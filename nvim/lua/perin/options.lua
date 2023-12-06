@@ -37,9 +37,8 @@ vim.opt.sidescrolloff = 15			-- min. nr. of columns to left and right of cursor
 
 vim.opt.smartindent = true			-- smart autoindenting for C programs
 vim.opt.smarttab = true				-- use 'shiftwidth' when inserting <Tab>
+vim.opt.shiftwidth = 4				-- Number of spaces to use for each step of (auto)indent
 vim.opt.softtabstop = 0				-- number of spaces that <Tab> uses while editing
 vim.opt.tabstop = 4					-- number of spaces that <Tab> in file uses
 
 vim.opt.wrap = false				-- long lines wrap and continue on the next line
-
-

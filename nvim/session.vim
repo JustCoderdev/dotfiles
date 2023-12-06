@@ -13,10 +13,12 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +59 init.lua
-badd +1 lua/perin/options.lua
+badd +1 init.lua
+badd +44 lua/perin/options.lua
 badd +1 man://vim(1)
-badd +4 lua/perin/keymaps.lua
+badd +48 lua/perin/keymaps.lua
+badd +1 lua/perin/themes.lua
+badd +2 lua/perin/plugins.lua
 argglobal
 %argdel
 $argadd init.lua
@@ -27,10 +29,6 @@ set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -41,11 +39,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 16 + 22) / 45)
 exe 'vert 1resize ' . ((&columns * 80 + 80) / 160)
-exe '2resize ' . ((&lines * 26 + 22) / 45)
-exe 'vert 2resize ' . ((&columns * 80 + 80) / 160)
-exe 'vert 3resize ' . ((&columns * 79 + 80) / 160)
+exe 'vert 2resize ' . ((&columns * 79 + 80) / 160)
 argglobal
 balt lua/perin/options.lua
 setlocal fdm=manual
@@ -58,19 +53,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 38 - ((7 * winheight(0) + 8) / 16)
+let s:l = 43 - ((21 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 38
-normal! 016|
+keepjumps 43
+normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("lua/perin/options.lua", ":p")) | buffer lua/perin/options.lua | else | edit lua/perin/options.lua | endif
+if bufexists(fnamemodify("lua/perin/plugins.lua", ":p")) | buffer lua/perin/plugins.lua | else | edit lua/perin/plugins.lua | endif
 if &buftype ==# 'terminal'
-  silent file lua/perin/options.lua
+  silent file lua/perin/plugins.lua
 endif
-balt init.lua
+balt lua/perin/keymaps.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -81,42 +76,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 13) / 26)
+let s:l = 2 - ((1 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 2
 normal! 0
 wincmd w
-argglobal
-if bufexists(fnamemodify("lua/perin/keymaps.lua", ":p")) | buffer lua/perin/keymaps.lua | else | edit lua/perin/keymaps.lua | endif
-if &buftype ==# 'terminal'
-  silent file lua/perin/keymaps.lua
-endif
-balt lua/perin/options.lua
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 4 - ((3 * winheight(0) + 21) / 43)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 4
-normal! 0
-wincmd w
-3wincmd w
-exe '1resize ' . ((&lines * 16 + 22) / 45)
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 80 + 80) / 160)
-exe '2resize ' . ((&lines * 26 + 22) / 45)
-exe 'vert 2resize ' . ((&columns * 80 + 80) / 160)
-exe 'vert 3resize ' . ((&columns * 79 + 80) / 160)
+exe 'vert 2resize ' . ((&columns * 79 + 80) / 160)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -131,6 +100,7 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
