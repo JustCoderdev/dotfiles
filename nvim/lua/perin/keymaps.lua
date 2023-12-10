@@ -26,6 +26,9 @@ local function disable(modes, key) map(modes, key, "<Nop>") end
 
 -- === DISABLED === --
 disable("n", "Q")
+disable("n", "'")
+disable("i", "<A-k>")
+disable("i", "<A-j>")
 
 -- arrows
 disable("nivx", "<Up>")
@@ -41,6 +44,10 @@ disable("n", "<Space>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- nvim_lspconfig overriden
+--   "gD", "gd", "K", "gi", "gr", "<C-k>", 
+--   "<Leader>d", "<Leader>r", "<Leader>f"
+
 -- save
 mapn("<Leader>u", ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 mapn("<Leader>w", ":wall <CR> :w <CR> :echo \"Saved all files\" <CR>")
@@ -49,8 +56,8 @@ mapn("<Leader>m", ":mksession! session.vim <CR> :echo \"Updated session file\" <
 mapn("<Leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- clipboard
-map("nv", "<Leader>y", "\"+y <CR> :echo \"Yanked to clipboard\" <CR>")
-map("nv", "<Leader>p", "\"*p <CR> :echo \"Pasted from clipboard\" <CR>")	
+map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
+map("nv", "<Leader>p", "\"*p :echo \"Pasted from system clipboard\" <CR>")	
 
 -- windows
 mapn("<Leader>e", ":Lexplore 25 <CR>")
@@ -87,18 +94,18 @@ mapi("<C-c>", "<Esc>") -- update view after exiting with C-c
 
 
 -- === VISUAL === --
-mapv("p", "\"_dP")
+map("x", "p", "\"_dP")
 
 -- indent
 mapv("<", "<gv")
 mapv(">", ">gv")
 
 -- move text
-mapv("J", ":move '>+1 <CR> gv=gv")
-mapv("K", ":move '<-2 <CR> gv=gv")
+-- mapv("J", ":move '>+1 <CR> gv=gv")
+-- mapv("K", ":move '<-2 <CR> gv=gv")
 
 
 -- === VISUAL BLOCK === --
 -- move text
-mapx("J", ":move '>+1 <CR> gv-gv")
-mapx("K", ":move '<-2 <CR> gv-gv")
+-- mapx("J", ":move '>+1 <CR> gv-gv")
+-- mapx("K", ":move '<-2 <CR> gv-gv")
