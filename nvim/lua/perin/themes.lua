@@ -3,26 +3,33 @@ declare_file("themes.lua")
 
 -- TRUECOLOR CAPABILITY --
 
-local color_capable = os.getenv("COLORTERM") == "truecolor"
-if color_capable then log("?", "Detected TrueColor capable terminal") end 
+COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
+vim.opt.termguicolors = COLOR_CAPABLE
+if COLOR_CAPABLE then
+	log("?", "Detected TrueColor capable terminal")
+else
 
-vim.opt.termguicolors = color_capable
+end
 
 
 -- 
 
-local function load_scheme(name)
-	local scheme_ok, _ = pcall(vim.cmd, string.format("colorscheme %s", name))
+local function load_scheme(scheme)
+	if(scheme.require_truecolor and (not COLOR_CAPABLE)) then
+		log_error(string.format("Error loading %s colorscheme: colors not supported", scheme.name))
+		return
+	end
 
+	local scheme_ok, _ = pcall(vim.cmd, string.format("colorscheme %s", scheme.name))
 	if(not scheme_ok) then
-		log_error(string.format("Error loading %s colorscheme", SETTINGS.default_colorscheme))
+		log_error(string.format("Error loading %s colorscheme: not found", scheme.name))
 	end
 end
 
 
 -- COLORSCHEME --
 
-load_scheme("default")
+load_scheme({ name = "default", require_truecolor = false })
 load_scheme(SETTINGS.fallback_colorscheme)
 load_scheme(SETTINGS.default_colorscheme)
 

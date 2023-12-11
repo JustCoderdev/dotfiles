@@ -3,8 +3,14 @@
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format("attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
 SETTINGS = protect({
 	user_name = "perin",
-	default_colorscheme = "onedark",
-	fallback_colorscheme = "habamax"
+	default_colorscheme = {
+		name = "onedark",
+		require_truecolor = true
+	},
+	fallback_colorscheme = {
+		name = "habamax",
+		require_truecolor = false
+	}
 })
 
 
@@ -17,7 +23,7 @@ function declare_file(file_name) log_base(">", string.format("Loading %s", file_
 local function require_file(file)
 	local require_string = string.format("%s.%s", SETTINGS.user_name, file)
 	local file_ok, _ = pcall(require, require_string)
-	if(not file_ok) then log_base_error(string.format("Error loading %s.lua", require_string)) end
+	if(not file_ok) then log_base_error(string.format("Error loading %s.lua file", require_string)) end
 end
 --
 function log(icon, msg) print(string.format("       %s %s", icon, msg)) end
@@ -27,7 +33,7 @@ function declare_plugin_config(plugin_name) log(">", string.format("Configuring 
 function require_plugin_config(plugin_name)
 	local require_string = string.format("%s.plugin_config.%s", SETTINGS.user_name, plugin_name)
 	local file_ok, _ = pcall(require, require_string)
-	if(not file_ok) then log_error(string.format("Error loading %s.lua", require_string)) end
+	if(not file_ok) then log_error(string.format("Error loading %s.lua config", require_string)) end
 end
 function require_plugin(plugin_name)
 	local file_ok, plugin = pcall(require, plugin_name)

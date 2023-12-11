@@ -1,5 +1,10 @@
 declare_plugin_config("nvim_lspconfig")
 
+-- Need to be called after plugins:
+-- 	  - language extensions
+-- 	  - nvim_cmp
+-- 	  - lsp_signature
+
 local lspconfig = require_plugin("lspconfig")
 
 
@@ -110,6 +115,9 @@ vim.keymap.set("n", "Nd", vim.diagnostic.goto_prev)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
+	-- attach lsp_signature
+	require("lsp_signature").on_attach()
+
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
