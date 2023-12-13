@@ -12,7 +12,7 @@ else
 end
 
 
--- 
+--
 
 local function load_scheme(scheme)
 	if(scheme.require_truecolor and (not COLOR_CAPABLE)) then
@@ -32,4 +32,8 @@ end
 load_scheme({ name = "default", require_truecolor = false })
 load_scheme(SETTINGS.fallback_colorscheme)
 load_scheme(SETTINGS.default_colorscheme)
+
+
+-- vim-illuminate options     onedark-darker-bg1
+vim.cmd("hi IlluminatedWordRead guibg=#30363f gui=NONE")
 

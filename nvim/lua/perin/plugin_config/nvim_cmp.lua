@@ -2,7 +2,7 @@ declare_plugin_config("nvim_cmp")
 
 local cmp = require_plugin("cmp")
 
--- 
+--
 local lspicons = {
   Text = "Tx",
   Keyword = "kw",

@@ -49,13 +49,17 @@ vim.g.maplocalleader = " "
 --   "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>r", "<Leader>f"
 
+mapn("<Leader>m", ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
+mapn("<Leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+
 -- save
 mapn("<Leader>u", ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 mapn("<Leader>w", ":wall <CR> :echo \"Saved all files\" <CR>")
-mapn("<Leader>q", ":wqall <CR>")
-mapn("<Leader>m", ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
-mapn("<Leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
-mapn("<Leader>f", ":Neoformat <CR>")
+mapn("<Leader>q", ":wall <CR> :mksession! last_session.vim <CR> :qall <CR>")
+
+-- plugins
+mapn("<Leader>f", ":Neoformat <CR>")			-- from neoformat
+mapn("<Leader>sw", ":StripWhitespace <CR>")		-- from vim-better-whitespace
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")

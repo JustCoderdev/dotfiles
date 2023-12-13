@@ -27,7 +27,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.dockerls.setup { capabilities = capabilities }
 -- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
 
--- Random 
+-- Random
 local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 c_capabilities.textDocument.completion.completionItem.snippetSupport = true
 c_capabilities.textDocument.completion.completionItem.resolveSupport = {
