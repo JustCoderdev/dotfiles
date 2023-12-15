@@ -59,7 +59,7 @@ print([[
 .
 Initialising neovim ...
 .
- Nvim:   v0.9.1 release 
+ Nvim:   v0.9.1 release
  LuaJIT:  2.1.0-beta3
 .
 ]])
