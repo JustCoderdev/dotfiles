@@ -3,6 +3,8 @@
 BasedOnStyle: LLVM
 
 # AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveAssignments: Consecutive 
+
 AlignTrailingComments: true
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false

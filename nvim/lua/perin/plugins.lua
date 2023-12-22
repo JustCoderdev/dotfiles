@@ -89,7 +89,7 @@ packer.startup({
 		use "neovim/nvim-lspconfig" -- Language server
 		--
 
-		use "tpope/vim-surround"  -- Interact with bracket and quotes
+		use "tpope/vim-surround"   -- Interact with bracket and quotes
 		use "tpope/vim-commentary" -- Handle comments
 
 		use "navarasu/onedark.nvim" -- Colorscheme
@@ -97,24 +97,27 @@ packer.startup({
 
 		use "mhartington/formatter.nvim" -- Formatting engine
 
-		use {                     -- Display syntax highlighting
+		use {                      -- Display syntax highlighting
 			"nvim-treesitter/nvim-treesitter",
-			tag = "v0.9.1" -- tag = "v0.8.1"
+			tag = "v0.9.1"         -- tag = "v0.8.1"
 		}
 
-		use "ntpeters/vim-better-whitespace" 	-- Check for trailing whitespaces
-		use "windwp/nvim-autopairs"    			-- Automatically add closing bracket
-		use "simrat39/symbols-outline.nvim" 	-- Provide an outline for current file
+		use "ntpeters/vim-better-whitespace" -- Check for trailing whitespaces
+		use "windwp/nvim-autopairs"    -- Automatically add closing bracket
+		use "simrat39/symbols-outline.nvim" -- Provide an outline for current file
 
 		use "RRethy/vim-illuminate"    -- Highlight word under cursor
 		use "tommcdo/vim-lion"         -- Provide indentation for code blocks
 
-		use "dense-analysis/ale"		-- Static code analisys
+		use "dense-analysis/ale"       -- Static code analisys
 
 		-- use "sindrets/diffview.nvim"			-- Better diff-views
 		-- use "honza/vim-snippets"				-- More snippets
 
-		-- use "junegunn/fzf"					-- Fuzzy finder
+		use { "ibhagwan/fzf-lua", -- Fuzzy finder
+			requires = { "junegunn/fzf", run = ":call fzf#install()" },
+		}
+
 		-- use "nvim-pack/nvim-spectre"			-- Find and replace tool
 
 		-- use "preservim/vimux"				-- Interact with tmux seamlessly
