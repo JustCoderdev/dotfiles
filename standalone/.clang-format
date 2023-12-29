@@ -2,8 +2,10 @@
 
 BasedOnStyle: LLVM
 
+AlignConsecutiveMacros: Consecutive
 # AlignConsecutiveDeclarations: Consecutive
-AlignConsecutiveAssignments: Consecutive 
+AlignConsecutiveAssignments: Consecutive
+AlignEscapedNewlines: Left
 
 AlignTrailingComments: true
 AllowShortBlocksOnASingleLine: Empty
