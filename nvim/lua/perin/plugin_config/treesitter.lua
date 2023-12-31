@@ -18,7 +18,7 @@ treesitter.setup({
   auto_install = true,
   ignore_install = { },
 
-  parser_install_dir = "~/.config/nvim/parsers",
+  parser_install_dir = "~/.config/nvim/.cache/parsers",
 
   highlight = {
     enable = true,

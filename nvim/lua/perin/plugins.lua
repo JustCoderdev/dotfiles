@@ -39,12 +39,14 @@ local packer_bootstrap = ensure_packer()
 -- PLUGINS --
 
 local packer = require_packer()
---packer.init({
---	ensure_dependencies = true,
---	snapshot_path       = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
---	package_root        = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
---	compile_path        = packer.util.join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
---})
+local util = require("packer.util")
+
+packer.init({
+	ensure_dependencies = true,
+	-- snapshot_path       = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
+	-- package_root        = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
+	compile_path        = util.join_paths(vim.fn.stdpath('config'), '.cache', 'plugin', 'packer_compiled.lua'),
+})
 packer.startup({
 	function(use)
 		use "wbthomason/packer.nvim"
