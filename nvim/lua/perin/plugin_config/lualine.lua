@@ -4,7 +4,13 @@ local lualine = require_plugin("lualine")
 lualine.setup {
 	options = {
 		icons_enabled = false,
-		theme = LUALINE_THEME,
+		theme = (function ()
+			if COLOR_CAPABLE then
+				return "auto"
+			else
+				return "codedark"
+			end
+		end)(),
 		-- component_separators = { left = "", right = "" },
 		component_separators = { left = "C", right = "D" },
 		-- section_separators = { left = "", right = "" },

@@ -3,14 +3,10 @@ declare_file("themes.lua")
 
 -- TRUECOLOR CAPABILITY --
 
-COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
-LUALINE_THEME = "auto"
-
 vim.opt.termguicolors = COLOR_CAPABLE
 if COLOR_CAPABLE then
 	log("?", "Detected TrueColor capable terminal")
 else
-	LUALINE_THEME = "codedark"
 end
 
 

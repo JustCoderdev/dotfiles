@@ -1,6 +1,7 @@
 -- STARTUP CONFIGS --
 
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format( "attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
+COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 SETTINGS = protect({
 	user_name = "perin",
 	default_colorscheme = {
