@@ -4,12 +4,14 @@ BasedOnStyle: LLVM
 
 AlignConsecutiveMacros: Consecutive
 # AlignConsecutiveDeclarations: Consecutive
-AlignConsecutiveAssignments: Consecutive
+# AlignConsecutiveAssignments: Consecutive
+# AlignConsecutiveShortCaseStatements: # Don't work :/
 AlignEscapedNewlines: Left
 
+AlignOperands: Align
 AlignTrailingComments: true
 AllowShortBlocksOnASingleLine: Empty
-AllowShortCaseLabelsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: WithoutElse
@@ -17,6 +19,7 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterReturnType: None
 
 # BreakBeforeBraces: Linux
+BreakBeforeBinaryOperators: true
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
