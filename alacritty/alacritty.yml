@@ -105,49 +105,27 @@ scrolling:
 font:
   # Normal (roman) font face
   normal:
-    # Font family
-    #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     family: Roboto Mono
-
-    # The `style` can be specified to pick a specific face.
     style: Medium
 
   # Bold font face
-  #bold:
-    # Font family
-    #
-    # If the bold family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Bold
+  bold:
+    # family: Roboto Mono
+    style: Bold
 
   # Italic font face
-  #italic:
-    # Font family
-    #
-    # If the italic family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Italic
+  italics:
+    # family: Roboto Mono
+    style: Medium Italic
 
   # Bold italic font face
-  #bold_italic:
-    # Font family
-    #
-    # If the bold italic family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+  bold_italic:
+    # family: Roboto Mono
+    style: Bold Italic
 
   # Point size
   size: 15
