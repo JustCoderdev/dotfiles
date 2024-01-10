@@ -1,13 +1,14 @@
-# :! cp ./.zshrc ~
+# justcoderdev zsh aliases
 
 alias ez="echo 'Updating zsh :D\n'; exec zsh"
 
 alias ls="ls -F"
 alias la="ls -AF"
-alias ll="ls -AFl | awk '{print \$9}'"
+alias ll="ls -AFl"
 
 alias cls="clear"
-alias rm="rm -I"
+alias rm="trash"
+alias rmf="rm -I"
 
 # git stuff
 alias gs="git status"

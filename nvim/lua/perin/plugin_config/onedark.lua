@@ -36,8 +36,9 @@ onedark.setup {
 		["@text.quote.markdown"]          = { fg = '$light_grey' },
 		["@text.emphasis"]                = { fg = '$purple', fmt = 'italic' },
 		["@text.strong"]                  = { fg = '$orange', fmt = 'bold' },
-		["@text.strike"]                  = { fg = '$green', fmt = 'strikethrough,underline' },
-		["@text.literal"]                 = { fg = '$red', fmt = "none" },
+		["@text.strike"]                  = { fg = '$green' , fmt = 'strikethrough,underline' },
+		["@text.literal"]                 = { fg = '$red'   , fmt = "none" },
+		["@illuminate.highlight"]         = { fg = '#30363f', fmt = "none" },
 	}, -- Override highlight groups
 
 	-- Plugins Config --
