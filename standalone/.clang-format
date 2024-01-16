@@ -52,6 +52,8 @@ IncludeCategories:
   - Regex:           '".*"'
     Priority:        3
 
+# Internal headers
+
 IndentCaseLabels: true
 IndentPPDirectives: None
 IndentWidth: 4

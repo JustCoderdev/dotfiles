@@ -1,18 +1,21 @@
 # justcoderdev zsh aliases
 
-alias ez="echo 'Updating zsh :D\n'; exec zsh"
+alias ez="echo 'Updating zsh :D'; exec zsh"
 
 alias ls="ls -F"
-alias la="ls -AF"
-alias ll="ls -AFl"
+alias la="ls -FA"
+alias ll="ls -FAl"
 
 alias cls="clear"
-alias rm="trash"
-alias rmf="rm -I"
+alias rm="rm -I"
+
+alias mk="make"
+alias mkr="make remote"
 
 # git stuff
 alias gs="git status"
 alias ga="git add"
+alias gc="git commit"
 
 # nvim stuff
 alias vis="nvim -S .session.vim"
@@ -20,8 +23,8 @@ alias vio="nvim -S .old_session.vim"
 alias vids="rm -rI ~/.local/state/nvim/swap"
 
 # directory movement
-alias proj="cd ~/Developer/Projects/"
-alias conf="cd ~/.config/"
+alias projects="cd ~/Developer/Projects/"
+alias dotfiles="cd ~/.config/"
 
 alias ~="cd ~"
 alias /="cd /"
