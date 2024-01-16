@@ -1,24 +1,33 @@
 # :!cp ./.clang-format ~/Developer
+#
 
 BasedOnStyle: LLVM
+
+AlignAfterOpenBracket: true
+# AlignAfterOpenBracket: DontAlign
 
 AlignConsecutiveMacros: Consecutive
 # AlignConsecutiveDeclarations: Consecutive
 # AlignConsecutiveAssignments: Consecutive
 # AlignConsecutiveShortCaseStatements: # Don't work :/
-AlignEscapedNewlines: Left
 
+AlignEscapedNewlines: Left
 AlignOperands: Align
 AlignTrailingComments: true
+
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterReturnType: None
 
+AlwaysBreakAfterReturnType: None
 # BreakBeforeBraces: Linux
+
 BreakBeforeBinaryOperators: true
 BreakBeforeBraces: Custom
 BraceWrapping:
@@ -33,6 +42,10 @@ BraceWrapping:
   IndentBraces: false
   SplitEmptyFunction: false
 
+BinPackArguments: false
+BinPackParameters: false
+
+BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeTernaryOperators: true
 DerivePointerAlignment: false
 
@@ -63,7 +76,7 @@ IndentWidth: 4
 # KeepEmptyLinesAtEOF: true
 # KeepEmptyLinesAtTheStartOfBlocks: true
 
-PointerAlignment: Left
+PointerAlignment: Right
 
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
