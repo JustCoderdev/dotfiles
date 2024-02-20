@@ -5,9 +5,9 @@ share with me any feedback or trick you may know :p
 ## Index
 
 Configuration files for
-- Alacritty \[v0.12.2\] ([GH](https://github.com/alacritty/alacritty/tree/9d9982df0ed3ab40a9b432e8e8b75d9c7f7bd882))
-- Clang
-- Clang-format
+- Alacritty \[v0.12.2\] ([GitHub](https://github.com/alacritty/alacritty/tree/9d9982df0ed3ab40a9b432e8e8b75d9c7f7bd882))
+- Clang ([Docs](https://clangd.llvm.org/config.html))
+- Clang-format ([Docs](https://releases.llvm.org/12.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
 - Nvim
 - Zsh
 
@@ -21,18 +21,14 @@ full RGB range
 **Requirements**
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git)
 
-```shell
-ln -s ~/.config/dotfiles/alacritty ~/.config/alacritty 
-```
-
 ### Clang
 C compiler (duh)
 
 ### Clang-format
-C formatter
+C file formatter
 
 ### Nvim
-Code editor
+Textual code editor
 
 ### Zsh
 Shell environment
