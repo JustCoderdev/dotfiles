@@ -45,7 +45,7 @@ packer.init({
 	ensure_dependencies = true,
 	-- snapshot_path       = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
 	-- package_root        = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-	compile_path        = util.join_paths(vim.fn.stdpath('config'), '.cache', 'plugin', 'packer_compiled.lua'),
+	compile_path        =  "~/.cache/nvim/packer_compiled.lua",
 })
 packer.startup({
 	function(use)
