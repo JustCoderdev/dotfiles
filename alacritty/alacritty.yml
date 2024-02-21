@@ -434,8 +434,8 @@ live_config_reload: true
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-# shell:
-#  program: /bin/zsh
+shell:
+  program: /bin/zsh
 #  args:
 #    - -c
 #    - "echo akjsfhksf && env arch -arm64 /bin/zsh --login"
@@ -736,8 +736,10 @@ live_config_reload: true
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Right, mods: Alt, chars: "\x1BF" }
-  - { key: Left,  mods: Alt, chars: "\x1BB" }
+  - { key: Right, mods: Alt,     chars: "\x1BF" }
+  - { key: Left,  mods: Alt,     chars: "\x1BB" }
+  - { key: C,     mods: Control, action: Copy   }
+  - { key: V,     mods: Control, action: Paste  }
 
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
