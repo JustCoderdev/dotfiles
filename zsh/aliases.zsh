@@ -24,7 +24,7 @@ alias vids="rm -rI ~/.local/state/nvim/swap"
 
 # directory movement
 alias projects="cd ~/Developer/Projects/"
-alias dotfiles="cd ~/.config/"
+alias dotfiles="cd ~/.config/dotfiles/"
 
 alias ~="cd ~"
 alias /="cd /"
