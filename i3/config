@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -26,6 +26,20 @@ font pango:monospace 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+## Colors
+#border: Small border surrounding header
+#backgr: Header background
+#text:   Header text
+#indica: Line to indicate where a new window will be placed (same as border)
+#child:  Same as border
+
+# # class                 border  backgr. text    indicator child_border
+# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# client.background       #ffffff
 
 # -- CUSTOM SET -- #
 exec firefox
@@ -42,29 +56,32 @@ assign [class="firefox"]   number 1
 assign [class="alacritty"] number 2
 
 # Colors
-set $primaryColor        "#AFBEE1"
-set $primaryColorSubdued "#64708D"
+set $brCyanColor   "#AFBEE1"
+set $CyanColor     "#64708D"
+set $brGreenColor  "#BCE1AF"
+set $greenColor    "#527251"
+set $brRedColor    "#E49393"
+set $redColor      "#A46060"
 
-set $brightGreenColor    "#BCE1AF"
-set $greenColor          "#527251"
-set $brightRedColor      "#E49393"
-set $redColor            "#A46060"
+set $fgColor    "#FFFFFF"
+set $bgColor    "#262626"
 
-set $foregroundColor     "#FFFFFF"
-set $backgroundColor     "#262626"
-set $grayColor           "#626262"
-set $blackColor          "#373b41"
-set $whiteColor          "#FFFFFF"
+set $grayColor   "#FAF"
+set $blackColor  "#373b41"
+set $whiteColor  "#FFFFFF"
 
-# class                 border               backgr. text        indicator   child_border
-client.focused          $primaryColor        #285577 $whiteColor #2e9ef4     #285577
-client.focused_inactive $primaryColorSubdued #5f676a $whiteColor #484e50     #5f676a
-client.unfocused        #333333              #222222 #888888     #292d2e     #222222
-client.urgent           #2f343a              #900000 $whiteColor #900000     #900000
-client.placeholder      $blackColor          #0c0c0c $whiteColor $blackColor #0c0c0c
+set $nilCol "#000000"
 
-client.background       $whiteColor
-exec_always --no-startup-id xsetroot -solid $backgroundColor 
+
+# class                 border      backgr.       text         indicator    child_border
+client.focused          $CyanColor  $CyanColor   $whiteColor  $CyanColor   $CyanColor
+client.focused_inactive $bgColor    $blackColor  $whiteColor  $blackColor  $blackColor
+client.unfocused        $bgColor    $blackColor  $grayColor   $blackColor  $blackColor
+client.urgent           $RedColor   $RedColor    $whiteColor  $RedColor    $RedColor
+client.placeholder      $nilCol     $bgColor     $whiteColor  $nilCol      $bgColor
+client.background       $bgColor
+
+exec_always --no-startup-id xsetroot -solid $bgColor
 # --  END  SET  -- #
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -215,5 +232,22 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+	status_command i3status
+
+	# Colors
+	set $grayColor   "#989898"
+
+    colors {
+        background #000000 
+        statusline $whiteColor 
+        separator  $bgColor 
+
+        # <colorclass>     <border>     <background> <text>
+        focused_workspace  $blackColor  $blackColor  $whiteColor 
+        active_workspace   $bgColor     $bgColor     $grayColor 
+        inactive_workspace $bgColor     $bgColor     $grayColor  
+        urgent_workspace   $bgColor     $redColor    $grayColor 
+        binding_mode       $bgColor     $redColor    $grayColor 
+
+    }
 }
