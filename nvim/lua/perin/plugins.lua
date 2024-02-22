@@ -120,6 +120,10 @@ packer.startup({
 			requires = { "junegunn/fzf", run = ":call fzf#install()" },
 		}
 
+		use { "norcalli/nvim-colorizer.lua",
+			requires = { run = ":lua require'colorizer'.setup({ '!*'; })" }
+		}
+
 		-- use "nvim-pack/nvim-spectre"			-- Find and replace tool
 
 		-- use "preservim/vimux"				-- Interact with tmux seamlessly
