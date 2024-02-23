@@ -13,7 +13,8 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 9
+# font pango:monospace 9
+font pango:robotomono medium 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -41,21 +42,49 @@ font pango:monospace 9
 # client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 # client.background       #ffffff
 
-# -- CUSTOM SET -- #
-exec firefox
-exec alacritty
 
-# Not available in i3 4.16.1
+######################
+## -- CUSTOM SET -- ##
+######################
+
+# Gaps not available in i3 4.16.1
 # gaps inner 500px
 # gaps outer 50px
 
-bindsym $mod+B exec firefox
-bindsym $mod+Return exec alacritty
 
-assign [class="firefox"]   number 1
-assign [class="alacritty"] number 2
+## STARTUP APP
+exec alacritty
+exec firefox
 
-# Colors
+# assign [class="Firefox"]   number 1
+# assign [class="Alacritty"] number 2
+
+
+## CUSTOM KEYBINDINGS
+bindsym $mod+B      exec --no-startup-id firefox
+bindsym $mod+Return exec --no-startup-id alacritty
+
+
+## "Borrowed" KEYBINDINGS
+# Source: <https://faq.i3wm.org/question/3747/enabling-multimedia-keys/?answer=3759#post-id-3759>
+
+# Pulse Audio controls
+# bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume 0 +5%"
+# bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume 0 -5%"
+# bindsym XF86AudioMute 		 exec --no-startup-id "pactl set-sink-mute 0 toggle"
+
+# Sreen brightness controls
+# bindsym XF86MonBrightnessUp   exec "xbacklight -inc 20"
+# bindsym XF86MonBrightnessDown exec "xbacklight -dec 20"
+
+# Media player controls
+# bindsym XF86AudioPlay  exec "playerctl play"
+# bindsym XF86AudioPause exec "playerctl pause"
+# bindsym XF86AudioNext  exec "playerctl next"
+# bindsym XF86AudioPrev  exec "playerctl previous"
+
+
+## CUSTOM COLORS ##
 set $brCyanColor   "#AFBEE1"
 set $CyanColor     "#64708D"
 set $brGreenColor  "#BCE1AF"
@@ -73,16 +102,22 @@ set $whiteColor  "#FFFFFF"
 set $nilCol "#000000"
 
 
-# class                 border      backgr.       text         indicator    child_border
-client.focused          $CyanColor  $CyanColor   $whiteColor  $CyanColor   $CyanColor
-client.focused_inactive $bgColor    $blackColor  $whiteColor  $blackColor  $blackColor
-client.unfocused        $bgColor    $blackColor  $grayColor   $blackColor  $blackColor
-client.urgent           $RedColor   $RedColor    $whiteColor  $RedColor    $RedColor
-client.placeholder      $nilCol     $bgColor     $whiteColor  $nilCol      $bgColor
-client.background       $bgColor
+# class                 border    backgr.      text         indicator    child_border
+client.focused          $bgColor  $CyanColor   $whiteColor  $CyanColor   $CyanColor
+client.focused_inactive $bgColor  $blackColor  $whiteColor  $blackColor  $blackColor
+client.unfocused        $bgColor  $blackColor  $grayColor   $blackColor  $blackColor
+client.urgent           $bgColor  $RedColor    $whiteColor  $RedColor    $RedColor
+client.placeholder      $nilCol   $bgColor     $whiteColor  $nilCol      $bgColor
 
+# Set background color
+client.background                           $bgColor 
 exec_always --no-startup-id xsetroot -solid $bgColor
-# --  END  SET  -- #
+
+
+#####################
+## --  END SET  -- ##
+#####################
+
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -95,6 +130,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -232,10 +268,15 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	status_command i3status
+	font pango:monospace 9
+	status_command i3status -c ~/.config/dotfiles/i3/i3status.conf
+    separator_symbol "|"
+
 
 	# Colors
 	set $grayColor   "#989898"
+	# set $redColor    "#d48525"
+	set $redColor    "#fb7979"
 
     colors {
         background #000000 
@@ -246,8 +287,12 @@ bar {
         focused_workspace  $blackColor  $blackColor  $whiteColor 
         active_workspace   $bgColor     $bgColor     $grayColor 
         inactive_workspace $bgColor     $bgColor     $grayColor  
-        urgent_workspace   $bgColor     $redColor    $grayColor 
-        binding_mode       $bgColor     $redColor    $grayColor 
+        urgent_workspace   $redColor    $bgColor     $grayColor 
+        binding_mode       $bgColor     $bgColor     $grayColor 
 
+        # binding_mode       $redColor    $bgColor     $grayColor  
+        # binding_mode       $brRedColor  #000000      $brRedColor 
+        # binding_mode       $redColor    $redColor    $blackColor 
+        # binding_mode       $bgColor     $bgColor     $redColor
     }
 }
