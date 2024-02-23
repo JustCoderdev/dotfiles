@@ -55,7 +55,7 @@ fzf.setup({
 			["default"] = actions.file_edit_or_qf,
 			["ctrl-h"]  = actions.file_split,
 			["ctrl-v"]  = actions.file_vsplit,
-			["ctrl-t"]  = actions.file_tabedit,
+			-- ["ctrl-t"]  = actions.file_tabedit,
 			-- ["alt-q"]   = actions.file_sel_to_qf,
 			-- ["alt-l"]   = actions.file_sel_to_ll,
 		},
