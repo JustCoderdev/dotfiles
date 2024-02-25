@@ -22,6 +22,9 @@ alias vis="nvim -S .session.vim"
 alias vio="nvim -S .old_session.vim"
 alias vids="rm -rI ~/.local/state/nvim/swap"
 
+# clang stuff
+alias clangf="clang -xc -Wall -Wextra -Werror -Wpedantic -pedantic -pedantic-errors -std=c89"
+
 # directory movement
 alias projects="cd ~/Developer/Projects/"
 alias dotfiles="cd ~/.config/dotfiles/"
