@@ -16,6 +16,8 @@ typedef unsigned long int n64;
 #define stderr tty2
 #define stddeb tty2
 
+/* #define stddeb stdout */
+
 FILE *tty2;
 
 char default_path[PATH_LEN] = "/sys/class/backlight/intel_backlight";
@@ -37,6 +39,7 @@ void print_usage(FILE *stream, char *program)
 				"\t<br>\t\tPrint current brightness\n"
 				"\tmax\t\tPrint max brightness\n"
 				"\tset <0-max>\tSet brightness to value\n"
+				"\tset max\tSet brightness to max brighness\n"
 				"\tinc <0-max>\tIncrement brightness by value\n"
 				"\tdec <0-max>\tDecement brightness by value\n", program);
 } /* clang-format on */
@@ -231,10 +234,14 @@ int main(int argc, char **argv)
 						__LINE__);
 				exit(1);
 			}
-			value = token_parse_n64(token);
 
 			max_brightness = brightness_get(brightness_max_path);
 			fprintf(stddeb, "DEBUG: Max brightness is %lu\n", max_brightness);
+
+			if(strncmp(token, "max", 3) == 0 && strlen(token) == 3)
+				value = max_brightness;
+			else
+				value = token_parse_n64(token);
 
 			if(value < 0 || value > max_brightness)
 			{
@@ -292,8 +299,7 @@ int main(int argc, char **argv)
 		}
 		else if(strncmp(token, "dec", PATH_LEN) == 0)
 		{
-			n64 max_brightness, brightness;
-			s64 value = 0;
+			n64 max_brightness, brightness, value = 0;
 
 			token = shift(&argc, &argv);
 			if(token == NULL)
@@ -312,7 +318,7 @@ int main(int argc, char **argv)
 			fprintf(stddeb, "DEBUG: Max brightness is %lu\n", max_brightness);
 			fprintf(stddeb, "DEBUG: Current brightness is %lu\n", brightness);
 
-			if(value < 0 || (n64)value > max_brightness)
+			if(value < 0 || value > max_brightness)
 			{
 				fprintf(stderr,
 						"ERROR:%s:%d: Argument `%lu` out of bounds (0, %lu)\n",
@@ -323,13 +329,13 @@ int main(int argc, char **argv)
 				exit(1);
 			}
 
-			/* brightness -= value */
-			fprintf(stddeb, "DEBUG: Subraction result is %ld (%lu - %ld)\n", brightness - value , brightness, value);
-			value = brightness - value;
-			if(value < 0) value = 0;
+			if(brightness < value)
+				brightness = 0;
+			else
+				brightness -= value;
 
-			brightness_set(value);
-			fprintf(stddeb, "DEBUG: Current brightness is %ld\n", value);
+			brightness_set(brightness);
+			fprintf(stddeb, "DEBUG: Current brightness is %ld\n", brightness);
 			exit(0);
 		}
 		else
