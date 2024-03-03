@@ -53,8 +53,8 @@ font pango:robotomono medium 10
 
 
 ## STARTUP APP
-exec alacritty
-exec firefox
+exec --no-startup-id i3-msg 'workspace 1; exec firefox'
+exec --no-startup-id i3-msg 'workspace 2; exec alacritty'
 
 # assign [class="Firefox"]   number 1
 # assign [class="Alacritty"] number 2
@@ -71,11 +71,11 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # Pulse Audio controls
 # bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume 0 +5%"
 # bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume 0 -5%"
-# bindsym XF86AudioMute 		 exec --no-startup-id "pactl set-sink-mute 0 toggle"
+# bindsym XF86AudioMute	       exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp   exec "~/.config/dotfiles/i3/scripts/bin/backlight inc 10"
-bindsym XF86MonBrightnessDown exec "~/.config/dotfiles/i3/scripts/bin/backlight dec 10"
+bindsym XF86MonBrightnessUp   exec "sudo backlight inc 50"
+bindsym XF86MonBrightnessDown exec "sudo backlight dec 50"
 
 # Media player controls
 # bindsym XF86AudioPlay  exec "playerctl play"
@@ -91,16 +91,12 @@ set $brGreenColor  "#BCE1AF"
 set $greenColor    "#527251"
 set $brRedColor    "#E49393"
 set $redColor      "#A46060"
-
-set $fgColor    "#FFFFFF"
-set $bgColor    "#262626"
-
-set $grayColor   "#FAF"
-set $blackColor  "#373b41"
-set $whiteColor  "#FFFFFF"
-
-set $nilCol "#000000"
-
+set $fgColor       "#FFFFFF"
+set $bgColor       "#262626"
+set $grayColor     "#FAF   "
+set $blackColor    "#373b41"
+set $whiteColor    "#FFFFFF"
+set $nilCol        "#000000"
 
 # class                 border    backgr.      text         indicator    child_border
 client.focused          $bgColor  $CyanColor   $whiteColor  $CyanColor   $CyanColor
