@@ -49,8 +49,8 @@ local function mapt(keybinding, action) map("t", keybinding, action) end
 -- === DISABLED === --
 unmap("n", "Q")
 unmap("n", "'")
-unmap("i", "<A-k>")
-unmap("i", "<A-j>")
+unmap("i", "<M-k>")
+unmap("i", "<M-j>")
 
 -- arrows
 unmap("nivx", "<Up>")
@@ -124,15 +124,15 @@ mapn("<C-w>q", ":q <CR>")
 mapn("<C-d>", "<C-d>zz")
 mapn("<C-u>", "<C-u>zz")
 
-mapn("<A-d>", "<C-d>zz")
-mapn("<A-u>", "<C-u>zz")
+mapn("<M-d>", "<C-d>zz")
+mapn("<M-u>", "<C-u>zz")
 
 -- navigation
-mapn("<A-h>", "<C-w>h")
-mapn("<A-j>", "<C-w>j")
-mapn("<A-k>", "<C-w>k")
-mapn("<A-l>", "<C-w>l")
-mapn("<A-q>", ":q <CR>")
+mapn("<M-h>", "<C-w>h")
+mapn("<M-j>", "<C-w>j")
+mapn("<M-k>", "<C-w>k")
+mapn("<M-l>", "<C-w>l")
+mapn("<M-q>", ":q <CR>")
 
 -- resize
 mapn("<C-S-Up>", ":resize -2 <CR>")
