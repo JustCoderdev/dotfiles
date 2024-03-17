@@ -48,7 +48,13 @@
 
 		# profile
 		homeConfigurations = {
-			personal = userBuilder;
+			${settings.username} = userBuilder;
+			# personal = home-manager.lib.homeManagerConfiguration {
+			# 	inherit pkgs;
+			# 	extraSpecialArgs = { inherit settings; };
+			# 	modules = ./profiles/${settings.profile}/home.nix;
+			# };
+
 		};
 	};
 }
