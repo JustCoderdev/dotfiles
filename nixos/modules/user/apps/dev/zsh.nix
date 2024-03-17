@@ -11,7 +11,7 @@
 		source = "${settings.dotfilespath}/zsh/.zshrc";
 	}
 
-	home.file."~/zsh" = {
+	home.file."~/.zsh" = {
 		source = "${settings.dotfilespath}/zsh";
 		recursive = true;
 	}
