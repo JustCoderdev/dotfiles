@@ -34,7 +34,7 @@
 		# hostname
 		nixosConfigurations = {
 			virtualmachine = systemBuilder;
-			acer = systemBuilder
+			acer = systemBuilder;
 		};
 
 		# homeConfigurations = { # username
