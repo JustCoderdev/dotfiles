@@ -1,4 +1,5 @@
-{ description = "NixOS config flake";
+{
+	description = "NixOS config flake";
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
@@ -9,32 +10,24 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, ... }@inputs:
+	outputs = { self, nixpkgs, home-manager, ... }@args:
 		let
-			settings = {
-				hostname = "virtualmachine";
-				profile = "personal";
-				system = "x86_64-linux";
-			};
+			# Configuration Switcher
+			host = "virtualmachine";
+			profile = "personal";
 
-			pkgs = nixpkgs.legacyPackages.${settings.system};
-			modules = [
-				./hosts/${settings.hostname}/hardware-configuration.nix
-				./profiles/${settings.profile}/configuration.nix
-			];
-
-			systemBuilder = nixpkgs.lib.nixosSystem {
-				system = settings.system;
-				specialArgs = { inherit settings; };
-				extraSpecialArgs = { inherit inputs; };
-				inherit modules;
-			};
+			# Other
+			system = "x86_64-linux";
+			pkgs = nixpkgs.legacyPackages.${system};
 		in {
 
 		# hostname
-		nixosConfigurations = {
-			virtualmachine = systemBuilder;
-			acer = systemBuilder
+		nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
+			inherit system;
+			modules = [
+				./profiles/${profile}/configuration.nix
+				./hosts/${host}/hardware-configuration.nix
+			];
 		};
 
 		# homeConfigurations = { # username
