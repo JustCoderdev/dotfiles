@@ -1,7 +1,7 @@
 { config, pkgs, settings, ... }:
 let 
 	username = settings.username;
-	dotfiles = settings.dotfiles;
+	dotfiles = settings.dotfiles_path;
 in {
 	programs.zsh.enable = true;
 
@@ -17,6 +17,4 @@ in {
 		source = "${dotfiles}/zsh";
 		recursive = true;
 	};
-
-	users.users.${username}.shell = pkgs.zsh;
 }

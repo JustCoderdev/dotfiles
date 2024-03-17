@@ -41,7 +41,7 @@ zmodload zsh/complist
 
 # more files
 # source ~/.config/zsh/purification.zsh
-source ~/.config/zsh/cursor.zsh
-source ~/.config/zsh/aliases.zsh
-source ~/.config/zsh/completition.zsh
+source ~/.zsh/cursor.zsh
+source ~/.zsh/aliases.zsh
+source ~/.zsh/completition.zsh
 

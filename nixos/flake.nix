@@ -15,16 +15,21 @@
 				hostname = "virtualmachine";
 				profile = "personal";
 
+				dotfiles_path = ../.;
 				username = "ryuji";
 				system = "x86_64-linux";
-				dotfilespath = "/.dotfiles";
 			};
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
 			modules = [
 				./hosts/${settings.hostname}/hardware-configuration.nix
 				./profiles/${settings.profile}/configuration.nix
-				# inputs.home-manager.nixosModules.default
+				home-manager.nixosModules.home-manager {
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.${settings.username} = import ./profiles/${settings.profile}/home.nix;
+					home-manager.extraSpecialArgs = { inherit settings; };
+				}
 			];
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
@@ -33,11 +38,11 @@
 				inherit modules;
 			};
 
-			userBuilder = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				extraSpecialArgs = { inherit settings; };
-				modules = ./profiles/${settings.profile}/home.nix;
-			};
+			# userBuilder = home-manager.lib.homeManagerConfiguration {
+			# 	inherit pkgs;
+			# 	extraSpecialArgs = { inherit settings; };
+			# 	modules = ./profiles/${settings.profile}/home.nix;
+			# };
 		in {
 
 		# hostname
@@ -47,19 +52,19 @@
 		};
 
 		# profile
-		homeConfigurations = {
-			# ${settings.username} = userBuilder;
-			personal = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				extraSpecialArgs = { inherit settings; };
-				modules = ./profiles/${settings.profile}/home.nix;
-			};
-
-			${settings.username} = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				extraSpecialArgs = { inherit settings; };
-				modules = ./profiles/${settings.profile}/home.nix;
-			};
-		};
+		# homeConfigurations = {
+		# 	# ${settings.username} = userBuilder;
+		# 	personal = home-manager.lib.homeManagerConfiguration {
+		# 		inherit pkgs;
+		# 		extraSpecialArgs = { inherit settings; };
+		# 		modules = ./profiles/${settings.profile}/home.nix;
+		# 	};
+                # 
+		# 	${settings.username} = home-manager.lib.homeManagerConfiguration {
+		# 		inherit pkgs;
+		# 		extraSpecialArgs = { inherit settings; };
+		# 		modules = ./profiles/${settings.profile}/home.nix;
+		# 	};
+		# };
 	};
 }
