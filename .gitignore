@@ -2,3 +2,5 @@
 
 .old_session.vim
 .session.vim
+
+.nixos-switch.log
