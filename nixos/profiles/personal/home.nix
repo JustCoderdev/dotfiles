@@ -10,6 +10,11 @@
 		../../modules/user/apps/dev/zsh.nix
 	];
 
+	programs.git = {
+		enable = true;
+		userName = "test";
+	};
+
 	# home-manager.useGlobalPackages = true;
 	# home-manager.useUserPackages = true;
 
