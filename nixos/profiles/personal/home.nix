@@ -4,19 +4,19 @@
 	home.username = settings.username;
 	home.homeDirectory = "/home/${settings.username}";
 
+	programs.home-manager.enable = true;
+
 	imports = [
-		inputs.home-manager.nixosModules.home-manager
 		../../modules/user/apps/dev/zsh.nix
 	];
 
-	home-manager.useGlobalPackages = true;
-	home-manager.useUserPackages = true;
-	# home-manager.users.${settings.username}.imports = [
-	# 	../../modules/user/apps/dev/zsh.nix
-	# ]
+	# home-manager.useGlobalPackages = true;
+	# home-manager.useUserPackages = true;
+
+	home.packages = with pkgs; [
+		zsh
+	];
 
 
-	# Let Home Manager install and manage itself.
-	programs.home-manager.enable = true;
 	home.stateVersion = "23.11";
 }
