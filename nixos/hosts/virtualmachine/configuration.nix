@@ -30,7 +30,7 @@
 
 	# Network settings
 	networking = {
-		hostName = "nixos-vm";		# Define your hostname.
+		hostName = "virtualmachine";	# Define your hostname.
 		# wireless.enable = true;	# Enables wireless support via wpa_supplicant.
 
 		# Configure network proxy if necessary
@@ -130,7 +130,7 @@
 	# home-manager.users.ryuji = import ./home.nix;
 	users.users.ryuji = {
 		name = "ryuji";
-		description = "personal user";
+		description = "ryuji";
 
 		isNormalUser = true;
 		createHome = true;

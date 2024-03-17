@@ -1,4 +1,5 @@
-{ description = "NixOS config flake";
+{
+	description = "NixOS config flake";
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
@@ -14,17 +15,8 @@
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
 		in {
-		nixosConfigurations = {
-			# default = nixpkgs.lib.nixosSystem {
-			# 	inherit system;
-			# 	specialArgs = args;
-			# 	modules = [
-			# 		./hosts/default/configuration.nix
-			# 		home-manager.nixosModules.default
-			# 	];
-			# };
 
-			# hostname
+		nixosConfigurations = { # hostname
 			virtualmachine = nixpkgs.lib.nixosSystem {
 				inherit system;
 				modules = [
@@ -33,8 +25,7 @@
 			};
 		};
 
-		homeConfigurations = {
-			# username
+		homeConfigurations = { # username
 			ryuji = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 				modules = [
