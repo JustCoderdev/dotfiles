@@ -7,26 +7,28 @@
 set -e
 
 # cd to your config dir
-pushd /.dotfiles/nixos/
+cd /.dotfiles/nixos/
 
 echo "Analysing changes..."
-if git diff --quiet *.nix; then
+if git diff --quiet -- './**/*.nix'; then
 	echo "No changes detected, exiting"
-	popd
+	cd $OLDPWD
 	exit 0
 fi
 
 # Shows your changes
-git diff -U0 *.nix | vi -
+git diff --word-diff=color -U0 -- './**/*.nix'
 
-echo "NixOS Rebuilding..."
+echo -n "\nNixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-sudo nixos-rebuild switch --flake .#$1 &>nixos-switch.log || (cat nixos-switch.log | grep --color error && false)
+sudo nixos-rebuild switch --flake .#$1 &>.nixos-switch.log || (cat .nixos-switch.log | grep --color error && false)
 
 # Commit all changes with the generation metadata
-current=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-git commit -am "NixOS: gen $current"
+generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
+sudo git add .
+sudo git commit -m "NixOS build#$generation"
 
-popd
-echo "\033[34mNixOS Rebuilt and Committed!\033[0m"
+echo -e "\033[32mCommitted as \"NixOS build#$generation\"\033[0m"
+echo -e "\033[34mNixOS Rebuild Completed!\033[0m"
+cd $OLDPWD
