@@ -7,8 +7,9 @@
 
 {
 	imports = [
-		./hardware-configuration.nix
+		# ./hardware-configuration.nix
 		# home-manager.nixosModules.default
+		../../modules/system/desktop/i3.nix
 	];
 
 	# VIRTUALIZATION
@@ -80,14 +81,14 @@
 		desktopManager.xfce.enable = true;
 		displayManager.defaultSession = "none+i3";
 
-		windowManager.i3 = {
-			enable = true;
-			extraPackages = with pkgs; [
-				dmenu
-				i3status
-				# i3lock
-			];	
-		};
+	# 	windowManager.i3 = {
+	# 		enable = true;
+	# 		extraPackages = with pkgs; [
+	# 	 		dmenu
+	# 	 		i3status
+	# 			# i3lock
+	# 		];	
+	# 	};
 
 		# Enable the GNOME Desktop Environment.
 		# desktopManager.gnome.enable = true;

@@ -22,11 +22,11 @@ git diff --word-diff=porcelain -U0 -- './**/*.nix'
 echo -e "\nNixOS Rebuilding...\n"
 
 # Rebuild, output simplified errors, log trackebacks
+sudo git add .
 sudo nixos-rebuild switch --flake .#$1 &>.nixos-switch.log || (cat .nixos-switch.log | grep --color error && false)
 
 # Commit changes 
 generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git add .
 sudo git commit -m "NixOS build#$generation"
 
 echo -e "\n\033[32mCommitted as NixOS build#$generation\033[0m"
