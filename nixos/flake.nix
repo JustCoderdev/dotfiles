@@ -24,7 +24,7 @@
 			modules = [
 				./hosts/${settings.hostname}/hardware-configuration.nix
 				./profiles/${settings.profile}/configuration.nix
-				inputs.home-manager.nixosModules.default
+				# inputs.home-manager.nixosModules.default
 			];
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
@@ -36,9 +36,7 @@
 			userBuilder = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 				extraSpecialArgs = { inherit settings; };
-				modules = [
-					./profiles/${settings.profile}/home.nix
-				];
+				modules = ./profiles/${settings.profile}/home.nix;
 			};
 		in {
 
