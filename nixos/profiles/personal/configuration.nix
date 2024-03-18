@@ -8,6 +8,7 @@
 	imports = [
 		# home-manager.nixosModules.default
 		../../modules/system/desktop/i3.nix
+		../../modules/system/hardware/numlock.nix
 	];
 
 	# VIRTUALIZATION
