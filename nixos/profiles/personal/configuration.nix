@@ -89,7 +89,8 @@
 	programs.dconf.enable = true;
 
 	# Configure console keymap
-	console.keyMap = "it2";
+	# console.keyMap = "it2";
+	console.useXkbConfig = true;
 
 	# Enable CUPS to print documents.
 	services.printing.enable = true;
