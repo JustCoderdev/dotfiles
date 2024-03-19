@@ -11,7 +11,7 @@
 
 	# $ gsettings reset org.gnome.desktop.input-sources xkb-options
 	# $ gsettings reset org.gnome.desktop.input-sources sources
-	services.xserver.xkbOptions = "numpad:mac, caps:ctrl_modifier";
+	services.xserver.xkbOptions = "numpad:mac, caps:none";
 
 	# ctrl			Ctrl position
 	# "ctrl:swapcaps"	Swap Ctrl and Caps Lock
