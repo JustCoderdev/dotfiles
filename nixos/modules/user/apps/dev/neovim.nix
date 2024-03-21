@@ -5,6 +5,7 @@ let
 in {
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
+	programs.neovim.extraLuaConfig = "SETTINGS.user_name = ${username}";
 
 #	home.packages = with pkgs; [ neovim ];
 
