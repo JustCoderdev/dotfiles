@@ -8,7 +8,7 @@ in {
 
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/neovim" = {
-		source = "${dotfiles}/neovim";
+		source = "${dotfiles}/nvim";
 		recursive = true;
 	};
 }
