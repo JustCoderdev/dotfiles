@@ -136,10 +136,10 @@
 
 	# List packages installed in system profile.
 	environment.systemPackages = with pkgs; [
-		alacritty
+		#alacritty
 		firefox
 
-		neovim
+		#neovim
 		vim 
 
 		git

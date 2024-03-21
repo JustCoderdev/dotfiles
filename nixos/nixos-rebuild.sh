@@ -31,6 +31,12 @@ else
 	echo ""
 	cat .nixos-switch.log | grep --color error
 	sudo git restore --staged ./**/*.nix
+
+	if read -p "Open log? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+		cat .nixos-switch.log | vim - 	
+	fi
+
+
 	shopt -u globstar
 	popd > /dev/null
 	exit 1
