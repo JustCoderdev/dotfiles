@@ -4,11 +4,11 @@ let
 	dotfiles = settings.dotfiles_path;
 in {
 	programs.neovim.enable = true;
-	home.packages = with pkgs; [ neovim ];
+#	home.packages = with pkgs; [ neovim ];
 
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/nvim" = {
-		source = "${dotfiles}/nvim";
+	home.file."/home/${username}/.config/neovim" = {
+		source = "${dotfiles}/neovim";
 		recursive = true;
 	};
 }

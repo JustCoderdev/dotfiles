@@ -4,7 +4,7 @@ let
 	dotfiles = settings.dotfiles_path;
 in {
 	programs.alacritty.enable = true;
-	home.packages = with pkgs; [ alacritty ];
+#	home.packages = with pkgs; [ alacritty ];
 
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/alacritty/alacritty.yml" = {
