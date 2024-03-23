@@ -434,10 +434,9 @@ live_config_reload: true
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /bin/zsh
-#  args:
-#    - -c
-#    - "echo akjsfhksf && env arch -arm64 /bin/zsh --login"
+  program: /usr/bin/env
+  args:
+    - zsh
 
 # Startup directory
 #
