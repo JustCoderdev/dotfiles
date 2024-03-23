@@ -1,5 +1,5 @@
 { config, pkgs, settings, ... }:
-let 
+let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
 	cachepath = settings.cache_path;
@@ -7,7 +7,19 @@ in {
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
 
-#	home.packages = with pkgs; [ neovim ];
+#	requirements:
+
+#		- clangd
+#		- Lua language server
+#		- Marksman
+#		- Bash language
+#		- cc1plus
+
+	home.packages = with pkgs; [
+#		neovim
+		xclip
+		xsel
+	];
 
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/nvim/init.lua".text = ''
@@ -17,14 +29,14 @@ SETTINGS = {
 	cache_path = "${cachepath}/nvim"
 }
 
-print("Injected by nixOS love <3")
-		 
-file = "init"; 
+print("Injected by nixOS with love <3")
+
+file = "init";
 local require_string = string.format("%s.%s", "${username}", file)
 local file_ok, _ = pcall(require, require_string)
 if (not file_ok) then
 	print(string.format(" /!\\  Error loading %s.lua file", require_string))
-end                                                                     
+end
 '';
 
 	home.file."/home/${username}/.config/nvim/lua/${username}" = {
