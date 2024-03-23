@@ -3,11 +3,14 @@
 # Thanks 0atman for the script <3, link here
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
 
+dotfiles_path="/.dotfiles"
+
+
 # Quit on error
 set -e
 
 # cd to your config dir
-pushd /.dotfiles/nixos/ > /dev/null
+pushd "$dotfiles_path/nixos/" > /dev/null
 shopt -s globstar
 
 # Check for differences
