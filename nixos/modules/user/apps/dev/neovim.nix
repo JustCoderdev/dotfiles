@@ -14,7 +14,7 @@ in {
 -- NixOS generated config for nvim :P
 SETTINGS = {
 	user_name = "${username}",
-	SETTINGS.cache_path = "${cachepath}/nvim"
+	cache_path = "${cachepath}/nvim"
 }
 
 print("Injected by nixOS love <3")
