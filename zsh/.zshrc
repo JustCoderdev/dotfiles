@@ -2,9 +2,13 @@
 
 
 # Global Variables
-export DOT_CACHE="/.dotfiles"
-export DOT_FILES="~/.cache"
 #path+=('/usr/local/bin')
+
+# Check if using nixOS
+if [[ -v DOT_FILES ]]; then ; else
+	export DOT_FILES="/.dotfiles"
+	export DOT_CACHE="~/.cache"
+fi
 
 # Options
 
@@ -39,7 +43,7 @@ zmodload zsh/complist
 # Source the rest...
 source "$DOT_FILES/zsh/prompt.zsh"
 source "$DOT_FILES/zsh/aliases.zsh"
-source "$DOT_FILES/zsh/keybinding.zsh"
+source "$DOT_FILES/zsh/keybindings.zsh"
 source "$DOT_FILES/zsh/completition.zsh"
 #source "$DOT_FILES/zsh/purification.zsh"
 
