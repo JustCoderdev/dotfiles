@@ -12,10 +12,12 @@ in {
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/nvim/init.lua".text = ''
 -- NixOS generated config for nvim :P
-SETTINGS.user_name = "${username}"
-SETTINGS.cache_path = "${cachepath}/nvim"
+SETTINGS = {
+	user_name = "${username}",
+	SETTINGS.cache_path = "${cachepath}/nvim"
+}
 
-print("hi")
+print("Injected by nixOS love <3")
 		 
 file = "init.lua";                                                      
 local require_string = string.format("%s.%s", ${username}, file)        
