@@ -7,7 +7,7 @@ in {
 #	home.packages = with pkgs; [ zsh ];
 
 	# Import configuration from dotfiles
-	programs.zsh.initExtra = "source ${dotfiles}/zsh/.zshrc";
+	programs.zsh.initExtra = "export DOT_NIXOS=1;source ${dotfiles}/zsh/.zshrc";
 	home.file."/home/${username}/.zsh" = {
 		source = "${dotfiles}/zsh";
 		recursive = true;
