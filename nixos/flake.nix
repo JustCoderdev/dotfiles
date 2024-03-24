@@ -1,4 +1,5 @@
-{ description = "NixOS config flake";
+{
+	description = "NixOS System flake";
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
@@ -11,15 +12,15 @@
 
 	outputs = { self, nixpkgs, home-manager, ... }@inputs:
 		let
-			settings = {
+			settings = rec {
 				hostname = "virtualmachine";
 				profile = "personal";
+				username = "ryuji";
 
 				dotfiles_path = ./..;
 				dotfiles_abspath = "/.dotfiles";
 				cache_path = "~/.config";
 
-				username = "ryuji";
 				system = "x86_64-linux";
 			};
 
