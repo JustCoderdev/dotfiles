@@ -55,6 +55,7 @@ function log_sub_error(msg) print(string.format(" /!\\      ! %s", msg)); flag_e
 -- START ACTUAL CODE --
 
 print([[
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 * ##     ## ########  #######  ##     ## #### ##     ## *
 * ###    ## ##       ##     ## ##     ##  ##  ###   ### *
@@ -68,7 +69,7 @@ print([[
 Initialising neovim ...
 .
  Nvim:   v0.9.1 release
- LuaJIT:  2.1.0-beta3
+ LuaJIT:  2.1.0 beta3
 .
 ]])
 
@@ -82,7 +83,7 @@ require_file("themes")
 print(".")
 -- print("_") -- sacrificed to the buffer gods
 
-if not errors then
+if not error then
 	vim.cmd("redraw")
 end
 
