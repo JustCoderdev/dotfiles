@@ -5,9 +5,11 @@
 #path+=('/usr/local/bin')
 
 # Check if using nixOS
-if [[ -v DOT_FILES ]]; then ; else
+# DOT is the prefix for variables throughout my dotfiles
+if [[ -v DOT_NIXOS ]] then
 	export DOT_FILES="/.dotfiles"
 	export DOT_CACHE="~/.cache"
+	export CC="${/usr/bin/env clang}"
 fi
 
 # Options
