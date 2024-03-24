@@ -1,1 +1,1 @@
-sudo nixos-rebuild switch --flake .#$1
+sudo nixos-rebuild switch --show-trace --flake .#$1

@@ -5,7 +5,7 @@
 set -e
 
 # cd to your config dir
-pushd "${dotfiles_path}/nixos/" > /dev/null
+pushd "${DOT_FILES}/nixos/" > /dev/null
 shopt -s globstar
 
 # Check for differences
@@ -23,15 +23,16 @@ echo -e "\nNixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
 sudo git add ./**/*.nix
+# shellcheck disable=SC2024 #ah the irony
 if sudo nixos-rebuild switch --show-trace --flake ".#$1" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
-	cat .nixos-switch.log | grep --color error
+	grep --color error .nixos-switch.log
 	sudo git restore --staged ./**/*.nix
 
-	if read -p "Open log? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
-		cat .nixos-switch.log | col -b | vim -R -
+	if read -pr "Open log? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+		vim -R .nixos-switch.log
 	fi
 
 	shopt -u globstar
