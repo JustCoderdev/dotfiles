@@ -17,7 +17,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Web
 -- vim.g.markdown_fenced_languages = { "ts=typescript" } -- for deno
 
--- lspconfig.astro.setup { 		capabilities = capabilities }
 -- lspconfig.denols.setup {		capabilities = capabilities }
 -- lspconfig.tsserver.setup {	capabilities = capabilities }
 -- lspconfig.html.setup { 		capabilities = capabilities }
@@ -26,10 +25,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- lspconfig.eslint.setup {		capabilities = capabilities }
 
 -- Tools
+lspconfig.nixd.setup{}
 lspconfig.marksman.setup{}
 lspconfig.dockerls.setup { capabilities = capabilities }
 -- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
-require'lspconfig'.nixd.setup{}
 
 -- Random
 local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
