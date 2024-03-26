@@ -10,6 +10,7 @@ in {
 
 	home.packages = with pkgs; [
 		clang-tools
+		clang
 	];
 
 	# Import configuration from dotfiles
