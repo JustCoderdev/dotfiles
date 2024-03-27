@@ -21,11 +21,7 @@
 		../../modules/system/hardware/pipewire.nix
 		../../modules/system/hardware/printer.nix
 
-		../../modules/system/services/docker.nix
-		../../modules/system/services/firewall.nix
-		../../modules/system/services/openvpn.nix
 		../../modules/system/services/ssh.nix
-		../../modules/system/services/virtualbox.nix
 
 		#../../modules/user/bin/nixos-rebuild.nix
 	];
