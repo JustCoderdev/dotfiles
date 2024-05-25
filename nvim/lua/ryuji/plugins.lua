@@ -7,6 +7,7 @@ local function require_packer()
 	local packer_ok, packer = pcall(require, "packer")
 	if (not packer_ok) then
 		log_error("Error loading packer")
+		print("error: " .. packer)
 		return
 	end
 
@@ -18,8 +19,7 @@ end
 
 local ensure_packer = function()
 	local fn = vim.fn
-	local install_path = SETTINGS.cache_path .. "/packer/site/pack/packer/start/packer.nvim"
-	--local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 	if fn.empty(fn.glob(install_path)) > 0 then
 		log_error("Packer not found. Installing now...")
@@ -40,26 +40,10 @@ local packer_bootstrap = ensure_packer()
 -- PLUGINS --
 
 local packer = require_packer()
-packer.util = require("packer.util")
-
 packer.init({
 	ensure_dependencies = true,
 
-	-- cache = '~/.cache/nvim'
-	-- data = '~/.local/share/nvim'
-	-- config = '~/.config/nvim'
-
-	-- snapshot_path = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
-	-- package_root  = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
 	-- compile_path  = packer.util.join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
-
-
-	-- cache =        '~/.cache/nvim/packer.nvim'
-	-- data =   '~/.local/share/nvim/site/pack'
-	-- config =      '~/.config/nvim/plugin/packer_compiled.lua'
-
-	snapshot_path       = SETTINGS.cache_path .. "/packer.nvim",
-	package_root        = SETTINGS.cache_path .. "/packer/site/pack",
 	compile_path        = SETTINGS.cache_path .. "/packer/plugin/packer_compiled.lua",
 
 	display             = {
@@ -71,6 +55,7 @@ packer.init({
 		moved_sym   = '[>]', -- The symbol for a plugin which was moved (e.g. from opt to start)
 	},
 })
+
 packer.startup({
 	function(use)
 		use {
