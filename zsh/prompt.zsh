@@ -1,7 +1,7 @@
 # justcoderdev zsh cursor
 
-# PROMPT=$'%F{white}%~ %B%F{blue}>%f%b '
-PROMPT=$' %F{grey}%~ %B%F{white}$%f%b '
+PROMPT=$' %~ %B$%b ' # plain
+PROMPT=$'%F{8} %~ %B%F{4}$%f%b ' # colored
 
 # Enable block cursor in normal mode
 cursor_mode() {
@@ -13,13 +13,12 @@ cursor_mode() {
 
     function zle-keymap-select {
         if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]];
-		then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] ||
-            [[ ${KEYMAP} == viins ]] ||
-            [[ ${KEYMAP} = '' ]] ||
-            [[ $1 = 'beam' ]];
-		then
+	then
+		echo -ne $cursor_block
+        elif
+		[[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
+        	[[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]];
+	then
             echo -ne $cursor_beam
         fi
     }
@@ -32,5 +31,5 @@ cursor_mode() {
     zle -N zle-line-init
 }
 
-# cursor_mode
+cursor_mode
 
