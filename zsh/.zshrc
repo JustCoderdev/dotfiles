@@ -32,7 +32,7 @@ setopt   LIST_ROWS_FIRST	# Lay out the matches in completion lists sorted horiz
 unsetopt MENU_COMPLETE		# Automatically highlight first element of completion menu
 
 ## history
-#setopt   HIST_SAVE_NO_DUPS	# Don't save duplicates to history
+setopt   HIST_SAVE_NO_DUPS	# Don't save duplicates to history
 #setopt   SHARE_HISTORY		# Share history with all zsh sessions
 
 # Pre load completition (?)
