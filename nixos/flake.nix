@@ -10,7 +10,7 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, ... }@inputs:
+	outputs = { self, nixpkgs, home-manager }@inputs:
 		let
 			# User settings
 			settings = rec {
