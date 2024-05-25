@@ -60,7 +60,8 @@ else
 	grep --color error .nixos-switch.log
 	sudo git restore --staged ./**/*.nix
 
-	if read -pr 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
+	# shellcheck disable=SC2162
+	if read -p 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
 		vim -R .nixos-switch.log
 	fi
 
