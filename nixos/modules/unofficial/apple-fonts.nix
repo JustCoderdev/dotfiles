@@ -1,5 +1,6 @@
 # Derivation from robbins, thanks <3 (had to update hashes)
 # source <https://gist.github.com/robbins/dccf1238e971973a6a963b04c486c099>
+# font sources <https://codeberg.org/adamcstephens/apple-fonts.nix/src/branch/main/sources.nix>
 
 { lib, stdenv, fetchurl, p7zip }:
 
@@ -9,22 +10,22 @@ stdenv.mkDerivation rec {
 
 	pro = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
-		sha256 = "";
+		hash = "sha256-Mu0pmx3OWiKBmMEYLNg+u2MxFERK07BQGe3WAhEec5Q=";
 	};
 
 	compact = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
-		sha256 = "";
+		hash = "sha256-Mkf+GK4iuUhZdUdzMW0VUOmXcXcISejhMeZVm0uaRwY=";
 	};
 
 	mono = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
-		sha256 = "";
+		hash = "sha256-tZHV6g427zqYzrNf3wCwiCh5Vjo8PAai9uEvayYPsjM=";
 	};
 
 	ny = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/NY.dmg";
-		sha256 = "";
+		hash = "sha256-tn1QLCSjgo5q4PwE/we80pJavr3nHVgFWrZ8cp29qBk=";
 	};
 
 	sourceRoot = ".";
