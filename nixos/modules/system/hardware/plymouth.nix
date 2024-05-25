@@ -24,12 +24,12 @@
 				sourceRoot = "${src.name}/plymouth/themes/${theme-name}";
 
 				installPhase = ''
-					#runHook preInstall
+					runHook preInstall
 					sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' ${theme-name}.plymouth
-					sed -i 's:\(^ScriptFile=\)/usr:\1'"$out"':' ${theme-name}.script
+					sed -i 's:\(^ScriptFile=\)/usr:\1'"$out"':' ${theme-name}.plymouth
 					mkdir -p $out/share/plymouth/themes/${theme-name}
 					cp -r * $out/share/plymouth/themes/${theme-name}
-					#runHook postInstall
+					runHook postInstall
 				'';
 			};
 		in
