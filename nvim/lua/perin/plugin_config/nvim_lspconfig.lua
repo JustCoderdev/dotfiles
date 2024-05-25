@@ -1,4 +1,6 @@
 declare_plugin_config("nvim_lspconfig")
+-- Open logs:
+-- :lua vim.cmd('e'..vim.lsp.get_log_path())
 
 -- Need to be called after plugins:
 -- 	  - language extensions
@@ -35,28 +37,27 @@ c_capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
 lspconfig.clangd.setup {
-	on_attach = function(client, bufnr)
-		require("clangd_extensions.inlay_hints").setup_autocmd()
-		require("clangd_extensions.inlay_hints").set_inlay_hints()
-	end,
+	-- on_attach = function(client, bufnr)
+		-- require("clangd_extensions.inlay_hints").setup_autocmd()
+		-- require("clangd_extensions.inlay_hints").set_inlay_hints()
+	-- end,
 	cmd = {
+		-- CLANGD args
 		"/usr/bin/clangd",
-		"--background-index",
 		"--pch-storage=memory",
-		"--all-scopes-completion",
 		"--pretty",
-		"--header-insertion=never",
 		"-j=4",
-		"--inlay-hints",
 		"--header-insertion-decorators",
-		"--function-arg-placeholders",
 		"--completion-style=detailed",
+		-- NOT AVAILABLE IN version 7.0.1-8
+		-- "--function-arg-placeholders",
+		-- "--background-index",
+		-- "--all-scopes-completion",
+		-- "--header-insertion=never",
+		-- "--inlay-hints",
 
-
-		-- doesn't work :/
-		-- "--fallback-style='{BasedOnStyle: LLVM, IndentWidth: 4, UseTab: UT_Always, BreakBeforeBraces: Linux, AllowShortIfStatementsOnASingleLine: SIS_WithoutElse, IndentCaseLabels: true}'"
-
-		-- custom
+		-- CLANG args
+		-- "/usr/bin/clang",
 		-- "-xc",
 		-- "-Wall",
 		-- "-Wextra",
@@ -68,7 +69,7 @@ lspconfig.clangd.setup {
 		-- "-fcolor-diagnostics"
 	},
 	filetypes = { "c" }, -- "cpp", "objc", "objcpp"
-	-- root_dir = lspconfig.util.root_pattern("src"),
+	root_dir = lspconfig.util.root_pattern("src"),
 	init_option = {
 		fallbackFlags = {  "-std=c89"  },
 	},

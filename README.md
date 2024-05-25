@@ -6,18 +6,24 @@ share with me any feedback or trick you may know :p
 
 Configuration files for
 - Alacritty \[v0.12.2\] ([Github](https://github.com/alacritty))
-- Clang ([Docs](https://clangd.llvm.org/config.html))
-- Clang-format ([Docs](https://releases.llvm.org/12.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
-- i3 ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
+- Clang \[7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
+- Clang-format \[7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
+- i3 \[4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
 - Nvim \[v0.9.1\] ([Github](https://github.com/neovim))
-- Zsh
+- Zsh \[5.7.1\]
 
 ## Special Requirements
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git)
 
-## Installation
+## Special Installing
+
+todo
+
+## Installing Configuration
 
 ```bash
+git clone https://github.com/JustCoderdev/dotfiles ~/.config/dotfiles
+
 # Create filepaths
 mkdir ~/Developer
 mkdir ~/Developer/Github
