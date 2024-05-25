@@ -4,8 +4,8 @@
 set -e
 
 # Clone dotfiles
-echo -e "Cloning dotfiles"
 DOTFILES_PATH="/.dotfiles"
+echo -e "Cloning dotfiles in ${DOTFILES_PATH}"
 
 # Move to dotfiles
 nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git --branch nixos-compliant ${DOT_FILES}"
