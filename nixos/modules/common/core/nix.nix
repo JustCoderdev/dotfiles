@@ -20,10 +20,10 @@
 	};
 
 	services.journald.extraConfig = "SystemMaxUse=1G";
-#	programs.nix-ld = {
-#		enable = true;
-#		libraries = [ pkgs.glibc ];
-#	};
+	programs.nix-ld = {
+		enable = true;
+		libraries = [ pkgs.glibc ];
+	};
 
 	nixpkgs.config = let pkgs = settings.special_pkgs; in {
 		permittedInsecurePackages = pkgs.insecure;
