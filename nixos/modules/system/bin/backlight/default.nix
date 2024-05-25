@@ -9,8 +9,16 @@ in
 
 {
 	config = mkIf cfg.enable {
+		security.sudo.extraRules = [{
+			commands = [{
+				command = "${pkgs.systemd}/bin/backlight";
+				options = [ "NOPASSWD" ];
+			}];
+			groups = [ "wheel" ];
+		}];
+
 		environment.systemPackages = with pkgs; [
-			(callPackage stdenv.mkDerivation rec {
+			(callPackage stdenv.mkDerivation {
 				name = "backlight";
 				version = "1.0";
 
