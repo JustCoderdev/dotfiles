@@ -30,12 +30,12 @@
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
 				specialArgs = { inherit settings; };
-				# extraSpecialArgs = { inherit inputs; };
 				inherit modules;
 			};
 
 			userBuilder = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
+				extraSpecialArgs = { inherit settings; };
 				modules = [
 					./profiles/${settings.profile}/home.nix
 				];
