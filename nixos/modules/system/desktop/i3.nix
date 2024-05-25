@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
 	imports = [ ./x11.nix ];
@@ -7,7 +7,7 @@
 	programs.dconf.enable = true;
 
 	services.xserver = {
-		displayManager.defaultSession = "none+i3";
+		displayManager.defaultSession = lib.mkforce "none+i3";
 
 		windowManager.i3 = {
 			enable = true;
