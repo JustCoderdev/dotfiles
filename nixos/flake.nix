@@ -15,8 +15,10 @@
 				hostname = "virtualmachine";
 				profile = "personal";
 
-				dotfiles_path = ../.;
+				dotfiles_path = ./..;
+				dotfiles_abspath = "/.dotfiles";
 				cache_path = "~/.config";
+
 				username = "ryuji";
 				system = "x86_64-linux";
 			};
@@ -60,7 +62,7 @@
 		# 		extraSpecialArgs = { inherit settings; };
 		# 		modules = ./profiles/${settings.profile}/home.nix;
 		# 	};
-                # 
+        #
 		# 	${settings.username} = home-manager.lib.homeManagerConfiguration {
 		# 		inherit pkgs;
 		# 		extraSpecialArgs = { inherit settings; };
