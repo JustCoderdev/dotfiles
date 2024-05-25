@@ -32,6 +32,16 @@ load_scheme(SETTINGS.fallback_colorscheme)
 load_scheme(SETTINGS.default_colorscheme)
 
 
+-- vim-whitespace options
+vim.cmd("hi ExtraWhitespace ctermbg=red")
+vim.cmd([[
+let g:better_whitespace_filetypes_blacklist=['diff', 'git', 'help']
+let g:current_line_whitespace_disabled_soft=1
+]])
+
 -- vim-illuminate options     onedark-darker-bg1
-vim.cmd("hi IlluminatedWordRead guibg=#30363f gui=NONE")
+vim.cmd("hi IlluminatedWordText  guibg=#30363f gui=NONE")
+vim.cmd("hi IlluminatedWordRead  guibg=#30363f gui=NONE")
+vim.cmd("hi IlluminatedWordWrite guibg=#30363f gui=NONE")
+
 
