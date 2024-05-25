@@ -10,6 +10,7 @@
 		../../modules/user/desktop/i3.nix
 
 		../../modules/user/dev/editor/neovim.nix
+		../../modules/user/dev/editor/emacs.nix
 
 		../../modules/user/dev/alacritty.nix
 		../../modules/user/dev/clang.nix
