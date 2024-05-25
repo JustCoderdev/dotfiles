@@ -44,11 +44,13 @@ lspconfig.clangd.setup {
 	cmd = {
 		-- CLANGD args
 		"/usr/bin/clangd",
-		"--pch-storage=memory",
-		"--pretty",
+		"-pch-storage=memory",
+		"-pretty",
 		"-j=4",
-		"--header-insertion-decorators",
-		"--completion-style=detailed",
+		"-header-insertion-decorators",
+		"-completion-style=detailed",
+		-- "-compile-commands-dir=/home/ryuji/.config/clangd"
+
 		-- NOT AVAILABLE IN version 7.0.1-8
 		-- "--function-arg-placeholders",
 		-- "--background-index",

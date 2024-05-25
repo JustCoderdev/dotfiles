@@ -8,7 +8,7 @@ FILE_ENTRY=backlight.c
 
 FLAGS=-xc -Wall -Wextra -Werror -Wpedantic \
 	  -pedantic -pedantic-errors -std=c89  \
-	  -fcolor-diagnostics
+	  -fcolor-diagnostics -lm
 
 SRC_FILES=${FILE_ENTRY} \
  		  $(wildcard lib/*.c)
