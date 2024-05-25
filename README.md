@@ -131,6 +131,12 @@ and are arranged as follows:
 
 ## Emergency wiki
 
+### Recover rollback dotfiles
+
+```bash
+nix derivation show -r /run/current-system | grep -m 1 dotfiles-backup
+```
+
 ### Connect to internet (with wpa_supplicant)
 
 ```bash
