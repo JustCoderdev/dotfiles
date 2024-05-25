@@ -4,7 +4,6 @@
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
 
-
 		home-manager = {
 			url = "github:nix-community/home-manager/release-23.05";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +13,7 @@
 	outputs = { self, nixpkgs, home-manager, ... }@inputs:
 		let
 			settings = rec {
-				hostname = "virtualmachine";
+				hostname = "acer";
 				profile = "personal";
 				username = "ryuji";
 
@@ -50,40 +49,22 @@
 				inherit modules;
 			};
 
-			userBuilder = home-manager.lib.homeManagerConfiguration {
-				inherit legacy-pkgs;
-				extraSpecialArgs = { inherit settings; };
-				modules = [ ./profiles/${settings.profile}/home.nix ];
-			};
+			# userBuilder = home-manager.lib.homeManagerConfiguration {
+			#	inherit legacy-pkgs;
+			#	extraSpecialArgs = { inherit settings; };
+			#	modules = [ ./profiles/${settings.profile}/home.nix ];
+			# };
 		in {
 
 		# hostname
 		nixosConfigurations = {
 			virtualmachine = systemBuilder;
 			acer = systemBuilder;
-
-			nixos = nixpkgs.lib.nixosSystem {
-				system = settings.system;
-				specialArgs = args;
-				modules = [
-					./hosts/nixos/hardware-configuration.nix
-					./hosts/nixos/boot.nix
-
-					./profiles/installation/configuration.nix
-					home-manager.nixosModules.home-manager {
-						home-manager.useGlobalPkgs = true;
-						home-manager.useUserPackages = true;
-						home-manager.extraSpecialArgs = args;
-						home-manager.users.${settings.username} =
-							import ./profiles/installation/home.nix;
-					}
-				];
-			};
 		};
 
 		# profile
-		homeConfigurations = {
-			${settings.username} = userBuilder;
-		};
+		# homeConfigurations = {
+		#	${settings.username} = userBuilder;
+		# };
 	};
 }
