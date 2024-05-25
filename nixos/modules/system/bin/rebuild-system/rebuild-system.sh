@@ -1,14 +1,22 @@
-# Thanks 0atman for the script <3, link here
+# Thanks 0atman for idea of the script <3, source here
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
 
 # Quit on error
 set -e
 
-# cd to your config dir
+
+# Check filepath
+if [ -z "${DOT_FILES:-}" ]; then
+	echo -e "\033[31mUnknown dotfiles path\033[0m"
+	echo -e "Set DOT_FILES environmental variable in shell"
+	exit 1
+fi
+
 pushd "${DOT_FILES}/nixos/" > /dev/null
 shopt -s globstar
 
-# Update hostname
+
+# Update host
 if [ -f "./flake.nix" ]; then
 	HOST_FLAKE=$(awk '/hostname = / {print $3}' ./flake.nix)
 	# shellcheck disable=SC2001
@@ -20,11 +28,12 @@ fi
 HOST_SHELL="${HOST:-}"
 HOST_INPUT="${1:-}"
 
-echo "HOST_FLAKE: ${HOST_FLAKE}"
-echo "HOST_SHELL: ${HOST_SHELL}"
-echo "HOST_INPUT: ${HOST_INPUT}"
-echo ""
+# echo "HOST_FLAKE: ${HOST_FLAKE}"
+# echo "HOST_SHELL: ${HOST_SHELL}"
+# echo "HOST_INPUT: ${HOST_INPUT}"
+# echo ""
 
+## Check for input
 if [ -z "${HOST_INPUT}" ]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOST_SHELL}\033[0m"
 else
@@ -32,51 +41,58 @@ else
 	HOST_SHELL="${HOST_INPUT}"
 fi
 
-# Update flake file
+## Update flake file
 if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
-	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
+	echo "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
 	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
 fi
 
-# Check for differences
-echo -e "Analysing changes..."
-if git diff --quiet -- ./**/*.nix; then
-	echo -e "No changes detected, \033[31mexiting\033[0m\n"
-	shopt -u globstar
-	popd > /dev/null
-	exit 0
+
+# Check differences
+echo -ne "Analysing changes..."
+if git diff --quiet -- .; then  # -- ./**/*.nix
+	echo -e " \033[31mNo changes detected\033[0m"
+	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
+	# shopt -u globstar
+	# popd > /dev/null
+	# exit 0
+else
+	echo -e " \033[32mFound\033[0m"
+
+	# shellcheck disable=SC2162
+	if read -p 'Open diff? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
+		git diff --word-diff=porcelain -U0 -- .
+	fi
+
+	sudo git add .
 fi
 
-# Shows your changes
-git diff --word-diff=porcelain -U0 -- ./**/*.nix
-echo -e "\nNixOS Rebuilding..."
 
-# Rebuild, output simplified errors, log trackebacks
-sudo git add ./**/*.nix
+# Rebuild system
+echo -n "Rebuilding NixOS..."
 
 # shellcheck disable=SC2024 #ah the irony
 if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-switch.log; then
-	echo -e "Done\n"
+	echo -e " Done\n"
+
+	## Commit changes
+	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
+	sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
+
+	echo -e "\n\033[32mCommitted as NixOS build ${HOST_SHELL}#${generation}\033[0m"
+	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
+
 else
-	echo ""
+	echo -e " \033[31mFailed\033[0m"
+
 	grep --color error .nixos-switch.log
-	sudo git restore --staged ./**/*.nix
+	sudo git restore --staged .
 
 	# shellcheck disable=SC2162
 	if read -p 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
 		vim -R .nixos-switch.log
 	fi
-
-	shopt -u globstar
-	popd > /dev/null
-	exit 1
 fi
 
-# Commit changes
-generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
-
-echo -e "\n\033[32mCommitted as NixOS build ${HOST_SHELL}#${generation}\033[0m"
-echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 shopt -u globstar
 popd > /dev/null
