@@ -40,7 +40,7 @@ with lib;
 	config = {
 		# Core packages
 		environment.systemPackages = with pkgs; [
-			gnumake glibcInfo glibc
+			gnumake glibcInfo # glibc in nix.nix
 			unzip zip
 			vim git
 			htop

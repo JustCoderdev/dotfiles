@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, settings, ... }:
+{ lib, pkgs, settings, ... }:
 
 {
 	nix = {
@@ -17,6 +17,12 @@
 			experimental-features = [ "nix-command" "flakes" ];
 			warn-dirty = false;
 		};
+	};
+
+	services.journald.extraConfig = "SystemMaxUse=1G";
+	programs.nix-ld = {
+		enable = true;
+		libraries = [ pkgs.glibc ];
 	};
 
 	nixpkgs.config = let pkgs = settings.special_pkgs; in {
