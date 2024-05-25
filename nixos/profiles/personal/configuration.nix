@@ -35,7 +35,7 @@
 	# List packages installed in system profile.
 	environment.systemPackages = with pkgs; [
 		(import ../../modules/user/bin/nixos-rebuild.nix { inherit pkgs settings; })
-		# (import ../../modules/user/bin/backlight.nix { inherit pkgs settings; })
+		(callPackage ../../modules/user/bin/backlight.nix { inherit pkgs settings; })
 
 		zip
 		unzip
