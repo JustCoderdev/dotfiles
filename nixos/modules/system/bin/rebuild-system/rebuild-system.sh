@@ -62,7 +62,8 @@ else
 	had_changes=true
 
 	# shellcheck disable=SC2162
-	if read -p 'Open diff? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
+	read -p 'Open diff? (y/N): ' diff_confirm
+	if [ "${diff_confirm}" == "[yY]" ] || [ "${diff_confirm}" == "[yY][eE][sS]" ]; then
 		git diff --word-diff=porcelain -U0 -- .
 	fi
 
@@ -95,7 +96,8 @@ else
 	fi
 
 	# shellcheck disable=SC2162
-	if read -p 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
+	read -p 'Open log? (y/N): ' log_confirm
+	if [ "${log_confirm}" == "[yY]" ] || [ "${log_confirm}" == "[yY][eE][sS]" ]; then
 		vim -R .nixos-switch.log
 	fi
 fi
