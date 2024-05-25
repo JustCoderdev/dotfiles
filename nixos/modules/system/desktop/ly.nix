@@ -5,10 +5,10 @@ in {
 	imports = [ ./x11.nix ];
 
 	services.xserver.displayManager = {
-		lightdm.enable = false;
+		lightdm.enable = true;
 
 		ly = {
-			enable = true;
+			enable = false;
 			defaultUser = username;
 			defaultSessionIndex = 2;
 
