@@ -63,6 +63,7 @@
 
 	# Set machine hostname
 	networking.hostName = settings.hostname;
+	powerManagement.powerUpCommands = "sudo rmmod atkbd; sudo modprobe atkbd reset=1";
 
 	# USER ACCOUNT
 	users.users.${settings.username} = {

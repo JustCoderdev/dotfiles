@@ -23,6 +23,9 @@
 				clickMethod = "clickfinger";
 				scrollMethod = "twofinger";
 
+				# dmesg | grep i8042
+				dev = "/devices/platform/i8042/serio1/input/input5";
+
 				tapping = true;
 				middleEmulation = false;
 				tappingButtonMap = "lrm";
