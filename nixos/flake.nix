@@ -27,9 +27,9 @@
 				};
 			};
 			modules = let path = settings.dotfiles_path; in [
-				{
-					environment.systemPackages = [ pkgs-unstable.nixd ];
-				}
+#				{
+#					environment.systemPackages = [ pkgs-unstable.nixd ];
+#				}
 
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
@@ -40,7 +40,7 @@
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = { inherit settings; };
+					home-manager.extraSpecialArgs = { inherit pkgs-unstable settings; };
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/${settings.profile}/home.nix");
 				}
