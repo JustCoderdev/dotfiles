@@ -4,9 +4,7 @@ with lib;
 
 {
 	imports = [
-		#../xserver/x11.nix
-
-		./hyprland.nix
+		#./hyprland.nix
 		#./sway.nix # Sway OR Hyprland
 		#./wayland.nix
 	];
