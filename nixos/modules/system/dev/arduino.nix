@@ -1,10 +1,9 @@
 { config, lib, pkgs, settings, ... }:
 
-with lib;
 let cfg = config.system.dev.arduino; in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		assertions = [{
 			assertion = config.system.dev.c.enable;
 			message = "Arduino tools require to enable c tools";
