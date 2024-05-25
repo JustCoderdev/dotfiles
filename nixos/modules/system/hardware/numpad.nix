@@ -10,7 +10,7 @@
 	'';
 
 	services.xserver = {
-		xkbOptions = "ctrl:swapcaps,grp_led:scroll,caps:ctrl_modifier,numpad:mac";
+		xkbOptions = "grp_led:scroll,caps:ctrl_modifier,numpad:mac";
 	};
 
 	# ctrl				Ctrl position
