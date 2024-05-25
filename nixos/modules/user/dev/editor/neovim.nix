@@ -10,6 +10,7 @@ in {
 #		- Clangd
 #		- Lua Language Server
 #		- Marksman
+#		- Astrojs/language-server
 #		- Node
 #		- Fzf
 
