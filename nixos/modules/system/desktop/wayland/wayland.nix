@@ -15,7 +15,7 @@ let cfg = config.system.desktop.wayland; in
 #			nvidia.modesetting.enable = true;
 		};
 
-#		services.xserver = {
+		services.xserver = {
 #			displayManager.gdm = {
 #				enable = true;
 #				wayland = true;
