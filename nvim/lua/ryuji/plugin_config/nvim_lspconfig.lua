@@ -28,7 +28,7 @@ snip_cap.textDocument.completion.completionItem.snippetSupport = true
 -- lspconfig.jsonls.setup { capabilities = snip_cap }
 
 -- Tools
--- lspconfig.nixd.setup { capabilities = snip_cap }
+lspconfig.nixd.setup { capabilities = snip_cap }
 lspconfig.marksman.setup { capabilities = snip_cap }
 lspconfig.dockerls.setup { capabilities = snip_cap }
 -- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
@@ -60,11 +60,11 @@ lspconfig.clangd.setup {
 		-- "-compile-commands-dir=/home/ryuji/.config/clangd"
 
 		-- NOT AVAILABLE IN version 7.0.1-8
-		-- "--function-arg-placeholders",
-		-- "--background-index",
-		-- "--all-scopes-completion",
-		-- "--header-insertion=never",
-		-- "--inlay-hints",
+		"--function-arg-placeholders",
+		"--background-index",
+		"--all-scopes-completion",
+		"--header-insertion=never",
+		"--inlay-hints",
 
 		-- CLANG args
 		-- "/usr/bin/clang",
@@ -78,11 +78,11 @@ lspconfig.clangd.setup {
 		-- "-std=c89",
 		-- "-fcolor-diagnostics"
 	},
-	filetypes = { "c" }, -- "cpp", "objc", "objcpp"
+	filetypes = { "c", "cpp" }, --  "objc", "objcpp"
 	root_dir = lspconfig.util.root_pattern("src"),
-	init_option = {
-		fallbackFlags = { "-std=c89" },
-	},
+	-- init_option = {
+	-- 	fallbackFlags = { "-std=c89" },
+	-- },
 	capabilities = c_capabilities
 }
 
