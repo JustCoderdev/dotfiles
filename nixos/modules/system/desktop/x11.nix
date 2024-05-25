@@ -20,6 +20,9 @@
 			};
 
 			touchpad = {
+				clickMethod = "clickfinger";
+				scrollMethod = "twofinger";
+
 				tapping = true;
 				middleEmulation = false;
 				tappingButtonMap = "lrm";
