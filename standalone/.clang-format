@@ -1,0 +1,65 @@
+BasedOnStyle: LLVM
+
+AlignConsecutiveDeclarations: Consecutive
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: None
+
+# BreakBeforeBraces: Linux
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterControlStatement: Always # Never, MultiLine, Always
+  AfterEnum: false
+  AfterFunction: true
+  AfterStruct: false
+  AfterUnion: false
+  BeforeElse: true
+  BeforeWhile: true
+  IndentBraces: false
+  SplitEmptyFunction: false
+
+BreakBeforeTernaryOperators: true
+DerivePointerAlignment: false
+
+IncludeBlocks: Regroup
+IncludeCategories:
+# Standard Libraries
+  - Regex:           '<std.*>'
+    Priority:        1
+
+# Other "external" libraries
+  - Regex:           '<.*>'
+    Priority:        2
+
+# Project files
+  - Regex:           '".*"'
+    Priority:        3
+
+IndentCaseLabels: true
+IndentPPDirectives: None
+IndentWidth: 4
+PointerAlignment: Left
+
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAroundPointerQualifiers: Before
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeParens: Never
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: true
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+TabWidth: 4
+UseTab: Always

@@ -58,8 +58,7 @@ mapn("<Leader>w", ":wall <CR> :echo \"Saved all files\" <CR>")
 mapn("<Leader>q", ":wall <CR> :mksession! last_session.vim <CR> :qall <CR>")
 
 -- plugins
-mapn("<Leader>f", ":Neoformat <CR>")			-- from neoformat
-mapn("<Leader>sw", ":StripWhitespace <CR>")		-- from vim-better-whitespace
+mapn("<Leader>sw", ":StripWhitespace <CR>") -- from vim-better-whitespace
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
