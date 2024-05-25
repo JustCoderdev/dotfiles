@@ -9,7 +9,7 @@
 	imports = [
 		../../modules/user/desktop/i3.nix
 		../../modules/user/desktop/hyprland.nix
-		../../modules/user/desktop/waybar.nix
+		#../../modules/user/desktop/waybar.nix
 
 		../../modules/user/dev/editor/neovim.nix
 		../../modules/user/dev/editor/emacs.nix
