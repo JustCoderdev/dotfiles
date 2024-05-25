@@ -16,6 +16,7 @@
 				profile = "personal";
 
 				dotfiles_path = ../.;
+				cache_path = "~/.config";
 				username = "ryuji";
 				system = "x86_64-linux";
 			};
