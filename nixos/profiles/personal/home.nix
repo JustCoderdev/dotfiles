@@ -13,10 +13,5 @@
 	# home-manager.useGlobalPackages = true;
 	# home-manager.useUserPackages = true;
 
-	home.packages = with pkgs; [
-		zsh
-	];
-
-
 	home.stateVersion = "23.11";
 }
