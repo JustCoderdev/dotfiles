@@ -74,13 +74,13 @@ vim.g.maplocalleader = " "
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>rd", "<Leader>ff"
 
-mapn("<Leader>m" , ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
+mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 mapn("<Leader>rc", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- save
 mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
-mapn("<Leader>qq" , ":wall <CR> :mksession! last_session.vim <CR> :qall <CR>")
+mapn("<Leader>qq" , ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
 
 -- plugins
 mapn("<Leader>s", ":StripWhitespace <CR>") -- from vim-better-whitespace
