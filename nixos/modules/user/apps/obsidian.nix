@@ -1,6 +1,0 @@
-{ ... }:
-
-{
-	# programs.obsidian.enable = true;
-
-}

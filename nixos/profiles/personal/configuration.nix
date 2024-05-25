@@ -39,6 +39,7 @@
 		unzip
 
 		firefox
+		obsidian
 		gimp
 
 		git
@@ -72,6 +73,8 @@
 	users.defaultUserShell = pkgs.zsh;
 	programs.zsh.enable = true;
 
+	system.nixos.label = "Test Label";
+	system.nixos.tags = [ "test-tag" "test-tag-2" ];
 
 	system.stateVersion = "23.11"; # Did you read the comment?
 }

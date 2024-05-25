@@ -10,12 +10,12 @@ shopt -s globstar
 
 # Update hostname
 # shellcheck disable=SC2086
-if [ -z $1 ]; then
+if [ -z "${1-}" ]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOST}\033[0m"
 else
 	echo -e "Requested rebuild for \033[32m\"$1\"\033[0m"
 
-# shellcheck disable=SC2086
+	# shellcheck disable=SC2086
 	if [ "$1" != "$HOST" ]; then
 		echo -e "Updating flake file... (${HOST}) -> ($1)"
 		sed -i "s/\(hostname = \).*/\1\"$1\";/" "${DOT_FILES}/nixos/flake.nix"
