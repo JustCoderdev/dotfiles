@@ -13,7 +13,7 @@
 	outputs = { self, nixpkgs, home-manager, ... }@inputs:
 		let
 			settings = rec {
-				hostname = "acer";
+				hostname = "virtualmachine";
 				profile = "personal";
 				username = "ryuji";
 
