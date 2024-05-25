@@ -16,6 +16,7 @@
 		../../modules/system/desktop/x11.nix
 		../../modules/system/desktop/xfce.nix
 
+		../../modules/system/gaming
 		../../modules/system/services/docker.nix
 		#../../modules/system/services/openvpn.nix
 		#../../modules/system/services/virtualbox.nix
@@ -23,13 +24,6 @@
 		../../modules/system/bin/backlight
 		../../modules/system/bin/rebuild-system
 	];
-
-	user.app-collection = {
-		#image-editing = true;
-		video-editing = false;
-		gaming = false;
-		developer = false;
-	};
 
 	system.stateVersion = "23.11"; # Did you read the comment?
 }

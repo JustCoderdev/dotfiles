@@ -14,7 +14,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
-			_hostname = "acer";
+			_hostname = "virtualmachine";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs-unstable = import nixpkgs-unstable {
@@ -27,7 +27,7 @@
 				}
 
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
-#				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
+				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
 				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
@@ -43,7 +43,7 @@
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
-				specialArgs = { inherit inputs settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				inherit modules;
 			};
 
