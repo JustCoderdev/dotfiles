@@ -8,7 +8,7 @@ let cfg = config.system.bin.rebuild-system; in
 		security.sudo = {
 			extraRules = [{
 				commands = [{
-					command = "${pkgs.systemd}/bin/rebuild-system";
+					command = "/run/current-system/sw/bin/rebuild-system";
 					options = [ "NOPASSWD" ];
 				}];
 				groups = [ "wheel" ];
