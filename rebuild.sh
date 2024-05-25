@@ -8,7 +8,7 @@ else
 
 	if [ "$1" != "$HOST" ]; then
 		echo -e "Updating flake file... (${HOST}) -> ($1)"
-		sed -i "s/\(hostname = \).*/\1\"$1\";/" "./flake.nix"
+		sudo sed -i "s/\(hostname = \).*/\1\"$1\";/" "./flake.nix"
 	fi
 
 	sudo nixos-rebuild switch --show-trace --flake ".#$1"
