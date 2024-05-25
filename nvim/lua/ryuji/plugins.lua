@@ -18,7 +18,8 @@ end
 
 local ensure_packer = function()
 	local fn = vim.fn
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	local install_path = SETTINGS.cache_path .. "/packer/site/pack/packer/start/packer.nvim"
+	--local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 	if fn.empty(fn.glob(install_path)) > 0 then
 		log_error("Packer not found. Installing now...")
@@ -43,9 +44,10 @@ local util = require("packer.util")
 
 packer.init({
 	ensure_dependencies = true,
-	-- snapshot_path       = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
-	-- package_root        = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-	compile_path        =  SETTINGS.cache_path .. "/packer_compiled.lua",
+	snapshot_path       = SETTINGS.cache_path .. "/packer.nvim", -- Default save directory for snapshots
+	package_root        = SETTINGS.cache_path .. "/packer/site/pack",
+	--package_root  = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
+	compile_path        = SETTINGS.cache_path .. "/packer_compiled.lua",
 })
 packer.startup({
 	function(use)
@@ -104,7 +106,7 @@ packer.startup({
 
 		use {                      -- Display syntax highlighting
 			"nvim-treesitter/nvim-treesitter",
-			tag = "v0.9.1",         -- tag = "v0.8.1"
+			tag = "v0.9.1",        -- tag = "v0.8.1"
 			run = ":TSUpdateSync"
 		}
 
