@@ -28,6 +28,7 @@ alias clangf="clang -xc -Wall -Wextra -Werror -Wpedantic -pedantic -pedantic-err
 # directory movement
 alias projects="cd ~/Developer/Projects/"
 alias dotfiles="cd ~/.config/dotfiles/"
+alias nos="cd /etc/nixos"
 
 alias ~="cd ~"
 alias /="cd /"
