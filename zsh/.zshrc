@@ -9,7 +9,6 @@
 if [[ -v DOT_NIXOS ]] then
 	export DOT_FILES="/.dotfiles"
 	export DOT_CACHE="~/.cache"
-	export CC="${/usr/bin/env clang}"
 fi
 
 # Options
