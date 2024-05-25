@@ -8,13 +8,13 @@ AlignAfterOpenBracket: true
 
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
-# AlignConsecutiveMacros: Consecutive
+AlignConsecutiveMacros: Consecutive
 # AlignConsecutiveShortCaseStatements: # Don't work :/
-#
+
 AlignEscapedNewlines: Left
 AlignOperands: true
 AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
 
 # AllowAllArgumentsOnNextLine: true
 AllowShortBlocksOnASingleLine: false
