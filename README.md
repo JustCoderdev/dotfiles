@@ -16,6 +16,15 @@ Configuration files for
 ## Special Requirements
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 
+## TODO
+
+### NixOS
+
+- [ ] Install nixd
+- [ ] Install obsidian
+- [ ] Add module configurability
+
+
 ## Special Installing
 
 #TODO
