@@ -55,6 +55,7 @@ with lib;
 
 			gnumake
 			cmake
+			gcc
 			gdb
 
 			file
