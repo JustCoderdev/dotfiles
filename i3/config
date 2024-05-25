@@ -67,6 +67,9 @@ bindsym $mod+Return exec --no-startup-id alacritty
 
 ## "Borrowed" KEYBINDINGS
 # Source: <https://faq.i3wm.org/question/3747/enabling-multimedia-keys/?answer=3759#post-id-3759>
+# Check key with xev ("xorg.xev")
+# Check key with xmodmap ("xorg.xmodmap")
+# `xmodmap -pke | grep -i XF86...`
 
 # Pipewire Audio controls
 bindsym XF86AudioRaiseVolume        exec --no-startup-id "pamixer -i 5"
@@ -82,10 +85,12 @@ bindsym Shift+XF86MonBrightnessUp    exec --no-startup-id "sudo backlight set ma
 bindsym Shift+XF86MonBrightnessDown  exec --no-startup-id "sudo backlight set 0"
 
 # Media player controls
-bindsym XF86AudioPlay   exec "playerctl play"
-bindsym XF86AudioPause  exec "playerctl pause"
-bindsym XF86AudioNext   exec "playerctl next"
-bindsym XF86AudioPrev   exec "playerctl previous"
+bindsym XF86AudioPlayPause  exec "playerctl play-pause"
+bindsym XF86AudioPlay       exec "playerctl play"
+bindsym XF86AudioPause      exec "playerctl pause"
+bindsym XF86AudioStop       exec "playerctl stop"
+bindsym XF86AudioNext       exec "playerctl next"
+bindsym XF86AudioPrev       exec "playerctl previous"
 
 
 ## CUSTOM COLORS ##
