@@ -1,15 +1,13 @@
-{ config, lib, pkgs, inputs, settings, ... }:
-
-with lib;
+{ config, lib, pkgs, settings, ... }:
 
 let
 	cfg = config.system.desktop.hyprland;
-	nvidia = config.common.core.nvidia;
+#	nvidia = config.common.core.nvidia;
 #	pkgs-hypr = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 #		hardware.opengl = {
 #			package = pkgs-hypr.mesa.drivers;
 #			package32 = pkgs-hypr.pkgsi686Linux.mesa.drivers;
@@ -33,12 +31,7 @@ in
 				libnotify  # dunst dependency
 		];
 
-		fonts.fonts = [
-			pkgs.font-awesome  # icons
-		];
-
-
-		environment.sessionVariables = mkIf settings.runningVM {
+		environment.sessionVariables = lib.mkIf settings.runningVM {
 			# Enable software rendering for VMs
 			WLR_RENDERER_ALLOW_SOFTWARE = "1";
 			# Enable if cursor is invisible

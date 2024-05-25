@@ -9,14 +9,13 @@
 
 		# logo = ../.;
 		theme = "darnix";
-		themePackages =
-		let
+		themePackages = let
 			# Took this bit from the catppuccini plymouth theme repo
 			# Link: <https://github.com/NixOS/nixpkgs/blob/nixos-23.11/pkgs/data/themes/catppuccin-plymouth/default.nix>
 			theme-name = "darnix";
-			darnix = with pkgs; stdenv.mkDerivation rec {
+			darnix = pkgs.stdenv.mkDerivation rec {
 				name = "darnix-plymouth-theme";
-				src = fetchFromGitHub {
+				src = pkgs.fetchFromGitHub {
 					owner = "JustCoderdev";
 					repo = "dotfiles";
 					rev = "9af46b860ee3a076f822a0dd028c86a710682b14";
