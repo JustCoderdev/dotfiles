@@ -1,14 +1,12 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
 	FLAGS="-xc -Wall -Wextra -Werror -Wpedantic -pedantic -pedantic-errors -std=c89 -fcolor-diagnostics -lm";
 	cfg = config.system.bin.backlight;
 in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		security.sudo.extraRules = [{
 			commands = [{
 				command = "/run/current-system/sw/bin/backlight";
@@ -17,15 +15,15 @@ in
 			groups = [ "wheel" ];
 		}];
 
-		environment.systemPackages = with pkgs; [
-			(callPackage stdenv.mkDerivation {
+		environment.systemPackages = [
+			(pkgs.callPackage pkgs.stdenv.mkDerivation {
 				name = "backlight";
 				version = "1.0";
 
 				src = ./.;
 
 				# Compilation dependencies
-				nativeBuildInputs = [ clang ];
+				nativeBuildInputs = [ pkgs.clang ];
 				buildInputs = [ ];
 
 				buildPhase = ''
