@@ -31,16 +31,16 @@
 				# 	nixpkgs.overlays = [ nixd.overlays.default ];
 				# 	environment.systemPackages = [ pkgs.nixd ];
 				# }
-				./hosts/${settings.hostname}/hardware-configuration.nix
-				./hosts/${settings.hostname}/boot.nix
-				./profiles/${settings.profile}/configuration.nix
+				(settings.dotfiles_path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
+				(settings.dotfiles_path + "/nixos/hosts/${settings.hostname}/boot.nix")
+				(settings.dotfiles_path + "/nixos/profiles/${settings.profile}/configuration.nix")
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = args;
 					home-manager.users.${settings.username} =
-						import ./profiles/${settings.profile}/home.nix;
+						import (settings.dotfiles_path + "/nixos/profiles/${settings.profile}/home.nix");
 				}
 			];
 
