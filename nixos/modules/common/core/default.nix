@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, settings, ... }:
 
 {
 	imports = [
@@ -38,13 +38,17 @@
 
 	config = {
 		# Core packages
-		environment.systemPackages = with pkgs; let
-			dotfiles-backup = (callPackage ../../unofficial/dotfiles-backup.nix {});
+		environment.systemPackages = let
+			dotfiles-backup =
+				(pkgs.callPackage ../../unofficial/dotfiles-backup.nix { inherit settings; });
 		in [
 			dotfiles-backup
-			unzip zip
-			vim git
-			htop
+
+			pkgs.htop
+			pkgs.unzip
+			pkgs.zip
+			pkgs.vim
+			pkgs.git
 		];
 	};
 }
