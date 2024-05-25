@@ -3,7 +3,7 @@
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
-		# nixd.url = "github:nix-community/nixd";
+		#nixd.url = "github:nix-community/nixd";
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-23.05";
@@ -33,6 +33,7 @@
 				# 	environment.systemPackages = [ pkgs.nixd ];
 				# }
 				./hosts/${settings.hostname}/hardware-configuration.nix
+				./hosts/${settings.hostname}/boot.nix
 				./profiles/${settings.profile}/configuration.nix
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
