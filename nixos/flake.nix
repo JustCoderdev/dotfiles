@@ -45,11 +45,11 @@
 				inherit modules;
 			};
 
-			# userBuilder = home-manager.lib.homeManagerConfiguration {
-			#	inherit legacy-pkgs;
-			#	extraSpecialArgs = { inherit settings; };
-			#	modules = [ ./profiles/${settings.profile}/home.nix ];
-			# };
+			userBuilder = home-manager.lib.homeManagerConfiguration {
+				inherit pkgs;
+				extraSpecialArgs = { inherit settings; };
+				modules = [ ./profiles/${settings.profile}/home.nix ];
+			};
 		in {
 
 		# hostname
@@ -61,9 +61,12 @@
 		};
 
 		# profile
-		# homeConfigurations = {
-		#	${settings.username} = userBuilder;
-		# };
+		homeConfigurations = {
+			${settings.username} = userBuilder;
+		};
+
+		packages.${settings.system}.${settings.username} =
+			self.homeConfigurations.${settings.username}.activationPackage;
 
 		#devShells.${settings.system} = let path = settings.dotfiles_path; in
 		#	import (path + "/nixos/modules/system/dev/shells") { inherit pkgs; };
