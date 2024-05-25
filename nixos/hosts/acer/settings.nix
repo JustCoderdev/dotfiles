@@ -12,7 +12,7 @@ rec {
 
 	system = "x86_64-linux";
 	special_pkgs = {
-		unfree = [ "obsidian" "google-chrome" ];
+		unfree = [ "obsidian" "google-chrome" "helvetica-neue-lt-std" ];
 		insecure = [ "electron-24.8.6" ];
 	};
 }
