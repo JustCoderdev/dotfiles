@@ -10,9 +10,9 @@ vim.opt.cinoptions = "l1,g0,t0"		-- how to do indenting when 'cindent' is set
 vim.opt.clipboard = ""				-- use the clipboard as the unnamed register
 vim.opt.colorcolumn = "80"			-- columns to highlight
 
-vim.opt.cursorcolumn = false		-- highlight the screen column of the cursor
-vim.opt.cursorline = false			-- highlight the screen line of the cursor
-vim.opt.cursorlineopt = "number"	-- settings for 'cursorline'
+vim.opt.cursorcolumn = false			-- highlight the screen column of the cursor
+vim.opt.cursorline = true				-- highlight the screen line of the cursor
+vim.opt.cursorlineopt = "line,number"	-- settings for 'cursorline'
 
 vim.opt.expandtab = false			-- use spaces when <Tab> is inserted
 -- vim.opt.filetype=c.doxygen		-- type of file, used for autocommands

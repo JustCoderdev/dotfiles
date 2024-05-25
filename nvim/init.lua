@@ -37,7 +37,7 @@ function require_plugin_config(plugin_name)
 end
 function require_plugin(plugin_name)
 	local file_ok, plugin = pcall(require, plugin_name)
-	if(not file_ok) then log_error(string.format("Error requiring %s", require_string)) end
+	if(not file_ok) then log_error(string.format("Error requiring %s plugin", require_string)) end
 	return plugin
 end
 --

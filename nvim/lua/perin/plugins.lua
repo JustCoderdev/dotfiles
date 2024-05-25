@@ -77,13 +77,10 @@ packer.startup({ function(use)
 
 --
 	use "neovim/nvim-lspconfig"			-- Language server
--- 
+--
 
 	use "tpope/vim-surround"			-- Interact with bracket and quotes
 	use "tpope/vim-commentary"			-- Handle comments
-
-	-- use "junegunn/fzf"				-- Fuzzy finder
-	-- use "nvim-pack/nvim-spectre"		-- Find and replace tool
 
 	use "navarasu/onedark.nvim"				-- Colorscheme
 	use "sbdchd/neoformat"					-- Format file
@@ -94,18 +91,23 @@ packer.startup({ function(use)
 		tag = "v0.8.1"
 	}
 
-	-- use "ntpeters/vim-better-whitespace"
-	-- use "windwp/nvim-autopairs"
-	-- use "preservim/vimux"
-	-- use "easymotion/vim-easymotion"
-	-- use "mfussenegger/nvim-dap"
-	-- use "simrat39/symbols-outline.nvim"
-	-- use "RRethy/vim-illuminate"
+	use "ntpeters/vim-better-whitespace"	-- Check for trailing whitespaces
+	use "windwp/nvim-autopairs"				-- Automatically add closing bracket
+	use "simrat39/symbols-outline.nvim"		-- Provide an outline for current file
+
+	use "RRethy/vim-illuminate"				-- Highlight word under cursor
 	-- use "tommcdo/vim-lion"
 	-- use "sindrets/diffview.nvim"
 	-- use "honza/vim-snippets"
 
-	-- Automatically set up configuration 
+	-- use "junegunn/fzf"				-- Fuzzy finder
+	-- use "nvim-pack/nvim-spectre"		-- Find and replace tool
+
+	-- use "preservim/vimux"				-- Interact with tmux seamlessly
+	-- use "easymotion/vim-easymotion"		-- Customise number in keybinding
+	-- use "mfussenegger/nvim-dap"			-- Debug Adapter Protocol support
+
+	-- Automatically set up configuration
 	if packer_bootstrap then packer.sync() end
 end,
 config = {
@@ -118,12 +120,12 @@ config = {
 
 -- AUTO UPDATE --
 
-vim.cmd([[
-augroup packer_user_config
-autocmd!
-autocmd BufWritePost plugins.lua source <afile> | PackerSync
-augroup end
-]])
+-- vim.cmd([[
+-- augroup packer_user_config
+-- autocmd!
+-- autocmd BufWritePost plugins.lua source <afile> | PackerSync
+-- augroup end
+-- ]])
 
 
 --
