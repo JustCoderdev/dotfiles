@@ -19,6 +19,7 @@ with lib;
 		./printer.nix
 		./shell.nix
 		./ssh.nix
+		./sudo.nix
 	];
 
 	options = {

@@ -5,13 +5,15 @@ let cfg = config.system.bin.rebuild-system; in
 
 {
 	config = mkIf cfg.enable {
-		security.sudo.extraRules = [{
-			commands = [{
-				command = "${pkgs.systemd}/bin/rebuild-system";
-				options = [ "NOPASSWD" ];
+		security.sudo = {
+			extraRules = [{
+				commands = [{
+					command = "${pkgs.systemd}/bin/rebuild-system";
+					options = [ "NOPASSWD" ];
+				}];
+				groups = [ "wheel" ];
 			}];
-			groups = [ "wheel" ];
-		}];
+		};
 
 		environment.systemPackages = with pkgs; [
 			(writeShellApplication {
