@@ -1,7 +1,5 @@
 { lib, ... }:
 
-with lib;
-
 {
 	imports = [
 		./backlight
@@ -10,13 +8,13 @@ with lib;
 
 	options = {
 		system.bin = {
-			backlight.enable = mkOption {
-				type = types.bool;
+			backlight.enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Add backlight to PATH";
 				default = true;
 			};
-			rebuild-system.enable = mkOption {
-				type = types.bool;
+			rebuild-system.enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Add rebuild-system to PATH";
 				default = true;
 			};

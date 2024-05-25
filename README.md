@@ -22,13 +22,13 @@ share with me any feedback or trick you may know :p
 
 ---
 
-[Xfce desktop]
+[Xfce desktop](./.screenshots/xfce-i3-desktop.png)
 > "Xfce", i3, i3status, nvim and zsh showcase
 
-[Hyprland desktop]
+[Hyprland desktop](./.screenshots/xfce-i3-desktop.png)
 > "Hyprland", waybar, wallpaper showcase
 
-[Plymouth theme]
+[Plymouth theme](./.screenshots/xfce-i3-desktop.png)
 > Plymouth darnix theme (custom)
 
 ---
@@ -101,10 +101,79 @@ cd "${DOT_FILES}"
 
 ## NixOS file structure
 
+In the `nixos` directory there are the configuration files for nixos (duh)
+and are arranged as follows:
 
+- `profiles`: Module importers (currently only `personal`)
+- `hosts`: Specific computer configurations (hw-config, settings and boot config)
+- `modules`:
+	- `unofficial`: Home-made nix modules
+	- `common`:
+		- `core`: Required stuff from all systems (hardware, etc...)
+		- `users`: Per user settings
+	- `system`:
+		- `bin`: Custom script binaries
+		- `desktop`: Desktop env stuff
+		- `dev`: Dev shit
+		- `gaming`: Gaming stuff
+		- `services`: Daemons and what not
+	- `user`: Per app configs (home-manager)
 
+## Inspiration
 
+- Jdah dotfiles ([Github](https://github.com/jdah/dotfiles))
+- Librephoenix dotfiles ([Gitlab](https://gitlab.com/librephoenix/nixos-config))
+- EmergentMind nixos configuration ([Github](https://github.com/EmergentMind/nix-config))
+- erictossel nixos configuration ([Github](https://github.com/erictossell/nixflakes))
+- mrkux nixos configuration ([Github](https://github.com/mrkuz/nixos))
+- Sane1090x Waybar style ([Github](https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/config))
+- Ruixi-rebirth waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
 
+## Emergency wiki
+
+### Connect to internet (with wpa_supplicant)
+
+```bash
+sudo ip link set dev <if> up
+sudo rfkill unblock wifi
+sudo mkdir /etc/wpa_supplicant
+
+wpa_passphrase <ESSID> <PASSWD> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i <if>
+```
+
+### Connect to internet (with nmcli)
+
+```bash
+nmcli device wifi rescan
+nmcli device wifi list
+nmcli device wifi connect <SSID> password <password>
+```
+
+### Connect to bluetooth
+
+```bash
+bluetootctl scan on
+bluetootctl list
+bluetootctl connect <ADDRESS>
+```
+
+### Enable ssh connection
+
+```bash
+sudo apt-get install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh
+```
+
+### Check battery level
+
+```bash
+cat /sys/class/power_supply/<BAT>/status
+cat /sys/class/power_supply/<BAT>/charge_now
+cat /sys/class/power_supply/<BAT>/charge_full
+```
 
 
 

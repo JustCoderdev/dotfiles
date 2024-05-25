@@ -20,9 +20,10 @@ in {
 
 
 		systemd.tmpfiles.rules = [
-			"d /home/${username}/Developer           0755 ${username} users"
-			"d /home/${username}/Developer/Github    0755 ${username} users"
-			"d /home/${username}/Developer/Projects  0755 ${username} users"
+			"d /home/${username}/Developer             0755 ${username} users"
+			"d /home/${username}/Developer/Github      0755 ${username} users"
+			"d /home/${username}/Developer/Projects    0755 ${username} users"
+			"d /home/${username}/Pictures/screenshots  0755 ${username} users"
 		];
 
 		users.users.${username} = {
