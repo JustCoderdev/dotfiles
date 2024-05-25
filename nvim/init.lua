@@ -2,20 +2,12 @@
 
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format( "attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
 COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
-SETTINGS = -- protect(
-{
-	-- injected by nixOS
-	user_name = "perin",
-	default_colorscheme = {
-		name = "onedark",
-		require_truecolor = true
-	},
-	fallback_colorscheme = {
-		name = "habamax",
-		require_truecolor = false
-	}
-} --)
 
+-- Check if using nixOS
+if (SETTINGS == nil) then SETTINGS.user_name = "perin"; SETTINGS.cache_path = "~/.cache/nvim" end
+SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
+SETTINGS.fallback_colorscheme = { name = "habamax", require_truecolor = false }
+SETTINGS = protect(SETTINGS)
 
 --
 
