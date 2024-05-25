@@ -30,4 +30,4 @@ if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
 fi
 
 # Rebuild system
-sudo nixos-rebuild switch --show-trace --flake "${FLAKE_PATH}#${HOST_SHELL}"
+sudo nixos-rebuild test --show-trace --flake "${FLAKE_PATH}#${HOST_SHELL}"
