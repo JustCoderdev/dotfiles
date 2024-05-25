@@ -24,6 +24,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- lspconfig.eslint.setup {		capabilities = capabilities }
 
 -- Tools
+lspconfig.marksman.setup{}
 lspconfig.dockerls.setup { capabilities = capabilities }
 -- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
 
