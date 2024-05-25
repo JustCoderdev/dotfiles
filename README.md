@@ -9,20 +9,21 @@ Configuration files for
 - Clang \[7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
 - Clang-format \[7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
 - i3 \[4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
+- NixOS \[v23.11\]
 - Nvim \[v0.9.1\] ([Github](https://github.com/neovim))
 - Zsh \[5.7.1\]
 
 ## Special Requirements
-- Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git)
+- Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 
 ## Special Installing
 
-todo
+#TODO
 
 ## Installing Configuration
 
-```bash
-git clone https://github.com/JustCoderdev/dotfiles ~/.config/dotfiles
+```shell
+git clone https://github.com/JustCoderdev/dotfiles.git ~/.config/dotfiles
 
 # Create filepaths
 mkdir ~/Developer
