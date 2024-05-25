@@ -20,7 +20,8 @@
 
 				dotfiles_path = ./..;
 				dotfiles_abspath = "/.dotfiles";
-				cache_path = "~/.config";
+				config_path = "/home/${username}/.config";
+				cache_path = "/home/${username}/.cache";
 
 				system = "x86_64-linux";
 				special_pkgs = {
