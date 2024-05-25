@@ -14,21 +14,21 @@
 		let
 			# User settings
 			settings = rec {
-				hostname = "nixos";
+				hostname = "acer";
 				profile = "personal";
 				username = "ryuji";
 
-				dotfiles_path = ./.;
+				dotfiles_path = ./..;
 				dotfiles_abspath = "/.dotfiles";
 				cache_path = "~/.config";
 
 				system = "x86_64-linux";
 			};
 
-			# Install script vars
-			supportedSystems = [ "i686-linux" "x86_64-linux" ];
-			forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
-			nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
+			## Auto install script stuff ##
+			# supportedSystems = [ "i686-linux" "x86_64-linux" ];
+			# forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+			# nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
 
 			# Other
 			legacy-pkgs = nixpkgs.legacyPackages.${settings.system};
@@ -77,23 +77,25 @@
 		#	${settings.username} = userBuilder;
 		# };
 
-		packages = forAllSystems (system: let pkgs = nixpkgsFor.${system}; in {
-			default = self.packages.${system}.install;
+		## Auto install script stuff ##
+		# packages = forAllSystems (system: let pkgs = nixpkgsFor.${system}; in {
+		# 	default = self.packages.${system}.install;
+		#
+		# 	install = pkgs.writeShellApplication {
+		# 	name = "install";
+		# 	runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
+		# 	text = ''${./install.sh} "$@"'';
+		# 	};
+		# });
 
-			install = pkgs.writeShellApplication {
-			name = "install";
-			runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
-			text = ''${./install.sh} "$@"'';
-			};
-		});
-
-		apps = forAllSystems (system: {
-			default = self.apps.${system}.install;
-
-			install = {
-				type = "app";
-				program = "${self.packages.${system}.install}/bin/install";
-			};
-		});
+		## Auto install script stuff ##
+		# apps = forAllSystems (system: {
+		# 	default = self.apps.${system}.install;
+		#
+		# 	install = {
+		# 		type = "app";
+		# 		program = "${self.packages.${system}.install}/bin/install";
+		# 	};
+		# });
 	};
 }
