@@ -17,7 +17,6 @@ rec {
 			"python-2.7.18.6"
 		];
 		unfree = [
-			"helvetica-neue-lt-std"
 			"nvidia-x11"
 			"nvidia-settings"
 			"google-chrome"
@@ -27,6 +26,8 @@ rec {
 			"steam-run"
 			"steam-original"
 			"davinci-resolve"
+			"helvetica-neue-lt-std"
+			"apple-fonts"
 		];
 	};
 }
