@@ -7,7 +7,7 @@
 
 		# Open ports in the firewall.
 		# interfaces.<name>.
-		# 	allowedTCPPorts = [ ... ];
-		# 	allowedUDPPorts = [ ... ];
+		allowedTCPPorts = [ 25565 ];
+		allowedUDPPorts = [ 25565 ];
 	};
 }
