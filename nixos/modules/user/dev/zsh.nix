@@ -11,7 +11,7 @@ in {
 	programs.zsh.initExtra = ''
 export DOT_NIXOS=1;
 export HOST=${hostname};
-source ${dotfiles}/zsh/.zshrc";
+source "${dotfiles}/zsh/.zshrc";
 '';
 #export LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/nix/var/nix/profiles/system/sw/lib;
 	home.file."/home/${username}/.zsh" = {
