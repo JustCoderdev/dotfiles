@@ -1,5 +1,5 @@
 rec {
-	hostname = "acer";
+	hostname = "virtualmachine";
 	profile = "personal";
 	username = "ryuji";
 
@@ -12,13 +12,8 @@ rec {
 
 	system = "x86_64-linux";
 	special_pkgs = {
-		unfree = [
-			"obsidian"
-			"google-chrome"
-			"helvetica-neue-lt-std"
-			"apple-fonts"
-		];
-		insecure = [ "electron-24.8.6" ];
+		insecure = [ ];
+		unfree = [ ];
 	};
 }
 
