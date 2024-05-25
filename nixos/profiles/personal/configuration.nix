@@ -2,12 +2,10 @@
 # your system. Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-# home-manager
-{ config, lib, pkgs, ... }:
+#{ config, lib, pkgs, settings, ... }:
 
 {
 	imports = [
-		# ./hardware-configuration.nix
 		# home-manager.nixosModules.default
 		../../modules/system/desktop/i3.nix
 	];
@@ -31,7 +29,7 @@
 
 	# Network settings
 	networking = {
-		hostName = "virtualmachine";	# Define your hostname.
+		hostName = settings.hostname;	# Define your hostname.
 		# wireless.enable = true;	# Enables wireless support via wpa_supplicant.
 
 		# Configure network proxy if necessary
@@ -81,15 +79,6 @@
 		desktopManager.xfce.enable = true;
 		displayManager.defaultSession = "none+i3";
 
-	# 	windowManager.i3 = {
-	# 		enable = true;
-	# 		extraPackages = with pkgs; [
-	# 	 		dmenu
-	# 	 		i3status
-	# 			# i3lock
-	# 		];	
-	# 	};
-
 		# Enable the GNOME Desktop Environment.
 		# desktopManager.gnome.enable = true;
 		# displayManager.gdm.enable = true;
@@ -137,17 +126,7 @@
 		createHome = true;
 
 		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [
-			# alacritty
-			# firefox
-			# neovim
-			
-			# clang
-			# clang-format
-			# make
-		];
-
-		shell = pkgs.zsh;
+		# packages = with pkgs; [ ];
 	};
 
 	# Allow unfree packages
@@ -164,7 +143,7 @@
 		git
 		docker
 		
-		zsh
+	#	zsh
 		wget
 		man
 	];
