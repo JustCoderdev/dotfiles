@@ -35,6 +35,7 @@ local function mapn(keybinding, action) map("n", keybinding, action) end
 local function mapi(keybinding, action) map("i", keybinding, action) end
 local function mapv(keybinding, action) map("v", keybinding, action) end
 local function mapx(keybinding, action) map("x", keybinding, action) end
+local function mapt(keybinding, action) map("t", keybinding, action) end
 
 -- Modes --
 --	n normal mode
@@ -146,3 +147,14 @@ mapv(">", ">gv")
 -- move text
 -- mapx("J", ":move '>+1 <CR> gv-gv")
 -- mapx("K", ":move '<-2 <CR> gv-gv")
+
+
+-- === TERM === --
+mapt("<ESC>", "<C-\\><C-n>")
+mapt("<C-c>", "<C-\\><C-n>")
+
+-- move buffer
+mapt("<C-h>", "<C-\\><C-N> <C-w>h")
+mapt("<C-j>", "<C-\\><C-N> <C-w>j")
+mapt("<C-k>", "<C-\\><C-N> <C-w>k")
+mapt("<C-l>", "<C-\\><C-N> <C-w>l")

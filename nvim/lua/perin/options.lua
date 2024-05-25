@@ -45,3 +45,4 @@ vim.opt.wrap = false          -- long lines wrap and continue on the next line
 
 -- :h c.vim
 vim.cmd("au BufRead,BufNewFile *.h set filetype=c")
+vim.cmd("au BufRead,BufNewFile aliases set filetype=zsh")
