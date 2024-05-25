@@ -52,12 +52,14 @@ fi
 echo -ne "Analysing changes..."
 if git diff --quiet -- .; then  # -- ./**/*.nix
 	echo -e " \033[31mNo changes detected\033[0m"
+	had_changes=false
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
 	# shopt -u globstar
 	# popd > /dev/null
 	# exit 0
 else
-	echo -e " \033[32mFound\033[0m"
+	echo -e " \033[34mFound\033[0m"
+	had_changes=true
 
 	# shellcheck disable=SC2162
 	if read -p 'Open diff? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
@@ -77,7 +79,9 @@ if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-swi
 
 	## Commit changes
 	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-	sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
+	if $had_changes; then
+		sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
+	fi
 
 	echo -e "\n\033[32mCommitted as NixOS build ${HOST_SHELL}#${generation}\033[0m"
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
@@ -86,7 +90,9 @@ else
 	echo -e " \033[31mFailed\033[0m"
 
 	grep --color error .nixos-switch.log
-	sudo git restore --staged .
+	if $had_changes; then
+		sudo git restore --staged .
+	fi
 
 	# shellcheck disable=SC2162
 	if read -p 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
