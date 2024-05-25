@@ -3,6 +3,7 @@
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
+		# nixd.url = "github:nix-community/nixd";
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-23.05";
@@ -24,26 +25,32 @@
 				system = "x86_64-linux";
 			};
 
-			pkgs = nixpkgs.legacyPackages.${settings.system};
+			legacy-pkgs = nixpkgs.legacyPackages.${settings.system};
+			args = { inherit settings; };  # inherit nixd; };
 			modules = [
+				# {
+				# 	nixpkgs.overlays = [ nixd.overlays.default ];
+				# 	environment.systemPackages = [ pkgs.nixd ];
+				# }
 				./hosts/${settings.hostname}/hardware-configuration.nix
 				./profiles/${settings.profile}/configuration.nix
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.users.${settings.username} = import ./profiles/${settings.profile}/home.nix;
-					home-manager.extraSpecialArgs = { inherit settings; };
+					home-manager.extraSpecialArgs = args;
+					home-manager.users.${settings.username} =
+						import ./profiles/${settings.profile}/home.nix;
 				}
 			];
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
-				specialArgs = { inherit settings; };
+				specialArgs = args;
 				inherit modules;
 			};
 
 			# userBuilder = home-manager.lib.homeManagerConfiguration {
-			# 	inherit pkgs;
+			# 	inherit legacy-pkgs;
 			# 	extraSpecialArgs = { inherit settings; };
 			# 	modules = ./profiles/${settings.profile}/home.nix;
 			# };
@@ -58,17 +65,6 @@
 		# profile
 		# homeConfigurations = {
 		# 	# ${settings.username} = userBuilder;
-		# 	personal = home-manager.lib.homeManagerConfiguration {
-		# 		inherit pkgs;
-		# 		extraSpecialArgs = { inherit settings; };
-		# 		modules = ./profiles/${settings.profile}/home.nix;
-		# 	};
-        #
-		# 	${settings.username} = home-manager.lib.homeManagerConfiguration {
-		# 		inherit pkgs;
-		# 		extraSpecialArgs = { inherit settings; };
-		# 		modules = ./profiles/${settings.profile}/home.nix;
-		# 	};
 		# };
 	};
 }
