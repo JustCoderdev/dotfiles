@@ -22,7 +22,7 @@ echo -e "Updating boot.nix file..."
 BOOT_FILE_PATH="${DOTFILES_PATH}/nixos/hosts/nixos/boot.nix"
 CONFIG_FILE_PATH="/etc/nixos/configuration.nix"
 
-touch $BOOT_FILE_PATH
+sudo touch $BOOT_FILE_PATH
 echo -ne "{ ... }:\n\n{\n\t#Bootloader\n"  > $BOOT_FILE_PATH
 grep "boot" $CONFIG_FILE_PATH             >> $BOOT_FILE_PATH
 
