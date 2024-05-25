@@ -128,7 +128,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 15
+  size: 12
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -738,8 +738,8 @@ shell:
 key_bindings:
   - { key: Right, mods: Alt,     chars: "\x1BF" }
   - { key: Left,  mods: Alt,     chars: "\x1BB" }
-  - { key: C,     mods: Control, action: Copy   }
-  - { key: V,     mods: Control, action: Paste  }
+  - { key: Y,     mods: Control, action: Copy   }
+  - { key: P,     mods: Control, action: Paste  }
 
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
