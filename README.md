@@ -1,6 +1,6 @@
 # Dotfiles
 These are my dotfiles, feel free to use them and
-share with me any feedback or trick you may know :p 
+share with me any feedback or trick you may know :p
 
 ## Index
 
