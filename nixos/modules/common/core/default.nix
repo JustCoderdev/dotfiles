@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 
-with lib;
-
 {
 	imports = [
 		./bluetooth.nix
@@ -24,14 +22,14 @@ with lib;
 
 	options = {
 		common.core = {
-			bluetooth.enable = mkOption {
-				type = types.bool;
+			bluetooth.enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Enable bluetooth support";
 				default = true;
 			};
 
-			nvidia.enable = mkOption {
-				type = types.bool;
+			nvidia.enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Enable nvidia support";
 				default = false;
 			};
@@ -40,25 +38,13 @@ with lib;
 
 	config = {
 		# Core packages
-		environment.systemPackages = with pkgs; [
+		environment.systemPackages = with pkgs; let
+			dotfiles-backup = (callPackage ../../unofficial/dotfiles-backup.nix {});
+		in [
+			dotfiles-backup
 			unzip zip
 			vim git
 			htop
-
-
-			# C Packages
-			glibcInfo
-			glibc
-
-			clang-tools
-			clang
-
-			gnumake
-			cmake
-			gcc
-			gdb
-
-			file
 		];
 	};
 }
