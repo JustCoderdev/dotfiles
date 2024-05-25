@@ -31,7 +31,7 @@ local function unmap(modes, keybinding)
 	-- end
 end
 
-local function mapa(keybinding, action) map("nivxt", keybinding, action) end
+local function mapa(keybinding, action) map("nv", keybinding, action) end
 local function mapn(keybinding, action) map("n", keybinding, action) end
 local function mapi(keybinding, action) map("i", keybinding, action) end
 local function mapv(keybinding, action) map("v", keybinding, action) end
