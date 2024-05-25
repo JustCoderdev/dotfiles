@@ -10,6 +10,7 @@ alias la="ls -FA"
 alias ll="ls -FAal"
 
 alias cls="clear"
+alias cl="clear"
 alias rm="rm -I"
 
 ## change dir
