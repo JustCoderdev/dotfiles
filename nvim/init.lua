@@ -17,9 +17,10 @@ SETTINGS = protect({
 
 --
 
-local errors = false
+local error = false
+function flag_error() error = true end
 function log_base(icon, msg) print(string.format("   %s %s", icon, msg)) end
-function log_base_error(msg) print(string.format(" /!\\  %s", msg)); errors = true end
+function log_base_error(msg) print(string.format(" /!\\  %s", msg)); flag_error() end
 
 --
 function declare_file(file_name) log_base(">", string.format("Loading %s", file_name)) end
@@ -27,14 +28,14 @@ local function require_file(file)
 	local require_string = string.format("%s.%s", SETTINGS.user_name, file)
 	local file_ok, _ = pcall(require, require_string)
 	if (not file_ok) then
-		log_base_error(string.format("Error loading %s.lua file", require_string)); errors = true
+		log_base_error(string.format("Error loading %s.lua file", require_string)); flag_error()
 	end
 end
 
 --
 function log(icon, msg) print(string.format("       %s %s", icon, msg)) end
 function log_error(msg)
-	print(string.format(" /!\\   ! %s", msg)); errors = true
+	print(string.format(" /!\\   ! %s", msg)); flag_error()
 end
 
 --
@@ -43,19 +44,19 @@ function require_plugin_config(plugin_name)
 	local require_string = string.format("%s.plugin_config.%s", SETTINGS.user_name, plugin_name)
 	local file_ok, _ = pcall(require, require_string)
 	if (not file_ok) then
-		log_error(string.format("Error loading %s.lua config", require_string)); errors = true
+		log_error(string.format("Error loading %s.lua config", require_string)); flag_error()
 	end
 end
 
 function require_plugin(plugin_name)
 	local file_ok, plugin = pcall(require, plugin_name)
-	if (not file_ok) then log_error(string.format("Error requiring %s plugin", plugin_name)); errors = true end
+	if (not file_ok) then log_error(string.format("Error requiring %s plugin", plugin_name)); flag_error() end
 	return plugin
 end
 
 --
 function log_sub(icon, msg) print(string.format("          %s %s", icon, msg)) end
-function log_sub_error(msg) print(string.format(" /!\\      ! %s", msg)); errors = true end
+function log_sub_error(msg) print(string.format(" /!\\      ! %s", msg)); flag_error() end
 
 -- START ACTUAL CODE --
 
@@ -90,3 +91,4 @@ print(".")
 if not errors then
 	vim.cmd("redraw")
 end
+
