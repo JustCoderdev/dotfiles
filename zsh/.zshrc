@@ -1,5 +1,7 @@
 # :! cp ./.zshrc ~
 
+path+=('/usr/local/bin')
+
 ##  Options  ##
 
 # vim motions
