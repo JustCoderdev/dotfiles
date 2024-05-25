@@ -9,18 +9,31 @@ pushd "${DOT_FILES}/nixos/" > /dev/null
 shopt -s globstar
 
 # Update hostname
-# shellcheck disable=SC2086
-if [ -z "${1-}" ]; then
-	echo -e "Hostname not passed, defaulting to \033[32m#${HOST}\033[0m"
-else
-	echo -e "Requested rebuild for \033[32m\"$1\"\033[0m"
+if [ -f "./flake.nix" ]; then
+	HOST_FLAKE=$(awk '/hostname = / {print $3}' ./flake.nix)
+	# shellcheck disable=SC2001
+	HOST_FLAKE=$(echo "${HOST_FLAKE}" | sed 's/"\(.*\)";/\1/')
+fi
 
-	# shellcheck disable=SC2086
-	if [ "$1" != "$HOST" ]; then
-		echo -e "Updating flake file... (${HOST}) -> ($1)"
-		sed -i "s/\(hostname = \).*/\1\"$1\";/" "${DOT_FILES}/nixos/flake.nix"
-		HOST=$1
-	fi
+HOST_SHELL="${HOST}"
+HOST_INPUT="${1}"
+
+echo "HOST_FLAKE: ${HOST_FLAKE}"
+echo "HOST_SHELL: ${HOST_SHELL}"
+echo "HOST_INPUT: ${HOST_INPUT}"
+echo ""
+
+if [ -z "${HOST_INPUT}" ]; then
+	echo -e "Hostname not passed, defaulting to \033[32m#${HOST_SHELL}\033[0m"
+else
+	echo -e "Requested rebuild for \033[32m\"${HOST_INPUT}\"\033[0m"
+	HOST_SHELL="${HOST_INPUT}"
+fi
+
+# Update flake file
+if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
+	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
+	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
 fi
 
 # Check for differences
@@ -40,14 +53,14 @@ echo -e "\nNixOS Rebuilding..."
 sudo git add ./**/*.nix
 
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#${HOST}" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
 	grep --color error .nixos-switch.log
 	sudo git restore --staged ./**/*.nix
 
-	if read -pr "Open log? (y/N): " confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
+	if read -pr 'Open log? (y/N): ' confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
 		vim -R .nixos-switch.log
 	fi
 
@@ -58,9 +71,9 @@ fi
 
 # Commit changes
 generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git commit -m "NixOS build ${HOST}#${generation}"
+sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
 
-echo -e "\n\033[32mCommitted as NixOS build ${HOST}#${generation}\033[0m"
+echo -e "\n\033[32mCommitted as NixOS build ${HOST_SHELL}#${generation}\033[0m"
 echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 shopt -u globstar
 popd > /dev/null
