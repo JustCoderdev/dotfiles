@@ -1,7 +1,10 @@
 { config, lib, settings, ... }:
 
 with lib;
-let cfg = config.system.services.docker; in
+let
+	username = settings.username;
+	cfg = config.system.services.docker;
+in
 
 {
 	config = mkIf cfg.enable {
@@ -9,11 +12,11 @@ let cfg = config.system.services.docker; in
 			enable = true;
 
 			daemon.settings = {
-				data-root = "~/Developer/.docker/";
+				data-root = "/home/${username}/Developer/.docker/";
 			};
 		};
 
-		users.users.${settings.username}.extraGroups = [ "docker" ];
+		users.users.${username}.extraGroups = [ "docker" ];
 	};
 }
 

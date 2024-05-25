@@ -73,7 +73,8 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS..."
-echo -ne "\033[?1049h\033[H" # enter alt-buff
+echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
+echo "Rebuilding NixOS..."
 
 # shellcheck disable=SC2024 #ah the irony
 sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
