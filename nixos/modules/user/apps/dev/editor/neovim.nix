@@ -7,8 +7,9 @@ in {
 #	Requirements:
 #		- Clangd
 #		- Lua Language Server
-#		- Node
 #		- Marksman
+#		- Node
+#		- Fzf
 
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
@@ -17,6 +18,8 @@ in {
 #		neovim
 		xclip
 		xsel
+
+		fzf
 
 		# Parsers
 		tree-sitter
