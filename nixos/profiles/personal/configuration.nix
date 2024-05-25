@@ -143,16 +143,11 @@
 		git
 		docker
 		
-	#	zsh
 		wget
 		man
 	];
 
 	programs = {
-		zsh = {
-			enable = true;
-		};
-
 		neovim = {
 			enable = true;
 			defaultEditor = true;
