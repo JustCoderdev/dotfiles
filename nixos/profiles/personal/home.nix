@@ -8,6 +8,7 @@
 
 	imports = [
 		../../modules/user/apps/dev/zsh.nix
+		../../modules/user/apps/dev/alacritty.nix
 	];
 
 	# home-manager.useGlobalPackages = true;
