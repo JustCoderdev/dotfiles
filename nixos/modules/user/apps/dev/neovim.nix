@@ -11,18 +11,19 @@ in {
 
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/nvim/init.lua".text = ''
-		SETTINGS.user_name = "${username}"                                                \n
-		SETTINGS.cache_path = "${cachepath}/nvim"                                         \n
+-- NixOS generated config for nvim :P
+SETTINGS.user_name = "${username}"
+SETTINGS.cache_path = "${cachepath}/nvim"
 
-		print("hi") \n
+print("hi")
 		 
-		file = "init.lua";                                                                \n
-		local require_string = string.format("%s.%s", ${username}, file)                  \n
-		local file_ok, _ = pcall(require, require_string)                                 \n
-		if (not file_ok) then                                                             \n
-			print(string.format(" /!\\  Error loading %s.lua file", require_string)); \n
-		end                                                                               \n
-	'';
+file = "init.lua";                                                      
+local require_string = string.format("%s.%s", ${username}, file)        
+local file_ok, _ = pcall(require, require_string)                       
+if (not file_ok) then
+	print(string.format(" /!\\  Error loading %s.lua file", require_string))
+end                                                                     
+'';
 
 	home.file."/home/${username}/.config/nvim/lua/${username}" = {
 		source = "${dotfiles}/nvim/lua/${username}/";
