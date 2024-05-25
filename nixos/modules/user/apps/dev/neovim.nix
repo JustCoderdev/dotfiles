@@ -7,6 +7,7 @@ in {
 #	Requirements:
 #		- Clangd
 #		- Lua Language Server
+#		- Node
 #		- Marksman
 
 	programs.neovim.enable = true;
@@ -14,14 +15,20 @@ in {
 
 	home.packages = with pkgs; [
 #		neovim
-
 		xclip
 		xsel
 
+		# Parsers
+		tree-sitter
+		nodejs
+
+		# LSPs
 		lua-language-server
 		marksman
-#		nixd
+		#nixd
 	];
+	environment.systemPackages = with pkgs; [ nixd ];
+	#  <https://github.com/nix-community/nixd/blob/main/nixd/docs/user-guide.md#how-to-use-nixd-in-my-flake>
 
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/nvim/init.lua".text = ''
