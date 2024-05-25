@@ -13,10 +13,12 @@ if [ -f "./flake.nix" ]; then
 	HOST_FLAKE=$(awk '/hostname = / {print $3}' ./flake.nix)
 	# shellcheck disable=SC2001
 	HOST_FLAKE=$(echo "${HOST_FLAKE}" | sed 's/"\(.*\)";/\1/')
+else
+	HOST_FLAKE=""
 fi
 
-HOST_SHELL="${HOST}"
-HOST_INPUT="${1}"
+HOST_SHELL="${HOST:-}"
+HOST_INPUT="${1:-}"
 
 echo "HOST_FLAKE: ${HOST_FLAKE}"
 echo "HOST_SHELL: ${HOST_SHELL}"
