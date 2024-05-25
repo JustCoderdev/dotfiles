@@ -37,7 +37,7 @@ ln -s ~/.config/dotfiles/clangd/    ..  # Clang
 ln -s ~/.config/dotfiles/standalone/.clang-format ~       # Clang format
 ln -s ~/.config/dotfiles/i3/        ..  # i3
 ln -s ~/.config/dotfiles/i3/scripts/bin/* /usr/local/bin  # i3
-ln -s ~/.config/dotfiles/nvim       ..  # Nvim
-ln -s ~/.config/dotfiles/zsh        ..  # Zsh
-ln -s ~/.config/dotfiles/zsh/.zshrc ~   # Zsh
+ln -s ~/.config/dotfiles/nvim       ..      # Nvim
+ln -s ~/.config/dotfiles/zsh        ~/.zsh  # Zsh
+ln -s ~/.config/dotfiles/zsh/.zshrc ~       # Zsh
 ```
