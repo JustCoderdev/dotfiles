@@ -6,26 +6,26 @@
 	// "position": "bottom", // (top|bottom|left|right)
 	"reload_style_on_change": true,
 	/// Modules Order
-	// [NXOS][WRK][VOL][MEDIA][GME] - [CLOCK] - [BTH][NET][CPU][TMP][DSK][BAT][TRAY]
 	"modules-left": [
 		"image",
 		"hyprland/workspaces",
+		"bluetooth",
 		"pulseaudio",
-		"mpris",
-		"gamemode"
+		"mpris"
 	],
 	"modules-center": [
 		"clock"
 	],
 	"modules-right": [
-		"bluetooth",
-		"network",
+		"gamemode",
 		"cpu",
-		"temperature",
-		"disk",
+		// "temperature",
+		// "memory",
+		// "disk",
 		"battery",
-		"tray"
-		// "group/power"
+		"network",
+		"tray",
+		"group/hardware"
 	],
 	/// Modules Conf
 	// "backlight": {
@@ -60,9 +60,9 @@
 		"on-click": "pkill -RTMIN+1 waybar"
 	},
 	"bluetooth": {
-		"format": "󰂯",
-		"format-off": "󰂲",
-		"format-disabled": "󰂲",
+		"format": "", //󰂯
+		"format-off": "", //󰂲
+		"format-disabled": "", //󰂲
 		"format-connected": " {device_alias}",
 		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
 		"format-device-preference": [
@@ -79,6 +79,12 @@
 	"cpu": {
 		"format": " {icon} {usage}%",
 		// "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+		"states": {
+			"critical": 100,
+			"warning": 90,
+			"normal": 60,
+			"optimal": 40
+		},
 		"tooltip": false,
 		"signal": 3,
 		"on-click": "pkill -RTMIN+3 waybar"
@@ -87,62 +93,61 @@
 		"format": "󰥔  {:%H:%M}",
 		// "timezone": "America/New_York",
 		"tooltip": true,
-		"tooltip-format": "{:%Y.%m.%d - %ddd %mmm (%Ez %Z)}"
+		"tooltip-format": "{:%Y.%m.%d - %a %b (%Ez %Z)}"
 	},
-	"disk": {
-		"interval": 120,
-		"format": "  {specific_free:0.0f}GB",
-		"unit": "GB",
-		"path": "/",
-		"states": {
-			"critical": 100,
-			"warning": 90,
-			"normal": 60,
-			"optimal": 40
-		},
-		"tooltip": false,
-		"signal": 4,
-		"on-click": "pkill -RTMIN+4 waybar"
-	},
+	// "disk": {
+	// 	"interval": 120,
+	// 	"format": "  {specific_free:0.0f}GB",
+	// 	"unit": "GB",
+	// 	"path": "/",
+	// 	"states": {
+	// 		"critical": 100,
+	// 		"warning": 90,
+	// 		"normal": 60,
+	// 		"optimal": 40
+	// 	},
+	// 	"tooltip": false,
+	// 	"signal": 4,
+	// 	"on-click": "pkill -RTMIN+4 waybar"
+	// },
 	"gamemode": {
 		"format": "󰸷"
 		// "tooltip": false,
 	},
-	// "group/power": {
-	// 	"direction": "inherit",
-	// 	"drawer": {
-	// 		"transition-duration": 600,
-	// 		"children-class": "group-power-child",
-	// 		"transition-left-to-right": false
-	// 	},
-	// 	"modules": [
-	// 		// First element is the "group leader" and won't ever be hidden
-	// 		"custom/shutdown",
-	// 		"custom/quit",
-	// 		"custom/lock",
-	// 		"custom/reboot"
-	// 	]
-	// },
-	// "custom/quit": {
-	// 	"format": "󰗼",
-	// 	"tooltip": false,
-	// 	"on-click": "hyprctl dispatch exit"
-	// },
-	// "custom/lock": {
-	// 	"format": "󰍁",
-	// 	"tooltip": false,
-	// 	"on-click": "swaylock"
-	// },
-	// "custom/reboot": {
-	// 	"format": "󰜉",
-	// 	"tooltip": false,
-	// 	"on-click": "reboot"
-	// },
-	// "custom/shutdown": {
-	// 	"format": "",
-	// 	"tooltip": false,
-	// 	"on-click": "shutdown now"
-	// },
+	"group/hardware": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 800,
+			"children-class": "group-power-child",
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"custom/shutdown",
+			"custom/quit",
+			"custom/lock",
+			"custom/reboot"
+		]
+	},
+	"custom/quit": {
+		"format": "󰗼",
+		"tooltip": false,
+		"on-click": "hyprctl dispatch exit"
+	},
+	"custom/lock": {
+		"format": "󰍁",
+		"tooltip": false,
+		"on-click": "swaylock"
+	},
+	"custom/reboot": {
+		"format": "󰜉",
+		"tooltip": false,
+		"on-click": "reboot"
+	},
+	"custom/shutdown": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "notify-send -u=critical \"The system will shutdown in 1 minute\" && shutdown -Pk 1"
+	},
 	"hyprland/workspaces": {
 		"active-only": false
 	},
@@ -169,23 +174,45 @@
 		"on-click-middle": "",
 		"on-click-right": ""
 	},
-	// Old
-	"network": {
-		// "interface": "wlp2*", // (Optional) To force the use of this interface
-		"format-wifi": "{essid} {signalStrength}% ({ipaddr})",
-		"format-ethernet": "{ipaddr}",
-		"format-disconnected": ""
+	"memory": { //{percentage}%
+		"format": "   {used:0.1f}/{total:0.1f}GB",
+		"states": {
+			"critical": 100,
+			"warning": 90,
+			"normal": 60,
+			"optimal": 40
+		},
+		"tooltip": false,
+		"signal": 5,
+		"on-click": "pkill -RTMIN+5 waybar"
 	},
-	"temperature": {
-		"critical-threshold": 80,
-		"format": " {temperatureC}-C"
+	"network": {
+		// "interface": "wlp2*",
+		"format": "?",
+		"format-wifi": "   {essid} {signalStrength}%",
+		"format-ethernet": "󰈀  {bandwidthTotalBytes}Bps",
+		"format-disconnected": "󰚦  Disconnected", //
+		"tooltip": true,
+		"tooltip-format": "",
+		"tooltip-format-wifi": "{ifname}: {ipaddr}",
+		"tooltip-format-ethernet": "{ifname}: {ipaddr}"
 	},
 	"pulseaudio": {
-		"format": "{format_source} {volume}%",
-		"format-bluetooth": "{format_source} {volume}%",
-		"format-muted": "[{format_source}]",
-		"format-bluetooth-muted": "[{format_source}]",
-		"format-source": "MIC {volume}%",
-		"format-source-muted": "[MIC]"
-	}
+		"format": "   {volume}%",
+		"format-bluetooth": "   {volume}%",
+		"format-muted": "   {volume}%",
+		"format-bluetooth-muted": "   {volume}%",
+		"format-source": "   {volume}%",
+		"format-source-muted": "󰍭   {volume}%",
+		"tooltip": false
+	},
+	// "temperature": {
+	// 	"critical-threshold": 80,
+	// 	"format": " {temperatureC}-C", // 
+	// 	"format-critical": " {temperatureC}-C",
+	// 	"tooltip": false,
+	// 	"signal": 6,
+	// 	"on-click": "pkill -RTMIN+6 waybar"
+	// }
+	"tray": {}
 }
