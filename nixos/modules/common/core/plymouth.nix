@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, lib, settings, ... }:
 
 {
 	boot.kernelParams = [ "quiet" ];
 	boot.initrd.systemd.enable = true;
 
-	boot.plymouth = {
+	boot.plymouth = lib.mkIf (settings.runningVM) {
 		enable = true;
 
 		# logo = ../.;
