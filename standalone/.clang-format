@@ -1,97 +1,106 @@
 # :!cp ./.clang-format ~/Developer
-#
+# clang-format version 7.0.1-8
 
 BasedOnStyle: LLVM
 
 AlignAfterOpenBracket: true
 # AlignAfterOpenBracket: DontAlign
 
-AlignConsecutiveMacros: Consecutive
-# AlignConsecutiveDeclarations: Consecutive
-# AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+# AlignConsecutiveMacros: Consecutive
 # AlignConsecutiveShortCaseStatements: # Don't work :/
-
+#
 AlignEscapedNewlines: Left
-AlignOperands: Align
+AlignOperands: true
 AlignTrailingComments: true
-
-AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
 
-AllowShortBlocksOnASingleLine: Empty
+# AllowAllArgumentsOnNextLine: true
+AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: true
-AllowShortEnumsOnASingleLine: false
+# AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
 
 AlwaysBreakAfterReturnType: None
-# BreakBeforeBraces: Linux
+AlwaysBreakBeforeMultilineStrings: true
+BinPackArguments: false
+BinPackParameters: false
 
-BreakBeforeBinaryOperators: true
-BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterCaseLabel: false
-  AfterControlStatement: Always # Never, MultiLine, Always
+  # AfterCaseLabel: false
+  AfterControlStatement: true
   AfterEnum: false
   AfterFunction: true
   AfterStruct: false
   AfterUnion: false
   BeforeElse: true
-  BeforeWhile: true
+  # BeforeWhile: true
   IndentBraces: false
   SplitEmptyFunction: false
 
-BinPackArguments: false
-BinPackParameters: false
-
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeTernaryOperators: true
-DerivePointerAlignment: false
 
-MaxEmptyLinesToKeep: 3
+# BreakBeforeBraces: Linux
+BreakBeforeBraces: Custom
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: true
+
+ColumnLimit: 80
+DerivePointerAlignment: false
+# MaxEmptyLinesToKeep: 3
 
 IncludeBlocks: Regroup
 IncludeCategories:
 # Standard Libraries
-  - Regex:           '<std.*>'
+  - Regex:           '<std.*\.h>'
     Priority:        1
 
 # Other "external" libraries
-  - Regex:           '<.*>'
+  - Regex:           '<.*\.h>'
     Priority:        2
 
 # Project files
-  - Regex:           '".*"'
+  - Regex:           '".*\.h"'
     Priority:        3
 
 # Internal headers
+  - Regex:           '"\..*\/lib\/.*\.h"'
+    Priority:        4
 
 IndentCaseLabels: true
-IndentPPDirectives: None
+IndentPPDirectives: None # AfterHash
 IndentWidth: 4
-
+IndentWrappedFunctionNames: false
 # InsertNewlineAtEOF: true
 # InsertTrailingCommas: true
-# KeepEmptyLinesAtEOF: true
-# KeepEmptyLinesAtTheStartOfBlocks: true
 
+KeepEmptyLinesAtTheStartOfBlocks: false
+# KeepEmptyLinesAtEOF: true
+
+Language: Cpp
 PointerAlignment: Right
+ReflowComments: true
+SortIncludes: true
 
 SpaceAfterCStyleCast: false
-SpaceAfterLogicalNot: false
-SpaceAroundPointerQualifiers: Before
+# SpaceAfterLogicalNot: false
+# SpaceAroundPointerQualifiers: Before
 SpaceBeforeAssignmentOperators: true
-SpaceBeforeCaseColon: false
+# SpaceBeforeCaseColon: false
 SpaceBeforeParens: Never
-SpaceBeforeSquareBrackets: false
-SpaceInEmptyBlock: true
+# SpaceBeforeSquareBrackets: false
+# SpaceInEmptyBlock: true
 SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+
 SpacesInCStyleCastParentheses: false
-SpacesInConditionalStatement: false
 SpacesInContainerLiterals: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
+# SpaceInParentheses: false
+# SpaceInSquareBrackets: false
+# # SpacesInConditionalStatement: false
 
 TabWidth: 4
 UseTab: Always
