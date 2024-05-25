@@ -1,7 +1,7 @@
 declare_plugin_config("treesitter")
 
 -- avoid keeping to redownload files
-vim.opt.runtimepath:append("~/.config/nvim/.cache/parsers")
+vim.opt.runtimepath:append("~/.cache/nvim/parsers")
 
 local treesitter = require_plugin("nvim-treesitter.configs")
 treesitter.setup({
@@ -18,7 +18,7 @@ treesitter.setup({
   auto_install = true,
   ignore_install = { },
 
-  parser_install_dir = "~/.config/nvim/.cache/parsers",
+  parser_install_dir = "~/.cache/nvim/parsers",
 
   highlight = {
     enable = true,
