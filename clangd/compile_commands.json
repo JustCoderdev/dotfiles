@@ -1,0 +1,17 @@
+[
+	{
+		"directory": "/home/user/llvm/build",
+		"arguments": [
+			"/usr/bin/clang",
+			"-xc",
+			"-Wall",
+			"-Wextra",
+			"-Werror",
+			"-Wpedantic",
+			"-pedantic",
+			"-pedantic-errors",
+			"-std=c89",
+			"-fcolor-diagnostics"
+		],
+	}
+]
