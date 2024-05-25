@@ -17,7 +17,7 @@
 
 				username = "ryuji";
 				system = "x86_64-linux";
-				dotfilespath = "/.dotfiles"
+				dotfilespath = "/.dotfiles";
 			};
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
