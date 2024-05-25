@@ -134,7 +134,8 @@ and are arranged as follows:
 ### Recover rollback dotfiles
 
 ```bash
-nix derivation show -r /run/current-system | grep -m 1 dotfiles-backup
+nix derivation show -r /run/current-system \
+        | grep --color -E '"out": "/nix/store/.*dotfiles-backup"'
 ```
 
 ### Connect to internet (with wpa_supplicant)
