@@ -39,15 +39,17 @@ local packer = require_packer()
 packer.startup({ function(use)
 	use "wbthomason/packer.nvim"
 
-	use "tpope/vim-surround"		-- Interact with bracket and quotes
-	use "tpope/vim-commentary"		-- Handle comments
+-- IMPORTANT: before lsp
+	use "folke/neodev.nvim"					-- Lua language extension
+	use "p00f/clangd_extensions.nvim"		-- C language extension
 
-	-- use "junegunn/fzf"			-- Fuzzy finder
-	-- use "nvim-pack/nvim-spectre"	-- Find and replace tool
+	use {									-- Display function definition
+		"ray-x/lsp_signature.nvim",
+		commit = "1d96fac72eb6d74abd5b4d7883a01f58aeb4f87e"
+	}
 
-	use "neovim/nvim-lspconfig"		-- Language server
-	use {
-		"hrsh7th/nvim-cmp",			-- Autocompletition engine
+	use {								-- Autocompletition engine
+		"hrsh7th/nvim-cmp",
 		requires = {
 			{"hrsh7th/cmp-nvim-lsp"},
 			{"hrsh7th/cmp-buffer"},
@@ -73,18 +75,25 @@ packer.startup({ function(use)
 		}
 	}
 
-	use "folke/neodev.nvim"			-- Lua language extension
-	use "p00f/clangd_extensions.nvim"	-- C language extension
+--
+	use "neovim/nvim-lspconfig"			-- Language server
+-- 
 
-	use "navarasu/onedark.nvim"			-- Colorscheme
+	use "tpope/vim-surround"			-- Interact with bracket and quotes
+	use "tpope/vim-commentary"			-- Handle comments
 
+	-- use "junegunn/fzf"				-- Fuzzy finder
+	-- use "nvim-pack/nvim-spectre"		-- Find and replace tool
 
-	-- use { "ray-x/lsp_signature.nvim", commit = "1d96fac72eb6d74abd5b4d7883a01f58aeb4f87e" }
-	-- use { "nvim-treesitter/nvim-treesitter", tag = "v0.8.1" }
+	use "navarasu/onedark.nvim"				-- Colorscheme
+	use "sbdchd/neoformat"					-- Format file
+	use "nvim-lualine/lualine.nvim"			-- Prettify line below
 
-	-- use "sbdchd/neoformat"
+	use {									-- Display syntax highlighting
+		"nvim-treesitter/nvim-treesitter",
+		tag = "v0.8.1"
+	}
 
-	-- use "nvim-lualine/lualine.nvim"
 	-- use "ntpeters/vim-better-whitespace"
 	-- use "windwp/nvim-autopairs"
 	-- use "preservim/vimux"

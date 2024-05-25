@@ -1,4 +1,5 @@
 declare_file("keymaps.lua")
+-- :lua vim.lsp.buf.signature_help()
 
 
 local opts = { noremap = true, silent = true }
@@ -45,19 +46,20 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- nvim_lspconfig overriden
---   "gD", "gd", "K", "gi", "gr", "<C-k>", 
+--   "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>r", "<Leader>f"
 
 -- save
 mapn("<Leader>u", ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-mapn("<Leader>w", ":wall <CR> :w <CR> :echo \"Saved all files\" <CR>")
+mapn("<Leader>w", ":wall <CR> :echo \"Saved all files\" <CR>")
 mapn("<Leader>q", ":wqall <CR>")
 mapn("<Leader>m", ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
 mapn("<Leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+mapn("<Leader>f", ":Neoformat <CR>")
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
-map("nv", "<Leader>p", "\"*p :echo \"Pasted from system clipboard\" <CR>")	
+map("nv", "<Leader>p", "\"*p :echo \"Pasted from system clipboard\" <CR>")
 
 -- windows
 mapn("<Leader>e", ":Lexplore 25 <CR>")
@@ -68,7 +70,7 @@ mapn("<Leader>o", ":SymbolsOutline <CR>")
 mapn("J", "J0")
 
 -- search
-mapn("n", "nzzzv") 
+mapn("n", "nzzzv")
 mapn("N", "Nzzzv")
 
 -- page jump
