@@ -14,6 +14,7 @@ with lib;
 		./nvidia.nix
 		./numpad.nix
 		./pipewire.nix
+		./power.nix
 		./plymouth.nix
 		./printer.nix
 		./shell.nix
@@ -42,6 +43,7 @@ with lib;
 			unzip zip
 			vim git
 			gnumake
+			htop
 		];
 	};
 }

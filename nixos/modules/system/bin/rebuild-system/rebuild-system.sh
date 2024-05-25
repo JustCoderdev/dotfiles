@@ -44,14 +44,14 @@ fi
 ## Update flake file
 if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
 	echo "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-	sudo sed -i "s/\(_hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
+	sudo sed -i "s/\(_hostname = \).*/\1\"${HOST_SHELL}\";/" ./flake.nix
 fi
 
 
 # Check differences
 echo -ne "Analysing changes..."
 if git diff --quiet -- .; then  # -- ./**/*.nix
-	echo -e " \033[31mNo changes detected\033[0m"
+	echo -e " \033[31mNot found\033[0m"
 	had_changes=false
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
 	# shopt -u globstar
