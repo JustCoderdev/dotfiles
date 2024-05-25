@@ -7,13 +7,13 @@
 		${pkgs.kbd}/bin/setleds +num
 	'';
 
-#	services.xserver.displayManager.setupCommands = ''
-#		${pkgs.numlockx}/bin/numlockx on
-#	'';
-#
-#	services.xserver = {
-#		xkbOptions = "grp_led:scroll,caps:ctrl_modifier,numpad:mac";
-#	};
+	services.xserver.displayManager.setupCommands = ''
+		${pkgs.numlockx}/bin/numlockx on
+	'';
+
+	services.xserver = {
+		xkbOptions = "grp_led:scroll,caps:ctrl_modifier,numpad:mac";
+	};
 
 	# ctrl				Ctrl position
 	# "ctrl:swapcaps"		Swap Ctrl and Caps Lock
