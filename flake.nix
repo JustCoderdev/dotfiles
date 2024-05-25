@@ -14,7 +14,7 @@
 		let
 			# User settings
 			settings = rec {
-				hostname = "virtualmachine";
+				hostname = "nixos";
 				profile = "personal";
 				username = "ryuji";
 
