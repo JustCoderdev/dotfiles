@@ -22,6 +22,7 @@ require_plugin_config("symbols_outline")
 require_plugin_config("vim_illuminate")
 
 require_plugin_config("ale")
+require_plugin_config("fzf")
 
 
 
