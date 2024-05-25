@@ -96,12 +96,13 @@ packer.startup({ function(use)
 	use "simrat39/symbols-outline.nvim"		-- Provide an outline for current file
 
 	use "RRethy/vim-illuminate"				-- Highlight word under cursor
-	-- use "tommcdo/vim-lion"
-	-- use "sindrets/diffview.nvim"
-	-- use "honza/vim-snippets"
+	use "tommcdo/vim-lion"					-- Provide indentation for code blocks
 
-	-- use "junegunn/fzf"				-- Fuzzy finder
-	-- use "nvim-pack/nvim-spectre"		-- Find and replace tool
+	-- use "sindrets/diffview.nvim"			-- Better diff-views
+	-- use "honza/vim-snippets"				-- More snippets
+
+	-- use "junegunn/fzf"					-- Fuzzy finder
+	-- use "nvim-pack/nvim-spectre"			-- Find and replace tool
 
 	-- use "preservim/vimux"				-- Interact with tmux seamlessly
 	-- use "easymotion/vim-easymotion"		-- Customise number in keybinding
