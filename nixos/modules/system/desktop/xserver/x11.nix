@@ -1,38 +1,33 @@
-{ config, lib, ... }:
-
-with lib;
-let cfg = config.system.desktop.xserver; in
+{ ... }:
 
 {
-	config = mkIf cfg.enable {
-		services.xserver = {
+	services.xserver = {
+		enable = true;
+
+		# Configure keymap in X11
+		layout = "it";
+		xkbVariant = "";
+
+		# Enable touchpad support.
+		libinput = {
 			enable = true;
 
-			# Configure keymap in X11
-			layout = "it";
-			xkbVariant = "";
+			mouse = {
+				middleEmulation = false;
+			};
 
-			# Enable touchpad support.
-			libinput = {
-				enable = true;
+			touchpad = {
+				accelProfile = "flat";       # flat, adaptive
+				clickMethod = "buttonareas"; # buttonareas, clickfinger
 
-				mouse = {
-					middleEmulation = false;
-				};
+				# dmesg | grep i8042
+				# dev = "/devices/platform/i8042/serio1/input/input5";
+				middleEmulation = false;
+				scrollMethod = "twofinger";
 
-				touchpad = {
-					accelProfile = "flat";       # flat, adaptive
-					clickMethod = "buttonareas"; # buttonareas, clickfinger
-
-					# dmesg | grep i8042
-					# dev = "/devices/platform/i8042/serio1/input/input5";
-					middleEmulation = false;
-					scrollMethod = "twofinger";
-
-					tapping = true;
-					tappingDragLock = false;
-					tappingButtonMap = "lrm";
-				};
+				tapping = true;
+				tappingDragLock = false;
+				tappingButtonMap = "lrm";
 			};
 		};
 	};

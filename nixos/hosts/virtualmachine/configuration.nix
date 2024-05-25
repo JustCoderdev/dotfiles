@@ -26,9 +26,10 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xserver.enable = true;
-		gaming.enable = true;
+		desktop.xfce.enable = false;
+		desktop.wayland.enable = true;
 
+		gaming.enable = false;
 		services = {
 			docker.enable = true;
 			virtualbox.enable = false;

@@ -4,6 +4,9 @@
 # Quit on error
 set -e
 
+# Exit alt-buff
+echo -ne "\033[?1049l"
+
 
 # Check filepath
 if [ -z "${DOT_FILES:-}" ]; then
