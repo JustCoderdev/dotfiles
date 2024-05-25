@@ -44,28 +44,24 @@ Configuration files for
 - [ ] Auto-fetch dotfile repo
 
 
-## Special Installing
-
-#TODO
-
 ## Installing Configuration
 
-```shell
-git clone https://github.com/JustCoderdev/dotfiles.git ~/.config/dotfiles
+### Without nix
 
-# Create filepaths
-mkdir ~/Developer
-mkdir ~/Developer/Github
-mkdir ~/Developer/Projects
+```bash
+DOT_FILES="${HOME}/.config/dotfiles" # or '/.dotfiles'
+git clone https://github.com/JustCoderdev/dotfiles.git $DOT_FILES
 
-# Setting soft links <3
-cd ~/-config/dotfiles
-ln -s ~/.config/dotfiles/alacritty  ..  # Alacritty
-ln -s ~/.config/dotfiles/clangd/    ..  # Clang
-ln -s ~/.config/dotfiles/standalone/.clang-format ~       # Clang format
-ln -s ~/.config/dotfiles/i3/        ..  # i3
-ln -s ~/.config/dotfiles/i3/scripts/bin/* /usr/local/bin  # i3
-ln -s ~/.config/dotfiles/nvim       ..      # Nvim
-ln -s ~/.config/dotfiles/zsh        ~/.zsh  # Zsh
-ln -s ~/.config/dotfiles/zsh/.zshrc ~       # Zsh
+cd $DOT_FILES
+./mount-configs.sh
+```
+
+### With nix stuff
+
+```bash
+DOT_FILES="${HOME}/.config/dotfiles" # or '/.dotfiles'
+git clone https://github.com/JustCoderdev/dotfiles.git $DOT_FILES
+
+cd "${DOT_FILES}/nixos"
+# TODO finish guide :P
 ```
