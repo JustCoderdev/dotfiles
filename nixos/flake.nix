@@ -10,22 +10,21 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-#nixd.url = "github:nix-community/nixd";
+		nixd.url = "github:nix-community/nixd";
 	};
-#, nixd
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
 			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
-			pkgs-unstable = import inputs.nixpkgs-unstable {
+			pkgs-unstable = import nixpkgs-unstable {
 				system = settings.system;
+				overlays = [ nixd.overlays.default ];
 			};
 			modules = let path = settings.dotfiles_path; in [
-#				{
-#					nixpkgs-unstable.overlays = [ nixd.overlays.default ];
-#					environment.systemPackages = [ pkgs-unstable.nixd ];
-#				}
+				{
+					environment.systemPackages = [ pkgs-unstable.nixd ];
+				}
 
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 #				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
