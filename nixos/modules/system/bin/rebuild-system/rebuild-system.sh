@@ -18,7 +18,7 @@ shopt -s globstar
 
 # Update host
 if [ -f "./flake.nix" ]; then
-	HOST_FLAKE=$(awk '/hostname = / {print $3}' ./flake.nix)
+	HOST_FLAKE=$(awk '/_hostname = / {print $3}' ./flake.nix)
 	# shellcheck disable=SC2001
 	HOST_FLAKE=$(echo "${HOST_FLAKE}" | sed 's/"\(.*\)";/\1/')
 else
@@ -44,7 +44,7 @@ fi
 ## Update flake file
 if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
 	echo "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
+	sudo sed -i "s/\(_hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
 fi
 
 

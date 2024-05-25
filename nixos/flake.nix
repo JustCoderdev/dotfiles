@@ -12,25 +12,8 @@
 
 	outputs = { self, nixpkgs, home-manager }@inputs:
 		let
-			settings = import ./settings.nix;
-
-			# User settings
-#			settings = rec {
-#				hostname = "acer";
-#				profile = "personal";
-#				username = "ryuji";
-
-#				dotfiles_path = ./..;
-#				dotfiles_abspath = "/.dotfiles";
-#				config_path = "/home/${username}/.config";
-#				cache_path = "/home/${username}/.cache";
-#
-#				system = "x86_64-linux";
-#				special_pkgs = {
-#					unfree = [ "obsidian" "google-chrome" ];
-#					insecure = [ "electron-24.8.6" ];
-#				};
-#			};
+			_hostname = "acer";
+			settings = import ./hosts/${_hostname}/settings.nix;
 
 			## Auto install script stuff ##
 			# supportedSystems = [ "i686-linux" "x86_64-linux" ];
@@ -46,7 +29,7 @@
 				# 	environment.systemPackages = [ pkgs.nixd ];
 				# }
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
-				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
+#				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
 				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
