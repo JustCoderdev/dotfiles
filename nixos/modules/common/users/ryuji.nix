@@ -85,11 +85,11 @@ in {
 				putty
 				kicad
 			])
-		];
 
 			# Scuola
 			# ciscoPacketTracer8
 			# github-desktop
 			# vscode
+		];
 	};
 }

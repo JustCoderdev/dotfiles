@@ -30,7 +30,8 @@ in {
 		# LSPs
 		lua-language-server
 		marksman
-	#	nixd
+		nodePackages.bash-language-server
+		#nixd
 	];
 
 	# Import configuration from dotfiles
