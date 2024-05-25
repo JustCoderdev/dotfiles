@@ -4,9 +4,12 @@ DOTFILES_PATH="/.dotfiles"
 
 # Clone dotfiles
 # nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ${DOTFILES_PATH}"
+<<<<<<< HEAD
 # nix-shell -p git --command "git checkout nixos-compliant"
 
 mkdir "${DOTFILES_PATH}/nixos/hosts/nixos"
+=======
+>>>>>>> 581a52e (Fixed typo in installation script)
 
 # Generate harware configuration
 sudo nixos-generate-config --show-hardware-config > "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"
@@ -23,6 +26,8 @@ echo -ne "\n\t#Virtualisation\n"          >> $BOOT_FILE_PATH
 grep "virtualisation" $CONFIG_FILE_PATH   >> $BOOT_FILE_PATH
 
 echo -ne "}\n"                            >> $BOOT_FILE_PATH
+
+git add .
 
 # Rebuild system
 sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}/nixos#nixos"
