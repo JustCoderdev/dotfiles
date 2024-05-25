@@ -150,7 +150,7 @@ mapn("<C-S-Right>", ":vertical resize +2 <CR>")
 
 -- === INSERT === --
 -- mapi("jk", "<Esc>")
-mapi("<C-c>", "<Esc>") -- update view after exiting with C-c
+-- mapi("<C-c>", "<Esc>") -- update view after exiting with C-c
 
 
 -- === VISUAL === --
