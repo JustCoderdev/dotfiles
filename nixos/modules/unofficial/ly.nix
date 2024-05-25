@@ -120,7 +120,7 @@ in
 			session		include			login
 		'';
 
-		services.xserver.displayManager.job.execCmd = ''
+		services.xserver.displayManager.job.execCmd = lib.mkForce ''
 			exec ${cfg.package}/bin/ly
 		'';
 
