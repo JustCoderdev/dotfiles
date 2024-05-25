@@ -6,7 +6,7 @@ declare_file("plugins.lua")
 local function require_packer()
 	local packer_ok, packer = pcall(require, "packer")
 	if (not packer_ok) then
-		log_error(" /!\\  Error loading packer")
+		log_error("Error loading packer")
 		return
 	end
 
@@ -40,14 +40,36 @@ local packer_bootstrap = ensure_packer()
 -- PLUGINS --
 
 local packer = require_packer()
-local util = require("packer.util")
+packer.util = require("packer.util")
 
 packer.init({
 	ensure_dependencies = true,
-	snapshot_path       = SETTINGS.cache_path .. "/packer.nvim", -- Default save directory for snapshots
+
+	-- cache = '~/.cache/nvim'
+	-- data = '~/.local/share/nvim'
+	-- config = '~/.config/nvim'
+
+	-- snapshot_path = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
+	-- package_root  = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
+	-- compile_path  = packer.util.join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
+
+
+	-- cache =        '~/.cache/nvim/packer.nvim'
+	-- data =   '~/.local/share/nvim/site/pack'
+	-- config =      '~/.config/nvim/plugin/packer_compiled.lua'
+
+	snapshot_path       = SETTINGS.cache_path .. "/packer.nvim",
 	package_root        = SETTINGS.cache_path .. "/packer/site/pack",
-	--package_root  = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-	compile_path        = SETTINGS.cache_path .. "/packer_compiled.lua",
+	compile_path        = SETTINGS.cache_path .. "/packer/plugin/packer_compiled.lua",
+
+	display             = {
+		compact     = true, -- If true, fold updates results by default
+		working_sym = '[.]', -- The symbol for a plugin being installed/updated
+		error_sym   = '[x]', -- The symbol for a plugin with an error in installation/updating
+		done_sym    = '[*]', -- The symbol for a plugin which has completed installation/updating
+		removed_sym = '[-]', -- The symbol for an unused plugin which was removed
+		moved_sym   = '[>]', -- The symbol for a plugin which was moved (e.g. from opt to start)
+	},
 })
 packer.startup({
 	function(use)

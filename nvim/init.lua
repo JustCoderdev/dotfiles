@@ -3,11 +3,18 @@
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format( "attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
 COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 
--- Check if using nixOS
-if (SETTINGS == nil) then SETTINGS.user_name = "perin"; SETTINGS.cache_path = "~/.cache/nvim" end
+-- Check if NOT using nixOS
+if (SETTINGS == nil) then
+	SETTINGS.user_name = "perin";
+	SETTINGS.cache_path = "~/.cache/nvim"
+end
+
 SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
 SETTINGS.fallback_colorscheme = { name = "habamax", require_truecolor = false }
 SETTINGS = protect(SETTINGS)
+
+-- Add cache path to path
+vim.opt.runtimepath:append(SETTINGS.cache_path)
 
 --
 
