@@ -19,12 +19,6 @@ in {
 				default = false;
 				example = true;
 			};
-			gaming = mkOption {
-				type = types.bool;
-				description = "Add gaming sofware to environment packages";
-				default = false;
-				example = true;
-			};
 			developer = mkOption {
 				type = types.bool;
 				description = "Add developer sofware to environment packages";
@@ -53,8 +47,6 @@ in {
 			obsidian
 			emulsion
 
-			google-chrome
-
 			(mkIf cfg.image-editing [
 				gimp
 				krita
@@ -63,30 +55,13 @@ in {
 				obs-studio # Add to home-manager
 				davinci-resolve
 			])
-			(mkIf cfg.gaming [
-				discord
-
-				goverlay
-				mangohud
-
-				gamemode #`programs.gamemode.enable = true`
-				proton-ge-bin
-
-				steam    #`programs.steam.enable = true`
-				heroic   # epic games - gog
-				prismlauncher
-
-				lutris
-				gamehub
-				cartridges
-				bottles
-			])
 			(mkIf cfg.developer [
 				putty
 				kicad
 			])
 
 			# Scuola
+			google-chrome
 			# ciscoPacketTracer8
 			# github-desktop
 			# vscode

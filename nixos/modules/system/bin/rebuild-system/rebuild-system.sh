@@ -73,9 +73,11 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS..."
+echo -ne "\033[?1049h\033[H" # enter alt-buff
 
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" | tee .nixos-switch.log; then
+	echo -ne "\033[?1049l" # exit alt-buff
 	echo -e " Done\n"
 
 	## Commit changes
@@ -88,6 +90,7 @@ if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-swi
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 
 else
+	echo -ne "\033[?1049l" # exit alt-buff
 	echo -e " \033[31mFailed\033[0m"
 
 	grep --color error .nixos-switch.log
