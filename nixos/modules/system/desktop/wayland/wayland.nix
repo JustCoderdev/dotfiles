@@ -1,12 +1,11 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
-with lib;
 let
 	cfg = config.system.desktop.hyprland;
 	nvidia = config.common.core.nvidia;
 in
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		hardware = {
 			opengl = {
 				enable = true;
@@ -30,6 +29,10 @@ in
 #				package = pkgs.sddm;
 			};
 		};
+
+		environment.systemPackages = with pkgs; [
+			where-is-my-sddm-theme
+		];
 
 		xdg.portal = {
 			enable = true;
