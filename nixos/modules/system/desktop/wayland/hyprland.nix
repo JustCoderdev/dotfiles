@@ -25,7 +25,6 @@ in
 
 		environment.systemPackages = with pkgs; [
 				waybar        # status bar
-				font-awesome  # icons
 
 				rofi-wayland  # app launcher
 				swww          # wallpaper daemon
@@ -33,6 +32,11 @@ in
 				dunst      # notification daemon
 				libnotify  # dunst dependency
 		];
+
+		fonts.fonts = [
+			pkgs.font-awesome  # icons
+		];
+
 
 		environment.sessionVariables = mkIf settings.runningVM {
 			# Enable software rendering for VMs
