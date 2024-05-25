@@ -9,11 +9,18 @@ pushd "${DOT_FILES}/nixos/" > /dev/null
 shopt -s globstar
 
 # Update hostname
-if [ -z "${1:-$HOST}" ]; then
-	echo -e "Host not passed, defaulting to \033[32m#\033[0m"
+# shellcheck disable=SC2086
+if [ -z $1 ]; then
+	echo -e "Hostname not passed, defaulting to \033[32m#${HOST}\033[0m"
 else
-	echo -e "Requested rebuild for \"\033[32m${1:-$HOST}\033[0m\". Updating flake file..."
-	sed -i "s/\(hostname = \).*/\1\"${1:-$HOST}\";/" "${DOT_FILES}/nixos/flake.nix"
+	echo -e "Requested rebuild for \"\033[32m$1\033[0m\""
+
+# shellcheck disable=SC2086
+	if [ $1 != $HOST ]; then
+		echo -e "Updating flake file... (${HOST}) -> (${1:-AAA})"
+		sed -i "s/\(hostname = \).*/\1\"$1\";/" "${DOT_FILES}/nixos/flake.nix"
+		HOST=$1
+	fi
 fi
 
 # Check for differences
@@ -33,14 +40,14 @@ echo -e "\nNixOS Rebuilding..."
 sudo git add ./**/*.nix
 
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#${1:-$HOST}" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#${HOST}" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
 	grep --color error .nixos-switch.log
 	sudo git restore --staged ./**/*.nix
 
-	if read -pr "Open log? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+	if read -pr "Open log? (y/N): " confirm && [[ $confirm == "[yY]" || $confirm == "[yY][eE][sS]" ]]; then
 		vim -R .nixos-switch.log
 	fi
 
@@ -51,9 +58,9 @@ fi
 
 # Commit changes
 generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git commit -m "NixOS build ${1:-$HOST}#${generation}"
+sudo git commit -m "NixOS build ${HOST}#${generation}"
 
-echo -e "\n\033[32mCommitted as NixOS build ${1:-$HOST}#${generation}\033[0m"
-echo -e "\033[34mNixOS Rebuild Completed! ${1:-$HOST}\033[0m\n"
+echo -e "\n\033[32mCommitted as NixOS build ${HOST}#${generation}\033[0m"
+echo -e "\033[34mNixOS Rebuild Completed! ${HOST}\033[0m\n"
 shopt -u globstar
 popd > /dev/null

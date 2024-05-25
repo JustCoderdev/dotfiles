@@ -2,6 +2,8 @@
 
 {
 	boot.kernelParams = [ "quiet" ];
+	boot.initrd.systemd.enable = true;
+
 	boot.plymouth = {
 		enable = true;
 
@@ -17,8 +19,8 @@
 				src = fetchFromGitHub {
 					owner = "JustCoderdev";
 					repo = "dotfiles";
-					rev = "eed7d3275f80bc530b6770c9a0404fd9ffdf7a52";
-					hash = "sha256-q4nHxhV1rDNInTxaC6ejZjoGZLBba4sWnFLK+BeKpno=";
+					rev = "9af46b860ee3a076f822a0dd028c86a710682b14";
+					hash = "sha256-/pEB8Q8ueWq/jZUChAKjgt2dPBHYazYxwE3ghhV/oZw=";
 				};
 
 				sourceRoot = "${src.name}/plymouth/themes/${theme-name}";
