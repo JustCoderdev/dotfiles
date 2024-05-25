@@ -76,7 +76,7 @@ vim.g.maplocalleader = " "
 --   "<Leader>d", "<Leader>rd", "<Leader>ff"
 
 mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
-mapn("<Leader>rc", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+mapn("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- save
 mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
