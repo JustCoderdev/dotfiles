@@ -54,6 +54,7 @@ with lib;
 			clang
 
 			gnumake
+			cmake
 			gdb
 
 			file
