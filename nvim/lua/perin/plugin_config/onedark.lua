@@ -30,8 +30,15 @@ onedark.setup {
 	},
 
 	-- Custom Highlights --
-	colors = {},  -- Override default colors
-	highlights = {}, -- Override highlight groups
+	colors = {}, -- Override default colors
+	highlights = {
+		["@punctuation.special.markdown"] = { fg = '$red' },
+		["@text.quote.markdown"]          = { fg = '$light_grey' },
+		["@text.emphasis"]                = { fg = '$purple', fmt = 'italic' },
+		["@text.strong"]                  = { fg = '$orange', fmt = 'bold' },
+		["@text.strike"]                  = { fg = '$green', fmt = 'strikethrough,underline' },
+		["@text.literal"]                 = { fg = '$red', fmt = "none" },
+	}, -- Override highlight groups
 
 	-- Plugins Config --
 	diagnostics = {
@@ -40,4 +47,4 @@ onedark.setup {
 		background = true, -- use background color for virtual text
 	},
 }
--- onedark.load()
+onedark.load()
