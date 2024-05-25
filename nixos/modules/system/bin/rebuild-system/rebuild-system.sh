@@ -70,6 +70,13 @@ else
 fi
 
 
+if $had_changes; then
+	echo "TEST: had changes"
+else
+	echo "TEST: no changes"
+fi
+
+
 # Rebuild system
 echo -n "Rebuilding NixOS..."
 
@@ -78,7 +85,7 @@ if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-swi
 	echo -e " Done\n"
 
 	## Commit changes
-	generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
+	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 	if $had_changes; then
 		sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
 	fi
