@@ -7,6 +7,7 @@ in {
 	config = lib.mkIf cfg.enable {
 
 # NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
+#TESTTTTTTTTTTTTTTTTTTt
 
 		# Allowed [a-zA-Z0-9:_\.-]*
 		system.nixos.label = let
