@@ -1,6 +1,4 @@
 .DS_Store
 
-.cache/
-
 .old_session.vim
 .session.vim
