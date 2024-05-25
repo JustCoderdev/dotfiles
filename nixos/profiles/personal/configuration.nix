@@ -54,11 +54,11 @@
 
 	# Nix settings
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-	nixpkgs.config = let special_pkgs = settings.special_pkgs; in {
-		permittedInsecurePackages = special_pkgs.insecure;
+	nixpkgs.config = let pkgs = settings.special_pkgs; in {
+		permittedInsecurePackages = pkgs.insecure;
 		allowUnfreePredicate = pkg:
 			builtins.elem (lib.getName pkg)
-			special_pkgs.unfree;
+			pkgs.unfree;
 	};
 
 	# Set machine hostname
