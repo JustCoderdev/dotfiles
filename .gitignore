@@ -1,8 +1,8 @@
-.DS_Store/
-result/
+.DS_Store
 
 .old_session.vim
 .session.vim
 
 .nixos-switch.log
+result
 
