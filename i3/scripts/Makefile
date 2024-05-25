@@ -27,5 +27,4 @@ build: clean
 
 run:
 	@echo "Running... "
-# @chmod +x bin/${FILE_ENTRY:.c=}
 	@cd bin && ./${FILE_ENTRY:.c=}
