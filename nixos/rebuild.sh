@@ -3,7 +3,7 @@
 FLAKE_PATH="."
 
 if [ -f "${FLAKE_PATH}/flake.nix" ]; then
-	HOST_FLAKE=$(awk '/hostname = / {print $3}' "${FLAKE_PATH}/flake.nix")
+	HOST_FLAKE=$(awk '/_hostname = / {print $3}' "${FLAKE_PATH}/flake.nix")
 	HOST_FLAKE=$(echo $HOST_FLAKE | sed 's/"\(.*\)";/\1/')
 fi
 
@@ -24,10 +24,10 @@ else
 fi
 
 # Update flake file
-# if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
-# 	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-# 	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
-# fi
+if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
+	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
+	sudo sed -i "s/\(_hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
+fi
 
 # Rebuild system
 sudo nixos-rebuild switch --show-trace --flake "${FLAKE_PATH}#${HOST_SHELL}"
