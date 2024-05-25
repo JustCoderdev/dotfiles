@@ -8,7 +8,7 @@ echo -e "Cloning dotfiles"
 DOTFILES_PATH="/.dotfiles"
 
 # Move to dotfiles
-nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git ${DOT_FILES} && sudo git checkout nixos-compliant"
+nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git --branch nixos-compliant ${DOT_FILES}"
 
 
 # Generate harware configuration
