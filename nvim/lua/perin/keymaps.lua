@@ -9,12 +9,29 @@ local function map(modes, keybinding, action)
 		vim.keymap.set(m, keybinding, action, opts)
 	end
 end
+
+local function unmap(modes, keybinding)
+	for i = 1, string.len(modes) do
+		local m = string.sub(modes, i, i)
+		local all_mode_keymap = vim.api.nvim_get_keymap(m)
+
+		for _, value in ipairs(all_mode_keymap) do
+			if string.find(value.lhs, keybinding, 0, true) then
+				print(string.format("Unmapping %s from %s", keybinding, m))
+				local successfully_unmapped, error = pcall(vim.keymap.del, m, keybinding)
+				if not successfully_unmapped then
+					print(successfully_unmapped)
+					print(error)
+				end
+			end
+		end
+	end
+end
+
 local function mapn(keybinding, action) map("n", keybinding, action) end
 local function mapi(keybinding, action) map("i", keybinding, action) end
 local function mapv(keybinding, action) map("v", keybinding, action) end
 local function mapx(keybinding, action) map("x", keybinding, action) end
-local function disable(modes, key) map(modes, key, "<Nop>") end
-
 
 -- Modes --
 --	n normal mode
@@ -26,19 +43,19 @@ local function disable(modes, key) map(modes, key, "<Nop>") end
 
 
 -- === DISABLED === --
-disable("n", "Q")
-disable("n", "'")
-disable("i", "<A-k>")
-disable("i", "<A-j>")
+unmap("n", "Q")
+unmap("n", "'")
+unmap("i", "<A-k>")
+unmap("i", "<A-j>")
 
 -- arrows
-disable("nivx", "<Up>")
-disable("nivx", "<Down>")
-disable("nivx", "<Left>")
-disable("nivx", "<Right>")
+unmap("nivx", "<Up>")
+unmap("nivx", "<Down>")
+unmap("nivx", "<Left>")
+unmap("nivx", "<Right>")
 
 -- leader
-disable("n", "<Space>")
+unmap("n", "<Space>")
 
 
 --  === LEADER === --
@@ -46,19 +63,20 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- nvim_lspconfig overriden
---   "gD", "gd", "K", "gi", "gr", "<C-k>",
---   "<Leader>d", "<Leader>r", "<Leader>f"
+--   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
+--   "<Leader>d", "<Leader>rd", "<Leader>s"
 
-mapn("<Leader>m", ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
-mapn("<Leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+mapn("<Leader>m" , ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
+mapn("<Leader>rc", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- save
-mapn("<Leader>u", ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-mapn("<Leader>w", ":wall <CR> :echo \"Saved all files\" <CR>")
-mapn("<Leader>q", ":wall <CR> :mksession! last_session.vim <CR> :qall <CR>")
+mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
+mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
+mapn("<Leader>qq" , ":wall <CR> :mksession! last_session.vim <CR> :qall <CR>")
 
 -- plugins
-mapn("<Leader>sw", ":StripWhitespace <CR>") -- from vim-better-whitespace
+mapn("<Leader>s", ":StripWhitespace <CR>") -- from vim-better-whitespace
+mapn("<Leader>h", ":FzfLua files resume=true <CR>")    -- from fzf
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
@@ -71,10 +89,12 @@ mapn("<Leader>o", ":SymbolsOutline <CR>")
 
 -- === NORMAL === --
 mapn("J", "J0")
+mapn("<C-w>h", "<C-w>s")
+mapn("<C-w>q", ":q <CR>")
 
 -- search
-mapn("n", "nzzzv")
-mapn("N", "Nzzzv")
+-- mapn("n", "nzzzv")
+-- mapn("N", "Nzzzv")
 
 -- page jump
 mapn("<C-d>", "<C-d>zz")
