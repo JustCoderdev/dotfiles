@@ -61,6 +61,6 @@ generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | g
 sudo git commit -m "NixOS build ${HOST}#${generation}"
 
 echo -e "\n\033[32mCommitted as NixOS build ${HOST}#${generation}\033[0m"
-echo -e "\033[34mNixOS Rebuild Completed! ${HOST}\033[0m\n"
+echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 shopt -u globstar
 popd > /dev/null
