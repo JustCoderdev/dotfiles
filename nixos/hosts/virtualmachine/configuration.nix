@@ -4,7 +4,7 @@
 	common = {
 		core = {
 			bluetooth.enable = true;
-			nvidia.enable = true;
+			nvidia.enable = false;
 		};
 
 		users = {
