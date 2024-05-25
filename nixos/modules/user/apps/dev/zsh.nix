@@ -1,5 +1,5 @@
 { config, pkgs, settings, ... }:
-let 
+let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
 in {

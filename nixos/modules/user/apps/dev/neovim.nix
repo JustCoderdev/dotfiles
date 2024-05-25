@@ -4,21 +4,23 @@ let
 	dotfiles = settings.dotfiles_path;
 	cachepath = settings.cache_path;
 in {
+#	Requirements:
+#		- Clangd
+#		- Lua Language Server
+#		- Marksman
+
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
 
-#	requirements:
-
-#		- clangd
-#		- Lua language server
-#		- Marksman
-#		- Bash language
-#		- cc1plus
-
 	home.packages = with pkgs; [
 #		neovim
+
 		xclip
 		xsel
+
+		lua-language-server
+		marksman
+#		nixd
 	];
 
 	# Import configuration from dotfiles
@@ -29,7 +31,7 @@ SETTINGS = {
 	cache_path = "${cachepath}/nvim"
 }
 
-print("Injected by nixOS with love <3")
+print("Injected by nixOS with love <3\n")
 
 file = "init";
 local require_string = string.format("%s.%s", "${username}", file)
