@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let cfg = config.system.desktop.wayland; in
@@ -7,26 +7,26 @@ let cfg = config.system.desktop.wayland; in
 	config = mkIf cfg.enable {
 		hardware = {
 			opengl.enable = true;
-			nvidia.modesetting.enable = true;
+#			nvidia.modesetting.enable = true;
 		};
 
 		services.xserver = {
-#			displayManager.gdm = {
-#				enable = true;
-#				wayland = true;
-#			};
-			displayManager.sddm = {
+			displayManager.gdm = {
 				enable = true;
-#				wayland.enable = true;
-				enableHidpi = true;
-				theme = "where_is_my_sddm_theme";
-#				package = pkgs.sddm;
+				wayland = true;
 			};
+#			displayManager.sddm = {
+#				enable = true;
+##				wayland.enable = true;
+#				enableHidpi = true;
+#				theme = "where_is_my_sddm_theme";
+##				package = pkgs.sddm;
+#			};
 		};
 
 		environment = {
 			systemPackages = with pkgs; [
-				pkgs-unstable.where-is-my-sddm-theme
+#				pkgs-unstable.where-is-my-sddm-theme
 				wayland
 				waybar
 				rofi-wayland
