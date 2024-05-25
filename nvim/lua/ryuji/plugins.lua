@@ -45,11 +45,14 @@ packer.init({
 	ensure_dependencies = true,
 	-- snapshot_path       = packer.util.join_paths(vim.fn.stdpath('cache'), 'packer.nvim'), -- Default save directory for snapshots
 	-- package_root        = packer.util.join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-	compile_path        =  "~/.cache/nvim/packer_compiled.lua",
+	compile_path        =  SETTINGS.cache_path .. "/packer_compiled.lua",
 })
 packer.startup({
 	function(use)
-		use "wbthomason/packer.nvim"
+		use {
+			"wbthomason/packer.nvim",
+			run = ":PackerSync"
+		}
 
 		-- IMPORTANT: before lsp
 		use "folke/neodev.nvim"     -- Lua language extension
@@ -101,7 +104,8 @@ packer.startup({
 
 		use {                      -- Display syntax highlighting
 			"nvim-treesitter/nvim-treesitter",
-			tag = "v0.9.1"         -- tag = "v0.8.1"
+			tag = "v0.9.1",         -- tag = "v0.8.1"
+			run = ":TSUpdateSync"
 		}
 
 		use "ntpeters/vim-better-whitespace" -- Check for trailing whitespaces
