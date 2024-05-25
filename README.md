@@ -20,9 +20,28 @@ Configuration files for
 
 ### NixOS
 
-- [ ] Install nixd
-- [ ] Install obsidian
-- [ ] Add module configurability
+- [ ] Restructure dotfiles
+- [ ] Background image
+- [ ] Mac-like gestures
+- [ ] Custom enable config (mk.force)
+
+- [ ] Setup Firefox
+- [ ] Setup Ly
+- [ ] Setup Github
+	- [ ] `git config --global --add safe.directory /.dotfiles`
+	- [ ] `git config --global pull.rebase true`
+	- [ ] `push.autoSetupRemote`
+
+- [ ] Check tmux
+- [ ] Check emax
+- [ ] Check xnomad
+- [ ] Check Wayland
+
+- [ ] Custom XKB LAYOUT (`Shift+Backspace`=`Canc`)
+
+- [ ] Set version for each package
+- [ ] Installation script (`system.userActivationScripts`)
+- [ ] Auto-fetch dotfile repo
 
 
 ## Special Installing
