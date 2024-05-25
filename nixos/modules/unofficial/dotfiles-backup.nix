@@ -7,8 +7,8 @@ stdenv.mkDerivation {
 	src = settings.dotfiles_path;
 
 	installPhase = ''
-		mkdir -p $out/current-dotfiles
-		cp -r . $out/current-dotfiles
+		mkdir -p $out/share/current-dotfiles
+		cp -r . $out/share/current-dotfiles
 	'';
 }
 
