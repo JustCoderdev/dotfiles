@@ -3,8 +3,8 @@
 DOTFILES_PATH="/.dotfiles"
 
 # Clone dotfiles
-# nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ${DOTFILES_PATH}"
-# nix-shell -p git --command "git checkout nixos-compliant"
+nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ${DOTFILES_PATH}"
+nix-shell -p git --command "git checkout nixos-compliant"
 
 rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
 mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
