@@ -15,6 +15,7 @@ alias cl="clear"
 alias rm="rm -I"
 
 ## change dir
+alias github="cd ~/Developer/Github/"
 alias projects="cd ~/Developer/Projects/"
 alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
 
