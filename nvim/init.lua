@@ -28,9 +28,7 @@ end
 
 --
 function log(icon, msg) print(string.format("       %s %s", icon, msg)) end
-function log_error(msg)
-	print(string.format(" /!\\   ! %s", msg)); flag_error()
-end
+function log_error(msg) print(string.format(" /!\\   ! %s", msg)); flag_error() end
 
 --
 function declare_plugin_config(plugin_name) log(">", string.format("Configuring %s", plugin_name)) end
