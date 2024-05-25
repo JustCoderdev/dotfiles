@@ -73,15 +73,10 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # bindsym XF86AudioMute	       exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
 # Custom Screen brightness controls
-bindsym XF86MonBrightnessUp			exec "i3-nagbar -t warning -m 'You pressed XF86MonBrightnessUp'"
-bindsym XF86MonBrightnessDown		exec "i3-nagbar -t warning -m 'You pressed XF86MonBrightnessDown'"
-bindsym Shift+XF86MonBrightnessUp	exec "i3-nagbar -t warning -m 'You pressed Shift+XF86MonBrightnessUp'"
-bindsym Shift+XF86MonBrightnessDown	exec "i3-nagbar -t warning -m 'You pressed Shift+XF86MonBrightnessDown'"
-
-# bindsym XF86MonBrightnessUp			exec "sudo backlight inc 50"
-# bindsym XF86MonBrightnessDown		exec "sudo backlight dec 50"
-# bindsym Shift+XF86MonBrightnessUp	exec "sudo backlight set max"
-# bindsym Shift+XF86MonBrightnessDown	exec "sudo backlight set 0"
+bindsym XF86MonBrightnessUp			exec "sudo backlight inc 50"
+bindsym XF86MonBrightnessDown		exec "sudo backlight dec 50"
+bindsym Shift+XF86MonBrightnessUp	exec "sudo backlight set max"
+bindsym Shift+XF86MonBrightnessDown	exec "sudo backlight set 0"
 
 # Media player controls
 # bindsym XF86AudioPlay  exec "playerctl play"
