@@ -14,7 +14,7 @@ nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfi
 # Generate harware configuration
 echo -e "Generating hardware configuration"
 
-sudo rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
+sudo rm -fI "${DOTFILES_PATH}/nixos/hosts/nixos/*"
 sudo mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
 sudo nixos-generate-config --show-hardware-config > "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"
 
