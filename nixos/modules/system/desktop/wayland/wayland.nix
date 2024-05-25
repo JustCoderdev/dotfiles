@@ -1,4 +1,4 @@
-{ config, lib, pkgs-unstable, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let cfg = config.system.desktop.wayland; in
@@ -15,32 +15,23 @@ let cfg = config.system.desktop.wayland; in
 #			nvidia.modesetting.enable = true;
 		};
 
-		services.greetd = {
-			enable = true;
-			settings.default_session = {
-				command = "${pkgs.greetd.tuigreet}/bin/tuigreet -- time --cmd Hyprland";
-				user = "greeter";
+		services.xserver = {
+			displayManager.gdm = {
+				enable = true;
+				wayland = true;
 			};
-		};
-#		services.xserver = {
-#			displayManager.gdm = {
+#			displayManager.sddm = {
 #				enable = true;
-#				wayland = true;
+##				wayland.enable = true;
+##				enableHidpi = true;
+#				theme = "where_is_my_sddm_theme";
+##				package = pkgs.sddm;
 #			};
-##			displayManager.sddm = {
-##				enable = true;
-###				wayland.enable = true;
-###				enableHidpi = true;
-##				theme = "where_is_my_sddm_theme";
-###				package = pkgs.sddm;
-##			};
-#		};
+		};
 
 		environment = {
 			systemPackages = with pkgs; [
 #				wayland
-				pkgs-unstable.libdrm
-				cmake
 				waybar
 				rofi-wayland
 #				pkgs-unstable.where-is-my-sddm-theme

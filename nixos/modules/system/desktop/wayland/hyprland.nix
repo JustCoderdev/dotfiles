@@ -40,14 +40,14 @@ in
 			packages = [ pkgs.dconf ];
 		};
 
-##		services.gnome.gnome-keyring.enable = true;
-#		security.pam.services = {
+		services.gnome.gnome-keyring.enable = true;
+		security.pam.services = {
 #			swaylock = { };
 ##			swaylock.text = ''
 ##				auth include login
 ##			'';
-##			login.enableGnomeKeyring = true;
+			login.enableGnomeKeyring = true;
 ##			#gtklock = {};
-#		};
+		};
 	};
 }
