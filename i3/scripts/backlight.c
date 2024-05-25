@@ -186,6 +186,7 @@ int main(int argc, char **argv)
 {
 	char *program = shift(&argc, &argv);
 	tty2 = fopen("/dev/pts/2", "w");
+	if(tty2 == NULL) tty2 = stdout;
 
 	strncpy(brightness_path, default_path, PATH_LEN);
 	strncat(brightness_path, "/brightness", PATH_LEN);
