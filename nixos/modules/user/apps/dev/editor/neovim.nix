@@ -2,7 +2,9 @@
 let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
+
 	cachepath = settings.cache_path;
+	configpath = settings.config_path;
 in {
 #	Requirements:
 #		- Clangd
@@ -32,7 +34,7 @@ in {
 	];
 
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/nvim/init.lua".text = ''
+	home.file."${configpath}/nvim/init.lua".text = ''
 -- NixOS generated config for nvim :P
 SETTINGS = {
 	user_name = "${username}",
@@ -50,11 +52,11 @@ if (not file_ok) then
 end
 '';
 
-	home.file."/home/${username}/.config/nvim/lua/${username}" = {
+	home.file."${configpath}/nvim/lua/${username}" = {
 		source = "${dotfiles}/nvim/lua/${username}/";
 		recursive = true;
 	};
-	home.file."/home/${username}/.config/nvim/lua/${username}/init.lua" = {
+	home.file."${configpath}/nvim/lua/${username}/init.lua" = {
 		source = "${dotfiles}/nvim/init.lua";
 	};
 }
