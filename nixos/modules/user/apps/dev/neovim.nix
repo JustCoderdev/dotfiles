@@ -10,7 +10,7 @@ in {
 #	home.packages = with pkgs; [ neovim ];
 
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/neovim/init.lua".text = ''
+	home.file."/home/${username}/.config/nvim/init.lua".text = ''
 		SETTINGS.user_name = "${username}"                                                \n
 		SETTINGS.cache_path = "${cachepath}/nvim"                                         \n
 
@@ -24,11 +24,11 @@ in {
 		end                                                                               \n
 	'';
 
-	home.file."/home/${username}/.config/neovim/lua/${username}" = {
+	home.file."/home/${username}/.config/nvim/lua/${username}" = {
 		source = "${dotfiles}/nvim/lua/${username}/";
 		recursive = true;
 	};
-	home.file."/home/${username}/.config/neovim/lua/${username}/init.lua" = {
+	home.file."/home/${username}/.config/nvim/lua/${username}/init.lua" = {
 		source = "${dotfiles}/nvim/init.lua";
 	};
 }
