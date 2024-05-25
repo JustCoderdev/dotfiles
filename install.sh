@@ -27,15 +27,26 @@ CONFIG_FILE_PATH="/etc/nixos/configuration.nix"
 
 sudo touch $BOOT_FILE_PATH
 echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" | sudo tee    $BOOT_FILE_PATH
-grep "boot" $CONFIG_FILE_PATH             | sudo tee -a $BOOT_FILE_PATH
 
-echo -ne "\n\tboot.loader.systemd-boot.configurationLimit = 5;\n" | sudo tee -a $BOOT_FILE_PATH
-echo -ne "\tboot.loader.grub.configurationLimit = 5;\n"           | sudo tee -a $BOOT_FILE_PATH
+# If UEFI system
+if [ -d "/sys/firmware/efi/efivars" ]; then
+	echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      | sudo tee -a $BOOT_FILE_PATH
+else
+	echo -ne "\tboot.loader.grub.enable = true;\n"                   | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\tboot.loader.grub.configurationLimit = 5;\n"          | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\tboot.loader.grub.useOSProber = false;\n"             | sudo tee -a $BOOT_FILE_PATH
+fi
 
-echo -ne "\n\t#Virtualisation\n"          | sudo tee -a $BOOT_FILE_PATH
-grep "virtualisation" $CONFIG_FILE_PATH   | sudo tee -a $BOOT_FILE_PATH
+# If using pre-existing configuration.nix file
+# grep "boot" $CONFIG_FILE_PATH             | sudo tee -a $BOOT_FILE_PATH
+# echo -ne "\n\t#Virtualisation\n"          | sudo tee -a $BOOT_FILE_PATH
+# grep "virtualisation" $CONFIG_FILE_PATH   | sudo tee -a $BOOT_FILE_PATH
+
 echo -ne "}\n"                            | sudo tee -a $BOOT_FILE_PATH
-sudo git add .
+sudo git add "${DOTFILES_PATH}/nixos"
 
 
 # Rebuild system
