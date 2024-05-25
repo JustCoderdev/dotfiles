@@ -18,12 +18,12 @@
 	],
 	"modules-right": [
 		"gamemode",
+		"network",
 		"cpu",
 		// "temperature",
 		// "memory",
 		// "disk",
 		"battery",
-		"network",
 		"tray",
 		"group/hardware"
 	],
