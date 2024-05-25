@@ -42,6 +42,7 @@ in {
 				firefox
 				obsidian
 				emulsion
+				newsflash
 			])
 
 			(lib.mkIf cfg.image-editing (with pkgs; [
