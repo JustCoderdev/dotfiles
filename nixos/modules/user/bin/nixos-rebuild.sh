@@ -24,7 +24,7 @@ echo -e "\nNixOS Rebuilding..."
 # Rebuild, output simplified errors, log trackebacks
 sudo git add ./**/*.nix
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#$1" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
