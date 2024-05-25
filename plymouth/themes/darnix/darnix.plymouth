@@ -4,5 +4,5 @@ Description=A Plymouth of OS X Yosemite
 ModuleName=script
 
 [script]
-ImageDir=/lib/plymouth/themes/darnix/resources
-ScriptFile=/lib/plymouth/themes/darnix/darnix.script
+ImageDir=/usr/share/plymouth/themes/darnix/resources
+ScriptFile=/usr/share/plymouth/themes/darnix/darnix.script
