@@ -84,7 +84,8 @@ mapn("<Leader>qq" , ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
 
 -- plugins
 mapn("<Leader>s", ":StripWhitespace <CR>") -- from vim-better-whitespace
-mapn("<Leader>h", ":FzfLua files resume=true <CR>")    -- from fzf
+-- mapn("<Leader>h", ":FzfLua files resume=true <CR>")    -- from fzf
+mapn("<Leader>h", ":FzfLua files <CR>")    -- from fzf
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
