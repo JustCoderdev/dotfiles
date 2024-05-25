@@ -11,7 +11,7 @@
 
 	# $ gsettings reset org.gnome.desktop.input-sources xkb-options
 	# $ gsettings reset org.gnome.desktop.input-sources sources
-	services.xserver.xkb.options = "numlock:"
+	services.xserver.xkbOptions = "numpad:mac";
 
 	# ctrl			Ctrl position
 	# "ctrl:swapcaps"	Swap Ctrl and Caps Lock
@@ -31,7 +31,4 @@
 	# compat		Compatibility options
 	# "numpad:pc"		Default numeric keypad keys
 	# "numpad:mac"		Numeric keypad always enters digits (as in macOS)
-
-
-	console.useXkbConfig = true;
 }
