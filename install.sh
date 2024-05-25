@@ -1,10 +1,17 @@
 #!/bin/sh
 
+# Quit on error
+set -e
+
 # Clone dotfiles
 echo -e "Cloning dotfiles"
 DOTFILES_PATH="/.dotfiles"
 
-nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ${DOTFILES_PATH}"
+# Move to dotfiles
+sudo mkdir ${DOTFILES_PATH}
+pushd "${DOT_FILES}" > /dev/null
+
+nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ."
 nix-shell -p git --command "git checkout nixos-compliant"
 
 
