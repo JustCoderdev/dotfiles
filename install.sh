@@ -12,7 +12,7 @@ nix-shell -p git --command "git checkout nixos-compliant"
 echo -e "Generating hardware configuration"
 
 rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
-mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
+sudo mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
 sudo nixos-generate-config --show-hardware-config > "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"
 
 
@@ -37,4 +37,4 @@ git add .
 
 # Rebuild system
 echo -e "Rebuilding system for \033[32m\"nixos\"\033[0m"
-sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}/nixos#nixos"
+sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}#nixos"
