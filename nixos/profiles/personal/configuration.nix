@@ -28,12 +28,14 @@
 		../../modules/system/services/ssh.nix
 		#../../modules/system/services/virtualbox.nix
 
-		#../../modules/user/bin/nixos-rebuild.nix
+		# ../../modules/user/bin/nixos-rebuild.nix
+		# ../../modules/user/bin/backlight.nix
 	];
 
 	# List packages installed in system profile.
 	environment.systemPackages = with pkgs; [
-		(import ../../modules/user/bin/nixos-rebuild.nix { inherit pkgs; inherit settings; })
+		(import ../../modules/user/bin/nixos-rebuild.nix { inherit pkgs settings; })
+		# (import ../../modules/user/bin/backlight.nix { inherit pkgs settings; })
 
 		zip
 		unzip
