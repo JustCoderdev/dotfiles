@@ -8,6 +8,14 @@ set -e
 pushd "${DOT_FILES}/nixos/" > /dev/null
 shopt -s globstar
 
+# Update hostname
+if [ -z "${1:-$HOST}" ]; then
+	echo -e "Host not passed, defaulting to \033[32m#\033[0m"
+else
+	echo -e "Requested rebuild for \"\033[32m${1:-$HOST}\033[0m\". Updating flake file..."
+	sed -i "s/\(hostname = \).*/\1\"${1:-$HOST}\";/" "${DOT_FILES}/nixos/flake.nix"
+fi
+
 # Check for differences
 echo -e "Analysing changes..."
 if git diff --quiet -- ./**/*.nix; then
@@ -25,7 +33,7 @@ echo -e "\nNixOS Rebuilding..."
 sudo git add ./**/*.nix
 
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#${1:-$HOST}" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
@@ -43,9 +51,9 @@ fi
 
 # Commit changes
 generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git commit -m "NixOS build#${generation}"
+sudo git commit -m "NixOS build ${1:-$HOST}#${generation}"
 
-echo -e "\n\033[32mCommitted as NixOS build#${generation}\033[0m"
-echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
+echo -e "\n\033[32mCommitted as NixOS build ${1:-$HOST}#${generation}\033[0m"
+echo -e "\033[34mNixOS Rebuild Completed! ${1:-$HOST}\033[0m\n"
 shopt -u globstar
 popd > /dev/null
