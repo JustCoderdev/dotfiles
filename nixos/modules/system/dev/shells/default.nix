@@ -1,10 +1,8 @@
-{ inputs, lib, settings, ... }:
+{ pkgs, ... }:
 
 let
-	callDevelop = lib.callPackageWith ({
-		inherit inputs settings;
-	});
-in
-{
-	c = callDevelop ./c.nix {};
+	cshell = import ./c.nix { inherit pkgs; };
+in {
+	default = cshell;
+	c = cshell;
 }

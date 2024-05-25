@@ -14,7 +14,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
-			_hostname = "acer";
+			_hostname = "virtualmachine";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs-unstable = import nixpkgs-unstable {
@@ -26,6 +26,8 @@
 						(nixpkgs.lib.getName pkg) pkgs.unfree;
 				};
 			};
+
+			args = { inherit inputs pkgs-unstable settings; };
 			modules = let path = settings.dotfiles_path; in [
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
@@ -36,7 +38,7 @@
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = { inherit pkgs-unstable settings; };
+					home-manager.extraSpecialArgs = args;
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/${settings.profile}/home.nix");
 				}
@@ -44,7 +46,7 @@
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = args;
 				inherit modules;
 			};
 
@@ -63,8 +65,8 @@
 			acer = systemBuilder;
 		};
 
-		devShells = let path = settings.dotfiles_path; in
-			(import (path + "/nixos/modules/system/dev/shells") { inherit inputs; });
+		devShells.${settings.system} = let path = settings.dotfiles_path; in
+			import (path + "/nixos/modules/system/dev/shells") { inherit args; };
 
 		# profile
 		# homeConfigurations = {

@@ -1,8 +1,7 @@
 { pkgs, ... }:
 
 pkgs.mkShell {
-	inputsFrom = with pkgs; [default];
-	packages = with pkgs; [
+	nativeBuildInputs = with pkgs; [
 		glibcInfo
 		glibc
 
