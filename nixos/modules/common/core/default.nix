@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 with lib;
 
@@ -40,6 +40,9 @@ with lib;
 
 	config = {
 		# Core packages
+#		environment.sessionVariables = {
+#			LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${pkgs.glib.out}/lib";
+#		};
 		environment.systemPackages = with pkgs; [
 			unzip zip
 			vim git
@@ -48,7 +51,7 @@ with lib;
 
 			# C Packages
 			glibcInfo
-			glibc
+			pkgs-unstable.glibc
 
 			clang-tools
 			clang
