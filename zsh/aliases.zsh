@@ -15,7 +15,7 @@ alias rm="rm -I"
 ## change dir
 alias projects="cd ~/Developer/Projects/"
 alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
-alias nixrebuild="dotfiles; ./nixos-rebuild.sh"
+alias nixrebuild="sudo $DOT_FILES/nixos/nixos-rebuild.sh"
 
 alias ..="cd .."
 alias ...="cd ../.."
