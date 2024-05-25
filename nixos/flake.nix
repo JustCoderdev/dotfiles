@@ -14,8 +14,8 @@
 			settings = {
 				hostname = "virtualmachine";
 				profile = "personal";
-
 				username = "ryuji";
+
 				system = "x86_64-linux";
 				dotfilespath = "/.dotfiles";
 			};
