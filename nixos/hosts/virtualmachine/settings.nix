@@ -12,6 +12,9 @@ rec {
 	special_pkgs = {
 		insecure = [ "electron-24.8.6" "python-2.7.18.6"];
 		unfree = [
+			"nvidia-x11"
+			"nvidia-settings"
+
 			"obsidian"
 			"google-chrome"
 			"discord"
