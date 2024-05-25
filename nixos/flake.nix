@@ -14,13 +14,17 @@
 			settings = {
 				hostname = "virtualmachine";
 				profile = "personal";
+
+				username = "ryuji";
 				system = "x86_64-linux";
+				dotfilespath = "/.dotfiles"
 			};
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
 			modules = [
 				./hosts/${settings.hostname}/hardware-configuration.nix
 				./profiles/${settings.profile}/configuration.nix
+				inputs.home-manager.nixosModules.default
 			];
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
@@ -28,6 +32,13 @@
 				specialArgs = { inherit settings; };
 				extraSpecialArgs = { inherit inputs; };
 				inherit modules;
+			};
+
+			userBuilder = home-manager.lib.homeManagerConfiguration {
+				inherit pkgs;
+				modules = [
+					./profiles/${settings.profile}/home.nix
+				];
 			};
 		in {
 
@@ -37,13 +48,9 @@
 			acer = systemBuilder;
 		};
 
-		# homeConfigurations = { # username
-		# 	ryuji = home-manager.lib.homeManagerConfiguration {
-		# 		inherit pkgs;
-		# 		modules = [
-		# 			./users/ryuji/home.nix
-		# 		];
-		# 	};
-		# };
+		# profile
+		homeConfigurations = {
+			personal = userBuilder;
+		};
 	};
 }
