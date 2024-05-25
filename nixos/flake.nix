@@ -66,7 +66,7 @@
 		};
 
 		devShells.${settings.system} = let path = settings.dotfiles_path; in
-			import (path + "/nixos/modules/system/dev/shells") { inherit args; };
+			import (path + "/nixos/modules/system/dev/shells") { pkgs = nixpkgs.pkgs; };
 
 		# profile
 		# homeConfigurations = {
