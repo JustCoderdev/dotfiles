@@ -1,17 +1,19 @@
 # Check whether you are on a different system
 
-if [ -f "./flake.nix" ]; then
-	HOST_FLAKE=$(awk '/hostname = / {print $3}' flake.nix)
+FLAKE_PATH="."
+
+if [ -f "${FLAKE_PATH}/flake.nix" ]; then
+	HOST_FLAKE=$(awk '/hostname = / {print $3}' "${FLAKE_PATH}/flake.nix")
 	HOST_FLAKE=$(echo $HOST_FLAKE | sed 's/"\(.*\)";/\1/')
 fi
 
 HOST_SHELL="${HOST}"
 HOST_INPUT="${1}"
 
-echo "HOST_FLAKE: ${HOST_FLAKE}"
-echo "HOST_SHELL: ${HOST_SHELL}"
-echo "HOST_INPUT: ${HOST_INPUT}"
-echo ""
+# echo "HOST_FLAKE: ${HOST_FLAKE}"
+# echo "HOST_SHELL: ${HOST_SHELL}"
+# echo "HOST_INPUT: ${HOST_INPUT}"
+# echo ""
 
 # Check for input
 if [ -z $HOST_INPUT ]; then
@@ -24,8 +26,8 @@ fi
 # Update flake file
 if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
 	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-	sudo sed -i "s/\(hostname = \).*/\1\"$1\";/" ./flake.nix
+	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
 fi
 
 # Rebuild system
-sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}"
+sudo nixos-rebuild switch --show-trace --flake "${FLAKE_PATH}#${HOST_SHELL}"
