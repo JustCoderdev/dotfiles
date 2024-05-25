@@ -11,14 +11,14 @@ DOTFILES_PATH="/.dotfiles"
 sudo mkdir ${DOTFILES_PATH}
 pushd "${DOT_FILES}" > /dev/null
 
-nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ."
-nix-shell -p git --command "git checkout nixos-compliant"
+nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git ${DOT_FILES}"
+nix-shell -p git --command "sudo git checkout nixos-compliant"
 
 
 # Generate harware configuration
 echo -e "Generating hardware configuration"
 
-rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
+sudo rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
 sudo mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
 sudo nixos-generate-config --show-hardware-config > "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"
 
