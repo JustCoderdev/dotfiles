@@ -58,7 +58,7 @@ if git diff --quiet -- .; then  # -- ./**/*.nix
 	# popd > /dev/null
 	# exit 0
 else
-	echo -e " \033[34mFound\033[0m"
+	echo " Found"
 	had_changes=true
 
 	# shellcheck disable=SC2162
@@ -78,7 +78,7 @@ if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" &>.nixos-swi
 	echo -e " Done\n"
 
 	## Commit changes
-	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
+	generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 	if $had_changes; then
 		sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
 	fi
