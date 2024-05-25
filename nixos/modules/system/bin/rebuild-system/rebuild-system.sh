@@ -73,10 +73,14 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS..."
-echo -ne "\033[?1049h\033[H" # enter alt-buff
+# echo -ne "\033[?1049h\033[H" # enter alt-buff
 
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" | tee .nixos-switch.log; then
+sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
+exit_code="${PIPESTATUS[0]}"
+echo "Exit code: \"${exit_code}\""
+if [[ "${exit_code}" == 0 ]]; then
+	sleep 1
 	echo -ne "\033[?1049l" # exit alt-buff
 	echo -e " Done\n"
 
@@ -93,7 +97,7 @@ else
 	echo -ne "\033[?1049l" # exit alt-buff
 	echo -e " \033[31mFailed\033[0m"
 
-	grep --color error .nixos-switch.log
+	grep --color -F "error" .nixos-switch.log
 	if $had_changes; then
 		sudo git restore --staged .
 	fi

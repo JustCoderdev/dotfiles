@@ -1,4 +1,4 @@
-{ pkgs, lib, config, settings, ... }:
+{ config, lib, pkgs-unstable, pkgs, settings, ... }:
 
 with lib;
 
@@ -42,10 +42,12 @@ in {
 		};
 
 		# List packages installed in system profile.
-		environment.systemPackages = with pkgs; [
-			firefox
-			obsidian
-			emulsion
+		environment.systemPackages = (mkMerge (with pkgs; [
+			[
+				firefox
+				obsidian
+				emulsion
+			]
 
 			(mkIf cfg.image-editing [
 				gimp
@@ -53,18 +55,19 @@ in {
 			])
 			(mkIf cfg.video-editing [
 				obs-studio # Add to home-manager
-				davinci-resolve
+				pkgs-unstable.davinci-resolve
 			])
 			(mkIf cfg.developer [
 				putty
 				kicad
 			])
 
-			# Scuola
-			google-chrome
-			# ciscoPacketTracer8
-			# github-desktop
-			# vscode
-		];
+			[ # Scuola
+				google-chrome
+				# ciscoPacketTracer8
+				# github-desktop
+				# vscode
+			]
+		]));
 	};
 }

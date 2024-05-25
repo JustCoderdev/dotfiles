@@ -10,8 +10,16 @@ rec {
 
 	system = "x86_64-linux";
 	special_pkgs = {
-		unfree = [ "obsidian" "google-chrome" ];
-		insecure = [ "electron-24.8.6" ];
+		insecure = [ "electron-24.8.6" "python-2.7.18.6"];
+		unfree = [
+			"obsidian"
+			"google-chrome"
+			"discord"
+			"steam"
+			"steam-run"
+			"steam-original"
+			"davinci-resolve"
+		];
 	};
 }
 
