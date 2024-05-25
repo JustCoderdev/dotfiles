@@ -11,7 +11,7 @@ treesitter.setup({
   ensure_installed = {
 	  "lua", "c", "bash",
 	  "html", "typescript", "javascript", "css",
-	  "json", "yaml",
+	  "json", -- "yaml",
 	  "markdown", "markdown_inline",
 	  "make", "gitignore", "dockerfile",
 	  "nix", "vim", "query"
