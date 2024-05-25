@@ -7,7 +7,7 @@ alias ez="echo 'Updating zsh :D'; exec zsh"
 ## list
 alias ls="ls --color -F "
 alias la="ls -FA"
-alias ll="ls -FAal"
+alias ll="ls -FA"
 
 alias cls="clear"
 alias cl="clear"
