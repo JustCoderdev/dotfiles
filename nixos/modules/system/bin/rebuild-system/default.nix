@@ -3,9 +3,9 @@
 {
 	environment.systemPackages = with pkgs; [
 		(writeShellApplication {
-			name = "rebuild-system";
-			runtimeInputs = with pkgs; [ git vim ];
-			text = (builtins.readFile ./nixos-rebuild.sh);
+				name = "rebuild-system";
+				runtimeInputs = with pkgs; [ git vim ];
+				text = (builtins.readFile ./rebuild-system.sh);
 		})
 	];
 }

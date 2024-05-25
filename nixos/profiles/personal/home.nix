@@ -7,15 +7,15 @@
 	programs.home-manager.enable = true;
 
 	imports = [
-		../../modules/user/apps/desktop/i3.nix
+		../../modules/user/desktop/i3.nix
 
-		../../modules/user/apps/dev/editor/neovim.nix
+		../../modules/user/dev/editor/neovim.nix
 
-		../../modules/user/apps/dev/alacritty.nix
-		../../modules/user/apps/dev/clang.nix
-		../../modules/user/apps/dev/zsh.nix
+		../../modules/user/dev/alacritty.nix
+		../../modules/user/dev/clang.nix
+		../../modules/user/dev/zsh.nix
 
-		../../modules/user/apps/firefox.nix
+		../../modules/user/firefox.nix
 	];
 
 	home.stateVersion = "23.05";

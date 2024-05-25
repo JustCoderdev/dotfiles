@@ -1,8 +1,13 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	# sound.enable = true;
 	# hardware.pulseaudio.enable = false;
+
+	# Install control script
+	environment.systemPackages = with pkgs; [
+		pamixer
+	];
 
 	# Enable sound with pipewire.
 	security.rtkit.enable = true;

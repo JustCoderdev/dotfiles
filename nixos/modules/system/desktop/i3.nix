@@ -7,13 +7,14 @@
 	programs.dconf.enable = true;
 
 	services.xserver = {
-		displayManager.defaultSession = lib.mkforce "none+i3";
+		displayManager.defaultSession = lib.mkForce "none+i3";
 
 		windowManager.i3 = {
 			enable = true;
 			extraPackages = with pkgs; [
 				dmenu
 				i3status
+				playerctl
 				# i3lock
 			];
 		};

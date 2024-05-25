@@ -1,7 +1,7 @@
 { pkgs, settings, ... }:
 
 {
-	import = [
+	imports = [
 		./bluetooth.nix
 		./console.nix
 		./firewall.nix
