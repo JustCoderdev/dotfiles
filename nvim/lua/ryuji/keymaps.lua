@@ -52,6 +52,13 @@ unmap("n", "'")
 unmap("i", "<M-k>")
 unmap("i", "<M-j>")
 
+-- disable mouse selection
+unmap("niv", "<RightMouse>")
+unmap("niv", "<A-RightMouse>")
+unmap("niv", "<S-RightMouse>")
+unmap("niv", "<C-RightMouse>")
+unmap("niv", "<MiddleMouse>")
+
 -- arrows
 unmap("nivx", "<Up>")
 unmap("nivx", "<Down>")
@@ -169,7 +176,7 @@ mapt("<ESC>", "<C-\\><C-n>")
 -- mapt("<C-c>", "<C-\\><C-n>")
 
 -- move buffer
-mapt("<C-h>", "<C-\\><C-N> <C-w>h")
-mapt("<C-j>", "<C-\\><C-N> <C-w>j")
-mapt("<C-k>", "<C-\\><C-N> <C-w>k")
-mapt("<C-l>", "<C-\\><C-N> <C-w>l")
+mapt("<M-h>", "<C-\\><C-N> <C-w>h")
+mapt("<M-j>", "<C-\\><C-N> <C-w>j")
+mapt("<M-k>", "<C-\\><C-N> <C-w>k")
+mapt("<M-l>", "<C-\\><C-N> <C-w>l")
