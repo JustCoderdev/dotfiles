@@ -32,5 +32,5 @@ cursor_mode() {
     zle -N zle-line-init
 }
 
-cursor_mode
+# cursor_mode
 

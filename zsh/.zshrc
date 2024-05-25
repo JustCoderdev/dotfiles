@@ -3,8 +3,8 @@
 ##  Options  ##
 
 # vim motions
-bindkey -v
-export KEYTIMEOUT=1
+# bindkey -v
+# export KEYTIMEOUT=1
 
 # completition
 setopt   AUTO_LIST            # Automatically list choices on ambiguous completion
@@ -33,8 +33,8 @@ zmodload zsh/complist
 
 
 ##  Bindings  ##
-bindkey -r '^K'
-bindkey -r '^D' # use to delete hole line
+# bindkey -r '^K'
+# bindkey -r '^D' # use to delete hole line
 
 
 # more files
