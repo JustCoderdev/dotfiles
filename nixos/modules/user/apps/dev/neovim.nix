@@ -6,7 +6,11 @@ let
 in {
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
-	programs.neovim.extraLuaConfig = ''
+
+#	home.packages = with pkgs; [ neovim ];
+
+	# Import configuration from dotfiles
+	home.file."/home/${username}/.config/neovim/init.lua".text = ''
 		SETTINGS = {                              \n
 			user_name = ${username},          \n
 			default_colorscheme = {           \n
@@ -25,11 +29,9 @@ in {
 		if (not file_ok) then                                                             \n
 			print(string.format(" /!\\  Error loading %s.lua file", require_string)); \n
 		end                                                                               \n
+		\n
 	'';
 
-#	home.packages = with pkgs; [ neovim ];
-
-	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/neovim/lua/${username}" = {
 		source = "${dotfiles}/nvim/lua/${old_username}/";
 		recursive = true;
