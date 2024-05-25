@@ -13,8 +13,8 @@ in {
 			isNormalUser = true;
 			createHome = true;
 
-			extraGroups = [ "networkmanager" "wheel" ];
 			# packages = with pkgs; [ ];
+			extraGroups = [ "networkmanager" "wheel" ];
 		};
 
 		# List packages installed in system profile.

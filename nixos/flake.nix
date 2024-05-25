@@ -19,7 +19,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, nixd }@inputs:
 		let
-			_hostname = "acer";
+			_hostname = "virtualmachine";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
@@ -71,12 +71,12 @@
 			acer = systemBuilder;
 		};
 
-		devShells.${settings.system} = let path = settings.dotfiles_path; in
-			import (path + "/nixos/modules/system/dev/shells") { inherit pkgs; };
-
 		# profile
 		# homeConfigurations = {
 		#	${settings.username} = userBuilder;
 		# };
+
+		#devShells.${settings.system} = let path = settings.dotfiles_path; in
+		#	import (path + "/nixos/modules/system/dev/shells") { inherit pkgs; };
 	};
 }

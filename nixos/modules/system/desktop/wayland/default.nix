@@ -4,11 +4,11 @@ with lib;
 
 {
 	imports = [
-		../xserver/x11.nix
+		#../xserver/x11.nix
 
 		./hyprland.nix
 		#./sway.nix # Sway OR Hyprland
-		./wayland.nix
+		#./wayland.nix
 	];
 
 	options = {

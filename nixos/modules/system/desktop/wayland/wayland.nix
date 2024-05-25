@@ -15,18 +15,18 @@ let cfg = config.system.desktop.wayland; in
 #			nvidia.modesetting.enable = true;
 		};
 
-		services.xserver = {
-			displayManager.gdm = {
-				enable = true;
-				wayland = true;
-			};
-#			displayManager.sddm = {
+#		services.xserver = {
+#			displayManager.gdm = {
 #				enable = true;
-##				wayland.enable = true;
-##				enableHidpi = true;
-#				theme = "where_is_my_sddm_theme";
-##				package = pkgs.sddm;
+#				wayland = true;
 #			};
+			displayManager.sddm = {
+				enable = true;
+#				wayland.enable = true;
+#				enableHidpi = true;
+#				theme = "where_is_my_sddm_theme";
+#				package = pkgs.sddm;
+			};
 		};
 
 		environment = {

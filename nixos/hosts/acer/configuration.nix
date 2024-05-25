@@ -29,6 +29,11 @@
 		desktop.xfce.enable = true;
 		desktop.wayland.enable = false;
 
+		dev = {
+			c.enable = true;
+			arduino.enable = true;
+		};
+
 		gaming.enable = false;
 		services = {
 			docker.enable = true;

@@ -1,33 +1,38 @@
-{ ... }:
+{ config, lib, ... }:
+
+with lib;
+let cfg = config.system.desktop.xfce; in
 
 {
-	services.xserver = {
-		enable = true;
-
-		# Configure keymap in X11
-		layout = "it";
-		xkbVariant = "";
-
-		# Enable touchpad support.
-		libinput = {
+	config = mkIf cfg.enable {
+		services.xserver = {
 			enable = true;
 
-			mouse = {
-				middleEmulation = false;
-			};
+			# Configure keymap in X11
+			layout = "it";
+			xkbVariant = "";
 
-			touchpad = {
-				accelProfile = "flat";       # flat, adaptive
-				clickMethod = "buttonareas"; # buttonareas, clickfinger
+			# Enable touchpad support.
+			libinput = {
+				enable = true;
 
-				# dmesg | grep i8042
-				# dev = "/devices/platform/i8042/serio1/input/input5";
-				middleEmulation = false;
-				scrollMethod = "twofinger";
+				mouse = {
+					middleEmulation = false;
+				};
 
-				tapping = true;
-				tappingDragLock = false;
-				tappingButtonMap = "lrm";
+				touchpad = {
+					accelProfile = "flat";       # flat, adaptive
+					clickMethod = "buttonareas"; # buttonareas, clickfinger
+
+					# dmesg | grep i8042
+					# dev = "/devices/platform/i8042/serio1/input/input5";
+					middleEmulation = false;
+					scrollMethod = "twofinger";
+
+					tapping = true;
+					tappingDragLock = false;
+					tappingButtonMap = "lrm";
+				};
 			};
 		};
 	};
