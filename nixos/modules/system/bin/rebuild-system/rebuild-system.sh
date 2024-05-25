@@ -79,7 +79,7 @@ echo -ne "\033[?1049h\033[H" # enter alt-buff
 sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
 
-echo  -e "\n\033[34mNixOS Rebuild Completed!\033[0m (Exit code: $exit_code)"
+echo  -e "\n\033[34mNixOS Rebuild Completed!\033[0m (code: $exit_code)"
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
