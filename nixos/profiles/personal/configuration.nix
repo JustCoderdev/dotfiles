@@ -43,7 +43,7 @@
 
 		git
 		vim
-		make
+		gnumake
 
 		wget
 		man

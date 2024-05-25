@@ -18,7 +18,7 @@
 				  owner = "JustCoderdev";
 				  repo = "dotfiles";
 				  rev = "eed7d3275f80bc530b6770c9a0404fd9ffdf7a52";
-				  hash = "";
+				  hash = "sha256-q4nHxhV1rDNInTxaC6ejZjoGZLBba4sWnFLK+BeKpno=";
 				};
 
 				sourceRoot = "${src.name}/plymouth/themes/${theme-name}";
@@ -27,7 +27,7 @@
 				installPhase = ''
 					sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' ${theme-name}.plymouth
 					mkdir -p $out/share/plymouth/themes/${theme-name}
-					cp * $out/share/plymouth/themes/${theme-name}
+					cp -r * $out/share/plymouth/themes/${theme-name}
 				'';
 				#runHook postInstall
     		};
