@@ -55,7 +55,6 @@ function log_sub_error(msg) print(string.format(" /!\\      ! %s", msg)); flag_e
 -- START ACTUAL CODE --
 
 print([[
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 * ##     ## ########  #######  ##     ## #### ##     ## *
 * ###    ## ##       ##     ## ##     ##  ##  ###   ### *

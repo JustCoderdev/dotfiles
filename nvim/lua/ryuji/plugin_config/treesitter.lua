@@ -4,9 +4,9 @@ declare_plugin_config("treesitter")
 vim.opt.runtimepath:append(SETTINGS.cache_path .. "/parsers")
 
 -- use nixOS to find clangd
-require("nvim-treesitter.install").compilers = {
-	"/usr/bin/env clangd"
-}
+-- require("nvim-treesitter.install").compilers = {
+-- 	"/usr/bin/env clangd"
+-- }
 
 local treesitter = require_plugin("nvim-treesitter.configs")
 treesitter.setup({
