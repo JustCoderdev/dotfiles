@@ -1,0 +1,12 @@
+/* Default colors from sane1090x Thx <3
+ * <https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/style.css> */
+
+@define-color background #1e2326;
+@define-color foreground #d3c6aa;
+
+@define-color tint-aqua #83c092;
+@define-color tint-blue #7fbbb3;
+@define-color tint-green #a7c080;
+@define-color tint-purple #d699b6;
+@define-color tint-orange #dbbc7f;
+@define-color tint-red #e67e80;
