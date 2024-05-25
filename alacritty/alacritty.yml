@@ -58,8 +58,7 @@ window:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
   #
-  # Values for `decorations` (macOS only):
-  #     - transparent: Title bar, transparent background and title bar buttons
+  # Values for `decorations` (macOS only): - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
   #decorations: full
 
@@ -736,10 +735,10 @@ shell:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Right, mods: Alt,     chars: "\x1BF" }
-  - { key: Left,  mods: Alt,     chars: "\x1BB" }
-  - { key: Y,     mods: Control, action: Copy   }
-  - { key: P,     mods: Control, action: Paste  }
+  - { key: Right, mods: Alt,       chars: "\x1BF" }
+  - { key: Left,  mods: Alt,       chars: "\x1BB" }
+  - { key: Y,     mods: Shift|Alt, action: Copy   }
+  - { key: P,     mods: Shift|Alt, action: Paste  }
 
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }

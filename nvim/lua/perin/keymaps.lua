@@ -73,24 +73,24 @@ vim.g.maplocalleader = " "
 
 -- nvim_lspconfig overriden
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
---   "<Leader>d", "<Leader>rd", "<Leader>ff"
+--   "<Leader>d", "<Leader>rd", "<Leader>s"
 
 mapn("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- save
 mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
-mapn("<Leader>qq" , ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
+mapn("<Leader>qq", ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
 mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 
 -- plugins
 mapn("<Leader>s", ":StripWhitespace <CR>")  -- from vim-better-whitespace
 
-mapn("<Leader>ff", ":FzfLua files <CR>")              -- from fzf
-mapn("<Leader>fF", ":FzfLua files resume=true <CR>")  -- from fzf
+mapn("<Leader>h", ":FzfLua files <CR>")              -- from fzf
+mapn("<Leader>H", ":FzfLua files resume=true <CR>")  -- from fzf
 
-mapn("<Leader>fs", ":FzfLua grep <CR>")               -- from fzf
-mapn("<Leader>fS", ":FzfLua grep resume=true <CR>")   -- from fzf
+mapn("<Leader>g", ":FzfLua grep <CR>")               -- from fzf
+mapn("<Leader>G", ":FzfLua grep resume=true <CR>")   -- from fzf
 
 -- clipboard
 -- map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
