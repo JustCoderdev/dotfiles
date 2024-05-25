@@ -28,19 +28,28 @@ in
 			(with pkgs; [
 				discord
 
-				goverlay
-				mangohud
+				goverlay # Edit overlay
+				mangohud # Overlay
 
-				heroic   # epic games - gog
-				prismlauncher
+				# To use mangohud add to launch options
+				# mangohud %command%
 
-				lutris
-				gamehub
-				bottles
+				# To use gamemode add to launch options
+				# gamemoderun %command%
+
+				# For both
+				# gamemoderun mangohud %command%
+
+				heroic         # Epic Games - gog
+				prismlauncher  # Minecraft launcher
+
+				lutris   # Game hub
+				gamehub  # Game hub
+				bottles  # Vine game manager
 			])
 
 			(with pkgs-unstable; [
-				cartridges
+				cartridges  # Game hub
 			])
 		]);
 	};

@@ -9,6 +9,7 @@
 		./locale.nix
 		./network.nix
 		./nix.nix
+#./nvidia.nix
 		./numpad.nix
 		./pipewire.nix
 		./plymouth.nix
