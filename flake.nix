@@ -12,6 +12,7 @@
 
 	outputs = { self, nixpkgs, home-manager, ... }@inputs:
 		let
+			# User settings
 			settings = rec {
 				hostname = "virtualmachine";
 				profile = "personal";
@@ -24,6 +25,12 @@
 				system = "x86_64-linux";
 			};
 
+			# Install script vars
+			supportedSystems = [ "i686-linux" "x86_64-linux" ];
+			forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+			nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
+
+			# Other
 			legacy-pkgs = nixpkgs.legacyPackages.${settings.system};
 			args = { inherit settings; };  # inherit nixd; };
 			modules = [
@@ -69,5 +76,24 @@
 		# homeConfigurations = {
 		#	${settings.username} = userBuilder;
 		# };
+
+		packages = forAllSystems (system: let pkgs = nixpkgsFor.${system}; in {
+			default = self.packages.${system}.install;
+
+			install = pkgs.writeShellApplication {
+			name = "install";
+			runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
+			text = ''${./install.sh} "$@"'';
+			};
+		});
+
+		apps = forAllSystems (system: {
+			default = self.apps.${system}.install;
+
+			install = {
+				type = "app";
+				program = "${self.packages.${system}.install}/bin/install";
+			};
+		});
 	};
 }
