@@ -1,14 +1,20 @@
 { config, lib, pkgs, settings, ... }:
 
-with lib;
-
 let
+	username = settings.username;
 	cfg = config.common.users.ryuji;
 in {
-	config = mkIf cfg.enable {
-		users.users.${settings.username} = {
-			name = settings.username;
-			description = settings.username;
+	config = lib.mkIf cfg.enable {
+
+		systemd.tmpfiles.rules = [
+			"d /home/${username}/Developer           0755 ${username} users"
+			"d /home/${username}/Developer/Github    0755 ${username} users"
+			"d /home/${username}/Developer/Projects  0755 ${username} users"
+		];
+
+		users.users.${username} = {
+			name = username;
+			description = username;
 
 			isNormalUser = true;
 			createHome = true;
@@ -18,25 +24,25 @@ in {
 		};
 
 		# List packages installed in system profile.
-		environment.systemPackages = (mkMerge (with pkgs; [
-			[
+		environment.systemPackages = (lib.mkMerge [
+			(with pkgs; [
 				firefox
 				obsidian
 				emulsion
-			]
+			])
 
-			(mkIf cfg.image-editing [
+			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
 				krita
-			])
-			(mkIf cfg.video-editing [
+			]))
+			(lib.mkIf cfg.video-editing (with pkgs; [
 				obs-studio # Add to home-manager
 				davinci-resolve
-			])
-			(mkIf cfg.developer [
+			]))
+			(lib.mkIf cfg.developer (with pkgs; [
 				putty
 				kicad
-			])
-		]));
+			]))
+		]);
 	};
 }
