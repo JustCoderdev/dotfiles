@@ -70,13 +70,6 @@ else
 fi
 
 
-if $had_changes; then
-	echo "TEST: had changes"
-else
-	echo "TEST: no changes"
-fi
-
-
 # Rebuild system
 echo -n "Rebuilding NixOS..."
 
