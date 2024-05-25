@@ -11,21 +11,24 @@ local function map(modes, keybinding, action)
 end
 
 local function unmap(modes, keybinding)
-	for i = 1, string.len(modes) do
-		local m = string.sub(modes, i, i)
-		local all_mode_keymap = vim.api.nvim_get_keymap(m)
+	map(modes, keybinding, "<Nop>")
 
-		for _, value in ipairs(all_mode_keymap) do
-			if string.find(value.lhs, keybinding, 0, true) then
-				print(string.format("Unmapping %s from %s", keybinding, m))
-				local successfully_unmapped, error = pcall(vim.keymap.del, m, keybinding)
-				if not successfully_unmapped then
-					print(successfully_unmapped)
-					print(error)
-				end
-			end
-		end
-	end
+	-- for i = 1, string.len(modes) do
+	-- 	local m = string.sub(modes, i, i)
+	-- 	local all_mode_keymap = vim.api.nvim_get_keymap(m)
+
+	-- 	for _, value in ipairs(all_mode_keymap) do
+	-- 		if string.find(value.lhs, keybinding, 0, true) then
+	-- 			print(string.format("Unmapping %s from %s", keybinding, m))
+	-- 			local successfully_unmapped, error = pcall(vim.keymap.del, m, keybinding)
+	-- 			if not successfully_unmapped then
+
+	-- 				vim.keymap.set(m, keybinding, "<Nop>", opts)
+	-- 				print(error)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 end
 
 local function mapn(keybinding, action) map("n", keybinding, action) end
@@ -54,6 +57,11 @@ unmap("nivx", "<Down>")
 unmap("nivx", "<Left>")
 unmap("nivx", "<Right>")
 
+unmap("nivx", "<S-Up>")
+unmap("nivx", "<S-Down>")
+unmap("nivx", "<S-Left>")
+unmap("nivx", "<S-Right>")
+
 -- leader
 unmap("n", "<Space>")
 
@@ -64,7 +72,7 @@ vim.g.maplocalleader = " "
 
 -- nvim_lspconfig overriden
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
---   "<Leader>d", "<Leader>rd", "<Leader>s"
+--   "<Leader>d", "<Leader>rd", "<Leader>ff"
 
 mapn("<Leader>m" , ":mksession! session.vim <CR> :echo \"Updated session file\" <CR>")
 mapn("<Leader>rc", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
@@ -111,6 +119,8 @@ mapn("<C-Up>", ":resize -2 <CR>")
 mapn("<C-Down>", ":resize +2 <CR>")
 -- mapn("<C-Left>", ":vertical resize -2 <CR>")
 -- mapn("<C-Right>", ":vertical resize +2 <CR>")
+mapn("<C-S-Left>", ":vertical resize -2 <CR>")
+mapn("<C-S-Right>", ":vertical resize +2 <CR>")
 
 
 -- === INSERT === --
