@@ -1,47 +1,45 @@
 # :! cp ./.zshrc ~
 
-path+=('/usr/local/bin')
 
-##  Options  ##
+# Global Variables
+export DOT_CACHE="/.dotfiles"
+export DOT_FILES="~/.cache"
+#path+=('/usr/local/bin')
 
-# vim motions
+# Options
+
+## Vim motions
 # bindkey -v
 # export KEYTIMEOUT=1
 
-# completition
-setopt   AUTO_LIST				# Automatically list choices on ambiguous completion
-setopt   AUTO_MENU				# Start completition by pressing the tab key repeatedly
+## Completition
+setopt   AUTO_LIST		# Automatically list choices on ambiguous completion
+setopt   AUTO_MENU		# Start completition by pressing the tab key repeatedly
 
-setopt   AUTO_PARAM_SLASH		# Add a trailing slash instead of a space
-setopt   AUTO_REMOVE_SLASH		# Remove trailing slash after delimiter
+setopt   AUTO_PARAM_SLASH	# Add a trailing slash instead of a space
+setopt   AUTO_REMOVE_SLASH	# Remove trailing slash after delimiter
 
-setopt   COMPLETE_ALIASES		# Complete aliases
+setopt   COMPLETE_ALIASES	# Complete aliases
 setopt   COMPLETE_IN_WORD     	# Complete from both ends of a word
 
-setopt   LIST_PACKED			# Make completition list smaller
-setopt   LIST_ROWS_FIRST		# Lay out the matches in completion lists sorted horizontally
+setopt   LIST_PACKED		# Make completition list smaller
+setopt   LIST_ROWS_FIRST	# Lay out the matches in completion lists sorted horizontally
 
-unsetopt MENU_COMPLETE			# Automatically highlight first element of completion menu
+unsetopt MENU_COMPLETE		# Automatically highlight first element of completion menu
 
-# history
-#setopt   SHARE_HISTORY			# Share history with all zsh sessions
-setopt   HIST_SAVE_NO_DUPS		# Don't save duplicates to history
+## history
+#setopt   HIST_SAVE_NO_DUPS	# Don't save duplicates to history
+#setopt   SHARE_HISTORY		# Share history with all zsh sessions
 
-
-##  Completition  ##
+# Pre load completition (?)
 autoload -U compinit; compinit
 _comp_options+=(globdots)
 zmodload zsh/complist
 
-
-##  Bindings  ##
-# bindkey -r '^K'
-# bindkey -r '^D' # use to delete hole line
-
-
-# more files
-# source ~/.config/zsh/purification.zsh
-source ~/.zsh/cursor.zsh
-source ~/.zsh/aliases.zsh
-source ~/.zsh/completition.zsh
+# Source the rest...
+source "$DOT_FILES/zsh/prompt.zsh"
+source "$DOT_FILES/zsh/aliases.zsh"
+source "$DOT_FILES/zsh/keybinding.zsh"
+source "$DOT_FILES/zsh/completition.zsh"
+#source "$DOT_FILES/zsh/purification.zsh"
 
