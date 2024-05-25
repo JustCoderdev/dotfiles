@@ -3,33 +3,32 @@
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
+#nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-23.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-	};
 
+#nixd.url = "github:nix-community/nixd";
+	};
+#nixpkgs-unstable, , nixd
 	outputs = { self, nixpkgs, home-manager }@inputs:
 		let
 			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
-			## Auto install script stuff ##
-			# supportedSystems = [ "i686-linux" "x86_64-linux" ];
-			# forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
-			# nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
-
-			# Other
-			legacy-pkgs = nixpkgs.legacyPackages.${settings.system};
-			args = { inherit settings; };  # inherit nixd; };
+#			pkgs-unstable = import inputs.nixpkgs-unstable {
+#				system = settings.system;
+#			};
 			modules = let path = settings.dotfiles_path; in [
-				# {
-				# 	nixpkgs.overlays = [ nixd.overlays.default ];
-				# 	environment.systemPackages = [ pkgs.nixd ];
-				# }
+#				{
+#					nixpkgs-unstable.overlays = [ nixd.overlays.default ];
+#					environment.systemPackages = [ pkgs-unstable.nixd ];
+#				}
+
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
-#				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
+#					(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
 				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
@@ -45,7 +44,7 @@
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
-				specialArgs = args;
+				specialArgs = { inherit inputs settings; };
 				inherit modules;
 			};
 
@@ -68,26 +67,5 @@
 		# homeConfigurations = {
 		#	${settings.username} = userBuilder;
 		# };
-
-		## Auto install script stuff ##
-		# packages = forAllSystems (system: let pkgs = nixpkgsFor.${system}; in {
-		# 	default = self.packages.${system}.install;
-		#
-		# 	install = pkgs.writeShellApplication {
-		# 	name = "install";
-		# 	runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
-		# 	text = ''${./install.sh} "$@"'';
-		# 	};
-		# });
-
-		## Auto install script stuff ##
-		# apps = forAllSystems (system: {
-		# 	default = self.apps.${system}.install;
-		#
-		# 	install = {
-		# 		type = "app";
-		# 		program = "${self.packages.${system}.install}/bin/install";
-		# 	};
-		# });
 	};
 }
