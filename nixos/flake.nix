@@ -58,6 +58,8 @@
 
 		# hostname
 		nixosConfigurations = {
+			nixos = systemBuilder;
+
 			virtualmachine = systemBuilder;
 			acer = systemBuilder;
 		};

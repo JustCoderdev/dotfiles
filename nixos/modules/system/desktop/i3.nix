@@ -3,6 +3,9 @@
 {
 	imports = [ ./x11.nix ];
 
+	# Remember windows size stuff
+	programs.dconf.enable = true;
+
 	services.xserver = {
 		displayManager.defaultSession = "none+i3";
 

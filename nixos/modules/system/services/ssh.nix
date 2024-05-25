@@ -25,5 +25,5 @@
 
 	# Set public authKey
 	# needs `PasswordAuthentication = false`
-	users.users.${settings.username}.openssh.authorizedKeys.keys = [ ];
+	# users.users.${settings.username}.openssh.authorizedKeys.keys = [ ];
 }

@@ -39,8 +39,11 @@
 		unzip
 
 		firefox
+		gimp
+
 		git
 		vim
+		make
 
 		wget
 		man
@@ -48,12 +51,7 @@
 
 	# Nix settings
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-	# Allow unfree packages
 	#nixpkgs.config.allowUnfree = true;
-
-	# Remember windows size stuff
-	programs.dconf.enable = true;
 
 	# Set machine hostname
 	networking.hostName = settings.hostname;
