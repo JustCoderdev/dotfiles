@@ -76,6 +76,7 @@ vim.g.maplocalleader = " "
 --   "<Leader>d", "<Leader>rd", "<Leader>s"
 
 mapn("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+mapn("<Leader>l", ":LspRestart <CR>")
 
 -- save
 mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
@@ -123,11 +124,15 @@ mapn("<C-w>q", ":q <CR>")
 mapn("<C-d>", "<C-d>zz")
 mapn("<C-u>", "<C-u>zz")
 
+mapn("<A-d>", "<C-d>zz")
+mapn("<A-u>", "<C-u>zz")
+
 -- navigation
-mapn("<C-h>", "<C-w>h")
-mapn("<C-j>", "<C-w>j")
-mapn("<C-k>", "<C-w>k")
-mapn("<C-l>", "<C-w>l")
+mapn("<A-h>", "<C-w>h")
+mapn("<A-j>", "<C-w>j")
+mapn("<A-k>", "<C-w>k")
+mapn("<A-l>", "<C-w>l")
+mapn("<A-q>", ":q <CR>")
 
 -- resize
 mapn("<C-S-Up>", ":resize -2 <CR>")
