@@ -1,7 +1,7 @@
 { config, pkgs, settings, ... }:
 
 {
-	programs.zsh.enable = false;
+	programs.zsh.enable = true;
 
 	home.packages = with pkgs; [
 		zsh
