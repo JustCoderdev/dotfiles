@@ -14,8 +14,8 @@
 			settings = {
 				hostname = "virtualmachine";
 				profile = "personal";
-				username = "ryuji";
 
+				username = "ryuji";
 				system = "x86_64-linux";
 				dotfilespath = "/.dotfiles";
 			};
@@ -30,7 +30,7 @@
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
 				specialArgs = { inherit settings; };
-				extraSpecialArgs = { inherit inputs; };
+				# extraSpecialArgs = { inherit inputs; };
 				inherit modules;
 			};
 
