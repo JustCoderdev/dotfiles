@@ -1,13 +1,13 @@
-> ⚠️ My dotfiles are divided in 3 branches:
+> ⚠️ My dotfiles had an incident >:(
+>
+> This is why all commits before a certain point report
+> the date of the incident and at least 8 commits got lost (as far as I know)
+
+> ℹ️ My dotfiles are divided in 3 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
 > - `nixos-compliant`: Stable version of nixos, preferred but not updated
 > - `nixos-compliant-unstable`: (CURRENT) Switched to unstable to configure hyprland
-
-> ⚠️ My dotfiles had an incident >:(
->
-> This is why all commits before a certain point report
-> the date of the incident and I lost 8 commits (as far as I know)
 
 # Dotfiles
 
