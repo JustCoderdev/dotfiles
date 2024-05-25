@@ -63,7 +63,7 @@ exec --no-startup-id i3-msg 'workspace 2; exec alacritty'
 bindsym $mod+B       exec --no-startup-id firefox
 bindsym $mod+O       exec --no-startup-id obsidian
 bindsym $mod+Return  exec --no-startup-id alacritty
-bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute.' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
+bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute. REMEMBER TO PUSH ALL UNCOMMITTED CHANGES!' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
 
 ## "Borrowed" KEYBINDINGS
@@ -80,10 +80,10 @@ bindsym Shift+XF86AudioLowerVolume  exec --no-startup-id "pamixer -d 15"
 bindsym XF86AudioMute               exec --no-startup-id "pamixer -t"
 
 # Custom Screen brightness controls
-bindsym XF86MonBrightnessUp          exec --no-startup-id "sudo backlight inc 50 && killall -USR1 i3status"
-bindsym XF86MonBrightnessDown        exec --no-startup-id "sudo backlight dec 50 && killall -USR1 i3status"
-bindsym Shift+XF86MonBrightnessUp    exec --no-startup-id "sudo backlight set max && killall -USR1 i3status"
-bindsym Shift+XF86MonBrightnessDown  exec --no-startup-id "sudo backlight set 0 && killall -USR1 i3status"
+bindsym XF86MonBrightnessUp          exec --no-startup-id "sudo backlight inc 50 && kill -s USR1 -a -- i3status"
+bindsym XF86MonBrightnessDown        exec --no-startup-id "sudo backlight dec 50 && kill -s USR1 -a -- i3status"
+bindsym Shift+XF86MonBrightnessUp    exec --no-startup-id "sudo backlight set max && kill -s USR1 -a -- i3status"
+bindsym Shift+XF86MonBrightnessDown  exec --no-startup-id "sudo backlight set 0 && kill -s USR1 -a -- i3status"
 
 # Media player controls
 bindsym XF86AudioPlayPause  exec "playerctl play-pause"
