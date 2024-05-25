@@ -85,9 +85,12 @@ mapn("<Leader>qq" , ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
 
 -- plugins
 mapn("<Leader>s", ":StripWhitespace <CR>") -- from vim-better-whitespace
--- mapn("<Leader>h", ":FzfLua files resume=true <CR>")    -- from fzf
-mapn("<Leader>h", ":FzfLua files <CR>")    -- from fzf
-mapn("<Leader>fs", ":FzfLua grep <CR>")   -- from fzf
+
+mapn("<Leader>h", ":FzfLua files <CR>")                -- from fzf
+mapn("<Leader>H", ":FzfLua files resume=true <CR>")    -- from fzf
+
+mapn("<Leader>fs", ":FzfLua grep <CR>")                -- from fzf
+mapn("<Leader>fS", ":FzfLua grep resume=true <CR>")    -- from fzf
 
 -- clipboard
 map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
@@ -118,16 +121,14 @@ mapn("<C-k>", "<C-w>k")
 mapn("<C-l>", "<C-w>l")
 
 -- resize
-mapn("<C-Up>", ":resize -2 <CR>")
-mapn("<C-Down>", ":resize +2 <CR>")
--- mapn("<C-Left>", ":vertical resize -2 <CR>")
--- mapn("<C-Right>", ":vertical resize +2 <CR>")
+mapn("<C-S-Up>", ":resize -2 <CR>")
+mapn("<C-S-Down>", ":resize +2 <CR>")
 mapn("<C-S-Left>", ":vertical resize -2 <CR>")
 mapn("<C-S-Right>", ":vertical resize +2 <CR>")
 
 
 -- === INSERT === --
-mapi("jk", "<Esc>")
+-- mapi("jk", "<Esc>")
 mapi("<C-c>", "<Esc>") -- update view after exiting with C-c
 
 
