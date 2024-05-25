@@ -24,13 +24,13 @@ let cfg = config.system.desktop.wayland; in
 			packages = [ pkgs.dconf ];
 		};
 
-		services.gnome.gnome-keyring.enable = true;
-		security.pam.services = {
-			swaylock.text = ''
-				auth include login
-			'';
-			login.enableGnomeKeyring = true;
-			#gtklock = {};
-		};
+#		services.gnome.gnome-keyring.enable = true;
+#		security.pam.services = {
+#			swaylock.text = ''
+#				auth include login
+#			'';
+#			login.enableGnomeKeyring = true;
+#			#gtklock = {};
+#		};
 	};
 }
