@@ -1,16 +1,18 @@
-#!/usr/bin/env bash
+{ pkgs, settings, ... }:
+let
+	dotfiles_path = settings.dotfiles_abspath;
+in {
+	environment.systemPackages = with pkgs; [
+		(writeShellScriptBin "nixos-rebuild.sh" ''
 
 # Thanks 0atman for the script <3, link here
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
-
-dotfiles_path="/.dotfiles"
-
 
 # Quit on error
 set -e
 
 # cd to your config dir
-pushd "$dotfiles_path/nixos/" > /dev/null
+pushd "${dotfiles_path}/nixos/" > /dev/null
 shopt -s globstar
 
 # Check for differences
@@ -36,7 +38,7 @@ else
 	sudo git restore --staged ./**/*.nix
 
 	if read -p "Open log? (y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
-		cat .nixos-switch.log | vim - 	
+		cat .nixos-switch.log | vim -
 	fi
 
 
@@ -45,7 +47,7 @@ else
 	exit 1
 fi
 
-# Commit changes 
+# Commit changes
 generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 sudo git commit -m "NixOS build#$generation"
 
@@ -53,3 +55,6 @@ echo -e "\n\033[32mCommitted as NixOS build#$generation\033[0m"
 echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 shopt -u globstar
 popd > /dev/null
+		'')
+	];
+}
