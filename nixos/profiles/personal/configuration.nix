@@ -9,8 +9,10 @@
 		# home-manager.nixosModules.default
 		../../modules/common/core
 		../../modules/common/users/ryuji.nix
+		../../modules/unofficial
 
 		../../modules/system/desktop/i3.nix
+		../../modules/system/desktop/ly.nix
 		../../modules/system/desktop/x11.nix
 		../../modules/system/desktop/xfce.nix
 
