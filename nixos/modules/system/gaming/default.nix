@@ -1,10 +1,7 @@
 { config, lib, pkgs, pkgs-unstable, ... }:
 
 with lib;
-
-let
-	cfg = config.system.gaming;
-in
+let cfg = config.system.gaming; in
 
 {
 	imports = [
@@ -18,39 +15,34 @@ in
 				type = types.bool;
 				description = "Enable gaming software";
 				default = false;
-				example = true;
 			};
 		};
 	};
 
 	config = mkIf cfg.enable {
-		environment.systemPackages = (mkMerge [
-			(with pkgs; [
-				discord
+		environment.systemPackages = with pkgs; [
+			discord
 
-				goverlay # Edit overlay
-				mangohud # Overlay
+			goverlay # Edit overlay
+			mangohud # Overlay
 
-				# To use mangohud add to launch options
-				# mangohud %command%
+			# To use mangohud add to launch options
+			# mangohud %command%
 
-				# To use gamemode add to launch options
-				# gamemoderun %command%
+			# To use gamemode add to launch options
+			# gamemoderun %command%
 
-				# For both
-				# gamemoderun mangohud %command%
+			# For both
+			# gamemoderun mangohud %command%
 
-				heroic         # Epic Games - gog
-				prismlauncher  # Minecraft launcher
+			heroic         # Epic Games - gog
+			prismlauncher  # Minecraft launcher
 
-				lutris   # Game hub
-				gamehub  # Game hub
-				bottles  # Vine game manager
-			])
+			lutris   # Game hub
+			gamehub  # Game hub
+			bottles  # Vine game manager
 
-			(with pkgs-unstable; [
-				cartridges  # Game hub
-			])
-		]);
+			pkgs-unstable.cartridges  # Game hub
+		];
 	};
 }

@@ -2,6 +2,7 @@
 let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
+
 in {
 	# Import configuration from dotfiles
 	home.file."/home/${username}/.config/i3" = {

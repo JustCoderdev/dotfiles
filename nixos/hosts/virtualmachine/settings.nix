@@ -10,13 +10,15 @@ rec {
 
 	system = "x86_64-linux";
 	special_pkgs = {
-		insecure = [ "electron-24.8.6" "python-2.7.18.6"];
+		insecure = [
+			"electron-24.8.6"
+			"python-2.7.18.6"
+		];
 		unfree = [
 			"nvidia-x11"
 			"nvidia-settings"
-
-			"obsidian"
 			"google-chrome"
+			"obsidian"
 			"discord"
 			"steam"
 			"steam-run"

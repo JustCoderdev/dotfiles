@@ -1,12 +1,37 @@
-{ config, ... }:
+{ ... }:
 
 {
-	system.gaming.enable = true;
+	common = {
+		core = {
+			bluetooth.enable = true;
+			nvidia.enable = false;
+		};
 
-	user.app-collection = {
-		image-editing = true;
-		video-editing = true;
-		developer = true;
+		users = {
+			ryuji = {
+				enable = true;
+
+				image-editing = true;
+				video-editing = true;
+				developer = true;
+			};
+
+			school.enable = false;
+		};
 	};
 
+	system = {
+		bin = {
+			backlight.enable = true;
+			rebuild-system.enable = true;
+		};
+
+		desktop.xserver.enable = true;
+		gaming.enable = true;
+
+		services = {
+			docker.enable = true;
+			virtualbox.enable = false;
+		};
+	};
 }

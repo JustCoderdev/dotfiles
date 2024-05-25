@@ -80,6 +80,7 @@ sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nix
 exit_code="${PIPESTATUS[0]}"
 
 sleep 1
+echo "Exit code: $exit_code"
 echo -ne "\033[?1049l" # exit alt-buff
 
 if [[ "${exit_code}" == 0 ]]; then

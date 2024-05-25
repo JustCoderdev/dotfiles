@@ -1,19 +1,14 @@
-{ ... }:
+{ settings, ... }:
 
 {
 	# Network settings
 	networking = {
-
-		# Enable networking
+		hostName = settings.hostname;
 		networkmanager.enable = true;
 
 		# Enable wireless support via wpa_supplicant.
 		wireless = {
 			enable = false;
-
-			# Force a specific driver
-			# driver = "";
-
 			networks = {
 				# "WindTower" = {
 				# 	psk = "******";

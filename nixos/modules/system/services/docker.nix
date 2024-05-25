@@ -1,14 +1,19 @@
-{ settings, ... }:
+{ config, lib, settings, ... }:
+
+with lib;
+let cfg = config.system.services.docker; in
 
 {
-	virtualisation.docker = {
-		enable = true;
+	config = mkIf cfg.enable {
+		virtualisation.docker = {
+			enable = true;
 
-		daemon.settings = {
-			data-root = "~/Developer/.docker/";
+			daemon.settings = {
+				data-root = "~/Developer/.docker/";
+			};
 		};
-	};
 
-	users.users.${settings.username}.extraGroups = [ "docker" ];
+		users.users.${settings.username}.extraGroups = [ "docker" ];
+	};
 }
 
