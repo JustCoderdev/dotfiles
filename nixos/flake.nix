@@ -63,6 +63,9 @@
 			acer = systemBuilder;
 		};
 
+		devShells = let path = settings.dotfiles_path; in
+			(import (path + "/nixos/modules/system/dev/shells") { inherit inputs; });
+
 		# profile
 		# homeConfigurations = {
 		#	${settings.username} = userBuilder;

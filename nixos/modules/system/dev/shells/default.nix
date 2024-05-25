@@ -1,7 +1,10 @@
-{ ... }:
+{ inputs, lib, settings, ... }:
 
+let
+	callDevelop = lib.callPackageWith ({
+		inherit inputs settings;
+	});
+in
 {
-	import = [
-		./c.nix
-	];
+	c = callDevelop ./c.nix {};
 }
