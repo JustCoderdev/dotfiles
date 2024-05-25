@@ -29,8 +29,11 @@ in {
 		# LSPs
 		lua-language-server
 		marksman
-		nodePackages.bash-language-server
 		nixd
+
+		nodePackages.bash-language-server
+		nodePackages.vscode-css-languageserver-bin
+		vscode-langservers-extracted
 	];
 
 	# Import configuration from dotfiles
