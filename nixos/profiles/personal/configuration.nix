@@ -20,6 +20,7 @@
 		../../modules/system/hardware/numpad.nix
 		../../modules/system/hardware/pipewire.nix
 		../../modules/system/hardware/printer.nix
+		../../modules/system/hardware/plymouth.nix
 
 		../../modules/system/services/docker.nix
 		../../modules/system/services/firewall.nix
