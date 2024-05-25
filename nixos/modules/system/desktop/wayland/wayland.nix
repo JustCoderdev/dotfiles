@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 with lib;
 let cfg = config.system.desktop.wayland; in
@@ -19,17 +19,17 @@ let cfg = config.system.desktop.wayland; in
 				enable = true;
 #				wayland.enable = true;
 				enableHidpi = true;
-				theme = "chili";
+				theme = "where_is_my_sddm_theme";
 #				package = pkgs.sddm;
 			};
 		};
 
 		environment = {
 			systemPackages = with pkgs; [
+				pkgs-unstable.where-is-my-sddm-theme
 				wayland
-				waydroid
-
-				#waybar
+				waybar
+				rofi-wayland
 			];
 
 			sessionVariables = {
