@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, settings, ... }:
+{ settings, ... }:
 
 {
 	home.username = settings.username;
@@ -8,7 +8,7 @@
 
 	imports = [
 		../../modules/user/desktop/i3.nix
-		#../../modules/user/desktop/sway.nix
+		#../../modules/user/desktop/hyprland.nix
 
 		../../modules/user/dev/editor/neovim.nix
 		../../modules/user/dev/editor/emacs.nix

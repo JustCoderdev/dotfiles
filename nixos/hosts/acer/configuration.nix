@@ -27,7 +27,7 @@
 		};
 
 		desktop.xfce.enable = true;
-		desktop.wayland.enable = false;
+		desktop.hyprland.enable = false;
 
 		dev = {
 			c.enable = true;

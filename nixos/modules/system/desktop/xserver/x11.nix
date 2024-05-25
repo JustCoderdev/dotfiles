@@ -8,10 +8,6 @@ let cfg = config.system.desktop.xfce; in
 		services.xserver = {
 			enable = true;
 
-			# Configure keymap in X11
-			layout = "it";
-			xkbVariant = "";
-
 			# Enable touchpad support.
 			libinput = {
 				enable = true;

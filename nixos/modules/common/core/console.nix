@@ -12,4 +12,6 @@
 		# keyMap = "it2";
 		useXkbConfig = true;
 	};
+
+	i18n.consoleUseXkbConfig = true;
 }

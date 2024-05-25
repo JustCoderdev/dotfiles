@@ -11,8 +11,11 @@
 		${pkgs.numlockx}/bin/numlockx on
 	'';
 
-	services.xserver = {
-		xkbOptions = "grp_led:scroll,caps:ctrl_modifier,numpad:mac";
+	services.xserver.xkb = {
+		# Configure keymap in X11
+		layout = "it";
+		variant = "";
+		options = "grp_led:scroll,caps:ctrl_modifier,numpad:mac";
 	};
 
 	# ctrl				Ctrl position

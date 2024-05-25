@@ -3,6 +3,8 @@ rec {
 	profile = "personal";
 	username = "ryuji";
 
+	runningVM = false;
+
 	dotfiles_path = ../../../.;
 	dotfiles_abspath = "/.dotfiles";
 	config_path = "/home/${username}/.config";

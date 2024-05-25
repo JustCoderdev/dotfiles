@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 with lib;
+let cfg = config.system.desktop.xfce; in
 
 {
 	imports = [
@@ -17,5 +18,12 @@ with lib;
 				default = true;
 			};
 		};
+	};
+
+	config = mkIf cfg.enable {
+		assertions = [{
+			assertion = !config.system.desktop.hyprland.enable;
+			message = "Cannot enable wayland support if xfce is enabled";
+		}];
 	};
 }
