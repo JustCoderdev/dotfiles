@@ -151,7 +151,7 @@ mapv(">", ">gv")
 
 -- === TERM === --
 mapt("<ESC>", "<C-\\><C-n>")
-mapt("<C-c>", "<C-\\><C-n>")
+-- mapt("<C-c>", "<C-\\><C-n>")
 
 -- move buffer
 mapt("<C-h>", "<C-\\><C-N> <C-w>h")
