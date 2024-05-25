@@ -23,8 +23,9 @@ echo -e "\nNixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
 sudo git add ./**/*.nix
+
 # shellcheck disable=SC2024 #ah the irony
-if sudo nixos-rebuild switch --show-trace --flake ".#" &>.nixos-switch.log; then
+if sudo nixos-rebuild switch --show-trace --flake ".#${HOST}" &>.nixos-switch.log; then
 	echo -e "Done\n"
 else
 	echo ""
@@ -41,10 +42,10 @@ else
 fi
 
 # Commit changes
-generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-sudo git commit -m "NixOS build#$generation"
+generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
+sudo git commit -m "NixOS build@${HOST}#${generation}"
 
-echo -e "\n\033[32mCommitted as NixOS build#$generation\033[0m"
+echo -e "\n\033[32mCommitted as NixOS build@${HOST}#${generation}\033[0m"
 echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 shopt -u globstar
 popd > /dev/null

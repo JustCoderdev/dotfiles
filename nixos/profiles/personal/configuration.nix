@@ -35,9 +35,13 @@
 	environment.systemPackages = with pkgs; [
 		(import ../../modules/user/bin/nixos-rebuild.nix { inherit pkgs; inherit settings; })
 
+		zip
+		unzip
+
 		firefox
 		git
 		vim
+
 		wget
 		man
 	];
