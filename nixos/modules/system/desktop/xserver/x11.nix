@@ -1,12 +1,15 @@
-{ config, lib, ... }:
+{ config, lib, settings, ... }:
 
 with lib;
-let cfg = config.system.desktop.xfce; in
+#let cfg = config.system.desktop.xfce; in
 
 {
-	config = mkIf cfg.enable {
+#mkIf cfg.enable
+	config =  {
 		services.xserver = {
 			enable = true;
+
+			videoDrivers = mkIf settings.runningVM [ "vmware" ];
 
 			# Enable touchpad support.
 			libinput = {
