@@ -16,29 +16,14 @@ in
 			nvidia.modesetting.enable = nvidia.enable;
 		};
 
-		services.xserver = {
-#			displayManager.gdm = {
-#				enable = true;
-#				wayland = true;
-#			};
-			displayManager.sddm = {
-				enable = true;
-				wayland.enable = true;
-				enableHidpi = true;
-#				theme = "where_is_my_sddm_theme";
-#				package = pkgs.sddm;
-			};
-		};
-
-		environment.systemPackages = with pkgs; [
-			where-is-my-sddm-theme
-		];
+#		services.xserver.displayManager.gdm = {
+#			enable = true;
+#			wayland = true;
+#		};
 
 		xdg.portal = {
 			enable = true;
-			extraPortals = with pkgs; [
-				xdg-desktop-portal-gtk
-			];
+			extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 		};
 	};
 }

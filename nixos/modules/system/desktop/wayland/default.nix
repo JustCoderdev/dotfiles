@@ -1,25 +1,25 @@
-{ config, lib, settings, ... }:
+{ config, lib, ... }:
 
-with lib;
 let cfg = config.system.desktop.hyprland; in
 
 {
 	imports = [
 		./wayland.nix
 		./hyprland.nix
+		./sddm.nix
 	];
 
 	options = {
 		system.desktop.hyprland = {
-			enable = mkOption {
-				type = types.bool;
+			enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Enable hyprland software suit and support";
 				default = true;
 			};
 		};
 	};
 
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		assertions = [
 		{
 			assertion = !config.system.desktop.xfce.enable;
