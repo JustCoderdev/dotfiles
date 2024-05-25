@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 with lib;
-let cfg = config.system.desktop.xserver; in
+let cfg = config.system.desktop.xfce; in
 
 {
 	config = mkIf cfg.enable {

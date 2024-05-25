@@ -10,10 +10,10 @@ with lib;
 	];
 
 	options = {
-		system.desktop.xserver = {
+		system.desktop.xfce = {
 			enable = mkOption {
 				type = types.bool;
-				description = "Enable x11 software suit and support";
+				description = "Enable xfce software suit and support";
 				default = true;
 			};
 		};
