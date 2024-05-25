@@ -1,4 +1,4 @@
-{ config, lib, pkgs-unstable, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 with lib;
 
@@ -31,7 +31,7 @@ in {
 			])
 			(mkIf cfg.video-editing [
 				obs-studio # Add to home-manager
-				pkgs-unstable.davinci-resolve
+				davinci-resolve
 			])
 			(mkIf cfg.developer [
 				putty

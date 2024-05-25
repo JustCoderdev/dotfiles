@@ -1,4 +1,4 @@
-{ pkgs-unstable, pkgs, settings, ... }:
+{ pkgs, settings, ... }:
 let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;

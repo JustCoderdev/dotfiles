@@ -3,9 +3,9 @@
 {
 #	services.fusuma.enable = true;
 
-	boot.initrd.preLVMCommands = ''
-		${pkgs.kbd}/bin/setleds +num
-	'';
+#	boot.initrd.preLVMCommands = ''
+#		${pkgs.kbd}/bin/setleds +num
+#	'';
 
 	services.xserver.displayManager.setupCommands = ''
 		${pkgs.numlockx}/bin/numlockx on

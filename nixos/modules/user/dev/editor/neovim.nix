@@ -1,4 +1,4 @@
-{ pkgs-unstable, pkgs, settings, ... }:
+{ pkgs, settings, ... }:
 let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
@@ -30,7 +30,7 @@ in {
 		lua-language-server
 		marksman
 		nodePackages.bash-language-server
-		pkgs-unstable.nixd
+		nixd
 	];
 
 	# Import configuration from dotfiles

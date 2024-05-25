@@ -4,9 +4,9 @@ with lib;
 
 {
 	imports = [
-		#./hyprland.nix
+		./wayland.nix
+		./hyprland.nix
 		#./sway.nix # Sway OR Hyprland
-		#./wayland.nix
 	];
 
 	options = {

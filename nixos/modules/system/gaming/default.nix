@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let cfg = config.system.gaming; in
@@ -42,7 +42,7 @@ let cfg = config.system.gaming; in
 			gamehub  # Game hub
 			bottles  # Vine game manager
 
-			pkgs-unstable.cartridges  # Game hub
+			cartridges  # Game hub
 		];
 	};
 }

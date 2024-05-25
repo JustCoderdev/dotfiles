@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -8,7 +8,7 @@ with lib;
 			enable = true;
 			gamescopeSession.enable = true;
 
-			#pkgs-unstable.proton-ge-bin
+			#proton-ge-bin
 			#extraCompatPackages = [  ];
 		};
 	};

@@ -12,8 +12,8 @@
 				enable = true;
 
 				image-editing = true;
-				video-editing = true;
-				developer = true;
+				video-editing = false;
+				developer = false;
 			};
 
 			school.enable = false;
@@ -26,8 +26,8 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = true;
-		desktop.wayland.enable = false;
+		desktop.xfce.enable = false;
+		desktop.wayland.enable = true;
 
 		dev = {
 			c.enable = true;
