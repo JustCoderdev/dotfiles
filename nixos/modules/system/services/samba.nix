@@ -28,24 +28,35 @@ in
 		services.samba = {
 			enable = true;
 			securityType = "user";
+
 			openFirewall = true;
+
+			enableNmbd = false;
+			enableWinbindd = false;
+
 			extraConfig = ''
-				server string = ${hostname}
-				netbios name = ${hostname}
 				hosts allow = 192.168.1. 127.0.0.1 localhost
 				hosts deny = 0.0.0.0/0
+
+				load printers = no
+				printcap name = /dev/null
+
 				guest account = nobody
+				map to guest = bad user
 			'';
+
 			shares = {
 				public = {
 					path = "/mnt/samba/public";
 					browseable = "yes";
 					"read only" = "yes";
 					"guest ok" = "yes";
+
 #					"create mask" = "0644";
 #					"directory mask" = "0755";
-#					"force user" = "guest";
-#					"force group" = "guest";
+
+					"force user" = "nobody";
+					"force group" = "nogroup";
 				};
 #				private = {
 #					path = "/mnt/Shares/Private";
