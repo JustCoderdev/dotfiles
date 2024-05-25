@@ -1,0 +1,142 @@
+@import url("colors.css");
+
+* {
+	font-family: "SF Pro Text", "RobotoMono", sans-serif, "Times New Roman";
+    font-size: 13px;
+    font-weight: 600;
+}
+
+window#waybar {
+	background-color: transparent;
+	color: @foreground;
+}
+
+label.module {
+	border-radius: 2rem;
+	background-color: @background;
+}
+
+button {
+	background: #FF0000;
+}
+
+#workspaces button {
+	padding: 0 5px;
+	background-color: @tint-aqua;
+}
+
+#workspaces button.urgent {
+	background-color: #eb4d4b;
+}
+
+#mode {
+	background-color: #64727D;
+	box-shadow: inset 0 -3px #ffffff;
+}
+
+#battery,
+#bluetooth,
+#cpu,
+#clock,
+#temperature,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode {
+	padding: 0 10px;
+	color: #ffffff;
+}
+
+#window,
+#workspaces {
+	margin: 0 4px;
+}
+
+/* .modules-left>widget:first-child>#workspaces { */
+/* 	margin-left: 0; */
+/* } */
+
+/* .modules-right>widget:last-child>#workspaces { */
+/* 	margin-right: 0; */
+/* } */
+
+
+/* Battery 󱐋 */
+#battery.charging {
+	color: @tint-orange;
+	/* color: #000000; */
+}
+
+#battery.charging.optimal {
+	background-color:@tint-green; /* GREEN: #26A65B */
+}
+
+#battery.critical:not(.charging) {
+	background-color: @tint-red; /* RED: #f53c3c */
+	color: #000000;
+}
+
+
+/* Bluetooth 󰂯 */
+#bluetooth {
+	padding: 0 12px;
+}
+#bluetooth.disabled,
+#bluetooth.off {
+	color: @tint-red;
+}
+
+#bluetooth.discoverable,
+#bluetooth.discovering,
+#bluetooth.pairable,
+#bluetooth.on { }
+
+#bluetooth.connected {
+	color: @tint-blue;
+}
+
+
+/* CPU  */
+#cpu {}
+
+
+/* 󰥔 Clock */
+#clock {
+	padding: 0 15px;
+	background-color: #44424D;
+}
+
+
+#network {}
+
+#network.disconnected {
+	background-color: #f53c3c;
+}
+
+#pulseaudio {}
+
+#pulseaudio.muted {
+	background-color: #90b1b1;
+}
+
+#custom-media {}
+
+#custom-media.custom-spotify {
+	background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+	background-color: #ffa000;
+}
+
+#tray {}
+
+#tray>.passive {
+	-gtk-icon-effect: dim;
+}
+
+#tray>.needs-attention {
+	-gtk-icon-effect: highlight;
+	background-color: #eb4d4b;
+}

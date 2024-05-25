@@ -1,127 +1,191 @@
 {
-	// "layer": "top",
-	// "position": "bottom", // (top|bottom|left|right)
-	"height": 20, 
-	// "width": 1280, 
-
+	"height": 30,
+	// "width": 1280,
 	"spacing": 4, // Gaps between modules (px)
 	"margin": "4px 6px",
+	// "position": "bottom", // (top|bottom|left|right)
 	"reload_style_on_change": true,
-
-	// Choose the order of the modules
+	/// Modules Order
+	// [NXOS][WRK][VOL][MEDIA][GME] - [CLOCK] - [BTH][NET][CPU][TMP][DSK][BAT][TRAY]
 	"modules-left": [
-		"hyprland/workspaces"
-	],
-
-	"modules-center": [
-
-	],
-
-	"modules-right": [
-		// "mpd",
-		// "tray",
-
-		"network",
-
-		"cpu",
-		"temperature",
-
+		"image",
+		"hyprland/workspaces",
 		"pulseaudio",
-
-		"backlight",
-		"battery",
+		"mpris",
+		"gamemode"
+	],
+	"modules-center": [
 		"clock"
 	],
-
-	// Modules configuration
-	// "mpd": {
-	// 	"format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-	// 	"format-disconnected": "Disconnected ",
-	// 	"format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-	// 	"unknown-tag": "N/A",
-	// 	"interval": 5,
-	// 	"consume-icons": {
-	// 		"on": " "
-	// 	},
-	// 	"random-icons": {
-	// 		"off": "<span color=\"#f53c3c\"></span> ",
-	// 		"on": " "
-	// 	},
-	// 	"repeat-icons": {
-	// 		"on": " "
-	// 	},
-	// 	"single-icons": {
-	// 		"on": "1 "
-	// 	},
-	// 	"state-icons": {
-	// 		"paused": "",
-	// 		"playing": ""
-	// 	},
-	// 	"tooltip-format": "MPD (connected)",
-	// 	"tooltip-format-disconnected": "MPD (disconnected)"
+	"modules-right": [
+		"bluetooth",
+		"network",
+		"cpu",
+		"temperature",
+		"disk",
+		"battery",
+		"tray"
+		// "group/power"
+	],
+	/// Modules Conf
+	// "backlight": {
+	// 	// "device": "acpi_video1",
+	// 	"format": "backlight {percent}%"
 	// },
-
-	// "tray": {
-	// 	// "icon-size": 21,
-	// 	"spacing": 10
-	// },
-
-	// Left side
-	"hyprland/workspaces": {
-		"active-only": true
+	"battery": {
+		"interval": 5,
+		"states": {
+			"optimal": 100,
+			"normal": 80,
+			"warning": 50,
+			"critical": 35
+		},
+		"tooltip": false,
+		// "tooltip-format": "{timeTo}",
+		"format": "{icon} {capacity}%",
+		"format-charging": "󱐋{icon} {capacity}%",
+		"format-icons": [
+			"󰁺",
+			"󰁻",
+			"󰁼",
+			"󰁽",
+			"󰁾",
+			"󰁿",
+			"󰂀",
+			"󰂁",
+			"󰂂",
+			"󰁹"
+		],
+		"signal": 1,
+		"on-click": "pkill -RTMIN+1 waybar"
 	},
-
-	// Right side
+	"bluetooth": {
+		"format": "󰂯",
+		"format-off": "󰂲",
+		"format-disabled": "󰂲",
+		"format-connected": " {device_alias}",
+		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+		"format-device-preference": [
+			"WH-CH510"
+		],
+		"tooltip": false,
+		"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+		"signal": 2,
+		"on-click": "pkill -RTMIN+2 waybar"
+	},
+	"cpu": {
+		"format": " {icon} {usage}%",
+		// "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+		"tooltip": false,
+		"signal": 3,
+		"on-click": "pkill -RTMIN+3 waybar"
+	},
+	"clock": {
+		"format": "󰥔  {:%H:%M}",
+		// "timezone": "America/New_York",
+		"tooltip": true,
+		"tooltip-format": "{:%Y.%m.%d - %ddd %mmm (%Ez %Z)}"
+	},
+	"disk": {
+		"interval": 120,
+		"format": "  {specific_free:0.0f}GB",
+		"unit": "GB",
+		"path": "/",
+		"states": {
+			"critical": 100,
+			"warning": 90,
+			"normal": 60,
+			"optimal": 40
+		},
+		"tooltip": false,
+		"signal": 4,
+		"on-click": "pkill -RTMIN+4 waybar"
+	},
+	"gamemode": {
+		"format": "󰸷"
+		// "tooltip": false,
+	},
+	// "group/power": {
+	// 	"direction": "inherit",
+	// 	"drawer": {
+	// 		"transition-duration": 600,
+	// 		"children-class": "group-power-child",
+	// 		"transition-left-to-right": false
+	// 	},
+	// 	"modules": [
+	// 		// First element is the "group leader" and won't ever be hidden
+	// 		"custom/shutdown",
+	// 		"custom/quit",
+	// 		"custom/lock",
+	// 		"custom/reboot"
+	// 	]
+	// },
+	// "custom/quit": {
+	// 	"format": "󰗼",
+	// 	"tooltip": false,
+	// 	"on-click": "hyprctl dispatch exit"
+	// },
+	// "custom/lock": {
+	// 	"format": "󰍁",
+	// 	"tooltip": false,
+	// 	"on-click": "swaylock"
+	// },
+	// "custom/reboot": {
+	// 	"format": "󰜉",
+	// 	"tooltip": false,
+	// 	"on-click": "reboot"
+	// },
+	// "custom/shutdown": {
+	// 	"format": "",
+	// 	"tooltip": false,
+	// 	"on-click": "shutdown now"
+	// },
+	"hyprland/workspaces": {
+		"active-only": false
+	},
+	"image": {
+		"interval": 0,
+		"size": 24,
+		/* TODO: Not configured in NixOS config */
+		"path": "/.dotfiles/waybar/nixos_icon.png",
+		"tooltip": false
+	},
+	"mpris": {
+		"format": "AA",
+		"format-playing": "{status_icon} {title}",
+		"format-paused": "{status_icon} {title}",
+		"format-stopped": "{status_icon}",
+		"tooltip": false,
+		"title-len": 15,
+		"ellipsis": "…",
+		"status-icons": {
+			"playing": " ",
+			"paused": " ",
+			"stopped": " "
+		},
+		"on-click-middle": "",
+		"on-click-right": ""
+	},
+	// Old
 	"network": {
 		// "interface": "wlp2*", // (Optional) To force the use of this interface
 		"format-wifi": "{essid} {signalStrength}% ({ipaddr})",
 		"format-ethernet": "{ipaddr}",
-		"format-disconnected": "",
+		"format-disconnected": ""
 	},
-
-	"cpu": {
-		"format": "CPU ({usage}%)",
-		"tooltip": false
-	},
-
 	"temperature": {
 		"critical-threshold": 80,
-		"format": "{temperatureC}-C",
+		"format": " {temperatureC}-C"
 	},
-
 	"pulseaudio": {
 		"format": "{format_source} {volume}%",
 		"format-bluetooth": "{format_source} {volume}%",
-
 		"format-muted": "[{format_source}]",
 		"format-bluetooth-muted": "[{format_source}]",
-
 		"format-source": "MIC {volume}%",
-		"format-source-muted": "[MIC]",
-	},
-
-	"backlight": {
-		// "device": "acpi_video1",
-		"format": "backlight {percent}%",
-	},
-
-	"battery": {
-		"states": {
-			"good": 80,
-			"warning": 30,
-			"critical": 15
-		},
-
-		"format": "BAT {capacity}%",
-		"format-full": "FUL {capacity}%",
-		"format-charging": "CHR {capacity}%",
-		"format-plugged": "ADP {capacity}%",
-	},
-
-	"clock": {
-		// "timezone": "America/New_York",
-		// "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-		"format-alt": "{:%Y.%m.%d %H:%M:%S}"
-	},
-
+		"format-source-muted": "[MIC]"
+	}
 }
