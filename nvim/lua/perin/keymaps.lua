@@ -75,26 +75,35 @@ vim.g.maplocalleader = " "
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>rd", "<Leader>ff"
 
-mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 mapn("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- save
-mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
 mapn("<Leader>qq" , ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
+mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
+mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 
 -- plugins
-mapn("<Leader>s", ":StripWhitespace <CR>") -- from vim-better-whitespace
+mapn("<Leader>s", ":StripWhitespace <CR>")  -- from vim-better-whitespace
 
-mapn("<Leader>h", ":FzfLua files <CR>")                -- from fzf
-mapn("<Leader>H", ":FzfLua files resume=true <CR>")    -- from fzf
+mapn("<Leader>ff", ":FzfLua files <CR>")              -- from fzf
+mapn("<Leader>fF", ":FzfLua files resume=true <CR>")  -- from fzf
 
-mapn("<Leader>fs", ":FzfLua grep <CR>")                -- from fzf
-mapn("<Leader>fS", ":FzfLua grep resume=true <CR>")    -- from fzf
+mapn("<Leader>fs", ":FzfLua grep <CR>")               -- from fzf
+mapn("<Leader>fS", ":FzfLua grep resume=true <CR>")   -- from fzf
 
 -- clipboard
-map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
-map("nv", "<Leader>p", "\"*p :echo \"Pasted from system clipboard\" <CR>")
+-- map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
+-- map("nv", "<Leader>p", "\"*p :echo \"Pasted from system clipboard\" <CR>")
+
+-- copy
+map("nv", "<Leader>y", "\"+y   :echo \"Yanked to system clipboard\" <CR>")
+map("n" , "<Leader>yy", "\"+yy :echo \"Yanked to system clipboard\" <CR>")
+map("n" , "<Leader>Y", "\"+yg_ :echo \"Yanked to system clipboard\" <CR>")
+
+-- paste
+map("nv", "<Leader>p", "\"+p :echo \"Pasted from system clipboard\" <CR>")
+map("nv", "<Leader>P", "\"+P :echo \"Pasted from system clipboard\" <CR>")
 
 -- windows
 mapn("<Leader>e", ":Lexplore 25 <CR>")
