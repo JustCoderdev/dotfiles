@@ -12,23 +12,25 @@
 
 	outputs = { self, nixpkgs, home-manager }@inputs:
 		let
+			settings = import ./settings.nix;
+
 			# User settings
-			settings = rec {
-				hostname = "acer";
-				profile = "personal";
-				username = "ryuji";
+#			settings = rec {
+#				hostname = "acer";
+#				profile = "personal";
+#				username = "ryuji";
 
-				dotfiles_path = ./..;
-				dotfiles_abspath = "/.dotfiles";
-				config_path = "/home/${username}/.config";
-				cache_path = "/home/${username}/.cache";
-
-				system = "x86_64-linux";
-				special_pkgs = {
-					unfree = [ "obsidian" ];
-					insecure = [ "electron-24.8.6" ];
-				};
-			};
+#				dotfiles_path = ./..;
+#				dotfiles_abspath = "/.dotfiles";
+#				config_path = "/home/${username}/.config";
+#				cache_path = "/home/${username}/.cache";
+#
+#				system = "x86_64-linux";
+#				special_pkgs = {
+#					unfree = [ "obsidian" "google-chrome" ];
+#					insecure = [ "electron-24.8.6" ];
+#				};
+#			};
 
 			## Auto install script stuff ##
 			# supportedSystems = [ "i686-linux" "x86_64-linux" ];
@@ -44,13 +46,15 @@
 				# 	environment.systemPackages = [ pkgs.nixd ];
 				# }
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
+				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
+
 				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = args;
+					home-manager.extraSpecialArgs = { inherit settings; };
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/${settings.profile}/home.nix");
 				}

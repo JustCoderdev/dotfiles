@@ -24,10 +24,10 @@ else
 fi
 
 # Update flake file
-if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
-	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
-fi
+# if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
+# 	echo -e "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
+# 	sudo sed -i "s/\(hostname = \).*/\1\"${HOST_SHELL}\";/" "${FLAKE_PATH}/flake.nix"
+# fi
 
 # Rebuild system
 sudo nixos-rebuild switch --show-trace --flake "${FLAKE_PATH}#${HOST_SHELL}"

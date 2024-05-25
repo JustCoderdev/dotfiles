@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 {
-	# sound.enable = true;
-	# hardware.pulseaudio.enable = false;
+	sound.enable = false; #alsa
+	hardware.pulseaudio.enable = false;
 
 	# Install control script
 	environment.systemPackages = with pkgs; [
@@ -13,8 +13,10 @@
 	security.rtkit.enable = true;
 	services.pipewire = {
 		enable = true;
+
 		alsa.enable = true;
 		alsa.support32Bit = true;
+
 		pulse.enable = true;
 
 		# If you want to use JACK applications, uncomment this

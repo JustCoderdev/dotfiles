@@ -7,8 +7,8 @@
 {
 	imports = [
 		# home-manager.nixosModules.default
-		../common/core
-		../common/users/ryuji.nix
+		../../modules/common/core
+		../../modules/common/users/ryuji.nix
 
 		../../modules/system/desktop/i3.nix
 		../../modules/system/desktop/x11.nix
@@ -22,8 +22,12 @@
 		../../modules/system/bin/rebuild-system
 	];
 
-	system.nixos.label = "Test_Label";
-	system.nixos.tags = [ "test-tag" "test-tag-2" ];
+	user.app-collection = {
+		#image-editing = true;
+		video-editing = false;
+		gaming = false;
+		developer = false;
+	};
 
 	system.stateVersion = "23.11"; # Did you read the comment?
 }
