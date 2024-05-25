@@ -31,12 +31,12 @@ echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" | sudo tee $BOOT_FILE_PATH
 # If UEFI system
 if [ -d "/sys/firmware/efi/efivars" ]; then
 	echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           | sudo tee -a $BOOT_FILE_PATH
-	echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\t#boot.loader.systemd-boot.configurationLimit = 5;\n"  | sudo tee -a $BOOT_FILE_PATH
 	echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      | sudo tee -a $BOOT_FILE_PATH
 else
 	echo -ne "\tboot.loader.grub.enable = true;\n"                   | sudo tee -a $BOOT_FILE_PATH
 	echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           | sudo tee -a $BOOT_FILE_PATH
-	echo -ne "\tboot.loader.grub.configurationLimit = 5;\n"          | sudo tee -a $BOOT_FILE_PATH
+	echo -ne "\t#boot.loader.grub.configurationLimit = 5;\n"          | sudo tee -a $BOOT_FILE_PATH
 	echo -ne "\tboot.loader.grub.useOSProber = false;\n"             | sudo tee -a $BOOT_FILE_PATH
 fi
 

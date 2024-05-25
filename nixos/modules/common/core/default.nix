@@ -12,7 +12,7 @@ with lib;
 		./network.nix
 		./nix.nix
 		./nvidia.nix
-		./numpad.nix
+		./keyboard.nix
 		./pipewire.nix
 		./power.nix
 		./plymouth.nix
