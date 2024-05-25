@@ -52,7 +52,12 @@
 
 	# Nix settings
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-	#nixpkgs.config.allowUnfree = true;
+	nixpkgs.config = let special_pkgs = settings.special_pkgs; in {
+		permittedInsecurePackages = special_pkgs.insecure;
+		allowUnfreePredicate = pkg:
+			builtins.elem (lib.getName pkg)
+			special_pkgs.unfree;
+	};
 
 	# Set machine hostname
 	networking.hostName = settings.hostname;
@@ -73,7 +78,7 @@
 	users.defaultUserShell = pkgs.zsh;
 	programs.zsh.enable = true;
 
-	system.nixos.label = "Test Label";
+	system.nixos.label = "Test_Label";
 	system.nixos.tags = [ "test-tag" "test-tag-2" ];
 
 	system.stateVersion = "23.11"; # Did you read the comment?

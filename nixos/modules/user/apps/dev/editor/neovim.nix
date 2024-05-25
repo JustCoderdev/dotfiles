@@ -39,9 +39,10 @@ SETTINGS = {
 	cache_path = "${cachepath}/nvim"
 }
 
-print("Injected by nixOS with love <3\n")
+print("Injected by nixOS with love <3")
+print(".")
 
-file = "init";
+local file = "init";
 local require_string = string.format("%s.%s", "${username}", file)
 local file_ok, _ = pcall(require, require_string)
 if (not file_ok) then
