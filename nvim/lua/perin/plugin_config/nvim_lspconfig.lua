@@ -50,6 +50,11 @@ lspconfig.clangd.setup {
 		"--header-insertion-decorators",
 		"--function-arg-placeholders",
 		"--completion-style=detailed",
+
+
+		-- doesn't work :/
+		-- "--fallback-style='{BasedOnStyle: LLVM, IndentWidth: 4, UseTab: UT_Always, BreakBeforeBraces: Linux, AllowShortIfStatementsOnASingleLine: SIS_WithoutElse, IndentCaseLabels: true}'"
+
 		-- custom
 		-- "-xc",
 		-- "-Wall",
@@ -63,7 +68,9 @@ lspconfig.clangd.setup {
 	},
 	filetypes = { "c" }, -- "cpp", "objc", "objcpp"
 	-- root_dir = lspconfig.util.root_pattern("src"),
-	init_option = { fallbackFlags = {  "-std=c89"  } },
+	init_option = {
+		fallbackFlags = {  "-std=c89"  },
+	},
 	capabilities = c_capabilities
 }
 
@@ -137,8 +144,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<Leader>d", vim.lsp.buf.type_definition, opts)
     vim.keymap.set("n", "<Leader>r", vim.lsp.buf.rename, opts)
     -- vim.keymap.set({"n","v"}, "<Leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "<Leader>f", function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+    vim.keymap.set("n", "<Leader>f", function() vim.lsp.buf.format { async = true } end, opts)
   end,
 })
+
+
+
+
