@@ -12,26 +12,31 @@
 
 	outputs = { self, nixpkgs, home-manager, ... }@args:
 		let
+			# Configuration Switcher
+			host = "virtualmachine";
+			profile = "personal";
+
+			# Other
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
 		in {
 
-		nixosConfigurations = { # hostname
-			virtualmachine = nixpkgs.lib.nixosSystem {
-				inherit system;
-				modules = [
-					./hosts/virtualmachine/configuration.nix
-				];
-			};
+		# hostname
+		nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
+			inherit system;
+			modules = [
+				./profiles/${profile}/configuration.nix
+				./hosts/${host}/hardware-configuration.nix
+			];
 		};
 
-		homeConfigurations = { # username
-			ryuji = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				modules = [
-					./users/ryuji/home.nix
-				];
-			};
-		};
+		# homeConfigurations = { # username
+		# 	ryuji = home-manager.lib.homeManagerConfiguration {
+		# 		inherit pkgs;
+		# 		modules = [
+		# 			./users/ryuji/home.nix
+		# 		];
+		# 	};
+		# };
 	};
 }
