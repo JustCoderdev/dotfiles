@@ -44,6 +44,19 @@ with lib;
 			unzip zip
 			vim git
 			htop
+
+
+			# C Packages
+			glibcInfo
+			glibc
+
+			clang-tools
+			clang
+
+			gnumake
+			gdb
+
+			file
 		];
 	};
 }
