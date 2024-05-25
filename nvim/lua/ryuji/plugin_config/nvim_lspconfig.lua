@@ -20,18 +20,21 @@ snip_cap.textDocument.completion.completionItem.snippetSupport = true
 -- lspconfig.astro.setup { capabilities = snip_cap } -- npm install -g @astrojs/language-server
 -- lspconfig.denols.setup { capabilities = snip_cap }
 -- lspconfig.tsserver.setup { capabilities = snip_cap }
--- lspconfig.eslint.setup { capabilities = snip_cap }
 
--- lspconfig.html.setup { capabilities = snip_cap }
--- lspconfig.cssls.setup { capabilities = snip_cap }         -- npm i -g vscode-langservers-extracted
--- lspconfig.css_variables.setup { capabilities = snip_cap } -- npm i -g css-variables-language-server
--- lspconfig.jsonls.setup { capabilities = snip_cap }
+ -- npm i -g vscode-langservers-extracted
+lspconfig.html.setup { capabilities = snip_cap }
+lspconfig.cssls.setup { capabilities = snip_cap }
+lspconfig.jsonls.setup { capabilities = snip_cap }
+lspconfig.eslint.setup { capabilities = snip_cap }
+
+-- npm i -g css-variables-language-server
+lspconfig.css_variables.setup { capabilities = snip_cap }
 
 -- Tools
 lspconfig.nixd.setup { capabilities = snip_cap }
 lspconfig.marksman.setup { capabilities = snip_cap }
 lspconfig.dockerls.setup { capabilities = snip_cap }
--- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
+lspconfig.docker_compose_language_service.setup { capabilities = snip_cap }
 -- lspconfig.arduino_language_server.setup {} -- go install github.com/arduino/arduino-language-server@latest
 
 -- Random
