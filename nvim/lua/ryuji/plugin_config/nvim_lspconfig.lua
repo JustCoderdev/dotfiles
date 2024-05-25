@@ -42,8 +42,12 @@ lspconfig.clangd.setup {
 		require("clangd_extensions.inlay_hints").set_inlay_hints()
 	end,
 	cmd = {
+		-- NixOS Shenanigans
+		"/usr/bin/env",
+		"clangd",
+
 		-- CLANGD args
-		"/usr/bin/clangd",
+		--"/usr/bin/clangd",
 		"-pch-storage=memory",
 		"-pretty",
 		"-j=4",
