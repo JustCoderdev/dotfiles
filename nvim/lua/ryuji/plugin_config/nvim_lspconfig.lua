@@ -29,6 +29,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.marksman.setup{}
 lspconfig.dockerls.setup { capabilities = capabilities }
 -- lspconfig.docker_compose_language_service.setup { capabilities = capabilities }}
+require'lspconfig'.nixd.setup{}
 
 -- Random
 local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -37,10 +38,10 @@ c_capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
 lspconfig.clangd.setup {
-	-- on_attach = function(client, bufnr)
-		-- require("clangd_extensions.inlay_hints").setup_autocmd()
-		-- require("clangd_extensions.inlay_hints").set_inlay_hints()
-	-- end,
+	on_attach = function(client, bufnr)
+		require("clangd_extensions.inlay_hints").setup_autocmd()
+		require("clangd_extensions.inlay_hints").set_inlay_hints()
+	end,
 	cmd = {
 		-- CLANGD args
 		"/usr/bin/clangd",
