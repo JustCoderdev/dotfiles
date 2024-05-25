@@ -24,7 +24,7 @@ in
 	};
 
 	config = mkIf cfg.enable {
-		environment.systemPackages = [
+		environment.systemPackages = (mkMerge [
 			(with pkgs; [
 				discord
 
@@ -39,9 +39,9 @@ in
 				bottles
 			])
 
-#			(with pkgs-unstable; [
-#				cartridges
-#			])
-		];
+			(with pkgs-unstable; [
+				cartridges
+			])
+		]);
 	};
 }

@@ -20,6 +20,11 @@
 			pkgs-unstable = import nixpkgs-unstable {
 				system = settings.system;
 				overlays = [ nixd.overlays.default ];
+				config = let pkgs = settings.special_pkgs; in {
+					permittedInsecurePackages = pkgs.insecure;
+					allowUnfreePredicate = pkg: builtins.elem
+						(nixpkgs.lib.getName pkg) pkgs.unfree;
+				};
 			};
 			modules = let path = settings.dotfiles_path; in [
 				{

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, pkgs-unstable, settings, ... }:
 
 {
 	nix = {
@@ -18,7 +18,6 @@
 			warn-dirty = false;
 		};
 	};
-
 
 	nixpkgs.config = let pkgs = settings.special_pkgs; in {
 		permittedInsecurePackages = pkgs.insecure;
