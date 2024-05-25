@@ -1,6 +1,6 @@
 # Check whether you are on a different system
 
-if [ -z $1 ]; then
+if [ -z "${1:-}" ]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOST}\033[0m"
 	sudo nixos-rebuild switch --show-trace --flake ".#${HOST}"
 else
