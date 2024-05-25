@@ -17,7 +17,7 @@
 				profile = "personal";
 				username = "ryuji";
 
-				dotfiles_path = ./..;
+				dotfiles_path = ./.;
 				dotfiles_abspath = "/.dotfiles";
 				cache_path = "~/.config";
 
