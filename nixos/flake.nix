@@ -17,6 +17,7 @@
 			_hostname = "virtualmachine";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
+			pkgs = nixpkgs.legacyPackages.${settings.system};
 			pkgs-unstable = import nixpkgs-unstable {
 				system = settings.system;
 				overlays = [ nixd.overlays.default ];
@@ -66,7 +67,7 @@
 		};
 
 		devShells.${settings.system} = let path = settings.dotfiles_path; in
-			import (path + "/nixos/modules/system/dev/shells") { pkgs = nixpkgs.pkgs; };
+			import (path + "/nixos/modules/system/dev/shells") { inherit pkgs; };
 
 		# profile
 		# homeConfigurations = {
