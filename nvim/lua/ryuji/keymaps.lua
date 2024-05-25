@@ -31,6 +31,7 @@ local function unmap(modes, keybinding)
 	-- end
 end
 
+local function mapa(keybinding, action) map("nivxt", keybinding, action) end
 local function mapn(keybinding, action) map("n", keybinding, action) end
 local function mapi(keybinding, action) map("i", keybinding, action) end
 local function mapv(keybinding, action) map("v", keybinding, action) end
@@ -82,23 +83,23 @@ vim.g.maplocalleader = " "
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>rd", "<Leader>s"
 
-mapn("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
-mapn("<Leader>l", ":LspRestart <CR>")
+mapa("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+mapa("<Leader>l", ":LspRestart <CR>")
 
 -- save
-mapn("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
-mapn("<Leader>qq", ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
-mapn("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-mapn("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
+mapa("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
+mapa("<Leader>qq", ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
+mapa("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
+mapa("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 
 -- plugins
-mapn("<Leader>s", ":StripWhitespace <CR>")  -- from vim-better-whitespace
+mapa("<Leader>s", ":StripWhitespace <CR>")  -- from vim-better-whitespace
 
-mapn("<Leader>h", ":FzfLua files <CR>")              -- from fzf
-mapn("<Leader>H", ":FzfLua files resume=true <CR>")  -- from fzf
+mapa("<Leader>h", ":FzfLua files <CR>")              -- from fzf
+mapa("<Leader>H", ":FzfLua files resume=true <CR>")  -- from fzf
 
-mapn("<Leader>g", ":FzfLua grep <CR>")               -- from fzf
-mapn("<Leader>G", ":FzfLua grep resume=true <CR>")   -- from fzf
+mapa("<Leader>g", ":FzfLua grep <CR>")               -- from fzf
+mapa("<Leader>G", ":FzfLua grep resume=true <CR>")   -- from fzf
 
 -- clipboard
 -- map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
