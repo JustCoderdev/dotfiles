@@ -3,7 +3,7 @@
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-23.05";
-#nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-23.05";
@@ -12,15 +12,15 @@
 
 #nixd.url = "github:nix-community/nixd";
 	};
-#nixpkgs-unstable, , nixd
-	outputs = { self, nixpkgs, home-manager }@inputs:
+#, nixd
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }@inputs:
 		let
 			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
-#			pkgs-unstable = import inputs.nixpkgs-unstable {
-#				system = settings.system;
-#			};
+			pkgs-unstable = import inputs.nixpkgs-unstable {
+				system = settings.system;
+			};
 			modules = let path = settings.dotfiles_path; in [
 #				{
 #					nixpkgs-unstable.overlays = [ nixd.overlays.default ];
@@ -28,7 +28,7 @@
 #				}
 
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
-#					(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
+#				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
 				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
