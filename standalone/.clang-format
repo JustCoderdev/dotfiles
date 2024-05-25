@@ -1,3 +1,5 @@
+# :!cp ./.clang-format ~/Developer
+
 BasedOnStyle: LLVM
 
 # AlignConsecutiveDeclarations: Consecutive
@@ -27,6 +29,8 @@ BraceWrapping:
 BreakBeforeTernaryOperators: true
 DerivePointerAlignment: false
 
+MaxEmptyLinesToKeep: 3
+
 IncludeBlocks: Regroup
 IncludeCategories:
 # Standard Libraries
@@ -44,6 +48,12 @@ IncludeCategories:
 IndentCaseLabels: true
 IndentPPDirectives: None
 IndentWidth: 4
+
+# InsertNewlineAtEOF: true
+# InsertTrailingCommas: true
+# KeepEmptyLinesAtEOF: true
+# KeepEmptyLinesAtTheStartOfBlocks: true
+
 PointerAlignment: Left
 
 SpaceAfterCStyleCast: false
