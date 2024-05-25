@@ -46,7 +46,7 @@ fi
 # grep "virtualisation" $CONFIG_FILE_PATH   | sudo tee -a $BOOT_FILE_PATH
 
 echo -ne "}\n"                            | sudo tee -a $BOOT_FILE_PATH
-sudo git add "${DOTFILES_PATH}/nixos"
+pushd "${DOTFILES_PATH}" && sudo git add "${DOTFILES_PATH}/nixos"
 
 
 # Rebuild system
