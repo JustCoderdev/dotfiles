@@ -5,10 +5,10 @@ set -e
 
 # Clone dotfiles
 DOTFILES_PATH="/.dotfiles"
-echo -e "Cloning dotfiles in ${DOTFILES_PATH}"
+# echo -e "Cloning dotfiles in ${DOTFILES_PATH}"
 
 # Move to dotfiles
-nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git --branch nixos-compliant ${DOTFILES_PATH}"
+# nix-shell -p git --command "sudo git clone https://github.com/JustCoderdev/dotfiles.git --branch nixos-compliant ${DOTFILES_PATH}"
 
 
 # Generate harware configuration
@@ -41,6 +41,7 @@ else
 fi
 
 # If using pre-existing configuration.nix file
+# echo -ne "\n\t#Boot\n"          | sudo tee -a $BOOT_FILE_PATH
 # grep "boot" $CONFIG_FILE_PATH             | sudo tee -a $BOOT_FILE_PATH
 # echo -ne "\n\t#Virtualisation\n"          | sudo tee -a $BOOT_FILE_PATH
 # grep "virtualisation" $CONFIG_FILE_PATH   | sudo tee -a $BOOT_FILE_PATH
@@ -51,4 +52,4 @@ pushd "${DOTFILES_PATH}" && sudo git add "${DOTFILES_PATH}/nixos"
 
 # Rebuild system
 echo -e "Rebuilding system for \033[32m\"nixos\"\033[0m"
-sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}#nixos"
+sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}/nixos#nixos"

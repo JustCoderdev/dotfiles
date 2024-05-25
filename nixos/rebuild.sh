@@ -7,7 +7,7 @@ else
 	echo -e "Requested rebuild for \033[32m\"$1\"\033[0m"
 
 	if [ "$1" != "$HOST" ]; then
-		echo -e "Updating flake file... (${HOST}) -> ($1)"
+		echo -e "Updating flake file... (${HOST:---}) -> ($1)"
 		sudo sed -i "s/\(hostname = \).*/\1\"$1\";/" "./flake.nix"
 	fi
 
