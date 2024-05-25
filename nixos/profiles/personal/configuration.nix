@@ -11,7 +11,7 @@
 
 		../../modules/system/desktop/i3.nix
 
-		../../modules/user/bin/nixos-rebuild.nix
+		#../../modules/user/bin/nixos-rebuild.nix
 	];
 
 	# VIRTUALIZATION
@@ -139,13 +139,12 @@
 
 	# List packages installed in system profile.
 	environment.systemPackages = with pkgs; [
+		(import ../../modules/user/bin/nixos-rebuild.nix { inherit pkgs; inherit settings; })
+
 		firefox
-
-		vim 
-
-		git
 		docker
-		
+		git
+		vim
 		wget
 		man
 	];
