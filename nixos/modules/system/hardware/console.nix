@@ -1,6 +1,10 @@
 { ... }:
 
 {
+	imports = [
+		../desktop/fonts.nix
+	];
+
 	# Configure console keymap
 	console = {
 		enable = true;

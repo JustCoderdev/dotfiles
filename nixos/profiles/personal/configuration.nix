@@ -25,7 +25,7 @@
 		../../modules/system/services/firewall.nix
 		../../modules/system/services/openvpn.nix
 		../../modules/system/services/ssh.nix
-		../../modules/system/services/virtualbox.nix
+		#../../modules/system/services/virtualbox.nix
 
 		#../../modules/user/bin/nixos-rebuild.nix
 	];
