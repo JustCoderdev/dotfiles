@@ -13,6 +13,7 @@
 		../../modules/system/bin
 		../../modules/system/desktop/xserver
 		../../modules/system/desktop/wayland
+		../../modules/system/dev
 		../../modules/system/gaming
 		../../modules/system/services
 	];

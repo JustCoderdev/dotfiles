@@ -26,8 +26,13 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = true;
-		desktop.wayland.enable = false;
+		desktop.xfce.enable = false;
+		desktop.wayland.enable = true;
+
+		dev = {
+			c.enable = true;
+			arduino.enable = true;
+		};
 
 		gaming.enable = false;
 		services = {
