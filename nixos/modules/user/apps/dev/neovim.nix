@@ -9,7 +9,7 @@ in {
 #	home.packages = with pkgs; [ neovim ];
 
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/nvim" = {
+	home.file."/home/${username}/.config/neovim" = {
 		source = "${dotfiles}/nvim";
 		recursive = true;
 	};
