@@ -118,7 +118,7 @@ font:
     style: Bold
 
   # Italic font face
-  italics:
+  italic:
     # family: Roboto Mono
     style: Medium Italic
 
