@@ -4,12 +4,10 @@ DOTFILES_PATH="/.dotfiles"
 
 # Clone dotfiles
 # nix-shell -p git --command "git clone https://github.com/JustCoderdev/dotfiles.git ${DOTFILES_PATH}"
-<<<<<<< HEAD
 # nix-shell -p git --command "git checkout nixos-compliant"
 
-mkdir "${DOTFILES_PATH}/nixos/hosts/nixos"
-=======
->>>>>>> 581a52e (Fixed typo in installation script)
+rm "${DOTFILES_PATH}/nixos/hosts/nixos/*"
+mkdir -p "${DOTFILES_PATH}/nixos/hosts/nixos"
 
 # Generate harware configuration
 sudo nixos-generate-config --show-hardware-config > "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"

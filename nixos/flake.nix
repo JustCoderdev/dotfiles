@@ -34,6 +34,7 @@
 				./hosts/${settings.hostname}/hardware-configuration.nix
 				./hosts/${settings.hostname}/boot.nix
 				./profiles/${settings.profile}/configuration.nix
+
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
