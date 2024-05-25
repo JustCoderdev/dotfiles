@@ -80,10 +80,10 @@ bindsym Shift+XF86AudioLowerVolume  exec --no-startup-id "pamixer -d 15"
 bindsym XF86AudioMute               exec --no-startup-id "pamixer -t"
 
 # Custom Screen brightness controls
-bindsym XF86MonBrightnessUp          exec --no-startup-id "sudo backlight inc 50"
-bindsym XF86MonBrightnessDown        exec --no-startup-id "sudo backlight dec 50"
-bindsym Shift+XF86MonBrightnessUp    exec --no-startup-id "sudo backlight set max"
-bindsym Shift+XF86MonBrightnessDown  exec --no-startup-id "sudo backlight set 0"
+bindsym XF86MonBrightnessUp          exec --no-startup-id "sudo backlight inc 50 && killall -USR1 i3status"
+bindsym XF86MonBrightnessDown        exec --no-startup-id "sudo backlight dec 50 && killall -USR1 i3status"
+bindsym Shift+XF86MonBrightnessUp    exec --no-startup-id "sudo backlight set max && killall -USR1 i3status"
+bindsym Shift+XF86MonBrightnessDown  exec --no-startup-id "sudo backlight set 0 && killall -USR1 i3status"
 
 # Media player controls
 bindsym XF86AudioPlayPause  exec "playerctl play-pause"
