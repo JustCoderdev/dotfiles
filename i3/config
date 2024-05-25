@@ -72,17 +72,11 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume 0 -5%"
 # bindsym XF86AudioMute	       exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
-# Screen brightness controls
-bindsym XF86MonBrightnessUp 	exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown 	exec xbacklight -dec 20 # decrease screen brightness
-bindsym Shift+XF86MonBrightnessUp	exec sudo xbacklight -set 100
-bindsym Shift+XF86MonBrightnessDown	exec sudo xbacklight -set 0
-
 # Custom Screen brightness controls
-# bindsym XF86MonBrightnessUp   exec "sudo backlight inc 50"
-# bindsym XF86MonBrightnessDown exec "sudo backlight dec 50"
-# bindsym Shift+XF86MonBrightnessUp	exec "sudo backlight set max"
-# bindsym Shift+XF86MonBrightnessDown	exec "sudo backlight set 0"
+bindsym XF86MonBrightnessUp			exec "sudo backlight inc 50"
+bindsym XF86MonBrightnessDown		exec "sudo backlight dec 50"
+bindsym Shift+XF86MonBrightnessUp	exec "sudo backlight set max"
+bindsym Shift+XF86MonBrightnessDown	exec "sudo backlight set 0"
 
 # Media player controls
 # bindsym XF86AudioPlay  exec "playerctl play"
