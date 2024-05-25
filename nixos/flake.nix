@@ -23,6 +23,10 @@
 				cache_path = "~/.config";
 
 				system = "x86_64-linux";
+				special_pkgs = {
+					unfree = [ "obsidian" ];
+					insecure = [ "electron-24.8.6" ];
+				};
 			};
 
 			## Auto install script stuff ##
