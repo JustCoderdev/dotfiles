@@ -20,7 +20,7 @@ SETTINGS = {
 print("Injected by nixOS love <3")
 		 
 file = "init.lua";                                                      
-local require_string = string.format("%s.%s", ${username}, file)        
+local require_string = string.format("%s.%s", "${username}", file)        
 local file_ok, _ = pcall(require, require_string)                       
 if (not file_ok) then
 	print(string.format(" /!\\  Error loading %s.lua file", require_string))
