@@ -12,59 +12,24 @@ Configuration files for
 - Nvim \[v0.9.1\] ([Github](https://github.com/neovim))
 - Zsh
 
-## Installation
-
-### Alacritty
-
-Terminal emulator that supports
-full RGB range
-
-**Requirements**
+## Special Requirements
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git)
 
+## Installation
+
 ```bash
-# Install alacritty source
-sudo git clone https://github.com/alacritty/alacritty.git /bin/alacritty
-sudo git checkout tags/v0.12.2 # Change to right release
+# Create filepaths
+mkdir ~/Developer
+mkdir ~/Developer/Github
+mkdir ~/Developer/Projects
 
-# Install build dependency
-sudo apt-get install curl cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup override set stable
-rustup update stable
-
-# Set permission
-sudo chmod -R g+w /usr/bin/alacritty  # Set permission to run cargo
-sudo chown -R root:sudo /usr/bin/alacritty  # Allow group sudo to edit
-
-# Build alacritty
-cd /bin/alacritty
-cargo build --release
-
-# Check integrity
-tic -xe alacritty,alacritty-direct extra/alacritty.info # Install infocmp
-infocmp alacritty  # If returns without error terminfo is installed
-
-# Add to desktop db
-sudo cp target/release/alacritty /usr/local/bin
-sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-sudo desktop-file-install extra/linux/Alacritty.desktop
-sudo update-desktop-database
+# Setting soft links <3
+cd ~/-config/dotfiles
+ln -s ~/.config/dotfiles/alacritty  ..  # Alacritty
+ln -s ~/.config/dotfiles/clangd/    ..  # Clang
+ln -s ~/.config/dotfiles/standalone/.clang-format ~/Developer  # Clang format
+ln -s ~/.config/dotfiles/i3/        ..  # i3
+ln -s ~/.config/dotfiles/nvim       ..  # Nvim
+ln -s ~/.config/dotfiles/zsh        ..  # Zsh
+ln -s ~/.config/dotfiles/zsh/.zshrc ~   # Zsh
 ```
-
-### Clang
-C compiler (duh)
-
-### Clang-format
-C file formatter
-
-### i3
-A window manager
-
-### Nvim
-Textual code editor
-
-### Zsh
-Shell environment
-
-
