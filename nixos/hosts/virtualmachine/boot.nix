@@ -2,15 +2,11 @@
 
 {
 	# Bootloader
-	boot.loader.grub = {
-		enable = true;
-		device = "/dev/sda";
-		useOSProber = true;
-	};
+	boot.loader.grub.enable = true;
+	boot.loader.grub.device = "/dev/sda";
+	boot.loader.grub.useOSProber = false;
 
 	# Virtualization
-	virtualisation.virtualbox.guest = {
-		enable = true;
-		x11 = true;
-	};
+	virtualisation.virtualbox.guest.enable = true;
+	virtualisation.virtualbox.guest.x11 = true;
 }
