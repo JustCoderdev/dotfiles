@@ -10,9 +10,14 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		hyprland = {
+			url = "github:hyprwm/Hyprland";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		nixd.url = "github:nix-community/nixd";
 	};
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, nixd }@inputs:
 		let
 			_hostname = "virtualmachine";
 			settings = import ./hosts/${_hostname}/settings.nix;
