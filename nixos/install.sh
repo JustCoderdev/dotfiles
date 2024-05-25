@@ -20,6 +20,9 @@ touch $BOOT_FILE_PATH
 echo -ne "{ ... }:\n\n{\n\t#Bootloader\n"  > $BOOT_FILE_PATH
 grep "boot" $CONFIG_FILE_PATH             >> $BOOT_FILE_PATH
 
+echo -ne "\n\tboot.loader.systemd-boot.configurationLimit = 5;\n"  >> $BOOT_FILE_PATH
+echo -ne "\tboot.loader.grub.configurationLimit = 5;\n"            >> $BOOT_FILE_PATH
+
 echo -ne "\n\t#Virtualisation\n"          >> $BOOT_FILE_PATH
 grep "virtualisation" $CONFIG_FILE_PATH   >> $BOOT_FILE_PATH
 
