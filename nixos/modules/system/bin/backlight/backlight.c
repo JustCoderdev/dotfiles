@@ -70,6 +70,7 @@ n64 brightness_get(char *file_path)
 	while((c = getc(file)) != EOF && i < (BUFF_LEN - 1))
 		buffer[i++] = c;
 
+	errno = 0;
 	brightness = strtoul(buffer, NULL, 10);
 	if(errno)
 	{
@@ -267,7 +268,7 @@ int main(int argc, char **argv)
 			if(token == NULL)
 			{
 				fprintf(stderr,
-						"ERROR:%s:%d: Missing required argument for `set` "
+						"ERROR:%s:%d: Missing required argument for `inc` "
 						"command\n",
 						__FILE__,
 						__LINE__);
@@ -306,7 +307,7 @@ int main(int argc, char **argv)
 			if(token == NULL)
 			{
 				fprintf(stderr,
-						"ERROR:%s:%d: Missing required argument for `set` "
+						"ERROR:%s:%d: Missing required argument for `dec` "
 						"command\n",
 						__FILE__,
 						__LINE__);
