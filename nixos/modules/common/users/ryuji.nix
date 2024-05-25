@@ -6,27 +6,17 @@ let
 in {
 	config = lib.mkIf cfg.enable {
 
-#  The default is {option}`system.nixos.tags` separated by
-#  "-" + "-" + {env}`NIXOS_LABEL_VERSION` environment
-#  variable (defaults to the value of
-#  {option}`system.nixos.version`)
-
 # NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 
 		# Allowed [a-zA-Z0-9:_\.-]*
 		system.nixos.label = let
 			nx = config.system.nixos;
-
-			name = nx.codeName;    # Uakari
-			version = nx.release;  # 24.05
-
+			#name = nx.codeName;    # Uakari
+			#version = nx.release;  # 24.05
 		in
-			"Label_test_";
-#			lib.concatStringsSep " " (
-#			[ nx.name ] ++
-#			(lib.sort (x: y: x < y) nx.tags)
-#			++ [ config.system.nixos.version ]
-#		);
+			lib.concatStringsSep " " ( #[ nx.name ] ++
+			(lib.sort (x: y: x < y) nx.tags) ++ [ nx.version ]
+		);
 
 
 		systemd.tmpfiles.rules = [
