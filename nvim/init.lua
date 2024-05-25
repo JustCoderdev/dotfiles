@@ -2,7 +2,9 @@
 
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format( "attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
 COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
-SETTINGS = protect({
+SETTINGS = -- protect(
+{
+	-- injected by nixOS
 	user_name = "perin",
 	default_colorscheme = {
 		name = "onedark",
@@ -12,7 +14,7 @@ SETTINGS = protect({
 		name = "habamax",
 		require_truecolor = false
 	}
-})
+} --)
 
 
 --
