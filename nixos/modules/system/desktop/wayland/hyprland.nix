@@ -9,7 +9,8 @@ let cfg = config.system.desktop.wayland; in
 			enable = true;
 			xwayland.enable = true;
 
-			nvidiaPatches = config.common.core.nvidia.enable;
+#			nvidiaPatches = config.common.core.nvidia.enable;
+#			nvidiaPatches = true;
 		};
 
 		xdg.portal = {

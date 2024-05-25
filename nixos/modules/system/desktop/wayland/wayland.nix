@@ -17,7 +17,7 @@ let cfg = config.system.desktop.wayland; in
 			};
 #			displayManager.sddm = {
 #				enable = true;
-##				wayland.enable = true;
+#				wayland.enable = true;
 #				enableHidpi = true;
 #				theme = "where_is_my_sddm_theme";
 ##				package = pkgs.sddm;
