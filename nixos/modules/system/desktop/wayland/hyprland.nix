@@ -9,32 +9,6 @@ in
 
 {
 	config = mkIf cfg.enable {
-
-# FROM WAYLAND STUFF
-		hardware.opengl = {
-			enable = true;
-			driSupport = true;
-			driSupport32Bit = true;
-		};
-
-		environment = {
-			systemPackages = with pkgs; [
-#				wayland
-				waybar
-				rofi-wayland
-#				pkgs-unstable.where-is-my-sddm-theme
-			];
-
-			sessionVariables = {
-				# Enable if cursor is invisible
-				WLR_NO_HARDWARE_CURSORS = "1";
-
-				# Enable Chromium and Electron apps
-				NIXOS_OZONE_WL = "1";
-			};
-		};
-# END WAYLAND STUFF
-
 #		hardware.opengl = {
 #			package = pkgs-hypr.mesa.drivers;
 #			package32 = pkgs-hypr.pkgsi686Linux.mesa.drivers;
