@@ -1,6 +1,6 @@
 [Plymouth Theme]
-Name=Darwin OS X Plymouth
-Description=A Plymouth of OS X Yosemite
+Name=Darnix Plymouth
+Description=A Plymouth of MacOS with NixOS logo
 ModuleName=script
 
 [script]
