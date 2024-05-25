@@ -27,10 +27,6 @@
 				};
 			};
 			modules = let path = settings.dotfiles_path; in [
-#				{
-#					environment.systemPackages = [ pkgs-unstable.nixd ];
-#				}
-
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
