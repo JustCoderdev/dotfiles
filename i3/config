@@ -52,7 +52,7 @@ font pango:robotomono medium 10
 
 
 ## STARTUP APP
-exec --no-startup-id i3-msg 'workspace 1; exec firefox'
+#exec --no-startup-id i3-msg 'workspace 1; exec firefox'
 exec --no-startup-id i3-msg 'workspace 2; exec alacritty'
 
 # assign [class="Firefox"]   number 1
@@ -73,6 +73,12 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # bindsym XF86AudioMute	       exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
 # Screen brightness controls
+bindsym XF86MonBrightnessUp 	exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown 	exec xbacklight -dec 20 # decrease screen brightness
+bindsym Shift+XF86MonBrightnessUp	exec sudo xbacklight -set 100
+bindsym Shift+XF86MonBrightnessDown	exec sudo xbacklight -set 0
+
+# Custom Screen brightness controls
 # bindsym XF86MonBrightnessUp   exec "sudo backlight inc 50"
 # bindsym XF86MonBrightnessDown exec "sudo backlight dec 50"
 # bindsym Shift+XF86MonBrightnessUp	exec "sudo backlight set max"
@@ -134,10 +140,6 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-# bindsym $mod+j       focus left
-# bindsym $mod+k       focus down
-# bindsym $mod+l       focus up
-# bindsym $mod+ograve  focus right
 bindsym $mod+h       focus left
 bindsym $mod+j       focus down
 bindsym $mod+k       focus up
@@ -150,10 +152,6 @@ bindsym $mod+l       focus right
 # bindsym $mod+Right  focus right
 
 # move focused window
-# bindsym $mod+Shift+j       move left
-# bindsym $mod+Shift+k       move down
-# bindsym $mod+Shift+l       move up
-# bindsym $mod+Shift+ograve  move right
 bindsym $mod+Shift+h       move left
 bindsym $mod+Shift+j       move down
 bindsym $mod+Shift+k       move up
@@ -267,8 +265,7 @@ bindsym $mod+r mode "resize"
 bar {
 	font pango:monospace 9
 	status_command i3status -c ~/.config/i3/i3status.conf
-#	status_command i3status 
-    separator_symbol "|"
+    	separator_symbol "|"
 
 
 	# Colors
@@ -276,21 +273,21 @@ bar {
 	# set $redColor    "#d48525"
 	set $redColor    "#fb7979"
 
-    colors {
-        background #000000 
-        statusline $whiteColor 
-        separator  $bgColor 
-
-        # <colorclass>     <border>     <background> <text>
-        focused_workspace  $blackColor  $blackColor  $whiteColor 
-        active_workspace   $bgColor     $bgColor     $grayColor 
-        inactive_workspace $bgColor     $bgColor     $grayColor  
-        urgent_workspace   $redColor    $bgColor     $grayColor 
-        binding_mode       $bgColor     $bgColor     $grayColor 
-
-        # binding_mode       $redColor    $bgColor     $grayColor  
-        # binding_mode       $brRedColor  #000000      $brRedColor 
-        # binding_mode       $redColor    $redColor    $blackColor 
-        # binding_mode       $bgColor     $bgColor     $redColor
+	colors {
+		background #000000 
+		statusline $whiteColor 
+		separator  $bgColor 
+		
+		# <colorclass>     <border>     <background> <text>
+		focused_workspace  $blackColor  $blackColor  $whiteColor 
+		active_workspace   $bgColor     $bgColor     $grayColor 
+		inactive_workspace $bgColor     $bgColor     $grayColor  
+		urgent_workspace   $redColor    $bgColor     $grayColor 
+		binding_mode       $bgColor     $bgColor     $grayColor 
+		
+		# binding_mode       $redColor    $bgColor     $grayColor  
+		# binding_mode       $brRedColor  #000000      $brRedColor 
+		# binding_mode       $redColor    $redColor    $blackColor 
+		# binding_mode       $bgColor     $bgColor     $redColor
     }
 }
