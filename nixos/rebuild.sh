@@ -1,1 +1,1 @@
-sudo nixos-rebuild switch --flake .#virtualmachine
+sudo nixos-rebuild switch --flake .#$1

@@ -7,28 +7,40 @@
 set -e
 
 # cd to your config dir
-cd /.dotfiles/nixos/
+pushd /.dotfiles/nixos/ > /dev/null
+shopt -s globstar
 
 # Check for differences
-echo "Analysing changes..."
-if git diff --quiet -- './**/*.nix'; then
-	echo "No changes detected, \033[31mexiting\033[0m"
-	cd $OLDPWD
+echo -e "Analysing changes..."
+if git diff --quiet -- ./**/*.nix; then
+	echo -e "No changes detected, \033[31mexiting\033[0m\n"
+	shopt -u globstar
+	popd > /dev/null
 	exit 0
 fi
 
 # Shows your changes
-git diff --word-diff=porcelain -U0 -- './**/*.nix'
-echo -e "\nNixOS Rebuilding...\n"
+git diff --word-diff=porcelain -U0 -- ./**/*.nix
+echo -e "\nNixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-sudo git add .
-sudo nixos-rebuild switch --flake .#$1 &>.nixos-switch.log || (cat .nixos-switch.log | grep --color error && false)
+sudo git add ./**/*.nix
+if sudo nixos-rebuild switch --flake ".#$1" &>.nixos-switch.log; then
+	echo -e "Done\n"
+else
+	echo ""
+	cat .nixos-switch.log | grep --color error
+	sudo git restore --staged ./**/*.nix
+	shopt -u globstar
+	popd > /dev/null
+	exit 1
+fi
 
 # Commit changes 
 generation=$(nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 sudo git commit -m "NixOS build#$generation"
 
 echo -e "\n\033[32mCommitted as NixOS build#$generation\033[0m"
-echo -e "\033[34mNixOS Rebuild Completed!\033[0m"
-cd $OLDPWD
+echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
+shopt -u globstar
+popd > /dev/null
