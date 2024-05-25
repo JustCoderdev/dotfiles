@@ -3,33 +3,9 @@
 with lib;
 
 let
-	cfg = config.user.app-collection;
+	cfg = config.common.users.ryuji;
 in {
-	options = {
-		user.app-collection = {
-			image-editing = mkOption  {
-				type = types.bool;
-				description = "Add image editing sofware to environment packages";
-				default = false;
-				example = true;
-			};
-			video-editing = mkOption {
-				type = types.bool;
-				description = "Add video editing sofware to environment packages";
-				default = false;
-				example = true;
-			};
-			developer = mkOption {
-				type = types.bool;
-				description = "Add developer sofware to environment packages";
-				default = false;
-				example = true;
-			};
-		};
-	};
-
-	config = {
-		# User account
+	config = mkIf cfg.enable {
 		users.users.${settings.username} = {
 			name = settings.username;
 			description = settings.username;
@@ -61,13 +37,6 @@ in {
 				putty
 				kicad
 			])
-
-			[ # Scuola
-				google-chrome
-				# ciscoPacketTracer8
-				# github-desktop
-				# vscode
-			]
 		]));
 	};
 }

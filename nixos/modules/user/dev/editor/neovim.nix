@@ -1,4 +1,4 @@
-{ pkgs-unstable, pkgs, lib, settings, ... }:
+{ pkgs-unstable, pkgs, settings, ... }:
 let
 	username = settings.username;
 	dotfiles = settings.dotfiles_path;
@@ -16,25 +16,21 @@ in {
 	programs.neovim.enable = true;
 	programs.neovim.defaultEditor = true;
 
-	home.packages = (lib.mkMerge [
-		(with pkgs; [
-			xclip
-			xsel
-			fzf
+	home.packages = with pkgs; [
+		xclip
+		xsel
+		fzf
 
-			# Parsers
-			tree-sitter
-			nodejs
+		# Parsers
+		tree-sitter
+		nodejs
 
-			# LSPs
-			lua-language-server
-			marksman
-			nodePackages.bash-language-server
-		])
-		(with pkgs-unstable; [
-			nixd
-		])
-	]);
+		# LSPs
+		lua-language-server
+		marksman
+		nodePackages.bash-language-server
+		pkgs-unstable.nixd
+	];
 
 	# Import configuration from dotfiles
 	home.file."${configpath}/nvim/init.lua".text = ''

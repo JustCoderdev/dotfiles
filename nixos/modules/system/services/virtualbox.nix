@@ -1,11 +1,15 @@
-{ nixpkgs, settings, ... }:
+{ config, lib, settings, ... }:
+
+with lib;
+let cfg = config.system.services.virtualbox; in
 
 {
-	nixpkgs.config.allowUnfree = true;
-	virtualisation.virtualbox.host = {
-		enable = true;
-		enableExtensionPack = true;
-	};
+	config = mkIf cfg.enable {
+		virtualisation.virtualbox.host = {
+			enable = true;
+			enableExtensionPack = true;
+		};
 
-	users.users.${settings.username}.extraGroups = [ "vboxusers" ];
+		users.users.${settings.username}.extraGroups = [ "vboxusers" ];
+	};
 }

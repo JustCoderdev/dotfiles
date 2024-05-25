@@ -1,4 +1,6 @@
-{ pkgs, settings, ... }:
+{ pkgs, lib, ... }:
+
+with lib;
 
 {
 	imports = [
@@ -9,26 +11,37 @@
 		./locale.nix
 		./network.nix
 		./nix.nix
-#./nvidia.nix
+		./nvidia.nix
 		./numpad.nix
 		./pipewire.nix
 		./plymouth.nix
 		./printer.nix
+		./shell.nix
 		./ssh.nix
 	];
 
-	networking.hostName = settings.hostname;
+	options = {
+		common.core = {
+			bluetooth.enable = mkOption {
+				type = types.bool;
+				description = "Enable bluetooth support";
+				default = true;
+			};
 
-	# Common packages
-	environment.systemPackages = with pkgs; [
-		unzip zip
+			nvidia.enable = mkOption {
+				type = types.bool;
+				description = "Enable nvidia support";
+				default = false;
+			};
+		};
+	};
 
-		vim git
-		gnumake
-	];
-
-	# Use zsh as shell
-	environment.shells = with pkgs; [ zsh ];
-	users.defaultUserShell = pkgs.zsh;
-	programs.zsh.enable = true;
+	config = {
+		# Core packages
+		environment.systemPackages = with pkgs; [
+			unzip zip
+			vim git
+			gnumake
+		];
+	};
 }

@@ -1,13 +1,15 @@
-{ ... }:
+{ config, lib, ... }:
+
+with lib;
+let cfg = config.common.core.bluetooth; in
 
 {
-	# Enable bluetooth
-	hardware.bluetooth = {
-		enable = true;
+	config = mkIf cfg.enable {
+		hardware.bluetooth = {
+			enable = true;
+			settings.General.Experimental = true;
+		};
 
-		settings.General.Experimental = true;
+		services.blueman.enable = true;
 	};
-
-	# Bluetooth GUI
-	services.blueman.enable = true;
 }
