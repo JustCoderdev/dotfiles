@@ -1,9 +1,10 @@
-{ config, lib, settings, ... }:
+{ config, lib, ... }:
 
-let cfg = config.system.desktop.xfce; in
+#let cfg = config.system.desktop.xfce; in
 
 {
-	config = lib.mkIf cfg.enable {
+#lib.mkIf cfg.enable
+	config = {
 		services.xserver.enable = true;
 		services.libinput = {
 			enable = true;
