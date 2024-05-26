@@ -4,16 +4,15 @@ let cfg = config.system.desktop.hyprland; in
 
 {
 	config = lib.mkIf cfg.enable {
+		services.displayManager.sddm = {
+			enable = true;
 
-	services.xserver.displayManager.sddm = {
-		enable = true;
+			wayland.enable = true;
+			enableHidpi = true;
 
-		wayland.enable = true;
-		enableHidpi = true;
-
-		autoNumlock = true;
-		theme = "ternix";  #terminal nix
-	};
+			autoNumlock = true;
+			theme = "ternix";  #terminal nix
+		};
 
 #		environment.systemPackages = let
 #			theme-name = "ternix";

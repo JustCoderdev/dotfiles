@@ -1,7 +1,8 @@
-{ pkgs, lib, settings, ... }:
+{ pkgs, lib, ... }:
 
 {
 	imports = [
+		../../unofficial/dotfiles-backup.nix
 		./bluetooth.nix
 		./console.nix
 		./firewall.nix
@@ -38,17 +39,10 @@
 
 	config = {
 		# Core packages
-		environment.systemPackages = let
-#			dotfiles-backup =
-#				(pkgs.callPackage ../../unofficial/dotfiles-backup.nix { inherit settings; });
-		in [
-#			dotfiles-backup
-
-			pkgs.htop
-			pkgs.unzip
-			pkgs.zip
-			pkgs.vim
-			pkgs.git
+		environment.systemPackages = with pkgs; [
+			unzip zip
+			vim git
+			htop
 		];
 	};
 }
