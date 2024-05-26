@@ -8,19 +8,21 @@
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
 > - `nixos-compliant`: Stable version of nixos, preferred but not updated
 > - `nixos-compliant-unstable`: (CURRENT) Switched to unstable to configure hyprland
-
-```plaintext
-* 16d55fd main
-|\
-| * 88e48b9 nixos-compliant (nixpkgs-23.05)
-| |\
-| | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
-| | |
-| |/
-| * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-| |
-v v
-```
+>
+> Graph
+>
+> ```plaintext
+> * 16d55fd main
+> |\
+> | * 88e48b9 nixos-compliant (nixpkgs-23.05)
+> | |\
+> | | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+> | | |
+> | |/
+> | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+> | |
+> v v
+> ```
 
 # Dotfiles
 
@@ -41,7 +43,7 @@ share with me any feedback or trick you may know :p
 ![Hyprland desktop](./.screenshots/hyprland_desktop.png)
 > "Hyprland", waybar, wallpaper showcase
 
-![Plymouth theme](./.screenshots/)
+![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
 > Plymouth darnix theme (custom)
 
 ---
@@ -147,8 +149,12 @@ and are arranged as follows:
 ### Recover rollback dotfiles
 
 ```bash
+# Get backup path
 nix derivation show -r /run/current-system \
         | grep --color -E '"out": "/nix/store/.*dotfiles-backup"'
+
+# Open backup path (EXPERIMENTAL)
+current-dotfiles
 ```
 
 ### Connect to internet (with wpa_supplicant)
