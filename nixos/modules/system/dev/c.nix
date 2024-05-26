@@ -1,10 +1,9 @@
 { config, lib, pkgs, ... }:
 
-with lib;
 let cfg = config.system.dev.c; in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		documentation = {
 			enable = true;
 
