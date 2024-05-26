@@ -3,6 +3,10 @@
 let
 	username = settings.username;
 	cfg = config.common.users.ryuji;
+	titleCase = text: lib.concatStrings [
+		(lib.toUpper (builtins.substring 0 1 text))
+		(builtins.substring 0 (builtins.stringLength text) text)
+	];
 in {
 	config = lib.mkIf cfg.enable {
 
@@ -28,7 +32,7 @@ in {
 
 		users.users.${username} = {
 			name = username;
-			description = username;
+			description = (titleCase username);
 
 			isNormalUser = true;
 			createHome = true;

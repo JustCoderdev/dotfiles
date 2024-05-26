@@ -1,37 +1,29 @@
 { config, lib, settings, ... }:
 
-with lib;
-#let cfg = config.system.desktop.xfce; in
+let cfg = config.system.desktop.xfce; in
 
 {
-#mkIf cfg.enable
-	config =  {
-		services.xserver = {
+	config = lib.mkIf cfg.enable {
+		services.xserver.enable = true;
+		services.libinput = {
 			enable = true;
 
-			videoDrivers = mkIf settings.runningVM [ "vmware" ];
+			mouse = {
+				middleEmulation = false;
+			};
 
-			# Enable touchpad support.
-			libinput = {
-				enable = true;
+			touchpad = {
+				accelProfile = "flat";       # flat, adaptive
+				clickMethod = "buttonareas"; # buttonareas, clickfinger
 
-				mouse = {
-					middleEmulation = false;
-				};
+				# dmesg | grep i8042
+				# dev = "/devices/platform/i8042/serio1/input/input5";
+				middleEmulation = false;
+				scrollMethod = "twofinger";
 
-				touchpad = {
-					accelProfile = "flat";       # flat, adaptive
-					clickMethod = "buttonareas"; # buttonareas, clickfinger
-
-					# dmesg | grep i8042
-					# dev = "/devices/platform/i8042/serio1/input/input5";
-					middleEmulation = false;
-					scrollMethod = "twofinger";
-
-					tapping = true;
-					tappingDragLock = false;
-					tappingButtonMap = "lrm";
-				};
+				tapping = true;
+				tappingDragLock = false;
+				tappingButtonMap = "lrm";
 			};
 		};
 	};

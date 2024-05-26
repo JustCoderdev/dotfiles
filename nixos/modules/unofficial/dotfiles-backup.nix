@@ -1,4 +1,4 @@
-{ pkgs, settings }:
+{ pkgs, settings, ... }:
 
 let
 	dotfiles-backup = pkgs.stdenv.mkDerivation {
@@ -12,18 +12,18 @@ let
 			cp -r . $out/current-dotfiles
 		'';
 	};
+	current-system = pkgs.writeShellApplication {
+		name = "current-system";
+		text = ''
+			echo "Visiting current configuration"
+			pushd ${dotfiles-backup}/current-dotfiles
+		'';
+	};
 in
 
 {
-	environment.systemPackages =  [
-		(pkgs.callPackage dotfiles-backup)
-		(pkgs.writeShellApplication {
-			name = "current-dotfiles";
-			text = ''
-				# /nix/store/i3mxngx5sk1lxg1ccbv3sycgxw4avan9-dotfiles-backup
-				echo ${dotfiles-backup}
-				cd ${dotfiles-backup}
-			'';
-		})
+	environment.systemPackages = [
+		dotfiles-backup
+		current-system
 	];
 }
