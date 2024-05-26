@@ -1,3 +1,7 @@
+# Alacritty config from jdah, thanks man <3
+# source <https://github.com/jdah/dotfiles>
+
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator._bindings:
 
 # Import additional configuration files
@@ -849,7 +853,7 @@ key_bindings:
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
 
-#debug:
+debug:
   # Display the time it takes to redraw each frame.
   #render_timer: false
 
@@ -865,7 +869,7 @@ key_bindings:
   #   - Info
   #   - Debug
   #   - Trace
-  #log_level: Warn
+  log_level: Error
 
   # Print all received window events.
   #print_events: false

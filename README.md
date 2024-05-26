@@ -9,6 +9,25 @@
 > - `nixos-compliant`: Stable version of nixos, preferred but not updated
 > - `nixos-compliant-unstable`: (CURRENT) Switched to unstable to configure hyprland
 
+<<<<<<< HEAD
+=======
+```plaintext
+* 16d55fd main
+|\
+| * 88e48b9 nixos-compliant (nixpkgs-23.05)
+| |\
+| | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+| | |
+v v v
+```
+
+
+> ⚠️ My dotfiles had an incident >:(
+>
+> This is why all commits before a certain point report
+> the date of the incident and I lost 8 commits (as far as I know)
+
+>>>>>>> 03f4f7f (Changed zsh aliases with sls, gd and gl)
 # Dotfiles
 
 These are my dotfiles, feel free to use them and
