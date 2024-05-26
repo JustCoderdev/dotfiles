@@ -3,8 +3,8 @@
 {
 	common = {
 		core = {
-			bluetooth.enable = true;
-			nvidia.enable = true;
+			bluetooth.enable = false;
+			nvidia.enable = false;
 		};
 
 		users = {
