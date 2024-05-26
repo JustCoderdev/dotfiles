@@ -1,0 +1,82 @@
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "0x665c54"
+blue = "0xbdae93"
+cyan = "0xd65d0e"
+green = "0x3c3836"
+magenta = "0xebdbb2"
+red = "0xfe8019"
+white = "0xfbf1c7"
+yellow = "0x504945"
+
+[colors.cursor]
+cursor = "0xd5c4a1"
+text = "0x1d2021"
+
+[colors.normal]
+black = "0x1d2021"
+blue = "0x83a598"
+cyan = "0x8ec07c"
+green = "0xb8bb26"
+magenta = "0xd3869b"
+red = "0xfb4934"
+white = "0xd5c4a1"
+yellow = "0xfabd2f"
+
+[colors.primary]
+background = "0x1d2021"
+foreground = "0xd5c4a1"
+
+[cursor]
+blinking = "On"
+
+[font]
+size = 12
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold Italic"
+
+[font.italic]
+style = "Medium Italic"
+
+[font.normal]
+family = "Roboto Mono"
+style = "Medium"
+
+[[keyboard.bindings]]
+chars = "\u001BF"
+key = "Right"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BB"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Y"
+mods = "Shift|Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "P"
+mods = "Shift|Alt"
+
+[scrolling]
+history = 100000
+
+[shell]
+program = "/usr/bin/env"
+args = ["zsh"]
+
+[window]
+dynamic_title = true
+title = "Terminal"
