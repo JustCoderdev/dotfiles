@@ -4,12 +4,15 @@
 	home.username = settings.username;
 	home.homeDirectory = "/home/${settings.username}";
 
-	programs.home-manager.enable = true;
+
+	# AAAA, fuck home-manager (enable when switching from 23.05 to 23.11)
+	manual.html.enable = false;
+	manual.manpages.enable = false;
 
 	imports = [
 		../../modules/user/desktop/i3.nix
 		../../modules/user/desktop/hyprland.nix
-		#../../modules/user/desktop/waybar.nix
+		../../modules/user/desktop/waybar.nix
 
 		../../modules/user/dev/editor/neovim.nix
 		../../modules/user/dev/editor/emacs.nix
@@ -21,5 +24,6 @@
 		../../modules/user/firefox.nix
 	];
 
-	home.stateVersion = "23.05";
+	programs.home-manager.enable = true;
+	home.stateVersion = "23.11";
 }
