@@ -5,14 +5,16 @@
 alias ez="echo 'Updating zsh :D'; exec zsh"
 
 ## list
+unalias l
 alias ls="ls --color -F "
 alias la="ls -Fa"
 alias ll="ls -Fla"
-unalias l
 
 alias cls="clear"
-alias cl="clear"
 alias rm="rm -I"
+
+alias cl="clear"
+alias sls="ls --color -F "
 
 ## change dir
 alias github="cd ~/Developer/Github/"
@@ -21,6 +23,7 @@ alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
 
 alias ..="cd .."
 alias ...="cd ../.."
+alias ....="cd ../../.."
 
 # Debug Aliases
 alias fgdeb='echo -e " \033[30m[0:BLK] \033[31m[1:RED] \033[32m[2:GRN] \033[33m[3:YLW] \033[34m[4:BLU] \033[35m[5:MAG] \033[36m[6:CYN] \033[37m[7:WHT]"'
@@ -30,16 +33,21 @@ alias fgbrdeb='echo -e " \033[90m[0:GRY] \033[91m[1:RED] \033[92m[2:GRN] \033[93
 
 ## make
 alias mk="make"
-alias mkr="make remote"
+alias mc="make clean"
 alias mb="make build"
 alias mr="make run"
 
 ## git
-alias gf="git pull"
 alias gs="git status"
+alias gl="git log --all --color --decorate --oneline --graph"
+alias gd="git diff"
+
+alias gf="git fetch"
+alias gp="git push"
+
 alias ga="git add"
 alias gc="git commit"
-alias gp="git push"
+
 
 ## nvim
 alias nres="nvim -S .session.vim"
