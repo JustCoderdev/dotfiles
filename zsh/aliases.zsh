@@ -16,6 +16,9 @@ alias rm="rm -I"
 alias cl="clear"
 alias sls="ls --color -F "
 
+alias l="ls --color -F "
+alias scls="clear"
+
 ## change dir
 alias github="cd ~/Developer/Github/"
 alias projects="cd ~/Developer/Projects/"
