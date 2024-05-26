@@ -39,10 +39,10 @@
 	config = {
 		# Core packages
 		environment.systemPackages = let
-			dotfiles-backup =
-				(pkgs.callPackage ../../unofficial/dotfiles-backup.nix { inherit settings; });
+#			dotfiles-backup =
+#				(pkgs.callPackage ../../unofficial/dotfiles-backup.nix { inherit settings; });
 		in [
-			dotfiles-backup
+#			dotfiles-backup
 
 			pkgs.htop
 			pkgs.unzip
