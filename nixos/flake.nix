@@ -2,7 +2,9 @@
 	description = "NixOS System flake";
 
 	inputs = {
-		nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+		nixpkgs.url = "nixpkgs/nixos-24.05";
+		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -15,14 +17,23 @@
 
 		nixd.url = "github:nix-community/nixd";
 	};
-	outputs = { self, nixpkgs, home-manager, nixd }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
 			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
+			pkgs-unstable = import nixpkgs-unstable {
+				system = settings.system;
+				overlays = [ nixd.overlays.default ];
+				config = let pkgs = settings.special_pkgs; in {
+					permittedInsecurePackages = pkgs.insecure;
+					allowUnfreePredicate = pkg: builtins.elem
+						(nixpkgs.lib.getName pkg) pkgs.unfree;
+				};
+			};
 
-			args = { inherit inputs settings; };
+			args = { inherit inputs pkgs-unstable settings; };
 			modules = let path = settings.dotfiles_path; in [
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")

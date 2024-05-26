@@ -22,8 +22,6 @@ in
 		};
 
 		environment.systemPackages = with pkgs; [
-				waybar        # status bar
-
 				rofi-wayland  # app launcher
 				swww          # wallpaper daemon
 
