@@ -1,3 +1,7 @@
+# Alacritty config from jdah, thanks man <3
+# source <https://github.com/jdah/dotfiles>
+
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator._bindings:
 
 # Import additional configuration files
