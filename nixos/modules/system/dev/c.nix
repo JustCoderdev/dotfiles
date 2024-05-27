@@ -31,9 +31,9 @@ let cfg = config.system.dev.c; in
 			clang
 			gcc
 
+			gdb gf
 			gnumake
 			file
-			gdb
 		];
 	};
 
