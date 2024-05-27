@@ -21,7 +21,7 @@
 > | |/
 > | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
 > | |
-> v v
+> ' v
 > ```
 
 # Dotfiles
