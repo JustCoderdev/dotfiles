@@ -1,6 +1,5 @@
 { config, lib, settings, ... }:
 
-with lib;
 let
 	hostname = settings.hostname;
 	cfg = config.system.services.samba;
@@ -12,7 +11,7 @@ in
 #   `smbpasswd -a my_user`
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		# Autodiscovery on windows
 #		services.samba-wsdd = {
 #			enable = true;
