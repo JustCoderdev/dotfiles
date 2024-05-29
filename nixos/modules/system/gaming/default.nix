@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 
-with lib;
 let cfg = config.system.gaming; in
 
 {
@@ -11,15 +10,15 @@ let cfg = config.system.gaming; in
 
 	options = {
 		system.gaming = {
-			enable = mkOption {
-				type = types.bool;
+			enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Enable gaming software";
 				default = false;
 			};
 		};
 	};
 
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		environment.systemPackages = with pkgs; [
 			discord
 

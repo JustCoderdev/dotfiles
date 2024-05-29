@@ -13,7 +13,6 @@
 
 				image-editing = false;
 				video-editing = false;
-				developer = false;
 			};
 
 			school.enable = false;
@@ -32,6 +31,7 @@
 		dev = {
 			c.enable = false;
 			arduino.enable = false;
+			net.enable = false;
 		};
 
 		gaming.enable = false;

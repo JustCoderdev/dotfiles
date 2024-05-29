@@ -13,14 +13,14 @@ in {
 # NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 
 		# Allowed [a-zA-Z0-9:_\.-]*
-		system.nixos.label = let
-			nx = config.system.nixos;
-			#name = nx.codeName;    # Uakari
-			#version = nx.release;  # 24.05
-		in
-			lib.concatStringsSep " " ( #[ nx.name ] ++
-			(lib.sort (x: y: x < y) nx.tags) ++ [ nx.version ]
-		);
+#		system.nixos.label = let
+#			nx = config.system.nixos;
+#			#name = nx.codeName;    # Uakari
+#			#version = nx.release;  # 24.05
+#		in
+#			lib.concatStringsSep " " ( #[ nx.name ] ++
+#			(lib.sort (x: y: x < y) nx.tags) ++ [ nx.version ]
+#		);
 
 
 		systemd.tmpfiles.rules = [
@@ -58,10 +58,9 @@ in {
 				obs-studio # Add to home-manager
 				davinci-resolve
 			]))
-			(lib.mkIf cfg.developer (with pkgs; [
-				putty
-				kicad
-			]))
+#			(lib.mkIf cfg.developer (with pkgs; [
+#				kicad
+#			]))
 		]);
 	};
 }

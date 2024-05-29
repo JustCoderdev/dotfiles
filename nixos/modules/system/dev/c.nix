@@ -7,7 +7,7 @@ let cfg = config.system.dev.c; in
 		documentation = {
 			enable = true;
 
-			nixos.enable = true;
+			nixos.enable = false;
 			dev.enable = true;
 
 			man = {

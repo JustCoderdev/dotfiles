@@ -14,7 +14,7 @@ let cfg = config.system.desktop.hyprland; in
 			enable = lib.mkOption {
 				type = lib.types.bool;
 				description = "Enable hyprland software suit and support";
-				default = true;
+				default = false;
 			};
 		};
 	};

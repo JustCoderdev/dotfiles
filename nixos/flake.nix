@@ -10,11 +10,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-#		hyprland = {
-#			url = "github:hyprwm/Hyprland";
-#			inputs.nixpkgs.follows = "nixpkgs";
-#		};
-
 		nixd.url = "github:nix-community/nixd";
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:

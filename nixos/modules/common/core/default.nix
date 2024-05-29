@@ -26,7 +26,7 @@
 			bluetooth.enable = lib.mkOption {
 				type = lib.types.bool;
 				description = "Enable bluetooth support";
-				default = true;
+				default = false;
 			};
 
 			nvidia.enable = lib.mkOption {

@@ -3,30 +3,21 @@
 let
 	cfg = config.system.desktop.hyprland;
 #	nvidia = config.common.core.nvidia;
-#	pkgs-hypr = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 
 {
 	config = lib.mkIf cfg.enable {
-#		hardware.opengl = {
-#			package = pkgs-hypr.mesa.drivers;
-#			package32 = pkgs-hypr.pkgsi686Linux.mesa.drivers;
-#		};
-
 		programs.hyprland = {
 			enable = true;
 			xwayland.enable = true;
-
-#			package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-#			portalPackage = pkgs.xdg-desktop-portal-hyprland;
 		};
 
 		environment.systemPackages = with pkgs; [
-				rofi-wayland  # app launcher
-				swww          # wallpaper daemon
+			rofi-wayland  # app launcher
+			swww          # wallpaper daemon
 
-				dunst      # notification daemon
-				libnotify  # dunst dependency
+			dunst      # notification daemon
+			libnotify  # dunst dependency
 		];
 
 		environment.sessionVariables = lib.mkIf settings.runningVM {

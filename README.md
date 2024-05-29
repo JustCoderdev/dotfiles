@@ -6,8 +6,8 @@
 > ℹ️ My dotfiles are divided in 3 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
-> - `nixos-compliant`: Stable version of nixos, preferred but not updated
-> - `nixos-compliant-unstable`: (CURRENT) Switched to unstable to configure hyprland
+> - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred but not updated
+> - `nixos-compliant-unstable`: Switched to unstable to configure hyprland
 >
 > Graph
 >
@@ -20,8 +20,8 @@
 > | | |
 > | |/
 > | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-> | |
-> ' v
+> ' |
+>   v
 > ```
 
 # Dotfiles

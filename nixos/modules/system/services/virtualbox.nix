@@ -1,10 +1,9 @@
 { config, lib, settings, ... }:
 
-with lib;
 let cfg = config.system.services.virtualbox; in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		virtualisation.virtualbox.host = {
 			enable = true;
 			enableExtensionPack = true;

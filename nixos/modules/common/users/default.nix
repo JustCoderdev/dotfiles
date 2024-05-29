@@ -1,7 +1,5 @@
 { lib, ... }:
 
-with lib;
-
 {
 	imports = [
 		./ryuji.nix
@@ -11,30 +9,30 @@ with lib;
 	options = {
 		common.users = {
 			ryuji = {
-				enable = mkOption {
-					type = types.bool;
+				enable = lib.mkOption {
+					type = lib.types.bool;
 					description = "Enable personal user";
 					default = true;
 				};
 
-				image-editing = mkOption  {
-					type = types.bool;
+				image-editing = lib.mkOption  {
+					type = lib.types.bool;
 					description = "Add image editing sofware to environment packages";
 					default = false;
 				};
-				video-editing = mkOption {
-					type = types.bool;
+				video-editing = lib.mkOption {
+					type = lib.types.bool;
 					description = "Add video editing sofware to environment packages";
 					default = false;
 				};
-				developer = mkOption {
-					type = types.bool;
-					description = "Add developer sofware to environment packages";
-					default = false;
-				};
+#				developer = lib.mkOption {
+#					type = lib.types.bool;
+#					description = "Add developer sofware to environment packages";
+#					default = false;
+#				};
 			};
-			school.enable = mkOption {
-				type = types.bool;
+			school.enable = lib.mkOption {
+				type = lib.types.bool;
 				description = "Enable school user";
 				default = false;
 			};
