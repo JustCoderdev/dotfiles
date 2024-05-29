@@ -82,6 +82,7 @@ vim.g.maplocalleader = " "
 -- nvim_lspconfig overriden
 --   "gn", "gN", "gD", "gd", "K", "gi", "gr", "<C-k>",
 --   "<Leader>d", "<Leader>rd", "<Leader>s"
+--   "<Alt>n", "<Alt>p",
 
 mapa("<Leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 mapa("<Leader>l", ":LspRestart <CR>")
@@ -89,17 +90,17 @@ mapa("<Leader>l", ":LspRestart <CR>")
 -- save
 mapa("<Leader>ww", ":wall <CR> :echo \"Saved all files\" <CR>")
 mapa("<Leader>qq", ":wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
-mapa("<Leader>u" , ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-mapa("<Leader>m" , ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
+mapa("<Leader>u", ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
+mapa("<Leader>m", ":mksession! .session.vim <CR> :echo \"Updated session file\" <CR>")
 
 -- plugins
-mapa("<Leader>s", ":StripWhitespace <CR>")  -- from vim-better-whitespace
+mapa("<Leader>s", ":StripWhitespace <CR>")          -- from vim-better-whitespace
 
-mapa("<Leader>h", ":FzfLua files <CR>")              -- from fzf
-mapa("<Leader>H", ":FzfLua files resume=true <CR>")  -- from fzf
+mapa("<Leader>h", ":FzfLua files <CR>")             -- from fzf
+mapa("<Leader>H", ":FzfLua files resume=true <CR>") -- from fzf
 
-mapa("<Leader>g", ":FzfLua grep <CR>")               -- from fzf
-mapa("<Leader>G", ":FzfLua grep resume=true <CR>")   -- from fzf
+mapa("<Leader>g", ":FzfLua grep <CR>")              -- from fzf
+mapa("<Leader>G", ":FzfLua grep resume=true <CR>")  -- from fzf
 
 -- clipboard
 -- map("nv", "<Leader>y", "\"+y :echo \"Yanked to system clipboard\" <CR>")
@@ -107,14 +108,15 @@ mapa("<Leader>G", ":FzfLua grep resume=true <CR>")   -- from fzf
 
 -- copy
 map("nv", "<Leader>y", "\"+y   :echo \"Yanked to system clipboard\" <CR>")
-map("n" , "<Leader>yy", "\"+yy :echo \"Yanked to system clipboard\" <CR>")
-map("n" , "<Leader>Y", "\"+yg_ :echo \"Yanked to system clipboard\" <CR>")
+map("n", "<Leader>yy", "\"+yy :echo \"Yanked to system clipboard\" <CR>")
+map("n", "<Leader>Y", "\"+yg_ :echo \"Yanked to system clipboard\" <CR>")
 
 -- paste
 map("nv", "<Leader>p", "\"+p :echo \"Pasted from system clipboard\" <CR>")
 map("nv", "<Leader>P", "\"+P :echo \"Pasted from system clipboard\" <CR>")
 
 -- windows
+mapn("<Leader>c", ":lopen <CR>")
 mapn("<Leader>e", ":Lexplore 25 <CR>")
 mapn("<Leader>o", ":SymbolsOutline <CR>")
 
