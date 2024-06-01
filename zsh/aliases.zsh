@@ -52,6 +52,10 @@ alias ga="git add"
 alias gc="git commit"
 
 
+## docker
+alias dp="docker ps -a"
+
+
 ## nvim
 alias nres="nvim -S .session.vim"
 alias nold="nvim -S .old_session.vim"
