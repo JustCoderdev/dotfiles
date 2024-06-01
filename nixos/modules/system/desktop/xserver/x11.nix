@@ -1,11 +1,15 @@
-{ config, lib, ... }:
+{ config, lib, settings, ... }:
 
 #let cfg = config.system.desktop.xfce; in
 
 {
 #lib.mkIf cfg.enable
 	config = {
-		services.xserver.enable = true;
+		services.xserver = {
+			enable = true;
+			videoDrivers = lib.mkIf settings.runningVM [ "wmware" ];
+		};
+
 		services.libinput = {
 			enable = true;
 
