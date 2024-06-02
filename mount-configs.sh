@@ -10,9 +10,9 @@ fi
 configpath="$HOME/.config"
 
 echo "Creating default folders :D"
-mkdir ~/Developer
-mkdir ~/Developer/Github
-mkdir ~/Developer/Projects
+mkdir "/home/${USER}/Developer"
+mkdir "/home/${USER}/Developer/Github"
+mkdir "/home/${USER}/Developer/Projects"
 
 echo "Setting home links <3"
 ln -s "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty

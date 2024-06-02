@@ -20,8 +20,8 @@ alias l="ls --color -F "
 alias scls="clear"
 
 ## change dir
-alias github="cd ~/Developer/Github/"
-alias projects="cd ~/Developer/Projects/"
+alias github="cd /home/${USER}/Developer/Github/"
+alias projects="cd /home/${USER}/Developer/Projects/"
 alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
 
 alias ..="cd .."
@@ -59,7 +59,7 @@ alias dp="docker ps -a"
 ## nvim
 alias nres="nvim -S .session.vim"
 alias nold="nvim -S .old_session.vim"
-#alias nrswp="rm -rI ~/.local/state/nvim/swap"
+#alias nrswp="rm -rI /home/${USER}/.local/state/nvim/swap"
 
 # clang flags
 #alias clangc="clang -xc -Wall -Wextra -Werror

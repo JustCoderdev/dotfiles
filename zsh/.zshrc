@@ -8,7 +8,7 @@
 # DOT is the prefix for variables throughout my dotfiles
 if [[ -v DOT_NIXOS ]] then
 	export DOT_FILES="/.dotfiles"
-	export DOT_CACHE="~/.cache"
+	export DOT_CACHE="/home/${USER}/.cache"
 fi
 
 # Options

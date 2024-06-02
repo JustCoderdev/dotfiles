@@ -3,7 +3,7 @@ declare_plugin_config("lsp_signature")
 local signature = require_plugin("lsp_signature")
 signature.setup({
   debug = false, -- set to true to enable debug logging
-  log_path = "~/.cache/nvim/logs/lsp_signature.log", -- log dir when debug is on
+  log_path = "/home/${USER}/.cache/nvim/logs/lsp_signature.log", -- log dir when debug is on
   verbose = false, -- show debug line number
 
   bind = true, -- This is mandatory, otherwise border config won't get registered.

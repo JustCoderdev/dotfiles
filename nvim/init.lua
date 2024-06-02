@@ -6,7 +6,7 @@ COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 -- Check if NOT using nixOS
 if (SETTINGS == nil) then
 	SETTINGS.user_name = "perin";
-	SETTINGS.cache_path = "~/.cache/nvim"
+	SETTINGS.cache_path = "/home/${USER}/.cache/nvim"
 end
 
 SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
