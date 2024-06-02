@@ -5,7 +5,6 @@
 	programs.zsh = {
 		enable = true;
 		enableGlobalCompInit = false;
-		oh-my-zsh.enable = false;
 	};
 
 	environment.shells = [ pkgs.zsh ];

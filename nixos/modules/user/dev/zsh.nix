@@ -8,6 +8,7 @@ in {
 		enable = true;
 		prezto.enable = false;
 		completionInit = "";
+		oh-my-zsh.enable = false;
 
 	# Import configuration from dotfiles
 		initExtra = ''
