@@ -7,6 +7,7 @@ in {
 	programs.zsh = {
 		enable = true;
 		prezto.enable = false;
+		completionInit = "";
 
 	# Import configuration from dotfiles
 		initExtra = ''
