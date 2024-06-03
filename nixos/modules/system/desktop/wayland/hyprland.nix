@@ -15,9 +15,6 @@ in
 		environment.systemPackages = with pkgs; [
 			rofi-wayland  # app launcher
 			swww          # wallpaper daemon
-
-			dunst      # notification daemon
-			libnotify  # dunst dependency
 		];
 
 		environment.sessionVariables = lib.mkIf settings.runningVM {

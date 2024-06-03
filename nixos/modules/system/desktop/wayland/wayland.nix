@@ -16,6 +16,12 @@ in
 			nvidia.modesetting.enable = nvidia.enable;
 		};
 
+		environment.systemPackages = with pkgs; [
+			dunst      # notification daemon
+			libnotify  # dunst dependency
+			wl-clipboard
+		];
+
 #		services.xserver.displayManager.gdm = {
 #			enable = true;
 #			wayland = true;
@@ -25,6 +31,7 @@ in
 			enable = true;
 			extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 		};
+
 	};
 }
 
