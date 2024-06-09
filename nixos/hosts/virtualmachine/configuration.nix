@@ -41,4 +41,10 @@
 			virtualbox.enable = false;
 		};
 	};
+
+	# Temporary fix
+	networking.networkmanager.appendNameservers = [
+		"192.168.1.59"
+		"192.168.2.1"
+	];
 }
