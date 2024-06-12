@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
 #	username = "school";
 	cfg = config.common.users.school;
 in {
 
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 #		users.users.${username} = {
 #			name = username;
 #			description = username;

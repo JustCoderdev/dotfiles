@@ -49,7 +49,6 @@ in {
 				emulsion
 				newsflash
 			])
-
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
 				krita

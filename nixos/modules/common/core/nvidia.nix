@@ -1,10 +1,11 @@
 { config, lib, ... }:
 
-with lib;
-let cfg = config.common.core.nvidia; in
+let
+	cfg = config.common.core.nvidia;
+in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		services.xserver.videoDrivers = [ "nvidia" ];
 		hardware.nvidia = {
 			modesetting.enable = true;

@@ -1,10 +1,11 @@
 { config, lib, ... }:
 
-with lib;
-let cfg = config.common.core.bluetooth; in
+let
+	cfg = config.common.core.bluetooth;
+in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 		hardware.bluetooth = {
 			enable = true;
 			settings.General.Experimental = true;

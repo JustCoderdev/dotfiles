@@ -2,11 +2,13 @@
 
 {
 	imports = [
+		../../unofficial/fusuma.nix
 		../../unofficial/dotfiles-backup.nix
 		./bluetooth.nix
 		./console.nix
 		./firewall.nix
 		./fonts.nix
+		./fusuma.nix
 		./locale.nix
 		./network.nix
 		./nix.nix

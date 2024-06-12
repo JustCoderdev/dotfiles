@@ -1,0 +1,39 @@
+swipe:
+# Drag
+  3:
+    begin:
+      command: ydotool click 40
+      interval: 0.00
+    update:
+      command: ydotool mousemove -- $move_x, $move_y
+      interval: 0.01
+      accel: 1.70
+    end:
+      command: ydotool click 80
+
+# Move workspaces
+  # 4:
+  #   left:
+  #    command: exec i3 workspace next
+  #   right:
+  #     command: exec i3 workspace prev
+  #   up:
+  #     command: exec i3 fullscreen toggle
+  #   down:
+  #     command: exec i3 floating toggle
+
+pinch:
+  in:
+    sendkey: 'LEFTCTRL+EQUAL'
+    threshold: 0.1
+  out:
+    sendkey: 'LEFTCTRL+MINUS'
+    threshold: 0.1
+
+threshold:
+  swipe: 0.3
+  pinch: 1
+
+interval:
+  swipe: 1
+  pinch: 1

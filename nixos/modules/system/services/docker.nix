@@ -1,13 +1,12 @@
 { config, lib, pkgs, settings, ... }:
 
-with lib;
 let
 	username = settings.username;
 	cfg = config.system.services.docker;
 in
 
 {
-	config = mkIf cfg.enable {
+	config = lib.mkIf cfg.enable {
 
 		environment.systemPackages = [ pkgs.docker-compose ];
 		virtualisation.docker = {
