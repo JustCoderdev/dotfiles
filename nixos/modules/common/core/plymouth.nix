@@ -3,8 +3,7 @@
 {
 	boot.kernelParams = [ "quiet" ];
 	boot.initrd.systemd.enable = true;
-#	lib.mkIf (settings.runningVM)
-	boot.plymouth = {
+	boot.plymouth = lib.mkIf (!settings.runningVM) {
 		enable = true;
 
 		# logo = ../.;

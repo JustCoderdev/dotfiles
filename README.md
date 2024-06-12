@@ -160,12 +160,8 @@ current-dotfiles
 ### Connect to internet (with wpa_supplicant)
 
 ```bash
-sudo ip link set dev <if> up
-sudo rfkill unblock wifi
-sudo mkdir /etc/wpa_supplicant
-
-wpa_passphrase <ESSID> <PASSWD> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
-sudo wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i <if>
+wpa_passphrase <ESSID> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+systemctl restart wpa_supplicant
 ```
 
 ### Connect to internet (with nmcli)

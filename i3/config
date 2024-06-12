@@ -267,7 +267,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 	font pango:monospace 9
-	status_command i3status -c ~/.config/i3/i3status.conf
+	status_command i3status -c /home/${USER}/.config/i3/i3status.conf
     	separator_symbol "|"
 
 

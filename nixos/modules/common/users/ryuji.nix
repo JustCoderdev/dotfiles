@@ -5,7 +5,7 @@ let
 	cfg = config.common.users.ryuji;
 	titleCase = text: lib.concatStrings [
 		(lib.toUpper (builtins.substring 0 1 text))
-		(builtins.substring 0 (builtins.stringLength text) text)
+		(builtins.substring 1 (builtins.stringLength text) text)
 	];
 in {
 	config = lib.mkIf cfg.enable {
