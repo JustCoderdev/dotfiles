@@ -1,6 +1,8 @@
 { lib, pkgs, settings, ... }:
 
 {
+	system.nixos.tags = [ "${settings.hostname}" ];
+
 	nix = {
 		optimise.automatic = true;
 		gc = {

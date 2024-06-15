@@ -197,5 +197,10 @@ cat /sys/class/power_supply/<BAT>/charge_now
 cat /sys/class/power_supply/<BAT>/charge_full
 ```
 
+### Change password
+
+```bash
+passwd <USERNAME>
+```
 
 

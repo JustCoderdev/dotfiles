@@ -6,6 +6,7 @@ in
 
 {
 	config = lib.mkIf cfg.enable {
+		system.nixos.tags = [ "nvidia" ];
 		services.xserver.videoDrivers = [ "nvidia" ];
 		hardware.nvidia = {
 			modesetting.enable = true;

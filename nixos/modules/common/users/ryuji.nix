@@ -9,7 +9,7 @@ let
 	];
 in {
 	config = lib.mkIf cfg.enable {
-
+		system.nixos.tags = [ "${username}" ];
 # NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 
 		# Allowed [a-zA-Z0-9:_\.-]*

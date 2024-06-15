@@ -7,6 +7,8 @@ in
 
 {
 	config = lib.mkIf cfg.enable {
+		system.nixos.tags = [ "hyprland" ];
+
 		programs.hyprland = {
 			enable = true;
 			xwayland.enable = true;
