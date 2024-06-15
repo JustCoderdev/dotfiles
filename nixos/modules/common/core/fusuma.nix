@@ -2,9 +2,9 @@
 
 let
 	dotfiles = settings.dotfiles_path;
-	xfce = config.system.desktop.xfce;
+	i3 = config.system.desktop.xfce;
 	hyprland = config.system.desktop.hyprland;
-	prefix = if xfce.enable then "xfce"
+	prefix = if i3.enable then "i3"
 		else if hyprland.enable then "hyprland"
 		else abort "Fusuma: no desktop environment enabled";
 in
@@ -17,7 +17,7 @@ in
 	};
 
 	environment.systemPackages = [
-		(lib.mkIf xfce.enable pkgs.xdotool)
+		(lib.mkIf i3.enable pkgs.xdotool)
 		(lib.mkIf hyprland.enable pkgs.ydotool)
 	];
 }
