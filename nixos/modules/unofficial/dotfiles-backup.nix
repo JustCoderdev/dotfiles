@@ -17,9 +17,13 @@ let
 	current-system = pkgs.writeShellApplication {
 		name = "current-system";
 		text = ''
-			echo "Visiting current configuration"
-			pushd ${dotfiles-backup}/current-dotfiles
-		'';
+# Check if you are not being redirected
+if [ -t 1 ]; then
+	echo -n "Current configuration found at: "
+fi
+
+echo ${dotfiles-backup}/current-dotfiles
+'';
 	};
 in
 
