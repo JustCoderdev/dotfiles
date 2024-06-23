@@ -9,6 +9,8 @@ let
 
 		installPhase = ''
 			mkdir -p $out/current-dotfiles
+			touch $out/timemark
+			date > $out/timemark
 			cp -r . $out/current-dotfiles
 		'';
 	};
