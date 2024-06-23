@@ -9,7 +9,8 @@ if (SETTINGS == nil) then
 	SETTINGS.cache_path = "/home/${USER}/.cache/nvim"
 end
 
-SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
+-- SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
+SETTINGS.default_colorscheme = { name = "gruvbox", require_truecolor = true }
 SETTINGS.fallback_colorscheme = { name = "habamax", require_truecolor = false }
 SETTINGS = protect(SETTINGS)
 

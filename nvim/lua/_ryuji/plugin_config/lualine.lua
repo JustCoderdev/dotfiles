@@ -8,7 +8,7 @@ lualine.setup {
 			if COLOR_CAPABLE then
 				return "auto"
 			else
-				return "gruvbox"
+				return "codedark"
 			end
 		end)(),
 		-- component_separators = { left = "", right = "" },

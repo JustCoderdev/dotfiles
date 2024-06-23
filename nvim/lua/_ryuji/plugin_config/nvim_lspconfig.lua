@@ -38,56 +38,56 @@ lspconfig.docker_compose_language_service.setup { capabilities = snip_cap }
 -- lspconfig.arduino_language_server.setup {} -- go install github.com/arduino/arduino-language-server@latest
 
 -- Random
---local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
---c_capabilities.textDocument.completion.completionItem.snippetSupport = true
---c_capabilities.textDocument.completion.completionItem.resolveSupport = {
---	properties = { "documentation", "detail", "additionalTextEdits" },
---}
---lspconfig.clangd.setup {
---	on_attach = function(client, bufnr)
---		require("clangd_extensions.inlay_hints").setup_autocmd()
---		require("clangd_extensions.inlay_hints").set_inlay_hints()
---	end,
---	cmd = {
---		-- NixOS Shenanigans
---		"/usr/bin/env",
---		"clangd",
+local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+c_capabilities.textDocument.completion.completionItem.snippetSupport = true
+c_capabilities.textDocument.completion.completionItem.resolveSupport = {
+	properties = { "documentation", "detail", "additionalTextEdits" },
+}
+lspconfig.clangd.setup {
+	on_attach = function(client, bufnr)
+		require("clangd_extensions.inlay_hints").setup_autocmd()
+		require("clangd_extensions.inlay_hints").set_inlay_hints()
+	end,
+	cmd = {
+		-- NixOS Shenanigans
+		"/usr/bin/env",
+		"clangd",
 
---		-- CLANGD args
---		--"/usr/bin/clangd",
---		"-pch-storage=memory",
---		"-pretty",
---		"-j=4",
---		"-header-insertion-decorators",
---		"-completion-style=detailed",
---		-- "-compile-commands-dir=/home/ryuji/.config/clangd"
+		-- CLANGD args
+		--"/usr/bin/clangd",
+		"-pch-storage=memory",
+		"-pretty",
+		"-j=4",
+		"-header-insertion-decorators",
+		"-completion-style=detailed",
+		-- "-compile-commands-dir=/home/ryuji/.config/clangd"
 
---		-- NOT AVAILABLE IN version 7.0.1-8
---		"--function-arg-placeholders",
---		"--background-index",
---		"--all-scopes-completion",
---		"--header-insertion=never",
---		"--inlay-hints",
+		-- NOT AVAILABLE IN version 7.0.1-8
+		"--function-arg-placeholders",
+		"--background-index",
+		"--all-scopes-completion",
+		"--header-insertion=never",
+		"--inlay-hints",
 
---		-- CLANG args
---		-- "/usr/bin/clang",
---		-- "-xc",
---		-- "-Wall",
---		-- "-Wextra",
---		-- "-Werror",
---		-- "-Wpedantic",
---		-- "-pedantic",
---		-- "-pedantic-errors",
---		-- "-std=c89",
---		-- "-fcolor-diagnostics"
---	},
---	filetypes = { "c", "cpp" }, --  "objc", "objcpp"
---	root_dir = lspconfig.util.root_pattern("src"),
---	-- init_option = {
---	-- 	fallbackFlags = { "-std=c89" },
---	-- },
---	capabilities = c_capabilities
---}
+		-- CLANG args
+		-- "/usr/bin/clang",
+		-- "-xc",
+		-- "-Wall",
+		-- "-Wextra",
+		-- "-Werror",
+		-- "-Wpedantic",
+		-- "-pedantic",
+		-- "-pedantic-errors",
+		-- "-std=c89",
+		-- "-fcolor-diagnostics"
+	},
+	filetypes = { "c", "cpp" }, --  "objc", "objcpp"
+	root_dir = lspconfig.util.root_pattern("src"),
+	-- init_option = {
+	-- 	fallbackFlags = { "-std=c89" },
+	-- },
+	capabilities = c_capabilities
+}
 
 
 lspconfig.bashls.setup {}
