@@ -1,29 +1,23 @@
 function github() {
-	path="/home/${USER}/Developer/Github/"
-
 	if [ -t 1 ]; then
-		cd "${path}"
+		cd "/home/${USER}/Developer/Github/"
 	else
-		echo "${path}"
+		echo "/home/${USER}/Developer/Github/"
 	fi
 }
 
 function projects() {
-	path"/home/${USER}/Developer/Projects/"
-
 	if [ -t 1 ]; then
-		cd "${path}"
+		cd "/home/${USER}/Developer/Projects/"
 	else
-		echo "${path}"
+		echo "/home/${USER}/Developer/Projects/"
 	fi
 }
 
 function dotfiles() {
-	path="${DOT_FILES}"
-
 	if [ -t 1 ]; then
-		cd "${path}"
+		cd "${DOT_FILES}"
 	else
-		echo "${path}"
+		echo "${DOT_FILES}"
 	fi
 }
