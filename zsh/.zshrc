@@ -44,6 +44,7 @@ zmodload zsh/complist
 # Source the rest...
 source "$DOT_FILES/zsh/prompt.zsh"
 source "$DOT_FILES/zsh/aliases.zsh"
+source "$DOT_FILES/zsh/functions.zsh"
 source "$DOT_FILES/zsh/keybindings.zsh"
 source "$DOT_FILES/zsh/completition.zsh"
 #source "$DOT_FILES/zsh/purification.zsh"
