@@ -40,7 +40,7 @@ fzf.setup({
 		},
 		fzf = {
 			["ctrl-c"] = "abort",
-			["ctrl-b"] = "unix-line-discard",
+			-- ["ctrl-b"] = "unix-line-discard",
 			-- ["ctrl-d"] = "half-page-down",
 			-- ["ctrl-u"] = "half-page-up",
 			-- ["ctrl-g"] = "beginning-of-line",

@@ -99,6 +99,9 @@ mapa("<Leader>s", ":StripWhitespace <CR>")          -- from vim-better-whitespac
 mapa("<Leader>h", ":FzfLua files <CR>")             -- from fzf
 mapa("<Leader>H", ":FzfLua files resume=true <CR>") -- from fzf
 
+-- mapa("<Leader>d", ":FzfLua git_status <CR>") -- from fzf
+mapa("<Leader>D", ":FzfLua git_status resume=true <CR>") -- from fzf
+
 mapa("<Leader>g", ":FzfLua grep <CR>")              -- from fzf
 mapa("<Leader>G", ":FzfLua grep resume=true <CR>")  -- from fzf
 
