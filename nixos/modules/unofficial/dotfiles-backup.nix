@@ -19,7 +19,7 @@ let
 		text = ''
 # Check if you are not being redirected
 if [ -t 1 ]; then
-	echo -n "Current configuration found at: "
+	echo -ne "Current configuration found at:\n"
 fi
 
 echo ${dotfiles-backup}/current-dotfiles

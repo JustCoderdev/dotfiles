@@ -20,19 +20,19 @@ alias l="ls --color -F "
 alias scls="clear"
 
 ## change dir
-alias github="cd /home/${USER}/Developer/Github/"
-alias projects="cd /home/${USER}/Developer/Projects/"
-alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
+# alias github="cd /home/${USER}/Developer/Github/"
+# alias projects="cd /home/${USER}/Developer/Projects/"
+# alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
 
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
 # Push Dir Aliases
-alias ds='r_wd=$(pwd) && echo "$r_wd"'
-alias dl='echo $r_wd'
-alias dp='cd $r_wd'
-alias du='cd $OLDPWD'
+# alias ds='r_wd=$(pwd) && echo "$r_wd"'
+# alias dl='echo $r_wd'
+# alias dp='cd $r_wd'
+# alias du='cd $OLDPWD'
 
 # Debug Aliases
 alias fgdeb='echo -e " \033[30m[0:BLK] \033[31m[1:RED] \033[32m[2:GRN] \033[33m[3:YLW] \033[34m[4:BLU] \033[35m[5:MAG] \033[36m[6:CYN] \033[37m[7:WHT]"'
@@ -59,7 +59,7 @@ alias gc="git commit"
 
 
 ## docker
-#alias dp="docker ps -a"
+alias dp="docker ps -a"
 
 
 ## nvim
