@@ -31,7 +31,7 @@
 		dev = {
 			c.enable = true;
 			arduino.enable = true;
-			net.enable = false;
+			net.enable = true;
 		};
 
 		gaming.enable = false;
