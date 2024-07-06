@@ -44,6 +44,7 @@
 		environment.systemPackages = with pkgs; [
 			unzip zip
 			vim git
+			smartmontools
 			htop
 		];
 	};
