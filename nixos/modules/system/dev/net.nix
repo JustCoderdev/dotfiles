@@ -9,11 +9,6 @@ let cfg = config.system.dev.net; in
 			wireshark
 			putty
 		];
-
-		programs.java = {
-			enable = true;
-			package = pkgs.jre8;
-		};
 	};
 }
 

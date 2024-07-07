@@ -9,7 +9,12 @@ let
 	];
 in {
 	config = lib.mkIf cfg.enable {
-		system.nixos.tags = [ "${username}" ];
+		system.nixos.tags = [ "${username}" "java" ];
+		programs.java = {
+			enable = true;
+			package = pkgs.jre8;
+		};
+
 # NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 
 		# Allowed [a-zA-Z0-9:_\.-]*
@@ -61,5 +66,6 @@ in {
 #				kicad
 #			]))
 		]);
+
 	};
 }
