@@ -9,24 +9,8 @@ let
 	];
 in {
 	config = lib.mkIf cfg.enable {
-		system.nixos.tags = [ "${username}" "java" ];
-		programs.java = {
-			enable = true;
-			package = pkgs.jre8;
-		};
-
-# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
-
-		# Allowed [a-zA-Z0-9:_\.-]*
-#		system.nixos.label = let
-#			nx = config.system.nixos;
-#			#name = nx.codeName;    # Uakari
-#			#version = nx.release;  # 24.05
-#		in
-#			lib.concatStringsSep " " ( #[ nx.name ] ++
-#			(lib.sort (x: y: x < y) nx.tags) ++ [ nx.version ]
-#		);
-
+	# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
+		system.nixos.tags = [ "${username}" ];
 
 		systemd.tmpfiles.rules = [
 			"d /home/${username}/Developer             0755 ${username} users"

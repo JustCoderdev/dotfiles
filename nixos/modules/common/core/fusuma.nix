@@ -10,6 +10,8 @@ let
 in
 
 {
+	system.nixos.tags = [ "fusuma" ];
+
 	services.fusuma = {
 		enable = true;
 		settings = (builtins.readFile

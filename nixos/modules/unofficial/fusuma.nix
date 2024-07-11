@@ -31,7 +31,6 @@ in
 		environment.systemPackages = [ cfg.package ]; # if user should have the command available as well
 		services.dbus.packages = [ cfg.package ]; # if the package has dbus related configuration
 
-
 		systemd.services.fusuma = {
 			description = "Fusuma server daemon.";
 
