@@ -32,6 +32,9 @@ let cfg = config.system.dev.c; in
 			clang gcc
 			gnumake
 
+			# Tools
+			ascii
+
 			# Debugging
 			gdb gf
 			valgrind

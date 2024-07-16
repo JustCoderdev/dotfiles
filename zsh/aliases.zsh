@@ -6,9 +6,9 @@ alias ez="echo 'Updating zsh :D'; exec zsh"
 
 ## list
 unalias l
-alias ls="ls --color -F "
+alias ls="ls --color -F"
 alias la="ls -Fa"
-alias ll="ls -Fla"
+alias ll="ls -Flah"
 
 alias cls="clear"
 alias rm="rm -I"
@@ -30,8 +30,8 @@ alias ....="cd ../../.."
 
 # Push Dir Aliases - Save Directory
 alias sd='echo $(pwd) > "/home/$USER/.zsh/sd" && cat "/home/$USER/.zsh/sd"'
-alias sdl='cd $(cat "/home/$USER/.zsh/r_wd")'
-alias sdc='cat "/home/$USER/.zsh/r_wd"'
+alias sdl='cd $(cat "/home/$USER/.zsh/sd")'
+alias sdc='cat "/home/$USER/.zsh/sd"'
 
 # Debug Aliases
 alias fgdeb='echo -e " \033[30m[0:BLK] \033[31m[1:RED] \033[32m[2:GRN] \033[33m[3:YLW] \033[34m[4:BLU] \033[35m[5:MAG] \033[36m[6:CYN] \033[37m[7:WHT]"'

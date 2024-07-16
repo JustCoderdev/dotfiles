@@ -21,6 +21,17 @@
 		};
 	};
 
+#	boot.loader.grub.extraEntries = ''
+## Power options
+#menuentry "Reboot" {
+#	reboot
+#}
+#
+#menuentry "Shutdown" {
+#	halt
+#}
+#'';
+
 	services.journald.extraConfig = "SystemMaxUse=1G";
 	programs.nix-ld = {
 		enable = true;
