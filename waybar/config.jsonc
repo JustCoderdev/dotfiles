@@ -19,7 +19,7 @@
 	"modules-right": [
 		"gamemode",
 		"network",
-		"cpu",
+		// "cpu",
 		// "temperature",
 		// "memory",
 		// "disk",
@@ -76,19 +76,19 @@
 		"signal": 2,
 		"on-click": "pkill -RTMIN+2 waybar"
 	},
-	"cpu": {
-		"format": " {icon} {usage}%",
-		// "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-		"states": {
-			"critical": 100,
-			"warning": 90,
-			"normal": 60,
-			"optimal": 40
-		},
-		"tooltip": false,
-		"signal": 3,
-		"on-click": "pkill -RTMIN+3 waybar"
-	},
+	// "cpu": {
+	// 	"format": " {icon} {usage}%",
+	// 	// "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+	// 	"states": {
+	// 		"critical": 100,
+	// 		"warning": 90,
+	// 		"normal": 60,
+	// 		"optimal": 40
+	// 	},
+	// 	"tooltip": false,
+	// 	"signal": 3,
+	// 	"on-click": "pkill -RTMIN+3 waybar"
+	// },
 	"clock": {
 		"format": "󰥔  {:%H:%M}",
 		// "timezone": "America/New_York",
@@ -146,7 +146,7 @@
 	"custom/shutdown": {
 		"format": "",
 		"tooltip": false,
-		"on-click": "notify-send -u=critical \"The system will shutdown in 1 minute\" && shutdown -Pk 1"
+		"on-click": "poweroff"
 	},
 	"hyprland/workspaces": {
 		"active-only": false

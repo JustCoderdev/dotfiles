@@ -3,7 +3,6 @@
 
 { pkgs, lib, config, ... }:
 
-
 let
 	cfg = config.services.fusuma;
 	configFile = pkgs.writeText "config.yml" cfg.settings;
