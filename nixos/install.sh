@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Quit on error
 set -e
@@ -25,6 +25,7 @@ read -p 'Enter machine hostname: ' hostname
 if [[ "${hostname}" == "" ]]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOSTNAME}\033[0m"
 else
+	HOSTNAME=$hostname
 	if [ -d "${HOSTS_PATH}/${HOSTNAME}" ]; then
 		# shellcheck disable=SC2162
 		read -p 'Host configuration already existing, do you want to continue? (y/N): ' continue_confirm
@@ -48,6 +49,7 @@ sed -i "s/\(_hostname = \).*/\1\"${HOSTNAME}\";/" "${NIXOS_PATH}/flake.nix"
 sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = systemBuilder;/" "${NIXOS_PATH}/flake.nix"
 
 echo -e "Cloning templates..."
+mkdir -p "${HOST_PATH}"
 cp "${TEMP_PATH}/settings.nix" "${HOST_PATH}/settings.nix"
 cp "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
 
@@ -57,26 +59,26 @@ $EDITOR "${HOST_PATH}/configuration.nix"
 $EDITOR "${HOST_PATH}/settings.nix"
 
 echo -e "Generating missing files"
-nixos-generate-config --show-hardware-config | tee "${DOTFILES_PATH}/nixos/hosts/nixos/hardware-configuration.nix"
+nixos-generate-config --show-hardware-config | tee "${HOST_PATH}/hardware-configuration.nix"
 
 BOOTF_PATH="${HOST_PATH}/boot.nix"
 DEF_CONF_PATH="/etc/nixos/configuration.nix"
 
-touch $BOOTF_PATH
-echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" | tee $BOOTF_PATH
+touch "${BOOTF_PATH}"
+echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" | tee "${BOOTF_PATH}"
 
 # If UEFI system
 if [ -d "/sys/firmware/efi/efivars" ]; then
 	echo "Efivars found, setting systemd..."
-	echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           | tee -a $BOOTF_PATH
-	echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  | tee -a $BOOTF_PATH
-	echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      | tee -a $BOOTF_PATH
+	echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           | tee -a "${BOOTF_PATH}"
+	echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  | tee -a "${BOOTF_PATH}"
+	echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      | tee -a "${BOOTF_PATH}"
 else
 	echo "Not found efivars, setting grub..."
-	echo -ne "\tboot.loader.grub.enable = true;\n"                   | tee -a $BOOTF_PATH
-	echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           | tee -a $BOOTF_PATH
-	echo -ne "\t#boot.loader.grub.configurationLimit = 5;\n"         | tee -a $BOOTF_PATH
-	echo -ne "\tboot.loader.grub.useOSProber = false;\n"             | tee -a $BOOTF_PATH
+	echo -ne "\tboot.loader.grub.enable = true;\n"                   | tee -a "${BOOTF_PATH}"
+	echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           | tee -a "${BOOTF_PATH}"
+	echo -ne "\t#boot.loader.grub.configurationLimit = 5;\n"         | tee -a "${BOOTF_PATH}"
+	echo -ne "\tboot.loader.grub.useOSProber = false;\n"             | tee -a "${BOOTF_PATH}"
 fi
 
 # If using pre-existing configuration.nix file
@@ -85,11 +87,11 @@ if [ -f "/etc/nixos/configuration.nix" ]; then
 	#grep "boot" $CONFIG_FILE_PATH         | tee -a $BOOT_FILE_PATH
 
 	echo "Checking virtualization options..."
-	echo -ne "\n\t#Virtualisation\n"      | tee -a $BOOTF_PATH
-	grep "virtualisation" $DEF_CONF_PATH  | tee -a $BOOTF_PATH
+	echo -ne "\n\t#Virtualisation\n"      | tee -a "${BOOTF_PATH}"
+	grep "virtualisation" $DEF_CONF_PATH  | tee -a "${BOOTF_PATH}"
 fi
 
-echo -ne "}\n"                               | tee -a $BOOTF_PATH
+echo -ne "}\n" | tee -a "${BOOTF_PATH}"
 pushd "${DOTFILES_PATH}" && git add "${DOTFILES_PATH}/nixos"
 
 

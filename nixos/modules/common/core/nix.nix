@@ -7,10 +7,10 @@
 		optimise.automatic = true;
 		gc = {
 			automatic = true;
-			dates = "weekly";
+			dates = "monthly";
 
 			# Keep the last 5 generations
-			options = "--delete-older-than +5";
+			options = "--delete-older-than 15d";
 		};
 		settings = {
 			auto-optimise-store = true;
@@ -20,6 +20,17 @@
 			warn-dirty = false;
 		};
 	};
+
+#	boot.loader.grub.extraEntries = ''
+## Power options
+#menuentry "Reboot" {
+#	reboot
+#}
+#
+#menuentry "Shutdown" {
+#	halt
+#}
+#'';
 
 	services.journald.extraConfig = "SystemMaxUse=1G";
 	programs.nix-ld = {

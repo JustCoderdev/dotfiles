@@ -17,9 +17,9 @@ let cfg = config.system.dev.c; in
 		};
 
 		environment.systemPackages = with pkgs; [
-			glibcInfo
+			# Docs
 			glibc
-
+			glibcInfo
 			man-pages
 			man-pages-posix
 			clang-manpages
@@ -27,12 +27,17 @@ let cfg = config.system.dev.c; in
 			stdmanpages
 			stdman
 
+			# Compilation
 			clang-tools
-			clang
-			gcc
-
-			gdb gf
+			clang gcc
 			gnumake
+
+			# Tools
+			ascii
+
+			# Debugging
+			gdb gf
+			valgrind
 			file
 		];
 	};
