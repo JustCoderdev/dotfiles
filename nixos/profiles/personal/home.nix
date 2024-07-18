@@ -19,6 +19,7 @@
 
 		../../modules/user/dev/alacritty.nix
 		../../modules/user/dev/clang.nix
+		../../modules/user/dev/tmux.nix
 		../../modules/user/dev/zsh.nix
 
 		../../modules/user/firefox.nix

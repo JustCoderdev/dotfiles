@@ -29,9 +29,10 @@
 		desktop.hyprland.enable = false;
 
 		dev = {
+			enable = true;
 			c.enable = true;
 			arduino.enable = true;
-			net.enable = true;
+			net.enable = false;
 		};
 
 		gaming.enable = false;
@@ -45,6 +46,5 @@
 	# Temporary fix
 	networking.networkmanager.appendNameservers = [
 		"192.168.1.59"
-		"192.168.2.1"
 	];
 }
