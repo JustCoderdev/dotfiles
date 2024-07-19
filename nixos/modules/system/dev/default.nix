@@ -1,13 +1,23 @@
-{ lib, ... }:
+{ config, lib, ... }:
+
+let
+	cfg = config.system.dev;
+in
 
 {
 	imports = [
 		./arduino.nix
 		./c.nix
+		./net.nix
 	];
 
 	options = {
 		system.dev = {
+			enable = lib.mkOption {
+				type = lib.types.bool;
+				description = "Add universal developer tools";
+				default = false;
+			};
 			c.enable = lib.mkOption {
 				type = lib.types.bool;
 				description = "Add c development tools and libs";

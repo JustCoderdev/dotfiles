@@ -29,6 +29,7 @@
 		desktop.hyprland.enable = false;
 
 		dev = {
+			enable = false;
 			c.enable = false;
 			arduino.enable = false;
 			net.enable = false;

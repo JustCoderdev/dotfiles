@@ -28,6 +28,7 @@ rec {
 			"davinci-resolve"
 			"helvetica-neue-lt-std"
 			"apple-fonts"
+			"ciscoPacketTracer8"
 		];
 	};
 }

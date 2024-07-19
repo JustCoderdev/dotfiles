@@ -1,4 +1,4 @@
-{ pkgs, settings, ... }:
+{ settings, ... }:
 
 let
 #	username = settings.username;
@@ -9,7 +9,7 @@ let
 in
 
 {
-	programs.emacs.enable = true;
+	programs.tmux.enable = true;
 
 
 }
