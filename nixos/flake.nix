@@ -11,10 +11,15 @@
 		};
 
 		nixd.url = "github:nix-community/nixd";
+
+		firefox-addons = {
+			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd, firefox-addons }@inputs:
 		let
-			_hostname = "virtualmachine";
+			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
