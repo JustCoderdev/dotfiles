@@ -18,6 +18,7 @@ rec {
 			"helvetica-neue-lt-std"
 			"apple-fonts"
 			"improved-tube"
+			"ciscoPacketTracer8"
 		];
 		insecure = [ "electron-24.8.6" ];
 	};
