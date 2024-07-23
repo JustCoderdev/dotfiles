@@ -17,6 +17,7 @@ rec {
 			"google-chrome"
 			"helvetica-neue-lt-std"
 			"apple-fonts"
+			"improved-tube"
 		];
 		insecure = [ "electron-24.8.6" ];
 	};

@@ -1,4 +1,4 @@
-{ settings, ... }:
+{ settings, lib, ... }:
 
 {
 	home.username = settings.username;
@@ -24,6 +24,13 @@
 
 		../../modules/user/firefox.nix
 	];
+
+
+	nixpkgs.config = let pkgs = settings.special_pkgs; in {
+		permittedInsecurePackages = pkgs.insecure;
+		allowUnfreePredicate = pkg:
+			builtins.elem (lib.getName pkg) pkgs.unfree;
+	};
 
 	programs.home-manager.enable = true;
 	home.stateVersion = "23.11";

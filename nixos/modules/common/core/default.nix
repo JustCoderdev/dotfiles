@@ -45,7 +45,7 @@
 			unzip zip
 			vim git
 			smartmontools
-			htop
+			htop wget
 		];
 	};
 }

@@ -29,6 +29,7 @@ rec {
 			"helvetica-neue-lt-std"
 			"apple-fonts"
 			"ciscoPacketTracer8"
+			"improved-tube"
 		];
 	};
 }
