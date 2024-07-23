@@ -71,4 +71,4 @@ alias nold="nvim -S .old_session.vim"
 #-Wpedantic -pedantic -pedantic-errors -std=c89"
 
 
-alias dshell="nix-shell .shell"
+alias dshell="nix-shell .shell.nix"
