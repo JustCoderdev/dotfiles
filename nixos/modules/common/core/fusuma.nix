@@ -10,7 +10,7 @@ let
 in
 
 {
-	system.nixos.tags = [ "fusuma" ];
+#	system.nixos.tags = [ "fusuma" ];
 
 	services.fusuma = {
 		enable = true;
