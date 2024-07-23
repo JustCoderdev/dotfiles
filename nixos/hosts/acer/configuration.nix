@@ -25,14 +25,14 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = false;
-		desktop.hyprland.enable = true;
+		desktop.xfce.enable = true;
+		desktop.hyprland.enable = false;
 
 		dev = {
 			enable = true;
 			c.enable = true;
 			arduino.enable = true;
-			net.enable = true;
+			net.enable = false;
 		};
 
 		gaming.enable = false;
