@@ -11,7 +11,7 @@ let cfg = config.system.desktop.hyprland; in
 			enableHidpi = true;
 
 			autoNumlock = true;
-			theme = "where_is_my_sddm_theme";
+			theme = "where_is_my_sddm_theme_qt5";
 		};
 
 		services.xserver.displayManager.setupCommands = ''
@@ -25,16 +25,19 @@ xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
 				variants = [ "qt5" ];
 				themeConfig.General = {
 					passwordInputBackground = "#3b3b3b";
-					passwordInputRadius = 5;
+					passwordInputRadius = 4;
+					passwordInputCursorVisible=false;
 
+					passwordFontSize=64;
 					passwordCursorColor = "#ffffff";
 					passwordTextColor = "#ffffff";
 
-					background = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-					backgroundMode = "none";
+					sessionsFontSize=36;
+					usersFontSize=36;
 
-					#backgroundFill = "#252525";
-					#backgroundFillMode = "aspect";
+					#background = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+					backgroundFill = "#252525";
+					backgroundFillMode = "aspect";
 
 					basicTextColor = "#ffffff";
 				};
