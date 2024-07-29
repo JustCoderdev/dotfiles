@@ -11,7 +11,7 @@ let cfg = config.system.desktop.hyprland; in
 			enableHidpi = true;
 
 			autoNumlock = true;
-			theme = "where-is-my-sddm";
+			theme = "where_is_my_sddm_theme";
 		};
 
 		services.xserver.displayManager.setupCommands = ''
