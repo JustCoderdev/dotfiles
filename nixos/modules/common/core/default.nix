@@ -46,6 +46,7 @@
 			vim git
 			smartmontools
 			htop wget
+			ntfs3g
 		];
 	};
 }

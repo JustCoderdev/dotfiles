@@ -31,6 +31,11 @@ in
 			systemPackages = with pkgs; [
 				rofi-wayland  # app launcher
 				swww          # wallpaper daemon
+				baobab        # disk usage application
+
+				# screenshots utility
+				slurp
+				grim
 			];
 
 			sessionVariables = lib.mkIf settings.runningVM {
