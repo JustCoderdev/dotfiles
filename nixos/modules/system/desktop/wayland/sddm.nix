@@ -30,7 +30,7 @@ xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
 			(pkgs.callPackage  ../../../unofficial/where-is-my-sddm-theme.nix {
 				variants = [ "qt5" ];
 				themeConfig.General = {
-					passwordInputWidth = "0.5";
+					passwordInputWidth = "0.3";
 					passwordInputBackground = "#252525";
 					passwordInputRadius = 4;
 					passwordInputCursorVisible=false;

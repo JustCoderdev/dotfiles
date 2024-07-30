@@ -10,8 +10,8 @@
 
 	#Mounts
 	fileSystems."/mnt/WDC_WD10" = {
-		device = "/dev/disk/by-uuid/54f2b0b8-0af3-485c-8fd1-40498476cc48";
+		device = "/dev/disk/by-uuid/2a9ccfda-3e0f-410c-9577-b7b2e15e3426";
 		fsType = "ext4";
-		options = [ "defaults" "user" "rw" "utf8" "noauto" "umask=000" ];
+		options = [ "defaults" "user" "rw" "noauto" ];
 	};
 }
