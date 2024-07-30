@@ -16,7 +16,7 @@
 		./keyboard.nix
 		./pipewire.nix
 		./power.nix
-		#./plymouth.nix
+		./plymouth.nix
 		./printer.nix
 		./shell.nix
 		./ssh.nix
