@@ -12,11 +12,17 @@ in {
 	# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 		system.nixos.tags = [ "${username}" ];
 
-		systemd.tmpfiles.rules = [
-			"d /home/${username}/Developer             0755 ${username} users"
-			"d /home/${username}/Developer/Github      0755 ${username} users"
-			"d /home/${username}/Developer/Projects    0755 ${username} users"
-			"d /home/${username}/Pictures/screenshots  0755 ${username} users"
+		systemd.tmpfiles.rules = let
+			uname = username;
+			home = "/home/${uname}";
+		in [
+#			Type Path                          Mode User     Group Age Argument
+			"d   ${home}/Developer             0755 ${uname} users"
+			"d   ${home}/Developer/Github      0755 ${uname} users"
+			"d   ${home}/Developer/Projects    0755 ${uname} users"
+			"d   ${home}/Pictures/screenshots  0755 ${uname} users"
+			"d   /mnt/WDC_WD10                 0755 ${uname} users"
+			"L /mnt/WDC_WD10 - - - - ${home}/HDisk"
 		];
 
 		users.users.${username} = {
