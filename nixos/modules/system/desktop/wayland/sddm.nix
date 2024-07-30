@@ -26,7 +26,7 @@ let cfg = config.system.desktop.hyprland; in
 #'';
 
 		environment.systemPackages = [
-			(pkgs.where-is-my-sddm-theme.override {
+			(pkgs.callPackage  ../../../unofficial/where-is-my-sddm-theme.nix {
 				variants = [ "qt5" ];
 				themeConfig.General = {
 					passwordInputWidth = "0.3";
@@ -47,7 +47,9 @@ let cfg = config.system.desktop.hyprland; in
 
 					basicTextColor = "#ffffff";
 				};
-			})
+
+			 })
+#(pkgs.where-is-my-sddm-theme.override { })
 		];
 	};
 }
