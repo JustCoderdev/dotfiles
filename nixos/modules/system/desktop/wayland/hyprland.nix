@@ -20,8 +20,14 @@ in
 		};
 
 		services = {
+			devmon.enable = true;
+			udisks2.enable = true;
+
 			# Mount, trash, and other functionalities
-			gvfs.enable = true;
+			gvfs = {
+				enable = true;
+				package = lib.mkForce pkgs.gnome3.gvfs;
+			};
 
 			# Thumbnail support for images
 			tumbler.enable = true;
