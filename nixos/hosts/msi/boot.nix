@@ -12,6 +12,6 @@
 	fileSystems."/mnt/WDC_WD10" = {
 		device = "/dev/disk/by-uuid/2a9ccfda-3e0f-410c-9577-b7b2e15e3426";
 		fsType = "ext4";
-		options = [ "defaults" "user" "rw" "noauto" ];
+		options = [ "defaults" "user" "rw" ];
 	};
 }
