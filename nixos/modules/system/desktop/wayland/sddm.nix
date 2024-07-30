@@ -9,6 +9,11 @@ let cfg = config.system.desktop.hyprland; in
 
 			wayland.enable = true;
 			enableHidpi = true;
+			setupScript = ''
+xrandr --output HDMI-A-1 --off
+xrandr --output Unknown-1 --off
+xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
+'';
 
 			autoNumlock = true;
 			theme = "where_is_my_sddm_theme_qt5";
@@ -24,19 +29,19 @@ xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
 			(pkgs.where-is-my-sddm-theme.override {
 				variants = [ "qt5" ];
 				themeConfig.General = {
-					passwordInputBackground = "#3b3b3b";
+					passwordInputBackground = "#252525";
 					passwordInputRadius = 4;
 					passwordInputCursorVisible=false;
 
-					passwordFontSize=64;
+					passwordFontSize=24;
 					passwordCursorColor = "#ffffff";
 					passwordTextColor = "#ffffff";
 
-					sessionsFontSize=36;
-					usersFontSize=36;
+					sessionsFontSize=12;
+					usersFontSize=12;
 
 					#background = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-					backgroundFill = "#252525";
+					backgroundFill = "#000000";
 					backgroundFillMode = "aspect";
 
 					basicTextColor = "#ffffff";
