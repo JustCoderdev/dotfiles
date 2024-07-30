@@ -19,22 +19,23 @@ let cfg = config.system.desktop.hyprland; in
 			theme = "where_is_my_sddm_theme_qt5";
 		};
 
-#		services.xserver.displayManager.setupCommands = ''
-#xrandr --output HDMI-A-1 --off
-#xrandr --output Unknown-1 --off
-#xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
-#'';
+		services.xserver.displayManager.setupCommands = ''
+xrandr --output HDMI-A-1 --off
+xrandr --output Unknown-1 --off
+xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
+'';
 
 		environment.systemPackages = [
+#			(pkgs.where-is-my-sddm-theme.override { })
 			(pkgs.callPackage  ../../../unofficial/where-is-my-sddm-theme.nix {
 				variants = [ "qt5" ];
 				themeConfig.General = {
-					passwordInputWidth = "0.3";
+					passwordInputWidth = "0.5";
 					passwordInputBackground = "#252525";
 					passwordInputRadius = 4;
 					passwordInputCursorVisible=false;
 
-					passwordFontSize=28;
+					passwordFontSize=36;
 					passwordCursorColor = "#ffffff";
 					passwordTextColor = "#ffffff";
 
@@ -49,7 +50,6 @@ let cfg = config.system.desktop.hyprland; in
 				};
 
 			 })
-#(pkgs.where-is-my-sddm-theme.override { })
 		];
 	};
 }
