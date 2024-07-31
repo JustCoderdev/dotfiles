@@ -95,7 +95,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	if $had_changes; then
 		message="NixOS build ${HOST_SHELL}#${generation}"
 		sudo git commit -m "${message}"
-		echo -e "\033[32mCommitted as ${message}\033[0m"
+		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 	fi
 
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
