@@ -38,6 +38,7 @@ in
 				rofi-wayland  # app launcher
 				swww          # wallpaper daemon
 				baobab        # disk usage application
+				playerctl     # media player control
 
 				# screenshots utility
 				slurp
