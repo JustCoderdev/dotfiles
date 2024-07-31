@@ -1,12 +1,8 @@
 # Thanks 0atman for idea of the script <3, source here
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
 
-# Quit on error
-set -e
-
 # Exit alt-buff
 echo -ne "\033[?1049l"
-
 
 # Check filepath
 if [ -z "${DOT_FILES:-}" ]; then
@@ -79,9 +75,11 @@ echo -n "Rebuilding NixOS..."
 echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
 echo "Rebuilding NixOS..."
 
+set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
 sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
+set -o pipefail # Re-enable pipefail
 
 echo  -e "\n\033[34mNixOS Rebuild Completed!\033[0m (code: $exit_code)"
 echo -ne "\rExit in 3" && sleep 1
