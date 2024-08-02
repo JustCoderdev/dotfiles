@@ -3,9 +3,9 @@
 # Quit on error
 set -e
 
-echo -n "Entering git shell...  "
-nix-shell -p git
-echo "Done!"
+#echo -n "Entering git shell...  "
+#nix-shell -p git
+#echo "Done!"
 
 DOTFILES_PATH="/.dotfiles"
 NIXOS_PATH="${DOTFILES_PATH}/nixos"

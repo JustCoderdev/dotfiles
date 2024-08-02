@@ -1,12 +1,8 @@
 # Thanks 0atman for idea of the script <3, source here
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
 
-# Quit on error
-set -e
-
 # Exit alt-buff
 echo -ne "\033[?1049l"
-
 
 # Check filepath
 if [ -z "${DOT_FILES:-}" ]; then
@@ -70,44 +66,49 @@ else
 		git diff --word-diff=porcelain -U0 -- .
 	fi
 
-	sudo git add .
+	sudo git add ..
 fi
 
 
 # Rebuild system
-echo -n "Rebuilding NixOS..."
+echo -n "Rebuilding NixOS... "
 echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
 echo "Rebuilding NixOS..."
 
+set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
 sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
+set -o pipefail # Re-enable pipefail
 
-echo  -e "\n\033[34mNixOS Rebuild Completed!\033[0m (code: $exit_code)"
+echo  -e "\n\033[34mNixOS rebuild completed\033[0m (code: $exit_code)"
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
 echo -ne "\033[?1049l" # exit alt-buff
 
 if [[ "${exit_code}" == 0 ]]; then
-	echo -e " Done\n"
+	echo -e "Done\n"
 
 	## Commit changes
 	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 	if $had_changes; then
-		sudo git commit -m "NixOS build ${HOST_SHELL}#${generation}"
+		message="NixOS build ${HOST_SHELL}#${generation}"
+		sudo git commit -m "${message}"
+		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 	fi
 
-	echo -e "\n\033[32mCommitted as NixOS build ${HOST_SHELL}#${generation}\033[0m"
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 
 else
-	echo -e " \033[31mFailed\033[0m"
+	echo -e "\033[31mFailed\033[0m\n"
 
 	grep --color -F "error" .nixos-switch.log
 	if $had_changes; then
 		sudo git restore --staged .
 	fi
+
+	echo -ne "\n"
 
 	# shellcheck disable=SC2162
 	read -p 'Open log? (y/N): ' log_confirm

@@ -36,6 +36,7 @@ let cfg = config.system.gaming; in
 
 			heroic         # Epic Games - gog
 			prismlauncher  # Minecraft launcher
+			modrinth-app   # Minecraft launcher
 
 			lutris   # Game hub
 			gamehub  # Game hub
