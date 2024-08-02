@@ -38,11 +38,11 @@ let cfg = config.system.gaming; in
 #			prismlauncher  # Minecraft launcher
 			modrinth-app   # Minecraft launcher
 
-#			lutris   # Game hub
+			lutris   # Game hub
 #			gamehub  # Game hub
 
-			bottles     # Vine game manager
-			cartridges  # Game hub
+#			bottles     # Vine game manager
+#			cartridges  # Game hub
 		];
 	};
 }
