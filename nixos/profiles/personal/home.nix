@@ -23,6 +23,7 @@
 		../../modules/user/dev/zsh.nix
 
 		../../modules/user/firefox.nix
+		../../modules/user/gtk.nix
 	];
 
 

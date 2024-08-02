@@ -35,13 +35,13 @@ let cfg = config.system.gaming; in
 			# gamemoderun mangohud %command%
 
 			heroic         # Epic Games - gog
-			prismlauncher  # Minecraft launcher
+#			prismlauncher  # Minecraft launcher
 			modrinth-app   # Minecraft launcher
 
-			lutris   # Game hub
-			gamehub  # Game hub
-			bottles  # Vine game manager
+#			lutris   # Game hub
+#			gamehub  # Game hub
 
+			bottles     # Vine game manager
 			cartridges  # Game hub
 		];
 	};

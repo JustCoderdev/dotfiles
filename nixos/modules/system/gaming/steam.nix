@@ -10,9 +10,10 @@ in
 			enable = true;
 			gamescopeSession.enable = true;
 
-			#proton-ge-bin
-			#extraCompatPackages = [  ];
-			extest.enable = (lib.mkIf hyprland.enable true);
+			extraCompatPackages = [ pkgs.proton-ge-bin pkgs.wine pkgs.wine-wayland ];
+			#extest.enable = (lib.mkIf hyprland.enable true);
 		};
+
+		environment.defaultPackages = [ pkgs.wine pkgs.wine-wayland ];
 	};
 }
