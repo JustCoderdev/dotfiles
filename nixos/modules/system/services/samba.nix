@@ -34,15 +34,15 @@ in
 			enableWinbindd = false;
 
 			extraConfig = ''
-				hosts allow = 192.168.1. 127.0.0.1 localhost
-				hosts deny = 0.0.0.0/0
+hosts allow = 192.168.7. 127.0.0.1 localhost
+hosts deny = 0.0.0.0/0
 
-				load printers = no
-				printcap name = /dev/null
+load printers = no
+printcap name = /dev/null
 
-				guest account = nobody
-				map to guest = bad user
-			'';
+guest account = nobody
+map to guest = bad user
+'';
 
 			shares = {
 				public = {
