@@ -45,8 +45,8 @@
 			unzip zip
 			vim git
 			smartmontools
-			htop wget
-			ntfs3g
+			htop wget killall
+			#ntfs3g
 		];
 	};
 }
