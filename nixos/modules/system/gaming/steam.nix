@@ -14,6 +14,10 @@ in
 			#extest.enable = (lib.mkIf hyprland.enable true);
 		};
 
-		environment.defaultPackages = [ pkgs.wine pkgs.wine-wayland ];
+		environment.defaultPackages = with pkgs; [
+			wine
+			wine-wayland
+			steam-tui
+		];
 	};
 }

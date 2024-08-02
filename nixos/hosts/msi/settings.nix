@@ -23,6 +23,7 @@ rec {
 			"steam"
 			"steam-original"
 			"steam-run"
+			"steamcmd"
 
 			"modrinth-app-unwrapped"
 			"modrinth-app"
