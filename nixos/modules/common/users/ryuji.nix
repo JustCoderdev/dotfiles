@@ -14,15 +14,15 @@ in {
 
 		systemd.tmpfiles.rules = let
 			uname = username;
-			home = "/home/${uname}";
+			uhome = "/home/${uname}";
 		in [
 #			Type Path                          Mode User     Group Age Argument
-			"d   ${home}/Developer             0755 ${uname} users"
-			"d   ${home}/Developer/Github      0755 ${uname} users"
-			"d   ${home}/Developer/Projects    0755 ${uname} users"
-			"d   ${home}/Pictures/screenshots  0755 ${uname} users"
-			"d   /mnt/WDC_WD10                 0755 ${uname} users"
-			"L /mnt/WDC_WD10 - - - - ${home}/HDisk"
+			"d   ${uhome}/Developer             0755 ${uname} users"
+			"d   ${uhome}/Developer/Github      0755 ${uname} users"
+			"d   ${uhome}/Developer/Projects    0755 ${uname} users"
+			"d   ${uhome}/Pictures/screenshots  0755 ${uname} users"
+			"d   /home/WDC_WD10                 0755 ${uname} users"
+			"L   /home/WDC_WD10 - - - - ${uhome}/HDisk"
 		];
 
 		users.users.${username} = {
