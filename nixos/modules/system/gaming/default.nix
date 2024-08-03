@@ -19,6 +19,12 @@ let cfg = config.system.gaming; in
 	};
 
 	config = lib.mkIf cfg.enable {
+		hardware.opengl = {
+			enable = true;
+			driSupport = true;
+			driSupport32Bit = true;
+		};
+
 		environment.systemPackages = with pkgs; [
 			discord
 
@@ -38,7 +44,10 @@ let cfg = config.system.gaming; in
 #			prismlauncher  # Minecraft launcher
 			modrinth-app   # Minecraft launcher
 
-			lutris   # Game hub
+			(lutris.override {   # Game hub
+				extraLibraries = pkgs: [ ];
+				extraPkgs = pkgs: [ pkgs.winetricks ];
+			})
 #			gamehub  # Game hub
 
 #			bottles     # Vine game manager
