@@ -26,7 +26,7 @@ let cfg = config.system.gaming; in
 		};
 
 		environment.systemPackages = with pkgs; [
-			discord
+			discord # Run with --disable-gpu 
 
 			goverlay # Edit overlay
 			mangohud # Overlay
