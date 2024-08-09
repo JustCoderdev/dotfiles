@@ -43,6 +43,7 @@ in {
 				obsidian
 				emulsion
 				newsflash
+				tor
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp

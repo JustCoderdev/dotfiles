@@ -34,6 +34,7 @@ let cfg = config.system.dev.c; in
 
 			# Tools
 			ascii
+			ripgrep
 
 			# Debugging
 			gdb gf
