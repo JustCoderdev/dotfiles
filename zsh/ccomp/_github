@@ -1,0 +1,8 @@
+#compdef _github github
+
+function _github {
+	local line
+	_arguments -C "1:: :_path_files -W $(github)"
+}
+
+

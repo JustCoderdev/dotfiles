@@ -1,0 +1,8 @@
+#compdef _projects projects
+
+function _projects {
+	local line
+	_arguments -C "1:: :_path_files -W $(projects)"
+}
+
+

@@ -37,6 +37,7 @@ unsetopt HIST_SAVE_NO_DUPS	# Don't save duplicates to history
 unsetopt SHARE_HISTORY		# Share history with all zsh sessions
 
 # Pre load completition (?)
+fpath=("$(pwd)/ccomp" $fpath)
 autoload -U compinit; compinit
 _comp_options+=(globdots)
 zmodload zsh/complist
@@ -44,7 +45,7 @@ zmodload zsh/complist
 # Source the rest...
 source "$DOT_FILES/zsh/prompt.zsh"
 source "$DOT_FILES/zsh/aliases.zsh"
-source "$DOT_FILES/zsh/functions.zsh"
+source "$DOT_FILES/zsh/pathers.zsh"
 source "$DOT_FILES/zsh/keybindings.zsh"
 source "$DOT_FILES/zsh/completition.zsh"
 #source "$DOT_FILES/zsh/purification.zsh"

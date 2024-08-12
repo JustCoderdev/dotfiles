@@ -1,0 +1,8 @@
+#compdef _dotfiles dotfiles
+
+function _dotfiles {
+	local line
+	_arguments -C "1:: :_path_files -W $(dotfiles)"
+}
+
+

@@ -14,7 +14,7 @@ mkdir "/home/${USER}/Developer"
 mkdir "/home/${USER}/Developer/Github"
 mkdir "/home/${USER}/Developer/Projects"
 
-echo "Setting home links <3"
+echo "Setting soft links <3"
 ln -s "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty
 ln -s "${DOT_FILES}/clangd"     "${configpath}"  # Clang
 ln -s "${DOT_FILES}/hypr"       "${configpath}"  # Hyprland

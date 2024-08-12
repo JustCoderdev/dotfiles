@@ -6,8 +6,8 @@
 > ℹ️ My dotfiles are divided in 3 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
-> - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred but not updated
-> - `nixos-compliant-unstable`: Switched to unstable to configure hyprland
+> - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred
+> - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
 >
 > Graph
 >
@@ -80,6 +80,7 @@ Included configuration files
 ## Special Requirements
 
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
+- Font: `SF Pro Text` [Link](https://developer.apple.com/fonts) (For Waybar)
 
 ## Installing Configuration
 

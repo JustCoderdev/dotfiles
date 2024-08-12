@@ -1,3 +1,5 @@
+fpath=($fpath $(pwd))
+
 function github() {
 	if [ -t 1 ]; then
 		cd "/home/${USER}/Developer/Github/$1"
