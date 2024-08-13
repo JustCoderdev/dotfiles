@@ -45,7 +45,7 @@
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = args;
-					home-manager.backupFileExtension = "bak";
+					#home-manager.backupFileExtension = "bak";
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/${settings.profile}/home.nix");
 
