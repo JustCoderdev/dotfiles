@@ -5,7 +5,7 @@
 #path+=('/usr/local/bin')
 
 # Check if using nixOS
-# DOT is the prefix for variables throughout my dotfiles
+# DOT is the prefix for environment variables throughout my dotfiles
 if [[ -v DOT_NIXOS ]] then
 	export DOT_FILES="/.dotfiles"
 	export DOT_CACHE="/home/${USER}/.cache"
@@ -37,7 +37,7 @@ unsetopt HIST_SAVE_NO_DUPS	# Don't save duplicates to history
 unsetopt SHARE_HISTORY		# Share history with all zsh sessions
 
 # Pre load completition (?)
-fpath=("$(pwd)/ccomp" $fpath)
+fpath=("$DOT_FILES/zsh/ccomp" $fpath)
 autoload -U compinit; compinit
 _comp_options+=(globdots)
 zmodload zsh/complist
