@@ -49,7 +49,7 @@ fi
 
 # Check differences
 echo -ne "Analysing changes..."
-if git diff --quiet -- .; then  # -- ./**/*.nix
+if git diff --quiet -- ..; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
 	had_changes=false
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
@@ -63,7 +63,7 @@ else
 	# shellcheck disable=SC2162
 	read -p 'Open diff? (y/N): ' diff_confirm
 	if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
-		git diff --word-diff=porcelain -U0 -- .
+		git diff --word-diff=porcelain -U0 -- ..
 	fi
 
 	sudo git add ..
@@ -91,8 +91,8 @@ if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"
 
 	## Commit changes
-	generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 	if $had_changes; then
+		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 		message="NixOS build ${HOST_SHELL}#${generation}"
 		sudo git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
@@ -105,7 +105,7 @@ else
 
 	grep --color -F "error" .nixos-switch.log
 	if $had_changes; then
-		sudo git restore --staged .
+		sudo git restore --staged ..
 	fi
 
 	echo -ne "\n"
