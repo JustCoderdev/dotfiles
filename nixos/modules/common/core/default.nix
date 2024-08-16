@@ -44,9 +44,8 @@
 		environment.systemPackages = with pkgs; [
 			unzip zip
 			vim git
-			smartmontools
+			smartmontools pciutils #ntfs3g
 			htop wget killall
-			#ntfs3g
 		];
 	};
 }
