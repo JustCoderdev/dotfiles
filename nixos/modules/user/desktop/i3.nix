@@ -5,8 +5,8 @@ let
 
 in {
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/i3" = {
-		source = "${dotfiles}/i3";
-		recursive = true;
-	};
+#	home.file."/home/${username}/.config/i3" = {
+#		source = "${dotfiles}/i3";
+#		recursive = true;
+#	};
 }

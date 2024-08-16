@@ -7,8 +7,8 @@ in
 {
 	programs.waybar.enable = true;
 
-	home.file."${configpath}/waybar" = {
-		source = "${dotfiles}/waybar";
-		recursive = true;
-	};
+#	home.file."${configpath}/waybar" = {
+#		source = "${dotfiles}/waybar";
+#		recursive = true;
+#	};
 }

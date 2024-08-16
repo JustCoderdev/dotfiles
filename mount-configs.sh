@@ -7,7 +7,7 @@ if [ -z "${DOT_FILES:-}" ]; then
 	exit 1
 fi
 
-configpath="$HOME/.config"
+configpath="/home/${USER}/.config"
 
 echo "Creating default folders :D"
 mkdir "/home/${USER}/Developer"

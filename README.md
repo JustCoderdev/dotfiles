@@ -68,7 +68,8 @@ Included configuration files
 - Alacritty \[v0.12.2\] ([Github](https://github.com/alacritty))
 - Clang \[7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
 - Clang-format \[7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
-- Hyprland (WIP)
+- Fusuma (WIP)
+- Hyprland
 - i3 \[4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
 - MangoHud (WIP)
 - NixOS \[v23.11\]

@@ -19,8 +19,8 @@ source "${dotfiles}/zsh/.zshrc";
 		'';
 	};
 
-	home.file."/home/${username}/.zsh" = {
-		source = "${dotfiles}/zsh";
-		recursive = true;
-	};
+#	home.file."/home/${username}/.zsh" = {
+#		source = "${dotfiles}/zsh";
+#		recursive = true;
+#	};
 }

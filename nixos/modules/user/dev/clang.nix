@@ -14,11 +14,11 @@ in {
 	];
 
 	# Import configuration from dotfiles
-	home.file."/home/${username}/.config/clangd" = {
-		source = "${dotfiles}/clangd/";
-		recursive = true;
-	};
-	home.file."/home/${username}/.clang-format" = {
-		source = "${dotfiles}/clangd/.clang-format";
-	};
+#	home.file."/home/${username}/.config/clangd" = {
+#		source = "${dotfiles}/clangd/";
+#		recursive = true;
+#	};
+#	home.file."/home/${username}/.clang-format" = {
+#		source = "${dotfiles}/clangd/.clang-format";
+#	};
 }
