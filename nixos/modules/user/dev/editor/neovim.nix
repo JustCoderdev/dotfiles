@@ -50,6 +50,7 @@ print(".")
 local file = "init";
 package.path = package.path .. ";${configpath}/nvim/?.lua"
 package.path = package.path .. ";${configpath}/nvim/${username}/?.lua"
+package.path = package.path .. ";${configpath}/nvim/${username}/lua/?.lua"
 package.path = package.path .. ";${configpath}/nvim/${username}/lua/${username}/?.lua"
 print(package.path)
 local require_string = string.format("%s.%s", "${username}", file)
