@@ -68,6 +68,8 @@ link "${dotpath}/zsh"                   "${uhome}/.zsh"          # Zsh
 
 mkdir -p "${cpath}/nvim"
 link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
+
+echo "ACTIVATING!! Arduino: ${pkgs.arduino}" > /home/${uname}/arduino_path_aaa
 '';
 
 		users.users.${username} = {

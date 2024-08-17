@@ -59,9 +59,9 @@
 			};
 
 			userBuilder = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
 				extraSpecialArgs = args;
 				modules = [ ./profiles/${settings.profile}/home.nix ];
+				inherit pkgs;
 			};
 		in {
 
