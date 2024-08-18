@@ -1,7 +1,6 @@
-{ config, lib, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
-	hostname = settings.hostname;
 	cfg = config.system.services.samba;
 in
 
@@ -23,6 +22,11 @@ in
 #			enable = true;
 #			package = lib.mkForce pkgs.gnome3.gvfs;
 #		};
+
+		environment.systemPackages = with pkgs; [
+			cifs-utils
+			keyutils
+		];
 
 		services.samba = {
 			enable = true;
@@ -69,5 +73,15 @@ map to guest = bad user
 #				};
 			};
 		};
+
+#		fileSystems."/mnt/samba-server/${settings.username}" = {
+#			device = "//samba.service.local/ryuji";
+#			fsType = "cifs";
+#			options = let # this line prevents hanging on network split
+#				automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+#			in [
+#				"${automount_opts},credentials=/etc/nixos/smb-secrets"
+#			];
+#		};
 	};
 }
