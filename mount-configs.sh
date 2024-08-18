@@ -22,6 +22,7 @@ ln -s "${DOT_FILES}/i3"         "${configpath}"  # i3
 ln -s "${DOT_FILES}/MangoHud"   "${configpath}"  # MangoHud
 ln -s "${DOT_FILES}/nvim"       "${configpath}"  # Nvim
 ln -s "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
+ln -s "${DOT_FILES}/emacs"      "${configpath}"  # Emacs
 
 echo "Setting weird links ?"
 ln -s "${DOT_FILES}/clangd/.clang-format"  "${HOME}"         # Clang format

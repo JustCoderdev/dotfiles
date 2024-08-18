@@ -61,6 +61,7 @@ link "${dotpath}/clangd"    "${cpath}"  # Clang
 link "${dotpath}/i3"        "${cpath}"  # i3
 link "${dotpath}/MangoHud"  "${cpath}"  # MangoHud
 link "${dotpath}/waybar"    "${cpath}"  # Waybar
+link "${dotpath}/emacs"     "${cpath}"  # Emacs
 
 # Setting weird links
 link "${dotpath}/clangd/.clang-format"  "${uhome}"               # Clang format
@@ -68,8 +69,6 @@ link "${dotpath}/zsh"                   "${uhome}/.zsh"          # Zsh
 
 mkdir -p "${cpath}/nvim"
 link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
-
-echo "ACTIVATING!! Arduino: ${pkgs.arduino}" > /home/${uname}/arduino_path_aaa
 '';
 
 		users.users.${username} = {
