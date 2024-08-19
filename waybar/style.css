@@ -1,4 +1,4 @@
-@import url("colors.css");
+@import url("colors.css";
 
 window#waybar {
 	background-color: transparent;
@@ -223,9 +223,7 @@ label.module {
 
 /* Network   */
 #network {}
-#network:hover {
-	cursor: pointer;
-}
+#network:hover { }
 #network.disabled {}
 
 #network.disconnected {

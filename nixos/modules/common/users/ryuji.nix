@@ -47,12 +47,10 @@ in {
 		system.userActivationScripts.linktosharedfolder.text = ''
 function link {
 	from="$1"; to="$2";
-	if [[ ! -h $from ]]; then
-		ln -snf $from $to;
-		echo "Linking $1 --> $2"
-	else
-		echo "Skip linked $1 --> $2"
-	fi
+
+	unlink $to
+	ln -snf $from $to;
+	echo "Linking $1 --> $2"
 }
 
 # Dotfiles
