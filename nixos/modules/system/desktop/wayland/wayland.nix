@@ -3,6 +3,7 @@
 let
 	cfg = config.system.desktop.hyprland;
 	nvidia = config.common.core.nvidia;
+	video-editing = config.common.users.ryuji.video-editing;
 in
 {
 	config = lib.mkIf cfg.enable {
@@ -11,6 +12,9 @@ in
 				enable = true;
 				driSupport = true;
 				driSupport32Bit = true;
+				extraPackages = [
+					(lib.mkIf video-editing pkgs.intel-compute-runtime)
+				];
 			};
 
 			nvidia.modesetting.enable = nvidia.enable;
