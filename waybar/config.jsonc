@@ -112,8 +112,9 @@
 	// 	"on-click": "pkill -RTMIN+4 waybar"
 	// },
 	"gamemode": {
-		"format": "󰸷"
-		// "tooltip": false,
+		"format": "󰸷",
+		"format-alt": "󰸷",
+		"tooltip": false
 	},
 	"group/hardware": {
 		"orientation": "inherit",

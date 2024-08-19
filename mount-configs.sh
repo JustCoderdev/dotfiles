@@ -10,9 +10,9 @@ fi
 configpath="/home/${USER}/.config"
 
 echo "Creating default folders :D"
-mkdir "/home/${USER}/Developer"
-mkdir "/home/${USER}/Developer/Github"
-mkdir "/home/${USER}/Developer/Projects"
+mkdir -p "/home/${USER}/Developer"
+mkdir -p "/home/${USER}/Developer/Github"
+mkdir -p "/home/${USER}/Developer/Projects"
 
 echo "Setting soft links <3"
 ln -s "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty

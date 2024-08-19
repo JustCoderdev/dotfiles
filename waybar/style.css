@@ -1,4 +1,4 @@
-@import url("colors.css";
+@import url("colors.css");
 
 window#waybar {
 	background-color: transparent;
@@ -29,7 +29,6 @@ label.module {
 #custom-lock,
 #custom-reboot,
 #disk,
-/* #gamemode, */
 #workspaces,
 #mpris,
 #memory,
@@ -118,7 +117,8 @@ label.module {
 
 /* Gamemode 󰸷 */
 #gamemode {
-	padding: 0 12px;
+	padding: 0 16px 0 12px;
+	border-radius: 2rem;
 }
 
 #gamemode.running {
@@ -164,7 +164,6 @@ label.module {
 	background-color: @background;
 }
 
-#gamemode,
 #workspaces button {
 	background-color: @background;
 	padding: 1px;
