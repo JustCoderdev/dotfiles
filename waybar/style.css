@@ -29,7 +29,7 @@ label.module {
 #custom-lock,
 #custom-reboot,
 #disk,
-#gamemode,
+/* #gamemode, */
 #workspaces,
 #mpris,
 #memory,
@@ -122,8 +122,8 @@ label.module {
 }
 
 #gamemode.running {
-	background-color: @foreground;
-	color: @background;
+	color: @foreground;
+	background-color: @background;
 }
 
 
@@ -164,6 +164,7 @@ label.module {
 	background-color: @background;
 }
 
+#gamemode,
 #workspaces button {
 	background-color: @background;
 	padding: 1px;
@@ -222,6 +223,9 @@ label.module {
 
 /* Network   */
 #network {}
+#network:hover {
+	cursor: pointer;
+}
 #network.disabled {}
 
 #network.disconnected {

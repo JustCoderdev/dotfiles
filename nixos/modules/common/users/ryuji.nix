@@ -91,13 +91,14 @@ link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
 				newsflash
 				vlc
 				tor
+				telegram-desktop
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
 				krita
 			]))
 			(lib.mkIf cfg.video-editing (with pkgs; [
-				obs-studio # Add to home-manager
+				obs-studio
 				davinci-resolve
 			]))
 #			(lib.mkIf cfg.developer (with pkgs; [

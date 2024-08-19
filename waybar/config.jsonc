@@ -4,6 +4,7 @@
 	"spacing": 4, // Gaps between modules (px)
 	"margin": "4px 6px",
 	// "position": "bottom", // (top|bottom|left|right)
+	// Reload by sending -SIGUSR2 to waybar
 	"reload_style_on_change": true,
 	/// Modules Order
 	"modules-left": [
@@ -192,6 +193,7 @@
 		"format-wifi": "   {essid} {signalStrength}%",
 		"format-ethernet": "󰈀  {bandwidthTotalBytes}Bps",
 		"format-disconnected": "󰚦  Disconnected", //
+		"on-click": "nmcli device wifi rescan",
 		"tooltip": true,
 		"tooltip-format": "",
 		"tooltip-format-wifi": "{ifname}: {ipaddr}",

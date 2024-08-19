@@ -12,7 +12,7 @@
 				enable = true;
 
 				image-editing = true;
-				video-editing = false;
+				video-editing = true;
 			};
 
 			school.enable = false;
@@ -25,8 +25,8 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = false;
-		desktop.hyprland.enable = true;
+		desktop.xfce.enable = true;
+		desktop.hyprland.enable = false;
 
 		dev = {
 			enable = true;
