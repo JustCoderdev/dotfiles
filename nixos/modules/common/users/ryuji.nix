@@ -44,7 +44,7 @@ in {
 #			#"L+  ${dotpath}/zsh/.zshrc"            "${uhome}"         # Zsh
 		];
 
-		system.userActivationScripts.linktosharedfolder.text = ''
+		system.activationScripts."link_dotfiles".text = ''
 function link {
 	from="$1"; to="$2";
 
