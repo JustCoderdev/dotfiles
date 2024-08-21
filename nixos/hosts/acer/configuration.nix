@@ -25,8 +25,8 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = false;
-		desktop.hyprland.enable = true;
+		desktop.xfce.enable = true;
+		desktop.hyprland.enable = false;
 
 		dev = {
 			enable = true;
