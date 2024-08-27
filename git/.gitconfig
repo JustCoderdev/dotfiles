@@ -1,0 +1,16 @@
+[init]
+	defaultBranch = main
+
+[http]
+	postBuffer = 157286400
+
+[user]
+	name = JustCoderdev
+	email = 107036402+JustCoderdev@users.noreply.github.com
+
+[pull]
+	rebase = true
+
+[core]
+	excludesfile = /home/ryuji/.gitignore_global
+	autocrlf = input

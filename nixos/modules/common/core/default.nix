@@ -43,7 +43,7 @@
 		# Core packages
 		environment.systemPackages = with pkgs; [
 			unzip zip
-			vim git
+			vim
 			smartmontools pciutils #ntfs3g
 			htop wget killall
 		];
