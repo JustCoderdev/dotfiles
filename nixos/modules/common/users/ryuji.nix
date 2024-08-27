@@ -90,6 +90,7 @@ link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
 				vlc
 				tor
 				telegram-desktop
+				piper
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
