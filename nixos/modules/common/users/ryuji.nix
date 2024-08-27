@@ -90,6 +90,7 @@ link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
 				vlc
 				tor
 				telegram-desktop
+
 				piper
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
@@ -104,6 +105,8 @@ link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
 #				kicad
 #			]))
 		]);
+
+		services.ratbagd.enable = true;
 
 		# GTK dark theme (hopefully)
 		environment.etc = {
