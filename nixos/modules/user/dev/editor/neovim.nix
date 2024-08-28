@@ -52,7 +52,7 @@ package.path = package.path .. ";${configpath}/nvim/?.lua"
 package.path = package.path .. ";${configpath}/nvim/${username}/?.lua"
 package.path = package.path .. ";${configpath}/nvim/${username}/lua/?.lua"
 package.path = package.path .. ";${configpath}/nvim/${username}/lua/${username}/?.lua"
-print(package.path)
+#print(package.path)
 local require_string = string.format("%s.%s", "${username}", file)
 local file_ok, err = pcall(require, require_string)
 if (not file_ok) then

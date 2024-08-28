@@ -70,5 +70,9 @@ alias nold="nvim -S .old_session.vim"
 #alias clangc="clang -xc -Wall -Wextra -Werror
 #-Wpedantic -pedantic -pedantic-errors -std=c89"
 
+# wifi
+alias wscan="nmcli device wifi rescan"
+alias wlist="nmcli device wifi list"
 
+# nixos
 alias dshell="nix-shell .shell.nix"
