@@ -17,15 +17,24 @@ let cfg = config.system.desktop.xfce; in
 					];
 				};
 
+
 #xrandr --output HDMI-A-1 --off
 #xrandr --output Unknown-1 --off
 #xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
-				displayManager.setupCommands = ''
-					LEFT='Unknown-1'
-					CENTER='HDMI-A-1'
-					RIGHT='desc:ASUSTek COMPUTER INC ASUS VA24E L7LMTF289885'
-					${pkgs.xorg.xrandr}/bin/xrandr --output $CENTER --rotate left --output $LEFT --rotate left --left-of $CENTER --output $RIGHT --right-of $CENTER
-				'';
+
+#MSI:
+# - DVI-D-0 : disconnected
+# - HDMI-0  : connected (DigiQuest)
+# - DP-0    : disconnected
+# - DP-1    : connected (ASUS)
+
+				displayManager.setupCommands = let
+					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+				in ''
+${xrandr} --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal   # Acer
+${xrandr} --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal  # DigiQuest
+${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
+'';
 			};
 
 		};
