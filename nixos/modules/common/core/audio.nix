@@ -39,8 +39,9 @@ in
 
 				extraConfig = ''
 					load-module module-combine-sink
-					load-module module-null-sink sink_name=Microphone
-					update-sink-proplist Microphone device.description='"Virtual input audio (custom)"'
+
+					load-module module-null-sink sink_name=virtmic sink_properties=device.description=Virtual_Microphone_Sink
+					load-module module-remap-source master=virtmic.monitor source_name=virtmic source_properties=device.description=Virtual_Microphone
 				'';
 			};
 
