@@ -37,8 +37,13 @@ in
 				enable = true;
 				support32Bit = true;
 
-				extraConfig = "load-module module-combine-sink";
+				extraConfig = ''
+					load-module module-combine-sink
+					load-module module-null-sink sink_name=@Microphone
+					update-sink-proplist @Microphone device.description='"Virtual input audio (custom)"'
+				'';
 			};
+
 
 			# Install control script
 			environment.systemPackages = with pkgs; [ pavucontrol ];
