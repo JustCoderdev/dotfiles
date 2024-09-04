@@ -40,6 +40,9 @@ in
 				extraConfig = "load-module module-combine-sink";
 			};
 
+			# Install control script
+			environment.systemPackages = with pkgs; [ pavucontrol ];
+
 			users.users.${username}.extraGroups = [ "audio" ];
 		})
 	];
