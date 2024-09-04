@@ -5,6 +5,11 @@
 		core = {
 			bluetooth.enable = true;
 			nvidia.enable = true;
+
+			audio = {
+				pipewire.enable = false;
+				pulseaudio.enable = true;
+			};
 		};
 
 		users = {
@@ -25,8 +30,10 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = true;
-		desktop.hyprland.enable = false;
+		desktop = {
+			xfce.enable = true;
+			hyprland.enable = false;
+		};
 
 		dev = {
 			enable = true;

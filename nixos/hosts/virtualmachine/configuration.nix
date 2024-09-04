@@ -5,6 +5,11 @@
 		core = {
 			bluetooth.enable = false;
 			nvidia.enable = false;
+
+			audio = {
+				pipewire.enable = true;
+				pulseaudio.enable = false;
+			};
 		};
 
 		users = {
@@ -25,8 +30,10 @@
 			rebuild-system.enable = true;
 		};
 
-		desktop.xfce.enable = true;
-		desktop.hyprland.enable = false;
+		desktop = {
+			xfce.enable = true;
+			hyprland.enable = false;
+		};
 
 		dev = {
 			enable = true;
@@ -44,7 +51,5 @@
 	};
 
 	# Temporary fix
-	networking.networkmanager.appendNameservers = [
-		"192.168.1.59"
-	];
+	networking.networkmanager.appendNameservers = [ "192.168.1.59" ];
 }
