@@ -13,6 +13,7 @@ let cfg = config.system.desktop.xfce; in
 						dmenu
 						i3status
 						playerctl
+						CuboCore.coreshot
 						# i3lock
 					];
 				};
