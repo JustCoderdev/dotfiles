@@ -20,7 +20,7 @@
 				video-editing = true;
 			};
 
-			school.enable = false;
+			school.enable = true;
 		};
 	};
 
