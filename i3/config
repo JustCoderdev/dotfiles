@@ -65,8 +65,8 @@ bindsym $mod+O       exec --no-startup-id obsidian
 bindsym $mod+Return  exec --no-startup-id alacritty
 bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute. REMEMBER TO PUSH ALL UNCOMMITTED CHANGES!' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
-bindsym $mod+Ctrl+S   exec coreshot -s "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H_%M_%S').png"
-bindsym $mod+Shift+S  exec coreshot -f "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H_%M_%S').png"
+bindsym $mod+Ctrl+S   exec coreshot -s "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').jpeg"
+bindsym $mod+Shift+S  exec coreshot -f "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').jpeg"
 
 
 ## "Borrowed" KEYBINDINGS
