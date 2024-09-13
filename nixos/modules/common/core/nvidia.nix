@@ -27,7 +27,7 @@ in
 			powerManagement.finegrained = false;
 
 			# Use open source driver
-			open = true;
+			open = false;
 
 			# Enable the Nvidia settings menu,
 			nvidiaSettings = false;
