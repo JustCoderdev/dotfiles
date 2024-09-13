@@ -14,7 +14,11 @@
 		fsType = "ext4";
 	};
 
-	boot.kernelParams = [ "nosgx" "snd-intel-dspcfg.dsp_driver=1" ];
+	boot.kernelParams = [
+		"nosgx"
+		"snd-intel-dspcfg.dsp_driver=1"
+		"nvidia-drm.fbdev=1" /* ls /dev/dri - dmesg | grep drm */
+	];
 
 #	system.nixos.tags = [ "ntfsON" ];
 #	boot.supportedFilesystems = [ "ntfs" ];
