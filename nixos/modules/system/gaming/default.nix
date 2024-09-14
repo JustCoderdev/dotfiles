@@ -19,14 +19,9 @@ let cfg = config.system.gaming; in
 	};
 
 	config = lib.mkIf cfg.enable {
-		hardware.opengl = {
-			enable = true;
-			driSupport = true;
-			driSupport32Bit = true;
-		};
 
 		environment.systemPackages = with pkgs; [
-			discord # Run with --disable-gpu 
+			discord # Run with --disable-gpu
 
 			goverlay # Edit overlay
 			mangohud # Overlay

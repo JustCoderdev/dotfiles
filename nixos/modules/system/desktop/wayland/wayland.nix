@@ -2,24 +2,9 @@
 
 let
 	cfg = config.system.desktop.hyprland;
-	nvidia = config.common.core.nvidia;
-	video-editing = config.common.users.ryuji.video-editing;
 in
 {
 	config = lib.mkIf cfg.enable {
-		hardware = {
-			opengl = {
-				enable = true;
-				driSupport = true;
-				driSupport32Bit = true;
-				extraPackages = [
-					(lib.mkIf video-editing pkgs.intel-compute-runtime)
-				];
-			};
-
-			nvidia.modesetting.enable = nvidia.enable;
-		};
-
 		environment.systemPackages = with pkgs; [
 			dunst      # notification daemon
 			libnotify  # dunst dependency
@@ -30,12 +15,6 @@ in
 #			enable = true;
 #			wayland = true;
 #		};
-
-		xdg.portal = {
-			enable = true;
-			extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-			config.common.default = [ "gtk" ];
-		};
 	};
 }
 
