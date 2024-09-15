@@ -72,7 +72,8 @@ alias nold="nvim -S .old_session.vim"
 
 # wifi
 alias wscan="nmcli device wifi rescan"
-alias wlist="nmcli device wifi list"
+alias wls="nmcli device wifi list"
+alias wconn="nmcli device wifi connect"
 
 # nixos
 alias dshell="nix-shell .shell.nix"

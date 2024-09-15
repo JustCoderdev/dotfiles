@@ -32,6 +32,8 @@ let cfg = config.system.dev.c; in
 			clang gcc
 			gnumake
 
+			nasm
+
 			# Tools
 			ascii
 			ripgrep
