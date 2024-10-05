@@ -25,6 +25,8 @@ rec {
 			"steam-run"
 			"steamcmd"
 
+			"Oracle_VM_VirtualBox_Extension_Pack"
+
 			"modrinth-app-unwrapped"
 			"modrinth-app"
 

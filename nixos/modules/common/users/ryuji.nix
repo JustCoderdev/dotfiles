@@ -48,12 +48,22 @@ in {
 function link {
 	from="$1"; to="$2";
 
-	unlink $to
-	ln -snf $from $to;
-	echo "Linking $1 --> $2"
+	if [ -L $to ]; then
+		unlink $to
+		echo "Unlinking '$to'"
+	fi
+
+	if [ -e $to ]; then
+		echo "[ERROR] Linking '$to': file exists"
+	else
+		ln -snf $from $to;
+		echo "[OK] Linked '$to'"
+	fi
 }
 
 # Dotfiles
+echo "Linking Dotfiles"
+echo "----------------------------"
 link "${dotpath}/alacritty" "${cpath}"  # Alacritty
 link "${dotpath}/clangd"    "${cpath}"  # Clang
 link "${dotpath}/i3"        "${cpath}"  # i3

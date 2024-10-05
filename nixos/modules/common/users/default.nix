@@ -31,6 +31,7 @@
 #					default = false;
 #				};
 			};
+
 			school.enable = lib.mkOption {
 				type = lib.types.bool;
 				description = "Enable school user";
