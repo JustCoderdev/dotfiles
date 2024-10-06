@@ -59,6 +59,7 @@ link "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
 echo -e "\nSetting weird links ?"
 link "${DOT_FILES}/clangd/.clang-format"   "/home/${USER}"          # Clang format
 link "${DOT_FILES}/emacs/.emacs"           "/home/${USER}"          # Emacs
+link "${DOT_FILES}/emacs/emacs.extra"      "/home/${USER}"          # Emacs
 link "${DOT_FILES}/git/.gitconfig"         "/home/${USER}"          # Git
 link "${DOT_FILES}/git/.gitignore_global"  "/home/${USER}"          # Git
 

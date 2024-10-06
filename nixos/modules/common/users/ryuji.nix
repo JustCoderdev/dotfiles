@@ -66,6 +66,7 @@ link "${dotpath}/waybar"    "${cpath}"  # Waybar
 # Setting weird links
 link "${dotpath}/clangd/.clang-format"  "${uhome}"       # Clang format
 link "${dotpath}/emacs/.emacs"          "${uhome}"       # Emacs
+link "${dotpath}/emacs/emacs.extra"     "${uhome}"       # Emacs
 
 mkdir -p "${cpath}/nvim"
 link "${dotpath}/nvim"                  "${cpath}/nvim" "${uname}" # Nvim
