@@ -14,7 +14,9 @@
 (require 'simpc-mode)
 (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
-
+; Enable IDO
+(ido-mode 1)
+(ido-everywhere 1)
 
 
 
