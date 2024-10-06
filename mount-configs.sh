@@ -37,7 +37,7 @@ function link {
 
 	# Link
 	if ln -snf "${from}" "${to}/${to_filename}"; then
-		echo "[OK]    Linked '${from_filename}' to '${to}/${to_filename}'"
+		echo "   [OK] Linked '${from_filename}' to '${to}/${to_filename}'"
 	else
 		echo "[ERROR] Linking '${from_filename}' to '${to}/${to_filename}': return code ${?}"
 	fi
@@ -59,7 +59,8 @@ link "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
 echo -e "\nSetting weird links ?"
 link "${DOT_FILES}/clangd/.clang-format"   "/home/${USER}"          # Clang format
 link "${DOT_FILES}/emacs/.emacs"           "/home/${USER}"          # Emacs
-link "${DOT_FILES}/emacs/emacs.extra"      "/home/${USER}"          # Emacs
+link "${DOT_FILES}/emacs/.emacs.custom.el" "/home/${USER}"          # Emacs
+link "${DOT_FILES}/emacs/.emacs.extra"     "/home/${USER}"          # Emacs
 link "${DOT_FILES}/git/.gitconfig"         "/home/${USER}"          # Git
 link "${DOT_FILES}/git/.gitignore_global"  "/home/${USER}"          # Git
 
