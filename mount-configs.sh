@@ -22,7 +22,6 @@ ln -s "${DOT_FILES}/i3"         "${configpath}"  # i3
 ln -s "${DOT_FILES}/MangoHud"   "${configpath}"  # MangoHud
 ln -s "${DOT_FILES}/nvim"       "${configpath}"  # Nvim
 ln -s "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
-ln -s "${DOT_FILES}/emacs"      "${configpath}"  # Emacs
 
 echo "Setting weird links ?"
 ln -s "${DOT_FILES}/clangd/.clang-format"   "${HOME}"         # Clang format
@@ -30,6 +29,7 @@ ln -s "${DOT_FILES}/i3/scripts/bin/*"       "/usr/local/bin"  # i3
 ln -s "${DOT_FILES}/plymouth"               "/etc"            # Plymouth
 ln -s "${DOT_FILES}/zsh"                    "${HOME}/.zsh"    # Zsh
 ln -s "${DOT_FILES}/zsh/.zshrc"             "${HOME}"         # Zsh
+ln -s "${DOT_FILES}/emacs/.emacs"           "${HOME}"         # Emacs
 ln -s "${DOT_FILES}/git/.gitconfig"         "${HOME}"         # Git
 ln -s "${DOT_FILES}/git/.gitignore_global"  "${HOME}"         # Git
 

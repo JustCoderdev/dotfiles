@@ -69,11 +69,11 @@ link "${dotpath}/clangd"    "${cpath}"  # Clang
 link "${dotpath}/i3"        "${cpath}"  # i3
 link "${dotpath}/MangoHud"  "${cpath}"  # MangoHud
 link "${dotpath}/waybar"    "${cpath}"  # Waybar
-link "${dotpath}/emacs"     "${cpath}"  # Emacs
 
 # Setting weird links
-link "${dotpath}/clangd/.clang-format"  "${uhome}"               # Clang format
-link "${dotpath}/zsh"                   "${uhome}/.zsh"          # Zsh
+link "${dotpath}/clangd/.clang-format"  "${uhome}"       # Clang format
+link "${dotpath}/zsh"                   "${uhome}/.zsh"  # Zsh
+link "${dotpath}/emacs/.emacs"          "${uhome}"       # Emacs
 
 mkdir -p "${cpath}/nvim"
 link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
