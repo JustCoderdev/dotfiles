@@ -26,43 +26,30 @@ in {
 			"d   ${uhome}/Pictures/screenshots  0755 ${uname} users"
 			"d   /home/WDC_WD10                 0755 ${uname} users"
 			"L+  /home/WDC_WD10 - - - - ${uhome}/HDisk"
-
-			# Dotfiles
-#			"L+  ${dotpath}/alacritty - - - - ${cpath}"  # Alacritty
-#			"L+  ${dotpath}/clangd    - - - - ${cpath}"  # Clang
-#			#"L+  ${dotpath}/hypr      - - - - ${cpath}"  # Hyprland
-#			"L+  ${dotpath}/i3        - - - - ${cpath}"  # i3
-#			"L+  ${dotpath}/MangoHud  - - - - ${cpath}"  # MangoHud
-#			"L+  ${dotpath}/nvim      - - - - ${cpath}"  # Nvim
-#			"L+  ${dotpath}/waybar    - - - - ${cpath}"  # Waybar
-
-			# Setting weird links
-#			"L+  ${dotpath}/clangd/.clang-format"  "${uhome}"         # Clang format
-#			#"L+  ${dotpath}/i3/scripts/bin/*"      "/usr/local/bin"   # i3
-#			#"L+  ${dotpath}/plymouth"              "/etc"             # Plymouth
-#			"L+  ${dotpath}/zsh"                   "${uhome}/.zsh"    # Zsh
-#			#"L+  ${dotpath}/zsh/.zshrc"            "${uhome}"         # Zsh
 		];
 
 		system.activationScripts."link_dotfiles".text = ''
 function link {
-	from="$1"; to="$2";
+	from="$1"; from_filename="''${from##/*/}";
+	to="$2"; to_filename="''${3:-$from_filename}";
 
-	if [ -L $to ]; then
-		unlink $to
-		echo "Unlinking '$to'"
+	# If file exists and is link
+	if [ -L "''${to}/''${to_filename}" ]; then
+		unlink "''${to}/''${to_filename}"
+		# echo "Unlinking ' ''${to}/''${to_filename}'"
 	fi
 
-	if [ -e $to ]; then
-		echo "[ERROR] Linking '$${from##/*/}' to '$to': file exists"
-	else
-		ln -snf $from $to;
+	# If file exists
+	if [ -e "''${to}/''${to_filename}" ]; then
+		echo "[ERROR] Linking ' ''${from_filename}' to ' ''${to}/''${to_filename}': file exists"
+		return 0; # Must be 0 to avoid triggering -e
+	fi
 
-		if [ $? -eq 0 ]; then
-			echo "[OK] Linked '$${from##/*/}' to '$to'"
-		else
-			echo "[ERROR] Linking '$${from##/*/}' to '$to': Ln return code $?"
-		fi
+	# Link
+	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
+		echo "[OK]    Linked ' ''${from_filename}' to ' ''${to}/''${to_filename}'"
+	else
+		echo "[ERROR] Linking ' ''${from_filename}' to ' ''${to}/''${to_filename}': return code ''${?}"
 	fi
 }
 
@@ -78,11 +65,11 @@ link "${dotpath}/waybar"    "${cpath}"  # Waybar
 
 # Setting weird links
 link "${dotpath}/clangd/.clang-format"  "${uhome}"       # Clang format
-link "${dotpath}/zsh"                   "${uhome}/.zsh"  # Zsh
 link "${dotpath}/emacs/.emacs"          "${uhome}"       # Emacs
 
 mkdir -p "${cpath}/nvim"
-link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
+link "${dotpath}/nvim"                  "${cpath}/nvim" "${uname}" # Nvim
+
 echo ""
 '';
 
