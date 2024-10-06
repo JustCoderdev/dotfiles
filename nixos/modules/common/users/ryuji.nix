@@ -54,14 +54,20 @@ function link {
 	fi
 
 	if [ -e $to ]; then
-		echo "[ERROR] Linking '$to': file exists"
+		echo "[ERROR] Linking '$${from##/*/}' to '$to': file exists"
 	else
 		ln -snf $from $to;
-		echo "[OK] Linked '$to'"
+
+		if [ $? -eq 0 ]; then
+			echo "[OK] Linked '$${from##/*/}' to '$to'"
+		else
+			echo "[ERROR] Linking '$${from##/*/}' to '$to': Ln return code $?"
+		fi
 	fi
 }
 
 # Dotfiles
+echo ""
 echo "Linking Dotfiles"
 echo "----------------------------"
 link "${dotpath}/alacritty" "${cpath}"  # Alacritty
@@ -77,6 +83,7 @@ link "${dotpath}/emacs/.emacs"          "${uhome}"       # Emacs
 
 mkdir -p "${cpath}/nvim"
 link "${dotpath}/nvim"                  "${cpath}/nvim/${uname}" # Nvim
+echo ""
 '';
 
 		users.users.${username} = {
