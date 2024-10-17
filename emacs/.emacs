@@ -1,6 +1,7 @@
 (setq custom-file "~/.emacs.custom.el")
 (add-to-list 'load-path "~/.emacs.extra")
 
+
 ; Disable useless UI stuff
 (tool-bar-mode 0)
 (menu-bar-mode 0)
