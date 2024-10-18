@@ -106,6 +106,7 @@ echo ""
 			(lib.mkIf cfg.video-editing (with pkgs; [
 				obs-studio
 				davinci-resolve
+				blender
 			]))
 #			(lib.mkIf cfg.developer (with pkgs; [
 #				kicad
