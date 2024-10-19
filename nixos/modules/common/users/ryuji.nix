@@ -109,6 +109,7 @@ echo ""
 			(lib.mkIf cfg.game-developing (with pkgs; [
 				unityhub
 				blender
+				godot_4
 			]))
 #			(lib.mkIf cfg.developer (with pkgs; [
 #				kicad
