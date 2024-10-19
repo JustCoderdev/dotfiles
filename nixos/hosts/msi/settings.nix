@@ -30,6 +30,8 @@ rec {
 			"modrinth-app-unwrapped"
 			"modrinth-app"
 
+			"unityhub"
+
 			"obsidian"
 			"google-chrome"
 			"improved-tube"

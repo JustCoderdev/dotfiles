@@ -25,6 +25,12 @@
 					description = "Add video editing sofware to environment packages";
 					default = false;
 				};
+				game-developing = lib.mkOption {
+					type = lib.types.bool;
+					description = "Add game developing sofware to environment packages";
+					default = false;
+				};
+
 #				developer = lib.mkOption {
 #					type = lib.types.bool;
 #					description = "Add developer sofware to environment packages";

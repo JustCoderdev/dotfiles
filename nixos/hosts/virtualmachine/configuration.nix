@@ -18,6 +18,7 @@
 
 				image-editing = true;
 				video-editing = false;
+				game-developing = false;
 			};
 
 			school.enable = false;

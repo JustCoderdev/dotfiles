@@ -92,12 +92,11 @@ echo ""
 				firefox
 				obsidian
 				emulsion
-				newsflash
+				telegram-desktop
 				vlc
 				tor
-				telegram-desktop
 
-				piper
+				piper  # Mouse software
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
@@ -106,6 +105,9 @@ echo ""
 			(lib.mkIf cfg.video-editing (with pkgs; [
 				obs-studio
 				davinci-resolve
+			]))
+			(lib.mkIf cfg.game-developing (with pkgs; [
+				unityhub
 				blender
 			]))
 #			(lib.mkIf cfg.developer (with pkgs; [
