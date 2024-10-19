@@ -75,9 +75,21 @@ echo -n "Rebuilding NixOS... "
 echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
 echo "Rebuilding NixOS..."
 
+
+# Detect processors
+procs="$(nproc)"
+if [ -z "${procs:-}" ]; then
+	echo -e "\033[31mNo processors detected!\033[0m Assuming 2..."
+	procs="2"
+fi
+
+hprocs="$(( procs / 2 ))"
+echo -e "Detected ${procs} processors, \033[34musing ${hprocs} of them\033[0m"
+
+
 set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
-sudo nixos-rebuild switch --show-trace --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
+sudo nixos-rebuild switch --show-trace --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
 set -o pipefail # Re-enable pipefail
 
