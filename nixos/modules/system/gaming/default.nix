@@ -35,7 +35,7 @@ let cfg = config.system.gaming; in
 			# For both
 			# gamemoderun mangohud %command%
 
-			heroic         # Epic Games - gog
+#			heroic         # Epic Games - gog
 #			prismlauncher  # Minecraft launcher
 			modrinth-app   # Minecraft launcher
 
