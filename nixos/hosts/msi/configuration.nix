@@ -4,7 +4,7 @@
 	common = {
 		core = {
 			bluetooth.enable = true;
-			nvidia.enable = false;
+			nvidia.enable = true;
 
 			audio = {
 				pipewire.enable = false;
@@ -17,8 +17,8 @@
 				enable = true;
 
 				image-editing = true;
-				video-editing = true;
-				game-developing = true;
+				video-editing = false;
+				game-developing = false;
 			};
 
 			school.enable = true;
@@ -40,14 +40,14 @@
 			enable = true;
 			c.enable = true;
 			arduino.enable = true;
-			net.enable = true;
+			net.enable = false;
 		};
 
 		gaming.enable = true;
 		services = {
 			docker.enable = true;
 			samba.enable = true;
-			virtualbox.enable = true;
+			virtualbox.enable = false;
 		};
 	};
 }

@@ -83,8 +83,8 @@ if [ -z "${procs:-}" ]; then
 	procs="2"
 fi
 
-hprocs="$(( procs / 2 ))"
-echo -e "Detected ${procs} processors, \033[34musing ${hprocs} of them\033[0m"
+hprocs="$(( procs * 2 / 3 ))"
+echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 
 set +o pipefail # Disable pipafail since we check ourselves

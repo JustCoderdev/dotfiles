@@ -96,7 +96,8 @@ echo ""
 				vlc
 				tor
 
-				piper  # Mouse software
+				baobab  # disk space
+				piper   # Mouse software
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [
 				gimp
