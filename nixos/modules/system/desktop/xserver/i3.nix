@@ -18,13 +18,12 @@ let cfg = config.system.desktop.xfce; in
 					];
 
 					extraSessionCommands = let
-						gnome-keyring-daemon = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon";
-					in ''
-eval $(${gnome-keyring-daemon} --daemonize)
+							gnome-keyring-daemon = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon";
+						in ''
+eval $(${gnome-keyring-daemon} --daemonize --components=ssh,secrets)
 export SSH_AUTH_SOCK
-					'';
-				};
-
+						'';
+					};
 #MSI:
 # - DVI-D-0 : disconnected
 # - HDMI-0  : connected (DigiQuest)
@@ -44,12 +43,11 @@ ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
-#		services.dbus = {
-#			enable = true;
-#			packages = [ pkgs.dconf ];
-#		};
-#
+
+		# Needed for gnome-keyring
 		services.gnome.gnome-keyring.enable = true;
+		environment.systemPackages = [ pkgs.gcr ];
+
 #		security.pam.services = {
 ##			swaylock = { };
 ##			swaylock.text = ''
