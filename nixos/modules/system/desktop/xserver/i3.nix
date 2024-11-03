@@ -42,18 +42,18 @@ ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 #		services.dbus.packages = with pkgs; [ pass-secret-service ];
 #		services.pass-secret-service.enable = true;
 
-		services.dbus.packages = with pkgs; [ gnome.gnome-keyring ];
-		services.gnome.gnome-keyring.enable = true;
-#		environment.systemPackages = [ pkgs.gcr ]; # for gnome3-keyring
-
-		security.pam.services = {
-##			swaylock = { };
-##			swaylock.text = ''
-##				auth include login
-##			'';
+#		services.dbus.packages = with pkgs; [ gnome.gnome-keyring ];
+#		services.gnome.gnome-keyring.enable = true;
+##		environment.systemPackages = [ pkgs.gcr ]; # for gnome3-keyring
 #
-			login.enableGnomeKeyring = true;
-##			#gtklock = {};
-		};
+#		security.pam.services = {
+###			swaylock = { };
+###			swaylock.text = ''
+###				auth include login
+###			'';
+##
+#			login.enableGnomeKeyring = true;
+###			#gtklock = {};
+#		};
 	};
 }
