@@ -14,7 +14,7 @@ let cfg = config.system.desktop.xfce; in
 						i3status
 						playerctl
 						CuboCore.coreshot
-						# i3lock
+						i3lock
 					];
 				};
 
@@ -42,5 +42,20 @@ ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
+		services.dbus = {
+			enable = true;
+			packages = [ pkgs.dconf ];
+		};
+
+		services.gnome.gnome-keyring.enable = true;
+		security.pam.services = {
+#			swaylock = { };
+#			swaylock.text = ''
+#				auth include login
+#			'';
+
+			login.enableGnomeKeyring = true;
+#			#gtklock = {};
+		};
 	};
 }
