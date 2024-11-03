@@ -33,6 +33,8 @@ rec {
 			"unityhub"
 
 			"obsidian"
+			"Anytype"
+
 			"google-chrome"
 			"improved-tube"
 			"davinci-resolve"

@@ -90,7 +90,10 @@ echo ""
 		environment.systemPackages = (lib.mkMerge [
 			(with pkgs; [
 				firefox
+
 				obsidian
+				anytype
+
 				emulsion
 				telegram-desktop
 				vlc
