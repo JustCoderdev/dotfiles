@@ -7,23 +7,7 @@ let cfg = config.system.desktop.xfce; in
 		services = {
 			displayManager.defaultSession = lib.mkForce "none+i3";
 			xserver = {
-				windowManager.i3 = {
-					enable = true;
-					extraPackages = with pkgs; [
-						dmenu
-						i3status
-						playerctl
-						CuboCore.coreshot
-						i3lock
-					];
 
-					extraSessionCommands = let
-							gnome-keyring-daemon = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon";
-						in ''
-eval $(${gnome-keyring-daemon} --daemonize --components=ssh,secrets)
-export SSH_AUTH_SOCK
-						'';
-					};
 #MSI:
 # - DVI-D-0 : disconnected
 # - HDMI-0  : connected (DigiQuest)
@@ -37,16 +21,30 @@ ${xrandr} --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal   # Acer
 ${xrandr} --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal  # DigiQuest
 ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 '';
-			};
 
+				windowManager.i3 = {
+					enable = true;
+					extraPackages = with pkgs; [
+						dmenu
+						i3status
+						playerctl
+						CuboCore.coreshot
+						i3lock
+					];
+				};
+
+			};
 		};
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
 
-		# Needed for gnome-keyring
+#		services.dbus.packages = with pkgs; [ pass-secret-service ];
+#		services.pass-secret-service.enable = true;
+
+		services.dbus.packages = with pkgs; [ gnome.gnome-keyring ];
 		services.gnome.gnome-keyring.enable = true;
-		environment.systemPackages = [ pkgs.gcr ];
+#		environment.systemPackages = [ pkgs.gcr ]; # for gnome3-keyring
 
 #		security.pam.services = {
 ##			swaylock = { };
