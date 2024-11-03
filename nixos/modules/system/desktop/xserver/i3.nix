@@ -16,12 +16,14 @@ let cfg = config.system.desktop.xfce; in
 						CuboCore.coreshot
 						i3lock
 					];
+
+					extraSessionCommands = let
+						gnome-keyring-daemon = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon";
+					in ''
+eval $(${gnome-keyring-daemon} --daemonize)
+export SSH_AUTH_SOCK
+					'';
 				};
-
-
-#xrandr --output HDMI-A-1 --off
-#xrandr --output Unknown-1 --off
-#xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
 
 #MSI:
 # - DVI-D-0 : disconnected
@@ -42,20 +44,20 @@ ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
-		services.dbus = {
-			enable = true;
-			packages = [ pkgs.dconf ];
-		};
-
+#		services.dbus = {
+#			enable = true;
+#			packages = [ pkgs.dconf ];
+#		};
+#
 		services.gnome.gnome-keyring.enable = true;
-		security.pam.services = {
-#			swaylock = { };
-#			swaylock.text = ''
-#				auth include login
-#			'';
-
-			login.enableGnomeKeyring = true;
-#			#gtklock = {};
-		};
+#		security.pam.services = {
+##			swaylock = { };
+##			swaylock.text = ''
+##				auth include login
+##			'';
+#
+#			login.enableGnomeKeyring = true;
+##			#gtklock = {};
+#		};
 	};
 }
