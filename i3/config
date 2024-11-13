@@ -60,6 +60,7 @@ exec --no-startup-id i3-msg 'workspace 2; exec alacritty'
 
 
 ## CUSTOM KEYBINDINGS
+bindsym $mod+L       exec --no-startup-id "dm-tool lock"
 bindsym $mod+B       exec --no-startup-id firefox
 bindsym $mod+O       exec --no-startup-id obsidian
 bindsym $mod+Return  exec --no-startup-id alacritty
@@ -206,7 +207,7 @@ set $ws6  "6"
 set $ws7  "7"
 set $ws8  "8"
 set $ws9  "9"
-set $ws10 "10"
+set $ws10 "A"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1

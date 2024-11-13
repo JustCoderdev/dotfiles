@@ -29,7 +29,6 @@ ${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 						i3status
 						playerctl
 						CuboCore.coreshot
-						i3lock
 					];
 				};
 
