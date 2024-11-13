@@ -7,6 +7,10 @@
 (menu-bar-mode 0)
 (toggle-scroll-bar 0)
 
+; Settings
+(setq ring-bell-function 'ignore)
+(setq indent-tabs-mode 'only)
+
 ; Configure useful UI stuff
 (global-display-line-numbers-mode 1)
 (add-to-list 'default-frame-alist `(font . "Roboto Mono-20"))
