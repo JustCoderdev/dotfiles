@@ -65,7 +65,7 @@ bindsym $mod+o       exec --no-startup-id obsidian
 bindsym $mod+Return  exec --no-startup-id alacritty
 bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute. REMEMBER TO PUSH ALL UNCOMMITTED CHANGES!' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
-bindsym $mod+Shift+l  exec --no-startup-id "dm-tool lock"
+bindsym $mod+Ctrl+l   exec --no-startup-id "dm-tool lock"
 bindsym $mod+Shift+s  exec coreshot -f "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').jpeg"
 bindsym $mod+Ctrl+s   exec coreshot -s "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').jpeg"
 
