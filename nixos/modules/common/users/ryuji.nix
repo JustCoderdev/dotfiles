@@ -97,6 +97,9 @@ echo ""
 				vlc
 				tor
 
+				audacity
+				obs-studio
+
 				baobab  # disk space
 				piper   # Mouse software
 			])
@@ -105,7 +108,6 @@ echo ""
 				krita
 			]))
 			(lib.mkIf cfg.video-editing (with pkgs; [
-				obs-studio
 				davinci-resolve
 			]))
 			(lib.mkIf cfg.game-developing (with pkgs; [

@@ -17,9 +17,9 @@ let cfg = config.system.desktop.xfce; in
 				displayManager.setupCommands = let
 					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
 				in ''
-${xrandr} --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal   # Acer
-${xrandr} --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal  # DigiQuest
-${xrandr} --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
+${xrandr} --output VGA-1  --mode 1920x1080 --pos 0x0    --rotate normal # Acer
+${xrandr} --output HDMI-0 --mode 1920x1080 --pos 0x0    --rotate normal # DigiQuest
+${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 '';
 
 				windowManager.i3 = {
