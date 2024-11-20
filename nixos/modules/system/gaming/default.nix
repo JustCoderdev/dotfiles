@@ -2,6 +2,10 @@
 
 let
 	cfg = config.system.gaming;
+	pokemmo-installer = pkgs.callPackage ../../unofficial/pokemmo-installer.nix {
+		inherit (pkgs.gnome3) zenity;
+		jre = pkgs.jdk11;
+	};
 in
 
 {
@@ -20,11 +24,12 @@ in
 		};
 	};
 
+
 	config = lib.mkIf cfg.enable {
 
 		environment.systemPackages = (lib.mkMerge [
 			[
-				(pkgs.callPackage  ../../unofficial/apple-fonts.nix {})
+				pokemmo-installer
 			]
 
 			(with pkgs; [
