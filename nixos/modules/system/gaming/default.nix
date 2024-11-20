@@ -38,6 +38,8 @@ in
 				goverlay # Edit overlay
 				mangohud # Overlay
 
+				jdk17 # Needed for pokemmo
+
 				# To use mangohud add to launch options
 				# mangohud %command%
 
