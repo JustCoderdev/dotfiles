@@ -2,10 +2,6 @@
 
 let
 	cfg = config.system.gaming;
-	pokemmo-installer = pkgs.callPackage ../../unofficial/pokemmo-installer.nix {
-		inherit (pkgs.gnome3) zenity;
-		jre = pkgs.jdk11;
-	};
 in
 
 {
@@ -29,7 +25,6 @@ in
 
 		environment.systemPackages = (lib.mkMerge [
 			[
-				pokemmo-installer
 			]
 
 			(with pkgs; [
@@ -37,8 +32,6 @@ in
 
 				goverlay # Edit overlay
 				mangohud # Overlay
-
-				jdk17 # Needed for pokemmo
 
 				# To use mangohud add to launch options
 				# mangohud %command%
@@ -50,7 +43,7 @@ in
 				# gamemoderun mangohud %command%
 
 #			heroic         # Epic Games - gog
-#			prismlauncher  # Minecraft launcher
+				prismlauncher  # Minecraft launcher
 				modrinth-app   # Minecraft launcher
 
 				(lutris.override {   # Game hub
