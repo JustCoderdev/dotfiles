@@ -20,6 +20,11 @@
 			};
 		};
 
+		nameservers = [
+			"193.110.81.0" # https://www.dns0.eu/it
+			"185.253.5.0"  # https://www.dns0.eu/it
+		];
+
 		# Configure proxy
 		# proxy = {
 		#	 proxy.default = "http://user:password@proxy:port/";
