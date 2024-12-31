@@ -19,7 +19,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
-			_hostname = "msi";
+			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
