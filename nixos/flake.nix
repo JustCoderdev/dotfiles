@@ -19,7 +19,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
-			_hostname = "msi";
+			_hostname = "acer";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
@@ -48,7 +48,6 @@
 					#home-manager.backupFileExtension = "bak";
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/${settings.profile}/home.nix");
-
 				}
 			];
 

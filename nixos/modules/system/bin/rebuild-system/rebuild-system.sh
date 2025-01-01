@@ -89,7 +89,7 @@ echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
-sudo nixos-rebuild switch --show-trace --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
+sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
 set -o pipefail # Re-enable pipefail
 

@@ -20,10 +20,17 @@
 			};
 		};
 
+		# DNS Servers
 		nameservers = [
 			"193.110.81.0" # https://www.dns0.eu/it
 			"185.253.5.0"  # https://www.dns0.eu/it
 		];
+
+		# DNS Records
+		hosts = {
+			"192.168.7.1" = [ "gateway.local" ];
+			"192.168.7.142" = [ "nixcache.local" "msi.host.local"];
+		};
 
 		# Configure proxy
 		# proxy = {
@@ -44,11 +51,6 @@
 		# 			address = "192.168.1.69";
 		# 		};
 		# 	];
-		# };
-
-		# Set local dns records
-		# hosts = {
-		# 	"127.0.0.1" = [ "WindTower.me" ];
 		# };
 	};
 }
