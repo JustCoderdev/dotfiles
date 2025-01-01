@@ -1,5 +1,9 @@
 { lib, pkgs, settings, ... }:
 
+let
+	nix-serve-port = 56552;
+in
+
 {
 	system.nixos.tags = [ "${settings.hostname}" ];
 
@@ -15,6 +19,10 @@
 		settings = {
 			auto-optimise-store = true;
 			allowed-users = [ "root" "@wheel" ];
+			substituters = [
+				"http://nixcache.local:${toString nix-serve-port}"
+				"https://cache.nixos.org/"
+			];
 
 			experimental-features = [ "nix-command" "flakes" ];
 			warn-dirty = false;
