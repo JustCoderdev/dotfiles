@@ -44,8 +44,8 @@ in
 				"global" = {
 					security = "user";
 
-					#"hosts allow" = "192.168.7.";
-					#"hosts deny" = "0.0.0.0/0";
+					"hosts allow" = "192.168.7.";
+					"hosts deny" = "0.0.0.0/0";
 
 					"load printers" = "no";
 					"printcap name" = "/dev/null";
@@ -53,7 +53,7 @@ in
 					"guest account" = "nobody";
 					"map to guest" = "bad user";
 
-					"additional dns hostnames" = "${hostname}.host.local";
+					#"additional dns hostnames" = "${hostname}.host.local";
 					"browse list" = "yes";
 					"case sensitive" = "yes";
 					"max disk size" = "2500"; # 2.5 GB
