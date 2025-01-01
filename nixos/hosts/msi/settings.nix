@@ -21,6 +21,7 @@ rec {
 			"apple-fonts"
 
 			"steam"
+			"steam-unwrapped"
 			"steam-original"
 			"steam-run"
 			"steamcmd"

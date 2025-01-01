@@ -47,7 +47,7 @@
 		services = {
 			docker.enable = true;
 			samba.enable = true;
-			virtualbox.enable = true;
+			virtualbox.enable = false;
 		};
 	};
 }

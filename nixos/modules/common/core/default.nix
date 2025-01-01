@@ -57,9 +57,9 @@
 		# Core packages
 		environment.systemPackages = with pkgs; [
 			unzip zip
-			vim
+			vim wget killall
 			smartmontools pciutils #ntfs3g
-			htop wget killall
+			htop btop
 		];
 	};
 }

@@ -93,7 +93,12 @@ sudo nixos-rebuild switch --show-trace --max-jobs "${hprocs}" --flake ".#${HOST_
 exit_code="${PIPESTATUS[0]}"
 set -o pipefail # Re-enable pipefail
 
+if [[ "${exit_code}" == 0 ]]; then
 echo  -e "\n\033[34mNixOS rebuild completed\033[0m (code: $exit_code)"
+else
+echo  -e "\n\033[31mNixOS rebuild failed\033[0m (code: $exit_code)"
+fi
+
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1

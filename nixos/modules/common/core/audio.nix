@@ -9,7 +9,6 @@ in
 	config = lib.mkMerge [
 
 		(lib.mkIf cfg.pipewire.enable {
-			sound.enable = false; #alsa
 			hardware.pulseaudio.enable = false;
 
 			# Install control script
@@ -32,7 +31,6 @@ in
 		})
 
 		(lib.mkIf cfg.pulseaudio.enable {
-			sound.enable = true; #alsa
 			hardware.pulseaudio = {
 				enable = true;
 				support32Bit = true;
@@ -45,6 +43,8 @@ in
 #				'';
 			};
 
+			# Disable pipewire?
+			services.pipewire.enable = false;
 
 			# Install control script
 			environment.systemPackages = with pkgs; [ pavucontrol ];

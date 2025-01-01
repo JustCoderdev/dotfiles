@@ -32,7 +32,6 @@ in {
 		nixd
 
 		nodePackages.bash-language-server
-		nodePackages.vscode-css-languageserver-bin
 		vscode-langservers-extracted
 	];
 

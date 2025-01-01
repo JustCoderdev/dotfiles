@@ -30,25 +30,25 @@ in
 
 		services.samba = {
 			enable = true;
-			securityType = "user";
-
 			openFirewall = true;
 
-			enableNmbd = false;
-			enableWinbindd = false;
+			settings = {
+				"global" = {
+					security = "user";
 
-			extraConfig = ''
-hosts allow = 192.168.7. 127.0.0.1 localhost
-hosts deny = 0.0.0.0/0
+					"hosts allow" = [
+						"127.0.0.1" "localhost" # "192.168.7."
+					];
 
-load printers = no
-printcap name = /dev/null
+					"hosts deny" = "0.0.0.0/0";
 
-guest account = nobody
-map to guest = bad user
-'';
+					"load printers" = "no";
+					"printcap name" = "/dev/null";
 
-			shares = {
+					"guest account" = "nobody";
+					"map to guest" = "bad user";
+				};
+
 				public = {
 					path = "/mnt/samba/public";
 					browseable = "yes";
@@ -61,6 +61,7 @@ map to guest = bad user
 					"force user" = "nobody";
 					"force group" = "nogroup";
 				};
+
 #				private = {
 #					path = "/mnt/Shares/Private";
 #					browseable = "yes";
