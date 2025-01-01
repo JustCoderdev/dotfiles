@@ -4,7 +4,7 @@ let
 	cfg = config.system.services.samba;
 	username = settings.username;
 	hostname = settings.hostname;
-	share-path = "/home/${username}/share";
+	share-path = "/home/${username}/user-share";
 in
 
 # User Authentication
@@ -44,27 +44,34 @@ in
 				"global" = {
 					security = "user";
 
-					"hosts allow" = [
-						"127.0.0.1" "localhost" # "192.168.7."
-					];
-
-					"hosts deny" = "0.0.0.0/0";
+					#"hosts allow" = "192.168.7.";
+					#"hosts deny" = "0.0.0.0/0";
 
 					"load printers" = "no";
 					"printcap name" = "/dev/null";
 
 					"guest account" = "nobody";
 					"map to guest" = "bad user";
+
+					"additional dns hostnames" = "${hostname}.host.local";
+					"browse list" = "yes";
+					"case sensitive" = "yes";
+					"max disk size" = "2500"; # 2.5 GB
 				};
 
 				"${username}-${hostname}" = {
-					path = "${share-path}";
 					browseable = "yes";
 
-					"read only" = "no";
+					path = "${share-path}";
+					comment = "${username}-${hostname}";
+
+					"admin users" = "${username}";
 					"guest ok" = "no";
 
-					"create mask" = "0644";
+					"writeable" = "yes";
+					"read only" = "no";
+
+					"create mask" = "0744";
 					"directory mask" = "0755";
 
 					"force user" = "${username}";
