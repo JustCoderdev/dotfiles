@@ -2,6 +2,9 @@
 
 let
 	cfg = config.system.services.samba;
+	username = settings.username;
+	hostname = settings.hostname;
+	share-path = "/home/${username}/share";
 in
 
 # User Authentication
@@ -28,6 +31,11 @@ in
 			keyutils
 		];
 
+		systemd.tmpfiles.rules = [
+#			Type Path           Mode User        Group Age Argument
+			"d   ${share-path}  0755 ${username} users"
+		];
+
 		services.samba = {
 			enable = true;
 			openFirewall = true;
@@ -49,18 +57,32 @@ in
 					"map to guest" = "bad user";
 				};
 
-				public = {
-					path = "/mnt/samba/public";
+				"${username}-${hostname}" = {
+					path = "${share-path}";
 					browseable = "yes";
-					"read only" = "yes";
-					"guest ok" = "yes";
 
-#					"create mask" = "0644";
-#					"directory mask" = "0755";
+					"read only" = "no";
+					"guest ok" = "no";
 
-					"force user" = "nobody";
-					"force group" = "nogroup";
+					"create mask" = "0644";
+					"directory mask" = "0755";
+
+					"force user" = "${username}";
+					"force group" = "users";
 				};
+
+#				public = {
+#					path = "/mnt/samba/public";
+#					browseable = "yes";
+#					"read only" = "yes";
+#					"guest ok" = "yes";
+#
+##					"create mask" = "0644";
+##					"directory mask" = "0755";
+#
+#					"force user" = "nobody";
+#					"force group" = "nogroup";
+#				};
 
 #				private = {
 #					path = "/mnt/Shares/Private";
