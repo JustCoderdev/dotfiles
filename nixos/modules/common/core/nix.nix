@@ -1,12 +1,12 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	cfg = config.nix;
+	cfg = config.common.core.nix;
 	nix-serve-port = 56552;
 in
 
 {
-	options.nix = {
+	options.common.core.nix = {
 		serve-store.enable = lib.mkOption {
 			type = lib.types.bool;
 			description = "Enable nix-store service";

@@ -10,6 +10,10 @@
 				pipewire.enable = false;
 				pulseaudio.enable = false;
 			};
+
+			nix = {
+				serve-store.enable = false;
+			};
 		};
 
 		users = {
