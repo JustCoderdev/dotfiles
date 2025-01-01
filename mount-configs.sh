@@ -49,14 +49,14 @@ mkdir -p "/home/${USER}/Developer/Github"
 mkdir -p "/home/${USER}/Developer/Projects"
 echo "Done! :D"
 
-echo -e "\nSetting soft links <3"
+echo -e "Setting soft links <3"
 link "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty
 link "${DOT_FILES}/clangd"     "${configpath}"  # Clang
 link "${DOT_FILES}/i3"         "${configpath}"  # i3
 link "${DOT_FILES}/MangoHud"   "${configpath}"  # MangoHud
 link "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
 
-echo -e "\nSetting weird links ?"
+echo -e "Setting weird links ?"
 link "${DOT_FILES}/clangd/.clang-format"   "/home/${USER}"          # Clang format
 link "${DOT_FILES}/emacs/.emacs"           "/home/${USER}"          # Emacs
 link "${DOT_FILES}/emacs/.emacs.custom.el" "/home/${USER}"          # Emacs
