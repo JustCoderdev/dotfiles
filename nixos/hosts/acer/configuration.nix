@@ -50,7 +50,7 @@
 		gaming.enable = false;
 		services = {
 			docker.enable = false;
-			samba.enable = true;
+			samba.enable = false;
 			virtualbox.enable = false;
 		};
 	};
