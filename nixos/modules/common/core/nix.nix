@@ -29,6 +29,10 @@ in
 			settings = {
 				auto-optimise-store = true;
 				allowed-users = [ "root" "@wheel" ];
+				substituters = [
+					"http://nixcache.local:${toString nix-serve-port}"
+					"https://cache.nixos.org/"
+				];
 
 				experimental-features = [ "nix-command" "flakes" ];
 				warn-dirty = false;
