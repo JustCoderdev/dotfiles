@@ -7,10 +7,13 @@ let
 	share-path = "/home/${username}/user-share";
 in
 
-# User Authentication
-#   For a user called my_user to be authenticated
-#   on the samba server, you must add their password using
-#   `smbpasswd -a my_user`
+# Samba user commands
+#   - Create a user: `sudo smbpasswd -a <username>`
+#   - List users:    `sudo pdbedit -L`
+
+# Login on iOS:
+#   Server: smb://<ip>/
+#   Registered User: use the data from the user created with smbpasswd!
 
 {
 	config = lib.mkIf cfg.enable {
@@ -21,10 +24,10 @@ in
 #		};
 
 		# Visible samba server in thunar
-#		services.gvfs = {
-#			enable = true;
-#			package = lib.mkForce pkgs.gnome3.gvfs;
-#		};
+		services.gvfs = {
+			enable = true;
+			package = lib.mkForce pkgs.gnome.gvfs;
+		};
 
 		environment.systemPackages = with pkgs; [
 			cifs-utils
