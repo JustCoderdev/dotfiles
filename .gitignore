@@ -8,3 +8,5 @@
 
 .nixos-switch.log
 result/
+
+tmprebuild.sh
