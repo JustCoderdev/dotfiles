@@ -36,6 +36,9 @@ in
 					"http://${custom-sub-url}:${toString nix-serve-port}?priority=30"
 				];
 				trusted-substituters = [ custom-sub-url ];
+				trusted-public-keys = [
+					"nixcache.local:K7HJMUeafG+hmi6ZoLRJ+/sjt8TZyCvmHe0zrRPio5w="
+				];
 
 				experimental-features = [ "nix-command" "flakes" ];
 				warn-dirty = false;
@@ -57,6 +60,10 @@ connect-timeout = 5  # The timeout (in seconds) for establishing connections in 
 			enable = cfg.serve-store.enable;
 			openFirewall = true;
 			port = nix-serve-port;
+
+			# To generate the key file
+			# nix-store --generate-binary-cache-key <domain.name> cache-priv-key.pem cache-pub-key.pem
+			secretKeyFile = "/var/cache-priv-key.pem";
 		};
 
 		environment.variables = {
