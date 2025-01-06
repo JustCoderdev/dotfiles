@@ -27,8 +27,11 @@ let
 in
 
 {
-	boot.kernelParams = [ "quiet" "splash" "plymouth.debug" ];
 	boot.initrd.systemd.enable = true;
+	boot.kernelParams = [
+		"quiet" "splash"
+		"plymouth.debug" # log at /var/log/plymouth-debug.log
+	];
 
 	boot.plymouth = lib.mkIf (!settings.runningVM) {
 		enable = true;
