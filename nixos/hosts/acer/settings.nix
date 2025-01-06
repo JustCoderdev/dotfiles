@@ -14,6 +14,7 @@ rec {
 	special_pkgs = {
 		unfree = [
 			"obsidian"
+			"anytype"
 			"google-chrome"
 			"helvetica-neue-lt-std"
 			"apple-fonts"
