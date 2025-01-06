@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 
 {
 	#Bootloader
@@ -10,4 +10,5 @@
 
 	# Intel Graphics
 	boot.kernelModules = [ "i915" ];
+	boot.kernelParams = [ "nomodeset" "i915.modeset=0" ];
 }
