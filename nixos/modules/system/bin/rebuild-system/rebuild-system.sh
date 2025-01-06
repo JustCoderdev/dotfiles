@@ -75,7 +75,7 @@ fi
 # Rebuild system
 echo -n "Rebuilding NixOS... "
 echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
-echo "Rebuilding NixOS..."
+echo -e "Rebuilding NixOS...\n"
 
 
 ## Check for online substituters
@@ -89,10 +89,10 @@ else
 		echo -e "\033[32mONLINE\033[0m"
 		substituters+="http://${DOT_NIX_SUB_URL}"
 
-		if [ -z "${DOT_NIX_SUB_PORT}" ]; then
-			echo -e "No nix substituter port set, leaving default"
-		else
-			echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
+		if [ -n "${DOT_NIX_SUB_PORT}" ]; then
+			#echo -e "No nix substituter port set, leaving default"
+		#else
+			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
 			substituters+=":${DOT_NIX_SUB_PORT}"
 		fi
 
@@ -115,7 +115,7 @@ echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 echo -ne "\n"
 
-echo -e "nixos-rebuild switch --show-trace --fallback --max-jobs \"${hprocs}\" --flake \".#${HOST_SHELL}\" --option substituters \"${substituters}\""
+echo -e "nixos-rebuild switch --show-trace --fallback --max-jobs \"${hprocs}\" --flake \".#${HOST_SHELL}\" --option substituters \"${substituters}\"\n"
 
 set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
