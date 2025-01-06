@@ -91,6 +91,7 @@ echo ""
 			(with pkgs; [
 				firefox
 				obsidian
+				anytype
 
 				emulsion
 				telegram-desktop

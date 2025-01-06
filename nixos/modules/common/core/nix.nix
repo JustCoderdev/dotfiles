@@ -3,6 +3,7 @@
 let
 	cfg = config.common.core.nix;
 	nix-serve-port = 56552;
+	custom-sub-url = "http://nixcache.local:${toString nix-serve-port}";
 in
 
 {
@@ -28,15 +29,21 @@ in
 			};
 			settings = {
 				auto-optimise-store = true;
-				allowed-users = [ "root" "@wheel" ];
+				allowed-users = [ "root" "${settings.username}" ];
+
 				substituters = [
-					"http://nixcache.local:${toString nix-serve-port}"
-					"https://cache.nixos.org/"
+					# "https://cache.nixos.org/?priority=40"
+					"${custom-sub-url}?priority=50"
 				];
+				trusted-substituters = [ custom-sub-url ];
 
 				experimental-features = [ "nix-command" "flakes" ];
 				warn-dirty = false;
 			};
+			extraOptions = ''
+narinfo-cache-positive-ttl = 0
+narinfo-cache-negative-ttl = 0
+'';
 		};
 
 		services.journald.extraConfig = "SystemMaxUse=1G";
@@ -45,6 +52,10 @@ in
 			enable = cfg.serve-store.enable;
 			openFirewall = true;
 			port = nix-serve-port;
+		};
+
+		environment.variables = {
+			"DOT_NIX_SUB" = custom-sub-url;
 		};
 
 		programs.nix-ld = {

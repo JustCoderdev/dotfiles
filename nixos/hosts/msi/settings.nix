@@ -34,7 +34,7 @@ rec {
 			"unityhub"
 
 			"obsidian"
-			"Anytype"
+			"anytype"
 
 			"google-chrome"
 			"improved-tube"
