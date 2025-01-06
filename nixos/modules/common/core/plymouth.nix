@@ -30,7 +30,7 @@ in
 	boot.initrd.systemd.enable = true;
 	boot.kernelParams = [
 		"quiet" "splash"
-		"plymouth.debug" # log at /var/log/plymouth-debug.log
+		#"plymouth.debug" # log at /var/log/plymouth-debug.log
 	];
 
 	boot.plymouth = lib.mkIf (!settings.runningVM) {
