@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
 	#Bootloader
@@ -7,4 +7,7 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 
 	#Virtualisation
+
+	# Intel Graphics
+	boot.kernelModules = [ "i915" ];
 }

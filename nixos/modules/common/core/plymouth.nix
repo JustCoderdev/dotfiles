@@ -27,6 +27,10 @@ let
 in
 
 {
+	# Check what VGA graphics driver is installed
+	# lspci -v | grep -A10 VGA | grep driver
+	# <>
+
 	boot.initrd.systemd.enable = true;
 	boot.kernelParams = [
 		"quiet" "splash"
