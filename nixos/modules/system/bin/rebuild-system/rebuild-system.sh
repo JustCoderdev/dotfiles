@@ -11,7 +11,7 @@ if [ -z "${DOT_FILES:-}" ]; then
 	exit 1
 fi
 
-pushd "${DOT_FILES}/nixos/" > /dev/null
+pushd "${DOT_FILES}/nixos/" > /dev/null || exit
 shopt -s globstar
 
 
@@ -66,6 +66,8 @@ else
 		git diff --word-diff=porcelain -U0 -- ..
 	fi
 
+	echo -ne "\n"
+
 	sudo git add ..
 fi
 
@@ -74,6 +76,31 @@ fi
 echo -n "Rebuilding NixOS... "
 echo -ne "\033[?1049h\033[H" # enter alt-buff and clear
 echo "Rebuilding NixOS..."
+
+
+## Check for online substituters
+substituters="https://cache.nixos.org/?priority=40 "
+if [ -z "${DOT_NIX_SUB_URL}" ]; then
+	echo -e "No nix substituter set, ignoring..."
+else
+	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
+
+	if [[ $(ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1) -eq 0 ]]; then
+		echo -e "\033[32mONLINE\033[0m"
+		substituters+="http://${DOT_NIX_SUB}"
+
+		if [ -z "${DOT_NIX_SUB_PORT}" ]; then
+			echo -e "No nix substituter port set, leaving default"
+		else
+			echo -e "Using found port '${DOT_NIX_SUB_URL}'"
+			substituters+=":${DOT_NIX_SUB_URL}"
+		fi
+
+		substituters+="?priority=30"
+	else
+		echo -e "\033[31mOFFLINE\033[0m"
+	fi
+fi
 
 
 # Detect processors
@@ -86,10 +113,12 @@ fi
 hprocs="$(( procs * 2 / 3 ))"
 echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
+echo -e "Executing 'sudo nixos-rebuild switch --show-trace --fallback --max-jobs \"${hprocs}\" --flake \".#${HOST_SHELL}\" --option substituters \"${substituters}\" 2>&1 | tee .nixos-switch.log'"
+echo -ne "\n"
 
 set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
-sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" 2>&1 | tee .nixos-switch.log
+sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
 set -o pipefail # Re-enable pipefail
 

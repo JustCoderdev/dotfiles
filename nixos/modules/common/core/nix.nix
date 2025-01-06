@@ -3,7 +3,7 @@
 let
 	cfg = config.common.core.nix;
 	nix-serve-port = 56552;
-	custom-sub-url = "http://nixcache.local:${toString nix-serve-port}";
+	custom-sub-url = "nixcache.local";
 in
 
 {
@@ -33,7 +33,7 @@ in
 
 				substituters = [
 					# "https://cache.nixos.org/?priority=40"
-					"${custom-sub-url}?priority=50"
+					"http://${custom-sub-url}:${toString nix-serve-port}?priority=30"
 				];
 				trusted-substituters = [ custom-sub-url ];
 
@@ -41,12 +41,17 @@ in
 				warn-dirty = false;
 			};
 			extraOptions = ''
-narinfo-cache-positive-ttl = 0
-narinfo-cache-negative-ttl = 0
+fallback = true      # Nix will fall back to building from source if a binary substitute fails
+connect-timeout = 5  # The timeout (in seconds) for establishing connections in the binary cache substituter
 '';
 		};
 
 		services.journald.extraConfig = "SystemMaxUse=1G";
+
+# Substituters helpful links
+#   - Nix-keeps-trying-removed-substituter <https://discourse.nixos.org/t/nix-keeps-trying-removed-substituter/39809/3>
+#   - The build fails if a build machine/cache is offline <https://github.com/NixOS/nix/issues/3514>
+
 
 		services.nix-serve = {
 			enable = cfg.serve-store.enable;
@@ -55,7 +60,8 @@ narinfo-cache-negative-ttl = 0
 		};
 
 		environment.variables = {
-			"DOT_NIX_SUB" = custom-sub-url;
+			"DOT_NIX_SUB_URL" = "${custom-sub-url}";
+			"DOT_NIX_SUB_PORT" = "${toString nix-serve-port}";
 		};
 
 		programs.nix-ld = {
