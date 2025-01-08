@@ -64,10 +64,17 @@ else
 	read -p 'Open diff? (y/N): ' diff_confirm
 	if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
 		git diff --word-diff=porcelain -U0 -- ..
-	else
-		echo -ne "\n"
 	fi
 
+	# shellcheck disable=SC2162
+	read -p 'Do you want to commit? (Y/n): ' commit_confirm
+	if [[ "${commit_confirm}" == [nN] ]] || [[ "${commit_confirm}" == [nN][oO] ]]; then
+		want_commit=false
+	else
+		want_commit=true
+	fi
+
+	echo -ne "\n"
 	sudo git add ..
 fi
 
@@ -79,13 +86,15 @@ echo -e "Rebuilding NixOS...\n"
 
 
 ## Check for online substituters
-substituters="https://cache.nixos.org/?priority=40"
+#substituters="https://cache.nixos.org/?priority=40"
 if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
 	echo -e "No nix substituter set, ignoring..."
 else
 	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
 
-	if [[ $(ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1) -eq 0 ]]; then
+	ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1
+	# shellcheck disable=SC2181 #ah the irony
+	if [[ "${?}" -eq 0 ]]; then
 		echo -e "\033[32mONLINE\033[0m"
 		substituters+=" http://${DOT_NIX_SUB_URL}"
 
@@ -138,7 +147,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"
 
 	## Commit changes
-	if $had_changes; then
+	if $had_changes && $want_commit; then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 		message="NixOS build ${HOST_SHELL}#${generation}"
 		sudo git commit -m "${message}"
@@ -165,4 +174,4 @@ else
 fi
 
 shopt -u globstar
-popd > /dev/null
+popd > /dev/null || exit
