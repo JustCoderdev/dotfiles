@@ -66,7 +66,7 @@ connect-timeout = 5  # The timeout (in seconds) for establishing connections in 
 			secretKeyFile = "/var/cache-priv-key.pem";
 		};
 
-		environment.variables = {
+		environment.variables = lib.mkIf (!cfg.serve-store.enable) {
 			"DOT_NIX_SUB_URL" = "${custom-sub-url}";
 			"DOT_NIX_SUB_PORT" = "${toString nix-serve-port}";
 		};
