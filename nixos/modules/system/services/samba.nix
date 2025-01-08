@@ -23,12 +23,6 @@ in
 #			openFirewall = true;
 #		};
 
-		# Visible samba server in thunar
-		services.gvfs = {
-			enable = true;
-			package = lib.mkForce pkgs.gnome.gvfs;
-		};
-
 		environment.systemPackages = with pkgs; [
 			cifs-utils
 			keyutils
@@ -80,30 +74,6 @@ in
 					"force user" = "${username}";
 					"force group" = "users";
 				};
-
-#				public = {
-#					path = "/mnt/samba/public";
-#					browseable = "yes";
-#					"read only" = "yes";
-#					"guest ok" = "yes";
-#
-##					"create mask" = "0644";
-##					"directory mask" = "0755";
-#
-#					"force user" = "nobody";
-#					"force group" = "nogroup";
-#				};
-
-#				private = {
-#					path = "/mnt/Shares/Private";
-#					browseable = "yes";
-#					"read only" = "no";
-#					"guest ok" = "no";
-#					"create mask" = "0644";
-#					"directory mask" = "0755";
-#					"force user" = "username";
-#					"force group" = "groupname";
-#				};
 			};
 		};
 
