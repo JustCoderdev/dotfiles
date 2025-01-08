@@ -79,15 +79,15 @@ echo -e "Rebuilding NixOS...\n"
 
 
 ## Check for online substituters
-substituters="https://cache.nixos.org/?priority=40 "
-if [ -z "${DOT_NIX_SUB_URL}" ]; then
+substituters="https://cache.nixos.org/?priority=40"
+if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
 	echo -e "No nix substituter set, ignoring..."
 else
 	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
 
-	if [[ $(ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1) -eq 0 ]]; then
+	if [[ $(ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1) -eq 0 ]]; then
 		echo -e "\033[32mONLINE\033[0m"
-		substituters+="http://${DOT_NIX_SUB_URL}"
+		substituters+=" http://${DOT_NIX_SUB_URL}"
 
 		if [ -n "${DOT_NIX_SUB_PORT}" ]; then
 			#echo -e "No nix substituter port set, leaving default"
