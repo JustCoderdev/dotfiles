@@ -45,7 +45,10 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 			gnome.gnome-keyring.enable = true;
 		};
 
-		# Remember windows size stuff
-		programs.dconf.enable = true;
+		programs = {
+			# Remember windows size stuff
+			dconf.enable = true;
+			i3lock.enable = true;
+		};
 	};
 }

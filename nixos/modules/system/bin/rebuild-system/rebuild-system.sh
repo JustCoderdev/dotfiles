@@ -86,7 +86,7 @@ echo -e "Rebuilding NixOS...\n"
 
 
 ## Check for online substituters
-#substituters="https://cache.nixos.org/?priority=40"
+substituters="https://cache.nixos.org/?priority=40"
 if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
 	echo -e "No nix substituter set, ignoring..."
 else
