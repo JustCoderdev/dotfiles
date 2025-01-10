@@ -33,7 +33,7 @@ in
 
 				substituters = [
 					# "https://cache.nixos.org/?priority=40"
-					"http://${custom-sub-url}:${toString nix-serve-port}?priority=30"
+					# "http://${custom-sub-url}:${toString nix-serve-port}?priority=30"
 				];
 				trusted-substituters = [ custom-sub-url ];
 				trusted-public-keys = [

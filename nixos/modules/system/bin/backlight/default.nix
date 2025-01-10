@@ -7,13 +7,13 @@ in
 
 {
 	config = lib.mkIf cfg.enable {
-		security.sudo.extraRules = [{
-			commands = [{
-				command = "/run/current-system/sw/bin/backlight";
-				options = [ "NOPASSWD" ];
-			}];
-			groups = [ "wheel" ];
-		}];
+#		security.sudo.extraRules = [{
+#			commands = [{
+#				command = "/run/current-system/sw/bin/backlight";
+#				options = [ "NOPASSWD" ];
+#			}];
+#			groups = [ "wheel" ];
+#		}];
 
 		environment.systemPackages = [
 			(pkgs.callPackage pkgs.stdenv.mkDerivation {

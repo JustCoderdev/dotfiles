@@ -31,9 +31,7 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 						CuboCore.coreshot
 					];
 				};
-
 			};
-
 
 			# org.freedesktop.secrets
 			dbus.packages = with pkgs; [
@@ -43,6 +41,13 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 			passSecretService.enable = true;
 			gnome.gnome-keyring.enable = true;
+		};
+
+		security.pam = {
+			# Enable lightdm to use Gnome Keyring
+			services.login.enableGnomeKeyring = true;
+			mount.logoutTerm = true;  # Send SIGTERM # Graceful shutdown
+			mount.logoutKill = false; # Send SIGKILL # Forceful shutdown
 		};
 
 		programs = {
