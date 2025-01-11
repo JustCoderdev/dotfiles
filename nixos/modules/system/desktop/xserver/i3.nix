@@ -41,7 +41,15 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 			passSecretService.enable = true;
 			gnome.gnome-keyring.enable = true;
+
+			# Thunar extensions
+			gvfs.enable = true;    # mount, trash, other
+			tumbler.enable = true; # img thumbnails
 		};
+
+		environment.systemPackages = with pkgs; [
+			ffmpegthumbnailer # Thunar extensions video thumbnails
+		];
 
 		security.pam = {
 			# Enable lightdm to use Gnome Keyring
@@ -51,9 +59,17 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 		};
 
 		programs = {
-			# Remember windows size stuff
-			dconf.enable = true;
+			dconf.enable = true; # Remember windows size stuff
 			i3lock.enable = true;
+
+			thunar = {
+				enable = true;
+				plugins = with pkgs.xfce; [
+					thunar-archive-plugin     # archives context actions
+					thunar-media-tags-plugin  # media tags?
+					thunar-volman             # drive mounting etc...
+				];
+			};
 		};
 	};
 }

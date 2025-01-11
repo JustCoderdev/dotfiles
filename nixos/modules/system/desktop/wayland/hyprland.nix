@@ -11,7 +11,7 @@ in
 
 		programs = {
 			thunar.enable = true;
-			xfconf.enable = true;
+			xfconf.enable = true; # Required for thunar to retain preferences
 
 			hyprland = {
 				enable = true;

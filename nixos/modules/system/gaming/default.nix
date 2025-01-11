@@ -29,6 +29,7 @@ in
 
 			(with pkgs; [
 				discord # Run with --disable-gpu
+				vesktop # Discord client
 
 				goverlay # Edit overlay
 				mangohud # Overlay

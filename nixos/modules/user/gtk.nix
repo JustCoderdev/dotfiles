@@ -13,6 +13,7 @@
 		};
 	};
 
+	home.sessionVariables.GTK_THEME = "orchis-theme";
 	gtk = {
 		enable = true;
 		theme = {
@@ -27,5 +28,11 @@
 			name = "Adwaita";
 			package = pkgs.adwaita-icon-theme;
 		};
+	};
+
+	qt = {
+		enable = true;
+		platformTheme = "gtk";
+		style.name = "gtk2";
 	};
 }

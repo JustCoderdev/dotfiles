@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-	nvidia = config.common.core.nvidia;
+#	nvidia = config.common.core.nvidia;
 	video-editing = config.common.users.ryuji.video-editing;
 in
 

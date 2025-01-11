@@ -36,20 +36,20 @@ function link {
 	# If file exists and is link
 	if [ -L "''${to}/''${to_filename}" ]; then
 		unlink "''${to}/''${to_filename}"
-		# echo "Unlinking ' ''${to}/''${to_filename}'"
+		echo "Unlinking ''${to}/''${to_filename}"
 	fi
 
 	# If file exists
 	if [ -e "''${to}/''${to_filename}" ]; then
-		echo "[ERROR] Linking ' ''${from_filename}' to ' ''${to}/''${to_filename}': file exists"
+		echo "[ERROR] Linking ''${from_filename} to ''${to}/''${to_filename}: file exists"
 		return 0; # Must be 0 to avoid triggering -e
 	fi
 
 	# Link
 	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		echo "[OK]    Linked ' ''${from_filename}' to ' ''${to}/''${to_filename}'"
+		echo "[OK]    Linked ''${from_filename} to ''${to}/''${to_filename}"
 	else
-		echo "[ERROR] Linking ' ''${from_filename}' to ' ''${to}/''${to_filename}': return code ''${?}"
+		echo "[ERROR] Linking ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
 	fi
 }
 
@@ -57,11 +57,11 @@ function link {
 echo ""
 echo "Linking Dotfiles"
 echo "----------------------------"
-link "${dotpath}/alacritty" "${cpath}"  # Alacritty
-link "${dotpath}/clangd"    "${cpath}"  # Clang
-link "${dotpath}/i3"        "${cpath}"  # i3
-link "${dotpath}/MangoHud"  "${cpath}"  # MangoHud
-link "${dotpath}/waybar"    "${cpath}"  # Waybar
+link "${dotpath}/alacritty"               "${cpath}"  # Alacritty
+link "${dotpath}/clangd"                  "${cpath}"  # Clang
+link "${dotpath}/i3"                      "${cpath}"  # i3
+link "${dotpath}/MangoHud"                "${cpath}"  # MangoHud
+link "${dotpath}/waybar"                  "${cpath}"  # Waybar
 
 # Setting weird links
 link "${dotpath}/clangd/.clang-format"    "${uhome}"  # Clang format
@@ -70,8 +70,7 @@ link "${dotpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
 link "${dotpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
 
 mkdir -p "${cpath}/nvim"
-link "${dotpath}/nvim"      "${cpath}/nvim" "${uname}" # Nvim
-
+link "${dotpath}/nvim"                    "${cpath}/nvim" "${uname}" # Nvim
 echo ""
 '';
 
