@@ -54,6 +54,7 @@ in
 					"browse list" = "yes";
 					"case sensitive" = "yes";
 					"max disk size" = "2500"; # 2.5 GB
+					"vfs objects" = "fruit"; # Apple - Share interop
 				};
 
 				"${username}-${hostname}" = {

@@ -11,9 +11,7 @@
 
 	imports = [
 		../../modules/user/dev/editor/neovim.nix
-		../../modules/user/dev/editor/emacs.nix
 
-		../../modules/user/dev/alacritty.nix
 		../../modules/user/dev/clang.nix
 		../../modules/user/dev/git.nix
 		../../modules/user/dev/tmux.nix
