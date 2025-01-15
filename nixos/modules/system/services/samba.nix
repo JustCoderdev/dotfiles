@@ -62,7 +62,6 @@ in
 					path = "${share-path}";
 					comment = "${username}-${hostname}";
 
-					"vfs objects" = "fruit"; # Apple - Share interop
 					"admin users" = "${username}";
 					"guest ok" = "no";
 
@@ -74,6 +73,13 @@ in
 
 					"force user" = "${username}";
 					"force group" = "users";
+
+					# Apple - Share interop
+					"vfs objects" = "catia fruit streams_xattr";
+					"fruit:resource" = "file";
+					"fruit:metadata" = "netatalk";
+					"fruit:locking" = "netatalk";
+					"fruit:encoding" = "native";
 				};
 			};
 		};
