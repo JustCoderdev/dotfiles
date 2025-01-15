@@ -54,7 +54,6 @@ in
 					"browse list" = "yes";
 					"case sensitive" = "yes";
 					"max disk size" = "2500"; # 2.5 GB
-					"vfs objects" = "fruit"; # Apple - Share interop
 				};
 
 				"${username}-${hostname}" = {
@@ -63,6 +62,7 @@ in
 					path = "${share-path}";
 					comment = "${username}-${hostname}";
 
+					"vfs objects" = "fruit"; # Apple - Share interop
 					"admin users" = "${username}";
 					"guest ok" = "no";
 
