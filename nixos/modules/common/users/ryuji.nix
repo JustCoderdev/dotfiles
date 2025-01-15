@@ -36,7 +36,7 @@ function link {
 	# If file exists and is link
 	if [ -L "''${to}/''${to_filename}" ]; then
 		unlink "''${to}/''${to_filename}"
-		echo "Unlinking ''${to}/''${to_filename}"
+		echo "[WARN] Unlinking ''${to}/''${to_filename}"
 	fi
 
 	# If file exists
@@ -47,7 +47,7 @@ function link {
 
 	# Link
 	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		echo "[OK]    Linked ''${from_filename} to ''${to}/''${to_filename}"
+		echo "[OK] Linked ''${from_filename} to ''${to}/''${to_filename}"
 	else
 		echo "[ERROR] Linking ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
 	fi
