@@ -1,3 +1,27 @@
+# YOU'RE ON THE `main` BRANCH, SWITCH TO `nixos-compliant` FOR THE LATEST CHANGES
+
+> `(i)` My dotfiles are divided in 3 branches:
+>
+> - `main`: Oldest "stable" version (fully "compatible" with macos)
+> - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred
+> - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
+>
+> Graph
+>
+> ```plaintext
+> * 16d55fd main
+> |\
+> | * 88e48b9 nixos-compliant (nixpkgs-23.05)
+> | |\
+> | | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+> | | |
+> | |/
+> | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+> ' |
+>   * 0be0f74 nixos-compliant (nixpkgs-24.11)
+>   v
+> ```
+
 # Dotfiles
 These are my dotfiles, feel free to use them and
 share with me any feedback or trick you may know :p
