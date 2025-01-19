@@ -3,17 +3,20 @@
 # Quit on error
 set -e
 
-#echo -n "Entering git shell...  "
-#nix-shell -p git
-#echo "Done!"
+
+# Create and enter a git subshell
+if hash git >/dev/null 2>&1; then
+	echo -e "\nGit found"
+else
+	echo -e "Git not found, entering git shell..."
+	nix-shell -p git --command "bash ${0}"
+fi
+
 
 DOTFILES_PATH="/.dotfiles"
 NIXOS_PATH="${DOTFILES_PATH}/nixos"
 HOSTS_PATH="${NIXOS_PATH}/hosts"
 
-# Clone dotfiles
-# echo -e "Cloning dotfiles in ${DOTFILES_PATH}"
-# sudo git clone https://github.com/JustCoderdev/dotfiles.git --branch nixos-compliant ${DOTFILES_PATH}
 
 
 echo -e "\n### Nixos system installation ###"
@@ -46,7 +49,14 @@ echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m"
 
 echo -e "Updating flake..."
 sed -i "s/\(_hostname = \).*/\1\"${HOSTNAME}\";/" "${NIXOS_PATH}/flake.nix"
-sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = systemBuilder;/" "${NIXOS_PATH}/flake.nix"
+
+grep -q "${HOSTNAME} = systemBuilder;" "${NIXOS_PATH}/flake.nix"
+if [ $? == 1 ]; then
+	echo "Adding new nixosConfiguration"
+	sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = systemBuilder;/" "${NIXOS_PATH}/flake.nix"
+else
+	echo "nixosConfiguration already in place, skipping"
+fi
 
 echo -e "Cloning templates..."
 mkdir -p "${HOST_PATH}"
@@ -95,6 +105,34 @@ echo -ne "}\n" | tee -a "${BOOTF_PATH}"
 pushd "${DOTFILES_PATH}" && git add "${DOTFILES_PATH}/nixos"
 
 
+## Check for online substituters
+substituters="https://cache.nixos.org/?priority=40"
+if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
+	echo -e "No nix substituter set, ignoring..."
+else
+	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
+
+	ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1
+	# shellcheck disable=SC2181 #ah the irony
+	if [[ "${?}" -eq 0 ]]; then
+		echo -e "\033[32mONLINE\033[0m"
+		substituters+=" http://${DOT_NIX_SUB_URL}"
+
+		if [ -n "${DOT_NIX_SUB_PORT}" ]; then
+			#echo -e "No nix substituter port set, leaving default"
+		#else
+			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
+			substituters+=":${DOT_NIX_SUB_PORT}"
+		fi
+
+		substituters+="?priority=30"
+	else
+		echo -e "\033[31mOFFLINE\033[0m"
+	fi
+fi
+
+
 # Rebuild system
 echo -e "Rebuilding system for \033[32m\"${HOSTNAME}\"\033[0m"
-sudo nixos-rebuild switch --show-trace --flake "${DOTFILES_PATH}/nixos#${HOSTNAME}"
+sudo nixos-rebuild switch --show-trace --fallback --flake "${DOTFILES_PATH}/nixos#${HOSTNAME}" --option substituters "${substituters}"
+
