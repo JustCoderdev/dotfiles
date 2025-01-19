@@ -60,7 +60,7 @@ ${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
 
 		programs = {
 			dconf.enable = true; # Remember windows size stuff
-			i3lock.enable = true;
+			#i3lock.enable = true;
 
 			thunar = {
 				enable = true;
