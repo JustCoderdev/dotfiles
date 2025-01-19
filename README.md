@@ -41,8 +41,12 @@ share with me any feedback or trick you may know :p
 ![Xfce desktop](./.screenshots/xfce-i3-desktop.png)
 > "Xfce", i3, i3status, nvim and zsh showcase
 
+---
+
 ![Hyprland desktop](./.screenshots/hyprland_desktop.png)
 > "Hyprland", waybar, wallpaper showcase
+
+---
 
 ![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
 > Plymouth darnix theme (custom)
