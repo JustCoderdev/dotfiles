@@ -57,14 +57,5 @@
 
 	networking = {
 		bridges.br0.interfaces = [ "eno1" "wlp3s0" ];
-		interfaces.br0 = {
-			useDHCP = false;
-			ipv4.addresses = [
-				{
-					address = "10.20.30.1";
-					prefixLength = 24;
-				}
-			];
-		};
 	};
 }
