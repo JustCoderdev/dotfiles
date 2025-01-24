@@ -23,7 +23,16 @@
 		};
 	};
 
+	# Create new ssh key
+	# ssh-keygen \
+	#	-t ed25519 -C "107036402+JustCoderdev@users.noreply.github.com" \
+	#	-f ~/.ssh/id_github_justcode
+	# <enter passphrase>
+	# ssh-add ~/.ssh/id_github_justcode
+
 	# Set public authKey
 	# needs `PasswordAuthentication = false`
-	# users.users.${settings.username}.openssh.authorizedKeys.keys = [ ];
+	users.users.${settings.username}.openssh.authorizedKeys.keys = [
+		# "" # msi
+	];
 }
