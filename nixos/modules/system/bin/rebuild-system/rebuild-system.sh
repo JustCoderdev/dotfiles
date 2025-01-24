@@ -75,7 +75,7 @@ else
 	fi
 
 	echo -ne "\n"
-	sudo git add ..
+	git add ..
 fi
 
 
@@ -151,7 +151,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	if $had_changes && $want_commit; then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 		message="NixOS build ${HOST_SHELL}#${generation}"
-		sudo git commit -m "${message}"
+		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 	fi
 
@@ -162,7 +162,7 @@ else
 
 	grep --color -F "error" .nixos-switch.log
 	if $had_changes; then
-		sudo git restore --staged ..
+		git restore --staged ..
 	fi
 
 	echo -ne "\n"
