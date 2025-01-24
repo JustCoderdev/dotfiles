@@ -62,6 +62,8 @@ narinfo-cache-negative-ttl = 0 # If a store path is queried from a substituter b
 
 		services.nix-serve = {
 			enable = cfg.serve-store.enable;
+			package = pkgs.nix-serve-ng;
+
 			openFirewall = true;
 			port = nix-serve-port;
 
