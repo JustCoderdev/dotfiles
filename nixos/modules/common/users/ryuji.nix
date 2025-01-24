@@ -70,6 +70,7 @@ link "${dotpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
 link "${dotpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
 
 mkdir -p "${cpath}/nvim"
+chown ${username}:users "${cpath}/nvim"
 link "${dotpath}/nvim"                    "${cpath}/nvim" "${uname}" # Nvim
 echo ""
 '';
