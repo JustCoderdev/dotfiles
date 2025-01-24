@@ -29,11 +29,8 @@ in
 			};
 			settings = {
 				auto-optimise-store = true;
-				allowed-users = [
-					"root"
-					"${settings.username}"
-					"nix-serve"
-				];
+				trusted-users = [ "root" "nix-serve" ];
+				allowed-users = [ "${settings.username}" ];
 
 				substituters = [
 					# "https://cache.nixos.org/?priority=40"
