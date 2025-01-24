@@ -100,7 +100,7 @@ else
 
 		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
 			#echo -e "No nix substituter port set, leaving default"
-			substituters+=":56522"
+			substituters+=":56552"
 		else
 			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
 			substituters+=":${DOT_NIX_SUB_PORT}"

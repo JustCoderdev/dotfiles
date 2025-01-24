@@ -13,7 +13,7 @@ else
 fi
 
 
-DOTFILES_PATH="/.dotfiles"
+DOTFILES_PATH="$(pwd)/.."
 NIXOS_PATH="${DOTFILES_PATH}/nixos"
 HOSTS_PATH="${NIXOS_PATH}/hosts"
 
@@ -29,44 +29,61 @@ if [[ "${hostname}" == "" ]]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOSTNAME}\033[0m"
 else
 	HOSTNAME=$hostname
-	if [ -d "${HOSTS_PATH}/${HOSTNAME}" ]; then
-		# shellcheck disable=SC2162
-		read -p 'Host configuration already existing, do you want to continue? (y/N): ' continue_confirm
-		if [[ "${continue_confirm}" == [yY] ]] || [[ "${continue_confirm}" == [yY][eE][sS] ]]; then
-			echo "Moved old configuration from ${HOSTS_PATH}/${HOSTNAME} to ${HOSTS_PATH}/${HOSTNAME}.old"
-			mv -f "${HOSTS_PATH}/${HOSTNAME}" "${HOSTS_PATH}/${HOSTNAME}.old"
-			mkdir -p "${HOSTS_PATH}/${HOSTNAME}"
-		else
-			echo -e "\033[31mExiting...\033[0m"
-			exit 1
-		fi
-	fi
 fi
+
 
 HOST_PATH="${HOSTS_PATH}/${HOSTNAME}"
 TEMP_PATH="${HOSTS_PATH}/.example"
 echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m"
 
-echo -e "Updating flake..."
+echo -e "Updating flake"
 sed -i "s/\(_hostname = \).*/\1\"${HOSTNAME}\";/" "${NIXOS_PATH}/flake.nix"
 
-grep -q "${HOSTNAME} = systemBuilder;" "${NIXOS_PATH}/flake.nix"
-if [ $? == 1 ]; then
+grep -q "${HOSTNAME} = systemBuilder;" "${NIXOS_PATH}/flake.nix" || grep_exit=$?
+if [[ $grep_exit == 1 ]]; then
 	echo "Adding new nixosConfiguration"
 	sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = systemBuilder;/" "${NIXOS_PATH}/flake.nix"
 else
 	echo "nixosConfiguration already in place, skipping"
 fi
 
-echo -e "Cloning templates..."
-mkdir -p "${HOST_PATH}"
-cp "${TEMP_PATH}/settings.nix" "${HOST_PATH}/settings.nix"
-cp "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
+
+if [ -d "${HOSTS_PATH}/${HOSTNAME}" ]; then
+	# shellcheck disable=SC2162
+	read -p 'Host configuration already exists, do you want to continue? (y/N): ' continue_confirm
+	if [[ "${continue_confirm}" == [yY] ]] || [[ "${continue_confirm}" == [yY][eE][sS] ]]; then
+		echo "Moving old configuration from '${HOSTS_PATH}/${HOSTNAME}' to '${HOSTS_PATH}/${HOSTNAME}.old'"
+		rm -rf "${HOSTS_PATH}/${HOSTNAME}.old"
+		cp -r "${HOSTS_PATH}/${HOSTNAME}" "${HOSTS_PATH}/${HOSTNAME}.old"
+	else
+		echo -e "\033[31mExiting...\033[0m"
+		exit 1
+	fi
+else
+	echo -e "Cloning templates..."
+	mkdir -p "${HOST_PATH}"
+	cp "${TEMP_PATH}/settings.nix" "${HOST_PATH}/settings.nix"
+	cp "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
+fi
+
 
 echo -e "Setting configuration"
 sed -i "s/\(hostname = \).*/\1\"${HOSTNAME}\";/" "${HOST_PATH}/settings.nix"
-$EDITOR "${HOST_PATH}/configuration.nix"
-$EDITOR "${HOST_PATH}/settings.nix"
+
+
+read -p 'Do you want to edit configuration.nix? (Y/n): ' editconf_confirm
+if [[ "${editconf_confirm}" == [nN] ]] || [[ "${editconf_confirm}" == [nN][oO] ]]; then
+	echo "Skipping"
+else
+	$EDITOR "${HOST_PATH}/configuration.nix"
+fi
+
+read -p 'Do you want to edit settings.nix? (Y/n): ' editsett_confirm
+if [[ "${editsett_confirm}" == [nN] ]] || [[ "${editsett_confirm}" == [nN][oO] ]]; then
+	echo "Skipping"
+else
+	$EDITOR "${HOST_PATH}/settings.nix"
+fi
 
 echo -e "Generating missing files"
 nixos-generate-config --show-hardware-config | tee "${HOST_PATH}/hardware-configuration.nix"
@@ -118,9 +135,9 @@ else
 		echo -e "\033[32mONLINE\033[0m"
 		substituters+=" http://${DOT_NIX_SUB_URL}"
 
-		if [ -z "${DOT_NIX_SUB_PORT}" ]; then
+		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
 			#echo -e "No nix substituter port set, leaving default"
-			substituters+=":56522"
+			substituters+=":56552"
 		else
 			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
 			substituters+=":${DOT_NIX_SUB_PORT}"
