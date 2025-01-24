@@ -12,6 +12,9 @@ in
 		virtualisation.docker = {
 			enable = true;
 
+			# Disable iptables to use nftables
+			extraOptions  = "--iptables=False";
+
 			daemon.settings = {
 				data-root = "/home/${username}/Developer/.docker/";
 			};

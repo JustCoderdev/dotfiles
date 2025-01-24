@@ -92,15 +92,16 @@ if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
 else
 	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
 
-	ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1
+	ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1
 	# shellcheck disable=SC2181 #ah the irony
 	if [[ "${?}" -eq 0 ]]; then
 		echo -e "\033[32mONLINE\033[0m"
 		substituters+=" http://${DOT_NIX_SUB_URL}"
 
-		if [ -n "${DOT_NIX_SUB_PORT}" ]; then
+		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
 			#echo -e "No nix substituter port set, leaving default"
-		#else
+			substituters+=":56522"
+		else
 			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
 			substituters+=":${DOT_NIX_SUB_PORT}"
 		fi

@@ -118,9 +118,10 @@ else
 		echo -e "\033[32mONLINE\033[0m"
 		substituters+=" http://${DOT_NIX_SUB_URL}"
 
-		if [ -n "${DOT_NIX_SUB_PORT}" ]; then
+		if [ -z "${DOT_NIX_SUB_PORT}" ]; then
 			#echo -e "No nix substituter port set, leaving default"
-		#else
+			substituters+=":56522"
+		else
 			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
 			substituters+=":${DOT_NIX_SUB_PORT}"
 		fi
@@ -131,22 +132,6 @@ else
 	fi
 fi
 
-
-# Allow unfree?
-if [ "${NIXPKGS_ALLOW_UNFREE}" = 1 ]; then
-	echo "Allowing unfree packages"
-else
-	# shellcheck disable=SC2162
-	read -p 'Allow the use of unfree packages? (y/N): ' unfree_confirm
-	if [[ "${unfree_confirm}" == [yY] ]] || [[ "${unfree_confirm}" == [yY][eE][sS] ]]; then
-		export NIXPKGS_ALLOW_UNFREE=1
-		echo "Allowing unfree packages"
-	fi
-fi
-
 # Rebuild system
 echo -e "Rebuilding system for \033[32m\"${HOSTNAME}\"\033[0m"
 sudo nixos-rebuild switch --show-trace --fallback --flake "${DOTFILES_PATH}/nixos#${HOSTNAME}" --option substituters "${substituters}"
-
-# Reset unfree
-export NIXPKGS_ALLOW_UNFREE=0
