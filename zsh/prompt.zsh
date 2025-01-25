@@ -1,7 +1,13 @@
 # justcoderdev zsh cursor
 
-PROMPT=$' %~ %B$%b ' # plain
-PROMPT=$'%F{8} %~ %B%F{4}$%f%b ' # colored
+
+# PROMPT=$' %~ %B$%b ' # plain
+PROMPT=$'%F{8} %~ %B%F{4}$%f%b ' # blue colored
+
+if [[ "${SSH_TTY}" == "$(tty)" ]]; then
+	PROMPT=$'%F{8} %~ %B%F{1}$%f%b '
+	echo "ZSH SSH Session detected"
+fi
 
 # Enable block cursor in normal mode
 cursor_mode() {
