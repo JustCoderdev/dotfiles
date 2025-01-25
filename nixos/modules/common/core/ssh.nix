@@ -18,7 +18,9 @@ in
 	# Enable the OpenSSH daemon.
 	services.openssh = {
 		enable = true;
-		banner = "My computer, please don't touch it :(";
+		banner = ''
+${hostname} is mine. DO NOT TOUCH
+'';
 
 		openFirewall = true;
 		settings = {
