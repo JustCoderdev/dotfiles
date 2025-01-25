@@ -10,16 +10,24 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		nixd.url = "github:nix-community/nixd";
+		nixd = {
+			url = "github:nix-community/nixd";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 #		firefox-addons = {
 #			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 #			inputs.nixpkgs.follows = "nixpkgs";
 #		};
+
+		disko = {
+			url = "github:nix-community/disko/v1.11.0";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd, disko }@inputs:
 		let
-			_hostname = "quiss";
+			_hostname = "msi";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
@@ -34,12 +42,16 @@
 			};
 
 			args = { inherit inputs pkgs-unstable settings; };
-			modules = let path = settings.dotfiles_path; in [
+			modules = let path = settings.dotfiles_path; in
+			[
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
+				(path + "/nixos/hosts/${settings.hostname}/options.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
-				(path + "/nixos/profiles/${settings.profile}/configuration.nix")
+				(path + "/nixos/profiles/configuration.nix")
+
+				disko.nixosModules.disko
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
@@ -47,7 +59,7 @@
 					home-manager.extraSpecialArgs = args;
 					#home-manager.backupFileExtension = "bak";
 					home-manager.users.${settings.username} =
-						import (path + "/nixos/profiles/${settings.profile}/home.nix");
+						import (path + "/nixos/profiles/home.nix");
 				}
 			];
 
@@ -59,7 +71,7 @@
 
 			userBuilder = home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
-				modules = [ ./profiles/${settings.profile}/home.nix ];
+				modules = [ ./profiles/home.nix ];
 				inherit pkgs;
 			};
 		in {

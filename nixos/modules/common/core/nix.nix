@@ -69,8 +69,6 @@ narinfo-cache-negative-ttl = 0 # If a store path is queried from a substituter b
 			openFirewall = true;
 			port = nix-serve-port;
 
-			# To generate the key file
-			# nix-store --generate-binary-cache-key <domain.name> cache-priv-key.pem cache-pub-key.pem
 			secretKeyFile = "/var/cache-priv-key.pem";
 		};
 

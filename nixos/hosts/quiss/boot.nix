@@ -8,4 +8,7 @@
 	boot.loader.grub.useOSProber = false;
 
 	#Virtualisation
+
+	# Intel Graphics
+	boot.initrd.kernelModules = [ "i915" ];
 }

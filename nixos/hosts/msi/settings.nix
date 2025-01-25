@@ -1,6 +1,5 @@
 rec {
 	hostname = "msi";
-	profile = "personal";
 	username = "ryuji";
 
 	runningVM = false;

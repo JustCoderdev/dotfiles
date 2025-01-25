@@ -64,6 +64,7 @@ else
 	mkdir -p "${HOST_PATH}"
 	cp "${TEMP_PATH}/settings.nix" "${HOST_PATH}/settings.nix"
 	cp "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
+	cp "${TEMP_PATH}/options.nix" "${HOST_PATH}/options.nix"
 fi
 
 
@@ -71,16 +72,16 @@ echo -e "Setting configuration"
 sed -i "s/\(hostname = \).*/\1\"${HOSTNAME}\";/" "${HOST_PATH}/settings.nix"
 
 
-read -p 'Do you want to edit configuration.nix? (Y/n): ' editconf_confirm
-if [[ "${editconf_confirm}" == [nN] ]] || [[ "${editconf_confirm}" == [nN][oO] ]]; then
-	echo "Skipping"
+read -p 'Do you want to edit options.nix? (Y/n): ' editoptions_confirm
+if [[ "${editoptions_confirm}" == [nN] ]] || [[ "${editoptions_confirm}" == [nN][oO] ]]; then
+	echo "Skipping" > /dev/null
 else
-	$EDITOR "${HOST_PATH}/configuration.nix"
+	$EDITOR "${HOST_PATH}/options.nix"
 fi
 
 read -p 'Do you want to edit settings.nix? (Y/n): ' editsett_confirm
 if [[ "${editsett_confirm}" == [nN] ]] || [[ "${editsett_confirm}" == [nN][oO] ]]; then
-	echo "Skipping"
+	echo "Skipping" > /dev/null
 else
 	$EDITOR "${HOST_PATH}/settings.nix"
 fi

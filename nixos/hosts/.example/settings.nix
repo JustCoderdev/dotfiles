@@ -1,7 +1,6 @@
 rec {
-	hostname = "virtualmachine";
-	profile = "personal";
-	username = "ryuji";
+	hostname = "aaaaa";
+	username = "bbb";
 
 	runningVM = false;
 

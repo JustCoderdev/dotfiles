@@ -7,11 +7,14 @@
 {
 	imports = [
 		# home-manager.nixosModules.default
-		../../modules/common/core
+		../modules/common/core
+		../modules/common/users
 
-		../../modules/system/bin
-		../../modules/system/dev
-		../../modules/system/services
+		../modules/system/bin
+		../modules/system/desktop
+		../modules/system/dev
+		../modules/system/gaming
+		../modules/system/services
 	];
 
 	system.stateVersion = "23.11"; # Did you read the comment?

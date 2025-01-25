@@ -10,12 +10,21 @@
 	manual.manpages.enable = false;
 
 	imports = [
-		../../modules/user/dev/editor/neovim.nix
+		../modules/user/desktop/i3.nix
+		../modules/user/desktop/hyprland.nix
+		../modules/user/desktop/waybar.nix
 
-		../../modules/user/dev/clang.nix
-		../../modules/user/dev/git.nix
-		../../modules/user/dev/tmux.nix
-		../../modules/user/dev/zsh.nix
+		../modules/user/dev/editor/neovim.nix
+		../modules/user/dev/editor/emacs.nix
+
+		../modules/user/dev/alacritty.nix
+		../modules/user/dev/clang.nix
+		../modules/user/dev/git.nix
+		../modules/user/dev/tmux.nix
+		../modules/user/dev/zsh.nix
+
+		../modules/user/firefox.nix
+		../modules/user/gtk.nix
 	];
 
 

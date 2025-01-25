@@ -151,6 +151,40 @@ and are arranged as follows:
 - Sane1090x Waybar style ([Github](https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/config))
 - Ruixi-rebirth waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
 
+## Secrets checklist
+
+- user pwd
+
+```
+passwd ryuji
+```
+
+- nix-serve (nix.nix)
+
+```
+cd /etc
+nix-store --generate-binary-cache-key nixcache.local \
+        cache-priv-key.pem cache-pub-key.pem
+```
+
+- Github ssh key (add to gh)
+
+```
+ssh-keygen -t ed25519 \
+  -C "107036402+JustCoderdev@users.noreply.github.com" \
+  -f ~/.ssh/id_github_justcode
+ssh-add ~/.ssh/id_github_justcode
+```
+
+- host ssh key (for ssh)
+
+```
+ssh-keygen -t ed25519 \
+  -C "ryuji@msi" \
+  -f ~/.ssh/id_msi_ryuji
+ssh-add ~/.ssh/id_msi_ryuji
+```
+
 ## Emergency wiki
 
 ### Recover rollback dotfiles

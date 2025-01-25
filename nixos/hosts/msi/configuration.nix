@@ -1,62 +1,51 @@
-{ ... }:
+{ config, ... }:
 
 {
-	common = {
-		core = {
-			bluetooth.enable = true;
-			nvidia.enable = true;
+	# Create MC Virtual Sink
+	hardware.pulseaudio = {
+		extraConfig = ''
+pactl load-module module-null-sink sink_name=MCVirtualSink sink_properties="device.description='Minecraft\ Virtual\ Sink'"
+pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
 
-			audio = {
-				pipewire.enable = false;
-				pulseaudio.enable = true;
-			};
+#					load-module module-combine-sink
+#					load-module module-null-sink sink_name=virtmic sink_properties=device.description=Virtual_Microphone_Sink
+#					load-module module-remap-source master=virtmic.monitor source_name=virtmic source_properties=device.description=Virtual_Microphone
+		'';
+	};
 
-			nix = {
-				serve-store.enable = true;
-			};
-		};
+	# Nvidia support
+	hardware.nvidia = {
+		modesetting.enable = true;
 
-		users = {
-			ryuji = {
-				enable = true;
+		# GPU Support for GeForce GTX 1050Ti
+		package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-				image-editing = true;
-				video-editing = false;
-				game-developing = false;
-			};
+		# Enable this if you have graphical issues
+		powerManagement.enable = false;
 
-			school.enable = true;
+		# Works on modern Nvidia GPUs (Turing or newer)
+		powerManagement.finegrained = false;
+
+		# Use open source driver
+		open = false;
+
+		# Enable the Nvidia settings menu,
+		nvidiaSettings = false;
+	};
+
+	# Network settings
+	networking = {
+		# DNS Records
+		hosts = {
+			"10.10.30.60"   = [ "nixcache.local" ]; # Quiss
 		};
 	};
 
-	system = {
-		bin = {
-			backlight.enable = false;
-			rebuild-system.enable = true;
-		};
-
-		desktop = {
-			xfce.enable = true;
-			hyprland.enable = false;
-		};
-
-		dev = {
-			enable = true;
-			c.enable = true;
-			arduino.enable = true;
-			net.enable = false;
-		};
-
-		gaming.enable = true;
-		services = {
-			docker.enable = true;
-			samba.enable = true;
-			virtualbox.enable = false;
-		};
-	};
 
 	# Network bridging
 	# src: <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
+
+	# Enable kernel packet forwarding
 	boot.kernel.sysctl = {
 		"net.ipv4.conf.all.forwarding" = true;
 		"net.ipv6.conf.all.forwarding" = true;
