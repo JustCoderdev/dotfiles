@@ -185,6 +185,13 @@ ssh-keygen -t ed25519 \
 ssh-add ~/.ssh/id_msi_ryuji
 ```
 
+- DuckDNS token
+
+```
+mkdir ${DOT_FILES}/nixos/secrets
+echo "xyz" > duckdns.token
+```
+
 ## Emergency wiki
 
 ### Recover rollback dotfiles
