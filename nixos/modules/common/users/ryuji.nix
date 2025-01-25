@@ -39,15 +39,15 @@ function link {
 
 	# If file exists
 	if [ -e "''${to}/''${to_filename}" ]; then
-		echo "[FAIL] Linking ''${from_filename} to ''${to}/''${to_filename}: file exists"
+		echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
 		return 0; # Must be 0 to avoid triggering -e
 	fi
 
 	# Link
 	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		echo "[ OK ] Linked ''${from_filename} to ''${to}/''${to_filename}"
+		echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
 	else
-		echo "[FAIL] Linking ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
+		echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
 	fi
 }
 
