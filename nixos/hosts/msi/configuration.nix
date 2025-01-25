@@ -85,10 +85,10 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 			internalIPs = [ "10.0.0.0/28" ];
 			internalInterfaces = [ "eno1" ];
 
-			forwardPorts = [ {
+			forwardPorts = [ { # 10.0.0.11:22 >>#<< 192.168.7.142:4022
+				proto = "tcp";
 				sourcePort = 4022;
 				destination = "10.0.0.11:22";
-				proto = "tcp";
 			} ];
 
 			externalInterface = "wlp3s0";

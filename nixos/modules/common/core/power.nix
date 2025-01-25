@@ -4,7 +4,7 @@
 	powerManagement = {
 		enable = true;
 		cpuFreqGovernor = "performance";
-		powertop.enable = true;
+		#powertop.enable = true;
 	};
 
 	services.thermald.enable = true;
