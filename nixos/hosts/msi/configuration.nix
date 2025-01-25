@@ -80,9 +80,21 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 		firewall.trustedInterfaces = [ "eno1" ];
 		networkmanager.unmanaged = [ "interface-name:eno1" ];
 
-#		nat.internalIPs = [ "10.0.0.0/28" ];
-#		nat.externalInterface = "wlp3s0";
-#		nat.enable = true;
+		nat = {
+			enable = true;
+			internalIPs = [ "10.0.0.0/28" ];
+			internalInterfaces = [ "eno1" ];
+
+			dmzHost = "192.168.7.1";
+			forwardPorts = [ {
+				sourcePort = 4022;
+				destination = "10.0.0.11:22";
+				proto = "tcp";
+			} ];
+
+			externalIP = "192.168.7.200";
+			externalInterface = "wlp3s0";
+		};
 
 		interfaces.eno1 = {
 			useDHCP = false;
