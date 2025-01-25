@@ -30,10 +30,10 @@
 
 		# DNS Records
 		hosts = {
-			"192.168.7.1"   = [ "gateway.local" ];
-			"192.168.7.142" = [ "msi.host.local"];
-			"192.168.7.16"  = [ "acer.host.local"];
-			"10.10.30.60"   = [ "quiss.host.local" ];
+			"192.168.7.1"   = [    "gateway.local" ];
+			"192.168.7.142" = [   "msi.host.local" ];
+			"192.168.7.16"  = [  "acer.host.local" ];
+			"10.0.0.11"     = [ "quiss.host.local" ];
 		};
 
 		# Configure proxy
