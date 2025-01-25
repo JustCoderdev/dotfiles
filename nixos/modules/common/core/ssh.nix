@@ -55,7 +55,7 @@ ${hostname} is mine. DO NOT TOUCH
 		# ""
 
 		# acer
-		# ""
+		"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
 
 		# server-cat
 		"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6h5xWAlFFP3J0mcjUGQGaW+fKIi441VXPif3PuzTTT"
