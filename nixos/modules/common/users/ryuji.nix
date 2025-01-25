@@ -19,13 +19,11 @@ in {
 		system.nixos.tags = [ "${username}" ];
 
 		systemd.tmpfiles.rules = [
-#			Type Path                          Mode User     Group Age Argument
+#			Type Path                           Mode User     Group Age Argument
 			"d   ${uhome}/Developer             0755 ${uname} users"
 			"d   ${uhome}/Developer/Github      0755 ${uname} users"
 			"d   ${uhome}/Developer/Projects    0755 ${uname} users"
 			"d   ${uhome}/Pictures/screenshots  0755 ${uname} users"
-			"d   /home/WDC_WD10                 0755 ${uname} users"
-			"L+  /home/WDC_WD10 - - - - ${uhome}/HDisk"
 		];
 
 		system.activationScripts."link_dotfiles".text = ''
@@ -41,15 +39,15 @@ function link {
 
 	# If file exists
 	if [ -e "''${to}/''${to_filename}" ]; then
-		echo "[ERROR] Linking ''${from_filename} to ''${to}/''${to_filename}: file exists"
+		echo "[FAIL] Linking ''${from_filename} to ''${to}/''${to_filename}: file exists"
 		return 0; # Must be 0 to avoid triggering -e
 	fi
 
 	# Link
 	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		echo "[OK] Linked ''${from_filename} to ''${to}/''${to_filename}"
+		echo "[ OK ] Linked ''${from_filename} to ''${to}/''${to_filename}"
 	else
-		echo "[ERROR] Linking ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
+		echo "[FAIL] Linking ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
 	fi
 }
 
@@ -90,6 +88,8 @@ echo ""
 		environment.systemPackages = (lib.mkMerge [
 			(with pkgs; [
 				firefox
+				google-chrome
+
 				obsidian
 				anytype
 
@@ -121,8 +121,6 @@ echo ""
 #			]))
 		]);
 
-		services.ratbagd.enable = true;
-
 		# GTK dark theme (hopefully)
 		environment.etc = {
 			"xdg/gtk-2.0/gtkrc".text = "gtk-application-prefer-dark-theme=1";
@@ -139,6 +137,5 @@ gtk-error-bell=false
 gtk-application-prefer-dark-theme=1
 '';
 		};
-
 	};
 }

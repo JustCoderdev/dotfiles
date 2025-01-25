@@ -3,7 +3,6 @@
 {
 	imports = [
 		./ryuji.nix
-		./school.nix
 	];
 
 	options = {
@@ -36,12 +35,6 @@
 #					description = "Add developer sofware to environment packages";
 #					default = false;
 #				};
-			};
-
-			school.enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable school user";
-				default = false;
 			};
 		};
 	};

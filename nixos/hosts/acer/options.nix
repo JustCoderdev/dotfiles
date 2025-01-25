@@ -24,8 +24,6 @@
 				video-editing = false;
 				game-developing = false;
 			};
-
-			school.enable = true;
 		};
 	};
 

@@ -49,7 +49,8 @@ fi
 
 # Check differences
 echo -ne "Analysing changes..."
-if git diff --cached --quiet -- ..; then  # -- ./**/*.nix
+git restore --staged ..
+if git diff --quiet -- ..; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
 	had_changes=false
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"

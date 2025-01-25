@@ -1,8 +1,8 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
 #	nvidia = config.common.core.nvidia;
-	video-editing = config.common.users.ryuji.video-editing;
+#	video-editing = config.common.users.ryuji.video-editing;
 in
 
 {
@@ -25,9 +25,9 @@ in
 			enable = true;
 			enable32Bit = true;
 
-			extraPackages = [
-				(lib.mkIf video-editing pkgs.intel-compute-runtime)
-			];
+#			extraPackages = [
+#				(lib.mkIf video-editing pkgs.intel-compute-runtime)
+#			];
 		};
 	};
 }

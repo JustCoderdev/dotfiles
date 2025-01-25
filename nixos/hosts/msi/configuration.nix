@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
 	# Create MC Virtual Sink
@@ -40,7 +40,6 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 			"10.10.30.60"   = [ "nixcache.local" ]; # Quiss
 		};
 	};
-
 
 	# Network bridging
 	# src: <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
@@ -94,8 +93,11 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 		};
 	};
 
-	# Bridge
-#	networking = {
-#		bridges.br0.interfaces = [ "eno1" "wlp3s0" ];
-#	};
+	# Install setup software
+	environment.systemPackages = with pkgs; [
+		piper   # Mouse software
+	];
+
+	# Mouse service
+	services.ratbagd.enable = true;
 }

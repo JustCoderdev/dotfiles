@@ -23,8 +23,6 @@
 				image-editing = false;
 				video-editing = false;
 			};
-
-			school.enable = false;
 		};
 	};
 
