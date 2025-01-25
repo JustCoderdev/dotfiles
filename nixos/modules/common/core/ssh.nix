@@ -3,7 +3,7 @@
 let
 	hostname = settings.hostname;
 	username = settings.username;
-	homepath = "/home/${hostname}";
+	homepath = "/home/${username}";
 in
 
 {
@@ -26,6 +26,7 @@ in
 			X11Forwarding = true;
 			UsePAM = true;
 
+			KbdInteractiveAuthentication = true;
 			PasswordAuthentication = true;
 			UseDns = false;
 		};
