@@ -13,6 +13,7 @@ rec {
 	special_pkgs = {
 		insecure = [ ];
 		unfree = [
+			"google-chrome"
 			"obsidian"
 			"anytype"
 			"apple-fonts"

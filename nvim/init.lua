@@ -10,7 +10,7 @@ if (SETTINGS == nil) then
 end
 
 -- SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
-SETTINGS.default_colorscheme = { name = "gruvbox", require_truecolor = true }
+SETTINGS.default_colorscheme = { name = "gruvbox", require_truecolor = false }
 SETTINGS.fallback_colorscheme = { name = "habamax", require_truecolor = false }
 SETTINGS = protect(SETTINGS)
 
