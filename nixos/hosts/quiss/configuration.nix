@@ -10,4 +10,6 @@
 		domains = [ "thefoxburrow" ];
 		tokenFile = settings.dotfiles_abspath + "/nixos/secrets/duckdns.token";
 	};
+
+	networking.firewall.allowedTCPPorts = [ 8080 ];
 }
