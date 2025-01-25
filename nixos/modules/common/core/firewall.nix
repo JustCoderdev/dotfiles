@@ -11,6 +11,7 @@
 #			25565 # Minecraft
 #			5222  # Satisfactory
 #			6666  # Satisfactory
+			8080
 		];
 		allowedUDPPorts = [
 #			25565 # Minecraft
