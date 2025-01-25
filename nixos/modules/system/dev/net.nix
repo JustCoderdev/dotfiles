@@ -7,7 +7,6 @@ let cfg = config.system.dev.net; in
 		environment.systemPackages = with pkgs; [
 			#ciscoPacketTracer8
 			wireshark
-			putty
 		];
 	};
 }
