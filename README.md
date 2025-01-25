@@ -167,7 +167,7 @@ nix-store --generate-binary-cache-key nixcache.local \
         cache-priv-key.pem cache-pub-key.pem
 ```
 
-- Github ssh key (add to gh)
+- Github ssh key (add to gh) [auto-gen]
 
 ```
 ssh-keygen -t ed25519 \
@@ -176,7 +176,7 @@ ssh-keygen -t ed25519 \
 ssh-add ~/.ssh/id_github_justcode
 ```
 
-- host ssh key (for ssh)
+- host ssh key (for ssh) [auto-gen]
 
 ```
 ssh-keygen -t ed25519 \
