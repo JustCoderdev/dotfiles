@@ -59,16 +59,18 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 				"193.110.81.0" # https://www.dns0.eu/it
 				"185.253.5.0"  # https://www.dns0.eu/it
 			];
+
 			domain-needed = true;
 			bogus-priv = true;
 			no-resolv = true;
 			cache-size = 1000;
 
 			# dhcp
-			dhcp-range = [ "br-lan,10.10.30.50,10.10.30.60,24h" ];
-			interface = "eno1";
-			dhcp-host = "10.10.30.1";
+			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.14,1h" ];
+			dhcp-leasefile = "/var/lib/dnsmasq/dnsmasq.leases";
+			dhcp-host = "10.0.0.1";
 
+			interface = "eno1";
 			no-hosts = true;
 		};
 	};
@@ -78,7 +80,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 		firewall.trustedInterfaces = [ "eno1" ];
 		networkmanager.unmanaged = [ "interface-name:eno1" ];
 
-		nat.internalIPs = [ "10.10.30.0/24" ];
+		nat.internalIPs = [ "10.0.0.0/28" ];
 		nat.externalInterface = "wlp3s0";
 		nat.enable = true;
 
@@ -86,7 +88,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 			useDHCP = false;
 			ipv4.addresses = [
 				{
-					address = "10.10.30.1";
+					address = "10.0.0.1";
 					prefixLength = 24;
 				}
 			];
