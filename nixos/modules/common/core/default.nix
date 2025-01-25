@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, settings, ... }:
 
 {
 	imports = [
@@ -57,9 +57,14 @@
 		# Core packages
 		environment.systemPackages = with pkgs; [
 			unzip zip
-			vim wget killall
-			smartmontools pciutils #ntfs3g
 			htop btop
+			smartmontools pciutils #ntfs3g
+			wget
+			vim killall
 		];
+
+		# Packet sniffer
+		programs.tcpdump.enable = true;
+		users.users.${settings.username}.extraGroups = [ "pcap" ];
 	};
 }
