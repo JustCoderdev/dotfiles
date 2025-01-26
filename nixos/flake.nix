@@ -27,7 +27,7 @@
 	};
 	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd, disko }@inputs:
 		let
-			_hostname = "quiss";
+			_hostname = "msi";
 			settings = import ./hosts/${_hostname}/settings.nix;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};

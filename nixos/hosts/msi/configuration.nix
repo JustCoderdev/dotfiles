@@ -125,8 +125,8 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 
 				{ # 10.0.0.11:8080 >>#<< 192.168.7.142:8080
 					proto = "tcp";
-					sourcePort = 8080;
-					destination = "10.0.0.11:8080";
+					sourcePort = 80;
+					destination = "10.0.0.11:80";
 				}
 			];
 
