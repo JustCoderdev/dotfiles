@@ -46,7 +46,7 @@
 
 		gaming.enable = false;
 		services = {
-			docker.enable = true;
+			docker.enable = false;
 			samba.enable = true;
 			virtualbox.enable = false;
 		};
