@@ -33,7 +33,7 @@
 		};
 
 		desktop = {
-			xfce.enable = true;
+			xfce.enable = false;
 			hyprland.enable = false;
 		};
 
