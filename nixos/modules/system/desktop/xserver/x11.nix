@@ -1,22 +1,20 @@
 { config, lib, settings, ... }:
 
-#let cfg = config.system.desktop.xfce; in
+let
+	cfg = config.system.desktop.xfce;
+in
 
 {
-#lib.mkIf cfg.enable
 	config = {
 		services.xserver = {
-			enable = true;
+			enable = cfg.enable;
 			videoDrivers = lib.mkIf settings.runningVM [ "wmware" ];
 		};
 
 		services.libinput = {
 			enable = true;
 
-			mouse = {
-				middleEmulation = false;
-			};
-
+			mouse.middleEmulation = false;
 			touchpad = {
 				accelProfile = "flat";       # flat, adaptive
 				clickMethod = "buttonareas"; # buttonareas, clickfinger

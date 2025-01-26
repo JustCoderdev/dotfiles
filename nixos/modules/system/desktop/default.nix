@@ -15,7 +15,7 @@ in
 		./wayland
 	];
 
-	config = lib.mkIf (i3.enable or hyprland.enable) {
+	config = lib.mkIf (i3.enable || hyprland.enable) {
 		xdg.portal = {
 			enable = true;
 			extraPortals = with pkgs; [
