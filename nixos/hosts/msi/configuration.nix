@@ -95,8 +95,11 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 
 			# dhcp
 			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.14,1h" ];
-			dhcp-leasefile = "/var/lib/dnsmasq/dnsmasq.leases";
-			dhcp-host = "10.0.0.1";
+			dhcp-host = [
+				"msi,10.0.0.1"
+				"f4:6d:04:99:dc:9a,quiss,infinite"
+			];
+			dhcp-option = "option:router,10.0.0.1";
 
 			interface = "eno1";
 			no-hosts = true;
