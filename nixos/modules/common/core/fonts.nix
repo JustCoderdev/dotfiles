@@ -8,5 +8,6 @@
 		pkgs.helvetica-neue-lt-std
 		pkgs.roboto-mono
 		pkgs.iosevka
+		pkgs.ipaexfont
 	];
 }
