@@ -1,13 +1,36 @@
 { pkgs, ... }:
 
 {
-	fonts.packages = [
-		(pkgs.callPackage  ../../unofficial/apple-fonts.nix {})
-		(pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; })
+	fonts = {
+		packages = with pkgs; [
+			(callPackage  ../../unofficial/apple-fonts.nix {})
+			helvetica-neue-lt-std
 
-		pkgs.helvetica-neue-lt-std
-		pkgs.roboto-mono
-		pkgs.iosevka
-		pkgs.ipaexfont
-	];
+			# Mono fonts
+			(nerdfonts.override { fonts = [ "RobotoMono" ]; })
+			roboto-mono
+			iosevka
+
+			# JPN fonts
+			ipaexfont
+			kochi-substitute
+		];
+
+		# setting up japanese support
+		# <https://functor.tokyo/blog/2018-10-01-japanese-on-nixos>
+		fontconfig.defaultFonts = {
+			monospace = [
+				"DejaVu Sans Mono"
+				"IPAGothic"
+			];
+			sansSerif = [
+				"DejaVu Sans"
+				"IPAPGothic"
+			];
+			serif = [
+				"DejaVu Serif"
+				"IPAPMincho"
+			];
+		};
+	};
 }
