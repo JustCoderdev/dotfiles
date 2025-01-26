@@ -41,17 +41,15 @@
 				};
 			};
 
+			path = settings.dotfiles_path;
 			args = { inherit inputs pkgs-unstable settings; };
-			modules = let path = settings.dotfiles_path; in
-			[
+			modules = [
 				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/options.nix")
 				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
 				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
 
 				(path + "/nixos/profiles/configuration.nix")
-
-				disko.nixosModules.disko
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
@@ -61,7 +59,12 @@
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/home.nix");
 				}
-			];
+			]
+			++
+			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in (
+				nixpkgs.lib.optional (nixpkgs.lib.pathExists diskopath)
+				(import diskopath { disko = disko.nixosModules.disko; })
+			));
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;

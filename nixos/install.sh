@@ -151,5 +151,5 @@ else
 fi
 
 # Rebuild system
-echo -e "Rebuilding system for \033[32m\"${HOSTNAME}\"\033[0m"
-sudo nixos-rebuild switch --show-trace --fallback --flake "${DOTFILES_PATH}/nixos#${HOSTNAME}" --option substituters "${substituters}"
+echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"
+sudo nixos-install --show-trace --flake "${DOTFILES_PATH}/nixos#${HOSTNAME}" --option substituters "${substituters}"

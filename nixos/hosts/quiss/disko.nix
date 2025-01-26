@@ -1,10 +1,12 @@
-{ disko, ... }:
+{ disko }:
 
 let
 
 in
 
 {
+#disko.devices = { };
+
 #	disko.devices = {
 #		disk = {
 #			one = {

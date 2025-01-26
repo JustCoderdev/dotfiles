@@ -117,8 +117,13 @@ cd "${DOT_FILES}"
     - With NixOS
 
     ```bash
-    cd nixos
-    ./install.sh
+    sudo nix --experimental-features "nix-command flakes" \
+        run github:nix-community/disko -- --mode disko \
+        ./hosts/<host>/disko-config.nix
+
+    repo='https://github.com/JustCoderdev/dotfiles
+    wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
+#    sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
     ```
 
 ## NixOS file structure
