@@ -120,17 +120,19 @@ let
 		};
 	};
 
-	filepath = settings.dotfiles_abspath + "/nixos/secrets/duckdns.token";
-	usermail = builtins.readFile filepath;
+#	filepath = settings.dotfiles_abspath + "/nixos/secrets/user.mail";
+#	usermail = builtins.readFile "${filepath}";
 in
 
 {
 	system.nixos.tags = [ "disko" ];
 
+	# TODO: Read secreted email
+
 	boot.swraid = {
 		enable = true;
 		mdadmConf = ''
-			MAILADDR ${usermail}
+			MAILADDR 107036402+JustCoderdev@users.noreply.github.com
 			MAILFROM mdadm.107036402+JustCoderdev@users.noreply.github.com
 		'';
 	};

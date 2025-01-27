@@ -32,6 +32,7 @@ in
 {
 	options.services.duckdns = {
 		enable = lib.mkEnableOption "DuckDNS Dynamic DNS Client";
+
 		tokenFile = lib.mkOption {
 			default = null;
 			type = lib.types.path;
