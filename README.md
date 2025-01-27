@@ -117,12 +117,22 @@ nix build ".#${USER}"
 - With NixOS
 
 ```bash
-sudo nix --experimental-features "nix-command flakes" \
-    run github:nix-community/disko -- --mode disko \
-    ./hosts/<host>/disko-config.nix
-
 repo='https://github.com/JustCoderdev/dotfiles
 wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
+```
+
+- With NixOS (& disko)
+
+???
+
+```bash
+\#sudo nix --experimental-features "nix-command flakes" \
+\#    run github:nix-community/disko -- --mode disko \
+\#    ./hosts/<host>/disko-config.nix
+
+\#sudo nix run 'github:nix-community/disko/latest#disko-install' \
+        -- --flake "${DOT_FILES}/nixos#<host>" --write-efi-boot-entries --disk root /dev/sdX
+
 \#sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
 ```
 

@@ -12,6 +12,12 @@ let
 	# Disk partitions
 
 	boot-partition = {
+		type = "EF02"; # for grub MBR
+		size = "1M";
+		priority = 1;
+	};
+
+	esp-partition = {
 		name = "ESP";
 
 		type = "EF00";
@@ -75,6 +81,7 @@ let
 			type = "gpt";
 			partitions = {
 				boot = boot-partition;
+				esp  = esp-partition;
 				root = root-partition;
 				swap = swap-partition;
 			};
@@ -130,9 +137,10 @@ in
 
 	disko.devices = {
 		disk = {
-			WDC-WD10EVVS-63M-sda = WDC-WD10EVVS-63M-sda-config;
-			WDC-WD5000BPKT-2-sdb = WDC-WD5000BPKT-2-sdb-config;
-			WDC-WD10EVVS-63M-sdc = WDC-WD10EVVS-63M-sdc-config;
+			root = WDC-WD5000BPKT-2-sdb-config;
+
+			leafA = WDC-WD10EVVS-63M-sda-config;
+			leafC = WDC-WD10EVVS-63M-sdc-config;
 		};
 
 		mdadm = {
