@@ -100,31 +100,31 @@ cd "${DOT_FILES}"
 
 2. Running installer
 
-    - Without nix
+- Without nix
 
-    ```bash
-    ./mount-configs.sh
-    ```
+```bash
+./mount-configs.sh
+```
 
-    - With nix stuff (home-manager)
+- With nix stuff (home-manager)
 
-    ```bash
-    cd nixos
-    nix build ".#${USER}"
-    ./result/activate
-    ```
+```bash
+cd nixos
+nix build ".#${USER}"
+./result/activate
+```
 
-    - With NixOS
+- With NixOS
 
-    ```bash
-    sudo nix --experimental-features "nix-command flakes" \
-        run github:nix-community/disko -- --mode disko \
-        ./hosts/<host>/disko-config.nix
+```bash
+sudo nix --experimental-features "nix-command flakes" \
+    run github:nix-community/disko -- --mode disko \
+    ./hosts/<host>/disko-config.nix
 
-    repo='https://github.com/JustCoderdev/dotfiles
-    wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
-#    sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
-    ```
+repo='https://github.com/JustCoderdev/dotfiles
+wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
+\#sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
+```
 
 ## NixOS file structure
 
@@ -164,6 +164,20 @@ and are arranged as follows:
 passwd ryuji
 ```
 
+- user mail
+
+```
+cd ${DOT_FILES}/nixos/secrets
+echo "x@y.z" > user.mail
+```
+
+- DuckDNS token
+
+```
+cd ${DOT_FILES}/nixos/secrets
+echo "xyz" > duckdns.token
+```
+
 - nix-serve (nix.nix)
 
 ```
@@ -188,13 +202,6 @@ ssh-keygen -t ed25519 \
   -C "ryuji@msi" \
   -f ~/.ssh/id_msi_ryuji
 ssh-add ~/.ssh/id_msi_ryuji
-```
-
-- DuckDNS token
-
-```
-mkdir ${DOT_FILES}/nixos/secrets
-echo "xyz" > duckdns.token
 ```
 
 ## Emergency wiki

@@ -61,10 +61,12 @@
 				}
 			]
 			++
-			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in (
-				nixpkgs.lib.optional (nixpkgs.lib.pathExists diskopath)
-				(import diskopath { disko = disko.nixosModules.disko; })
-			));
+			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in
+				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
+					diskopath
+					disko.nixosModules.disko
+				]
+			);
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;

@@ -1,4 +1,4 @@
-{ pkgs, lib, settings, ... }:
+{ pkgs, config, lib, settings, ... }:
 
 let
 	# Took this bit from the catppuccini plymouth theme repo
@@ -24,6 +24,9 @@ let
 			runHook postInstall
 		'';
 	};
+
+	i3 = config.system.desktop.xfce;
+	hyprland = config.system.desktop.hyprland;
 in
 
 {
@@ -37,7 +40,7 @@ in
 		#"plymouth.debug" # log at /var/log/plymouth-debug.log
 	];
 
-	boot.plymouth = lib.mkIf (!settings.runningVM) {
+	boot.plymouth = lib.mkIf (!settings.runningVM && (i3.enable || hyprland.enable) ) {
 		enable = true;
 
 		# logo = ../.;
