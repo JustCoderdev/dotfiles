@@ -1,11 +1,21 @@
 # justcoderdev zsh cursor
 
 
-# PROMPT=$' %~ %B$%b ' # plain
-PROMPT=$'%F{8} %~ %B%F{4}$%f%b ' # blue colored
+# ' ~ $ ' cyan tinted
+PROMPT=$'%F{8} %~ %B%F{4}$%f%b '
 
 if [[ "${SSH_TTY}" == "$(tty)" ]]; then
-	PROMPT=$'%F{8} %~ %B%F{1}$%f%b '
+	# ' ~ $ ' red tinted
+	# PROMPT=$'%F{8} %~ %B%F{1}$%f%b '
+
+	# ' ryuji@quiss ~ $ ' red tinted
+	# PROMPT=$'%F{6}%n%F{8}@%F{6}%m%F{8} %~ %B%F{1}$%f%b '
+
+	# ' ryuji@quiss ~ $ ' cyan tinted
+	# PROMPT=$'%F{4}%n%F{8}@%F{4}%m%F{8} %~ %B%F{4}$%f%b '
+
+	# ' ryuji@quiss ~ $ ' red tinted
+	PROMPT=$'%F{1}%n%F{8}@%F{1}%m%F{8} %~ %B%F{1}$%f%b '
 	echo "ZSH SSH Session detected"
 fi
 
