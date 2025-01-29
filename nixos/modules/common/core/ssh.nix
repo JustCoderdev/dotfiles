@@ -29,7 +29,7 @@ You are accessing ${hostname}, one of my computers. DO NOT TOUCH
 			UsePAM = true;
 
 			KbdInteractiveAuthentication = true;
-			PasswordAuthentication = true;
+			PasswordAuthentication = false;
 			UseDns = false;
 		};
 
