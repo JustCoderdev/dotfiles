@@ -2,7 +2,7 @@
 # <https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5>
 
 # Exit alt-buff
-echo -ne "\033[2J\033[?1049l"
+echo -ne "\033[?1049l"
 
 # Check filepath
 if [ -z "${DOT_FILES:-}" ]; then
@@ -143,7 +143,7 @@ fi
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
-echo -ne "\033[2J\033[?1049l" # exit alt-buff
+echo -ne "\033[?1049l" # exit alt-buff
 
 if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"

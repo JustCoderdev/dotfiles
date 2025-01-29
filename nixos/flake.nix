@@ -20,12 +20,12 @@
 #			inputs.nixpkgs.follows = "nixpkgs";
 #		};
 
-		disko = {
-			url = "github:nix-community/disko/v1.11.0";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+#		disko = {
+#			url = "github:nix-community/disko/v1.11.0";
+#			inputs.nixpkgs.follows = "nixpkgs";
+#		};
 	};
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd, disko }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
 			_hostname = "quiss";
 			settings = import ./hosts/${_hostname}/settings.nix;
@@ -59,14 +59,14 @@
 					home-manager.users.${settings.username} =
 						import (path + "/nixos/profiles/home.nix");
 				}
-			]
-			++
-			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in
-				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
-					diskopath
-					disko.nixosModules.disko
-				]
-			);
+			];
+#			++
+#			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in
+#				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
+#					diskopath
+#					disko.nixosModules.disko
+#				]
+#			);
 
 			systemBuilder = nixpkgs.lib.nixosSystem {
 				system = settings.system;
