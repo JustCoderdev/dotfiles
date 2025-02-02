@@ -6,6 +6,7 @@ in
 
 {
 	imports = [
+		./android.nix
 		./arduino.nix
 		./c.nix
 		./net.nix
@@ -18,14 +19,19 @@ in
 				description = "Add universal developer tools";
 				default = false;
 			};
-			c.enable = lib.mkOption {
+			android.enable = lib.mkOption {
 				type = lib.types.bool;
-				description = "Add c development tools and libs";
+				description = "Add android development tools and libs";
 				default = false;
 			};
 			arduino.enable = lib.mkOption {
 				type = lib.types.bool;
 				description = "Add arduino development tools and libs";
+				default = false;
+			};
+			c.enable = lib.mkOption {
+				type = lib.types.bool;
+				description = "Add c development tools and libs";
 				default = false;
 			};
 			net.enable = lib.mkOption {

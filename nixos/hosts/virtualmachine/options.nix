@@ -40,8 +40,9 @@
 
 		dev = {
 			enable = true;
+			android.enable = false;
+			arduino.enable = false;
 			c.enable = true;
-			arduino.enable = true;
 			net.enable = false;
 		};
 

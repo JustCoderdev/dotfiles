@@ -8,7 +8,7 @@ in
 	config = lib.mkIf cfg.enable {
 		assertions = [{
 			assertion = config.system.dev.c.enable;
-			message = "Arduino tools require to enable c tools";
+			message = "Arduino tools requires you to enable c tools";
 		}];
 
 		environment.systemPackages = with pkgs; [
