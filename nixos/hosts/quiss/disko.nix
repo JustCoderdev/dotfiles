@@ -1,4 +1,4 @@
-{ settings, ... }:
+{ ... }:
 
 # Examples used
 # <https://github.com/nix-community/disko/blob/master/example/boot-raid1.nix>
@@ -48,10 +48,10 @@ let
 		};
 	};
 
-	mdadm-partition = {
+	data-raid-partition = {
 		size = "100%";
 		content = {
-			name = "raid1";
+			name = "md0data";
 			type = "mdraid";
 		};
 	};
@@ -66,7 +66,7 @@ let
 		content = {
 			type = "gpt";
 			partitions = {
-				mdadm = mdadm-partition;
+				mdadm = data-raid-partition;
 			};
 		};
 	};
@@ -97,7 +97,7 @@ let
 		content = {
 			type = "gpt";
 			partitions = {
-				mdadm = mdadm-partition;
+				mdadm = data-raid-partition;
 			};
 		};
 	};
@@ -114,26 +114,28 @@ let
 				content = {
 					type = "filesystem";
 					format = "ext4";
-					mountpoint = "/storage";
+					mountpoint = "/data";
 				};
 			};
 		};
 	};
 
-#	filepath = settings.dotfiles_abspath + "/nixos/secrets/user.mail";
-#	usermail = builtins.readFile "${filepath}";
 in
 
 {
 	system.nixos.tags = [ "disko" ];
 
 	# TODO: Read secreted email
+	# TODO: Setup w discord webhooks
+	# curl -s -X POST -H "content-type: application/json" -d '{ "content": "Hii" }' 'HOOK'
 
+
+	# Mdadm configuration
+	# <https://discourse.nixos.org/t/i-want-to-create-a-raid0-for-var-but-im-unable-to-figure-how-to-load-mdamd-on-boot/30381/5>
 	boot.swraid = {
 		enable = true;
 		mdadmConf = ''
-			MAILADDR 107036402+JustCoderdev@users.noreply.github.com
-			MAILFROM mdadm.107036402+JustCoderdev@users.noreply.github.com
+
 		'';
 	};
 

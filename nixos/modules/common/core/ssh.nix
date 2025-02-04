@@ -11,13 +11,17 @@ in
 	programs.gnupg.agent.enable = false;
 	programs.ssh.startAgent = true;
 
+	# Check permissions and add keys to ssh agent
+	# $ eval "$(ssh-agent -s)"
+	# $ ssh-add ~/.ssh/...
+
 	# Enable the OpenSSH daemon.
 	services.openssh = {
 		enable = true;
 		openFirewall = true;
 
 		banner = ''
-			You are accessing ${hostname}, one of my computers. DO NOT TOUCH
+		You are accessing ${hostname}, one of my computers. DO NOT TOUCH
 		'';
 
 		settings = {

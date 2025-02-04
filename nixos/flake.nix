@@ -96,8 +96,5 @@
 
 		packages.${settings.system}.${settings.username} =
 			self.homeConfigurations.${settings.username}.activationPackage;
-
-		#devShells.${settings.system} = let path = settings.dotfiles_path; in
-		#	import (path + "/nixos/modules/system/dev/shells") { inherit pkgs; };
 	};
 }
