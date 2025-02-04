@@ -82,7 +82,7 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS... "
-echo -ne "\033[2J\033[?1049h\033[H" # enter alt-buff and clear
+echo -ne "\033[?1049h\033[2J\033[H" # enter alt-buff and clear
 echo -e "Rebuilding NixOS...\n"
 
 
@@ -143,7 +143,7 @@ fi
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
-echo -ne "\033[?1049l" # exit alt-buff
+echo -ne "\033[2J\033[?1049l" # exit alt-buff
 
 if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"

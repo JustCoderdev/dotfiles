@@ -7,29 +7,28 @@ let
 in
 
 {
-	# Some programs need SUID wrappers, can be configured
-	# further or are started in user sessions.
-	# programs.mtr.enable = true;
-	programs.gnupg.agent = {
-		enable = true;
-	 	enableSSHSupport = true;
-	};
+	# Prompt for passphrase
+	programs.gnupg.agent.enable = false;
+	programs.ssh.startAgent = true;
 
 	# Enable the OpenSSH daemon.
 	services.openssh = {
 		enable = true;
-		banner = ''
-You are accessing ${hostname}, one of my computers. DO NOT TOUCH
-'';
-
 		openFirewall = true;
+
+		banner = ''
+			You are accessing ${hostname}, one of my computers. DO NOT TOUCH
+		'';
+
 		settings = {
 			PermitRootLogin = "no";
-			X11Forwarding = true;
-			UsePAM = true;
 
-			KbdInteractiveAuthentication = true;
+			UsePAM = true;
+			X11Forwarding = true;
+
+			KbdInteractiveAuthentication = false;
 			PasswordAuthentication = false;
+
 			UseDns = false;
 		};
 
@@ -49,9 +48,9 @@ You are accessing ${hostname}, one of my computers. DO NOT TOUCH
 	};
 
 	# Set public authKey
-	# needs `PasswordAuthentication = false`
-	users.users.${username}.openssh.authorizedKeys.keys = [
- 		# msi
+	users.users.${username}.openssh.authorizedKeys.keys =
+	[
+		# msi
 		"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
 
 		# acer
