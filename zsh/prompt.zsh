@@ -16,7 +16,6 @@ if [[ "${SSH_TTY}" == "$(tty)" ]]; then
 
 	# ' ryuji@quiss ~ $ ' red tinted
 	PROMPT=$'%F{1}%n%F{8}@%F{1}%m%F{8} %~ %B%F{1}$%f%b '
-	echo "ZSH SSH Session detected"
 fi
 
 # Enable block cursor in normal mode

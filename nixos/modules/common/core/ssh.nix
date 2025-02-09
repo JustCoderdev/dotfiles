@@ -9,11 +9,23 @@ in
 {
 	# Prompt for passphrase
 	programs.gnupg.agent.enable = false;
-	programs.ssh.startAgent = true;
+	programs.ssh = {
+		# Check permissions and add keys to ssh agent
+		# $ eval "$(ssh-agent -s)"
+		# $ ssh-add ~/.ssh/...
+		startAgent = true;
 
-	# Check permissions and add keys to ssh agent
-	# $ eval "$(ssh-agent -s)"
-	# $ ssh-add ~/.ssh/...
+		# Set as default keys
+		extraConfig = ''
+
+			Host ${hostname}
+				User ${username}
+				IdentitiesOnly yes # Force to use only this identity file
+				IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
+
+		'';
+	};
+
 
 	# Enable the OpenSSH daemon.
 	services.openssh = {
@@ -21,8 +33,10 @@ in
 		openFirewall = true;
 
 		banner = ''
-You are accessing ${hostname}, one of my computers. DO NOT TOUCH
-'';
+
+			You are accessing ${hostname}, one of my computers. DO NOT TOUCH
+
+		'';
 
 		settings = {
 			PermitRootLogin = "no";
