@@ -18,10 +18,19 @@ in
 		# Set as default keys
 		extraConfig = ''
 
-			Host ${hostname}
-				User ${username}
-				IdentitiesOnly yes # Force to use only this identity file
-				IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
+		# github
+		# <https://superuser.com/questions/232373/how-to-tell-git-which-private-key-to-use>
+		Host github.com
+			HostName github.com
+			IdentitiesOnly yes # Force to use only this identity file
+			IdentityFile "${homepath}/.ssh/id_github_justcode"
+
+		# SSH
+		# <https://unix.stackexchange.com/questions/494483/specifying-an-identityfile-with-ssh>
+#		Host ${hostname}
+#			User ${username}
+#			IdentitiesOnly yes # Force to use only this identity file
+#			IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
 
 		'';
 	};
