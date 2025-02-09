@@ -60,17 +60,17 @@ packer.startup({
 	function(use)
 		use {
 			"wbthomason/packer.nvim",
-			--run = ":PackerSync"
+			run = ":PackerSync"
 		}
 
 		-- IMPORTANT: before lsp
 		use "folke/neodev.nvim"     -- Lua language extension
 		use "p00f/clangd_extensions.nvim" -- C language extension
 
-		use {                       -- Display function definition
-			"ray-x/lsp_signature.nvim",
-			commit = "1d96fac72eb6d74abd5b4d7883a01f58aeb4f87e"
-		}
+--		use {                       -- Display function definition
+--			"ray-x/lsp_signature.nvim",
+--			commit = "1d96fac72eb6d74abd5b4d7883a01f58aeb4f87e"
+--		}
 
 		use { -- Autocompletition engine
 			"hrsh7th/nvim-cmp",
@@ -142,23 +142,23 @@ packer.startup({
 
 
 
-		use "nvim-lualine/lualine.nvim" -- Prettify line below
-		use "mhartington/formatter.nvim" -- Formatting engine
+		use "nvim-lualine/lualine.nvim"  -- Prettify status bar
+--		use "mhartington/formatter.nvim" -- Formatting engine
 
 		use {                      -- Display syntax highlighting
 			"nvim-treesitter/nvim-treesitter",
 			tag = "v0.9.1",        -- tag = "v0.8.1"
-			--run = ":TSUpdate"
+			run = ":TSUpdate"
 		}
 
 		use "ntpeters/vim-better-whitespace" -- Check for trailing whitespaces
-		use "windwp/nvim-autopairs"    -- Automatically add closing bracket
-		use "simrat39/symbols-outline.nvim" -- Provide an outline for current file
+		use "windwp/nvim-autopairs"          -- Automatically add closing bracket
+--		use "simrat39/symbols-outline.nvim"  -- Provide an outline for current file
 
 		use "RRethy/vim-illuminate"    -- Highlight word under cursor
 		use "tommcdo/vim-lion"         -- Provide indentation for code blocks
 
-		use "dense-analysis/ale"       -- Static code analisys
+--		use "dense-analysis/ale"       -- Static code analisys
 
 		-- use "sindrets/diffview.nvim"			-- Better diff-views
 		-- use "honza/vim-snippets"				-- More snippets
@@ -171,11 +171,11 @@ packer.startup({
 			requires = { run = ":lua require'colorizer'.setup({ '!*'; })" }
 		}
 
-		-- use "nvim-pack/nvim-spectre"			-- Find and replace tool
+		-- use "nvim-pack/nvim-spectre"         -- Find and replace tool
 
-		-- use "preservim/vimux"				-- Interact with tmux seamlessly
-		-- use "easymotion/vim-easymotion"		-- Customise number in keybinding
-		-- use "mfussenegger/nvim-dap"			-- Debug Adapter Protocol support
+		-- use "preservim/vimux"                -- Interact with tmux seamlessly
+		-- use "easymotion/vim-easymotion"      -- Customise number in keybinding
+		-- use "mfussenegger/nvim-dap"          -- Debug Adapter Protocol support
 
 		-- Automatically set up configuration
 		if packer_bootstrap then packer.sync() end

@@ -21,8 +21,8 @@ in
 		openFirewall = true;
 
 		banner = ''
-		You are accessing ${hostname}, one of my computers. DO NOT TOUCH
-		'';
+You are accessing ${hostname}, one of my computers. DO NOT TOUCH
+'';
 
 		settings = {
 			PermitRootLogin = "no";

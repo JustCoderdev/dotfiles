@@ -33,6 +33,9 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 		nvidiaSettings = false;
 	};
 
+	# nfs support
+	# <https://nixos.wiki/wiki/NFS>
+
 	# Network settings
 	networking = {
 
