@@ -43,7 +43,7 @@ function require_plugin_config(plugin_name)
 	local file_ok, err = pcall(require, require_string)
 	if (not file_ok) then
 		log_error(string.format("Error loading %s.lua config", require_string)); flag_error()
-		print("BBB: " .. err);
+		print("Details: " .. err);
 	end
 end
 
@@ -51,7 +51,7 @@ function require_plugin(plugin_name)
 	local file_ok, plugin = pcall(require, plugin_name)
 	if (not file_ok) then
 		log_error(string.format("Error requiring %s plugin", plugin_name));
-		print("CCC: " .. plugin);
+		print("Details: " .. plugin);
 		flag_error()
 	end
 	return plugin

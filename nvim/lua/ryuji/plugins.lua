@@ -107,7 +107,7 @@ packer.startup({
 		use "tpope/vim-commentary" -- Handle comments
 
 		-- Colorscheme
-		use "navarasu/onedark.nvim"
+		-- use "navarasu/onedark.nvim"
 		use {
 			"ellisonleao/gruvbox.nvim",
 			config = function()
@@ -200,4 +200,4 @@ packer.startup({
 
 --
 
-require_plugin_config("init")
+-- require_plugin_config("init")
