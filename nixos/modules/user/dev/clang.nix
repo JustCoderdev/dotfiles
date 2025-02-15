@@ -1,9 +1,10 @@
-{ config, pkgs, settings, ... }:
+{ pkgs, settings, ... }:
+
 let
 	username = settings.username;
-	dotfiles = settings.dotfiles_path;
-	cachepath = settings.cache_path;
-in {
+in
+
+{
 	# Configuration for:
 	#  - clangd
 	#  - clang-format

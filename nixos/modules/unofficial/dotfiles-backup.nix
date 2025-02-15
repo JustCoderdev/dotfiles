@@ -1,11 +1,11 @@
-{ pkgs, settings, ... }:
+{ pkgs, dotfiles_path, ... }:
 
 let
 	dotfiles-backup = pkgs.stdenv.mkDerivation {
 		name = "dotfiles-backup";
 
 		version = "1.0";
-		src = settings.dotfiles_path;
+		src = dotfiles_path;
 
 		installPhase = ''
 			mkdir -p $out/current-dotfiles
@@ -17,13 +17,13 @@ let
 	current-system = pkgs.writeShellApplication {
 		name = "current-system";
 		text = ''
-# Check if you are not being redirected
-if [ -t 1 ]; then
-	echo -ne "Current configuration found at:\n"
-fi
+			# Check if you are not being redirected
+			if [ -t 1 ]; then
+				echo -ne "Current configuration found at:\n"
+			fi
 
-echo ${dotfiles-backup}/current-dotfiles
-'';
+			echo ${dotfiles-backup}/current-dotfiles
+		'';
 	};
 in
 

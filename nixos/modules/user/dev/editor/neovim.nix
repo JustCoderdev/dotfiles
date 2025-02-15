@@ -1,8 +1,6 @@
-{ pkgs, settings, ... }:
+{ pkgs, settings, dotfiles_path, ... }:
 let
 	username = settings.username;
-	dotfiles = settings.dotfiles_path;
-
 	cachepath = settings.cache_path;
 	configpath = settings.config_path;
 in {
@@ -62,7 +60,7 @@ in {
 	'';
 
 #	home.file."${configpath}/nvim/lua/${username}" = {
-#		source = "${dotfiles}/nvim/lua/${username}/";
+#		source = "${dotfiles_path}/nvim/lua/${username}/";
 #		recursive = true;
 #	};
 #	home.file."${configpath}/nvim/lua/${username}/init.lua" = {

@@ -53,7 +53,6 @@ echo -e "Setting soft links <3"
 link "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty
 link "${DOT_FILES}/clangd"     "${configpath}"  # Clang
 link "${DOT_FILES}/i3"         "${configpath}"  # i3
-link "${DOT_FILES}/MangoHud"   "${configpath}"  # MangoHud
 link "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
 
 echo -e "Setting weird links ?"

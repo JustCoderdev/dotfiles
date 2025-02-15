@@ -8,22 +8,24 @@
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
 > - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred
 > - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
->
-> Graph
->
-> ```plaintext
-> * 16d55fd main
-> |\
-> | * 88e48b9 nixos-compliant (nixpkgs-23.05)
-> | |\
-> | | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
-> | | |
-> | |/
-> | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-> ' |
->   * 0be0f74 nixos-compliant (nixpkgs-24.11)
->   v
-> ```
+
+Graph
+
+```plaintext
+* 16d55fd main
+|\
+| * 88e48b9 nixos-compliant (nixpkgs-23.05)
+| |\
+| | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+| | |
+| |/
+| * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+' |
+  * 0be0f74 nixos-compliant (nixpkgs-24.11)
+  |
+  * ####### nixos-integration (nixpkgs-24.11)
+  v
+```
 
 # Dotfiles
 
@@ -70,23 +72,29 @@ without (or at least that's the goal) nix/NixOS installed
 
 Included configuration files
 
-- Alacritty \[v0.12.2\] ([Github](https://github.com/alacritty))
-- Clang \[7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
-- Clang-format \[7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
+- Alacritty \[\>v0.12.2\] ([Github](https://github.com/alacritty))
+- Clang \[\>7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
+- Clang-format \[\>7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
 - Fusuma (WIP)
 - Hyprland
-- i3 \[4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
-- MangoHud (WIP)
-- NixOS \[v23.11\]
-- Nvim \[v0.9.1\] ([Github](https://github.com/neovim))
-- Plymouth \[v24.004.60\] ([Gitlab](https://gitlab.freedesktop.org/plymouth/plymouth))
-- Waybar \[v0.10.3\] ([Github](https://github.com/Alexays/Waybar))
-- Zsh \[5.7.1\]
+- i3 \[\>4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
+- NixOS \[\>v23.11\]
+- Nvim \[\>v0.9.1\] ([Github](https://github.com/neovim))
+- Plymouth \[\>v24.004.60\] ([Gitlab](https://gitlab.freedesktop.org/plymouth/plymouth))
+- Waybar \[\>v0.10.3\] ([Github](https://github.com/Alexays/Waybar))
+- Zsh \[\>5.7.1\]
 
 ## Special Requirements
 
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 - Font: `SF Pro Text` [Link](https://developer.apple.com/fonts) (For Waybar)
+
+## Special Global Variables
+
+- `DOT_NIXOS`: `1` if the system is using the nixos configuration otherwise unset
+- `DOT_FILES`: The absolute path to the dotfiles folder (currently hardcoded in zsh.nix)
+- `DOT_NIX_SUB_URL`: The url to a nix substituter
+- `DOT_NIX_SUB_PORT`: The port of the nix subsituter
 
 ## Installing Configuration
 

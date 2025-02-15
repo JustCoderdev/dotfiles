@@ -1,7 +1,6 @@
-{ settings, ... }:
+{ settings, dotfiles_path, ... }:
 
 let
-	dotfiles = settings.dotfiles_path;
 	configpath = settings.config_path;
 in
 {

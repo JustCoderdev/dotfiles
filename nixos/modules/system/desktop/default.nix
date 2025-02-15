@@ -1,4 +1,4 @@
-{ pkgs, config, lib, settings, ... }:
+{ pkgs, config, lib, settings, dotfiles_path, ... }:
 
 let
 #	nvidia = config.common.core.nvidia;
@@ -42,7 +42,7 @@ in
 		in {
 			enable = true;
 			settings = (builtins.readFile
-				 "${settings.dotfiles_path}/fusuma/${prefix}_config.yml");
+				 "${dotfiles_path}/fusuma/${prefix}_config.yml");
 		};
 
 		environment.systemPackages = [

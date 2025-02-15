@@ -1,8 +1,7 @@
-{ settings, ... }:
+{ settings, dotfiles_path, ... }:
 
 let
-	dotfiles = settings.dotfiles_path;
-	wallpapers_path = "${dotfiles}/.wallpapers";
+	wallpapers_path = "${dotfiles_path}/.wallpapers";
 in
 {
 	wayland.windowManager.hyprland = {
@@ -25,7 +24,6 @@ in
 			exec = "swww img ${wallpapers_path}/space_engineers.png";
 		};
 
-		extraConfig = (builtins.readFile
-			 "${dotfiles}/hypr/hyprland.conf");
+		extraConfig = (builtins.readFile "${dotfiles_path}/hypr/hyprland.conf");
 	};
 }

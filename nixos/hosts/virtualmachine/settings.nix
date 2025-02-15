@@ -4,8 +4,6 @@ rec {
 
 	runningVM = true;
 
-	dotfiles_path = ../../../.;
-	dotfiles_abspath = "/.dotfiles";
 	config_path = "/home/${username}/.config";
 	cache_path = "/home/${username}/.cache";
 

@@ -10,7 +10,6 @@
 		../modules/common/core
 		../modules/common/users
 
-		../modules/system/bin
 		../modules/system/desktop
 		../modules/system/dev
 		../modules/system/gaming

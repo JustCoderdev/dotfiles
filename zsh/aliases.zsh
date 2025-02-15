@@ -1,6 +1,4 @@
-#> justcoderdev zsh aliases
-
-# "System" Aliases
+# justcoderdev zsh aliases
 
 alias ez="echo 'Updating zsh :D'; exec zsh"
 
@@ -10,19 +8,13 @@ alias ls="ls --color -F"
 alias la="ls -Fa"
 alias ll="ls -Flah"
 
-alias cls="clear"
 alias rm="rm -I"
+alias cls="clear && ls"
 
-alias cl="clear"
-alias sls="ls --color -F "
-
-alias l="ls --color -F "
-alias scls="clear"
-
-## change dir
-# alias github="cd /home/${USER}/Developer/Github/"
-# alias projects="cd /home/${USER}/Developer/Projects/"
-# alias dotfiles="cd $DOT_FILES" # "~/.config/dotfiles/"
+alias cl="cls"
+alias sls="ls"
+alias l="ls"
+alias scls="cls"
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -31,7 +23,6 @@ alias ....="cd ../../.."
 # Push Dir Aliases - Save Directory
 alias sd='echo $(pwd) > "/home/$USER/.zsh/sd" && cat "/home/$USER/.zsh/sd"'
 alias sdl='cd $(cat "/home/$USER/.zsh/sd")'
-alias sdc='cat "/home/$USER/.zsh/sd"'
 
 # Debug Aliases
 alias fgdeb='echo -e " \033[30m[0:BLK] \033[31m[1:RED] \033[32m[2:GRN] \033[33m[3:YLW] \033[34m[4:BLU] \033[35m[5:MAG] \033[36m[6:CYN] \033[37m[7:WHT]"'
@@ -41,9 +32,6 @@ alias fgbrdeb='echo -e " \033[90m[0:GRY] \033[91m[1:RED] \033[92m[2:GRN] \033[93
 
 ## make
 alias mk="make"
-alias mc="make clean"
-alias mb="make build"
-alias mr="make run"
 
 ## git
 alias gs="git status"
@@ -56,24 +44,13 @@ alias gp="git push"
 alias ga="git add"
 alias gc="git commit"
 
-
-## docker
-alias dp="docker ps -a"
-
-
 ## nvim
-alias nres="nvim -S .session.vim"
 alias nold="nvim -S .old_session.vim"
-#alias nrswp="rm -rI /home/${USER}/.local/state/nvim/swap"
 
 # clang flags
 #alias clangc="clang -xc -Wall -Wextra -Werror
 #-Wpedantic -pedantic -pedantic-errors -std=c89"
 
 # wifi
-alias wscan="nmcli device wifi rescan"
-alias wls="nmcli device wifi list"
+alias wscan="nmcli device wifi rescan && nmcli device wifi list"
 alias wconn="nmcli device wifi connect"
-
-# nixos
-alias dshell="nix-shell .shell.nix"

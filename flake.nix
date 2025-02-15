@@ -1,9 +1,15 @@
 {
-	description = "NixOS System flake";
+	description = "JC NixOS System flake";
 
 	inputs = {
+
 		nixpkgs.url = "nixpkgs/nixos-24.11";
 		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+		jcbin = {
+			url = "path:./bin";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-24.11";
@@ -25,10 +31,12 @@
 #			inputs.nixpkgs.follows = "nixpkgs";
 #		};
 	};
-	outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixd }@inputs:
+
+	outputs = { self, nixpkgs, jcbin, nixpkgs-unstable, home-manager, nixd }@inputs:
 		let
 			_hostname = "msi";
-			settings = import ./hosts/${_hostname}/settings.nix;
+			settings = import ./nixos/hosts/${_hostname}/settings.nix;
+			dotfiles_path = ./.;
 
 			pkgs = nixpkgs.legacyPackages.${settings.system};
 			pkgs-unstable = import nixpkgs-unstable {
@@ -41,27 +49,28 @@
 				};
 			};
 
-			path = settings.dotfiles_path;
-			args = { inherit inputs pkgs-unstable settings; };
+			args = { inherit inputs settings dotfiles_path pkgs-unstable; };
 			modules = [
-				(path + "/nixos/hosts/${settings.hostname}/hardware-configuration.nix")
-				(path + "/nixos/hosts/${settings.hostname}/options.nix")
-				(path + "/nixos/hosts/${settings.hostname}/configuration.nix")
-				(path + "/nixos/hosts/${settings.hostname}/boot.nix")
+				./nixos/hosts/${settings.hostname}/hardware-configuration.nix
+				./nixos/hosts/${settings.hostname}/options.nix
+				./nixos/hosts/${settings.hostname}/configuration.nix
+				./nixos/hosts/${settings.hostname}/boot.nix
 
-				(path + "/nixos/profiles/configuration.nix")
+				./nixos/profiles/configuration.nix
+
+				jcbin.nixosModules.rebuild-system
+				jcbin.nixosModules.backlight
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = args;
-					#home-manager.backupFileExtension = "bak";
 					home-manager.users.${settings.username} =
-						import (path + "/nixos/profiles/home.nix");
+						import ./nixos/profiles/home.nix;
 				}
 			];
 #			++
-#			(let diskopath = (path + "/nixos/hosts/${settings.hostname}/disko.nix"); in
+#			(let diskopath = "./nixos/hosts/${settings.hostname}/disko.nix"; in
 #				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
 #					diskopath
 #					disko.nixosModules.disko
@@ -76,25 +85,35 @@
 
 			userBuilder = home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
-				modules = [ ./profiles/home.nix ];
+				modules = [ ./nixos/profiles/home.nix ];
 				inherit pkgs;
 			};
 		in {
 
 		# hostname
 		nixosConfigurations = {
-			quiss = systemBuilder;
 			msi = systemBuilder;
 			virtualmachine = systemBuilder;
 			acer = systemBuilder;
+			quiss = systemBuilder;
 		};
 
-		# profile
+		# username
 		homeConfigurations = {
 			${settings.username} = userBuilder;
 		};
 
 		packages.${settings.system}.${settings.username} =
 			self.homeConfigurations.${settings.username}.activationPackage;
+
+		# nix develop
+		devShell.${settings.system}.default = pkgs.mkShell {
+			shellHook = ''
+				PROMPT=$'%F{8} %~ %B%F{6}$%f%b ' zsh && exit
+			'';
+
+			# Run time
+			buildInputs = with pkgs; [ git vim ];
+		};
 	};
 }

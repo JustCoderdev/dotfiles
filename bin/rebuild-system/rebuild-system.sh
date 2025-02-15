@@ -11,7 +11,7 @@ if [ -z "${DOT_FILES:-}" ]; then
 	exit 1
 fi
 
-pushd "${DOT_FILES}/nixos/" > /dev/null || exit
+pushd "${DOT_FILES}/" > /dev/null || exit
 shopt -s globstar
 
 
@@ -49,8 +49,8 @@ fi
 
 # Check differences
 echo -ne "Analysing changes..."
-git restore --staged ..
-if git diff --quiet -- ..; then  # -- ./**/*.nix
+git restore --staged .
+if git diff --quiet -- .; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
 	had_changes=false
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
@@ -64,7 +64,7 @@ else
 	# shellcheck disable=SC2162
 	read -p 'Open diff? (y/N): ' diff_confirm
 	if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
-		git diff --word-diff=porcelain -U0 -- ..
+		git diff --word-diff=porcelain -U0 -- .
 	fi
 
 	# shellcheck disable=SC2162
@@ -76,7 +76,7 @@ else
 	fi
 
 	echo -ne "\n"
-	git add ..
+	git add .
 fi
 
 
@@ -152,6 +152,10 @@ if [[ "${exit_code}" == 0 ]]; then
 	if $had_changes && $want_commit; then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 		message="NixOS build ${HOST_SHELL}#${generation}"
+
+		read -rp "${message}: " commit_msg
+		message="${message}: ${commit_msg}"
+
 		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 	fi
@@ -163,7 +167,7 @@ else
 
 	grep --color -F "error" .nixos-switch.log
 	if $had_changes; then
-		git restore --staged ..
+		git restore --staged .
 	fi
 
 	echo -ne "\n"

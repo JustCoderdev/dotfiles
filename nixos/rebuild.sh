@@ -1,1 +1,0 @@
-/.dotfiles/nixos/modules/system/bin/rebuild-system/rebuild-system.sh

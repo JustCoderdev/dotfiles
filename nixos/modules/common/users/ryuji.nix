@@ -1,22 +1,22 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, dotfiles_path, ... }:
 
 let
-	username = settings.username;
 	cfg = config.common.users.ryuji;
 	titleCase = text: lib.concatStrings [
 		(lib.toUpper (builtins.substring 0 1 text))
 		(builtins.substring 1 (builtins.stringLength text) text)
 	];
-in {
-	config = let
-		uname = username;
-		uhome = "/home/${uname}";
-		cpath = "${uhome}/.config";
-		dotpath = settings.dotfiles_path;
-	in
-	lib.mkIf cfg.enable {
-	# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
-		system.nixos.tags = [ "${username}" ];
+
+	uname = settings.username;
+	uhome = "/home/${uname}";
+	cpath = "/home/${uname}/.config";
+	dpath = dotfiles_path;
+in
+
+{
+	config = lib.mkIf cfg.enable {
+		# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
+		system.nixos.tags = [ "${uname}" ];
 
 		systemd.tmpfiles.rules = [
 #			Type Path                           Mode User     Group Age Argument
@@ -27,55 +27,55 @@ in {
 		];
 
 		system.activationScripts."link_dotfiles".text = ''
-function link {
-	from="$1"; from_filename="''${from##/*/}";
-	to="$2"; to_filename="''${3:-$from_filename}";
+			function link {
+				from="$1"; from_filename="''${from##/*/}";
+				to="$2"; to_filename="''${3:-$from_filename}";
 
-	# If file exists and is link
-	if [ -L "''${to}/''${to_filename}" ]; then
-		unlink "''${to}/''${to_filename}"
-		echo "[WARN] Unlinking ''${to}/''${to_filename}"
-	fi
+				# If file exists and is link
+				if [ -L "''${to}/''${to_filename}" ]; then
+					unlink "''${to}/''${to_filename}"
+					echo "[WARN] Unlinking ''${to}/''${to_filename}"
+				fi
 
-	# If file exists
-	if [ -e "''${to}/''${to_filename}" ]; then
-		echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
-		return 0; # Must be 0 to avoid triggering -e
-	fi
+				# If file exists
+				if [ -e "''${to}/''${to_filename}" ]; then
+					echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
+					return 0; # Must be 0 to avoid triggering -e
+				fi
 
-	# Link
-	if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
-	else
-		echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
-	fi
-}
+				# Link
+				if ln -snf "''${from}" "''${to}/''${to_filename}"; then
+					echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
+				else
+					echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
+				fi
+			}
 
-# Dotfiles
-echo ""
-echo "Linking Dotfiles"
-echo "----------------------------"
-link "${dotpath}/alacritty"               "${cpath}"  # Alacritty
-link "${dotpath}/clangd"                  "${cpath}"  # Clang
-link "${dotpath}/i3"                      "${cpath}"  # i3
-link "${dotpath}/MangoHud"                "${cpath}"  # MangoHud
-link "${dotpath}/waybar"                  "${cpath}"  # Waybar
+			# Dotfiles
+			echo ""
+			echo "Linking Dotfiles"
+			echo "----------------------------"
+			link "${dpath}/alacritty"               "${cpath}"  # Alacritty
+			link "${dpath}/clangd"                  "${cpath}"  # Clang
+			link "${dpath}/i3"                      "${cpath}"  # i3
+			link "${dpath}/waybar"                  "${cpath}"  # Waybar
 
-# Setting weird links
-link "${dotpath}/clangd/.clang-format"    "${uhome}"  # Clang format
-link "${dotpath}/emacs/.emacs"            "${uhome}"  # Emacs
-link "${dotpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
-link "${dotpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
+			# Setting home links
+			link "${dpath}/clangd/.clang-format"    "${uhome}"  # Clang format
+			link "${dpath}/emacs/.emacs"            "${uhome}"  # Emacs
+			link "${dpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
+			link "${dpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
 
-mkdir -p "${cpath}/nvim"
-chown ${username}:users "${cpath}/nvim"
-link "${dotpath}/nvim"                    "${cpath}/nvim" "${uname}" # Nvim
-echo ""
-'';
+			# Setting weird links
+			mkdir -p "${cpath}/nvim"
+			chown ${uname}:users "${cpath}/nvim"
+			link "${dpath}/nvim" "${cpath}/nvim" "${uname}" # Nvim
+			echo ""
+		'';
 
-		users.users.${username} = {
-			name = username;
-			description = (titleCase username);
+		users.users.${uname} = {
+			name = uname;
+			description = (titleCase uname);
 
 			isNormalUser = true;
 			createHome = true;

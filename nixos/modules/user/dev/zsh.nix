@@ -1,21 +1,19 @@
-{ settings, ... }:
+{ settings, dotfiles_path, ... }:
 let
 	username = settings.username;
 	hostname = settings.hostname;
-	dotfiles = settings.dotfiles_path;
 in {
 	programs.zsh = {
 		enable = true;
-		prezto.enable = false;
 		completionInit = "";
-		oh-my-zsh.enable = false;
 
-	# Import configuration from dotfiles
+		# Import configuration from dotfiles
 		initExtra = ''
-export DOT_NIXOS=1;
-export HOST=${hostname};
-export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH;
-source "${dotfiles}/zsh/.zshrc";
+			export DOT_NIXOS=1;
+			export DOT_FILES="/.dotfiles"
+			export HOST=${hostname};
+			# export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH;
+			source "$${DOT_FILES}/zsh/.zshrc";
 		'';
 	};
 

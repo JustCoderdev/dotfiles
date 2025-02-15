@@ -23,4 +23,12 @@ in
 
 		environment.systemPackages =  [ package ];
 	};
+
+	options.system.bin.rebuild-system = {
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add rebuild-system to PATH";
+			default = true;
+		};
+	};
 }

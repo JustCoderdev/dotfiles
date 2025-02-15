@@ -3,7 +3,7 @@
 # Completition
 
 ## Options
-zstyle ':completion:*' cache-path "$DOT_CACHE/zsh/.zcompcache"
+zstyle ':completion:*' cache-path "/home/${USER}/zsh/.zcompcache"
 zstyle ':completion:*' completer _extensions _complete _approximate
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' menu select
