@@ -23,7 +23,7 @@ Graph
 ' |
   * 0be0f74 nixos-compliant (nixpkgs-24.11)
   |
-  * ####### nixos-integration (nixpkgs-24.11)
+  * 91c5ef1 nixos-integration (nixpkgs-24.11)
   v
 ```
 
@@ -76,7 +76,7 @@ Included configuration files
 - Clang \[\>7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
 - Clang-format \[\>7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
 - Fusuma (WIP)
-- Hyprland
+- Hyprland (WIP)
 - i3 \[\>4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
 - NixOS \[\>v23.11\]
 - Nvim \[\>v0.9.1\] ([Github](https://github.com/neovim))
@@ -108,13 +108,13 @@ cd "${DOT_FILES}"
 
 2. Running installer
 
-- Without nix
+- Without nix [wip]
 
 ```bash
 ./mount-configs.sh
 ```
 
-- With nix stuff (home-manager)
+- With nix stuff (home-manager) [untested]
 
 ```bash
 cd nixos
@@ -122,16 +122,14 @@ nix build ".#${USER}"
 ./result/activate
 ```
 
-- With NixOS
+- With NixOS [untested]
 
 ```bash
 repo='https://github.com/JustCoderdev/dotfiles
 wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
 ```
 
-- With NixOS (& disko)
-
-???
+- With NixOS (& disko) [breaks]
 
 ```bash
 \#sudo nix --experimental-features "nix-command flakes" \
@@ -157,7 +155,6 @@ and are arranged as follows:
 		- `core`: Required stuff from all systems (hardware, etc...)
 		- `users`: Per user settings
 	- `system`:
-		- `bin`: Custom script binaries
 		- `desktop`: Desktop env stuff
 		- `dev`: Dev shit
 		- `gaming`: Gaming stuff
@@ -274,11 +271,4 @@ cat /sys/class/power_supply/<BAT>/status
 cat /sys/class/power_supply/<BAT>/charge_now
 cat /sys/class/power_supply/<BAT>/charge_full
 ```
-
-### Change password
-
-```bash
-passwd <USERNAME>
-```
-
 
