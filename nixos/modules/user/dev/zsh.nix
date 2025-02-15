@@ -13,7 +13,7 @@ in {
 			export DOT_FILES="/.dotfiles"
 			export HOST=${hostname};
 			# export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH;
-			source "$${DOT_FILES}/zsh/.zshrc";
+			source "''${DOT_FILES}/zsh/.zshrc";
 		'';
 	};
 
