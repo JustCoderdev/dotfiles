@@ -32,11 +32,14 @@
 		bin = {
 			backlight.enable = false;
 			rebuild-system.enable = true;
+			mount-configs.enable = true;
 		};
 
 		desktop = {
-			xfce.enable = false;
 			hyprland.enable = false;
+			i3.enable = true;
+			thunar.enable = true;
+			xfce.enable = false;
 		};
 
 		dev = {

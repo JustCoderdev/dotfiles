@@ -58,8 +58,9 @@
 
 				./nixos/profiles/configuration.nix
 
-				jcbin.nixosModules.rebuild-system
 				jcbin.nixosModules.backlight
+				jcbin.nixosModules.mount-configs
+				jcbin.nixosModules.rebuild-system
 
 				home-manager.nixosModules.home-manager {
 					home-manager.useGlobalPkgs = true;
