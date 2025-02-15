@@ -1,12 +1,13 @@
-> `/!\` My dotfiles had an incident >:(
+> `/!\` My dotfiles had an incident
 >
 > This is why all commits before a certain point report
 > the date of the incident and at least 8 commits got lost (as far as I know)
 
-> `(i)` My dotfiles are divided in 3 branches:
+> `(i)` My dotfiles are divided in 4 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
-> - `nixos-compliant`: (CURRENT) Stable version of nixos, preferred
+> - `nixos-integration`: (CURRENT) Restructuring of nixos w better flakes
+> - `nixos-compliant`: [DEPRECATED] Messy stable version of nixos
 > - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
 
 Graph
