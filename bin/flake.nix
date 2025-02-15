@@ -12,6 +12,7 @@
 	{
 		nixosModules = {
 			backlight = import ./backlight/default.nix;
+			mount-configs = import ./mount-configs/default.nix;
 			rebuild-system = import ./rebuild-system/default.nix;
 		};
 	};
