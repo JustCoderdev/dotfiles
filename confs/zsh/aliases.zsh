@@ -1,8 +1,7 @@
-# justcoderdev zsh aliases
 
-alias ez="echo 'Updating zsh :D'; exec zsh"
+# Misc
+alias ez="echo 'Updating zsh'; exec zsh"
 
-## list
 unalias l
 alias ls="ls --color -F"
 alias la="ls -Fa"
@@ -20,13 +19,16 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+
 # Push Dir Aliases - Save Directory
 alias sd='echo $(pwd) > "/home/$USER/.zsh/sd" && cat "/home/$USER/.zsh/sd"'
 alias sdl='cd $(cat "/home/$USER/.zsh/sd")'
 
+
 # Debug Aliases
 alias fgdeb='echo -e " \033[30m[0:BLK] \033[31m[1:RED] \033[32m[2:GRN] \033[33m[3:YLW] \033[34m[4:BLU] \033[35m[5:MAG] \033[36m[6:CYN] \033[37m[7:WHT]"'
 alias fgbrdeb='echo -e " \033[90m[0:GRY] \033[91m[1:RED] \033[92m[2:GRN] \033[93m[3:YLW] \033[94m[4:BLU] \033[95m[5:MAG] \033[96m[6:CYN] \033[97m[7:WHT]"'
+
 
 # Programs Aliases
 
@@ -46,10 +48,6 @@ alias gc="git commit"
 
 ## nvim
 alias nold="nvim -S .old_session.vim"
-
-# clang flags
-#alias clangc="clang -xc -Wall -Wextra -Werror
-#-Wpedantic -pedantic -pedantic-errors -std=c89"
 
 # wifi
 alias wscan="nmcli device wifi rescan && nmcli device wifi list"

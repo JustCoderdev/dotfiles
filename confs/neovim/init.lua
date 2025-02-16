@@ -3,16 +3,11 @@
 local function protect(tbl) return setmetatable({}, { __index = tbl, __newindex = function(t, key, value) error(string.format( "attempting to change constant %s to %s", tostring(key), tostring(value), 2)) end }) end
 COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 
--- Check if NOT using nixOS
--- if (SETTINGS == nil) then
-SETTINGS.user_name = "${USER}";
-SETTINGS.cache_path = "/home/${USER}/.cache/nvim"
--- end
-
--- SETTINGS.default_colorscheme = { name = "onedark", require_truecolor = true }
-SETTINGS.default_colorscheme = { name = "gruvbox", require_truecolor = false }
-SETTINGS.fallback_colorscheme = { name = "habamax", require_truecolor = false }
-SETTINGS = protect(SETTINGS)
+-- { name = "onedark", require_truecolor = true }
+COLORSCHEME = protect({
+	default_colorscheme = { name = "gruvbox", require_truecolor = true },
+	fallback_colorscheme = { name = "habamax", require_truecolor = false }
+})
 
 --
 
@@ -24,11 +19,10 @@ function log_base_error(msg) print(string.format(" /!\\  %s", msg)); flag_error(
 --
 function declare_file(file_name) log_base(">", string.format("Loading %s", file_name)) end
 local function require_file(file)
-	local require_string = string.format("%s.%s", SETTINGS.user_name, file)
-	local file_ok, err = pcall(require, require_string)
+	local file_ok, err = pcall(require, file)
 	if (not file_ok) then
-		log_base_error(string.format("Error loading %s.lua file", require_string)); flag_error()
-		print("AAA: " .. err);
+		log_base_error(string.format("Error loading %s.lua", file)); flag_error()
+		print("Details: " .. err);
 	end
 end
 
@@ -39,7 +33,7 @@ function log_error(msg) print(string.format(" /!\\   ! %s", msg)); flag_error() 
 --
 function declare_plugin_config(plugin_name) log(">", string.format("Configuring %s", plugin_name)) end
 function require_plugin_config(plugin_name)
-	local require_string = string.format("%s.plugin_config.%s", SETTINGS.user_name, plugin_name)
+	local require_string = string.format("plugin_config.%s", plugin_name)
 	local file_ok, err = pcall(require, require_string)
 	if (not file_ok) then
 		log_error(string.format("Error loading %s.lua config", require_string)); flag_error()
@@ -76,12 +70,12 @@ print([[
 .
 Initialising neovim ...
 .
- Nvim:   v0.9.1 release
- LuaJIT:  2.1.0 beta3
+ Nvim:   vx.x.x -------
+ LuaJIT:  x.x.x -----
 .
 ]])
 
-print(string.format("Loading %s configurations:", SETTINGS.user_name))
+print("Loading configuration")
 
 require_file("options")
 require_file("keymaps")

@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Darnix Plymouth
+Description=A copy of the darwing theme with the NixOS logo
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/darnix/resources
+ScriptFile=/usr/share/plymouth/themes/darnix/darnix.script

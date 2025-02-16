@@ -1,7 +1,7 @@
-{ dotfiles_path, ... }:
+{ ... }:
 
 let
-	wallpapers_path = "${dotfiles_path}/.wallpapers";
+	wallpapers_path = ../.wallpapers;
 in
 
 {

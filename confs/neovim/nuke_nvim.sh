@@ -1,6 +1,6 @@
-sudo rm -rf "/home/ryuji/.local/share/nvim"
-sudo rm -rf "/home/ryuji/.local/state/nvim"
-sudo rm -rf "/home/ryuji/.config/nvim"
-sudo rm -rf "/home/ryuji/.cache/nvim"
+rm -rf "/home/${USER}/.local/share/nvim"
+rm -rf "/home/${USER}/.local/state/nvim"
+rm -rf "/home/${USER}/.config/nvim"
+rm -rf "/home/${USER}/.cache/nvim"
 
 echo "Nuked nvim :P"

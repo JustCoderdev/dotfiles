@@ -1,4 +1,3 @@
-# justcoderdev zsh cursor
 
 # Check if we're in an ssh tty
 if [[ "${SSH_TTY}" == "$(tty)" ]]; then

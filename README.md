@@ -10,8 +10,6 @@
 > - `nixos-compliant`: (CURRENT) Messy stable version of nixos
 > - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
 
-Graph
-
 ```plaintext
 * 16d55fd main
 |\
@@ -37,7 +35,7 @@ share with me any feedback or trick you may know :p
 >
 > - Remember to enable `settings.runningVM` in `nixos/hosts/HOST/settings.nix`
 > - Nixos doesn't like default graphics driver, use `VBoxVGA`
-> - Hyrpland may not work in a VM, try but it's not assured
+> - Hyrpland may not work in a VM
 
 ---
 
@@ -66,24 +64,29 @@ without (or at least that's the goal) nix/NixOS installed
 - `Editor`: Nvim (trying emacs tho...)
 
 |                | XServer  | Wayland  |
-| -------------: | -------- | -------- |
+| -------------- | -------- | -------- |
 | Window manager | i3       | hyprland |
 | Status bar     | i3status | waybar   |
 | App launcher   | dmenu    | wofi     |
 
 Included configuration files
 
+[standalone] firefox - gtk - tmux
+
 - Alacritty \[\>v0.12.2\] ([Github](https://github.com/alacritty))
 - Clang \[\>7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
 - Clang-format \[\>7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
+- Emacs (WIP)
 - Fusuma (WIP)
+- Git
 - Hyprland (WIP)
 - i3 \[\>4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
+- Neovim \[\>v0.9.1\] ([Github](https://github.com/neovim))
 - NixOS \[\>v23.11\]
-- Nvim \[\>v0.9.1\] ([Github](https://github.com/neovim))
 - Plymouth \[\>v24.004.60\] ([Gitlab](https://gitlab.freedesktop.org/plymouth/plymouth))
 - Waybar \[\>v0.10.3\] ([Github](https://github.com/Alexays/Waybar))
 - Zsh \[\>5.7.1\]
+
 
 ## Special Requirements
 
@@ -97,9 +100,9 @@ Included configuration files
 - `DOT_NIX_SUB_URL`: The url to a nix substituter
 - `DOT_NIX_SUB_PORT`: The port of the nix subsituter
 
-## Installing Configuration
+## Installation guide
 
-1. Cloning repo
+1. Clone
 
 ```bash
 DOT_FILES="${HOME}/.config/dotfiles" # or /.dotfiles
@@ -107,60 +110,67 @@ git clone https://github.com/JustCoderdev/dotfiles.git "${DOT_FILES}"
 cd "${DOT_FILES}"
 ```
 
-2. Running installer
+2. Install
 
-- Without nix [wip]
+- Without nix [untested]
 
 ```bash
-./mount-configs.sh
+./bin/mount-configs/mount-configs.sh
 ```
 
-- With nix stuff (home-manager) [untested]
+- With nix stuff (home-manager)
 
 ```bash
-cd nixos
-nix build ".#${USER}"
+cd confs
+nix build .#${USER}-activation
 ./result/activate
 ```
 
-- With NixOS [untested]
+- With NixOS [BROKEN]
 
 ```bash
 repo='https://github.com/JustCoderdev/dotfiles
-wget "${repo}/blob/nixos-compliant/nixos/install.sh" -O - | sh
+wget "${repo}/blob/nixos-integration/install.sh" -O - | sh
 ```
 
-- With NixOS (& disko) [breaks]
+- With NixOS (& disko) [BROKEN]
 
 ```bash
-\#sudo nix --experimental-features "nix-command flakes" \
-\#    run github:nix-community/disko -- --mode disko \
-\#    ./hosts/<host>/disko-config.nix
+sudo nix --experimental-features "nix-command flakes" \
+    run github:nix-community/disko -- --mode disko \
+    ./hosts/<host>/disko-config.nix
 
-\#sudo nix run 'github:nix-community/disko/latest#disko-install' \
-        -- --flake "${DOT_FILES}/nixos#<host>" --write-efi-boot-entries --disk root /dev/sdX
+sudo nix run 'github:nix-community/disko/latest#disko-install' \
+      -- --flake "${DOT_FILES}/nixos#<host>" --write-efi-boot-entries --disk root /dev/sdX
 
-\#sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
+sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
 ```
 
-## NixOS file structure
+## Dotfiles structure
 
-In the `nixos` directory there are the configuration files for nixos (duh)
-and are arranged as follows:
+There are 4 main directories:
 
-- `profiles`: Module importers (currently only `personal`)
-- `hosts`: Specific computer configurations (hw-config, settings and boot config)
-- `modules`:
-	- `unofficial`: Home-made nix modules
-	- `common`:
-		- `core`: Required stuff from all systems (hardware, etc...)
-		- `users`: Per user settings
-	- `system`:
-		- `desktop`: Desktop env stuff
-		- `dev`: Dev shit
-		- `gaming`: Gaming stuff
-		- `services`: Daemons and what not
-	- `user`: Per app configs (home-manager)
+- `bin`: various scripts available in a flake
+- `confs`: application configuration files (w home-manager support)
+- `nixos`: nixos system modules
+- `settings`: hosts and users settings
+
+### nixos
+
+- `unofficial`: Home-made nix modules
+- `common`:
+    - `core`: Required stuff from all systems (net, font, etc...)
+    - `users`: Per user settings
+- `system`:
+    - `desktop`: Desktop env stuff
+    - `dev`: Dev shit
+    - `gaming`: Gaming stuff
+    - `services`: Daemons and what not
+
+### settings
+
+- `hosts`: Computer bound configuration (boot, hw and options configuration)
+- `users`: User settings (username and insecure/unfree packages list)
 
 ## Inspiration
 
@@ -171,6 +181,7 @@ and are arranged as follows:
 - mrkux nixos configuration ([Github](https://github.com/mrkuz/nixos))
 - Sane1090x Waybar style ([Github](https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/config))
 - Ruixi-rebirth waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
+- XeIaso doublas-adams-quotes for making me discover the power of flakes ([Github](https://github.com/Xe/douglas-adams-quotes/blob/main/flake.nix)[XeIasoBlog](https://xeiaso.net/))
 
 ## Secrets checklist
 
@@ -202,7 +213,7 @@ nix-store --generate-binary-cache-key nixcache.local \
         cache-priv-key.pem cache-pub-key.pem
 ```
 
-- Github ssh key (add to gh) [auto-gen]
+- Github ssh key (add to gh) [auto-generated]
 
 ```
 ssh-keygen -t ed25519 \
@@ -211,13 +222,13 @@ ssh-keygen -t ed25519 \
 ssh-add ~/.ssh/id_github_justcode
 ```
 
-- host ssh key (for ssh) [auto-gen]
+- host ssh key (for ssh) [auto-generated]
 
 ```
 ssh-keygen -t ed25519 \
-  -C "ryuji@msi" \
-  -f ~/.ssh/id_msi_ryuji
-ssh-add ~/.ssh/id_msi_ryuji
+  -C "${USER}@${HOST}" \
+  -f "~/.ssh/id_${HOST}_${USER}"
+ssh-add "~/.ssh/id_${HOST}_${USER}"
 ```
 
 ## Emergency wiki

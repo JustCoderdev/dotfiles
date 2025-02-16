@@ -24,73 +24,83 @@
 
 	outputs = { self, nixpkgs, jcbin, jcconfs }@inputs:
 	let
-		_username = "ryuji";
-		_hostname = "msi";
-		system = "x86_64-linux";
+		darnix-overlay = (
+			final: prev: { darnix-plymouth-theme = jcconfs.packages.darnix-plymouth-theme; }
+		);
 
-		pkgs = nixpkgs.legacyPackages.${system};
-		# pkgs-unstable = import nixpkgs-unstable {
-		# 	system = settings.system;
-		# 	config = let pkgs = settings.special_pkgs; in {
-		# 		permittedInsecurePackages = pkgs.insecure;
-		# 		allowUnfreePredicate = pkg: builtins.elem
-		# 			(nixpkgs.lib.getName pkg) pkgs.unfree;
-		# 	};
-		# };
-
-		args = {
-			inherit inputs system;
-			hostname = _hostname;
-			username = _username;
-		};
-		system-modules = [
-			jcbin.nixosModules.all
-			jcconfs.nixosModules.${_username};
-			./nixos/profiles/configuration.nix
-		];
-#		++
-#		(let diskopath = "./nixos/hosts/${settings.hostname}/disko.nix"; in
-#			nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
-#				diskopath
-#				disko.nixosModules.disko
-#			]
-#		);
+		getModules = (
+			settings: [
+				jcbin.nixosModules.all
+				jcconfs.nixosModule.home { inherit (settings) username special_pkgs; };
+				./nixos
+			]
+#			++
+#			(let diskopath = "./nixos/hosts/${_hostname}/disko.nix"; in
+#				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
+#					diskopath
+#					disko.nixosModules.disko
+#				]
+#			);
+		);
 
 		systemBuilder = (
-			hostname: nixpkgs.lib.nixosSystem {
+			{ hostname, system, username }:
+			let
+				settings = {
+					inherit hostname;
+					inherit system;
+					inherit (import ./settings/users/${username}.nix) username special_pkgs;
+				};
+			in
+			nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = args;
-				modules = system-modules ++ [
-					./nixos/hosts/${hostname}/hardware-configuration.nix
-					./nixos/hosts/${hostname}/boot.nix
-					./nixos/hosts/${hostname}/options.nix
-					./nixos/hosts/${hostname}/configuration.nix
+				specialArgs = { inherit inputs settings darnix-overlay; };
+				modules = (getModules settings) ++ [
+					./settings/hosts/${hostname}/hardware-configuration.nix
+					./settings/hosts/${hostname}/boot.nix
+					./settings/hosts/${hostname}/options.nix
+					./settings/hosts/${hostname}/configuration.nix
 				];
 			}
 		);
+
+		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 
 	{
 		# nixos-rebuild switch --flake .#<hostname>
-		nixosConfigurations.${_hostname} = systemBuilder ${_hostname};
+		nixosConfigurations = {
+			virtualmachine = systemBuilder "virtualmachine" "x86_64-linux" "ryuji";
+			msi            = systemBuilder "msi"            "x86_64-linux" "ryuji";
+			acer           = systemBuilder "acer"           "x86_64-linux" "ryuji";
+			quiss          = systemBuilder "quiss"          "x86_64-linux" "ryuji";
+		};
 
 		# nix build
-		# packages.${settings.system} = { };
+		# packages.${system} = { };
 
 		# nix run
-		apps.${system} = {
-			# install = {
-			# 	type = "app";
-			# 	program = "...";
-			# };
-		};
+		apps = forAllSystems (
+			system: let pkgs = nixpkgsFor.${system}; in
+			{
+				# install = {
+				# 	type = "app";
+				# 	program = "...";
+				# };
+			}
+		);
 
 		# nix develop
-		devShell.${system} = {
-			default = pkgs.mkShell {
-				shellHook = '' zsh && exit '';
-				buildInputs = with pkgs; [ git vim ];
-			};
-		};
+		devShell = forAllSystems (
+			system: let pkgs = nixpkgsFor.${system}; in
+			{
+				default = pkgs.mkShell {
+					shellHook = '' zsh && exit '';
+					buildInputs = with pkgs; [ git vim ];
+				};
+			}
+		);
 	};
 }

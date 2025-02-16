@@ -24,41 +24,58 @@
 
 	outputs = { self, nixpkgs, home-manager, nixd }@inputs:
 	let
-		_username = "ryuji";
-		dotfiles_path = "/.dotfiles";
-		settings = import ../settings/${_username}.nix;
+		getArgs = (
+			username:
+			{
+				inherit inputs nixd;
+				settings = import ../settings/users/${username}.nix;
+			}
+		);
 
-		pkgs = nixpkgs.legacyPackages.${system};
-		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
-		args = { inherit inputs settings dotfiles_path; };
 		homeConfiguration = (
-			username: home-manager.nixosModules.home-manager {
-				home-manager.useGlobalPkgs = true;
-				home-manager.useUserPackages = true;
-				home-manager.extraSpecialArgs = args;
-				home-manager.users.${username} = import ./${username}.nix;
+			username: special_pkgs:
+			{
+				imports = [
+					home-manager.nixosModules.home-manager
+					{
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.extraSpecialArgs = getArgs username;
+						home-manager.users.${username} = import ./users/${username}.nix;
+					}
+				];
 			}
 		);
 
 		homeBuilder = (
-			username: home-manager.lib.homeManagerConfiguration {
-				extraSpecialArgs = args;
-				modules = [ import ./${username}.nix ];
-				inherit pkgs;
+			username: system:
+			home-manager.lib.homeManagerConfiguration {
+				extraSpecialArgs = getArgs username;
+				modules = [ ./users/${username}.nix ];
+				pkgs = nixpkgs.legacyPackages.${system};
 			}
 		);
+
+		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
-		nixosModules.${_username} = homeConfiguration _username;
+		nixosModules = {
+			home = homeConfiguration;
+		};
 
-		# home-manager 
-		homeConfigurations.${_username} = homeBuilder _username;
+		homeConfigurations = {
+			ryuji = homeBuilder "ryuji" "x86_64";
+		};
 
 		# nix build
-		packages.${_username} = forAllSystems (system:
-			self.homeConfigurations.${_username}.activationPackage
+		packages = forAllSystems (
+			system: let pkgs = nixpkgsFor.${system}; in {
+				ryuji-activation = (homeBuilder "ryuji" system).activationPackage;
+				# ryuji-activation = self.homeConfigurations.ryuji.activationPackage;
+				darnix-plymouth-theme = pkgs.callPackage ./plymouth/darnix { };
+			}
 		);
 	};
 }
