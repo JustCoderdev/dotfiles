@@ -1,6 +1,8 @@
 { ... }:
 
 {
+	host.isVM = false;
+
 	common = {
 		core = {
 			bluetooth.enable = false;

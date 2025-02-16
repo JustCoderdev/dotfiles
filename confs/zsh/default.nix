@@ -8,7 +8,7 @@
 		initExtra = ''
 			export DOT_NIXOS=1;
 			export DOT_FILES="/.dotfiles"
-			source "''${DOT_FILES}/confs/zsh/.zshrc";
+			source "''${DOT_FILES}/confs/zsh/.zshrc"
 		'';
 	};
 

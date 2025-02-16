@@ -22,16 +22,13 @@ let
 		"tmux"
 	];
 
-	toPathList = (ms: lib.lists.forEach ms (m: ./${m}/default.nix));
-	toStandalonePathList = (ms: lib.lists.forEach ms (m: ./standalone/${m}.nix));
+	toPathList = (ms: lib.lists.forEach ms (m: ../${m}/default.nix));
+	toStandalonePathList = (ms: lib.lists.forEach ms (m: ../standalone/${m}.nix));
 in
 
 {
-	home = {
-		username = settings.username;
-		homeDirectory = "/home/${settings.username}";
-		stateVersion = "23.11";
-	};
+	home.username = settings.username;
+	home.homeDirectory = "/home/${settings.username}";
 
 	imports = (toPathList modules)
 		++ (toStandalonePathList standalone-modules);
@@ -48,4 +45,5 @@ in
 	};
 
 	programs.home-manager.enable = true;
+	home.stateVersion = "23.11";
 }

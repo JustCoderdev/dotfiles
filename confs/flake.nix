@@ -28,14 +28,15 @@
 			username:
 			{
 				inherit inputs nixd;
-				settings = import ../settings/users/${username}.nix;
+				settings = import ./settings/${username}.nix;
 			}
 		);
 
 		homeConfiguration = (
-			username: special_pkgs:
+			{ config, lib, ... }:
 			{
-				imports = [
+				imports = let username = config.username; in
+				[
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useGlobalPkgs = true;
@@ -44,6 +45,12 @@
 						home-manager.users.${username} = import ./users/${username}.nix;
 					}
 				];
+
+				options.username = lib.mkOption {
+					type = lib.types.str;
+					readOnly = true;
+					description = "name of the user";
+				};
 			}
 		);
 

@@ -36,9 +36,6 @@ HOST_PATH="${HOSTS_PATH}/${HOSTNAME}"
 TEMP_PATH="${HOSTS_PATH}/.example"
 echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m"
 
-echo -e "Updating flake"
-sed -i "s/\(_hostname = \).*/\1\"${HOSTNAME}\";/" "${NIXOS_PATH}/flake.nix"
-
 grep -q "${HOSTNAME} = systemBuilder;" "${NIXOS_PATH}/flake.nix" || grep_exit=$?
 if [[ $grep_exit == 1 ]]; then
 	echo "Adding new nixosConfiguration"

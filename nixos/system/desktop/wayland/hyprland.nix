@@ -46,7 +46,7 @@ in
 				grim
 			];
 
-			sessionVariables = lib.mkIf settings.runningVM {
+			sessionVariables = lib.mkIf config.host.isVM {
 				# Enable software rendering for VMs
 				WLR_RENDERER_ALLOW_SOFTWARE = "1";
 				# Enable if cursor is invisible

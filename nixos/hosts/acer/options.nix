@@ -1,9 +1,11 @@
 { ... }:
 
 {
+	host.isVM = false;
+
 	common = {
 		core = {
-			bluetooth.enable = false;
+			bluetooth.enable = true;
 			nvidia.enable = false;
 
 			audio = {
@@ -43,15 +45,15 @@
 		dev = {
 			enable = true;
 			android.enable = false;
-			arduino.enable = false;
+			arduino.enable = true;
 			c.enable = true;
 			net.enable = false;
 		};
 
 		gaming.enable = false;
 		services = {
-			docker.enable = true;
-			samba.enable = false;
+			docker.enable = false;
+			samba.enable = true;
 			virtualbox.enable = false;
 		};
 	};

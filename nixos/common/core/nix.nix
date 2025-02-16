@@ -88,7 +88,7 @@ in
 			config = let pkgs = settings.special_pkgs; in {
 				permittedInsecurePackages = pkgs.insecure;
 				allowUnfreePredicate = pkg: builtins.elem
-					(nixpkgs.lib.getName pkg) pkgs.unfree;
+					(lib.getName pkg) pkgs.unfree;
 			};
 		};
 	};

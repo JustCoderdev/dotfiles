@@ -14,10 +14,10 @@ in
 		enable = true;
 		package = pkgs.firefox-esr;
 
-		profiles."${username}" = {
-			settings = {
+		profiles.${username} = {
+			# settings = {
 				# "dom.security.https_only_mode" = true;
-			};
+			# };
 
 			# nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
 #			extensions = with addons; [

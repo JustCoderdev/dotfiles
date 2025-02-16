@@ -24,26 +24,15 @@ else
 	HOST_FLAKE=""
 fi
 
-HOST_SHELL="${HOST:-}"
+HOST_SHELL="${HOSTNAME:-}"
 HOST_INPUT="${1:-}"
-
-# echo "HOST_FLAKE: ${HOST_FLAKE}"
-# echo "HOST_SHELL: ${HOST_SHELL}"
-# echo "HOST_INPUT: ${HOST_INPUT}"
-# echo ""
 
 ## Check for input
 if [ -z "${HOST_INPUT}" ]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOST_SHELL}\033[0m"
 else
 	echo -e "Requested rebuild for \033[32m\"${HOST_INPUT}\"\033[0m"
-	HOST_SHELL="${HOST_INPUT}"
-fi
-
-## Update flake file
-if [ "${HOST_SHELL}" != "${HOST_FLAKE}" ]; then
-	echo "Updating flake... (${HOST_FLAKE:---}) -> ($HOST_SHELL)"
-	sudo sed -i "s/\(_hostname = \).*/\1\"${HOST_SHELL}\";/" ./flake.nix
+	export HOSTNAME="${HOST_INPUT}"
 fi
 
 
@@ -62,10 +51,10 @@ else
 	had_changes=true
 
 	# shellcheck disable=SC2162
-	read -p 'Open diff? (y/N): ' diff_confirm
-	if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
-		git diff --word-diff=porcelain -U0 -- .
-	fi
+	# read -p 'Open diff? (y/N): ' diff_confirm
+	# if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
+	# 	git diff --word-diff=porcelain -U0 -- .
+	# fi
 
 	# shellcheck disable=SC2162
 	read -p 'Do you want to commit? (Y/n): ' commit_confirm
@@ -165,10 +154,11 @@ if [[ "${exit_code}" == 0 ]]; then
 else
 	echo -e "\033[31mFailed\033[0m\n"
 
-	grep --color -F "error" .nixos-switch.log
-	if $had_changes; then
-		git restore --staged .
-	fi
+	grep --color -F 'error' .nixos-switch.log
+	grep --color -F 'fail' .nixos-switch.log
+	# if $had_changes; then
+	# 	git restore --staged .
+	# fi
 
 	echo -ne "\n"
 

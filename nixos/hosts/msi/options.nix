@@ -1,14 +1,16 @@
 { ... }:
 
 {
+	host.isVM = false;
+
 	common = {
 		core = {
-			bluetooth.enable = false;
-			nvidia.enable = false;
+			bluetooth.enable = true;
+			nvidia.enable = true;
 
 			audio = {
 				pipewire.enable = false;
-				pulseaudio.enable = false;
+				pulseaudio.enable = true;
 			};
 
 			nix = {
@@ -20,8 +22,9 @@
 			ryuji = {
 				enable = true;
 
-				image-editing = false;
+				image-editing = true;
 				video-editing = false;
+				game-developing = false;
 			};
 		};
 	};
@@ -30,6 +33,7 @@
 		bin = {
 			backlight.enable = false;
 			rebuild-system.enable = true;
+			mount-configs.enable = true;
 		};
 
 		desktop = {
@@ -40,16 +44,16 @@
 		};
 
 		dev = {
-			enable = false;
-			android.enable = false;
-			arduino.enable = false;
-			c.enable = false;
+			enable = true;
+			android.enable = true;
+			arduino.enable = true;
+			c.enable = true;
 			net.enable = false;
 		};
 
-		gaming.enable = false;
+		gaming.enable = true;
 		services = {
-			docker.enable = false;
+			docker.enable = true;
 			samba.enable = true;
 			virtualbox.enable = false;
 		};

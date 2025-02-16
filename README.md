@@ -33,7 +33,7 @@ share with me any feedback or trick you may know :p
 
 > Virtual machine notes
 >
-> - Remember to enable `settings.runningVM` in `nixos/hosts/HOST/settings.nix`
+> - Remember to enable `host.isVM` in `nixos/hosts/HOST/settings.nix`
 > - Nixos doesn't like default graphics driver, use `VBoxVGA`
 > - Hyrpland may not work in a VM
 
@@ -148,16 +148,23 @@ sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host
 
 ## Dotfiles structure
 
-There are 4 main directories:
+There are 3 main directories:
 
 - `bin`: various scripts available in a flake
 - `confs`: application configuration files (w home-manager support)
 - `nixos`: nixos system modules
-- `settings`: hosts and users settings
+
+### confs
+
+- `.wallpapers`: wallpapers for sway
+- `settings`: User settings (username and insecure/unfree packages list)
+- `users`: Available users
+- `standalone`: Configurations that exists only in home-manager
 
 ### nixos
 
 - `unofficial`: Home-made nix modules
+- `hosts`: Computer bound configuration (boot, hw and options configuration)
 - `common`:
     - `core`: Required stuff from all systems (net, font, etc...)
     - `users`: Per user settings
@@ -167,10 +174,6 @@ There are 4 main directories:
     - `gaming`: Gaming stuff
     - `services`: Daemons and what not
 
-### settings
-
-- `hosts`: Computer bound configuration (boot, hw and options configuration)
-- `users`: User settings (username and insecure/unfree packages list)
 
 ## Inspiration
 

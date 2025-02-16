@@ -20,15 +20,9 @@ let cfg = config.system.desktop.hyprland; in
 	};
 
 	config = lib.mkIf cfg.enable {
-		assertions = [
-		{
+		assertions = [ {
 			assertion = !config.system.desktop.xfce.enable;
 			message = "Cannot enable hyprland if xfce is enabled";
-		}
-		#{
-		#	assertion = settings.runningVM;
-		#	message = "Hyprland in VM is not supported";
-		#}
-		];
+		} ];
 	};
 }

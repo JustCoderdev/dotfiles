@@ -36,6 +36,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "jcconfs",
           "nixpkgs"
         ]
       },
@@ -62,7 +63,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-Ig7ww8DnGq0powqCytZ3PkkD7s0KKUFMQmqGzhx0p/k=",
+        "narHash": "sha256-FBz3NxSkQ7asl1PbUR/dg6AHC+bCAkBjC5uWudKjv84=",
         "path": "./bin",
         "type": "path"
       },
@@ -73,13 +74,15 @@
     },
     "jcconfs": {
       "inputs": {
+        "home-manager": "home-manager",
+        "nixd": "nixd",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-wBXSJ4dHia68lVaUDtZ4PVX+tQldumS/tV1c7xNCWXo=",
+        "narHash": "sha256-9YSIredlZ3FWg6dsY4EIibvZxN7BUydFyYxfBS3UgRM=",
         "path": "./confs",
         "type": "path"
       },
@@ -93,6 +96,7 @@
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "nixpkgs": [
+          "jcconfs",
           "nixpkgs"
         ],
         "treefmt-nix": "treefmt-nix"
@@ -138,35 +142,17 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5487e69da40cbd611ab2cadee0b4637225f7cfae.tar.gz"
       }
     },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1739446958,
-        "narHash": "sha256-+/bYK3DbPxMIvSL4zArkMX0LQvS7rzBKXnDXLfKyRVc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2ff53fe64443980e139eaa286017f53f88336dd0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "home-manager": "home-manager",
         "jcbin": "jcbin",
         "jcconfs": "jcconfs",
-        "nixd": "nixd",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs": "nixpkgs"
       }
     },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
+          "jcconfs",
           "nixd",
           "nixpkgs"
         ]

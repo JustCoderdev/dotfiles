@@ -10,7 +10,7 @@ in
 		services = {
 			xserver = {
 				enable = xfceCfg.enable || i3Cfg.enable;
-				videoDrivers = lib.mkIf settings.runningVM [ "wmware" ];
+				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
 
 				#MSI:
 				# - DVI-D-0 : disconnected

@@ -15,7 +15,7 @@ in
 		#"plymouth.debug" # log at /var/log/plymouth-debug.log
 	];
 
-	boot.plymouth = lib.mkIf (!settings.runningVM && (i3.enable || hyprland.enable) ) {
+	boot.plymouth = lib.mkIf (!config.host.isVM && (i3.enable || hyprland.enable) ) {
 		enable = true;
 
 		theme = "darnix";

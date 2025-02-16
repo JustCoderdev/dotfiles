@@ -24,6 +24,8 @@
 
 	outputs = { self, nixpkgs, jcbin, jcconfs }@inputs:
 	let
+		dotfiles = ./.;
+
 		darnix-overlay = (
 			final: prev: { darnix-plymouth-theme = jcconfs.packages.darnix-plymouth-theme; }
 		);
@@ -31,7 +33,7 @@
 		getModules = (
 			settings: [
 				jcbin.nixosModules.all
-				jcconfs.nixosModule.home { inherit (settings) username special_pkgs; };
+				jcconfs.nixosModules.home { inherit (settings) username; }
 				./nixos
 			]
 #			++
@@ -44,22 +46,22 @@
 		);
 
 		systemBuilder = (
-			{ hostname, system, username }:
+			hostname: system: username:
 			let
 				settings = {
 					inherit hostname;
 					inherit system;
-					inherit (import ./settings/users/${username}.nix) username special_pkgs;
+					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
 				};
 			in
 			nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs settings darnix-overlay; };
+				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
 				modules = (getModules settings) ++ [
-					./settings/hosts/${hostname}/hardware-configuration.nix
-					./settings/hosts/${hostname}/boot.nix
-					./settings/hosts/${hostname}/options.nix
-					./settings/hosts/${hostname}/configuration.nix
+					./nixos/hosts/${hostname}/hardware-configuration.nix
+					./nixos/hosts/${hostname}/boot.nix
+					./nixos/hosts/${hostname}/options.nix
+					./nixos/hosts/${hostname}/configuration.nix
 				];
 			}
 		);

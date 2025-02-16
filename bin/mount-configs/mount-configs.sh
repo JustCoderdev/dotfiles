@@ -50,10 +50,10 @@ mkdir -p "${homepath}/Developer/Projects"
 echo "Done! :D"
 
 echo -e "Creating soft links"
-link "${DOT_FILES}/confs/alacritty"    "${configpath}/.config"  # Alacritty
-link "${DOT_FILES}/confs/clang"        "${configpath}/.config"  # Clang
-link "${DOT_FILES}/confs/i3"           "${configpath}/.config"  # i3
-link "${DOT_FILES}/confs/waybar"       "${configpath}/.config"  # Waybar
+link "${DOT_FILES}/confs/alacritty"      "${homepath}/.config"  # Alacritty
+link "${DOT_FILES}/confs/clang"          "${homepath}/.config"  # Clang
+link "${DOT_FILES}/confs/i3"             "${homepath}/.config"  # i3
+link "${DOT_FILES}/confs/waybar"         "${homepath}/.config"  # Waybar
 
 link "${DOT_FILES}/confs/clang/.clang-format"    "${homepath}"  # Clang format
 link "${DOT_FILES}/confs/emacs/.emacs"           "${homepath}"  # Emacs
