@@ -21,9 +21,9 @@ Graph
 | | |
 | |/
 | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+| |
+| * 0be0f74 nixos-compliant (nixpkgs-24.11)
 ' |
-  * 0be0f74 nixos-compliant (nixpkgs-24.11)
-  |
   * 91c5ef1 nixos-integration (nixpkgs-24.11)
   v
 ```

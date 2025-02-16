@@ -13,7 +13,7 @@ if [ -z "${USER:-}" ]; then
 	exit 1
 fi
 
-configpath="/home/${USER}/.config"
+homepath="/home/${USER}"
 
 function link {
 	from="$1"; from_filename="${from##/*/}";
@@ -44,32 +44,32 @@ function link {
 }
 
 echo -n "Creating default folders... "
-mkdir -p "/home/${USER}/Developer"
-mkdir -p "/home/${USER}/Developer/Github"
-mkdir -p "/home/${USER}/Developer/Projects"
+mkdir -p "${homepath}/Developer"
+mkdir -p "${homepath}/Developer/Github"
+mkdir -p "${homepath}/Developer/Projects"
 echo "Done! :D"
 
 echo -e "Creating soft links"
-link "${DOT_FILES}/alacritty"  "${configpath}"  # Alacritty
-link "${DOT_FILES}/clangd"     "${configpath}"  # Clang
-link "${DOT_FILES}/i3"         "${configpath}"  # i3
-link "${DOT_FILES}/waybar"     "${configpath}"  # Waybar
+link "${DOT_FILES}/confs/alacritty"    "${configpath}/.config"  # Alacritty
+link "${DOT_FILES}/confs/clang"        "${configpath}/.config"  # Clang
+link "${DOT_FILES}/confs/i3"           "${configpath}/.config"  # i3
+link "${DOT_FILES}/confs/waybar"       "${configpath}/.config"  # Waybar
 
-link "${DOT_FILES}/clangd/.clang-format"   "/home/${USER}"          # Clang format
-link "${DOT_FILES}/emacs/.emacs"           "/home/${USER}"          # Emacs
-link "${DOT_FILES}/emacs/.emacs.custom.el" "/home/${USER}"          # Emacs
-link "${DOT_FILES}/emacs/.emacs.extra"     "/home/${USER}"          # Emacs
-link "${DOT_FILES}/git/.gitconfig"         "/home/${USER}"          # Git
-link "${DOT_FILES}/git/.gitignore_global"  "/home/${USER}"          # Git
+link "${DOT_FILES}/confs/clang/.clang-format"    "${homepath}"  # Clang format
+link "${DOT_FILES}/confs/emacs/.emacs"           "${homepath}"  # Emacs
+link "${DOT_FILES}/confs/emacs/.emacs.custom.el" "${homepath}"  # Emacs
+link "${DOT_FILES}/confs/emacs/.emacs.extra"     "${homepath}"  # Emacs
+link "${DOT_FILES}/confs/git/.gitconfig"         "${homepath}"  # Git
+link "${DOT_FILES}/confs/git/.gitignore_global"  "${homepath}"  # Git
 
 if [ -z "${DOT_NIXOS:-}" ]; then
 	echo "TODO: Fix linking on non nixos distro !!"
 	exit 1;
 
-	# link "${DOT_FILES}/hypr"               "${configpath}"  # Hyprland
-	# link "${DOT_FILES}/nvim"               "${configpath}"  # Nvim
-	# link "${DOT_FILES}/plymouth"           "/etc"           # Plymouth
-	# link "${DOT_FILES}/zsh/.zshrc"         "/home/${USER}"  # Zsh
+	# link "${DOT_FILES}/confs/hyprland"       "${homepath}/.config/hypr"  # Hyprland
+	# link "${DOT_FILES}/confs/neovim"         "${homepath}/.config/nvim"  # Nvim
+	# link "${DOT_FILES}/confs/plymouth"       "/etc"         # Plymouth
+	# link "${DOT_FILES}/confs/zsh/.zshrc"     "${homepath}"  # Zsh
 fi
 
 echo "Done mounting configs"

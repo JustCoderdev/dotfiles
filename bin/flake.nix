@@ -9,11 +9,21 @@
 	};
 	
 	outputs = { self, nixpkgs, ... }:
+	let
+		modules = [
+			"backlight"
+			"mount-configs"
+			"rebuild-system"
+		];
+
+		lib = nixpkgs.lib;
+
+		toPathList = (ms: lib.lists.forEach ms (m: ./${m}/default.nix));
+		toAttrsSet = (ms: lib.attrsets.genAttrs ms (m: import ./${m}/default.nix));
+	in
 	{
-		nixosModules = {
-			backlight = import ./backlight/default.nix;
-			mount-configs = import ./mount-configs/default.nix;
-			rebuild-system = import ./rebuild-system/default.nix;
+		nixosModules = (toAttrsSet modules) // {
+			all = { ... }: { imports = toPathList modules; };
 		};
 	};
 }

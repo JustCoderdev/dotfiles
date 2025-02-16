@@ -1,0 +1,36 @@
+{
+	username = "ryuji";
+
+	special_pkgs = {
+		insecure = [ "electron-24.8.6" "python-2.7.18.6"  ];
+		unfree = [
+			"nvidia-x11"
+			"nvidia-settings"
+
+			"helvetica-neue-lt-std"
+			"apple-fonts"
+
+			"steam"
+			"steam-unwrapped"
+			"steam-original"
+			"steam-run"
+			"steamcmd"
+
+			"Oracle_VM_VirtualBox_Extension_Pack"
+
+			"modrinth-app-unwrapped"
+			"modrinth-app"
+
+			"unityhub"
+
+			"obsidian"
+			"anytype"
+
+			"google-chrome"
+			"improved-tube"
+			"davinci-resolve"
+			"discord"
+		];
+	};
+}
+

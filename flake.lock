@@ -62,12 +62,29 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-bUR7xtrA/2P3FDpOfvzUN8hUTVUNd6z7CXJhXYNnY9o=",
+        "narHash": "sha256-Ig7ww8DnGq0powqCytZ3PkkD7s0KKUFMQmqGzhx0p/k=",
         "path": "./bin",
         "type": "path"
       },
       "original": {
         "path": "./bin",
+        "type": "path"
+      }
+    },
+    "jcconfs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-wBXSJ4dHia68lVaUDtZ4PVX+tQldumS/tV1c7xNCWXo=",
+        "path": "./confs",
+        "type": "path"
+      },
+      "original": {
+        "path": "./confs",
         "type": "path"
       }
     },
@@ -141,6 +158,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "jcbin": "jcbin",
+        "jcconfs": "jcconfs",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable"
