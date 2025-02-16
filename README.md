@@ -6,8 +6,8 @@
 > `(i)` My dotfiles are divided in 4 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
-> - `nixos-integration`: (CURRENT) Restructuring of nixos w better flakes
-> - `nixos-compliant`: [DEPRECATED] Messy stable version of nixos
+> - `nixos-integration`: [BROKEN] Restructuring of nixos w better flakes
+> - `nixos-compliant`: (CURRENT) Messy stable version of nixos
 > - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
 
 Graph
