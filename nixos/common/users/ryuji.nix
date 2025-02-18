@@ -94,7 +94,6 @@ in
 				anytype
 
 				emulsion
-				telegram-desktop
 				vlc
 				tor
 

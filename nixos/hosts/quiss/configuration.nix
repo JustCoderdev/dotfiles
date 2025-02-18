@@ -1,17 +1,16 @@
 { settings, ... }:
 
 {
-	imports = [
-		../../modules/unofficial/duckdns.nix
-	];
+	# imports = [ ];
 
+# ../../unofficial/duckdns.nix
 #	services.duckdns = {
 #		enable = true;
 #		domains = [ "thefoxburrow" ];
 #		tokenFile = dotfiles_path + "/nixos/secrets/duckdns.token";
 #	};
 
-	networking.firewall.allowedTCPPorts = [ 80 ];
+	networking.firewall.allowedTCPPorts = [ 80 443 ];
 
 	services.nginx = {
 		enable = true;

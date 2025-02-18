@@ -40,7 +40,7 @@ in
 
 #			heroic         # Epic Games - gog
 			prismlauncher  # Minecraft launcher
-			modrinth-app   # Minecraft launcher
+			# modrinth-app   # Minecraft launcher
 
 			(lutris.override {   # Game hub
 				extraLibraries = pkgs: [ ];

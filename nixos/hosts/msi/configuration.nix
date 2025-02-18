@@ -116,7 +116,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 
 		nat = {
 			enable = true;
-			internalIPs = [ "10.0.0.0/28" ];
+			internalIPs = [ "10.0.0.0/24" ];
 			internalInterfaces = [ "eno1" ];
 
 			forwardPorts = [
@@ -130,6 +130,12 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 					proto = "tcp";
 					sourcePort = 4080;
 					destination = "10.0.0.11:80";
+				}
+
+				{ # 10.0.0.11:443 >>#<< 192.168.7.142:4443
+					proto = "tcp";
+					sourcePort = 4443;
+					destination = "10.0.0.11:443";
 				}
 			];
 

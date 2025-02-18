@@ -16,13 +16,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-#		disko = {
-#			url = "github:nix-community/disko/v1.11.0";
-#			inputs.nixpkgs.follows = "nixpkgs";
-#		};
+		disko = {
+			url = "github:nix-community/disko/v1.11.0";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = { self, nixpkgs, jcbin, jcconfs }@inputs:
+	outputs = { self, nixpkgs, jcbin, jcconfs, disko }@inputs:
 	let
 		dotfiles = ./.;
 
@@ -36,13 +36,13 @@
 				jcconfs.nixosModules.home { inherit (settings) username; }
 				./nixos
 			]
-#			++
-#			(let diskopath = "./nixos/hosts/${_hostname}/disko.nix"; in
-#				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
-#					diskopath
-#					disko.nixosModules.disko
-#				]
-#			);
+			++
+			(let diskopath = "${dotfiles}/nixos/hosts/${settings.hostname}/disko.nix"; in
+				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
+					disko.nixosModules.disko
+					diskopath
+				]
+			)
 		);
 
 		systemBuilder = (

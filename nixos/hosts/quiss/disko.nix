@@ -120,6 +120,7 @@ let
 		};
 	};
 
+	hook_path = "/etc/mdadmhook.url";
 in
 
 {
@@ -127,15 +128,13 @@ in
 
 	# TODO: Read secreted email
 	# TODO: Setup w discord webhooks
-	# curl -s -X POST -H "content-type: application/json" -d '{ "content": "Hii" }' 'HOOK'
-
 
 	# Mdadm configuration
 	# <https://discourse.nixos.org/t/i-want-to-create-a-raid0-for-var-but-im-unable-to-figure-how-to-load-mdamd-on-boot/30381/5>
 	boot.swraid = {
 		enable = true;
 		mdadmConf = ''
-
+			PROGRAM curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR $${1}: $${2}\" }" "$(cat ${hook_path})"
 		'';
 	};
 
