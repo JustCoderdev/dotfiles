@@ -1,41 +1,21 @@
 { pkgs, ... }:
 
 {
-	programs.chromium.enable = true;
+	# programs.chromium.enable = true;
 
-	home = {
-		packages = with pkgs; [ dconf ];
-		sessionVariables.GTK_THEME = "orchis-theme";
-	};
+	# home = {
+	# 	packages = with pkgs; [ dconf ];
+	# };
 
-	dconf = {
-		enable = true;
-		settings = {
-			"org/gnome/desktop/interface" = {
-				color-scheme = "prefer-dark";
-			};
-		};
-	};
+	# dconf = {
+	# 	enable = true;
+	# };
 
-	gtk = {
-		enable = true;
-		theme = {
-			name = "orchis-theme";
-			package = pkgs.orchis-theme;
-		};
-		iconTheme = {
-			name = "Adwaita";
-			package = pkgs.adwaita-icon-theme;
-		};
-		cursorTheme = {
-			name = "Adwaita";
-			package = pkgs.adwaita-icon-theme;
-		};
-	};
+	# gtk = {
+	# 	enable = true;
+	# };
 
-	qt = {
-		enable = true;
-		platformTheme.name = "gtk";
-		style.name = "gtk2";
-	};
+	# qt = {
+	# 	enable = true;
+	# };
 }

@@ -3,10 +3,12 @@
 *~
 .emacs.elc
 
+
 .old_session.vim
 .session.vim
 
 .nixos-switch.log
-result/
 
-secrets/
+
+result
+secrets

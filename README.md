@@ -146,6 +146,15 @@ sudo nix run 'github:nix-community/disko/latest#disko-install' \
 sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
 ```
 
+- Remote VPS [untested]
+
+Make sure the host has a disko configuration in `nixos/hosts/HOST/disko.nix`
+
+```bash
+nix run nixpkgs#nixos-anywhere -- --flake .#<host> \
+    -i <idfile> <user>@<ip>
+```
+
 ## Dotfiles structure
 
 There are 3 main directories:

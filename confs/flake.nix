@@ -10,6 +10,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		stylix = {
+			url = "github:danth/stylix/release-24.11";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		nixd = {
 			url = "github:nix-community/nixd";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -22,13 +27,14 @@
 	};
 
 
-	outputs = { self, nixpkgs, home-manager, nixd }@inputs:
+	outputs = { self, nixpkgs, home-manager, stylix, nixd }@inputs:
 	let
 		getArgs = (
 			username:
 			{
 				inherit inputs nixd;
 				settings = import ./settings/${username}.nix;
+				wallpapers_path = ./.wallpapers;
 			}
 		);
 

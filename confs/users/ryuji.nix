@@ -1,4 +1,4 @@
-{ settings, lib, ... }:
+{ inputs, lib, pkgs, settings, wallpapers_path, ... }:
 
 let
 	modules = [
@@ -9,7 +9,7 @@ let
 		"neovim"
 		"emacs"
 
-		"alacritty"
+		# "alacritty"
 		"clang"
 		"git"
 		"zsh"
@@ -27,17 +27,68 @@ let
 in
 
 {
-	home.username = settings.username;
-	home.homeDirectory = "/home/${settings.username}";
-
-	imports = (toPathList modules)
+	imports = [ inputs.stylix.homeManagerModules.stylix ]
+		++ (toPathList modules)
 		++ (toStandalonePathList standalone-modules);
 
-	# enable when switching from 23.05 to 23.11
-	manual.html.enable = false;
-	manual.manpages.enable = false;
-	# ----------------------------- #
 
+	# --- enable when 23.05 => 23.11 --- #
+	manual.html.enable = false;          #
+	manual.manpages.enable = false;      #
+	# ---------------------------------- #
+
+
+	# <https://youtu.be/ljHkWgBaQWU?si=GgoH0R7OykG20Se2>
+	stylix = {
+		enable = true;
+
+		polarity = "dark";
+		base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+		image = "${wallpapers_path}/space_engineers.png";
+
+		iconTheme = {
+			enable = true;
+			package = pkgs.adwaita-icon-theme;
+			dark = "Adawaita";
+		};
+
+		cursor = {
+			name = "Adwaita";
+			package = pkgs.adwaita-icon-theme;
+			size = 32;
+		};
+
+		targets = {
+			# alacritty.enable = false;
+			neovim.enable = false;
+			waybar.enable = false;
+		};
+
+		fonts = {
+			sizes = {
+				applications = 12;
+				terminal = 15;
+				desktop = 10;
+				popups = 10;
+			};
+
+			monospace = {
+				name = "DejaVu Sans Mono";
+				package = pkgs.dejavu_fonts;
+			};
+			sansSerif = {
+				name = "DejaVu Sans";
+				package = pkgs.dejavu_fonts;
+			};
+			serif = {
+				name = "DejaVu Serif";
+				package = pkgs.dejavu_fonts;
+			};
+		};
+	};
+
+
+	# DO NOT TOUCH
 	nixpkgs.config = let pkgs = settings.special_pkgs; in {
 		permittedInsecurePackages = pkgs.insecure;
 		allowUnfreePredicate = pkg:
@@ -45,5 +96,9 @@ in
 	};
 
 	programs.home-manager.enable = true;
-	home.stateVersion = "23.11";
+	home = {
+		username = settings.username;
+		homeDirectory = "/home/${settings.username}";
+		stateVersion = "23.11";
+	};
 }

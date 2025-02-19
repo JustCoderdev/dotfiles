@@ -1,8 +1,4 @@
-{ ... }:
-
-let
-	wallpapers_path = ../.wallpapers;
-in
+{ wallpapers_path, ... }:
 
 {
 	wayland.windowManager.hyprland = {
