@@ -9,7 +9,7 @@ let
 		"neovim"
 		"emacs"
 
-		# "alacritty"
+		"alacritty"
 		"clang"
 		"git"
 		"zsh"
@@ -40,7 +40,7 @@ in
 
 	# <https://youtu.be/ljHkWgBaQWU?si=GgoH0R7OykG20Se2>
 	stylix = {
-		enable = true;
+		enable = false;
 
 		polarity = "dark";
 		base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
