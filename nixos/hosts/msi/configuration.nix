@@ -72,6 +72,13 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 
 
 
+	services.nginx.enable = true;
+	services.nginx.virtualHosts."msi.host.local" = {
+		root = "/var/www/msi";
+	};
+
+
+
 #	# Network routing
 #	# src: <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
 

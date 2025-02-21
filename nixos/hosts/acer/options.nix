@@ -3,6 +3,12 @@
 {
 	host.isVM = false;
 
+	jcbin = {
+		backlight.enable = true;
+		rebuild-system.enable = true;
+		mount-configs.enable = true;
+	};
+
 	common = {
 		core = {
 			bluetooth.enable = true;
@@ -30,11 +36,6 @@
 	};
 
 	system = {
-		bin = {
-			backlight.enable = true;
-			rebuild-system.enable = true;
-		};
-
 		desktop = {
 			hyprland.enable = false;
 			i3.enable = true;

@@ -30,6 +30,8 @@
 			final: prev: { darnix-plymouth-theme = jcconfs.packages.darnix-plymouth-theme; }
 		);
 
+		lib = nixpkgs.lib;
+
 		getModules = (
 			settings: [
 				jcbin.nixosModules.all
@@ -38,7 +40,7 @@
 			]
 			++
 			(let diskopath = "${dotfiles}/nixos/hosts/${settings.hostname}/disko.nix"; in
-				nixpkgs.lib.optionals (nixpkgs.lib.pathExists diskopath) [
+				lib.optionals (lib.pathExists diskopath) [
 					disko.nixosModules.disko
 					diskopath
 				]
@@ -54,7 +56,7 @@
 					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
 				};
 			in
-			nixpkgs.lib.nixosSystem {
+			lib.nixosSystem {
 				inherit system;
 				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
 				modules = (getModules settings) ++ [
@@ -66,8 +68,36 @@
 			}
 		);
 
+		isoBuilder = (
+			system: username:
+			let
+				settings = {
+					hostname = "nixiso";
+					inherit system;
+					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
+				};
+			in
+			lib.nixosSystem {
+				inherit system;
+				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
+				modules = (getModules settings) ++ [
+					({ pkgs, modulesPath, ... }: {
+						imports = [
+							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+						];
+
+						# Enable SSH in the boot process.
+						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
+						services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+						nixpkgs.hostPlatform = system;
+					})
+				];
+			}
+		);
+
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+		forAllSystems = lib.genAttrs supportedSystems;
+		listAllSystems = lib.lists.forEach supportedSystems;
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 
@@ -78,7 +108,19 @@
 			msi            = systemBuilder "msi"            "x86_64-linux" "ryuji";
 			acer           = systemBuilder "acer"           "x86_64-linux" "ryuji";
 			quiss          = systemBuilder "quiss"          "x86_64-linux" "ryuji";
-		};
+		}
+		//
+		builtins.listToAttrs (
+			listAllSystems (
+				system:
+				{
+					# build using
+					# nix build .#nixosConfigurations.iso-${SYSTEM}.config.system.build.isoImage
+					name = "iso-${system}";
+					value = isoBuilder system "ryuji";
+				}
+			)
+		);
 
 		# nix build
 		# packages.${system} = { };

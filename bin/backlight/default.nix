@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.bin.backlight;
+	cfg = config.jcbin.backlight;
 	package = pkgs.stdenv.mkDerivation {
 		name = "backlight";
 		version = "1.0";
@@ -39,7 +39,7 @@ in
 		environment.systemPackages = [ package ];
 	};
 
-	options.system.bin.backlight = {
+	options.jcbin.backlight = {
 		enable = lib.mkOption {
 			type = lib.types.bool;
 			description = "Add backlight to PATH";
