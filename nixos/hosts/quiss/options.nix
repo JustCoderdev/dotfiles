@@ -20,7 +20,7 @@
 			};
 
 			nix = {
-				serve-store.enable = true;
+				serve-store.enable = false;
 			};
 		};
 
@@ -51,6 +51,7 @@
 		};
 
 		gaming.enable = false;
+
 		services = {
 			docker.enable = false;
 			samba.enable = true;

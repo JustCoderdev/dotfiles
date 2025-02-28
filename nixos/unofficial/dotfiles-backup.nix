@@ -17,13 +17,13 @@ let
 	current-system = pkgs.writeShellApplication {
 		name = "current-system";
 		text = ''
-			# Check if you are not being redirected
-			if [ -t 1 ]; then
-				echo -ne "Current configuration found at:\n"
-			fi
+# Check if you are not being redirected
+if [ -t 1 ]; then
+	echo -ne "Current configuration found at:\n"
+fi
 
-			echo ${dotfiles-backup}/current-dotfiles
-		'';
+echo ${dotfiles-backup}/current-dotfiles
+'';
 	};
 in
 

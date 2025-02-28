@@ -7,10 +7,10 @@ mkDerivation {
 	src = ./.;
 
 	installPhase = ''
-		sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' darnix.plymouth
-		sed -i 's:\(^ScriptFile=\)/usr:\1'"$out"':' darnix.plymouth
-		
-		mkdir -p $out/share/plymouth/themes/darnix
-		cp -r * $out/share/plymouth/themes/darnix
-	'';
+sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' darnix.plymouth
+sed -i 's:\(^ScriptFile=\)/usr:\1'"$out"':' darnix.plymouth
+
+mkdir -p $out/share/plymouth/themes/darnix
+cp -r * $out/share/plymouth/themes/darnix
+'';
 }

@@ -35,6 +35,7 @@
 				inherit inputs nixd;
 				settings = import ./settings/${username}.nix;
 				wallpapers_path = ./.wallpapers;
+				confs_path = ./.;
 			}
 		);
 

@@ -6,27 +6,27 @@
 let
 	cfg = config.services.duckdns;
 	duckdns = pkgs.writeShellScriptBin "duckdns" ''
-		DRESPONSE=$(curl -sS --max-time 60 --no-progress-meter -k -K- <<< "url = \"https://www.duckdns.org/update?verbose=true&domains=$DUCKDNS_DOMAINS&token=$DUCKDNS_TOKEN&ip=\"")
-		IPV4=$(echo "$DRESPONSE" | awk 'NR==2')
-		IPV6=$(echo "$DRESPONSE" | awk 'NR==3')
-		RESPONSE=$(echo "$DRESPONSE" | awk 'NR==1')
-		IPCHANGE=$(echo "$DRESPONSE" | awk 'NR==4')
+DRESPONSE=$(curl -sS --max-time 60 --no-progress-meter -k -K- <<< "url = \"https://www.duckdns.org/update?verbose=true&domains=$DUCKDNS_DOMAINS&token=$DUCKDNS_TOKEN&ip=\"")
+IPV4=$(echo "$DRESPONSE" | awk 'NR==2')
+IPV6=$(echo "$DRESPONSE" | awk 'NR==3')
+RESPONSE=$(echo "$DRESPONSE" | awk 'NR==1')
+IPCHANGE=$(echo "$DRESPONSE" | awk 'NR==4')
 
-		if [[ "$RESPONSE" = "OK" ]] && [[ "$IPCHANGE" = "UPDATED" ]]; then
-			if [[ "$IPV4" != "" ]] && [[ "$IPV6" == "" ]]; then
-				echo "Your IP was updated at $(date) to IPv4: $IPV4"
-			elif [[ "$IPV4" == "" ]] && [[ "$IPV6" != "" ]]; then
-				echo "Your IP was updated at $(date) to IPv6: $IPV6"
-			else
-				echo "Your IP was updated at $(date) to IPv4: $IPV4 & IPv6 to: $IPV6"
-			fi
-		elif [[ "$RESPONSE" = "OK" ]] && [[ "$IPCHANGE" = "NOCHANGE" ]]; then
-			echo "DuckDNS request at $(date) successful. IP(s) unchanged."
-		else
-			echo -e "Something went wrong, please check your settings\nThe response returned was:\n$DRESPONSE\n"
-			exit 1
-		fi
-	'';
+if [[ "$RESPONSE" = "OK" ]] && [[ "$IPCHANGE" = "UPDATED" ]]; then
+	if [[ "$IPV4" != "" ]] && [[ "$IPV6" == "" ]]; then
+		echo "Your IP was updated at $(date) to IPv4: $IPV4"
+	elif [[ "$IPV4" == "" ]] && [[ "$IPV6" != "" ]]; then
+		echo "Your IP was updated at $(date) to IPv6: $IPV6"
+	else
+		echo "Your IP was updated at $(date) to IPv4: $IPV4 & IPv6 to: $IPV6"
+	fi
+elif [[ "$RESPONSE" = "OK" ]] && [[ "$IPCHANGE" = "NOCHANGE" ]]; then
+	echo "DuckDNS request at $(date) successful. IP(s) unchanged."
+else
+	echo -e "Something went wrong, please check your settings\nThe response returned was:\n$DRESPONSE\n"
+	exit 1
+fi
+'';
 
 in
 {
@@ -110,15 +110,15 @@ in
 				DynamicUser = true;
 			};
 			script = ''
-				export DUCKDNS_TOKEN=$(systemd-creds cat DUCKDNS_TOKEN_FILE)
-				${lib.optionalString (cfg.domains != null) ''
-					export DUCKDNS_DOMAINS='${lib.strings.concatStringsSep "," cfg.domains}'
-				''}
-				${lib.optionalString (cfg.domainsFile != null) ''
-					export DUCKDNS_DOMAINS=$(systemd-creds cat DUCKDNS_DOMAINS_FILE | sed -z 's/\n/,/g')
-				''}
-				exec ${lib.getExe duckdns}
-			'';
+export DUCKDNS_TOKEN=$(systemd-creds cat DUCKDNS_TOKEN_FILE)
+${lib.optionalString (cfg.domains != null) ''
+	export DUCKDNS_DOMAINS='${lib.strings.concatStringsSep "," cfg.domains}'
+''}
+${lib.optionalString (cfg.domainsFile != null) ''
+	export DUCKDNS_DOMAINS=$(systemd-creds cat DUCKDNS_DOMAINS_FILE | sed -z 's/\n/,/g')
+''}
+exec ${lib.getExe duckdns}
+'';
 		};
 	};
 

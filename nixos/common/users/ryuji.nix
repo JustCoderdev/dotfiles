@@ -27,51 +27,51 @@ in
 		];
 
 		# system.activationScripts."link_dotfiles".text = ''
-		# 	function link {
-		# 		from="$1"; from_filename="''${from##/*/}";
-		# 		to="$2"; to_filename="''${3:-$from_filename}";
+# 	function link {
+# 		from="$1"; from_filename="''${from##/*/}";
+# 		to="$2"; to_filename="''${3:-$from_filename}";
 
-		# 		# If file exists and is link
-		# 		if [ -L "''${to}/''${to_filename}" ]; then
-		# 			unlink "''${to}/''${to_filename}"
-		# 			echo "[WARN] Unlinking ''${to}/''${to_filename}"
-		# 		fi
+# 		# If file exists and is link
+# 		if [ -L "''${to}/''${to_filename}" ]; then
+# 			unlink "''${to}/''${to_filename}"
+# 			echo "[WARN] Unlinking ''${to}/''${to_filename}"
+# 		fi
 
-		# 		# If file exists
-		# 		if [ -e "''${to}/''${to_filename}" ]; then
-		# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
-		# 			return 0; # Must be 0 to avoid triggering -e
-		# 		fi
+# 		# If file exists
+# 		if [ -e "''${to}/''${to_filename}" ]; then
+# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
+# 			return 0; # Must be 0 to avoid triggering -e
+# 		fi
 
-		# 		# Link
-		# 		if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-		# 			echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
-		# 		else
-		# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
-		# 		fi
-		# 	}
+# 		# Link
+# 		if ln -snf "''${from}" "''${to}/''${to_filename}"; then
+# 			echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
+# 		else
+# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
+# 		fi
+# 	}
 
-		# 	# Dotfiles
-		# 	echo ""
-		# 	echo "Linking Dotfiles"
-		# 	echo "----------------------------"
-		# 	link "${dpath}/alacritty"               "${cpath}"  # Alacritty
-		# 	link "${dpath}/clangd"                  "${cpath}"  # Clang
-		# 	link "${dpath}/i3"                      "${cpath}"  # i3
-		# 	link "${dpath}/waybar"                  "${cpath}"  # Waybar
+# 	# Dotfiles
+# 	echo ""
+# 	echo "Linking Dotfiles"
+# 	echo "----------------------------"
+# 	link "${dpath}/alacritty"               "${cpath}"  # Alacritty
+# 	link "${dpath}/clangd"                  "${cpath}"  # Clang
+# 	link "${dpath}/i3"                      "${cpath}"  # i3
+# 	link "${dpath}/waybar"                  "${cpath}"  # Waybar
 
-		# 	# Setting home links
-		# 	link "${dpath}/clangd/.clang-format"    "${uhome}"  # Clang format
-		# 	link "${dpath}/emacs/.emacs"            "${uhome}"  # Emacs
-		# 	link "${dpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
-		# 	link "${dpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
+# 	# Setting home links
+# 	link "${dpath}/clangd/.clang-format"    "${uhome}"  # Clang format
+# 	link "${dpath}/emacs/.emacs"            "${uhome}"  # Emacs
+# 	link "${dpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
+# 	link "${dpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
 
-		# 	# Setting weird links
-		# 	mkdir -p "${cpath}/nvim"
-		# 	chown ${uname}:users "${cpath}/nvim"
-		# 	link "${dpath}/nvim" "${cpath}/nvim" "${uname}" # Nvim
-		# 	echo ""
-		# '';
+# 	# Setting weird links
+# 	mkdir -p "${cpath}/nvim"
+# 	chown ${uname}:users "${cpath}/nvim"
+# 	link "${dpath}/nvim" "${cpath}/nvim" "${uname}" # Nvim
+# 	echo ""
+# '';
 
 		users.users.${uname} = {
 			name = uname;

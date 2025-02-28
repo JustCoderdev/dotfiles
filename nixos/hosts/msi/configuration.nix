@@ -7,10 +7,10 @@
 pactl load-module module-null-sink sink_name=MCVirtualSink sink_properties="device.description='Minecraft\ Virtual\ Sink'"
 pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
 
-#					load-module module-combine-sink
-#					load-module module-null-sink sink_name=virtmic sink_properties=device.description=Virtual_Microphone_Sink
-#					load-module module-remap-source master=virtmic.monitor source_name=virtmic source_properties=device.description=Virtual_Microphone
-		'';
+# load-module module-combine-sink
+# load-module module-null-sink sink_name=virtmic sink_properties=device.description=Virtual_Microphone_Sink
+# load-module module-remap-source master=virtmic.monitor source_name=virtmic source_properties=device.description=Virtual_Microphone
+'';
 	};
 
 	# Nvidia support

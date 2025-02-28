@@ -1,7 +1,7 @@
 {
 	username = "ryuji";
 
-	dotfiles_path = "/.dotfiles";
+	dotfiles_path = "/home/ryuji/.config/dotfiles";
 
 	special_pkgs = {
 		insecure = [ "electron-24.8.6" "python-2.7.18.6"  ];

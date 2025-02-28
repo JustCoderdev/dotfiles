@@ -35,7 +35,6 @@ else
 	export HOSTNAME="${HOST_INPUT}"
 fi
 
-
 # Check differences
 echo -ne "Analysing changes..."
 git restore --staged .
@@ -115,11 +114,11 @@ echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 echo -ne "\n"
 
-echo -e "nixos-rebuild switch --show-trace --fallback --max-jobs \"${hprocs}\" --flake \".#${HOST_SHELL}\" --option substituters \"${substituters}\"\n"
+echo -e "nixos-rebuild switch --max-jobs \"${hprocs}\" --flake \".#${HOSTNAME}\" --option substituters \"${substituters}\"\n"
 
 set +o pipefail # Disable pipafail since we check ourselves
 # shellcheck disable=SC2024 #ah the irony
-sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOST_SHELL}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
+sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOSTNAME}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
 exit_code="${PIPESTATUS[0]}"
 set -o pipefail # Re-enable pipefail
 
@@ -140,7 +139,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	## Commit changes
 	if $had_changes && $want_commit; then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-		message="NixOS build ${HOST_SHELL}#${generation}"
+		message="NixOS build ${HOSTNAME}#${generation}"
 
 		read -rp "${message}: " commit_msg
 		message="${message}: ${commit_msg}"

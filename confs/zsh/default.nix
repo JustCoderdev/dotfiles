@@ -1,4 +1,4 @@
-{ ... }:
+{ settings, ... }:
 
 {
 	programs.zsh = {
@@ -6,10 +6,17 @@
 		completionInit = "";
 
 		initExtra = ''
-			export DOT_NIXOS=1;
-			export DOT_FILES="/.dotfiles"
-			source "''${DOT_FILES}/confs/zsh/.zshrc"
-		'';
+export DOT_NIXOS=1;
+export DOT_FILES="/home/ryuji/.config/dotfiles"
+source "''${DOT_FILES}/confs/zsh/.zshrc"
+'';
+
+# if [ -z "''${DOT_FILES:-}" ]; then
+# 	echo -e "\033[31mUnknown dotfiles path\033[0m"
+# 	echo -e "Set DOT_FILES environmental variable in shell"
+# else
+# fi
+
 	};
 
 	home.file = {

@@ -217,6 +217,13 @@ cd ${DOT_FILES}/nixos/secrets
 echo "xyz" > duckdns.token
 ```
 
+- MDADM discord hook
+
+```
+cd ${DOT_FILES}/nixos/secrets
+echo "xyz" > mdadmhook.url
+```
+
 - nix-serve (nix.nix)
 
 ```
@@ -296,3 +303,36 @@ cat /sys/class/power_supply/<BAT>/charge_now
 cat /sys/class/power_supply/<BAT>/charge_full
 ```
 
+### Setup mdadm raid
+
+Guides
+
+- <https://www.jeffgeerling.com/blog/2021/htgwa-create-raid-array-linux-mdadm>
+- <https://www.youtube.com/watch?v=CJ0ed38N8-s>
+
+```bash
+# Create raid
+sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1
+cat /proc/mdstat  # check creation progress
+
+# Save raid information
+sudo mdadm --detail --scan > /etc/mdadm/mdadm.conf  # save configuration
+
+# File System
+sudo mkfs.ext4 /dev/md0
+blkid # check if md0 shows up
+
+# Mount fs
+```
+
+### Mdadm maintenance
+
+src <https://www.thomas-krenn.com/en/wiki/Mdadm_recovery_and_resync>
+
+```bash
+# hot remove
+sudo mdadm --manage /dev/md0 -r /dev/sdc1
+
+# add
+sudo mdadm --manage /dev/md0 -a /dev/sdc1
+```

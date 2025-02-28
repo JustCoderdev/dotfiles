@@ -38,13 +38,13 @@
 				jcconfs.nixosModules.home { inherit (settings) username; }
 				./nixos
 			]
-			++
-			(let diskopath = "${dotfiles}/nixos/hosts/${settings.hostname}/disko.nix"; in
-				lib.optionals (lib.pathExists diskopath) [
-					disko.nixosModules.disko
-					diskopath
-				]
-			)
+#			++
+#			(let diskopath = "${dotfiles}/nixos/hosts/${settings.hostname}/disko.nix"; in
+#				lib.optionals (lib.pathExists diskopath) [
+#					disko.nixosModules.disko
+#					diskopath
+#				]
+#			)
 		);
 
 		systemBuilder = (
