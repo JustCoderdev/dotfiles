@@ -82,7 +82,16 @@ in
 
 			# packages = with pkgs; [ ];
 			extraGroups = [ "networkmanager" "wheel" ];
+
+			openssh.authorizedKeys.keys = [
+				# msi
+				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
+
+				# acer
+				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
+			];
 		};
+
 
 		# List packages installed in system profile.
 		environment.systemPackages = (lib.mkMerge [

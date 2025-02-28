@@ -252,14 +252,25 @@ ssh-add "~/.ssh/id_${HOST}_${USER}"
 
 ## Emergency wiki
 
-### Recover rollback dotfiles
+### Enable flakes in nix system
 
 ```bash
-# Get backup path
+cd ~/.config/nix/nix.conf # or /etc/nix/nix.conf
+experimental-features = nix-command flakes
+```
+
+### Recover rollback dotfiles
+
+Get backup path
+
+```bash
 nix derivation show -r /run/current-system \
         | grep --color -E '"out": "/nix/store/.*dotfiles-backup"'
+```
 
-# Open backup path (EXPERIMENTAL)
+Open backup path (EXPERIMENTAL)
+
+```bash
 current-dotfiles
 ```
 

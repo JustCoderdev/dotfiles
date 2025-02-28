@@ -133,7 +133,24 @@
 				# 	type = "app";
 				# 	program = "...";
 				# };
+				test-iso-x86_64 = {
+					type = "app";
+					program = "nix-shell -p qemu --command 'qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso'";
+				};
 			}
+			//
+			builtins.listToAttrs (
+				listAllSystems (
+					system:
+					{
+						name = "build-iso-${system}";
+						value = {
+							type = "app";
+							program = "nix build .#nixosConfigurations.iso-${system}.config.system.build.isoImage";
+						};
+					}
+				)
+			)
 		);
 
 		# nix develop

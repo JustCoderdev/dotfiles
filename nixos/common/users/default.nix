@@ -3,6 +3,7 @@
 {
 	imports = [
 		./ryuji.nix
+		./neko.nix
 	];
 
 	options = {
@@ -35,6 +36,14 @@
 #					description = "Add developer sofware to environment packages";
 #					default = false;
 #				};
+			};
+
+			neko = {
+				enable = lib.mkOption {
+					type = lib.types.bool;
+					description = "Enable remote viewer";
+					default = true;
+				};
 			};
 		};
 	};
