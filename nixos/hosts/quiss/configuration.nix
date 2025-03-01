@@ -25,10 +25,11 @@ PROGRAM curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \
 '';
 	};
 
-#	fileSystems."/mnt/md0" = {
-#		device = "/dev/disk/by-uuid/3e1b8cbb-9c23-4d61-a423-65245733be57";
-#		fsType = "ext4";
-#	};
+	fileSystems."/mnt/md0" = {
+		device = "/dev/disk/by-uuid/3e1b8cbb-9c23-4d61-a423-65245733be57";
+		fsType = "ext4";
+		options = [ "nofail" ];
+	};
  
 	# DNS
 	
