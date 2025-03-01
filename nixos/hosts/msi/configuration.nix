@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+	quiss-ip = "10.0.0.14";
+in
+
 {
 	# Create MC Virtual Sink
 	hardware.pulseaudio = {
@@ -40,7 +44,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 	networking = {
 
 		hosts = {
-			"10.0.0.11"   = [ "nixcache.local" ]; # Quiss
+			"${quiss-ip}" = [ "nixcache.local" ]; # Quiss
 		};
 
 #		# Network switching
@@ -130,19 +134,19 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 				{ # 10.0.0.11:22 >>#<< 192.168.7.142:4022
 					proto = "tcp";
 					sourcePort = 4022;
-					destination = "10.0.0.11:22";
+					destination = "${quiss-ip}:22";
 				}
 
 				{ # 10.0.0.11:80 >>#<< 192.168.7.142:4080
 					proto = "tcp";
 					sourcePort = 4080;
-					destination = "10.0.0.11:80";
+					destination = "${quiss-ip}:80";
 				}
 
 				{ # 10.0.0.11:443 >>#<< 192.168.7.142:4443
 					proto = "tcp";
 					sourcePort = 4443;
-					destination = "10.0.0.11:443";
+					destination = "${quiss-ip}:443";
 				}
 			];
 
