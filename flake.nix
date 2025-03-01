@@ -16,13 +16,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		disko = {
-			url = "github:nix-community/disko/v1.11.0";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		# disko = {
+		# 	url = "github:nix-community/disko/v1.11.0";
+		# 	inputs.nixpkgs.follows = "nixpkgs";
+		# };
 	};
 
-	outputs = { self, nixpkgs, jcbin, jcconfs, disko }@inputs:
+	outputs = { self, nixpkgs, jcbin, jcconfs }@inputs:
 	let
 		dotfiles = ./.;
 
