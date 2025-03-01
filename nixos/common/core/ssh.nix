@@ -26,10 +26,10 @@ Host github.com
 
 # SSH
 # <https://unix.stackexchange.com/questions/494483/specifying-an-identityfile-with-ssh>
-#Host ${hostname}
-#	User ${username}
-#	IdentitiesOnly yes # Force to use only this identity file
-#	IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
+Host *
+	User ${username}
+	IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
+	IdentitiesOnly yes # Force to use only this identity file
 '';
 	};
 
