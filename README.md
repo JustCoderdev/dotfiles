@@ -129,7 +129,7 @@ nix build .#${USER}-activation
 - With NixOS [BROKEN]
 
 ```bash
-repo='https://github.com/JustCoderdev/dotfiles
+repo='https://github.com/JustCoderdev/dotfiles'
 wget "${repo}/blob/nixos-integration/install.sh" -O - | sh
 ```
 
