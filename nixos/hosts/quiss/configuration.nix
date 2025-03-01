@@ -4,6 +4,7 @@ let
 	inherit (settings) dotfiles_path;
 	mdadmhook-url-path = dotfiles_path + "/nixos/secrets/mdadmhook.url";
 	duckdns-token-path = dotfiles_path + "/nixos/secrets/duckdns.token";
+	cftunnel-cred-path = dotfiles_path + "/nixos/secrets/cloudflare.cred";
 in
 
 {
@@ -30,7 +31,22 @@ PROGRAM curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \
 		fsType = "ext4";
 		options = [ "nofail" ];
 	};
- 
+
+	# TUNNEL
+
+	# services.cloudflared = {
+	# 	enable = true;
+	# 	tunnels."local" = {
+	# 		credentialsFile = "${cftunnel-cred-path}";
+	# 		default = "http_status:404";
+	# 		# ingress = {
+	# 		# 	"*.domain1.com" = {
+	# 		# 		service = "http://localhost:80";
+	# 		# 	};
+	# 		# };
+	# 	};
+	# };
+
 	# DNS
 	
 	# services.duckdns = {
