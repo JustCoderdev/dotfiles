@@ -4,7 +4,7 @@
 	inputs = {
 
 		nixpkgs.url = "nixpkgs/nixos-24.11";
-		# nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+		nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
 		jcbin = {
 			url = "path:./bin";
@@ -22,7 +22,7 @@
 		# };
 	};
 
-	outputs = { self, nixpkgs, jcbin, jcconfs }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs }@inputs:
 	let
 		dotfiles = ./.;
 
@@ -55,10 +55,18 @@
 					inherit system;
 					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
 				};
+				pkgs-unstable = import nixpkgs-unstable {
+					inherit system;
+					config = let spkgs = settings.special_pkgs; in {
+						permittedInsecurePackages = spkgs.insecure;
+						allowUnfreePredicate = pkg: builtins.elem
+							(nixpkgs.lib.getName pkg) spkgs.unfree;
+					};
+				};
 			in
 			lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
+				specialArgs = { inherit inputs pkgs-unstable settings dotfiles darnix-overlay; };
 				modules = (getModules settings) ++ [
 					./nixos/hosts/${hostname}/hardware-configuration.nix
 					./nixos/hosts/${hostname}/boot.nix

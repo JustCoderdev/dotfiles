@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
 let
-	quiss-ip = "10.0.0.14";
+	quiss-ip  = "10.0.0.14";
+	quiss-mac = "f4:6d:04:99:dc:9a";
+	quiss-wake-pkg = pkgs.writeShellScriptBin "quiss-wake" "wakeonlan ${quiss-mac}";
 in
 
 {
@@ -66,21 +68,25 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 #		};
 	};
 
+
+
 	# Install setup software
-	environment.systemPackages = with pkgs; [
-		piper   # Mouse software
+	environment.systemPackages = (with pkgs; [
+		piper      # Mouse software
+		wakeonlan  # Wakeonlan utility
+	]) ++ [
+		quiss-wake-pkg  # Wakeup Quiss
 	];
+
 
 	# Mouse service
 	services.ratbagd.enable = true;
-
 
 
 	services.nginx.enable = true;
 	services.nginx.virtualHosts."msi.host.local" = {
 		root = "/var/www/msi";
 	};
-
 
 
 #	# Network routing
@@ -111,7 +117,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.14,1h" ];
 			dhcp-host = [
 				"msi,10.0.0.1"
-				"f4:6d:04:99:dc:9a,quiss,infinite"
+				"${quiss-mac},quiss,infinite"
 			];
 			dhcp-option = "option:router,10.0.0.1";
 
