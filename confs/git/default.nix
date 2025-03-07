@@ -5,6 +5,6 @@
 
 	home.file = {
 		".gitconfig".source = ./.gitconfig;
-		".gititnore_global".source = ./.gitignore_global;
+		".gitignore_global".source = ./.gitignore_global;
 	};
 }

@@ -109,7 +109,7 @@ in
 				audacity
 				obs-studio
 
-				baobab  # disk space
+				# baobab  # disk space
 				piper   # Mouse software
 			])
 			(lib.mkIf cfg.image-editing (with pkgs; [

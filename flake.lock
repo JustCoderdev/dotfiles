@@ -325,7 +325,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-GWryZ8x6hXKn4nR7uEHy4OzC8Tjg77rZLSX4oPsOJEc=",
+        "narHash": "sha256-ntBF7Zqf8yro9/Y+EknW9et0MUgVvUO83hvY3iUsgRw=",
         "path": "./bin",
         "type": "path"
       },
@@ -345,7 +345,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-AAWeaFzXLZld+GEunVAGty658srYzhSTOIqxaGMUpfs=",
+        "narHash": "sha256-PPL8ypRqdo5dSOFNiv1YjYc6UY1LaLzZhM1nzuIUyIQ=",
         "path": "./confs",
         "type": "path"
       },

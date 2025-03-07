@@ -15,19 +15,10 @@ pushd "${DOT_FILES}/" > /dev/null || exit
 shopt -s globstar
 
 
-# Update host
-if [ -f "./flake.nix" ]; then
-	HOST_FLAKE=$(awk '/_hostname = / {print $3}' ./flake.nix)
-	# shellcheck disable=SC2001
-	HOST_FLAKE=$(echo "${HOST_FLAKE}" | sed 's/"\(.*\)";/\1/')
-else
-	HOST_FLAKE=""
-fi
-
+# Check for input
 HOST_SHELL="${HOSTNAME:-}"
 HOST_INPUT="${1:-}"
 
-## Check for input
 if [ -z "${HOST_INPUT}" ]; then
 	echo -e "Hostname not passed, defaulting to \033[32m#${HOST_SHELL}\033[0m"
 else
@@ -36,7 +27,7 @@ else
 fi
 
 # Check differences
-echo -ne "Analysing changes..."
+echo -ne "\nAnalysing changes..."
 git restore --staged .
 if git diff --quiet -- .; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
@@ -64,14 +55,26 @@ else
 	fi
 
 	echo -ne "\n"
-	git add .
 fi
+
 
 
 # Rebuild system
 echo -n "Rebuilding NixOS... "
 echo -ne "\033[?1049h\033[2J\033[H" # enter alt-buff and clear
 echo -e "Rebuilding NixOS...\n"
+
+
+## Update flake
+echo -e "Locking jcbin and jcconfs...";
+cd ./bin
+nix flake lock
+cd ../confs
+nix flake lock
+cd ..
+nix flake update jcbin jcconfs
+git add .
+echo "";
 
 
 ## Check for online substituters
