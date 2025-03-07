@@ -18,18 +18,12 @@
 			"steam-run"
 			"steamcmd"
 
-			"Oracle_VM_VirtualBox_Extension_Pack"
-
-			"modrinth-app-unwrapped"
-			"modrinth-app"
-
-			"unityhub"
+			"minecraft-server"
 
 			"obsidian"
 			"anytype"
 
 			"google-chrome"
-			"improved-tube"
 			"davinci-resolve"
 			"discord"
 		];

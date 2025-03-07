@@ -4,12 +4,12 @@
 { pkgs, lib, config, ... }:
 
 let
-	cfg = config.services.fusuma;
+	cfg = config.unofficial.services.fusuma;
 	configFile = pkgs.writeText "config.yml" cfg.settings;
 in
 
 {
-	options.services.fusuma = {
+	options.unofficial.services.fusuma = {
 		enable = lib.mkEnableOption "Enable fusuma service";
 
 		package = lib.mkOption {

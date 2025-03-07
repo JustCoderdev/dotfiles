@@ -37,8 +37,8 @@
 	system = {
 		desktop = {
 			hyprland.enable = false;
-			i3.enable = true;
-			thunar.enable = true;
+			i3.enable = false;
+			thunar.enable = false;
 			xfce.enable = false;
 		};
 

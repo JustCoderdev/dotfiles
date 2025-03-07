@@ -16,13 +16,18 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		nix-minecraft = {
+			url = "github:Infinidoge/nix-minecraft";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		# disko = {
 		# 	url = "github:nix-community/disko/v1.11.0";
 		# 	inputs.nixpkgs.follows = "nixpkgs";
 		# };
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
 	let
 		dotfiles = ./.;
 

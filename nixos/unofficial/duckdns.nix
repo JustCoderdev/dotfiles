@@ -4,7 +4,7 @@
 { config, pkgs, lib, ... }:
 
 let
-	cfg = config.services.duckdns;
+	cfg = config.unofficial.services.duckdns;
 	duckdns = pkgs.writeShellScriptBin "duckdns" ''
 DRESPONSE=$(curl -sS --max-time 60 --no-progress-meter -k -K- <<< "url = \"https://www.duckdns.org/update?verbose=true&domains=$DUCKDNS_DOMAINS&token=$DUCKDNS_TOKEN&ip=\"")
 IPV4=$(echo "$DRESPONSE" | awk 'NR==2')
@@ -30,7 +30,7 @@ fi
 
 in
 {
-	options.services.duckdns = {
+	options.unofficial.services.duckdns = {
 		enable = lib.mkEnableOption "DuckDNS Dynamic DNS Client";
 
 		tokenFile = lib.mkOption {

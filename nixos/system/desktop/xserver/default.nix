@@ -37,15 +37,16 @@ in
 	};
 
 	config =  {
-		assertions = [
-			{
-				assertion = (cfg.xfce.enable || cfg.i3.enable) && !config.system.desktop.hyprland.enable;
+		assertions = (
+			lib.lists.optionals config.system.desktop.hyprland.enable [ {
+				assertion = !(cfg.xfce.enable || cfg.i3.enable);
 				message = "Cannot enable wayland support if xfce or i3 is enabled";
-			}
-			{
-				assertion = cfg.thunar.enable && (cfg.xfce.enable || cfg.i3.enable);
+			} ]
+		) ++ (
+			lib.lists.optionals cfg.thunar.enable [ {
+				assertion = cfg.xfce.enable || cfg.i3.enable;
 				message = "Cannot enable thunar if xfce or i3 aren't enabled";
-			}
-		];
+			} ]
+		);
 	};
 }

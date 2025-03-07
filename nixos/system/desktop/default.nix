@@ -35,7 +35,7 @@ in
 		};
 
 
-		services.fusuma = let
+		unofficial.services.fusuma = let
 			prefix = if i3.enable then "i3"
 				else if hyprland.enable then "hyprland"
 				else abort "Fusuma: no desktop environment enabled";
