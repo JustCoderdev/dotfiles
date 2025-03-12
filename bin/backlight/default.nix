@@ -10,10 +10,10 @@ let
 		# Compilation - Runtime dependencies
 		nativeBuildInputs = [ pkgs.clang ];
 		buildInputs = [ ];
-
+		
 		buildPhase = ''
 clang -xc -Wall -Wextra -Werror -Wpedantic \
-	-pedantic -pedantic-errors -std=c89 \ 
+	-pedantic -pedantic-errors -std=c89 \
 	-fcolor-diagnostics -lm \
 	"backlight.c" -o "backlight"
 chmod +x "backlight"
