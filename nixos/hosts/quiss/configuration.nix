@@ -25,7 +25,7 @@ in
 	# 	../../unofficial/duckdns.nix
 	];
 
-	nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 
 
 	# Create service group
@@ -68,10 +68,10 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# WAKE ON LAN
 
-	environment.systemPackages = with pkgs; [ ethtool ];
-	networking.interfaces = {
-		"eno1".wakeOnLan.enable = true;
-	};
+	# environment.systemPackages = with pkgs; [ ethtool ];
+	# networking.interfaces = {
+	# 	"eno1".wakeOnLan.enable = true;
+	# };
 
 	# MINECRAFT SERVERS
 
@@ -178,7 +178,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 			root = "/var/www/quiss";
 
 			locations = {
-				"/prowlerr/".proxyPass = "http://127.0.0.1:9696";
+				# "/prowlerr/".proxyPass = "http://127.0.0.1:9696";
 
 				# "^~ /jellyfin/" = {
 				# 	proxyPass = "http://127.0.0.1:8096/";
@@ -217,62 +217,115 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# TORRENT TRACKER
 
-	services.jackett = {
-		package = pkgs-unstable.jackett;
-		inherit openFirewall;
-		enable = true;
+	# services.jackett = {
+	# 	package = pkgs-unstable.jackett;
+	# 	inherit openFirewall;
+	# 	enable = true;
 
-		dataDir = config-dir + "/jackett";
+	# 	dataDir = config-dir + "/jackett";
 
-		group = serv-group;
-	};
+	# 	group = serv-group;
+	# };
 
 	# TORRENT TRACKER AND INDEXER
 
-	unofficial.services.prowlarr = {
-		inherit openFirewall;
-		enable = true;
+	# unofficial.services.prowlarr = {
+	# 	inherit openFirewall;
+	# 	enable = true;
 
-		reverseProxyURL = "/prowlarr";
+	# 	reverseProxyURL = "/prowlarr";
 
-		dataDir = config-dir + "/prowlarr";
+	# 	dataDir = config-dir + "/prowlarr";
 
-		group = serv-group;
-	};
+	# 	group = serv-group;
+	# };
 
 	# MOVIE DOWNLOADER
 
-	services.radarr = {
-		package = pkgs-unstable.radarr;
-		inherit openFirewall;
-		enable = true;
+	# services.radarr = {
+	# 	package = pkgs-unstable.radarr;
+	# 	inherit openFirewall;
+	# 	enable = true;
 
-		dataDir = config-dir + "/radarr";
+	# 	dataDir = config-dir + "/radarr";
 
-		group = serv-group;
-	};
+	# 	group = serv-group;
+	# };
 
 	# SERIE DOWNLOADER
 
-	services.sonarr = {
-		inherit openFirewall;
-		enable = true;
+	# services.sonarr = {
+	# 	inherit openFirewall;
+	# 	enable = true;
 
-		dataDir = config-dir + "/sonarr";
+	# 	dataDir = config-dir + "/sonarr";
 
-		group = serv-group;
-	};
+	# 	group = serv-group;
+	# };
 
 	# MEDIA PLAYER
 
-	services.jellyfin = {
-		inherit openFirewall;
+	# services.jellyfin = {
+	# 	inherit openFirewall;
+	# 	enable = true;
+
+	# 	dataDir = data-dir + "/jellyfin";
+	# 	configDir = config-dir + "/jellyfin";
+	# 	logDir = log-dir + "/jellyfin";
+
+	# 	group = serv-group;
+	# };
+	
+	# Network
+
+	networking = {
+		firewall.trustedInterfaces = [ "enp8s2" ];
+		networkmanager.unmanaged = [ "interface-name:enp8s2" ];
+
+		interfaces.enp8s2 = {
+			useDHCP = false;
+			ipv4.addresses = [
+				{
+					address = "192.168.1.25";
+					prefixLength = 24;
+				}
+			];
+		};
+	};
+
+	# WIRESHARK 
+
+	programs.wireshark.enable = true;
+	environment.systemPackages = with pkgs; [ wireshark qemu ];
+	users.users.${settings.username}.extraGroups = [ "wireshark" "libvirtd" ];
+	# users.groups.wireshark = { };
+
+	# KVM
+
+	#environment.systemPackages = with pkgs; [ qemu ];
+	programs = {
+		virt-manager.enable = true;
+	};
+
+	# users.users.${settings.username}.extraGroups = [ "libvirtd" ];
+	virtualisation.libvirtd = {
 		enable = true;
-
-		dataDir = data-dir + "/jellyfin";
-		configDir = config-dir + "/jellyfin";
-		logDir = log-dir + "/jellyfin";
-
-		group = serv-group;
+		allowedBridges = [ "virbr0" "virbr1" ];
+		qemu = {
+			package = pkgs.qemu_kvm;
+			runAsRoot = true;
+			swtpm.enable = true;
+			ovmf = {
+				enable = true;
+				packages = [
+					(
+						pkgs.OVMF.override {
+							secureBoot = true;
+							tpmSupport = true;
+						}
+					).fd
+				];
+			};
+		};
 	};
 }

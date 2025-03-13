@@ -61,7 +61,7 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS... "
-echo -ne "\033[?1049h\033[2J\033[H" # enter alt-buff and clear
+echo -ne "\033[?1049h\033[2J" # enter alt-buff # and clear \033[H
 echo -e "Rebuilding NixOS...\n"
 
 
