@@ -13,7 +13,7 @@ let
 
 	data-dir = raid-mount + "/data";
 	game-dir = data-dir + "/game";
-	
+
 	serv-group = "maid";
 	openFirewall = true;
 in
@@ -81,7 +81,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 		dataDir = "${game-dir}/minecraft/";
 
-		servers = 
+		servers =
 		let
 			# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
 			default-properties = {
@@ -158,7 +158,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	# };
 
 	# DNS
-	
+
 	# services.duckdns = {
 	# 	enable = true;
 	# 	domains = [ "thefoxburrow" ];
@@ -275,25 +275,33 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# 	group = serv-group;
 	# };
-	
+
 	# Network
 
 	networking = {
+		useDHCP = false;
+
 		firewall.trustedInterfaces = [ "enp8s2" ];
 		networkmanager.unmanaged = [ "interface-name:enp8s2" ];
 
-		interfaces.enp8s2 = {
-			useDHCP = false;
-			ipv4.addresses = [
-				{
+		interfaces = {
+			br0.useDHCP = true;  # eno1   -> gateway
+			br1 = {              # enp8s2 -> display
+				useDHCP = false;
+				ipv4.addresses = [ {
 					address = "192.168.1.25";
 					prefixLength = 24;
-				}
-			];
+				} ];
+			};
+		};
+
+		bridges = {
+			br0.interfaces = [ "eno1" ];
+			br1.interfaces = [ "enp8s2" ];
 		};
 	};
 
-	# WIRESHARK 
+	# WIRESHARK
 
 	programs.wireshark.enable = true;
 	environment.systemPackages = with pkgs; [ wireshark qemu ];

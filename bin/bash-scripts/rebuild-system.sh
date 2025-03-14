@@ -61,7 +61,7 @@ fi
 
 # Rebuild system
 echo -n "Rebuilding NixOS... "
-echo -ne "\033[?1049h\033[2J" # enter alt-buff # and clear \033[H
+echo -ne "\033[?1049h\033[2J\033[H" # enter alt-buff and clear
 echo -e "Rebuilding NixOS...\n"
 
 
@@ -117,13 +117,22 @@ echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 echo -ne "\n"
 
-echo -e "nixos-rebuild switch --max-jobs \"${hprocs}\" --flake \".#${HOSTNAME}\" --option substituters \"${substituters}\"\n"
 
-set +o pipefail # Disable pipafail since we check ourselves
-# shellcheck disable=SC2024 #ah the irony
-sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOSTNAME}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
-exit_code="${PIPESTATUS[0]}"
-set -o pipefail # Re-enable pipefail
+if $want_commit; then
+	echo -e "nixos-rebuild switch --max-jobs \"${hprocs}\" --flake \".#${HOSTNAME}\" --option substituters \"${substituters}\"\n"
+	set +o pipefail # Disable pipafail since we check ourselves
+	# shellcheck disable=SC2024 #ah the irony
+	sudo nixos-rebuild switch --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOSTNAME}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
+	exit_code="${PIPESTATUS[0]}"
+	set -o pipefail # Re-enable pipefail
+else
+	echo -e "nixos-rebuild test --max-jobs \"${hprocs}\" --flake \".#${HOSTNAME}\" --option substituters \"${substituters}\"\n"
+	set +o pipefail # Disable pipafail since we check ourselves
+	# shellcheck disable=SC2024 #ah the irony
+	sudo nixos-rebuild test --show-trace --fallback --max-jobs "${hprocs}" --flake ".#${HOSTNAME}" --option substituters "${substituters}" 2>&1 | tee .nixos-switch.log
+	exit_code="${PIPESTATUS[0]}"
+	set -o pipefail # Re-enable pipefail
+fi
 
 if [[ "${exit_code}" == 0 ]]; then
 echo  -e "\n\033[34mNixOS rebuild completed\033[0m (code: $exit_code)"

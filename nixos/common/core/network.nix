@@ -6,6 +6,7 @@
 		hostName = settings.hostname;
 		domain = "host.local";
 
+		dhcpcd.enable = false;
 		networkmanager.enable = true;
 
 		# Enable wireless support via wpa_supplicant.
