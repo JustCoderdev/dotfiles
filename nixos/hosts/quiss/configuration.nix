@@ -281,19 +281,19 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	# Network
 
 	# Fix hangup
-	# systemd.network.wait-online.enable = false;
-	# boot.initrd.systemd.network.wait-online.enable = false;
+	systemd.network.wait-online.enable = false;
+	boot.initrd.systemd.network.wait-online.enable = false;
 
 	networking = {
 		useDHCP = false;
 
 		nftables.enable = false;
-		networkmanager.unmanaged = [ "interface-name:enp8s2" ];
+		networkmanager.unmanaged = [ "interface-name:eno1" "interface-name:enp8s2" ];
 		firewall.trustedInterfaces = [ "enp8s2" ];
 
 		interfaces = {
-			eno1.useDHCP = true;
-			enp8s0.useDHCP = true;
+			eno1.useDHCP = false;
+			enp8s0.useDHCP = false;
 
 			br0.useDHCP = true;      # eno1   -> gateway
 			br1 = {
