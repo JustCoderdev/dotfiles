@@ -32,6 +32,8 @@ git restore --staged .
 if git diff --quiet -- .; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
 	had_changes=false
+	want_commit=false
+
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
 	# shopt -u globstar
 	# popd > /dev/null
