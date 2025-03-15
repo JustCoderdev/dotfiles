@@ -38,6 +38,8 @@
 
 			"192.168.7.168" = [ "quiss.host.local" ];
 			"10.0.0.14"     = [ "quiss.host.local" ];
+
+			"192.168.7.223" = [ "home-assistant.service.local" ];
 		};
 
 		# Configure proxy
