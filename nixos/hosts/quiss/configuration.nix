@@ -293,15 +293,6 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 		interfaces = {
 			# br0.useDHCP = true;      # eno1   -> gateway
-########################################################
-			br0 = {
-				useDHCP = false;
-				ipv4.addresses = [{
-					address = "192.168.7.69";
-					prefixLength = 24;
-				}];
-			};
-########################################################
 			br1 = {
 				useDHCP = false;
 				ipv4.addresses = [{  # enp8s2 -> display
