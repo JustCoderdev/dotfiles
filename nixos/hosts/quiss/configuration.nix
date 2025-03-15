@@ -59,8 +59,10 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 		"d   ${data-dir}                0775 root ${serv-group}"
 		"d   ${game-dir}                0775 root ${serv-group}"
-		"d   ${data-dir}/downloads      0775 root ${serv-group}"
 		"d   ${data-dir}/documents      0775 root ${serv-group}"
+
+		"d   ${data-dir}/downloads      0775 root ${serv-group}"
+
 		"d   ${data-dir}/media/movie    0775 root ${serv-group}"
 		"d   ${data-dir}/media/serie    0775 root ${serv-group}"
 		"d   ${data-dir}/music          0775 root ${serv-group}"

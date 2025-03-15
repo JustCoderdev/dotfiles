@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, settings, ... }:
 
 let
 	quiss-ip  = "10.0.0.14";
@@ -69,11 +69,42 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 	};
 
 
+	# VPN
+	# WG SETUP <https://wiki.nixos.org/w/index.php?title=WireGuard&mobileaction=toggle_view_desktop>
+	# P2P VPN <https://www.procustodibus.com/blog/2020/11/wireguard-point-to-point-config/>
+	# networking = {
+	# 	nat.internalInterfaces = [ "wg0" "eno1" ];
+	# 	firewall.allowedUDPPorts = [ 51820 80 ];
+
+	# 	wireguard = {
+	# 		enable = true;
+	# 		interfaces."wg0" = {
+
+	# 			ips = [ "10.0.1.1/24" ];
+	# 			listenPort = 51820;
+
+	# 			peers = [
+	# 				{ 
+	# 					name = "mobile";
+	# 					publicKey = "TDEa07WlhgPSQUm1Epzri8j4/+LSC8I1Suxoc9U8mWU=";
+	# 					allowedIPs = [ "10.0.1.0/24" ];
+	# 					persistentKeepalive = 25;
+	# 				}
+	# 			];
+
+	# 			# generatePrivateKeyFile = true;
+	# 			privateKeyFile = "/home/${settings.username}/.wireguard-keys/private";
+	# 		};
+	# 	};
+	# };
+
 
 	# Install setup software
 	environment.systemPackages = (with pkgs; [
 		piper      # Mouse software
 		wakeonlan  # Wakeonlan utility
+
+		# wireguard-tools # Wireguard tools :O
 	]) ++ [
 		quiss-wake-pkg  # Wakeup Quiss
 	];
@@ -83,6 +114,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 	services.ratbagd.enable = true;
 
 
+	networking.firewall.allowedUDPPorts = [ 80 ];
 	services.nginx.enable = true;
 	services.nginx.virtualHosts."msi.host.local" = {
 		root = "/var/www/msi";
@@ -113,16 +145,16 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 			no-resolv = true;
 			cache-size = 1000;
 
+			interface = "eno1";
+			no-hosts = true;
+
 			# dhcp
+			dhcp-option = "option:router,10.0.0.1";
 			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.14,1h" ];
 			dhcp-host = [
 				"msi,10.0.0.1"
 				"${quiss-mac},quiss,infinite"
 			];
-			dhcp-option = "option:router,10.0.0.1";
-
-			interface = "eno1";
-			no-hosts = true;
 		};
 	};
 
@@ -133,7 +165,7 @@ pactl load-module module-loopback source=MCVirtualSink.monitor sink=alsa_output.
 
 		nat = {
 			enable = true;
-			internalIPs = [ "10.0.0.0/24" ];
+			internalIPs = [ "10.0.0.0/24" "10.0.1.0/24" ];
 			internalInterfaces = [ "eno1" ];
 
 			forwardPorts = [

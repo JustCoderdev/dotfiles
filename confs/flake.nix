@@ -29,12 +29,13 @@
 
 	outputs = { self, nixpkgs, home-manager, stylix, nixd }@inputs:
 	let
+		wallpapers_path = ./.wallpapers;
+
 		getArgs = (
 			username:
 			{
-				inherit inputs nixd;
+				inherit inputs wallpapers_path nixd;
 				settings = import ./settings/${username}.nix;
-				wallpapers_path = ./.wallpapers;
 				confs_path = ./.;
 			}
 		);
@@ -61,6 +62,20 @@
 			}
 		);
 
+		stylixConfiguration = (
+			{ pkgs, settings, ... }:
+
+			let
+				settings.wallpapers_path = wallpapers_path;
+			in
+
+			{
+				imports = [
+					./standalone/stylix.nix
+				];
+			}
+		);
+
 		homeBuilder = (
 			username: system:
 			home-manager.lib.homeManagerConfiguration {
@@ -77,6 +92,7 @@
 	{
 		nixosModules = {
 			home = homeConfiguration;
+			stylix = stylixConfiguration;
 		};
 
 		homeConfigurations = {

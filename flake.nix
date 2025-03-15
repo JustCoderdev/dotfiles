@@ -16,6 +16,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		stylix = {
+			url = "github:danth/stylix/release-24.11";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		nix-minecraft = {
 			url = "github:Infinidoge/nix-minecraft";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +32,7 @@
 		# };
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, stylix, nix-minecraft }@inputs:
 	let
 		dotfiles = ./.;
 
@@ -41,6 +46,8 @@
 			settings: [
 				jcbin.nixosModules.all
 				jcconfs.nixosModules.home { inherit (settings) username; }
+				jcconfs.nixosModules.stylix
+				stylix.nixosModules.stylix
 				./nixos
 			]
 #			++

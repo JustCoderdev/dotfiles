@@ -66,7 +66,7 @@ bindsym $mod+Return  exec --no-startup-id alacritty
 bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute. REMEMBER TO PUSH ALL UNCOMMITTED CHANGES!' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
 bindsym $mod+Ctrl+l   exec --no-startup-id "dm-tool lock"
-bindsym $mod+Shift+s   exec coreshot -s "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
+bindsym $mod+Shift+s  exec coreshot -s "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
 #bindsym $mod+Ctrl+s  exec coreshot -f "/home/$USER/Pictures/screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
 
 
@@ -120,7 +120,7 @@ client.urgent           $bgColor  $RedColor    $whiteColor  $RedColor    $RedCol
 client.placeholder      $nilCol   $bgColor     $whiteColor  $nilCol      $bgColor
 
 # Set background color
-client.background                           $bgColor 
+client.background                           $bgColor
 exec_always --no-startup-id xsetroot -solid $bgColor
 
 
@@ -281,20 +281,20 @@ bar {
 	set $redColor    "#fb7979"
 
 	colors {
-		background #000000 
-		statusline $whiteColor 
-		separator  $bgColor 
-		
+		background #000000
+		statusline $whiteColor
+		separator  $bgColor
+
 		# <colorclass>     <border>     <background> <text>
-		focused_workspace  $blackColor  $blackColor  $whiteColor 
-		active_workspace   $bgColor     $bgColor     $grayColor 
-		inactive_workspace $bgColor     $bgColor     $grayColor  
-		urgent_workspace   $redColor    $bgColor     $grayColor 
-		binding_mode       $bgColor     $bgColor     $grayColor 
-		
-		# binding_mode       $redColor    $bgColor     $grayColor  
-		# binding_mode       $brRedColor  #000000      $brRedColor 
-		# binding_mode       $redColor    $redColor    $blackColor 
+		focused_workspace  $blackColor  $blackColor  $whiteColor
+		active_workspace   $bgColor     $bgColor     $grayColor
+		inactive_workspace $bgColor     $bgColor     $grayColor
+		urgent_workspace   $redColor    $bgColor     $grayColor
+		binding_mode       $bgColor     $bgColor     $grayColor
+
+		# binding_mode       $redColor    $bgColor     $grayColor
+		# binding_mode       $brRedColor  #000000      $brRedColor
+		# binding_mode       $redColor    $redColor    $blackColor
 		# binding_mode       $bgColor     $bgColor     $redColor
     }
 }
