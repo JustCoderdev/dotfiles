@@ -280,20 +280,34 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# Network
 
+	# Fix hangup
+	# systemd.network.wait-online.enable = false;
+	# boot.initrd.systemd.network.wait-online.enable = false;
+
 	networking = {
 		useDHCP = false;
 
-		firewall.trustedInterfaces = [ "enp8s2" ];
+		nftables.enable = false;
 		networkmanager.unmanaged = [ "interface-name:enp8s2" ];
+		firewall.trustedInterfaces = [ "enp8s2" ];
 
 		interfaces = {
-			br0.useDHCP = true;  # eno1   -> gateway
-			br1 = {              # enp8s2 -> display
+			# br0.useDHCP = true;      # eno1   -> gateway
+########################################################
+			br0 = {
 				useDHCP = false;
-				ipv4.addresses = [ {
+				ipv4.addresses = [{
+					address = "192.168.7.69";
+					prefixLength = 24;
+				}];
+			};
+########################################################
+			br1 = {
+				useDHCP = false;
+				ipv4.addresses = [{  # enp8s2 -> display
 					address = "192.168.1.25";
 					prefixLength = 24;
-				} ];
+				}];
 			};
 		};
 
@@ -313,27 +327,22 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	# KVM
 
 	#environment.systemPackages = with pkgs; [ qemu ];
-	programs = {
-		virt-manager.enable = true;
-	};
+	programs.virt-manager.enable = true;
 
 	# users.users.${settings.username}.extraGroups = [ "libvirtd" ];
 	virtualisation.libvirtd = {
 		enable = true;
-		allowedBridges = [ "virbr0" "virbr1" ];
+		allowedBridges = [ "br0" "br1" ];
+
 		qemu = {
 			package = pkgs.qemu_kvm;
 			runAsRoot = true;
+
 			swtpm.enable = true;
 			ovmf = {
 				enable = true;
-				packages = [
-					(
-						pkgs.OVMF.override {
-							secureBoot = true;
-							tpmSupport = true;
-						}
-					).fd
+				packages = with pkgs; [
+					(OVMF.override { secureBoot = true; tpmSupport = true; }).fd
 				];
 			};
 		};
