@@ -292,7 +292,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		firewall.trustedInterfaces = [ "enp8s2" ];
 
 		interfaces = {
-			# br0.useDHCP = true;      # eno1   -> gateway
+			br0.useDHCP = true;      # eno1   -> gateway
 			br1 = {
 				useDHCP = false;
 				ipv4.addresses = [{  # enp8s2 -> display
