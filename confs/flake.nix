@@ -73,6 +73,8 @@
 				imports = [
 					./standalone/stylix.nix
 				];
+
+				stylix.targets.plymouth.enable = false;
 			}
 		);
 
