@@ -55,7 +55,7 @@
 			docker.enable = false;
 			samba.enable = true;
 			virtualbox.enable = false;
-			nixcache.enable = true;
+			nixcache.enable = false;
 		};
 	};
 }
