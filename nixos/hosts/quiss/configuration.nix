@@ -53,27 +53,17 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	};
 
 	systemd.tmpfiles.rules = [
-#		Type Path                       Mode User Group          Age Argument
+#		Type Path                       Mode User Group
 		"d   ${config-dir}              0775 root ${serv-group}"
 		"d   ${log-dir}                 0775 root ${serv-group}"
 
-		"d   ${data-dir}                0775 root ${serv-group}"
 		"d   ${game-dir}                0775 root ${serv-group}"
 		"d   ${data-dir}/documents      0775 root ${serv-group}"
-
 		"d   ${data-dir}/downloads      0775 root ${serv-group}"
-
 		"d   ${data-dir}/media/movie    0775 root ${serv-group}"
 		"d   ${data-dir}/media/serie    0775 root ${serv-group}"
 		"d   ${data-dir}/music          0775 root ${serv-group}"
 	];
-
-	# WAKE ON LAN
-
-	# environment.systemPackages = with pkgs; [ ethtool ];
-	# networking.interfaces = {
-	# 	"eno1".wakeOnLan.enable = true;
-	# };
 
 	# MINECRAFT SERVERS
 
@@ -121,26 +111,6 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 				whitelist = default-whitelist // { };
 			};
-
-			# test-forge-1-12 = {
-			# 	enable = true;
-			# 	package = pkgs.vanillaServers.forge-1_12_2;
-			# 	openFirewall = true;
-
-			# 	jvmOpts = "-Xms4092M -Xmx6144M";
-
-			# 	serverProperties = default-properties // {
-			# 		level-name = "world";
-			# 		max-players = 5;
-			# 		motd = "Test forge 1.12.2";
-
-			# 		server-port = 25566;
-			# 		white-list = false;
-			# 	};
-
-			# 	whitelist = default-whitelist // { };
-			# };
-
 		};
 	};
 
@@ -169,17 +139,13 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# HOST PROXY
 
-	networking.firewall.allowedTCPPorts = [ 80 443 ];
-	services.nginx = {
-		enable = true;
+	# networking.firewall.allowedTCPPorts = [ 443 ];
+	# services.nginx = {
+		# enable = true;
 
 		# src <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
-		virtualHosts."quiss.host.local" = {
-			# addSSL = true;
-			# enableACME = true;
-			root = "/var/www/quiss";
-
-			locations = {
+		# virtualHosts."quiss.host.local" = {
+		# 	locations = {
 				# "/prowlerr/".proxyPass = "http://127.0.0.1:9696";
 
 				# "^~ /jellyfin/" = {
@@ -203,18 +169,13 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 				# 		+ "rewrite /jellyfin/(.*) /$1 break;\n"
 				# 		+ "";
 				# };
-			};
+			# };
 
 			# extraConfig = ""
 			# 	+ "client_max_body_size 20M;\n"
 			# 	+ "add_header X-Content-Type-Options \"nosniff\";\n"
 			# 	+ "";
-		};
-	};
-
-	# security.acme = {
-	# 	acceptTerms = true;
-	# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
+		# };
 	# };
 
 	# TORRENT TRACKER
@@ -280,10 +241,6 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# Network
 
-	# Fix hangup
-	systemd.network.wait-online.enable = false;
-	boot.initrd.systemd.network.wait-online.enable = false;
-
 	networking = {
 		useDHCP = false;
 
@@ -311,19 +268,12 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		};
 	};
 
-	# WIRESHARK
-
-	programs.wireshark.enable = true;
-	environment.systemPackages = with pkgs; [ wireshark qemu ];
-	users.users.${settings.username}.extraGroups = [ "wireshark" "libvirtd" ];
-	# users.groups.wireshark = { };
-
 	# KVM
 
-	#environment.systemPackages = with pkgs; [ qemu ];
+	environment.systemPackages = with pkgs; [ qemu ];
 	programs.virt-manager.enable = true;
 
-	# users.users.${settings.username}.extraGroups = [ "libvirtd" ];
+	users.users.${settings.username}.extraGroups = [ "libvirtd" ];
 	virtualisation.libvirtd = {
 		enable = true;
 		allowedBridges = [ "br0" "br1" ];

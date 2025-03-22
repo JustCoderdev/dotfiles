@@ -1,27 +1,18 @@
 { settings, ... }:
 
 {
+	# Fix hangups
+	systemd.network.wait-online.enable = false;
+	boot.initrd.systemd.network.wait-online.enable = false;
+
 	# Network settings
 	networking = {
 		hostName = settings.hostname;
 		domain = "host.local";
 
-		# dhcpcd.enable = false;
 		networkmanager.enable = true;
-
-		# Enable wireless support via wpa_supplicant.
-		wireless = {
-			enable = false;
-			networks = {
-				# "WindTower" = {
-				# 	psk = "******";
-				#	psk = "@KEY@"; #read `environmentFile`
-				# };
-
-				# Public wifi networks
-				"free.wifi" = {};
-			};
-		};
+		wireless.enable = false; # disable wpa_supplicant.
+		# dhcpcd.enable = false;
 
 		# DNS Servers
 		nameservers = [
@@ -29,38 +20,15 @@
 			"185.253.5.0"  # https://www.dns0.eu/it
 		];
 
-		# DNS Records
+		# Local DNS Records
 		hosts = {
-			"192.168.7.1"   = [    "gateway.local" ];
+			"192.168.7.1"   = [                "gateway.local" ];
 
-			"192.168.7.16"  = [  "acer.host.local" ];
-			"192.168.7.142" = [   "msi.host.local" ];
-
-			"192.168.7.168" = [ "quiss.host.local" ];
-			"10.0.0.14"     = [ "quiss.host.local" ];
+			"192.168.7.16"  = [              "acer.host.local" ];
+			"192.168.7.142" = [               "msi.host.local" ];
+			"192.168.7.168" = [             "quiss.host.local" ];
 
 			"192.168.7.223" = [ "home-assistant.service.local" ];
 		};
-
-		# Configure proxy
-		# proxy = {
-		#	 proxy.default = "http://user:password@proxy:port/";
-		#	 proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-		# };
-
-		# Set network default Gateway
-		# defaultGateway = {
-		#	 address = "192.168.1.1";
-		#	 interface = "eth0";
-		# }
-
-		# Manually set an address to interfaces
-		# interfaces = {
-		#	eth0.ipv4.addresses = [
-		# 		{
-		# 			address = "192.168.1.69";
-		# 		};
-		# 	];
-		# };
 	};
 }

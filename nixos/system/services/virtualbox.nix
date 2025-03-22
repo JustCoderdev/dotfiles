@@ -1,6 +1,8 @@
 { config, lib, settings, ... }:
 
-let cfg = config.system.services.virtualbox; in
+let
+	cfg = config.system.services.virtualbox;
+in
 
 {
 	config = lib.mkIf cfg.enable {

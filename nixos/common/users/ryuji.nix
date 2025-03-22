@@ -8,9 +8,6 @@ let
 	];
 
 	uname = settings.username;
-	uhome = "/home/${uname}";
-	cpath = "/home/${uname}/.config";
-	dpath = settings.dotfiles_path;
 in
 
 {
@@ -18,60 +15,17 @@ in
 		# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 		system.nixos.tags = [ "${uname}" ];
 
-		systemd.tmpfiles.rules = [
+		systemd.tmpfiles.rules =
+		let
+			uhome = "/home/${uname}";
+		in
+		[
 #			Type Path                           Mode User     Group Age Argument
 			"d   ${uhome}/Developer             0755 ${uname} users"
 			"d   ${uhome}/Developer/Github      0755 ${uname} users"
 			"d   ${uhome}/Developer/Projects    0755 ${uname} users"
-			"d   ${uhome}/Pictures/screenshots  0755 ${uname} users"
+			"d   ${uhome}/Pictures/Screenshots  0755 ${uname} users"
 		];
-
-		# system.activationScripts."link_dotfiles".text = ''
-# 	function link {
-# 		from="$1"; from_filename="''${from##/*/}";
-# 		to="$2"; to_filename="''${3:-$from_filename}";
-
-# 		# If file exists and is link
-# 		if [ -L "''${to}/''${to_filename}" ]; then
-# 			unlink "''${to}/''${to_filename}"
-# 			echo "[WARN] Unlinking ''${to}/''${to_filename}"
-# 		fi
-
-# 		# If file exists
-# 		if [ -e "''${to}/''${to_filename}" ]; then
-# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: file exists"
-# 			return 0; # Must be 0 to avoid triggering -e
-# 		fi
-
-# 		# Link
-# 		if ln -snf "''${from}" "''${to}/''${to_filename}"; then
-# 			echo "[ OK ] Linked    ''${from_filename} to ''${to}/''${to_filename}"
-# 		else
-# 			echo "[FAIL] Linking   ''${from_filename} to ''${to}/''${to_filename}: return code ''${?}"
-# 		fi
-# 	}
-
-# 	# Dotfiles
-# 	echo ""
-# 	echo "Linking Dotfiles"
-# 	echo "----------------------------"
-# 	link "${dpath}/alacritty"               "${cpath}"  # Alacritty
-# 	link "${dpath}/clangd"                  "${cpath}"  # Clang
-# 	link "${dpath}/i3"                      "${cpath}"  # i3
-# 	link "${dpath}/waybar"                  "${cpath}"  # Waybar
-
-# 	# Setting home links
-# 	link "${dpath}/clangd/.clang-format"    "${uhome}"  # Clang format
-# 	link "${dpath}/emacs/.emacs"            "${uhome}"  # Emacs
-# 	link "${dpath}/emacs/.emacs.custom.el"  "${uhome}"  # Emacs
-# 	link "${dpath}/emacs/.emacs.extra"      "${uhome}"  # Emacs
-
-# 	# Setting weird links
-# 	mkdir -p "${cpath}/nvim"
-# 	chown ${uname}:users "${cpath}/nvim"
-# 	link "${dpath}/nvim" "${cpath}/nvim" "${uname}" # Nvim
-# 	echo ""
-# '';
 
 		users.users.${uname} = {
 			name = uname;
@@ -84,50 +38,25 @@ in
 			extraGroups = [ "networkmanager" "wheel" ];
 
 			openssh.authorizedKeys.keys = [
-				# msi
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
-
-				# acer
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
 			];
 		};
 
+		environment.systemPackages = with pkgs; [
+			google-chrome
+			firefox
 
-		# List packages installed in system profile.
-		environment.systemPackages = (lib.mkMerge [
-			(with pkgs; [
-				firefox
-				google-chrome
+			obsidian
 
-				obsidian
-				ascii-draw
-				anytype
+			vlc
+			audacity
+			emulsion
 
-				emulsion
-				vlc
-				tor
-
-				audacity
-				obs-studio
-
-				# baobab  # disk space
-				piper   # Mouse software
-			])
-			(lib.mkIf cfg.image-editing (with pkgs; [
-				gimp
-				krita
-			]))
-			(lib.mkIf cfg.video-editing (with pkgs; [
-				davinci-resolve
-			]))
-			(lib.mkIf cfg.game-developing (with pkgs; [
-				unityhub
-				blender
-				godot_4
-			]))
-#			(lib.mkIf cfg.developer (with pkgs; [
-#				kicad
-#			]))
-		]);
+			obs-studio
+		]
+		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
+		++ lib.optionals (cfg.video-editing)   [ davinci-resolve ]
+		++ lib.optionals (cfg.game-developing) [ blender ];
 	};
 }

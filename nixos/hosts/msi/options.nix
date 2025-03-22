@@ -18,10 +18,6 @@
 				pipewire.enable = false;
 				pulseaudio.enable = true;
 			};
-
-			nix = {
-				serve-store.enable = true;
-			};
 		};
 
 		users = {
@@ -56,6 +52,8 @@
 			docker.enable = true;
 			samba.enable = true;
 			virtualbox.enable = false;
+			webserver.enable = true;
+			nixcache.enable = true;
 		};
 	};
 }

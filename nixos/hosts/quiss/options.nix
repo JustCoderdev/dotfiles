@@ -18,10 +18,6 @@
 				pipewire.enable = false;
 				pulseaudio.enable = false;
 			};
-
-			nix = {
-				serve-store.enable = false;
-			};
 		};
 
 		users = {
@@ -30,7 +26,10 @@
 
 				image-editing = false;
 				video-editing = false;
+				game-developing = false;
 			};
+
+			neko.enable = true;
 		};
 	};
 
@@ -47,7 +46,7 @@
 			android.enable = false;
 			arduino.enable = false;
 			c.enable = false;
-			net.enable = false;
+			net.enable = true;
 		};
 
 		gaming.enable = false;
@@ -56,6 +55,7 @@
 			docker.enable = false;
 			samba.enable = true;
 			virtualbox.enable = false;
+			nixcache.enable = true;
 		};
 	};
 }

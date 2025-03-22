@@ -1,4 +1,4 @@
-{ settings, ... }:
+{ config, settings, ... }:
 
 {
 	#Bootloader
@@ -9,14 +9,34 @@
 	#Virtualisation
 
 
-	# Nvidia drm support
+	# Nvidia support
 	boot.kernelParams = [
 		"nosgx"
 		"snd-intel-dspcfg.dsp_driver=1"
 		"nvidia-drm.fbdev=1" /* ls /dev/dri - dmesg | grep drm */
 	];
 
-	#Mounts
+	hardware.nvidia = {
+		modesetting.enable = true;
+
+		# GPU Support for GeForce GTX 1050Ti
+		package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+		# Enable this if you have graphical issues
+		powerManagement.enable = false;
+
+		# Works on modern Nvidia GPUs (Turing or newer)
+		powerManagement.finegrained = false;
+
+		# Use open source driver
+		open = false;
+
+		# Enable the Nvidia settings menu,
+		nvidiaSettings = false;
+	};
+
+
+	#Mount
 	fileSystems."/home/WDC_WD10" = {
 		device = "/dev/disk/by-uuid/87de6ef7-b2ea-43ea-b574-52ca561288df";
 		fsType = "ext4";

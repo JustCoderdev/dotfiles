@@ -224,7 +224,7 @@ cd ${DOT_FILES}/nixos/secrets
 echo "xyz" > mdadmhook.url
 ```
 
-- nix-serve (nix.nix)
+- nix-serve
 
 ```
 cd /etc

@@ -18,10 +18,6 @@
 				pipewire.enable = true;
 				pulseaudio.enable = false;
 			};
-
-			nix = {
-				serve-store.enable = false;
-			};
 		};
 
 		users = {
@@ -32,6 +28,8 @@
 				video-editing = false;
 				game-developing = false;
 			};
+
+			neko.enable = true;
 		};
 	};
 
@@ -56,6 +54,8 @@
 			docker.enable = false;
 			samba.enable = true;
 			virtualbox.enable = false;
+			webserver.enable = true;
+			nixcache.instance-host = "192.168.7.142";  # msi 
 		};
 	};
 }

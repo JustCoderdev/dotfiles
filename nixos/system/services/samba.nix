@@ -4,7 +4,8 @@ let
 	cfg = config.system.services.samba;
 	username = settings.username;
 	hostname = settings.hostname;
-	share-path = "/home/${username}/user-share";
+	share-name = "${username}-${hostname}";
+	share-path = "/home/${username}/${share-name}-share";
 in
 
 # Samba user commands
@@ -18,10 +19,10 @@ in
 {
 	config = lib.mkIf cfg.enable {
 		# Autodiscovery on windows
-#		services.samba-wsdd = {
-#			enable = true;
-#			openFirewall = true;
-#		};
+		services.samba-wsdd = {
+			enable = true;
+			openFirewall = true;
+		};
 
 		environment.systemPackages = with pkgs; [
 			cifs-utils
@@ -50,17 +51,16 @@ in
 					"guest account" = "nobody";
 					"map to guest" = "bad user";
 
-					#"additional dns hostnames" = "${hostname}.host.local";
 					"browse list" = "yes";
 					"case sensitive" = "yes";
 					"max disk size" = "2500"; # 2.5 GB
 				};
 
-				"${username}-${hostname}" = {
+				"${share-name}" = {
 					browseable = "yes";
 
 					path = "${share-path}";
-					comment = "${username}-${hostname}";
+					comment = "${share-name}";
 
 					"admin users" = "${username}";
 					"guest ok" = "no";
@@ -83,15 +83,5 @@ in
 				};
 			};
 		};
-
-#		fileSystems."/mnt/samba-server/${settings.username}" = {
-#			device = "//samba.service.local/ryuji";
-#			fsType = "cifs";
-#			options = let # this line prevents hanging on network split
-#				automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-#			in [
-#				"${automount_opts},credentials=/etc/nixos/smb-secrets"
-#			];
-#		};
 	};
 }
