@@ -30,7 +30,7 @@
 				instance-host = lib.mkOption {
 					type = lib.types.nullOr lib.types.str;
 					description = "Local nixcache host";
-					default = "nixcache.local";
+					default = null;
 				};
 				instance-port = lib.mkOption {
 					type = lib.types.port;
