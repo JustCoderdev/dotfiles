@@ -88,7 +88,7 @@
 			}
 		);
 
-		isoBuilder = (
+		isoBuilderCD = (
 			system: username:
 			let
 				settings = {
@@ -115,6 +115,38 @@
 			}
 		);
 
+		isoBuilderSD-raspberry = (
+			build-system: username:
+			let
+				settings = {
+					hostname = "nixiso";
+					system = "aarch64-linux";
+					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
+				};
+			in
+			lib.nixosSystem {
+				inherit (settings) system;
+				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
+				modules = (getModules settings) ++ [
+					({ pkgs, modulesPath, ... }: {
+						imports = [
+							"${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
+						];
+
+						# Enable SSH in the boot process.
+						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
+						services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+
+						# Allow cross-compilation
+						nixpkgs.config.allowUnsupportedSystem = true;
+						nixpkgs.hostPlatform = settings.system;
+						nixpkgs.buildPlatform = build-system;
+					})
+				];
+			}
+		);
+
+
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
 		forAllSystems = lib.genAttrs supportedSystems;
 		listAllSystems = lib.lists.forEach supportedSystems;
@@ -135,9 +167,21 @@
 				system:
 				{
 					# build using
-					# nix build .#nixosConfigurations.iso-${SYSTEM}.config.system.build.isoImage
-					name = "iso-${system}";
-					value = isoBuilder system "ryuji";
+					# nix build .#nixosConfigurations.iso-cd-${SYSTEM}.config.system.build.isoImage
+					name = "iso-cd-${system}";
+					value = isoBuilderCD system "ryuji";
+				}
+			)
+		)
+		//
+		builtins.listToAttrs (
+			listAllSystems (
+				build-system:
+				{
+					# build using
+					# nix build .#nixosConfigurations.iso-sd-raspberry_build-${HOST-SYSTEM}.config.system.build.isoImage
+					name = "iso-sd-raspberry_build-${build-system}";
+					value = isoBuilderSD-raspberry build-system "ryuji";
 				}
 			)
 		);
