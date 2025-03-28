@@ -58,7 +58,7 @@ in
 					isSystemUser = true;
 
 					openssh.authorizedKeys.keys = [
-						# SSH PUBLIC KEYS GO HERE
+						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIINNmsEslUoxDlBlJwsgywTD65lyhMQc4SK+XSUNaEh9 ryuji_buildclient@acer"
 					];
 				};
 			}
