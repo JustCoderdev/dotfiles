@@ -54,6 +54,10 @@
 			virtualbox.enable = false;
 			webserver.enable = true;
 			nixcache.enable = true;
+			nixbuilder.server = {
+				enable = true;
+				systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+			};
 		};
 	};
 }

@@ -41,6 +41,10 @@
 		);
 
 		lib = nixpkgs.lib;
+		nixos-hardware = fetchTarball {
+			url = "https://github.com/NixOS/nixos-hardware/tarball/master";
+			sha256 = "1xjrlq04i6an90f0s689ip3abky88mljxjik7c9s6kw9q0d3ix6f";
+		};
 
 		getModules = (
 			settings: [
@@ -106,20 +110,24 @@
 							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
 						];
 
+						jcbin = {
+							rebuild-system.enable = true;
+							mount-configs.enable = true;
+						};
+
 						# Enable SSH in the boot process.
 						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
-						services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
-						nixpkgs.hostPlatform = system;
 					})
 				];
 			}
 		);
 
-		isoBuilderSD-raspberry = (
-			build-system: username:
+		imgBuilderSD-raspi3 = (
+			build-platform-system:
+			username:
 			let
 				settings = {
-					hostname = "nixiso";
+					hostname = "niximg";
 					system = "aarch64-linux";
 					inherit (import ./confs/settings/${username}.nix) username dotfiles_path special_pkgs;
 				};
@@ -131,16 +139,31 @@
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							"${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
+							"${nixos-hardware}/raspberry-pi/3"
 						];
+
+
+						jcbin = {
+							rebuild-system.enable = true;
+							mount-configs.enable = true;
+						};
+
+						# Other
+						sdImage.compressImage = false;
+						hardware.enableRedistributableFirmware = true;
 
 						# Enable SSH in the boot process.
 						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
-						services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
 
-						# Allow cross-compilation
+						# Reduce memory usage
+						boot.tmp.cleanOnBoot = true;
+						documentation.nixos.enable = false;
+						swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+
+						# Enable cross compilation
 						nixpkgs.config.allowUnsupportedSystem = true;
-						nixpkgs.hostPlatform = settings.system;
-						nixpkgs.buildPlatform = build-system;
+						nixpkgs.hostPlatform = { inherit (settings) system; };
+						nixpkgs.buildPlatform.system = build-platform-system;
 					})
 				];
 			}
@@ -155,7 +178,8 @@
 
 	{
 		# nixos-rebuild switch --flake .#<hostname>
-		nixosConfigurations = {
+		nixosConfigurations =
+		{
 			virtualmachine = systemBuilder "virtualmachine" "x86_64-linux" "ryuji";
 			msi            = systemBuilder "msi"            "x86_64-linux" "ryuji";
 			acer           = systemBuilder "acer"           "x86_64-linux" "ryuji";
@@ -166,9 +190,7 @@
 			listAllSystems (
 				system:
 				{
-					# build using
-					# nix build .#nixosConfigurations.iso-cd-${SYSTEM}.config.system.build.isoImage
-					name = "iso-cd-${system}";
+					name = "iso-${system}";
 					value = isoBuilderCD system "ryuji";
 				}
 			)
@@ -176,12 +198,10 @@
 		//
 		builtins.listToAttrs (
 			listAllSystems (
-				build-system:
+				build-platform-system:
 				{
-					# build using
-					# nix build .#nixosConfigurations.iso-sd-raspberry_build-${HOST-SYSTEM}.config.system.build.isoImage
-					name = "iso-sd-raspberry_build-${build-system}";
-					value = isoBuilderSD-raspberry build-system "ryuji";
+					name = "img-raspi3_build-${build-platform-system}";
+					value = imgBuilderSD-raspi3 build-platform-system "ryuji";
 				}
 			)
 		);
@@ -193,28 +213,29 @@
 		apps = forAllSystems (
 			system: let pkgs = nixpkgsFor.${system}; in
 			{
-				# install = {
+				# test-iso-x86_64 = {
 				# 	type = "app";
-				# 	program = "...";
+				# 	program = "nix-shell -p qemu --command 'qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso'";
 				# };
-				test-iso-x86_64 = {
-					type = "app";
-					program = "nix-shell -p qemu --command 'qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso'";
-				};
+
+				# build-img-raspi3 = {
+				# 	type = "app";
+				# 	program = "nix build .#nixosConfigurations.img-raspi3.config.system.build.sdImage";
+				# };
 			}
-			//
-			builtins.listToAttrs (
-				listAllSystems (
-					system:
-					{
-						name = "build-iso-${system}";
-						value = {
-							type = "app";
-							program = "nix build .#nixosConfigurations.iso-${system}.config.system.build.isoImage";
-						};
-					}
-				)
-			)
+			# //
+			# builtins.listToAttrs (
+			# 	listAllSystems (
+			# 		system:
+			# 		{
+			# 			name = "build-iso-${system}";
+			# 			value = {
+			# 				type = "app";
+			# 				program = "nix build .#nixosConfigurations.iso-${system}.config.system.build.isoImage";
+			# 			};
+			# 		}
+			# 	)
+			# )
 		);
 
 		# nix develop

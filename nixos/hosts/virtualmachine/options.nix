@@ -55,6 +55,10 @@
 			samba.enable = false;
 			virtualbox.enable = false;
 			nixcache.enable = false;
+			nixbuilder = {
+				server.enable = false;
+				client.builders = [ ];
+			};
 		};
 	};
 }

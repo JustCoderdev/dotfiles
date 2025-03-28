@@ -23,12 +23,11 @@
 		# Local DNS Records
 		hosts = {
 			"192.168.7.1"   = [                "gateway.local" ];
-
 			"192.168.7.16"  = [              "acer.host.local" ];
 			"192.168.7.142" = [               "msi.host.local" ];
 			"192.168.7.168" = [             "quiss.host.local" ];
-
 			"192.168.7.223" = [ "home-assistant.service.local" ];
+			"192.168.7.230" = [            "jarvis.host.local" ];
 		};
 	};
 }
