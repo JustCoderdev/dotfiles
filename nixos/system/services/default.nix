@@ -34,27 +34,29 @@
 						lib.types.submodule (
 							{ config, ... }:
 							{
-								hostName = lib.mkOption {
-									type = lib.types.str;
-									description = "How to reach the builder";
-								};
-								maxJobs = lib.mkOption {
-									type = lib.types.int;
-									description = "The number of concurrent jobs the builder supports";
-									default = 1;
-								};
-								priority = lib.mkOption {
-									type = lib.types.int;
-									description = "The computational priority of this builder";
-									default = 1;
-								};
-								features = lib.mkOption {
-									type = lib.types.listOf lib.types.str;
-									description = "The features of the builder";
-								};
-								systems = lib.mkOption {
-									type = lib.types.listOf lib.types.str;
-									description = "The systems supported by the builder";
+								options = {
+									hostName = lib.mkOption {
+										type = lib.types.str;
+										description = "How to reach the builder";
+									};
+									maxJobs = lib.mkOption {
+										type = lib.types.int;
+										description = "The number of concurrent jobs the builder supports";
+										default = 1;
+									};
+									priority = lib.mkOption {
+										type = lib.types.int;
+										description = "The computational priority of this builder";
+										default = 1;
+									};
+									features = lib.mkOption {
+										type = lib.types.listOf lib.types.str;
+										description = "The features of the builder";
+									};
+									systems = lib.mkOption {
+										type = lib.types.listOf lib.types.str;
+										description = "The systems supported by the builder";
+									};
 								};
 							}
 						)
