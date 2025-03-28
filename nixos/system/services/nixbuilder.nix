@@ -17,15 +17,15 @@ in
 	# - Distributed Builds <https://nix.dev/manual/nix/2.24/advanced-topics/distributed-builds>
 	# - Nixos on ARM <https://nixos.wiki/wiki/NixOS_on_ARM#Build_your_own_image_natively>
 
-	config = { }
-		//
+	config = lib.mkMerge [
 		(
+			# CLIENT
 			lib.mkIf (builtins.length client_cfg.builders > 0) {
-				# CLIENT
 				nix = {
 					distributedBuilds = true;
 					buildMachines = lib.lists.forEach client_cfg.builders (
-						builder: {
+						builder:
+						{
 							inherit (builder) hostName maxJobs systems;
 							supportedFeatures = builder.features;
 							speedFactor = builder.priority;
@@ -45,7 +45,6 @@ in
 				} ];
 			}
 		)
-		//
 		(
 			# SERVER
 			lib.mkIf server_cfg.enable {
@@ -63,6 +62,7 @@ in
 					];
 				};
 			}
-		);
+		)
+	];
 }
 
