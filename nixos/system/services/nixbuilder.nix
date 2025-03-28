@@ -20,7 +20,7 @@ in
 	config = { }
 		//
 		(
-			lib.mkIf (builtins.length client_cfg.builders) {
+			lib.mkIf (builtins.length client_cfg.builders > 0) {
 				# CLIENT
 				nix = {
 					distributedBuilds = true;

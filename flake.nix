@@ -42,8 +42,8 @@
 
 		lib = nixpkgs.lib;
 		nixos-hardware = fetchTarball {
-			url = "https://github.com/NixOS/nixos-hardware/tarball/master";
-			sha256 = "1xjrlq04i6an90f0s689ip3abky88mljxjik7c9s6kw9q0d3ix6f";
+			url = "https://github.com/NixOS/nixos-hardware/tarball/0ed819e708af17bfc4bbc63ee080ef308a24aa42";
+			sha256 = "0n83riy6j6vlsjcsjp1w704ag5db8gyd3qap0ir4gl8ffanm4kr3";
 		};
 
 		getModules = (
