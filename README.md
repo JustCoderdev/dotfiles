@@ -232,6 +232,12 @@ nix-store --generate-binary-cache-key nixcache.local \
         cache-priv-key.pem cache-pub-key.pem
 ```
 
+- nixbuilder buildclient pwd
+
+```
+passwd buildclient
+```
+
 - Github ssh key (add to gh) [auto-generated]
 
 ```
@@ -248,6 +254,15 @@ ssh-keygen -t ed25519 \
   -C "${USER}@${HOST}" \
   -f "~/.ssh/id_${HOST}_${USER}"
 ssh-add "~/.ssh/id_${HOST}_${USER}"
+```
+
+- nixbuilder ssh key (for ssh) [auto-generated]
+
+```
+ssh-keygen -t ed25519 \
+  -C "${USER}_buildclient@${HOST}" \
+  -f "~/.ssh/id_${HOST}_${USER}_nixbuilder" 
+ssh-add "~/.ssh/id_${HOST}_${USER}_nixbuilder" 
 ```
 
 ## Emergency wiki
