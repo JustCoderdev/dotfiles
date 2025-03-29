@@ -241,54 +241,54 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# Network
 
-	networking = {
-		useDHCP = false;
-
-		nftables.enable = false;
-		networkmanager.unmanaged = [ "interface-name:eno1" "interface-name:enp8s2" ];
-		firewall.trustedInterfaces = [ "enp8s2" ];
-
-		interfaces = {
-			eno1.useDHCP = false;
-			enp8s0.useDHCP = false;
-
-			br0.useDHCP = true;      # eno1   -> gateway
-			br1 = {
-				useDHCP = false;
-				ipv4.addresses = [{  # enp8s2 -> display
-					address = "192.168.1.25";
-					prefixLength = 24;
-				}];
-			};
-		};
-
-		bridges = {
-			br0.interfaces = [ "eno1" ];
-			br1.interfaces = [ "enp8s2" ];
-		};
-	};
+#	networking = {
+#		useDHCP = false;
+#
+#		nftables.enable = false;
+#		networkmanager.unmanaged = [ "interface-name:eno1" "interface-name:enp8s2" ];
+#		firewall.trustedInterfaces = [ "enp8s2" ];
+#
+#		interfaces = {
+#			eno1.useDHCP = false;
+#			enp8s0.useDHCP = false;
+#
+#			br0.useDHCP = true;      # eno1   -> gateway
+#			br1 = {
+#				useDHCP = false;
+#				ipv4.addresses = [{  # enp8s2 -> display
+#					address = "192.168.1.25";
+#					prefixLength = 24;
+#				}];
+#			};
+#		};
+#
+#		bridges = {
+#			br0.interfaces = [ "eno1" ];
+#			br1.interfaces = [ "enp8s2" ];
+#		};
+#	};
 
 	# KVM
 
-	environment.systemPackages = with pkgs; [ qemu ];
-	programs.virt-manager.enable = true;
-
-	users.users.${settings.username}.extraGroups = [ "libvirtd" ];
-	virtualisation.libvirtd = {
-		enable = true;
-		allowedBridges = [ "br0" "br1" ];
-
-		qemu = {
-			package = pkgs.qemu_kvm;
-			runAsRoot = true;
-
-			swtpm.enable = true;
-			ovmf = {
-				enable = true;
-				packages = with pkgs; [
-					(OVMF.override { secureBoot = true; tpmSupport = true; }).fd
-				];
-			};
-		};
-	};
+#	environment.systemPackages = with pkgs; [ qemu ];
+#	programs.virt-manager.enable = true;
+#
+#	users.users.${settings.username}.extraGroups = [ "libvirtd" ];
+#	virtualisation.libvirtd = {
+#		enable = true;
+#		allowedBridges = [ "br0" "br1" ];
+#
+#		qemu = {
+#			package = pkgs.qemu_kvm;
+#			runAsRoot = true;
+#
+#			swtpm.enable = true;
+#			ovmf = {
+#				enable = true;
+#				packages = with pkgs; [
+#					(OVMF.override { secureBoot = true; tpmSupport = true; }).fd
+#				];
+#			};
+#		};
+#	};
 }

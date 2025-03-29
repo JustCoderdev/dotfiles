@@ -6,10 +6,16 @@
 let
 	cfg = config.unofficial.services.duckdns;
 	duckdns = pkgs.writeShellScriptBin "duckdns" ''
+# # Get ipv6
+# curl -s 'https://api6.ipify.org'
+
+# # Get ipv4
+# curl -s 'https://api.ipify.org'
+
 DRESPONSE=$(curl -sS --max-time 60 --no-progress-meter -k -K- <<< "url = \"https://www.duckdns.org/update?verbose=true&domains=$DUCKDNS_DOMAINS&token=$DUCKDNS_TOKEN&ip=\"")
+RESPONSE=$(echo "$DRESPONSE" | awk 'NR==1')
 IPV4=$(echo "$DRESPONSE" | awk 'NR==2')
 IPV6=$(echo "$DRESPONSE" | awk 'NR==3')
-RESPONSE=$(echo "$DRESPONSE" | awk 'NR==1')
 IPCHANGE=$(echo "$DRESPONSE" | awk 'NR==4')
 
 if [[ "$RESPONSE" = "OK" ]] && [[ "$IPCHANGE" = "UPDATED" ]]; then
@@ -41,6 +47,15 @@ in
 				used to authenticate with DuckDNS.
 			'';
 		};
+
+		# address-families = lib.mkOption {
+		# 	default = [ "inet" ];
+		# 	type = lib.types.listOf (lib.types.enum [ "inet" "inet6" ]);
+		# 	example = [ "inet6" ];
+		# 	description = ''
+		# 		The address families (ipv4 or ipv6) that will be used to update the dns record
+		# 	'';
+		# };
 
 		domains = lib.mkOption {
 			default = null;
