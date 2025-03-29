@@ -30,7 +30,7 @@ in
 							supportedFeatures = builder.features;
 							speedFactor = builder.priority;
 
-							protocol = "ssh-ng";
+							protocol = "ssh"; # ssh-ng
 							publicHostKey = null; # The (base64-encoded) public host key of this builder
 							sshKey = sshkey_path; # private key to use to authenticate with the build machine
 							sshUser = buildclient_user; # username to log into the remote host
