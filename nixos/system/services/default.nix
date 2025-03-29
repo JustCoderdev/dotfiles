@@ -24,6 +24,15 @@
 						description = "Configure this device as a nixbuilder";
 						default = false;
 					};
+					maxJobs = lib.mkOption {
+						type = lib.types.int;
+						description = "The number of concurrent jobs supported by the builder";
+						default = 1;
+					};
+					features = lib.mkOption {
+						type = lib.types.listOf lib.types.str;
+						description = "The features of the builder";
+					};
 					systems = lib.mkOption {
 						type = lib.types.listOf lib.types.str;
 						description = "The systems supported by the builder";
