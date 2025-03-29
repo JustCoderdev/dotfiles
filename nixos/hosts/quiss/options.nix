@@ -64,6 +64,12 @@
 				};
 				client.builders = [
 					{
+						hostName = "quiss.host.local";
+						maxJobs = 4;
+						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+					}
+					{
 						hostName = "msi.host.local";
 						maxJobs = 6;
 						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
