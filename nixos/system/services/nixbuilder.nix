@@ -24,18 +24,18 @@ in
 				nix = {
 					distributedBuilds = true;
 					buildMachines = []
-					++
-					lib.lists.optionals (server_cfg.enable)
-					[
-						{
-							hostName = "localhost";
-							inherit (server_cfg) maxJobs systems;
+					# ++
+					# lib.lists.optionals (server_cfg.enable)
+					# [
+					# 	{
+					# 		hostName = "localhost";
+					# 		inherit (server_cfg) maxJobs systems;
 
-							supportedFeatures = server_cfg.features;
-							speedFactor = 10;
-							protocol = null;
-						}
-					]
+					# 		supportedFeatures = server_cfg.features;
+					# 		speedFactor = 10;
+					# 		protocol = null;
+					# 	}
+					# ]
 					++
 					lib.lists.forEach client_cfg.builders (
 						builder:
