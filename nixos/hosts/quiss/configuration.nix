@@ -65,6 +65,10 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		"d   ${data-dir}/music          0775 root ${serv-group}"
 	];
 
+
+	# dns records
+	networking.hosts."10.0.0.1" = [ "msi.host.local" ];
+
 	# MINECRAFT SERVERS
 
 	services.minecraft-servers = {
