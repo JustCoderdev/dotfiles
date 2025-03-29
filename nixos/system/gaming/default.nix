@@ -24,7 +24,6 @@ in
 	config = lib.mkIf cfg.enable {
 		environment.systemPackages = with pkgs; [
 			discord # Run with --disable-gpu
-			vesktop # Discord client
 
 			goverlay # Edit overlay
 			mangohud # Overlay

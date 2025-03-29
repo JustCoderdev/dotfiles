@@ -135,18 +135,21 @@
 			lib.nixosSystem {
 				inherit (settings) system;
 				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
-				modules = (getModules settings) ++ [
+				modules =
+				# (getModules settings) ++
+				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
-							"${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
+							# "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
+							"${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
 							"${nixos-hardware}/raspberry-pi/3"
 						];
 
 
-						jcbin = {
-							rebuild-system.enable = true;
-							mount-configs.enable = true;
-						};
+						# jcbin = {
+						# 	rebuild-system.enable = true;
+						# 	mount-configs.enable = true;
+						# };
 
 						# Other
 						sdImage.compressImage = false;

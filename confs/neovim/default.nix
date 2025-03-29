@@ -24,12 +24,12 @@
 		nodejs
 
 		# LSPs
-		lua-language-server
-		marksman
-		nixd
+		# lua-language-server
+		# marksman
+		# nixd
 
-		nodePackages.bash-language-server
-		vscode-langservers-extracted
+		# nodePackages.bash-language-server
+		# vscode-langservers-extracted
 	];
 
 	home.file = {
