@@ -135,8 +135,7 @@
 			lib.nixosSystem {
 				inherit (settings) system;
 				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
-				modules =
-				# (getModules settings) ++
+				modules = (getModules settings) ++
 				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
@@ -146,10 +145,10 @@
 						];
 
 
-						# jcbin = {
-						# 	rebuild-system.enable = true;
-						# 	mount-configs.enable = true;
-						# };
+						jcbin = {
+							rebuild-system.enable = true;
+							mount-configs.enable = true;
+						};
 
 						# Other
 						sdImage.compressImage = false;

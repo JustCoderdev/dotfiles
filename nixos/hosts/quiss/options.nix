@@ -56,7 +56,7 @@
 			samba.enable = true;
 			virtualbox.enable = false;
 			webserver.enable = true;
-			nixcache.enable = false;
+			nixcache.instance-host = "10.0.0.1";  # msi 
 			nixbuilder = {
 				server = {
 					enable = true;
