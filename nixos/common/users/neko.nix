@@ -12,10 +12,8 @@ in
 
 {
 	config = lib.mkIf cfg.enable {
-		users.users.${uname} = {
-			name = uname;
-			description = (titleCase uname);
-
+		users.users.${uname} =
+		{
 			isNormalUser = true;
 			createHome = false;
 			
@@ -23,6 +21,7 @@ in
 
 			# mkpasswd
 			hashedPassword = "$y$j9T$UW3PUszvZt8wITQOClF221$i3nRPjte3F5FLvlgpK4H16CBa7GHe0N/q.BMmDSOTJ6";
+
 			openssh.authorizedKeys.keys = [
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6h5xWAlFFP3J0mcjUGQGaW+fKIi441VXPif3PuzTTT"
 			];

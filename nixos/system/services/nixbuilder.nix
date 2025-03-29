@@ -30,7 +30,7 @@ in
 							supportedFeatures = builder.features;
 							speedFactor = builder.priority;
 
-							protocol = "ssh"; # ssh-ng
+							protocol = "ssh-ng"; # ssh
 							publicHostKey = null; # The (base64-encoded) public host key of this builder
 							sshKey = sshkey_path; # private key to use to authenticate with the build machine
 							sshUser = buildclient_user; # username to log into the remote host
@@ -53,9 +53,12 @@ in
 				nix.settings.trusted-users =  [ buildclient_user ];
 
 				users.groups."${buildclient_group}" = {};
-				users.users."${buildclient_user}" = {
+				users.users."${buildclient_user}" =
+				{
+					isNormalUser = true;
+					createHome = false;
+
 					group = buildclient_group;
-					isSystemUser = true;
 
 					openssh.authorizedKeys.keys = [
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZrsLB5QXClVYmeTYNZfOoiPvsndbiAIYG9wuiIdJUz ryuji_buildclient@msi"
