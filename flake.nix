@@ -104,7 +104,9 @@
 			lib.nixosSystem {
 				inherit system;
 				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
-				modules = (getModules settings) ++ [
+				modules =
+				# (getModules settings) ++
+				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
@@ -113,6 +115,21 @@
 						jcbin = {
 							rebuild-system.enable = true;
 							mount-configs.enable = true;
+						};
+
+						users.users.${settings.username} = {
+							name = settings.username;
+
+							isNormalUser = true;
+							createHome = true;
+
+							# packages = with pkgs; [ ];
+							extraGroups = [ "networkmanager" "wheel" ];
+
+							openssh.authorizedKeys.keys = [
+								"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
+								"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
+							];
 						};
 
 						# Enable SSH in the boot process.
