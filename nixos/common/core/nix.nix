@@ -9,12 +9,10 @@ in
 		system.nixos.tags = [ "${settings.hostname}" ];
 
 		nix = {
-			optimise.automatic = true;
+			optimise.automatic = false;
 			gc = {
-				automatic = true;
+				automatic = false;
 				dates = "17:30";
-
-				# Keep the last 5 generations
 				options = "--delete-older-than 15d";
 			};
 
@@ -37,13 +35,10 @@ narinfo-cache-negative-ttl = 0     # If a store path is queried from a substitut
 
 		services.journald.extraConfig = "SystemMaxUse=1G";
 
-		nixpkgs = {
-			overlays = [ darnix-overlay ];
-			config = let pkgs = settings.special_pkgs; in {
-				permittedInsecurePackages = pkgs.insecure;
-				allowUnfreePredicate = pkg: builtins.elem
-					(lib.getName pkg) pkgs.unfree;
-			};
+		nixpkgs.config = let pkgs = settings.special_pkgs; in {
+			permittedInsecurePackages = pkgs.insecure;
+			allowUnfreePredicate = pkg: builtins.elem
+				(lib.getName pkg) pkgs.unfree;
 		};
 	};
 }

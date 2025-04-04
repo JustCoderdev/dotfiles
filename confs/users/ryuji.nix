@@ -17,7 +17,6 @@ let
 
 
 	standalone-modules = [
-		"stylix"
 		"firefox"
 		"gtk"
 		"tmux"
@@ -28,7 +27,7 @@ let
 in
 
 {
-	imports = [ inputs.stylix.homeManagerModules.stylix ]
+	imports = [ ]
 		++ (toPathList modules)
 		++ (toStandalonePathList standalone-modules);
 
@@ -38,7 +37,6 @@ in
 	manual.manpages.enable = false;      #
 	# ---------------------------------- #
 
-	stylix.module.mode = "home-manager";
 
 	# DO NOT TOUCH
 	nixpkgs.config = let pkgs = settings.special_pkgs; in {

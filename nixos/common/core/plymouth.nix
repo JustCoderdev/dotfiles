@@ -1,24 +1,28 @@
-{ pkgs, config, lib, settings, ... }:
+{ inputs, pkgs, config, lib, settings, ... }:
 
 let
-	i3 = config.system.desktop.xfce;
-	hyprland = config.system.desktop.hyprland;
+	cfg = config.common.core.plymouth;
+	darnix-plymouth-theme = inputs.jcconfs.packages.${settings.system}.darnix-plymouth-theme;
 in
 
 {
 	# Check what VGA graphics driver is installed
 	# lspci -v | grep -A10 VGA | grep driver
 
-	boot.initrd.systemd.enable = true;
-	boot.kernelParams = [
-		"quiet" "splash"
-		#"plymouth.debug" # log at /var/log/plymouth-debug.log
-	];
+	config = lib.mkIf cfg.enable {
 
-	boot.plymouth = lib.mkIf (!config.host.isVM && (i3.enable || hyprland.enable) ) {
-		enable = true;
+		boot = {
+			initrd.systemd.enable = true;
+			
+			#"plymouth.debug" # log at /var/log/plymouth-debug.log
+			kernelParams = [ "quiet" "splash" ];
+		};
 
-		theme = "darnix";
-		themePackages = [ pkgs.darnix-theme ];
+		boot.plymouth = {
+			enable = true;
+
+			theme = "darnix";
+			themePackages = [ darnix-plymouth-theme ];
+		};
 	};
 }

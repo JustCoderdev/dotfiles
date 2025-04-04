@@ -2,7 +2,6 @@
 
 {
 	stylix = {
-
 		iconTheme = {
 			enable = true;
 			package = pkgs.adwaita-icon-theme;

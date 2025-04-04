@@ -5,10 +5,6 @@ let
 in
 
 {
-	imports = [
-		inputs.stylix.homeManagerModules.stylix
-	];
-
 	options.stylix.module.wallpapers_path = lib.mkOption {
 		type = lib.types.path;
 		description = "Specify the wallpapers directory";

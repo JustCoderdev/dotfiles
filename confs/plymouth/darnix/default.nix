@@ -2,7 +2,7 @@
 # Link: <https://github.com/NixOS/nixpkgs/blob/nixos-23.11/pkgs/data/themes/catppuccin-plymouth/default.nix>
 { stdenv }:
 
-mkDerivation {
+stdenv.mkDerivation {
 	name = "darnix-plymouth-theme";
 	src = ./.;
 

@@ -42,17 +42,40 @@
 
 		homeConfiguration = (
 			{ config, lib, ... }:
+			let
+				username = config.username;
+				args = getArgs username;
+
+				settings = args.settings;
+				wallpapers_path = args.wallpapers_path;
+			in
 			{
-				imports = let username = config.username; in
+				imports =
 				[
+					inputs.stylix.nixosModules.stylix
+					./stylix/base.nix { stylix.module.wallpapers_path = args.wallpapers_path; }
+					./stylix/nixos.nix
+
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
-						home-manager.extraSpecialArgs = getArgs username;
-						home-manager.users.${username} = import ./users/${username}.nix;
+						home-manager.extraSpecialArgs = args;
+						home-manager.users.${username} = (
+							{ ... }:
+							{
+								imports = [
+									./stylix/hm.nix
+									./users/${username}.nix
+								];
+							}
+						);
 					}
 				];
+
+				config = {
+					stylix.module = { inherit wallpapers_path; };
+				};
 
 				options.username = lib.mkOption {
 					type = lib.types.str;
@@ -62,44 +85,54 @@
 			}
 		);
 
-		stylixConfiguration = (
-			{ pkgs, settings, ... }:
-
-			let
-				settings.wallpapers_path = wallpapers_path;
-			in
-
-			{
-				imports = [
-					./standalone/stylix.nix
-				];
-
-				stylix.targets.plymouth.enable = false;
-			}
-		);
-
 		homeBuilder = (
 			username: system:
+			let
+				args = getArgs username;
+			in
 			home-manager.lib.homeManagerConfiguration {
-				extraSpecialArgs = getArgs username;
-				modules = [ ./users/${username}.nix ];
-				pkgs = nixpkgs.legacyPackages.${system};
+				extraSpecialArgs = args;
+				pkgs = nixpkgsFor.${system};
+				modules = [
+					inputs.stylix.homeManagerModules.stylix
+					./stylix/base.nix { stylix.module.wallpapers_path = args.wallpapers_path; }
+					./stylix/hm.nix
+
+					./users/${username}.nix
+
+					(
+						{ ... }:
+						{
+							config = {
+								stylix.module = { inherit wallpapers_path; };
+							};
+						}
+					)
+				];
 			}
 		);
 
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
 		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+		listAllSystems = nixpkgs.lib.lists.forEach supportedSystems;
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
 		nixosModules = {
 			home = homeConfiguration;
-			stylix = stylixConfiguration;
 		};
 
-		homeConfigurations = {
-			ryuji = homeBuilder "ryuji" "x86_64";
-		};
+		homeConfigurations = { }
+		//
+		builtins.listToAttrs (
+			listAllSystems (
+				system: {
+					name = "ryuji-${system}";
+					value = homeBuilder "ryuji" system;
+				}
+			)
+		);
+
 
 		# nix build
 		packages = forAllSystems (

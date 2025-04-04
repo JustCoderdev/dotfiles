@@ -18,6 +18,8 @@
 				pipewire.enable = false;
 				pulseaudio.enable = false;
 			};
+
+			plymouth.enable = false;
 		};
 
 		users = {

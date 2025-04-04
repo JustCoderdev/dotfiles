@@ -48,6 +48,12 @@
 					default = false;
 				};
 			};
+
+			plymouth.enable = lib.mkOption {
+				type = lib.types.bool;
+				description = "Enable plymouth boot screen";
+				default = false;
+			};
 		};
 	};
 

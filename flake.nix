@@ -16,11 +16,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		stylix = {
-			url = "github:danth/stylix/release-24.11";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-
 		nix-minecraft = {
 			url = "github:Infinidoge/nix-minecraft";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -32,13 +27,9 @@
 		# };
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, stylix, nix-minecraft }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
 	let
 		dotfiles = ./.;
-
-		darnix-overlay = (
-			final: prev: { darnix-plymouth-theme = jcconfs.packages.darnix-plymouth-theme; }
-		);
 
 		lib = nixpkgs.lib;
 		nixos-hardware = fetchTarball {
@@ -50,8 +41,6 @@
 			settings: [
 				jcbin.nixosModules.all
 				jcconfs.nixosModules.home { inherit (settings) username; }
-				jcconfs.nixosModules.stylix
-				stylix.nixosModules.stylix
 				./nixos
 			]
 #			++
@@ -63,7 +52,7 @@
 #			)
 		);
 
-		systemBuilder = (
+		system-builder = (
 			hostname: system: username:
 			let
 				settings = {
@@ -82,7 +71,7 @@
 			in
 			lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles darnix-overlay; };
+				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
 				modules = (getModules settings) ++ [
 					./nixos/hosts/${hostname}/hardware-configuration.nix
 					./nixos/hosts/${hostname}/boot.nix
@@ -92,7 +81,7 @@
 			}
 		);
 
-		isoBuilderCD = (
+		iso-cd-builder = (
 			system: username:
 			let
 				settings = {
@@ -103,33 +92,22 @@
 			in
 			lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
+				specialArgs = { inherit inputs settings dotfiles; };
 				modules =
 				# (getModules settings) ++
 				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+
+							./nixos/common/core
+							./nixos/common/users
+							./nixos/system/services
 						];
 
 						jcbin = {
 							rebuild-system.enable = true;
 							mount-configs.enable = true;
-						};
-
-						users.users.${settings.username} = {
-							name = settings.username;
-
-							isNormalUser = true;
-							createHome = true;
-
-							# packages = with pkgs; [ ];
-							extraGroups = [ "networkmanager" "wheel" ];
-
-							openssh.authorizedKeys.keys = [
-								"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
-								"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
-							];
 						};
 
 						# Enable SSH in the boot process.
@@ -139,7 +117,7 @@
 			}
 		);
 
-		imgBuilderSD-raspi3 = (
+		img-sd-builder-raspi3 = (
 			build-platform-system:
 			username:
 			let
@@ -151,21 +129,36 @@
 			in
 			lib.nixosSystem {
 				inherit (settings) system;
-				specialArgs = { inherit inputs settings dotfiles darnix-overlay; };
-				modules = (getModules settings) ++
+				specialArgs = { inherit inputs settings dotfiles; };
+				modules =
+				# (getModules settings) ++
 				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							# "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
 							"${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
 							"${nixos-hardware}/raspberry-pi/3"
+
+							./nixos/common/core
+							./nixos/common/users
+							./nixos/system/services
 						];
 
 
-						jcbin = {
-							rebuild-system.enable = true;
-							mount-configs.enable = true;
-						};
+						system.services.nixbuilder.client.builders =
+						[
+							{
+								hostName = "msi.host.local";
+								maxJobs = 6;
+								features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+								systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+							}
+						];
+
+						# jcbin = {
+						# 	rebuild-system.enable = true;
+						# 	mount-configs.enable = true;
+						# };
 
 						# Other
 						sdImage.compressImage = false;
@@ -199,18 +192,18 @@
 		# nixos-rebuild switch --flake .#<hostname>
 		nixosConfigurations =
 		{
-			virtualmachine = systemBuilder "virtualmachine" "x86_64-linux" "ryuji";
-			msi            = systemBuilder "msi"            "x86_64-linux" "ryuji";
-			acer           = systemBuilder "acer"           "x86_64-linux" "ryuji";
-			quiss          = systemBuilder "quiss"          "x86_64-linux" "ryuji";
+			virtualmachine = system-builder "virtualmachine" "x86_64-linux" "ryuji";
+			msi            = system-builder "msi"            "x86_64-linux" "ryuji";
+			acer           = system-builder "acer"           "x86_64-linux" "ryuji";
+			quiss          = system-builder "quiss"          "x86_64-linux" "ryuji";
 		}
 		//
 		builtins.listToAttrs (
 			listAllSystems (
 				system:
 				{
-					name = "iso-${system}";
-					value = isoBuilderCD system "ryuji";
+					name = "iso-cd-${system}";
+					value = iso-cd-builder system "ryuji";
 				}
 			)
 		)
@@ -219,8 +212,8 @@
 			listAllSystems (
 				build-platform-system:
 				{
-					name = "img-raspi3_build-${build-platform-system}";
-					value = imgBuilderSD-raspi3 build-platform-system "ryuji";
+					name = "img-sd-raspi3-build_${build-platform-system}";
+					value = img-sd-builder-raspi3 build-platform-system "ryuji";
 				}
 			)
 		);
