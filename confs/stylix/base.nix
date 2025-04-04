@@ -20,13 +20,13 @@ in
 		cursor = {
 			name = "Adwaita"; # breeze_cursors
 			package = pkgs.adwaita-icon-theme;
-			size = 24;
+			size = 18;
 		};
 
 		fonts = {
 			sizes = {
-				applications = 14;  terminal = 12;
-				popups = 10;        desktop = 10;
+				applications = 12;  terminal = 12;
+				popups = 8;         desktop = 10;
 			};
 
 			monospace = { name = "Roboto Mono Medium"; package = pkgs.roboto-mono; };
