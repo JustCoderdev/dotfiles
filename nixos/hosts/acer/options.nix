@@ -51,12 +51,13 @@
 		};
 
 		gaming.enable = false;
+
 		services = {
 			docker.enable = false;
 			samba.enable = true;
 			virtualbox.enable = false;
 			webserver.enable = true;
-			nixcache.instance-host = "192.168.7.142";  # msi 
+			nixcache.instance-host = "msi.host.local";  # msi 
 			nixbuilder = {
 				server.enable = false;
 				client.builders = [

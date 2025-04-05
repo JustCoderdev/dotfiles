@@ -43,13 +43,13 @@ else
 	had_changes=true
 
 	# shellcheck disable=SC2162
-	# read -p 'Open diff? (y/N): ' diff_confirm
+	# read -rp 'Open diff? (y/N): ' diff_confirm
 	# if [[ "${diff_confirm}" == [yY] ]] || [[ "${diff_confirm}" == [yY][eE][sS] ]]; then
 	# 	git diff --word-diff=porcelain -U0 -- .
 	# fi
 
 	# shellcheck disable=SC2162
-	read -p 'Do you want to commit? (Y/n): ' commit_confirm
+	read -rp 'Do you want to commit? (Y/n): ' commit_confirm
 	if [[ "${commit_confirm}" == [nN] ]] || [[ "${commit_confirm}" == [nN][oO] ]]; then
 		want_commit=false
 	else
@@ -84,26 +84,34 @@ substituters="https://cache.nixos.org/?priority=40"
 if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
 	echo -e "No nix substituter set, ignoring..."
 else
-	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
+	echo -e "Found nix substituter '${DOT_NIX_SUB_URL}'"
 
-	ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1
-	# shellcheck disable=SC2181 #ah the irony
-	if [[ "${?}" -eq 0 ]]; then
-		echo -e "\033[32mONLINE\033[0m"
-		substituters+=" http://${DOT_NIX_SUB_URL}"
+	read -rp 'Do you want to ignore subtituter? (y/N): ' ignore_sub
+	if [[ "${ignore_sub}" != [yY] ]] && [[ "${ignore_sub}" != [yY][eE][sS] ]];
+	then
+		echo -n "pinging... "
 
-		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
-			#echo -e "No nix substituter port set, leaving default"
-			substituters+=":56552"
+		ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1
+		# shellcheck disable=SC2181 #ah the irony
+		if [[ "${?}" -eq 0 ]]; then
+			echo -e "\033[32mONLINE\033[0m"
+			substituters+=" http://${DOT_NIX_SUB_URL}"
+
+			if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
+				#echo -e "No nix substituter port set, leaving default"
+				substituters+=":56552"
+			else
+				#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
+				substituters+=":${DOT_NIX_SUB_PORT}"
+			fi
+
+			substituters+="?priority=30"
 		else
-			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
-			substituters+=":${DOT_NIX_SUB_PORT}"
+			echo -e "\033[31mOFFLINE\033[0m"
 		fi
-
-		substituters+="?priority=30"
-	else
-		echo -e "\033[31mOFFLINE\033[0m"
 	fi
+
+	echo -ne '\n'
 fi
 
 
@@ -176,7 +184,7 @@ else
 	echo -ne "\n"
 
 	# shellcheck disable=SC2162
-	read -p 'Open log? (y/N): ' log_confirm
+	read -rp 'Open log? (y/N): ' log_confirm
 	if [[ "${log_confirm}" == [yY] ]] || [[ "${log_confirm}" == [yY][eE][sS] ]]; then
 		vim -R .nixos-switch.log
 	fi
