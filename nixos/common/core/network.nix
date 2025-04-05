@@ -26,7 +26,9 @@
 			"192.168.7.16"  = [              "acer.host.local" ];
 			"192.168.7.142" = [               "msi.host.local" ];
 			# "192.168.7.168" = [             "quiss.host.local" ];
-			"192.168.7.230" = [            "jarvis.host.local" ];
+			# "192.168.7.222" = [            "jarvis.host.local" ];
+
+			"192.168.7.230" = [            "home-assistant.service.local" ];
 		};
 	};
 }
