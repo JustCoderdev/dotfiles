@@ -45,9 +45,6 @@
 			let
 				username = config.username;
 				args = getArgs username;
-
-				settings = args.settings;
-				wallpapers_path = args.wallpapers_path;
 			in
 			{
 				imports =
@@ -73,9 +70,9 @@
 					}
 				];
 
-				config = {
-					stylix.module = { inherit wallpapers_path; };
-				};
+				# config = {
+				# 	stylix.module = { inherit wallpapers_path; };
+				# };
 
 				options.username = lib.mkOption {
 					type = lib.types.str;
@@ -100,14 +97,14 @@
 
 					./users/${username}.nix
 
-					(
-						{ ... }:
-						{
-							config = {
-								stylix.module = { inherit wallpapers_path; };
-							};
-						}
-					)
+					# (
+					# 	{ ... }:
+					# 	{
+					# 		config = {
+					# 			stylix.module = { inherit wallpapers_path; };
+					# 		};
+					# 	}
+					# )
 				];
 			}
 		);
@@ -127,6 +124,7 @@
 		builtins.listToAttrs (
 			listAllSystems (
 				system: {
+					# TODO: replace `ryuji-x86_64-linux` with `ryuji.x86_64-linux`
 					name = "ryuji-${system}";
 					value = homeBuilder "ryuji" system;
 				}

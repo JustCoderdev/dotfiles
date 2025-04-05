@@ -6,12 +6,13 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		system.nixos.tags = [ "hyprland" ];
 
 		programs = {
-			thunar.enable = true;
-			xfconf.enable = true; # Required for thunar to retain preferences
+			# Required for thunar to retain preferences
+			xfconf.enable = true;
 
 			hyprland = {
 				enable = true;
@@ -22,15 +23,6 @@ in
 		services = {
 			devmon.enable = true;
 			udisks2.enable = true;
-
-			# Mount, trash, and other functionalities
-			gvfs = {
-				enable = true;
-				package = lib.mkForce pkgs.gnome3.gvfs;
-			};
-
-			# Thumbnail support for images
-			tumbler.enable = true;
 		};
 
 		environment = {
@@ -71,5 +63,15 @@ in
 #			login.enableGnomeKeyring = true;
 ##			#gtklock = {};
 #		};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.desktop.hyprland = {
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable hyprland software suit and support";
+			default = false;
+		};
 	};
 }

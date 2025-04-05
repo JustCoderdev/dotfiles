@@ -11,7 +11,8 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
 		system.nixos.tags = [ "${uname}" ];
 
@@ -58,5 +59,31 @@ in
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
 		++ lib.optionals (cfg.video-editing)   [ davinci-resolve ]
 		++ lib.optionals (cfg.game-developing) [ blender ];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.common.users.ryuji =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable personal user";
+			default = true;
+		};
+		image-editing = lib.mkOption  {
+			type = lib.types.bool;
+			description = "Add image editing sofware to environment packages";
+			default = false;
+		};
+		video-editing = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add video editing sofware to environment packages";
+			default = false;
+		};
+		game-developing = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add game developing sofware to environment packages";
+			default = false;
+		};
 	};
 }

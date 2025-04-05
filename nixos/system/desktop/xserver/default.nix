@@ -12,41 +12,13 @@ in
 		./xfce.nix
 	];
 
-	options.system.desktop = {
-		i3 = {
-			enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable i3 software suit and support";
-				default = true;
-			};
-		};
-		thunar = {
-			enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable thunar and related support";
-				default = true;
-			};
-		};
-		xfce = {
-			enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable xfce software suit and support";
-				default = false;
-			};
-		};
-	};
-
-	config =  {
-		assertions = (
-			lib.lists.optionals config.system.desktop.hyprland.enable [ {
+	config = {
+		assertions = lib.lists.optionals cfg.hyprland.enable
+		[
+			{
 				assertion = !(cfg.xfce.enable || cfg.i3.enable);
 				message = "Cannot enable wayland support if xfce or i3 is enabled";
-			} ]
-		) ++ (
-			lib.lists.optionals cfg.thunar.enable [ {
-				assertion = cfg.xfce.enable || cfg.i3.enable;
-				message = "Cannot enable thunar if xfce or i3 aren't enabled";
-			} ]
-		);
+			}
+		];
 	};
 }

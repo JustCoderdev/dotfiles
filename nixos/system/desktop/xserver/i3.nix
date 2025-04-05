@@ -1,9 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let cfg = config.system.desktop.i3; in
+let
+	cfg = config.system.desktop.i3;
+in
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		system.nixos.tags = [ "i3" ];
 
 		services = {
@@ -18,7 +21,17 @@ let cfg = config.system.desktop.i3; in
 					CuboCore.coreshot
 				];
 			};
+		};
+	};
 
+	# ------------------------------------------------------------ #
+
+	options.system.desktop.i3 =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable i3 software suit and support";
+			default = true;
 		};
 	};
 }

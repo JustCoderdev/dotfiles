@@ -13,4 +13,12 @@ in
 
 		services.blueman.enable = true;
 	};
+
+	options.common.core.bluetooth = {
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable bluetooth support";
+			default = false;
+		};
+	};
 }

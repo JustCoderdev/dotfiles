@@ -10,7 +10,8 @@ in
 	# - Nix-keeps-trying-removed-substituter <https://discourse.nixos.org/t/nix-keeps-trying-removed-substituter/39809/3>
 	# - The build fails if a build machine/cache is offline <https://github.com/NixOS/nix/issues/3514>
 
-	config = {
+	config =
+	{
 		services.nix-serve = {
 			inherit (cfg) enable port;
 			package = pkgs.nix-serve-ng;
@@ -38,6 +39,32 @@ in
 				DOT_NIX_SUB_URL  = "${cfg.instance-host}";
 				DOT_NIX_SUB_PORT = "${toString cfg.instance-port}";
 			};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.services.nixcache =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable nixcache daemon";
+			default = false;
+		};
+		port = lib.mkOption {
+			type = lib.types.port;
+			description = "Nixcache daemon port";
+			default = 56552;
+		};
+		instance-host = lib.mkOption {
+			type = lib.types.nullOr lib.types.str;
+			description = "Local nixcache host";
+			default = null;
+		};
+		instance-port = lib.mkOption {
+			type = lib.types.port;
+			description = "Local nixcache port";
+			default = 56552;
+		};
 	};
 }
 

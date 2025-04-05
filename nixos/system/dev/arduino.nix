@@ -5,18 +5,29 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		assertions = [{
 			assertion = config.system.dev.c.enable;
 			message = "Arduino tools requires you to enable c tools";
 		}];
 
 		environment.systemPackages = with pkgs; [
-			arduino
-			screen
+			arduino screen
 		];
 
 		# Grant permission to read serial devices /dev/ttyACM0
 		users.users.${settings.username}.extraGroups = [ "dialout" ];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.dev.arduino =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add arduino development tools and libs";
+			default = false;
+		};
 	};
 }

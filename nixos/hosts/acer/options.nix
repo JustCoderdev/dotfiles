@@ -44,7 +44,6 @@
 		};
 
 		dev = {
-			enable = true;
 			android.enable = false;
 			arduino.enable = true;
 			c.enable = true;

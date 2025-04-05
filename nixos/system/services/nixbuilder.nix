@@ -17,27 +17,15 @@ in
 	# - Distributed Builds <https://nix.dev/manual/nix/2.24/advanced-topics/distributed-builds>
 	# - Nixos on ARM <https://nixos.wiki/wiki/NixOS_on_ARM#Build_your_own_image_natively>
 
-	config = lib.mkMerge [
+	config = lib.mkMerge
+	[
 		(
 			# CLIENT
-			lib.mkIf (builtins.length client_cfg.builders > 0) {
+			lib.mkIf (builtins.length client_cfg.builders > 0)
+			{
 				nix = {
 					distributedBuilds = true;
-					buildMachines = []
-					# ++
-					# lib.lists.optionals (server_cfg.enable)
-					# [
-					# 	{
-					# 		hostName = "localhost";
-					# 		inherit (server_cfg) maxJobs systems;
-
-					# 		supportedFeatures = server_cfg.features;
-					# 		speedFactor = 10;
-					# 		protocol = null;
-					# 	}
-					# ]
-					++
-					lib.lists.forEach client_cfg.builders (
+					buildMachines = lib.lists.forEach client_cfg.builders (
 						builder:
 						{
 							inherit (builder) hostName maxJobs systems;
@@ -59,10 +47,11 @@ in
 				} ];
 			}
 		)
+
 		(
 			# SERVER
-			lib.mkIf server_cfg.enable {
-
+			lib.mkIf server_cfg.enable
+			{
 				boot.binfmt.emulatedSystems = lib.lists.remove (config.nixpkgs.hostPlatform.system) server_cfg.systems;
 				nix.settings.trusted-users =  [ buildclient_user ];
 
@@ -83,5 +72,67 @@ in
 			}
 		)
 	];
+
+	# ------------------------------------------------------------ #
+
+	options.system.services.nixbuilder =
+	{
+		server = {
+			enable = lib.mkOption {
+				type = lib.types.bool;
+				description = "Configure this device as a nixbuilder";
+				default = false;
+			};
+			maxJobs = lib.mkOption {
+				type = lib.types.int;
+				description = "The number of concurrent jobs supported by the builder";
+				default = 1;
+			};
+			features = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The features of the builder";
+			};
+			systems = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The systems supported by the builder";
+			};
+		};
+
+		client.builders = lib.mkOption {
+			default = [];
+			description = "Known builders that the client can offload the work to";
+			type = lib.types.listOf (
+				lib.types.submodule (
+					{ config, ... }:
+					{
+						options = {
+							hostName = lib.mkOption {
+								type = lib.types.str;
+								description = "How to reach the builder";
+							};
+							maxJobs = lib.mkOption {
+								type = lib.types.int;
+								description = "The number of concurrent jobs the builder supports";
+								default = 1;
+							};
+							priority = lib.mkOption {
+								type = lib.types.int;
+								description = "The computational priority of this builder";
+								default = 1;
+							};
+							features = lib.mkOption {
+								type = lib.types.listOf lib.types.str;
+								description = "The features of the builder";
+							};
+							systems = lib.mkOption {
+								type = lib.types.listOf lib.types.str;
+								description = "The systems supported by the builder";
+							};
+						};
+					}
+				)
+			);
+		};
+	};
 }
 

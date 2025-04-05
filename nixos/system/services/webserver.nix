@@ -6,8 +6,8 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
-
+	config = lib.mkIf cfg.enable
+	{
 		networking.firewall.allowedTCPPorts = [ 80 443 ];
 		services.nginx = {
 			enable = true;
@@ -23,5 +23,16 @@ in
 		# 	acceptTerms = true;
 		# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
 		# };
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.services.webserver =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable webserver and serve files at /var/www/HOSTNAME";
+			default = false;
+		};
 	};
 }

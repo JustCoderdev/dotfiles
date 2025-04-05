@@ -5,8 +5,8 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
-
+	config = lib.mkIf cfg.enable
+	{
 		system.nixos.tags = [ "nvidia" ];
 
 		services.xserver.videoDrivers = [ "nvidia" ];
@@ -14,6 +14,15 @@ in
 
 		hardware.nvidia = {
 			# Configure for each host in boot.nix
+		};
+	};
+
+	options.common.core.nvidia = 
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable nvidia support";
+			default = false;
 		};
 	};
 }

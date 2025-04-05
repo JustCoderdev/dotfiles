@@ -5,11 +5,22 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
-
+	config = lib.mkIf cfg.enable
+	{
 		environment.systemPackages = with pkgs; [ scrcpy ];
 
 		programs.adb.enable = true;
 		users.users.${settings.username}.extraGroups = [ "adbusers" ];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.dev.android = 
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add android development tools and libs";
+			default = false;
+		};
 	};
 }

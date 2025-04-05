@@ -1,9 +1,6 @@
 { pkgs, config, lib, settings, ... }:
 
 let
-#	nvidia = config.common.core.nvidia;
-#	video-editing = config.common.users.ryuji.video-editing;
-
 	i3 = config.system.desktop.xfce;
 	hyprland = config.system.desktop.hyprland;
 in
@@ -33,7 +30,6 @@ in
 #				(lib.mkIf video-editing pkgs.intel-compute-runtime)
 #			];
 		};
-
 
 		unofficial.services.fusuma = let
 			prefix = if i3.enable then "i3"

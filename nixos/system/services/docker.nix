@@ -6,8 +6,8 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
-
+	config = lib.mkIf cfg.enable
+	{
 		environment.systemPackages = [ pkgs.docker-compose ];
 		virtualisation.docker = {
 			enable = true;
@@ -21,6 +21,17 @@ in
 		};
 
 		users.users.${username}.extraGroups = [ "docker" ];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.services.docker = 
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable docker daemon";
+			default = false;
+		};
 	};
 }
 

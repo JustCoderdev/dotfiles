@@ -5,8 +5,8 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable {
-
+	config = lib.mkIf cfg.enable
+	{
 		programs.thunar = {
 			enable = true;
 			plugins = with pkgs.xfce; [
@@ -25,5 +25,16 @@ in
 		environment.systemPackages = with pkgs; [
 			ffmpegthumbnailer # Thunar extensions video thumbnails
 		];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.desktop.thunar =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable thunar and related support";
+			default = true;
+		};
 	};
 }

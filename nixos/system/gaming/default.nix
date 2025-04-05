@@ -10,19 +10,10 @@ in
 		./steam.nix
 	];
 
-	options = {
-		system.gaming = {
-			enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable gaming software";
-				default = false;
-			};
-		};
-	};
-
-
-	config = lib.mkIf cfg.enable {
-		environment.systemPackages = with pkgs; [
+	config = lib.mkIf cfg.enable
+	{
+		environment.systemPackages = with pkgs;
+		[
 			discord # Run with --disable-gpu
 
 			goverlay # Edit overlay
@@ -37,9 +28,7 @@ in
 			# For both
 			# gamemoderun mangohud %command%
 
-#			heroic         # Epic Games - gog
 			prismlauncher  # Minecraft launcher
-			# modrinth-app   # Minecraft launcher
 
 			(lutris.override {   # Game hub
 				extraLibraries = pkgs: [ ];
@@ -50,5 +39,15 @@ in
 #			bottles     # Vine game manager
 #			cartridges  # Game hub
 		];
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.gaming = {
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable gaming software";
+			default = false;
+		};
 	};
 }

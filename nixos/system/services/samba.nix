@@ -2,8 +2,10 @@
 
 let
 	cfg = config.system.services.samba;
+
 	username = settings.username;
 	hostname = settings.hostname;
+
 	share-name = "${username}-${hostname}";
 	share-path = "/home/${username}/${share-name}-share";
 in
@@ -17,7 +19,8 @@ in
 #   Registered User: use the data from the user created with smbpasswd!
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		# Autodiscovery on windows
 		services.samba-wsdd = {
 			enable = true;
@@ -82,6 +85,17 @@ in
 					"fruit:encoding" = "native";
 				};
 			};
+		};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.system.services.samba =
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable samba daemon";
+			default = false;
 		};
 	};
 }

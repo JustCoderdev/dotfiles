@@ -1,9 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let cfg = config.system.dev.c; in
+let
+	cfg = config.system.dev.c;
+in
 
 {
-	config = lib.mkIf cfg.enable {
+	config = lib.mkIf cfg.enable
+	{
 		documentation = {
 			enable = true;
 
@@ -18,38 +21,32 @@ let cfg = config.system.dev.c; in
 
 		environment.systemPackages = with pkgs; [
 			# Docs
-			glibc
-			glibcInfo
-			man-pages
-			man-pages-posix
-			clang-manpages
-			linux-manual
-			stdmanpages
-			stdman
+			glibc glibcInfo
+			man-pages man-pages-posix
+			clang-manpages linux-manual
+			stdmanpages stdman
 
 			# Compilation
-			clang-tools
-			clang gcc
-			gnumake
-
-			nasm
+			clang-tools clang
+			gcc gnumake nasm
 
 			# Tools
-			ascii
-			ripgrep
+			ascii ripgrep
 
 			# Debugging
-			gdb gf
-			valgrind
-			file
+			gdb valgrind
+			gf file
 		];
 	};
 
-#	libGL
-#	xorg.libXinerama
-#	xorg.libX11.dev
-#	xorg.libXft
-#	xorg.libXcursor
-#	xorg.libXrandr
-#	xorg.libXi.dev
+	# ------------------------------------------------------------ #
+
+	options.system.dev.c = 
+	{
+		enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Add c development tools and libs";
+			default = false;
+		};
+	};
 }

@@ -21,54 +21,12 @@
 		./sudo.nix
 	];
 
-	options = {
-		common.core = {
-			bluetooth.enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable bluetooth support";
-				default = false;
-			};
-
-			nvidia.enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable nvidia support";
-				default = false;
-			};
-
-			audio = {
-				pipewire.enable = lib.mkOption {
-					type = lib.types.bool;
-					description = "Enable pipewire support";
-					default = false;
-				};
-
-				pulseaudio.enable = lib.mkOption {
-					type = lib.types.bool;
-					description = "Enable pulseaudio support";
-					default = false;
-				};
-			};
-
-			plymouth.enable = lib.mkOption {
-				type = lib.types.bool;
-				description = "Enable plymouth boot screen";
-				default = false;
-			};
-		};
-	};
-
-	config = {
-		# Core packages
-		environment.systemPackages = with pkgs; [
-			unzip zip
-			htop btop
-			smartmontools pciutils #ntfs3g
-			wget
-			vim killall
-		];
-
-		# Packet sniffer
-		programs.tcpdump.enable = true;
-		users.users.${settings.username}.extraGroups = [ "pcap" ];
-	};
+	# Core packages
+	environment.systemPackages = with pkgs; [
+		unzip zip
+		htop btop
+		smartmontools pciutils #ntfs3g
+		wget
+		vim killall
+	];
 }

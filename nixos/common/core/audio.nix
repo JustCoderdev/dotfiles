@@ -49,4 +49,19 @@ in
 			}
 		)
 	];
+
+	options.common.core.audio = 
+	{
+		pipewire.enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable pipewire support";
+			default = false;
+		};
+
+		pulseaudio.enable = lib.mkOption {
+			type = lib.types.bool;
+			description = "Enable pulseaudio support";
+			default = false;
+		};
+	};
 }
