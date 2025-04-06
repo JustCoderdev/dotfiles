@@ -44,20 +44,19 @@ in
 			];
 		};
 
-		environment.systemPackages = with pkgs; [
-			google-chrome
+		environment.systemPackages = with pkgs;
+		[
+			# google-chrome
 			firefox
 
 			obsidian
 
-			vlc
+			# vlc
 			audacity
 			emulsion
-
-			obs-studio
 		]
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
-		++ lib.optionals (cfg.video-editing)   [ davinci-resolve ]
+		++ lib.optionals (cfg.video-editing)   [ davinci-resolve obs-studio ]
 		++ lib.optionals (cfg.game-developing) [ blender ];
 	};
 

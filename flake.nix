@@ -141,9 +141,10 @@
 
 							./nixos/common/core
 							./nixos/common/users
-							./nixos/system/services
+							./nixos/system/services/nixbuilder.nix
 						];
 
+						services.printing.enable = lib.mkForce false;
 
 						system.services.nixbuilder.client.builders =
 						[
