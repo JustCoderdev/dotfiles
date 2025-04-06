@@ -6,8 +6,6 @@ let
 in
 
 {
-	boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
 	# Mouse support
 	environment.systemPackages = with pkgs; [ piper ];
 	services.ratbagd.enable = true;
@@ -41,7 +39,7 @@ in
 
 			# dhcp
 			dhcp-option = "option:router,10.0.0.1";
-			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.14,1h" ];
+			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.127,1h" ];
 			dhcp-host = [
 				"msi,10.0.0.1"
 				"${quiss-mac},quiss,infinite"
@@ -75,19 +73,6 @@ in
 					proto = "tcp";
 					sourcePort = 4080;
 					destination = "${quiss-ip}:80";
-				}
-
-				{ # 10.0.0.11:443 >>#<< 192.168.7.142:4443
-					proto = "tcp";
-					sourcePort = 4443;
-					destination = "${quiss-ip}:443";
-				}
-
-
-				{ # 10.0.0.12:8123 >>#<< 192.168.7.142:8123
-					proto = "tcp";
-					sourcePort = 8123;
-					destination = "10.0.0.12:8123";
 				}
 			];
 
