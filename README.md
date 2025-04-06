@@ -362,3 +362,17 @@ sudo mdadm --manage /dev/md0 -r /dev/sdc1
 # add
 sudo mdadm --manage /dev/md0 -a /dev/sdc1
 ```
+
+### Samba users
+
+> Login on iOS
+> `smb://<ip>/<share>`
+
+```
+# Create a user
+sudo smbpasswd -a <username>
+
+# List users
+sudo pdbedit -L
+```
+

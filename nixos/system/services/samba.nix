@@ -10,14 +10,6 @@ let
 	share-path = "/home/${username}/${share-name}-share";
 in
 
-# Samba user commands
-#   - Create a user: `sudo smbpasswd -a <username>`
-#   - List users:    `sudo pdbedit -L`
-
-# Login on iOS:
-#   Server: smb://<ip>/
-#   Registered User: use the data from the user created with smbpasswd!
-
 {
 	config = lib.mkIf cfg.enable
 	{
