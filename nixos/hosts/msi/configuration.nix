@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 let
-	quiss-mac = "f4:6d:04:99:dc:9a";
-	quiss-ip  = "10.0.0.14";
+	quiss-mac = "f4:6d:04:99:cb:11";
+	quiss-ip  = "10.0.0.2";
 in
 
 {
@@ -19,6 +19,8 @@ in
 		"net.ipv6.conf.all.forwarding" = true;
 	};
 
+	# Check leases here
+	# /var/lib/dnsmasq/dnsmasq.leases
 	services.dnsmasq = {
 		enable = true;
 		resolveLocalQueries = false;
@@ -39,10 +41,10 @@ in
 
 			# dhcp
 			dhcp-option = "option:router,10.0.0.1";
-			dhcp-range = [ "br-lan,10.0.0.2,10.0.0.127,1h" ];
+			dhcp-range = [ "br-lan,10.0.0.3,10.0.0.127,1h" ];
 			dhcp-host = [
 				"msi,10.0.0.1"
-				"${quiss-mac},quiss,infinite"
+				"${quiss-mac},quiss,infinite"  # 10.0.0.2
 			];
 		};
 	};
