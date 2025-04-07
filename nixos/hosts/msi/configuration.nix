@@ -3,6 +3,9 @@
 let
 	quiss-mac = "f4:6d:04:99:cb:11";
 	quiss-ip  = "10.0.0.2";
+
+	alpha-mac = "1c:c1:de:be:c6:c4";
+	alpha-ip  = "10.0.0.5";
 in
 
 {
@@ -45,6 +48,7 @@ in
 			dhcp-host = [
 				"msi,10.0.0.1"
 				"${quiss-mac},quiss,infinite"  # 10.0.0.2
+				"${alpha-mac},alpha,infinite"  # 10.0.0.5
 			];
 		};
 	};
@@ -57,7 +61,10 @@ in
 		networkmanager.unmanaged = [ "interface-name:eno1" ];
 
 		# Add dns record
-		hosts."${quiss-ip}" = [ "quiss.host.local" ];
+		hosts = {
+			"${quiss-ip}" = [ "quiss.host.local" ];
+			"${alpha-ip}" = [ "alpha.server.local" ];
+		};
 
 		nat = {
 			enable = true;
@@ -65,10 +72,15 @@ in
 			internalInterfaces = [ "eno1" ];
 
 			forwardPorts = [
-				{ # 10.0.0.11:22 >>#<< 192.168.7.142:4022
+				{ # 10.0.0.2:22 >>#<< 192.168.7.142:4022
 					proto = "tcp";
-					sourcePort = 4022;
+					sourcePort = 52222;
 					destination = "${quiss-ip}:22";
+				}
+				{ # 10.0.0.5:22 >>#<< 192.168.7.142:4022
+					proto = "tcp";
+					sourcePort = 50522;
+					destination = "${alpha-ip}:22";
 				}
 
 				{ # 10.0.0.11:80 >>#<< 192.168.7.142:4080
