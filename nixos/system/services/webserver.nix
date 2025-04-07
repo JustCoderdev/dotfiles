@@ -8,7 +8,7 @@ in
 {
 	config = lib.mkIf cfg.enable
 	{
-		networking.firewall.allowedTCPPorts = [ 80 443 ];
+		networking.firewall.allowedTCPPorts = [ 80 ]; # 443 
 		services.nginx = {
 			enable = true;
 
@@ -18,6 +18,15 @@ in
 				# forceSSL = true;
 			};
 		};
+
+		systemd.tmpfiles.rules =
+		let
+			uname = settings.username;
+		in
+		[
+#			Type Path                           Mode User     Group Age Argument
+			"d   /var/www/${hostname}           0755 ${uname} users"
+		];
 
 		# security.acme = {
 		# 	acceptTerms = true;
@@ -31,7 +40,7 @@ in
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;
-			description = "Enable webserver and serve files at /var/www/HOSTNAME";
+			description = "Enable webserver to serve files at /var/www/HOSTNAME";
 			default = false;
 		};
 	};
