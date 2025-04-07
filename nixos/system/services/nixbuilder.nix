@@ -54,7 +54,6 @@ Host ${builder.hostName}
 	User ${buildclient_user}
 	IdentitiesOnly yes # Force to use only this identity file
 	IdentityFile "${sshkey_path}"
-\n
 ''
 					)
 				);
