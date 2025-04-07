@@ -45,6 +45,18 @@ in
 					comment = "${username}_${buildclient_user}@${hostname}";
 					path = sshkey_path;
 				} ];
+
+				programs.ssh.extraConfig = lib.lists.forEach client_cfg.builders (
+					builder:
+''
+Host ${builder.hostName}
+	User ${buildclient_user}
+	IdentitiesOnly yes # Force to use only this identity file
+	IdentityFile "${sshkey_path}"
+
+''
+				);
+
 			}
 		)
 
