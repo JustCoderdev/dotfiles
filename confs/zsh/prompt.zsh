@@ -12,7 +12,7 @@ if [[ "${SSH_TTY}" == "$(tty)" ]]; then
 fi
 
 # Set fallback prompt
-if [[ "${PROMPT}" == '%n@%m:%~/ > ' ]]; then
+if [[ "${PROMPT}" != '%F{8} %~ %B%F{4}$%f%b ' ]] && [[ "${PROMPT}" != "%F{8} %~ %B%F{5}\$${SHLVL}%f%b " ]]; then
 	# ' ~ $ ' cyan tinted
 	PROMPT=$'%F{8} %~ %B%F{4}$%f%b '
 

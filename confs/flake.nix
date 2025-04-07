@@ -120,23 +120,13 @@
 		};
 
 		homeConfigurations = { }
-		//
-		builtins.listToAttrs (
-			listAllSystems (
-				system: {
-					# TODO: replace `ryuji-x86_64-linux` with `ryuji.x86_64-linux`
-					name = "ryuji-${system}";
-					value = homeBuilder "ryuji" system;
-				}
-			)
-		);
-
+			// forAllSystems (system: { ryuji = homeBuilder "ryuji" system; });
 
 		# nix build
 		packages = forAllSystems (
 			system: let pkgs = nixpkgsFor.${system}; in {
 				ryuji-activation = (homeBuilder "ryuji" system).activationPackage;
-				# ryuji-activation = self.homeConfigurations.ryuji.activationPackage;
+			    #ryuji-activation = self.homeConfigurations."${system}".ryuji.activationPackage;
 				darnix-plymouth-theme = pkgs.callPackage ./plymouth/darnix { };
 			}
 		);

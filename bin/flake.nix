@@ -22,16 +22,21 @@
 			}
 		];
 
+		packageShellScript = (
+			name: getInputs: pkgs:
+			pkgs.writeShellApplication {
+				inherit name;
+				runtimeInputs = (if (builtins.isFunction getInputs) then getInputs pkgs else []);
+				text = (builtins.readFile ./bash-scripts/${name}.sh);
+			}
+		);
+
 		generateBashScriptModule = (
 			{ name, getInputs ? (pkgs: []), requiresSudo ? false }: (
 				{ config, lib, pkgs, ... }:
 				let
 					cfg = config.jcbin.${name};
-					package = pkgs.writeShellApplication {
-						inherit name;
-						runtimeInputs = getInputs pkgs;
-						text = (builtins.readFile ./bash-scripts/${name}.sh);
-					};
+					package = packageShellScript name getInputs pkgs;
 				in
 				{
 					config = lib.mkIf cfg.enable {
@@ -71,10 +76,28 @@
 				}
 			)
 		);
+
+		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+		forAllSystems = lib.genAttrs supportedSystems;
+		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
 		nixosModules = modules // {
 			all = ( { ... }: { imports = attrValues modules; } );
 		};
+
+		packages = forAllSystems (
+			system: let pkgs = nixpkgsFor.${system}; in
+			builtins.listToAttrs (
+				forEach bash-scripts (
+					# { name, getInputs ? (pkgs: []), requiresSudo ? false }: (
+					sdata:
+					{
+						inherit (sdata) name;
+						value = packageShellScript sdata.name sdata.getInputs pkgs;
+					}
+				)
+			)
+		);
 	};
 }

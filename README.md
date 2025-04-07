@@ -112,7 +112,7 @@ cd "${DOT_FILES}"
 
 2. Install
 
-- Without nix [untested]
+- Without nix
 
 ```bash
 ./bin/mount-configs/mount-configs.sh
@@ -122,7 +122,10 @@ cd "${DOT_FILES}"
 
 ```bash
 cd confs
+
+# add after nix "--extra-features 'nix-command flakes'" if using a non-flake env
 nix build .#${USER}-activation
+
 ./result/activate
 ```
 

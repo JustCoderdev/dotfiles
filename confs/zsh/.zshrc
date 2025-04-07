@@ -17,6 +17,7 @@ unsetopt MENU_COMPLETE      # Automatically highlight first element of completio
 unsetopt HIST_SAVE_NO_DUPS  # Don't save duplicates to history
 unsetopt SHARE_HISTORY      # Share history with all zsh sessions
 
+DOT_FILES='/home/ryuji/.config/dotfiles'
 
 # Completition
 

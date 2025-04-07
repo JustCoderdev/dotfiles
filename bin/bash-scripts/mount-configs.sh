@@ -17,7 +17,7 @@ homepath="/home/${USER}"
 
 function link {
 	from="$1"; from_filename="${from##/*/}";
-	to="$2"; to_filename="${3:-$from_filename}";
+	  to="$2";   to_filename="${3:-$from_filename}";
 
 	# echo "----"
 	# echo -e "from = '${from}\t\t from_filename = '${from_filename}'"
@@ -27,19 +27,20 @@ function link {
 	if [ -L "${to}/${to_filename}" ]; then
 		unlink "${to}/${to_filename}"
 		# echo "Unlinking '${to}/${to_filename}'"
+		echo -e " \033[33m[WARN]\033[0m Unlinked \033[36m'${to}/${to_filename}'\033[0m"
 	fi
 
 	# If file exists
 	if [ -e "${to}/${to_filename}" ]; then
-		echo "[ERROR] Linking '${from_filename}' to '${to}/${to_filename}': file exists"
+		echo -e "\033[31m[ERROR]\033[0m Linking \033[36m'${from_filename}'\033[0m to \033[36m'${to}/${to_filename}'\033[0m: file exists"
 		return 0; # Must be 0 to avoid triggering -e
 	fi
 
 	# Link
 	if ln -snf "${from}" "${to}/${to_filename}"; then
-		echo "   [OK] Linked '${from_filename}' to '${to}/${to_filename}'"
+		echo -e "   \033[32m[OK]\033[0m Linked \033[36m'${from_filename}'\033[0m to \033[36m'${to}/${to_filename}'\033[0m"
 	else
-		echo "[ERROR] Linking '${from_filename}' to '${to}/${to_filename}': return code ${?}"
+		echo -e "\033[31m[ERROR]\033[0m Linking \033[36m'${from_filename}'\033[0m to \033[36m'${to}/${to_filename}'\033[0m: return code ${?}"
 	fi
 }
 
@@ -61,6 +62,7 @@ link "${DOT_FILES}/confs/emacs/.emacs.custom.el" "${homepath}"  # Emacs
 link "${DOT_FILES}/confs/emacs/.emacs.extra"     "${homepath}"  # Emacs
 link "${DOT_FILES}/confs/git/.gitconfig"         "${homepath}"  # Git
 link "${DOT_FILES}/confs/git/.gitignore_global"  "${homepath}"  # Git
+link "${DOT_FILES}/confs/zsh/.zshrc"             "${homepath}"  # Zsh
 
 if [ -z "${DOT_NIXOS:-}" ]; then
 	echo "TODO: Fix linking on non nixos distro !!"
@@ -69,7 +71,6 @@ if [ -z "${DOT_NIXOS:-}" ]; then
 	# link "${DOT_FILES}/confs/hyprland"       "${homepath}/.config/hypr"  # Hyprland
 	# link "${DOT_FILES}/confs/neovim"         "${homepath}/.config/nvim"  # Nvim
 	# link "${DOT_FILES}/confs/plymouth"       "/etc"         # Plymouth
-	# link "${DOT_FILES}/confs/zsh/.zshrc"     "${homepath}"  # Zsh
 fi
 
 echo "Done mounting configs"

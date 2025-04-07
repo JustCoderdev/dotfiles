@@ -2,7 +2,7 @@
 # Misc
 alias ez="echo 'Updating zsh'; exec zsh"
 
-unalias l
+#unalias l
 alias ls="ls --color -F"
 alias la="ls -Fa"
 alias ll="ls -Flah"
