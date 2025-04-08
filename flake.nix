@@ -27,9 +27,7 @@
 		# };
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable,
-			jcbin, jcconfs,
-			nix-minecraft }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
 	let
 		dotfiles = ./.;
 
@@ -196,10 +194,13 @@
 		nixosConfigurations =
 		{
 			virtualmachine = system-builder "virtualmachine" "x86_64-linux" "ryuji";
+
 			msi            = system-builder "msi"            "x86_64-linux" "ryuji";
 			acer           = system-builder "acer"           "x86_64-linux" "ryuji";
+
 			quiss          = system-builder "quiss"          "x86_64-linux" "ryuji";
 			alpha          = system-builder "alpha"          "x86_64-linux" "ryuji";
+			beta           = system-builder "beta"           "x86_64-linux" "ryuji";
 		}
 		//
 		builtins.listToAttrs (
@@ -260,7 +261,7 @@
 			{
 				default = pkgs.mkShell {
 					shellHook = '' zsh && exit '';
-					buildInputs = with pkgs; [ git vim ];
+					buildInputs = with pkgs; [ git vim zsh ];
 				};
 			}
 		);

@@ -12,7 +12,8 @@ if [[ "${SSH_TTY}" == "$(tty)" ]]; then
 fi
 
 # Set fallback prompt
-if [[ "${PROMPT}" == '%n@%m:%~/ > ' ]]; then
+if [[ "${PROMPT}" == '%n@%m:%~/ > ' || "${PROMPT}" == '%m%# ' ]];
+then
 	# ' ~ $ ' cyan tinted
 	PROMPT=$'%F{8} %~ %B%F{4}$%f%b '
 

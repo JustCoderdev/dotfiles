@@ -172,6 +172,7 @@ nix --extra-experimental-features 'nix-command flakes' build .#ryuji-activation
 nix --extra-experimental-features 'nix-command flakes' flake lock
 
 cd ..
+nix --extra-experimental-features 'nix-command flakes' flake update jcbin jcconfs
 git add .
 echo "";
 
