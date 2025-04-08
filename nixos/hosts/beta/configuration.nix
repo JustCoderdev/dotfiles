@@ -9,12 +9,14 @@ in
 {
 	networking = {
 		interfaces = {
-			"${beta-port-to-alpha}".addresses = [
-				{
-					address = beta-ip;
-					prefixLength = 30;
-				}
-			];
+			"${beta-port-to-alpha}" = {
+				ipv4.addresses = [
+					{
+						address = beta-ip;
+						prefixLength = 30;
+					}
+				];
+			};
 		};
 	};
 
