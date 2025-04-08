@@ -6,6 +6,9 @@ let
 
 	alpha-mac = "1c:c1:de:be:c6:c4";
 	alpha-ip  = "10.0.0.5";
+
+	beta-mac  = "30:8d:99:b2:88:df";
+	beta-ip   = "10.0.0.65";
 in
 
 {
@@ -49,6 +52,7 @@ in
 				"msi,10.0.0.1"
 				"${quiss-mac},quiss,infinite"  # 10.0.0.2
 				"${alpha-mac},alpha,infinite"  # 10.0.0.5
+				"${beta-mac},beta,infinite"  # 10.0.0.65
 			];
 		};
 	};
@@ -64,6 +68,7 @@ in
 		hosts = {
 			"${quiss-ip}" = [ "quiss.host.local" ];
 			"${alpha-ip}" = [ "alpha.server.local" ];
+			"${beta-ip}"  = [ "beta.server.local" ];
 		};
 
 		nat = {
@@ -72,16 +77,23 @@ in
 			internalInterfaces = [ "eno1" ];
 
 			forwardPorts = [
-				{ # 10.0.0.2:22 >>#<< 192.168.7.142:4022
+				{ # 10.0.0.2:22 >>#<< 192.168.7.142:52222
 					proto = "tcp";
 					sourcePort = 52222;
 					destination = "${quiss-ip}:22";
 				}
-				{ # 10.0.0.5:22 >>#<< 192.168.7.142:4022
+				{ # 10.0.0.5:22 >>#<< 192.168.7.142:50522
 					proto = "tcp";
 					sourcePort = 50522;
 					destination = "${alpha-ip}:22";
 				}
+				{ # 10.0.0.65:22 >>#<< 192.168.7.142:56522
+					proto = "tcp";
+					sourcePort = 56522;
+					destination = "${beta-ip}:22";
+				}
+				
+				# -------------------- #
 
 				{ # 10.0.0.11:80 >>#<< 192.168.7.142:4080
 					proto = "tcp";

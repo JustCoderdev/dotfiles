@@ -115,7 +115,7 @@ cd "${DOT_FILES}"
 - Without nix
 
 ```bash
-./bin/mount-configs/mount-configs.sh
+./bin/bash-scripts/mount-configs.sh
 ```
 
 - With nix stuff (home-manager)
@@ -129,33 +129,17 @@ nix build .#${USER}-activation
 ./result/activate
 ```
 
-- With NixOS [BROKEN]
+- With NixOS
+
+> If you get a "relative path error for ./bin..."
+>
+> - Remove local inputs from flake.nix (jcbin and jcconfs)
+> - Start rebuild `./bin/bash-scrips/rebuild-system.sh`
+> - Wait for rebuild to fail
+> - Add local inputs back
 
 ```bash
-repo='https://github.com/JustCoderdev/dotfiles'
-wget "${repo}/blob/nixos-integration/install.sh" -O - | sh
-```
-
-- With NixOS (& disko) [BROKEN]
-
-```bash
-sudo nix --experimental-features "nix-command flakes" \
-    run github:nix-community/disko -- --mode disko \
-    ./hosts/<host>/disko-config.nix
-
-sudo nix run 'github:nix-community/disko/latest#disko-install' \
-      -- --flake "${DOT_FILES}/nixos#<host>" --write-efi-boot-entries --disk root /dev/sdX
-
-sudo nixos-install --flake "${repo}/archive/refs/heads/nixos-compliant.zip#<host>"
-```
-
-- Remote VPS [untested]
-
-Make sure the host has a disko configuration in `nixos/hosts/HOST/disko.nix`
-
-```bash
-nix run nixpkgs#nixos-anywhere -- --flake .#<host> \
-    -i <idfile> <user>@<ip>
+./install.sh
 ```
 
 ## Dotfiles structure

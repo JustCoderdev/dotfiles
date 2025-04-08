@@ -12,6 +12,14 @@ else
 	exit 1
 fi
 
+if hash vim >/dev/null 2>&1; then
+	echo -e "Vim found"
+	EDITOR='vim'
+else
+	echo -e "Vim not found, quitting..."
+	exit 1
+fi
+
 
 DOTFILES_PATH="$(pwd)"
 NIXOS_PATH="${DOTFILES_PATH}/nixos"
@@ -38,9 +46,11 @@ echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m\n"
 
 grep -q "${HOSTNAME} = system-builder" "${DOTFILES_PATH}/flake.nix" || grep_exit=$?
 if [[ $grep_exit == 1 ]]; then
-	echo -e "Adding ${HOSTNAME} nixosConfiguration"
 	echo -e "\033[31mTODO: FIX SED THINGY\033[0m"
-	echo -e "\033[31mTManually add '${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";' to flake.nix\033[0m\n"
+	echo -e "\033[33mManually add v to flake.nix"
+	echo -e "${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";\033[0m\n"
+	
+	# echo -e "Adding ${HOSTNAME} nixosConfiguration"
 	#sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";/" "${DOTFILES_PATH}/flake.nix"
 else
 	echo -e "NixosConfiguration already in place, skipping..."
