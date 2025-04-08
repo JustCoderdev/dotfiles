@@ -51,6 +51,7 @@
 		};
 
 		gaming.enable = false;
+
 		services = {
 			docker.enable = false;
 			samba.enable = true;

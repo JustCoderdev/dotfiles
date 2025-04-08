@@ -57,7 +57,7 @@
 			samba.enable = true;
 			virtualbox.enable = false;
 			webserver.enable = true;
-			nixcache.instance-host = "10.0.0.1";  # msi 
+			nixcache.instance-host = "msi.host.local";
 			nixbuilder = {
 				server = {
 					enable = true;
@@ -73,8 +73,14 @@
 						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 					}
 					{
-						hostName = "10.0.0.5";
+						hostName = "alpha.server.local";
 						maxJobs = 8;
+						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+					}
+					{
+						hostName = "beta.server.local";
+						maxJobs = 6;
 						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 					}
