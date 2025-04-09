@@ -7,16 +7,11 @@ let
 in
 
 {
-	networking = {
-		interfaces = {
-			"${beta-port-to-alpha}" = {
-				ipv4.addresses = [
-					{
-						address = beta-ip;
-						prefixLength = 30;
-					}
-				];
-			};
+	systemd.network = {
+		enable = true;
+		networks."${beta-port-to-alpha}" = {
+			matchConfig.Name = beta-port-to-alpha;
+			address = [ "${beta-ip}/30" ];
 		};
 	};
 
