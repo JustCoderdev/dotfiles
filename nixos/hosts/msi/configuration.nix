@@ -76,7 +76,10 @@ in
 			internalIPs = [ "10.0.0.0/24" ];
 			internalInterfaces = [ "eno1" ];
 
-			forwardPorts = [
+			forwardPorts =
+			[
+				# SSH
+				# -------------------- #
 				{
 					proto = "tcp";
 					sourcePort = 52222;
