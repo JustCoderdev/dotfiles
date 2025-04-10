@@ -12,12 +12,12 @@ let cfg = config.system.dev.net; in
 
 		# Wireshark
 		programs.wireshark.enable = true;
-		users.users.${settings.username}.extraGroups = [ "wireshark" ];
+		users.users.${settings.username}.extraGroups = [ "wireshark" "pcap" ];
 		users.groups.wireshark = { };
 
 		# Packet sniffer
 		programs.tcpdump.enable = true;
-		users.users.${settings.username}.extraGroups = [ "pcap" ];
+		# users.users.${settings.username}.extraGroups = [ "pcap" ];
 	};
 
 	# ------------------------------------------------------------ #
