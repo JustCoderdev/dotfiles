@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
 	quiss-mac = "f4:6d:04:99:cb:11";
-	quiss-ip  = "10.0.0.2";
+	quiss-ip  = "10.0.0.22";
 
 	alpha-mac = "1c:c1:de:be:c6:c4";
 	alpha-ip  = "10.0.0.5";
@@ -13,7 +13,7 @@ in
 
 {
 	# Mouse support
-	environment.systemPackages = with pkgs; [ piper ];
+	environment.systemPackages = with pkgs; [ piper libnfc ];
 	services.ratbagd.enable = true;
 
 	# Network routing
@@ -77,28 +77,33 @@ in
 			internalInterfaces = [ "eno1" ];
 
 			forwardPorts = [
-				{ # 10.0.0.2:22 >>#<< 192.168.7.142:52222
+				{
 					proto = "tcp";
 					sourcePort = 52222;
 					destination = "${quiss-ip}:22";
 				}
-				{ # 10.0.0.5:22 >>#<< 192.168.7.142:50522
+				{
 					proto = "tcp";
 					sourcePort = 50522;
 					destination = "${alpha-ip}:22";
 				}
-				{ # 10.0.0.65:22 >>#<< 192.168.7.142:56522
+				{
 					proto = "tcp";
 					sourcePort = 56522;
 					destination = "${beta-ip}:22";
 				}
-				
+
 				# -------------------- #
 
-				{ # 10.0.0.11:80 >>#<< 192.168.7.142:4080
+				{
 					proto = "tcp";
 					sourcePort = 4080;
 					destination = "${quiss-ip}:80";
+				}
+				{
+					proto = "tcp";
+					sourcePort = 22445;
+					destination = "${quiss-ip}:445";
 				}
 			];
 
