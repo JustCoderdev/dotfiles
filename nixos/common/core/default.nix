@@ -28,5 +28,6 @@
 		smartmontools pciutils
 		wget
 		vim killall
+		screen
 	];
 }
