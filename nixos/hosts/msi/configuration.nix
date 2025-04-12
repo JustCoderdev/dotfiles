@@ -89,18 +89,23 @@ in
 				# -------------------- #
 				{
 					proto = "tcp";
-					sourcePort = 52222;
-					destination = "${confs.quiss.ip}:22";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 50522;
+					sourcePort = 50222;
 					destination = "${confs.alpha.ip}:22";
 				}
 				{
 					proto = "tcp";
-					sourcePort = 56522;
+					sourcePort = 50422;
 					destination = "${confs.beta.ip}:22";
+				}
+				{
+					proto = "tcp";
+					sourcePort = 50622;
+					destination = "${confs.quiss.ip}:22";
+				}
+				{
+					proto = "tcp";
+					sourcePort = 50722;
+					destination = "${confs.jarvis.ip}:22";
 				}
 
 				# -------------------- #

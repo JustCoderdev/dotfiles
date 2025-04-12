@@ -44,7 +44,7 @@ HOST_PATH="${HOSTS_PATH}/${HOSTNAME}"
 TEMP_PATH="${HOSTS_PATH}/.example"
 echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m\n"
 
-grep -q "${HOSTNAME} = system-builder" "${DOTFILES_PATH}/flake.nix" || grep_exit=$?
+grep -qE "${HOSTNAME}.*= system-builder" "${DOTFILES_PATH}/flake.nix" || grep_exit=$?
 if [[ $grep_exit == 1 ]]; then
 	echo -e "\033[31mTODO: FIX SED THINGY\033[0m"
 	echo -e "\033[33mManually add v to flake.nix"
@@ -57,8 +57,7 @@ else
 fi
 
 
-clone_templates=1
-
+generate_files=1
 if [ -d "${HOST_PATH}" ]; then
 	# shellcheck disable=SC2162
 	read -p 'Host configuration already exists, do you want to replace them? (y/N): ' continue_confirm
@@ -66,18 +65,64 @@ if [ -d "${HOST_PATH}" ]; then
 		echo "Moving old configuration to '${HOSTS_PATH}/${HOSTNAME}.old'\n"
 		cp -rf "${HOSTS_PATH}/${HOSTNAME}" "${HOSTS_PATH}/${HOSTNAME}.old"
 	else
-		clone_templates=0
+		generate_files=0
 	fi
 fi
 
-if [[ $clone_templates == 1 ]]; then
+if [[ $generate_files == 1 ]];
+then
+	echo -e "\nCloning templates"
 	mkdir -p "${HOST_PATH}"
 	cp -f "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
 	cp -f "${TEMP_PATH}/options.nix"       "${HOST_PATH}/options.nix"
-	echo -e "\nCloned templates"
+
+
+	echo -e "\nGenerating missing files"
+	nixos-generate-config --show-hardware-config > "${HOST_PATH}/hardware-configuration.nix"
+
+	BOOT_FILE_PATH="${HOST_PATH}/boot.nix"
+	DEF_CONF_PATH="/etc/nixos/configuration.nix"
+
+	touch "${BOOT_FILE_PATH}"
+	echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" > "${BOOT_FILE_PATH}"
+
+	# If UEFI system
+	if [ -d "/sys/firmware/efi/efivars" ]; then
+		echo "Efivars found, setting systemd"
+		echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           >> "${BOOT_FILE_PATH}"
+		echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  >> "${BOOT_FILE_PATH}"
+		echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      >> "${BOOT_FILE_PATH}"
+	else
+		echo "Efivars not found, setting grub"
+		echo -ne "\tboot.loader.grub.enable = true;\n"                   >> "${BOOT_FILE_PATH}"
+		echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           >> "${BOOT_FILE_PATH}"
+		echo -ne "\t#boot.loader.grub.configurationLimit = 5;\n"         >> "${BOOT_FILE_PATH}"
+		echo -ne "\tboot.loader.grub.useOSProber = false;\n"             >> "${BOOT_FILE_PATH}"
+	fi
+
+	# If using pre-existing configuration.nix file
+	if [ -f "/etc/nixos/configuration.nix" ]; then
+		#echo "Copying existing boot options..."
+		#echo -ne "\n\t#Boot\n"                 >> "$BOOT_FILE_PATH"
+		#set +e
+		#grep "boot" "${DEF_CONF_PATH}"         >> "$BOOT_FILE_PATH"
+		#set -e
+
+		echo "Copying existing virtualization options"
+		echo -ne "\n\t#Virtualisation\n"             >> "${BOOT_FILE_PATH}"
+
+		set +e
+		grep -q "virtualisation" "${DEF_CONF_PATH}"  >> "${BOOT_FILE_PATH}"
+		set -e
+	fi
+
+	echo -ne "}\n" >> "${BOOT_FILE_PATH}"
+	echo -ne "\n"
 fi
 
 
+
+# Edit files
 read -p 'Do you want to edit options.nix? (Y/n): ' editoptions_confirm
 if [[ "${editoptions_confirm}" != [nN] ]] && [[ "${editoptions_confirm}" != [nN][oO] ]]; then
 	$EDITOR "${HOST_PATH}/options.nix"
@@ -89,47 +134,6 @@ if [[ "${editconf_confirm}" != [nN] ]] && [[ "${editconf_confirm}" != [nN][oO] ]
 fi
 
 
-echo -e "\nGenerating missing files"
-nixos-generate-config --show-hardware-config > "${HOST_PATH}/hardware-configuration.nix"
-
-BOOT_FILE_PATH="${HOST_PATH}/boot.nix"
-DEF_CONF_PATH="/etc/nixos/configuration.nix"
-
-touch "${BOOT_FILE_PATH}"
-echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" > "${BOOT_FILE_PATH}"
-
-# If UEFI system
-if [ -d "/sys/firmware/efi/efivars" ]; then
-	echo "Efivars found, setting systemd"
-	echo -ne "\tboot.loader.systemd-boot.enable = true;\n"           >> "${BOOT_FILE_PATH}"
-	echo -ne "\tboot.loader.systemd-boot.configurationLimit = 5;\n"  >> "${BOOT_FILE_PATH}"
-	echo -ne "\tboot.loader.efi.canTouchEfiVariables = true;\n"      >> "${BOOT_FILE_PATH}"
-else
-	echo "Efivars not found, setting grub"
-	echo -ne "\tboot.loader.grub.enable = true;\n"                   >> "${BOOT_FILE_PATH}"
-	echo -ne "\tboot.loader.grub.device = \"/dev/sda\";\n"           >> "${BOOT_FILE_PATH}"
-	echo -ne "\t#boot.loader.grub.configurationLimit = 5;\n"         >> "${BOOT_FILE_PATH}"
-	echo -ne "\tboot.loader.grub.useOSProber = false;\n"             >> "${BOOT_FILE_PATH}"
-fi
-
-# If using pre-existing configuration.nix file
-if [ -f "/etc/nixos/configuration.nix" ]; then
-	#echo "Copying existing boot options..."
-	#echo -ne "\n\t#Boot\n"                 >> "$BOOT_FILE_PATH"
-	#set +e
-	#grep "boot" "${DEF_CONF_PATH}"         >> "$BOOT_FILE_PATH"
-	#set -e
-
-	echo "Copying existing virtualization options"
-	echo -ne "\n\t#Virtualisation\n"             >> "${BOOT_FILE_PATH}"
-
-	set +e
-	grep -q "virtualisation" "${DEF_CONF_PATH}"  >> "${BOOT_FILE_PATH}"
-	set -e
-fi
-
-echo -ne "}\n" >> "${BOOT_FILE_PATH}"
-echo -ne "\n"
 
 ## Check for online substituters
 substituters="https://cache.nixos.org/?priority=40"
@@ -159,6 +163,7 @@ else
 fi
 
 
+
 ## Update flake
 echo -e "Creating jcbin and jcconfs in nix-store...";
 cd "${DOTFILES_PATH}"
@@ -177,8 +182,8 @@ git add .
 echo "";
 
 
-sudo mkdir -p /mnt
 
 # Rebuild system
+sudo mkdir -p /mnt
 echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"
 sudo nixos-install --show-trace --flake "${DOTFILES_PATH}#${HOSTNAME}" --option substituters "${substituters}"
