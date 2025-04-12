@@ -57,7 +57,7 @@
 			samba.enable = true;
 			virtualbox.enable = false;
 			webserver.enable = true;
-			nixcache.instance-host = "msi.host.local";  # msi 
+			nixcache.instance-host = "msi.host.local";
 			nixbuilder = {
 				server.enable = false;
 				client.builders = [

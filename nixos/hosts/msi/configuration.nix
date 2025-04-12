@@ -7,7 +7,7 @@ let
 		alpha-ilo = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.3" "server.local";
 
 		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local";
-		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.5" "server.local"; # "10.0.0.10
+		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.5" "server.local";
 
 		quiss     = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.6" "server.local";
 		jarvis    = get_conf "jarvis"    "b8:27:eb:22:44:60" "10.0.0.7" "server.local";
