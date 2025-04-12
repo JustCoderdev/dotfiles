@@ -118,8 +118,7 @@
 		);
 
 		img-sd-builder-raspi3 = (
-			build-platform-system:
-			username:
+			build-platform-system: username:
 			let
 				settings = {
 					hostname = "niximg";
@@ -130,12 +129,10 @@
 			lib.nixosSystem {
 				inherit (settings) system;
 				specialArgs = { inherit inputs settings dotfiles; };
-				modules =
-				# (getModules settings) ++
-				[
+				modules = (getModules settings)
+				++ [
 					({ pkgs, modulesPath, ... }: {
 						imports = [
-							# "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix"
 							"${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
 							"${nixos-hardware}/raspberry-pi/3"
 
@@ -146,20 +143,21 @@
 
 
 						system.services.nixbuilder.client.builders =
+						let
+							gen-builder = (
+								hostName: maxJobs:
+								{
+									inherit hostName maxJobs;
+									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+								}
+							);
+						in
 						[
-							{
-								hostName = "msi.host.local";
-								maxJobs = 6;
-								features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-								systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-							}
+							(gen-builder "10.0.0.1" 6) # msi
+							(gen-builder "10.0.0.2" 8) # alpha
+							(gen-builder "10.0.0.4" 6) # beta
 						];
-
-						# jcbin = {
-						# 	rebuild-system.enable = true;
-						# 	mount-configs.enable = true;
-						# };
-
 
 						# Disable unbuildable services
 						# -------------------- #

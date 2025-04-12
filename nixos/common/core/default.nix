@@ -26,8 +26,7 @@
 		unzip zip
 		htop btop
 		smartmontools pciutils
-		wget
-		vim killall
-		screen
+		wget killall
+		vim git screen
 	];
 }
