@@ -54,9 +54,9 @@
 
 		services = {
 			docker.enable = false;
-			samba.enable = true;
+			samba.enable = false;
 			virtualbox.enable = false;
-			webserver.enable = true;
+			webserver.enable = false;
 			nixcache.enable = false;
 			nixbuilder = {
 				server = {
