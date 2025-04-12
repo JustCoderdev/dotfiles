@@ -4,7 +4,7 @@ let
 	get_conf = (hostname: mac: ip: domain: { inherit hostname mac ip domain; });
 	confs = {
 		alpha     = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.local";
-		alpha-ilo = get_conf "alpha-ilo" "                 " "10.0.0.3" "server.local";
+		alpha-ilo = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.3" "server.local";
 
 		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local";
 		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.5" "server.local"; # "10.0.0.10

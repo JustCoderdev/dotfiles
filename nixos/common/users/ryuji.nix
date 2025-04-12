@@ -39,6 +39,8 @@ in
 			isNormalUser = true;
 			createHome = true;
 
+			initialPassword = "${uname}";
+
 			# packages = with pkgs; [ ];
 			extraGroups = [ "networkmanager" "wheel" ];
 
