@@ -2,12 +2,16 @@
 
 let
 	cfg = config.common.users.ryuji;
+
+	uname = settings.username;
 	titleCase = text: lib.concatStrings [
 		(lib.toUpper (builtins.substring 0 1 text))
 		(builtins.substring 1 (builtins.stringLength text) text)
 	];
 
-	uname = settings.username;
+	is_desk_available = lib.attrsets.hasAttrByPath [ "system" "desktop" ] config;
+	desk_cfg = config.system.desktop;
+	has_desktop = desk_cfg.xfce.enable || desk_cfg.hyprland.enable || desk_cfg.i3.enable;
 in
 
 {
@@ -46,12 +50,16 @@ in
 
 		environment.systemPackages = with pkgs;
 		[
-			# google-chrome
+
+		]
+		++ lib.optionals (is_desk_available && has_desktop)
+		[
+			google-chrome
 			firefox
 
 			obsidian
 
-			# vlc
+			vlc
 			audacity
 			emulsion
 		]

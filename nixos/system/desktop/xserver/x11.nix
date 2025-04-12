@@ -1,15 +1,15 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	xfceCfg = config.system.desktop.xfce;
-	i3Cfg = config.system.desktop.i3;
+	xfce_cfg = config.system.desktop.xfce;
+	i3_cfg = config.system.desktop.i3;
 in
 
 {
 	config = {
 		services = {
 			xserver = {
-				enable = xfceCfg.enable || i3Cfg.enable;
+				enable = xfce_cfg.enable || i3_cfg.enable;
 				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
 
 				#MSI:

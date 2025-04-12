@@ -144,7 +144,6 @@
 							./nixos/system/services/nixbuilder.nix
 						];
 
-						services.printing.enable = lib.mkForce false;
 
 						system.services.nixbuilder.client.builders =
 						[
@@ -160,6 +159,16 @@
 						# 	rebuild-system.enable = true;
 						# 	mount-configs.enable = true;
 						# };
+
+
+						# Disable unbuildable services
+						# -------------------- #
+
+						services.printing.enable = lib.mkForce false;
+						services.thermald.enable = lib.mkForce false;
+						networking.networkmanager.plugins = lib.mkForce (with pkgs; [ ]);
+
+						# -------------------- #
 
 						# Other
 						sdImage.compressImage = false;

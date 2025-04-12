@@ -1,14 +1,19 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	quiss-mac = "f4:6d:04:99:cb:11";
-	quiss-ip  = "10.0.0.22";
+	get_conf = (hostname: mac: ip: domain: { inherit hostname mac ip domain; });
+	confs = {
+		alpha     = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.local";
+		alpha-ilo = get_conf "alpha-ilo" "                 " "10.0.0.3" "server.local";
 
-	alpha-mac = "1c:c1:de:be:c6:c4";
-	alpha-ip  = "10.0.0.5";
+		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local";
+		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.5" "server.local"; # "10.0.0.10
 
-	beta-mac  = "30:8d:99:b2:88:df";
-	beta-ip   = "10.0.0.65";
+		quiss     = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.6" "server.local";
+		jarvis    = get_conf "jarvis"    "b8:27:eb:22:44:60" "10.0.0.7" "server.local";
+	};
+
+	get_dhcp_host = ({ hostname, mac, ip, ... }: "${mac},${hostname},${ip},infinite");
 in
 
 {
@@ -47,13 +52,9 @@ in
 
 			# dhcp
 			dhcp-option = "option:router,10.0.0.1";
-			dhcp-range = [ "br-lan,10.0.0.3,10.0.0.127,1h" ];
-			dhcp-host = [
-				"msi,10.0.0.1"
-				"${quiss-mac},quiss,infinite"  # 10.0.0.2
-				"${alpha-mac},alpha,infinite"  # 10.0.0.5
-				"${beta-mac},beta,infinite"  # 10.0.0.65
-			];
+			dhcp-range = [ "br-lan,10.0.0.8,10.0.0.127,1h" ];
+			dhcp-host = [ "msi,10.0.0.1" ]
+				++ lib.attrsets.mapAttrsToList (name: value: (get_dhcp_host value)) confs;
 		};
 	};
 
@@ -65,11 +66,17 @@ in
 		networkmanager.unmanaged = [ "interface-name:eno1" ];
 
 		# Add dns record
-		hosts = {
-			"${quiss-ip}" = [ "quiss.host.local" ];
-			"${alpha-ip}" = [ "alpha.server.local" ];
-			"${beta-ip}"  = [ "beta.server.local" ];
-		};
+		hosts = { }
+		// (
+			lib.attrsets.mapAttrs' (
+				name: value:
+				lib.attrsets.nameValuePair (value.ip) ([ "${value.hostname}.${value.domain}" ])
+			) confs
+		);
+
+		# "${quiss-ip}" = [ "quiss.host.local" ];
+		# "${alpha-ip}" = [ "alpha.server.local" ];
+		# "${beta-ip}"  = [ "beta.server.local" ];
 
 		nat = {
 			enable = true;
@@ -83,17 +90,17 @@ in
 				{
 					proto = "tcp";
 					sourcePort = 52222;
-					destination = "${quiss-ip}:22";
+					destination = "${confs.quiss.ip}:22";
 				}
 				{
 					proto = "tcp";
 					sourcePort = 50522;
-					destination = "${alpha-ip}:22";
+					destination = "${confs.alpha.ip}:22";
 				}
 				{
 					proto = "tcp";
 					sourcePort = 56522;
-					destination = "${beta-ip}:22";
+					destination = "${confs.beta.ip}:22";
 				}
 
 				# -------------------- #
@@ -101,12 +108,12 @@ in
 				{
 					proto = "tcp";
 					sourcePort = 4080;
-					destination = "${quiss-ip}:80";
+					destination = "${confs.quiss.ip}:80";
 				}
 				{
 					proto = "tcp";
 					sourcePort = 22445;
-					destination = "${quiss-ip}:445";
+					destination = "${confs.quiss.ip}:445";
 				}
 			];
 

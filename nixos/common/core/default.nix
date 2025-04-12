@@ -25,7 +25,7 @@
 	environment.systemPackages = with pkgs; [
 		unzip zip
 		htop btop
-		smartmontools pciutils #ntfs3g
+		smartmontools pciutils
 		wget
 		vim killall
 	];

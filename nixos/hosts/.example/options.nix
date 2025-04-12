@@ -7,6 +7,7 @@
 		backlight.enable = false;
 		rebuild-system.enable = true;
 		mount-configs.enable = true;
+		umount-configs.enable = true;
 	};
 
 	common = {

@@ -12,13 +12,12 @@
 	let
 		programs = [ "backlight" ];
 		bash-scripts = [
-			{
-				name = "mount-configs";
-				getInputs = (pkgs: with pkgs; [ vim git ]);
-			}
+			{ name = "mount-configs";  }
+			{ name = "umount-configs"; }
 			{
 				name = "rebuild-system";
 				requiresSudo = true;
+				# getInputs = (pkgs: with pkgs; [ vim git ]);
 			}
 		];
 
@@ -26,11 +25,10 @@
 			name: getInputs: pkgs:
 			pkgs.writeShellApplication {
 				inherit name;
-				runtimeInputs = (if (builtins.isFunction getInputs) then getInputs pkgs else []);
+				runtimeInputs = getInputs pkgs;
 				text = (builtins.readFile ./bash-scripts/${name}.sh);
 			}
 		);
-
 		generateBashScriptModule = (
 			{ name, getInputs ? (pkgs: []), requiresSudo ? false }: (
 				{ config, lib, pkgs, ... }:
@@ -92,9 +90,12 @@
 				forEach bash-scripts (
 					# { name, getInputs ? (pkgs: []), requiresSudo ? false }: (
 					sdata:
+					let
+						getInputs = if (lib.attrsets.hasAttrByPath [ "getInputs" ] sdata) then sdata.getInputs else (pkgs: []);
+					in
 					{
 						inherit (sdata) name;
-						value = packageShellScript sdata.name sdata.getInputs pkgs;
+						value = packageShellScript sdata.name getInputs pkgs;
 					}
 				)
 			)
