@@ -12,6 +12,8 @@ in
 
 	config =
 	{
+		networking.firewall.allowedTCPPorts = lib.optionals (cfg.enable) [ cfg.instance-port ];
+
 		services.nix-serve = {
 			inherit (cfg) enable port;
 			package = pkgs.nix-serve-ng;

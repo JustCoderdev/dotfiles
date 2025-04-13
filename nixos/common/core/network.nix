@@ -23,13 +23,14 @@
 		# Local DNS Records
 		hosts = {
 			"192.168.7.1"   = [ "gateway.local" ];
+			# "192.168.7.1"   = [  "switch.local" ];
 
 			# SERVERS
-			"192.168.7.6" = [  "quiss.server.local" ];
-			"192.168.7.7" = [ "jarvis.server.local" ];
+			# "192.168.7.6" = [  "quiss.server.local" ];
+			# "192.168.7.7" = [ "jarvis.server.local" ];
 
 			# SERVICES
-			"192.168.7.230" = [ "home-assistant.service.local" ];
+			"192.168.7.16" = [ "home-assistant.service.local" ];
 
 			# CLIENTS
 			"192.168.7.32" = [  "msi.host.local" ];
