@@ -29,10 +29,10 @@ in
 				popups = 8;         desktop = 10;
 			};
 
-			monospace = { name = "Roboto Mono Medium"; package = pkgs.roboto-mono; };
+			monospace = { name = "Roboto Mono Medium"; package = pkgs.roboto-mono;  };
 			sansSerif = { name = "DejaVu Sans";        package = pkgs.dejavu_fonts; };
 			serif     = { name = "DejaVu Serif";       package = pkgs.dejavu_fonts; };
-			emoji     = { name = "IPAGothic";          package = pkgs.ipaexfont; };
+			emoji     = { name = "IPAGothic";          package = pkgs.ipaexfont;    };
 		};
 	};
 }

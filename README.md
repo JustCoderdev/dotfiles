@@ -71,7 +71,7 @@ without (or at least that's the goal) nix/NixOS installed
 
 Included configuration files
 
-[standalone] firefox - gtk - tmux
+[standalone] firefox - tmux
 
 - Alacritty \[\>v0.12.2\] ([Github](https://github.com/alacritty))
 - Clang \[\>7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))

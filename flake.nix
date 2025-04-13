@@ -38,7 +38,8 @@
 		};
 
 		getModules = (
-			settings: [
+			settings:
+			[
 				jcbin.nixosModules.all
 				jcconfs.nixosModules.home { inherit (settings) username; }
 				./nixos

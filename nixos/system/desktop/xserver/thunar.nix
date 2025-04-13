@@ -34,7 +34,7 @@ in
 		enable = lib.mkOption {
 			type = lib.types.bool;
 			description = "Enable thunar and related support";
-			default = true;
+			default = false;
 		};
 	};
 }

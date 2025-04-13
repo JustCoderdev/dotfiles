@@ -3,8 +3,8 @@
 let
 	modules = [
 		"i3"
-		"hyprland"
-		"waybar"
+		# "hyprland"
+		# "waybar"
 
 		"neovim"
 		"emacs"
@@ -18,7 +18,6 @@ let
 
 	standalone-modules = [
 		"firefox"
-		"gtk"
 		"tmux"
 	];
 

@@ -31,7 +31,7 @@ in
 		enable = lib.mkOption {
 			type = lib.types.bool;
 			description = "Enable i3 software suit and support";
-			default = true;
+			default = false;
 		};
 	};
 }

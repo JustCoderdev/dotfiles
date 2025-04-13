@@ -3,14 +3,18 @@
 let
 	get_conf = (hostname: mac: ip: domain: { inherit hostname mac ip domain; });
 	confs = {
-		alpha     = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.local";
-		alpha-ilo = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.3" "server.local";
+		switch    = get_conf "switch"    "                 " "10.0.0.2" "local";
 
-		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local";
-		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.5" "server.local";
+		# -------------------- #
 
-		quiss     = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.6" "server.local";
-		jarvis    = get_conf "jarvis"    "b8:27:eb:22:44:60" "10.0.0.7" "server.local";
+		alpha     = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local";
+		alpha-ilo = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local";
+
+		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local";
+		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local";
+
+		quiss     = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local";
+		jarvis    = get_conf "jarvis"    "b8:27:eb:22:44:60" "10.0.0.8" "server.local";
 	};
 
 	get_dhcp_host = ({ hostname, mac, ip, ... }: "${mac},${hostname},${ip},infinite");
@@ -52,7 +56,7 @@ in
 
 			# dhcp
 			dhcp-option = "option:router,10.0.0.1";
-			dhcp-range = [ "br-lan,10.0.0.8,10.0.0.127,1h" ];
+			dhcp-range = [ "br-lan,10.0.0.16,10.0.0.127,1h" ];
 			dhcp-host = [ "msi,10.0.0.1" ]
 				++ lib.attrsets.mapAttrsToList (name: value: (get_dhcp_host value)) confs;
 		};
@@ -90,21 +94,26 @@ in
 				{
 					proto = "tcp";
 					sourcePort = 50222;
+					destination = "${confs.switch.ip}:22";
+				}
+				{
+					proto = "tcp";
+					sourcePort = 50322;
 					destination = "${confs.alpha.ip}:22";
 				}
 				{
 					proto = "tcp";
-					sourcePort = 50422;
+					sourcePort = 50522;
 					destination = "${confs.beta.ip}:22";
 				}
 				{
 					proto = "tcp";
-					sourcePort = 50622;
+					sourcePort = 50722;
 					destination = "${confs.quiss.ip}:22";
 				}
 				{
 					proto = "tcp";
-					sourcePort = 50722;
+					sourcePort = 50822;
 					destination = "${confs.jarvis.ip}:22";
 				}
 
