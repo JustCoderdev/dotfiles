@@ -10,7 +10,7 @@
 	
 	outputs = { self, nixpkgs, ... }:
 	let
-		programs = [ "backlight" ];
+		programs = [ "backlight" "boomer" ];
 		bash-scripts = [
 			{ name = "mount-configs";  }
 			{ name = "umount-configs"; }
