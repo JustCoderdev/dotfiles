@@ -15,8 +15,25 @@ in
 		# $ ssh-add ~/.ssh/...
 		startAgent = true;
 
-		kexAlgorithms = [
-			"diffie-hellman-group1-sha1" # Needed to access C2960
+		kexAlgorithms =
+		[
+			# Available `ssh -Q kex`
+			"sntrup761x25519-sha512"
+			"sntrup761x25519-sha512@openssh.com"
+
+			"curve25519-sha256"
+			"mlkem768x25519-sha256"
+
+			"ecdh-sha2-nistp256"
+			"ecdh-sha2-nistp384"
+			"ecdh-sha2-nistp521"
+
+			# Reccomended by <https://blog.stribik.technology/2015/01/04/secure-secure-shell.html>
+			"curve25519-sha256@libssh.org"
+			"diffie-hellman-group-exchange-sha256"
+
+			# Needed to access C2960
+			"diffie-hellman-group1-sha1"
 		];
 
 		knownHosts = {
