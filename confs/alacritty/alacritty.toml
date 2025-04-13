@@ -70,6 +70,7 @@ mods = "Shift|Alt"
 
 [scrolling]
 history = 100000
+multiplier = 0
 
 [terminal.shell]
 program = "/usr/bin/env"
