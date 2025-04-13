@@ -59,7 +59,7 @@
 			samba.enable = false;
 			virtualbox.enable = false;
 			webserver.enable = false;
-			nixcache.enable = false;
+			nixcache.instance-host = "10.0.0.1";
 			nixbuilder = {
 				server = {
 					enable = true;
@@ -67,7 +67,20 @@
 					features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 					systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 				};
-				client.builders = [ ];
+				client.builders = [
+					{
+						hostName = "10.0.0.1";
+						maxJobs = 6;
+						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+					}
+					{
+						hostName = "10.0.0.5";
+						maxJobs = 6;
+						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+					}
+				];
 			};
 		};
 	};
