@@ -2,8 +2,8 @@
 
 let
 	cfg = config.jcbin.boomer;
-	nim_1_0 = pkgs.callPackage ./nim_1_0.nix {};
-	package = pkgs.callPackage ./boomer.nix { inherit nim_1_0; };
+	nim_1_0 = pkgs.callPackage ./overlay/nim_1_0.nix {};
+	package = pkgs.callPackage ./overlay/boomer.nix { inherit nim_1_0; };
 in
 
 {

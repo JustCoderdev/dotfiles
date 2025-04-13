@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, nim, libX11, libXrandr, libGL, nim_1_0 }:
+{ lib, stdenv, fetchFromGitHub, nim, libX11, libXrandr, libGL, nim_1_0 }:
 
 let
   x11-nim = fetchFromGitHub {
@@ -28,5 +28,5 @@ in stdenv.mkDerivation rec {
     nim -p:${x11-nim}/ -p:${opengl-nim}/src c -d:release src/boomer.nim
   '';
   installPhase = "install -Dt $out/bin src/boomer";
-  fixupPhase = "patchelf --set-rpath ${stdenv.lib.makeLibraryPath [stdenv.cc.cc libX11 libXrandr libGL]} $out/bin/boomer";
+  fixupPhase = "patchelf --set-rpath ${lib.makeLibraryPath [stdenv.cc.cc libX11 libXrandr libGL]} $out/bin/boomer";
 }

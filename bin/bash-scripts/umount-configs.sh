@@ -25,7 +25,7 @@ function ulink {
 	fi
 
 	# If file exists
-	if [ -e "${to}/${to_filename}" ]; then
+	if [ -e "${file}" ]; then
 		echo -e "\033[31m[ERROR]\033[0m File \033[36m'${file}'\033[0m is not a link"
 		return 0; # Must be 0 to avoid triggering -e
 	else
