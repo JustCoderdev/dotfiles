@@ -21,6 +21,8 @@ let
 in
 
 {
+	boot.tmp.cleanOnBoot = true;
+
 	# Mouse support
 	environment.systemPackages = with pkgs; [ piper libnfc ];
 	services.ratbagd.enable = true;

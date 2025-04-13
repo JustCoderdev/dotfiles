@@ -18,14 +18,15 @@
 			"steam-run"
 			"steamcmd"
 
+			"davinci-resolve"
 			"minecraft-server"
+			"discord"
 
 			"obsidian"
 			"anytype"
 
 			"google-chrome"
-			"davinci-resolve"
-			"discord"
+			"ciscoPacketTracer8"
 		];
 	};
 }

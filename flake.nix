@@ -130,7 +130,13 @@
 			lib.nixosSystem {
 				inherit (settings) system;
 				specialArgs = { inherit inputs settings dotfiles; };
-				modules = (getModules settings)
+				modules =
+				# (getModules settings)
+				[
+					jcbin.nixosModules.all
+					# jcconfs.nixosModules.home { inherit (settings) username; }
+					./nixos
+				]
 				++ [
 					({ pkgs, modulesPath, ... }: {
 						imports = [
