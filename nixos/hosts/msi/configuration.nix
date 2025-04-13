@@ -3,7 +3,7 @@
 let
 	get_conf = (hostname: mac: ip: domain: { inherit hostname mac ip domain; });
 	confs = {
-		switch    = get_conf "switch"    "                 " "10.0.0.2" "local";
+		switch    = get_conf "switch"    "58:97:1e:94:b7:40" "10.0.0.2" "local";
 
 		# -------------------- #
 
