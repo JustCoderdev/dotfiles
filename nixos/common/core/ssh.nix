@@ -15,9 +15,16 @@ in
 		# $ ssh-add ~/.ssh/...
 		startAgent = true;
 
+		# Available `ssh -Q key`
+		hostKeyAlgorithms = 
+		[
+			"ssh-ed25519"
+			"ssh-rsa" # Needed to access C2960
+		];
+
+		# Available `ssh -Q kex`
 		kexAlgorithms =
 		[
-			# Available `ssh -Q kex`
 			"sntrup761x25519-sha512"
 			"sntrup761x25519-sha512@openssh.com"
 
