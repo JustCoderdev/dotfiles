@@ -64,6 +64,9 @@ in
 			vlc
 			audacity
 			emulsion
+
+			gnome-disk-utility
+			baobab
 		]
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
 		++ lib.optionals (cfg.video-editing)   [ davinci-resolve obs-studio ]

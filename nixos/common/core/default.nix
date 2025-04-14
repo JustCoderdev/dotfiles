@@ -28,5 +28,6 @@
 		smartmontools pciutils
 		wget killall
 		vim git screen
+		rsync
 	];
 }
