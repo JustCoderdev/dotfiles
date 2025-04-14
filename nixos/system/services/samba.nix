@@ -49,7 +49,6 @@ in
 					"browse list" = "yes";
 					"case sensitive" = "yes";
 					"max disk size" = "2500"; # 2.5 GB
-					"min protocol" = "CORE";
 				};
 
 				"${share-name}" = {
