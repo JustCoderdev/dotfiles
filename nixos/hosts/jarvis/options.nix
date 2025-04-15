@@ -7,8 +7,8 @@
 		backlight.enable = false;
 		boomer.enable = false;
 		rebuild-system.enable = true;
-		mount-configs.enable = true;
-		umount-configs.enable = true;
+		mount-configs.enable = false;
+		umount-configs.enable = false;
 	};
 
 	common = {
