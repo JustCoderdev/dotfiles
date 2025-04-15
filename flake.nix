@@ -201,14 +201,16 @@
 		# nixos-rebuild switch --flake .#<hostname>
 		nixosConfigurations =
 		{
-			virtualmachine = system-builder "virtualmachine" "x86_64-linux" "ryuji";
+			virtualmachine = system-builder "virtualmachine" "x86_64-linux"  "ryuji";
+                                                                                         
+			alpha          = system-builder "alpha"          "x86_64-linux"  "ryuji";
+			beta           = system-builder "beta"           "x86_64-linux"  "ryuji";
+                                                                                         
+			quiss          = system-builder "quiss"          "x86_64-linux"  "ryuji";
+			jarvis         = system-builder "jarvis"         "aarch64-linux" "ryuji";
 
-			msi            = system-builder "msi"            "x86_64-linux" "ryuji";
-			acer           = system-builder "acer"           "x86_64-linux" "ryuji";
-
-			quiss          = system-builder "quiss"          "x86_64-linux" "ryuji";
-			alpha          = system-builder "alpha"          "x86_64-linux" "ryuji";
-			beta           = system-builder "beta"           "x86_64-linux" "ryuji";
+			msi            = system-builder "msi"            "x86_64-linux"  "ryuji";
+			acer           = system-builder "acer"           "x86_64-linux"  "ryuji";
 		}
 		//
 		builtins.listToAttrs (

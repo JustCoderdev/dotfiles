@@ -80,10 +80,6 @@ in
 			) confs
 		);
 
-		# "${quiss-ip}" = [ "quiss.host.local" ];
-		# "${alpha-ip}" = [ "alpha.server.local" ];
-		# "${beta-ip}"  = [ "beta.server.local" ];
-
 		nat = {
 			enable = true;
 			internalIPs = [ "10.0.0.0/24" ];

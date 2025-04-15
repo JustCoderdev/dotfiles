@@ -39,13 +39,13 @@ ulink "${homepath}/.config/clang"      # Clang
 ulink "${homepath}/.config/i3"         # i3
 ulink "${homepath}/.config/waybar"     # Waybar
 
-ulink "${homepath}/clang-format"      # Clang format
-ulink "${homepath}/emacs"             # Emacs
-ulink "${homepath}/emacs.custom.el"   # Emacs
-ulink "${homepath}/emacs.extra"       # Emacs
-ulink "${homepath}/gitconfig"         # Git
-ulink "${homepath}/gitignore_global"  # Git
-ulink "${homepath}/zshrc"             # Zsh
+ulink "${homepath}/.clang-format"      # Clang format
+ulink "${homepath}/.emacs"             # Emacs
+ulink "${homepath}/.emacs.custom.el"   # Emacs
+ulink "${homepath}/.emacs.extra"       # Emacs
+ulink "${homepath}/.gitconfig"         # Git
+ulink "${homepath}/.gitignore_global"  # Git
+ulink "${homepath}/.zshrc"             # Zsh
 
 if [ -z "${DOT_NIXOS:-}" ]; then
 	echo "TODO: Fix unlinking on non nixos distro !!"

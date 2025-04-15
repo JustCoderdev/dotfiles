@@ -21,13 +21,20 @@
 		];
 
 		# Local DNS Records
-		hosts = {
+		hosts =
+		{
 			"192.168.7.1"   = [ "gateway.local" ];
-			# "192.168.7.1"   = [  "switch.local" ];
+			"192.168.7.2"   = [  "switch.local" ];
 
 			# SERVERS
-			# "192.168.7.6" = [  "quiss.server.local" ];
-			# "192.168.7.7" = [ "jarvis.server.local" ];
+			"192.168.7.3" = [     "alpha.server.local" ];
+			"192.168.7.4" = [ "alpha-ilo.server.local" ];
+
+			"192.168.7.5" = [     "beta.server.local" ];
+			"192.168.7.6" = [ "beta-ilo.server.local" ];
+
+			"192.168.7.7" = [  "quiss.server.local" ];
+			"192.168.7.8" = [ "jarvis.server.local" ];
 
 			# SERVICES
 			"192.168.7.16" = [ "home-assistant.service.local" ];
