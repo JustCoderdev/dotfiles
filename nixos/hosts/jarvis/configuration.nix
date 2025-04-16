@@ -18,7 +18,6 @@
 	networking = {
 		useDHCP = false;
 
-
 		hosts =
 		{
 			"10.0.0.1"   = [ "gateway.local" ];
@@ -42,7 +41,7 @@
 #		};
 
 		nftables.enable = false;
-		networkmanager.unmanaged = [ "interface-name:wlan0" ]; # "interface-name:enu1u1"
+#		networkmanager.unmanaged = [ "interface-name:wlan0" ]; # "interface-name:enu1u1"
 #		firewall.trustedInterfaces = [ "enu1u1" ];
 
 		interfaces = {
