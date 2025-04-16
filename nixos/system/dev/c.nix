@@ -9,8 +9,6 @@ in
 	{
 		documentation = {
 			enable = true;
-
-			nixos.enable = false;
 			dev.enable = true;
 
 			man = {

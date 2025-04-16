@@ -211,6 +211,14 @@ cd ${DOT_FILES}/nixos/secrets
 echo "xyz" > mdadmhook.url
 ```
 
+- WPA Supplicant psk
+
+```
+cd ${DOT_FILES}/nixos/secrets
+wpa_passphrase ESSID PSK windtower_lte_psk
+echo "psk=PSK" > wireless.conf
+```
+
 - nix-serve
 
 ```

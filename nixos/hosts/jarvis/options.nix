@@ -2,11 +2,16 @@
 
 {
 	jcbin.rebuild-system.enable = true;
-	jcconfs.has_de = lib.mkForce false;
+
+	jcconfs.services.home-assistant = true;
 
 	common.core.bluetooth.enable = true;
 
 	system.services = {
+		kvm = {
+			enable = true;
+			allowedBridges = [ "br0" "br1" ];
+		};
 		nixcache.instance-host = "msi.host.local";
 		nixbuilder = {
 			server.enable = false;

@@ -46,7 +46,7 @@
 			{ config, lib, ... }:
 			let
 				cfg = config.jcconfs;
-				args = (getArgs cfg);
+				args = (getArgs { inherit (cfg) username has_de; });
 
 				wallpapers_path = args.settings.wallpapers_path;
 			in
@@ -83,10 +83,10 @@
 						readOnly = true;
 						description = "Name of the primary user";
 					};
-					has_de = lib.mkOption {
-						type = lib.types.bool;
-						default = false;
-						description = "Whether to enable graphical applications or not";
+					has_de = lib.mkEnableOption "Whether to enable graphical applications or not";
+
+					services = {
+						home-assistant = lib.mkEnableOption "Enable home-assistant vm";
 					};
 				};
 			}

@@ -109,9 +109,6 @@
 							rebuild-system.enable = true;
 							mount-configs.enable = true;
 						};
-
-						# Enable SSH in the boot process.
-						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
 					})
 				];
 			}
@@ -141,48 +138,27 @@
 							./nixos/system/services/nixbuilder.nix
 						];
 
-						system.services.nixbuilder.client.builders =
-						let
-							gen-builder = (
-								hostName: maxJobs:
-								{
-									inherit hostName maxJobs;
-									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-								}
-							);
-						in
-						[
-							(gen-builder     "msi.host.local" 6) # msi
-							(gen-builder "alpha.server.local" 8) # alpha
-							(gen-builder  "beta.server.local" 6) # beta
-						];
+						# -------------------- #
 
 						# Disable unbuildable services
-						# -------------------- #
-
 						services.printing.enable = lib.mkForce false;
 						services.thermald.enable = lib.mkForce false;
-						networking.networkmanager.plugins = lib.mkForce (with pkgs; [ ]);
-
-						# -------------------- #
-
-						# Other
-						sdImage.compressImage = false;
-						hardware.enableRedistributableFirmware = true;
-
-						# Enable SSH in the boot process.
-						systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
-
-						# Reduce memory usage
-						boot.tmp.cleanOnBoot = true;
-						documentation.nixos.enable = false;
-						swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+						networking.networkmanager.plugins = lib.mkForce [ ];
 
 						# Enable cross compilation
 						nixpkgs.config.allowUnsupportedSystem = true;
 						nixpkgs.hostPlatform = { inherit (settings) system; };
 						nixpkgs.buildPlatform.system = build-platform-system;
+
+						# Reduce memory usage
+						boot.tmp.cleanOnBoot = true;
+						swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+
+						# Other
+						sdImage.compressImage = false;
+						hardware.enableRedistributableFirmware = true;
+
+						# -------------------- #
 					})
 				];
 			}
