@@ -1,7 +1,8 @@
-{ ... }:
+{ lib, ... }:
 
 {
 	jcbin.rebuild-system.enable = true;
+	jcconfs.has_de = lib.mkForce false;
 
 	common.core.bluetooth.enable = true;
 

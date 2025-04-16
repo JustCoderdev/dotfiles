@@ -12,7 +12,8 @@ in
 
 {
 	# ~/.mozilla about:config
-	programs.firefox = {
+	programs.firefox =
+	{
 		enable = true && has_de;
 		package = pkgs.firefox-esr;
 
