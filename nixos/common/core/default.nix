@@ -23,11 +23,9 @@
 
 	# Core packages
 	environment.systemPackages = with pkgs; [
-		unzip zip
-		htop btop
-		smartmontools pciutils
-		wget killall
-		vim git screen
-		rsync
+		unzip zip wget killall
+		rsync smartmontools pciutils
+		htop btop screen
+		vim git
 	];
 }
