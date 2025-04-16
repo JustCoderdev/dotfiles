@@ -1,8 +1,9 @@
-{ wallpapers_path, ... }:
+{ settings, ... }:
 
 {
-	wayland.windowManager.hyprland = {
-		enable = true;
+	wayland.windowManager.hyprland =
+	{
+		enable = true && settings.has_de;
 		systemd.enable = true;
 
 		settings = {
@@ -18,7 +19,7 @@
 				scroll_method = "twofinger";
 			};
 			exec-once = "swww-daemon --format xrgb";
-			exec = "swww img ${wallpapers_path}/space_engineers.png";
+			exec = "swww img ${settings.wallpapers_path}/space_engineers.png";
 		};
 
 		extraConfig = (builtins.readFile ./hyprland.conf);

@@ -15,10 +15,10 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		nixd = {
-			url = "github:nix-community/nixd";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+#		nixd = {
+#			url = "github:nix-community/nixd";
+#			inputs.nixpkgs.follows = "nixpkgs";
+#		};
 
 #		firefox-addons = {
 #			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -27,30 +27,34 @@
 	};
 
 
-	outputs = { self, nixpkgs, home-manager, stylix, nixd }@inputs:
+	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
 	let
-		wallpapers_path = ./.wallpapers;
-
 		getArgs = (
-			username:
+			{ username, has_de }:
 			{
-				inherit inputs wallpapers_path nixd;
-				settings = import ./settings/${username}.nix;
-				confs_path = ./.;
+				inherit inputs;
+				settings = (import ./settings/${username}.nix)
+				// {
+					inherit has_de;
+					wallpapers_path = ./.wallpapers;
+					confs_path = ./.;
+				};
 			}
 		);
 
 		homeConfiguration = (
 			{ config, lib, ... }:
 			let
-				username = config.username;
-				args = getArgs username;
+				cfg = config.jcconfs;
+				args = (getArgs cfg);
+
+				wallpapers_path = args.settings.wallpapers_path;
 			in
 			{
 				imports =
 				[
 					inputs.stylix.nixosModules.stylix
-					./stylix/base.nix { stylix.module.wallpapers_path = args.wallpapers_path; }
+					./stylix/base.nix { stylix.module = { inherit wallpapers_path; }; }
 					./stylix/nixos.nix
 
 					home-manager.nixosModules.home-manager
@@ -58,53 +62,51 @@
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
 						home-manager.extraSpecialArgs = args;
-						home-manager.users.${username} = (
+						home-manager.users.${cfg.username} = (
 							{ ... }:
 							{
 								imports = [
 									./stylix/hm.nix
-									./users/${username}.nix
+									./users/${cfg.username}.nix
 								];
 							}
 						);
 					}
 				];
 
-				# config = {
-				# 	stylix.module = { inherit wallpapers_path; };
-				# };
+				# ------------------------------------------------------------ #
 
-				options.username = lib.mkOption {
-					type = lib.types.str;
-					readOnly = true;
-					description = "name of the user";
+				options.jcconfs =
+				{
+					username = lib.mkOption {
+						type = lib.types.str;
+						readOnly = true;
+						description = "Name of the primary user";
+					};
+					has_de = lib.mkOption {
+						type = lib.types.bool;
+						default = false;
+						description = "Whether to enable graphical applications or not";
+					};
 				};
 			}
 		);
 
 		homeBuilder = (
-			username: system:
+			{ username, system, has_de }:
 			let
-				args = getArgs username;
+				args = getArgs { inherit username has_de; };
+				wallpapers_path = args.settings.wallpapers_path;
 			in
 			home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
 				pkgs = nixpkgsFor.${system};
 				modules = [
 					inputs.stylix.homeManagerModules.stylix
-					./stylix/base.nix { stylix.module.wallpapers_path = args.wallpapers_path; }
+					./stylix/base.nix { stylix.module = { inherit wallpapers_path; }; }
 					./stylix/hm.nix
 
 					./users/${username}.nix
-
-					# (
-					# 	{ ... }:
-					# 	{
-					# 		config = {
-					# 			stylix.module = { inherit wallpapers_path; };
-					# 		};
-					# 	}
-					# )
 				];
 			}
 		);
@@ -120,13 +122,27 @@
 		};
 
 		homeConfigurations = { }
-			// forAllSystems (system: { ryuji = homeBuilder "ryuji" system; });
+		// forAllSystems (
+			system:
+			let username = "ryuji"; in
+			{
+				ryuji       = homeBuilder { inherit username system; has_de = true;  };
+				ryuji-no-de = homeBuilder { inherit username system; has_de = false; };
+			}
+		);
 
 		# nix build
-		packages = forAllSystems (
-			system: let pkgs = nixpkgsFor.${system}; in {
-				ryuji-activation = (homeBuilder "ryuji" system).activationPackage;
-			    #ryuji-activation = self.homeConfigurations."${system}".ryuji.activationPackage;
+		packages = forAllSystems
+		(
+			system:
+			let pkgs = nixpkgsFor.${system}; in
+			{
+				ryuji-activation       = self.homeConfigurations."${system}".ryuji.activationPackage;
+				ryuji-no-de-activation = self.homeConfigurations."${system}".ryuji-no-de.activationPackage;
+
+				# ryuji-activation       = (homeBuilder "ryuji" system true).activationPackage;
+				# ryuji-no-de-activation = (homeBuilder "ryuji" system false).activationPackage;
+
 				darnix-plymouth-theme = pkgs.callPackage ./plymouth/darnix { };
 			}
 		);

@@ -73,15 +73,17 @@ if [[ $generate_files == 1 ]];
 then
 	echo -e "\nCloning templates"
 	mkdir -p "${HOST_PATH}"
-	cp -f "${TEMP_PATH}/configuration.nix" "${HOST_PATH}/configuration.nix"
 	cp -f "${TEMP_PATH}/options.nix"       "${HOST_PATH}/options.nix"
-
 
 	echo -e "\nGenerating missing files"
 	nixos-generate-config --show-hardware-config > "${HOST_PATH}/hardware-configuration.nix"
 
-	BOOT_FILE_PATH="${HOST_PATH}/boot.nix"
 	DEF_CONF_PATH="/etc/nixos/configuration.nix"
+	BOOT_FILE_PATH="${HOST_PATH}/boot.nix"
+	CONF_FILE_PATH="${HOST_PATH}/configuration.nix"
+
+	touch "${CONF_FILE_PATH}"
+	echo -ne "{ ... }:\n\n{\n\n}\n" > "${CONF_FILE_PATH}"
 
 	touch "${BOOT_FILE_PATH}"
 	echo -ne "{ ... }:\n\n{\n\t#Bootloader\n" > "${BOOT_FILE_PATH}"

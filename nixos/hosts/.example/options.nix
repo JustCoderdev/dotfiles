@@ -6,10 +6,12 @@
 	jcbin = {
 		backlight.enable = false;
 		boomer.enable = false;
-		rebuild-system.enable = true;
-		mount-configs.enable = true;
-		umount-configs.enable = true;
+		rebuild-system.enable = false;
+		mount-configs.enable = false;
+		umount-configs.enable = false;
 	};
+
+	jcconfs.has_de = false;
 
 	common = {
 		core = {

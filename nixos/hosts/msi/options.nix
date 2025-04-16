@@ -1,46 +1,29 @@
 { ... }:
 
 {
-	host.isVM = false;
-
 	jcbin = {
-		backlight.enable = false;
 		boomer.enable = true;
 		rebuild-system.enable = true;
-		mount-configs.enable = true;
-		umount-configs.enable = true;
 	};
+
+	jcconfs.has_de = true;
 
 	common = {
 		core = {
 			bluetooth.enable = true;
 			nvidia.enable = true;
 
-			audio = {
-				pipewire.enable = false;
-				pulseaudio.enable = true;
-			};
-
+			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
 		};
 
-		users = {
-			ryuji = {
-				enable = true;
-
-				image-editing = true;
-				video-editing = false;
-				game-developing = false;
-			};
-		};
+		users.ryuji.image-editing = true;
 	};
 
 	system = {
 		desktop = {
-			hyprland.enable = false;
 			i3.enable = true;
 			thunar.enable = true;
-			xfce.enable = false;
 		};
 
 		dev = {
@@ -55,7 +38,6 @@
 		services = {
 			docker.enable = true;
 			samba.enable = true;
-			virtualbox.enable = false;
 			webserver.enable = true;
 			nixcache.enable = true;
 			nixbuilder = {
@@ -65,19 +47,20 @@
 					features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 					systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 				};
-				client.builders = [
-					{
-						hostName = "alpha.server.local";
-						maxJobs = 8;
-						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-					}
-					{
-						hostName = "beta.server.local";
-						maxJobs = 6;
-						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-					}
+				client.builders =
+				let
+					gen-builder = (
+						hostName: maxJobs:
+						{
+							inherit hostName maxJobs;
+							features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+							systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+						}
+					);
+				in
+				[
+					(gen-builder "alpha.server.local" 8)
+					(gen-builder  "beta.server.local" 6)
 				];
 			};
 		};

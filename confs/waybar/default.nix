@@ -1,7 +1,7 @@
-{ ... }:
+{ settings, ... }:
 
 {
-	programs.waybar.enable = true;
+	programs.waybar.enable = true && settings.has_de;
 
 	home.file = {
 		".config/waybar/style.css".source = ./style.css;

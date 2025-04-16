@@ -41,7 +41,7 @@
 			settings:
 			[
 				jcbin.nixosModules.all
-				jcconfs.nixosModules.home { inherit (settings) username; }
+				jcconfs.nixosModules.home { jcconfs.username = settings.username; }
 				./nixos
 			]
 #			++
@@ -94,9 +94,8 @@
 			lib.nixosSystem {
 				inherit system;
 				specialArgs = { inherit inputs settings dotfiles; };
-				modules =
-				# (getModules settings) ++
-				[
+				modules = (getModules settings)
+				++ [
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
@@ -142,7 +141,6 @@
 							./nixos/system/services/nixbuilder.nix
 						];
 
-
 						system.services.nixbuilder.client.builders =
 						let
 							gen-builder = (
@@ -155,9 +153,9 @@
 							);
 						in
 						[
-							(gen-builder "10.0.0.1" 6) # msi
-							(gen-builder "10.0.0.2" 8) # alpha
-							(gen-builder "10.0.0.4" 6) # beta
+							(gen-builder     "msi.host.local" 6) # msi
+							(gen-builder "alpha.server.local" 8) # alpha
+							(gen-builder  "beta.server.local" 6) # beta
 						];
 
 						# Disable unbuildable services

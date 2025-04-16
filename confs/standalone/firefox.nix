@@ -3,6 +3,8 @@
 let
 	username = settings.username;
 	system = settings.system;
+	has_de = settings.has_de;
+
 #	addons = inputs.firefox-addons.packages."${system}";
 in
 
@@ -11,7 +13,7 @@ in
 {
 	# ~/.mozilla about:config
 	programs.firefox = {
-		enable = true;
+		enable = true && has_de;
 		package = pkgs.firefox-esr;
 
 		profiles.${username} = {

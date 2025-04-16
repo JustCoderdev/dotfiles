@@ -12,11 +12,10 @@ in
 		environment.systemPackages = [ package ];
 	};
 
-	options.jcbin.boomer = {
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Add boomer to PATH";
-			default = false;
-		};
+	# ------------------------------------------------------------ #
+
+	options.jcbin.boomer =
+	{
+		enable = lib.mkEnableOption "Add boomer to PATH";
 	};
 }

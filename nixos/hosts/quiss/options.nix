@@ -1,63 +1,10 @@
 { ... }:
 
 {
-	host.isVM = false;
+	jcbin.rebuild-system.enable = true;
 
-	jcbin = {
-		backlight.enable = false;
-		boomer.enable = false;
-		rebuild-system.enable = true;
-		mount-configs.enable = true;
-		umount-configs.enable = true;
-	};
-
-	common = {
-		core = {
-			bluetooth.enable = false;
-			nvidia.enable = false;
-
-			audio = {
-				pipewire.enable = false;
-				pulseaudio.enable = false;
-			};
-
-			plymouth.enable = false;
-		};
-
-		users = {
-			ryuji = {
-				enable = true;
-
-				image-editing = false;
-				video-editing = false;
-				game-developing = false;
-			};
-
-			neko.enable = true;
-		};
-	};
-
-	system = {
-		desktop = {
-			hyprland.enable = false;
-			i3.enable = false;
-			thunar.enable = false;
-			xfce.enable = false;
-		};
-
-		dev = {
-			android.enable = false;
-			arduino.enable = false;
-			c.enable = false;
-			net.enable = true;
-		};
-
-		gaming.enable = false;
-
-		services = {
-			docker.enable = false;
+	system.services = {
 			samba.enable = true;
-			virtualbox.enable = false;
 			webserver.enable = true;
 			nixcache.instance-host = "msi.host.local";
 			nixbuilder = {
@@ -67,25 +14,21 @@
 					features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 					systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 				};
-				client.builders = [
-					{
-						hostName = "msi.host.local";
-						maxJobs = 6;
-						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-					}
-					{
-						hostName = "alpha.server.local";
-						maxJobs = 8;
-						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-					}
-					{
-						hostName = "beta.server.local";
-						maxJobs = 6;
-						features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-						systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-					}
+				client.builders =
+				let
+					gen-builder = (
+						hostName: maxJobs:
+						{
+							inherit hostName maxJobs;
+							features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+							systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+						}
+					);
+				in
+				[
+					(gen-builder     "msi.host.local" 6)
+					(gen-builder "alpha.server.local" 8)
+					(gen-builder  "beta.server.local" 6)
 				];
 			};
 		};
