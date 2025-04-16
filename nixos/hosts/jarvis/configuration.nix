@@ -15,8 +15,25 @@
 
 	# -------------------- #
 
-#	networking = {
-#		useDHCP = false;
+	networking = {
+		useDHCP = false;
+
+
+		hosts =
+		{
+			"10.0.0.1"   = [ "gateway.local" ];
+			"10.0.0.2"   = [  "switch.local" ];
+
+			# SERVERS
+			"10.0.0.3" = [     "alpha.host.local" ];
+			"10.0.0.4" = [ "alpha-ilo.host.local" ];
+
+			"10.0.0.5" = [     "beta.host.local" ];
+			"10.0.0.6" = [ "beta-ilo.host.local" ];
+
+			"10.0.0.7" = [  "quiss.server.local" ];
+			# "10.0.0.8" = [ "jarvis.server.local" ];
+		};
 
 #		wireless = {
 #			enable = lib.mkForce true;
@@ -24,15 +41,15 @@
 #			secretsFile = settings.dotfiles_path + "/nixos/secrets/wireless.conf";
 #		};
 
-#		nftables.enable = false;
-#		networkmanager.unmanaged = [ "interface-name:enu1u1" "interface-name:wlan0" ];
+		nftables.enable = false;
+		networkmanager.unmanaged = [ "interface-name:wlan0" ]; # "interface-name:enu1u1"
 #		firewall.trustedInterfaces = [ "enu1u1" ];
 
-#		interfaces = {
+		interfaces = {
 #			enu1u1.useDHCP = false;
-#			wlan0.useDHCP = false;
+			wlan0.useDHCP = false;
 
-#			br0.useDHCP = true;      # wlan0 -> gateway
+			br0.useDHCP = true;      # wlan0 -> gateway
 #			br1 = {
 #				useDHCP = false;
 #				ipv4.addresses = [{  # enu1u1 -> display
@@ -40,12 +57,12 @@
 #					prefixLength = 24;
 #				}];
 #			};
-#		};
+		};
 
-#		bridges = {
-#			br0.interfaces = [ "wlan0" ];
+		bridges = {
+			br0.interfaces = [ "wlan0" ];
 #			br1.interfaces = [ "enu1u1" ];
-#		};
-#	};
+		};
+	};
 }
 
