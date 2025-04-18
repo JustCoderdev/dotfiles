@@ -3,11 +3,13 @@
 let
 	cfg = config.common.users.ryuji;
 
-	uname = settings.username;
 	titleCase = text: lib.concatStrings [
 		(lib.toUpper (builtins.substring 0 1 text))
 		(builtins.substring 1 (builtins.stringLength text) text)
 	];
+
+	uname = settings.username;
+	uhome = "/home/${uname}";
 
 	is_desk_available = lib.attrsets.hasAttrByPath [ "system" "desktop" ] config;
 	desk_cfg = config.system.desktop;
@@ -21,9 +23,6 @@ in
 		system.nixos.tags = [ "${uname}" ];
 
 		systemd.tmpfiles.rules =
-		let
-			uhome = "/home/${uname}";
-		in
 		[
 #			Type Path                           Mode User     Group Age Argument
 			"d   ${uhome}/Developer             0755 ${uname} users"
@@ -48,6 +47,22 @@ in
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
 			];
+		};
+
+		system.userActivationScripts =
+		{
+			correct-ssh-perms.text = ''
+# Permission table found here
+# <https://superuser.com/a/215506>
+
+echo "Setting correct ssh permissions"
+chown -R ${uname}:users ${uhome}/.ssh
+
+chmod 700 ${uhome}/.ssh           # Folder
+chmod 600 ${uhome}/.ssh/*         # All config files
+chmod 600 ${uhome}/.ssh/id_*      # All keys
+chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
+'';
 		};
 
 		environment.systemPackages = with pkgs;

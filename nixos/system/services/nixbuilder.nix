@@ -52,7 +52,7 @@ in
 ''
 Host ${builder.hostName}
 	User ${buildclient_user}
-	IdentitiesOnly yes # Force to use only this identity file
+	IdentitiesOnly yes
 	IdentityFile "${sshkey_path}"
 ''
 					)

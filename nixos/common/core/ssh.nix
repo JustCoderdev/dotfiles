@@ -38,12 +38,12 @@ Host github.com
 	IdentitiesOnly yes # Force to use only this identity file
 	IdentityFile "${homepath}/.ssh/id_github_justcode"
 
-# SSH
+# Ryuji
 # <https://unix.stackexchange.com/questions/494483/specifying-an-identityfile-with-ssh>
 Host *
 	User ${username}
 	IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
-	IdentitiesOnly yes # Force to use only this identity file
+	IdentitiesOnly no
 '';
 
 		# Options are ordered following
