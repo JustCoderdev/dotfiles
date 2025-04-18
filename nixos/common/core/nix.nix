@@ -16,11 +16,18 @@ in
 				options = "--delete-older-than 15d";
 			};
 
-			settings = {
-				auto-optimise-store = true;
+			settings =
+			{
 				allowed-users = [ "${settings.username}" ];
 				experimental-features = [ "nix-command" "flakes" ];
+
+				auto-optimise-store = true;
 				warn-dirty = false;
+
+				trusted-public-keys =
+				[
+					"msi.host.local:jbqDHg/Ky3EjKvI0Wtf2LZyiuxcbuJarlxA26WAAeT4="
+				];
 			};
 
 			extraOptions = ''

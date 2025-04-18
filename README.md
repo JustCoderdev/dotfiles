@@ -215,49 +215,54 @@ echo "xyz" > mdadmhook.url
 
 ```
 cd ${DOT_FILES}/nixos/secrets
-wpa_passphrase ESSID PSK windtower_lte_psk
-echo "psk=PSK" > wireless.conf
+wpa_passphrase WindTower-LTE PSK
+echo "windtower_lte_psk=PSK" > wireless.conf
 ```
 
 - nix-serve
 
 ```
 cd /etc
-nix-store --generate-binary-cache-key nixcache.local \
+sudo nix-store --generate-binary-cache-key DOMAIN \
         cache-priv-key.pem cache-pub-key.pem
+
+# Update nixos/common/core/nix.nix
 ```
 
-#- nixbuilder buildclient pwd
-#
-#```
-#passwd buildclient
-#```
-
-- Github ssh key (add to gh) [auto-generated]
+- Github ssh key [auto-generated]
 
 ```
 ssh-keygen -t ed25519 \
   -C "107036402+JustCoderdev@users.noreply.github.com" \
   -f ~/.ssh/id_github_justcode
+
 ssh-add ~/.ssh/id_github_justcode
+
+# Add to github
 ```
 
-- host ssh key (for ssh) [auto-generated]
+- host ssh key [auto-generated]
 
 ```
 ssh-keygen -t ed25519 \
   -C "${USER}@${HOST}" \
   -f "~/.ssh/id_${HOST}_${USER}"
+
 ssh-add "~/.ssh/id_${HOST}_${USER}"
+
+# Update nixos/common/users/ryuji.nix
 ```
 
-- nixbuilder ssh key (for ssh) [auto-generated]
+- nixbuilder ssh key [auto-generated]
 
 ```
 ssh-keygen -t ed25519 \
   -C "${USER}_buildclient@${HOST}" \
   -f "~/.ssh/id_${HOST}_${USER}_nixbuilder"
+
 ssh-add "~/.ssh/id_${HOST}_${USER}_nixbuilder"
+
+# Update nixos/system/services/nixbuilder.nix
 ```
 
 ## Emergency wiki
