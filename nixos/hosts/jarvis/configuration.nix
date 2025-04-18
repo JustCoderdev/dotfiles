@@ -38,8 +38,8 @@
 			"30-br0" = {
 				matchConfig.Name = "br0";
 				bridgeConfig = {};
-				address = [ "10.0.0.8/24" ]; # "192.168.1.25/24"
-				networkConfig.DHCP = "no";
+#				address = [ "192.168.1.25/24" ];
+				networkConfig.DHCP = "ipv4"; # "no"
 			};
 		};
 	};
@@ -64,18 +64,18 @@
 			# "10.0.0.8" = [ "jarvis.server.local" ];
 		};
 
-		wireless = {
-			enable = lib.mkForce true;
-			secretsFile = settings.dotfiles_path + "/nixos/secrets/wireless.conf";
-
-			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
-
-			userControlled.enable = true;
-			interfaces = [ "wlan0" ];
-		};
+#		wireless = {
+#			enable = lib.mkForce true;
+#			secretsFile = settings.dotfiles_path + "/nixos/secrets/wireless.conf";
+#
+#			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
+#
+#			userControlled.enable = true;
+#			interfaces = [ "wlan0" ];
+#		};
 
 		nftables.enable = false;
-		networkmanager.unmanaged = [ "interface-name:wlan0" "interface-name:enu1u1" ];
+		networkmanager.unmanaged = [ "interface-name:enu1u1" ]; # "interface-name:wlan0" 
 		# firewall.trustedInterfaces = [ "enu1u1" ];
 	};
 }

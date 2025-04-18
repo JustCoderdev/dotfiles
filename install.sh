@@ -21,8 +21,8 @@ else
 fi
 
 
-DOTFILES_PATH="$(pwd)"
-NIXOS_PATH="${DOTFILES_PATH}/nixos"
+DOT_FILES="$(pwd)"
+NIXOS_PATH="${DOT_FILES}/nixos"
 HOSTS_PATH="${NIXOS_PATH}/hosts"
 
 
@@ -44,14 +44,15 @@ HOST_PATH="${HOSTS_PATH}/${HOSTNAME}"
 TEMP_PATH="${HOSTS_PATH}/.example"
 echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m\n"
 
-grep -qE "${HOSTNAME}.*= system-builder" "${DOTFILES_PATH}/flake.nix" || grep_exit=$?
+grep -qE "${HOSTNAME}.*= system-builder" "${DOT_FILES}/flake.nix" || grep_exit=$?
 if [[ $grep_exit == 1 ]]; then
 	echo -e "\033[31mTODO: FIX SED THINGY\033[0m"
 	echo -e "\033[33mManually add v to flake.nix"
 	echo -e "${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";\033[0m\n"
-	
+	exit 1
+
 	# echo -e "Adding ${HOSTNAME} nixosConfiguration"
-	#sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";/" "${DOTFILES_PATH}/flake.nix"
+	#sed -i "s/\(nixosConfigurations = {\).*/\1\n\t\t\t${HOSTNAME} = system-builder \"${HOSTNAME}\" \"x86_64-linux\" \"ryuji\";/" "${DOT_FILES}/flake.nix"
 else
 	echo -e "NixosConfiguration already in place, skipping..."
 fi
@@ -137,55 +138,57 @@ fi
 
 
 
-## Check for online substituters
-substituters="https://cache.nixos.org/?priority=40"
-if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
-	echo -e "No nix substituter set, ignoring..."
-else
-	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
+#  ## Check for online substituters
+#  substituters="https://cache.nixos.org/?priority=40"
+#  if [ -z "${DOT_NIX_SUB_URL:-}" ]; then
+#  	echo -e "No nix substituter set, ignoring..."
+#  else
+#  	echo -ne "Found nix substituter '${DOT_NIX_SUB_URL}', pinging... "
+#
+#  	ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1
+#  	# shellcheck disable=SC2181 #ah the irony
+#  	if [[ "${?}" -eq 0 ]]; then
+#  		echo -e "\033[32mONLINE\033[0m"
+#  		substituters+=" http://${DOT_NIX_SUB_URL}"
+#
+#  		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
+#  			#echo -e "No nix substituter port set, leaving default"
+#  			substituters+=":56552"
+#  		else
+#  			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
+#  			substituters+=":${DOT_NIX_SUB_PORT}"
+#  		fi
+#
+#  		substituters+="?priority=30"
+#  	else
+#  		echo -e "\033[31mOFFLINE\033[0m"
+#  	fi
+#  fi
 
-	ping -c 4 "${DOT_NIX_SUB_URL:-}" > /dev/null 2>&1
-	# shellcheck disable=SC2181 #ah the irony
-	if [[ "${?}" -eq 0 ]]; then
-		echo -e "\033[32mONLINE\033[0m"
-		substituters+=" http://${DOT_NIX_SUB_URL}"
-
-		if [ -z "${DOT_NIX_SUB_PORT:-}" ]; then
-			#echo -e "No nix substituter port set, leaving default"
-			substituters+=":56552"
-		else
-			#echo -e "Using found port '${DOT_NIX_SUB_PORT}'"
-			substituters+=":${DOT_NIX_SUB_PORT}"
-		fi
-
-		substituters+="?priority=30"
-	else
-		echo -e "\033[31mOFFLINE\033[0m"
-	fi
-fi
 
 
-
-## Update flake
-echo -e "Creating jcbin and jcconfs in nix-store...";
-cd "${DOTFILES_PATH}"
-
-cd ./bin
-nix --extra-experimental-features 'nix-command flakes' build .#mount-configs
-nix --extra-experimental-features 'nix-command flakes' flake lock
-
-cd ../confs
-nix --extra-experimental-features 'nix-command flakes' build .#ryuji-activation
-nix --extra-experimental-features 'nix-command flakes' flake lock
-
-cd ..
-nix --extra-experimental-features 'nix-command flakes' flake update jcbin jcconfs
-git add .
-echo "";
+#  ## Update flake
+#  echo -e "Creating jcbin and jcconfs in nix-store...";
+#  cd "${DOT_FILES}"
+#
+#  cd ./bin
+#  nix --extra-experimental-features 'nix-command flakes' build .#mount-configs
+#  nix --extra-experimental-features 'nix-command flakes' flake lock
+#
+#  cd ../confs
+#  nix --extra-experimental-features 'nix-command flakes' build .#ryuji-activation
+#  nix --extra-experimental-features 'nix-command flakes' flake lock
+#
+#  cd ..
+#  nix --extra-experimental-features 'nix-command flakes' flake update jcbin jcconfs
+#  git add .
+#  echo "";
 
 
 
 # Rebuild system
-sudo mkdir -p /mnt
-echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"
-sudo nixos-install --show-trace --flake "${DOTFILES_PATH}#${HOSTNAME}" --option substituters "${substituters}"
+./bin/bash-scripts/rebuild-system.sh ${HOSTNAME}
+
+# sudo mkdir -p /mnt
+# echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"
+# sudo nixos-install --show-trace --flake "${DOT_FILES}#${HOSTNAME}" --option substituters "${substituters}"

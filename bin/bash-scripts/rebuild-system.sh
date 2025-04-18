@@ -157,7 +157,7 @@ fi
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
-echo -ne "\033[2J\033[?1049l" # exit alt-buff
+echo -ne "\033[?1049l" # exit alt-buff # clear screen \033[2J
 
 if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"
