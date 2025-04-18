@@ -19,6 +19,7 @@ let
 	standalone-modules = [
 		"firefox"
 		"tmux"
+		"ssh"
 	];
 
 	toPathList = (ms: lib.lists.forEach ms (m: ../${m}/default.nix));
