@@ -10,11 +10,10 @@
 	system.services = {
 		kvm = {
 			enable = true;
-			allowedBridges = [ "br0" "br1" ];
+			allowedBridges = [ "br0" ];
 		};
 		nixcache.instance-host = "msi.host.local";
 		nixbuilder = {
-			server.enable = false;
 			client.builders =
 			let
 				gen-builder = (
@@ -28,8 +27,8 @@
 			in
 			[
 				(gen-builder     "msi.host.local" 6)
-				(gen-builder "alpha.server.local" 8)
-				(gen-builder  "beta.server.local" 6)
+				# (gen-builder "alpha.server.local" 8)
+				# (gen-builder  "beta.server.local" 6)
 			];
 		};
 	};

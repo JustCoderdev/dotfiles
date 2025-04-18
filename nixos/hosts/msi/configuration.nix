@@ -7,17 +7,30 @@ let
 
 		# -------------------- #
 
-		alpha     = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local";
-		alpha-ilo = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local";
+		alpha      = get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local";
+		alpha-ilo  = get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local";
 
-		beta      = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local";
-		beta-ilo  = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local";
+		beta       = get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local";
+		beta-ilo   = get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local";
 
-		quiss     = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local";
-		jarvis    = get_conf "jarvis"    "b8:27:eb:22:44:60" "10.0.0.8" "server.local";
+		# quiss      = get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local";
+		# jarvis     = get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.local";
+#        ^ jarvis-br0                     "b8:27:eb:22:44:60"
 	};
 
 	get_dhcp_host = ({ hostname, mac, ip, ... }: "${mac},${hostname},${ip},infinite");
+	get_ssh_forward = (
+		{ ip, ... }:
+		let
+			last-byte = lib.lists.last (lib.strings.splitString "." ip);
+		in
+		{
+			proto = "tcp";
+			sourcePort = lib.strings.toInt "50${last-byte}22";
+			destination = "${ip}:22";
+		}
+	);
+
 in
 
 {
@@ -87,47 +100,18 @@ in
 
 			forwardPorts =
 			[
-				# SSH
-				# -------------------- #
-				{
-					proto = "tcp";
-					sourcePort = 50222;
-					destination = "${confs.switch.ip}:22";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 50322;
-					destination = "${confs.alpha.ip}:22";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 50522;
-					destination = "${confs.beta.ip}:22";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 50722;
-					destination = "${confs.quiss.ip}:22";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 50822;
-					destination = "${confs.jarvis.ip}:22";
-				}
-
-				# -------------------- #
-
-				{
-					proto = "tcp";
-					sourcePort = 4080;
-					destination = "${confs.quiss.ip}:80";
-				}
-				{
-					proto = "tcp";
-					sourcePort = 22445;
-					destination = "${confs.quiss.ip}:445";
-				}
-			];
+				# {
+				# 	proto = "tcp";
+				# 	sourcePort = 4080;
+				# 	destination = "${confs.quiss.ip}:80";
+				# }
+				# {
+				# 	proto = "tcp";
+				# 	sourcePort = 22445;
+				# 	destination = "${confs.quiss.ip}:445";
+				# }
+			]
+			++ lib.attrsets.mapAttrsToList (name: value: (get_ssh_forward value)) confs;
 
 			externalInterface = "wlp3s0";
 		};
