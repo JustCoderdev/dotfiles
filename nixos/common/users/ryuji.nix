@@ -41,7 +41,7 @@ in
 			initialPassword = "${uname}";
 
 			# packages = with pkgs; [ ];
-			extraGroups = [ "networkmanager" "wheel" ];
+			extraGroups = [ "wheel" ];
 
 			openssh.authorizedKeys.keys = [
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"

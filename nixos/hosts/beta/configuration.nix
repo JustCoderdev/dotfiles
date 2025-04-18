@@ -14,6 +14,7 @@ in
 			matchConfig.Name = beta-port-to-alpha;
 			address = [ "${beta-ip}/30" ];
 		};
+		linkConfig.RequiredForOnline = "no";
 	};
 
 

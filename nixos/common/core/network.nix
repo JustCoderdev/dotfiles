@@ -2,8 +2,11 @@
 
 {
 	# Fix hangups
-	systemd.network.wait-online.enable = false;
-	boot.initrd.systemd.network.wait-online.enable = false;
+	# systemd.network.wait-online.enable = false;
+	# boot.initrd.systemd.network.wait-online.enable = false;
+
+	# Let user manage network
+	users.users.${settings.username}.extraGroups = [ "networkmanager" ];
 
 	# Network settings
 	networking = {
