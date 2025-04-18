@@ -21,9 +21,9 @@
 		netdevs =
 		{
 			# Display
-			"10-br1".netdevConfig = {
+			"10-br0".netdevConfig = {
 				Kind = "bridge";
-				Name = "br1";
+				Name = "br0";
 			};
 		};
 
@@ -31,21 +31,15 @@
 		{
 			"20-enu1u1" = {
 				matchConfig.Name = "enu1u1";
-				networkConfig.Bridge = "br1";
+				networkConfig.Bridge = "br0";
 				linkConfig.RequiredForOnline = "enslaved";
 			};
 
-			"30-br1" = {
-				matchConfig.Name = "br1";
+			"30-br0" = {
+				matchConfig.Name = "br0";
 				bridgeConfig = {};
-
-				# address = [ "192.168.1.25/24" ];
-				# networkConfig.DHCP = "no";
-
-				address = [ "10.0.0.8/24" ];
-				networkConfig.DHCP = "ipv4";
-
-				linkConfig.RequiredForOnline = "no";
+				address = [ "10.0.0.8/24" ]; # "192.168.1.25/24"
+				networkConfig.DHCP = "no";
 			};
 		};
 	};
@@ -75,13 +69,14 @@
 			secretsFile = settings.dotfiles_path + "/nixos/secrets/wireless.conf";
 
 			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
-#			userControlled.enable = false;
+
+			userControlled.enable = true;
 			interfaces = [ "wlan0" ];
 		};
 
 		nftables.enable = false;
 		networkmanager.unmanaged = [ "interface-name:wlan0" "interface-name:enu1u1" ];
-		firewall.trustedInterfaces = [ "enu1u1" ];
+		# firewall.trustedInterfaces = [ "enu1u1" ];
 	};
 }
 
