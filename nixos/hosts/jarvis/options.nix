@@ -3,8 +3,6 @@
 {
 	jcbin.rebuild-system.enable = true;
 
-	jcconfs.services.home-assistant = true;
-
 	common.core.bluetooth.enable = true;
 
 	system.services = {

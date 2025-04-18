@@ -84,10 +84,6 @@
 						description = "Name of the primary user";
 					};
 					has_de = lib.mkEnableOption "Whether to enable graphical applications or not";
-
-					services = {
-						home-assistant = lib.mkEnableOption "Enable home-assistant vm";
-					};
 				};
 			}
 		);
