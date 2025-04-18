@@ -17,7 +17,10 @@
 			plymouth.enable = true;
 		};
 
-		users.ryuji.image-editing = true;
+		users.ryuji = {
+			image-editing = true;
+			game-developing = true;
+		};
 	};
 
 	system = {

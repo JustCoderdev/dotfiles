@@ -27,6 +27,7 @@
 
 			"google-chrome"
 			"ciscoPacketTracer8"
+			"unityhub"
 		];
 	};
 }

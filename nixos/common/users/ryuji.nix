@@ -70,7 +70,7 @@ in
 		]
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
 		++ lib.optionals (cfg.video-editing)   [ davinci-resolve obs-studio ]
-		++ lib.optionals (cfg.game-developing) [ blender ];
+		++ lib.optionals (cfg.game-developing) [ blender unityhub pikopixel ];
 	};
 
 	# ------------------------------------------------------------ #
