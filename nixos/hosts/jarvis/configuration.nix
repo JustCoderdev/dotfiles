@@ -38,8 +38,8 @@
 			"30-br0" = {
 				matchConfig.Name = "br0";
 				bridgeConfig = {};
-#				address = [ "192.168.1.25/24" ];
-				networkConfig.DHCP = "ipv4"; # "no"
+				address = [ "192.168.1.25/24" ];
+				networkConfig.DHCP = "no"; # "ipv4"
 			};
 		};
 	};
