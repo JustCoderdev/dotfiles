@@ -34,6 +34,8 @@
 			# "10.0.0.8" = [ "jarvis.server.local" ];
 		};
 
+		networkmanager.enable = lib.mkForce false;
+
 #		wireless = {
 #			enable = lib.mkForce true;
 #			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
