@@ -70,11 +70,9 @@ echo -e "Rebuilding NixOS...\n"
 ## Update flake
 echo -e "Locking jcbin and jcconfs...";
 cd ./bin
-# nix --extra-experimental-features 'nix-command flakes' build .#mount-configs
 nix --extra-experimental-features 'nix-command flakes' flake lock
 
 cd ../confs
-# nix --extra-experimental-features 'nix-command flakes' build .#ryuji-activation
 nix --extra-experimental-features 'nix-command flakes' flake lock
 
 cd ..
