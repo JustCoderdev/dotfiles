@@ -1,7 +1,7 @@
 { pkgs-unstable, pkgs, settings, inputs, ... }:
 
 let
-	inherit (settings) dotfiles_path;
+	inherit (settings) dotfiles_path username;
 	mdadmhook-url-path = dotfiles_path + "/nixos/secrets/mdadmhook.url";
 	duckdns-token-path = dotfiles_path + "/nixos/secrets/duckdns.token";
 	cftunnel-cred-path = dotfiles_path + "/nixos/secrets/cloudflare.cred";
@@ -64,6 +64,44 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		"d   ${data-dir}/media/serie    0775 root ${serv-group}"
 		"d   ${data-dir}/music          0775 root ${serv-group}"
 	];
+
+	# SAMBA
+
+	services.samba.settings =
+	let
+		get-share = (
+			name: path:
+			{
+				browseable = "yes";
+
+				path = "${path}";
+				comment = "${name}";
+
+				"admin users" = "${username}";
+				"guest ok" = "no";
+
+				"writeable" = "yes";
+				"read only" = "no";
+
+				"create mask" = "0744";
+				"directory mask" = "0755";
+
+				"force user" = "${username}";
+				"force group" = "users";
+
+				# Apple - Share interop
+				"vfs objects" = "catia fruit streams_xattr";
+				"fruit:resource" = "file";
+				"fruit:metadata" = "netatalk";
+				"fruit:locking" = "netatalk";
+				"fruit:encoding" = "native";
+			}
+		);
+	in
+	{
+		old-ryuji-root = get-share "old-ryuji-root" "${data-dir}/old-ryuji-root";
+		ryuji-root     = get-share "ryuji-root"     "${data-dir}/ryuji-root";
+	};
 
 
 	# dns records
