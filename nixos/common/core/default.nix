@@ -26,6 +26,7 @@
 		unzip zip wget killall
 		rsync smartmontools pciutils
 		htop btop screen
+		ntfs3g # ntfs driver
 		vim git
 	];
 }
