@@ -154,6 +154,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 		apps = {
 			prowlarr.enable = true;
+			deluge.enable = true;
 
 			lidarr.enable = true;
 			radarr.enable = true;
