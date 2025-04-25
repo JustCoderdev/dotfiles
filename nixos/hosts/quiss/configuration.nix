@@ -61,9 +61,11 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
 		"d   ${data-dir}/downloads   0775 root ${serv-group}"
+
 		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
 		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
 		"d   ${data-dir}/music       0775 root ${serv-group}"
+		"d   ${data-dir}/books       0775 root ${serv-group}"
 	];
 
 	# SAMBA
@@ -162,6 +164,16 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 			readarr.enable = true;
 			sonarr.enable = true;
 		};
+	};
+
+	# BOOK VIEWER
+
+	services.calibre-web = {
+		inherit openFirewall;
+		enable = true;
+
+		dataDir = config-dir + "/calibre";
+		group = serv-group;
 	};
 
 	# MEDIA PLAYER
