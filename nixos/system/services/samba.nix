@@ -27,8 +27,8 @@ in
 		++
 		(
 			lib.optionals (cfg.shares.user.enable) [
-#				Type Path                                  Mode User        Group
-				"d   ${share-root}/${username}-${hostname} 0755 ${username} users"
+#				Type Path                                        Mode User        Group
+				"d   ${share-root}/${username}-${hostname}-share 0755 ${username} users"
 			]
 		)
 		++
@@ -103,13 +103,16 @@ in
 					}
 				]
 				++
-				lib.optionals (cfg.shares.user.enable)
-				[
-					{
-						name = "${username}-${hostname}";
-						value = create-share "${username}-${hostname}" share-root username;
-					}
-				]
+				(
+					let name = "${username}-${hostname}-share"; in
+					lib.optionals (cfg.shares.user.enable)
+					[
+						{
+							inherit name;
+							value = create-share name share-root username;
+						}
+					]
+				)
 				++
 				builtins.map (
 					share:

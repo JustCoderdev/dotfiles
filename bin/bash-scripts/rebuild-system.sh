@@ -161,7 +161,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"
 
 	## Commit changes
-	if $had_changes && $want_commit; then
+	if [[ "${had_changes}" -ne 0 && "${want_commit}" -ne 0 ]]; then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
 		message="NixOS build ${HOSTNAME}#${generation}"
 
