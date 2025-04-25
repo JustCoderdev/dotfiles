@@ -67,41 +67,52 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# SAMBA
 
-	services.samba.settings =
-	let
-		get-share = (
-			name: path:
-			{
-				browseable = "yes";
-
-				path = "${path}";
-				comment = "${name}";
-
-				"admin users" = "${username}";
-				"guest ok" = "no";
-
-				"writeable" = "yes";
-				"read only" = "no";
-
-				"create mask" = "0744";
-				"directory mask" = "0755";
-
-				"force user" = "${username}";
-				"force group" = "users";
-
-				# Apple - Share interop
-				"vfs objects" = "catia fruit streams_xattr";
-				"fruit:resource" = "file";
-				"fruit:metadata" = "netatalk";
-				"fruit:locking" = "netatalk";
-				"fruit:encoding" = "native";
-			}
-		);
-	in
-	{
-		old-ryuji-root = get-share "old-ryuji-root" "${data-dir}/old-ryuji-root";
-		ryuji-root     = get-share "ryuji-root"     "${data-dir}/ryuji-root";
+	system.services = {
+		samba.shares.custom = 
+		let
+			create-share = (name: root: owner: { inherit name root owner; });
+		in
+		[
+			(create-share "old-ryuji-root" data-dir settings.username)
+			(create-share     "ryuji-root" data-dir settings.username)
+		];
 	};
+
+	# services.samba.settings =
+	# let
+	# 	get-share = (
+	# 		name: path:
+	# 		{
+	# 			browseable = "yes";
+
+	# 			path = "${path}";
+	# 			comment = "${name}";
+
+	# 			"admin users" = "${username}";
+	# 			"guest ok" = "no";
+
+	# 			"writeable" = "yes";
+	# 			"read only" = "no";
+
+	# 			"create mask" = "0744";
+	# 			"directory mask" = "0755";
+
+	# 			"force user" = "${username}";
+	# 			"force group" = "users";
+
+	# 			# Apple - Share interop
+	# 			"vfs objects" = "catia fruit streams_xattr";
+	# 			"fruit:resource" = "file";
+	# 			"fruit:metadata" = "netatalk";
+	# 			"fruit:locking" = "netatalk";
+	# 			"fruit:encoding" = "native";
+	# 		}
+	# 	);
+	# in
+	# {
+	# 	old-ryuji-root = get-share "old-ryuji-root" "${data-dir}/old-ryuji-root";
+	# 	ryuji-root     = get-share "ryuji-root"     "${data-dir}/ryuji-root";
+	# };
 
 
 	# dns records

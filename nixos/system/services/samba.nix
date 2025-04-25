@@ -6,8 +6,7 @@ let
 	username = settings.username;
 	hostname = settings.hostname;
 
-	share-name = "${username}-${hostname}";
-	share-path = "/home/${username}/${share-name}-share";
+	share-root = "/home/${username}";
 in
 
 {
@@ -24,60 +23,101 @@ in
 			keyutils
 		];
 
-		systemd.tmpfiles.rules = [
-#			Type Path           Mode User        Group Age Argument
-			"d   ${share-path}  0755 ${username} users"
-		];
+		systemd.tmpfiles.rules = [ ]
+		++
+		(
+			lib.optionals (cfg.shares.user.enable)
+#			Type Path                                  Mode User        Group
+			"d   ${share-root}/${username}-${hostname} 0755 ${username} users"
+		)
+		++
+		(
+			builtins.map (
+				share:
+#				Type Path                        Mode User           Group
+				"d   ${share.root}/${share.name} 0755 ${share.owner} users"
+			) cfg.shares.custom
+		);
+		
 
-		services.samba = {
+		services.samba =
+		let
+			default-settings = {
+				"browseable" = "yes";
+				"guest ok" = "no";
+
+				"writeable" = "yes";
+				"read only" = "no";
+
+				"create mask" = "0744";
+				"directory mask" = "0755";
+
+				# Apple - Share interop
+				"vfs objects" = "catia fruit streams_xattr";
+				"fruit:resource" = "file";
+				"fruit:metadata" = "netatalk";
+				"fruit:locking" = "netatalk";
+				"fruit:encoding" = "native";
+			};
+
+			create-share = (
+				name: root-path: owner:
+				(default-settings) // {
+					"path" = "${root-path}/${name}";
+					"comment" = "${name}";
+
+					"admin users" = "${owner}";
+
+					"force user" = "${owner}";
+					"force group" = "users";
+				}
+			);
+		in
+		{
 			enable = true;
 			openFirewall = true;
 
-			settings = {
-				"global" = {
-					security = "user";
+			settings = builtins.listToAttrs (
+				[
+					{
+						name = "global";
+						value =
+						{
+							"security" = "user";
 
-					"hosts allow" = "192.168.7.";
-					"hosts deny" = "0.0.0.0/0";
+							"hosts allow" = "192.168.7., 10.0.0.";
+							"hosts deny" = "0.0.0.0/0";
 
-					"load printers" = "no";
-					"printcap name" = "/dev/null";
+							"load printers" = "no";
+							"printcap name" = "/dev/null";
 
-					"guest account" = "nobody";
-					"map to guest" = "bad user";
+							"guest account" = "nobody";
+							"map to guest" = "bad user";
 
-					"browse list" = "yes";
-					"case sensitive" = "yes";
-					"max disk size" = "2500"; # 2.5 GB
-					"name resolve order" = "host lmhosts wins bcast";
-				};
-
-				"${share-name}" = {
-					browseable = "yes";
-
-					path = "${share-path}";
-					comment = "${share-name}";
-
-					"admin users" = "${username}";
-					"guest ok" = "no";
-
-					"writeable" = "yes";
-					"read only" = "no";
-
-					"create mask" = "0744";
-					"directory mask" = "0755";
-
-					"force user" = "${username}";
-					"force group" = "users";
-
-					# Apple - Share interop
-					"vfs objects" = "catia fruit streams_xattr";
-					"fruit:resource" = "file";
-					"fruit:metadata" = "netatalk";
-					"fruit:locking" = "netatalk";
-					"fruit:encoding" = "native";
-				};
-			};
+							"browse list" = "yes";
+							"case sensitive" = "yes";
+							"max disk size" = "2500"; # 2.5 GB
+							"name resolve order" = "host lmhosts wins bcast";
+						};
+					}
+				]
+				++
+				lib.optionals (cfg.shares.user.enable)
+				[
+					{
+						name = "${username}-${hostname}";
+						value = create-share "${username}-${hostname}" share-root username;
+					}
+				]
+				++
+				builtins.map (
+					share:
+					{
+						inherit (share) name;
+						value = create-share share.name share.root share.owner;
+					}
+				) cfg.shares.custom
+			);
 		};
 	};
 
@@ -85,10 +125,36 @@ in
 
 	options.system.services.samba =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable samba daemon";
-			default = false;
+		enable = lib.mkEnableOption "Enable samba daemon";
+		shares = {
+			user.enable = lib.mkEnableOption "Create default user share";
+			custom = lib.mkOption {
+				default = [];
+				description = "Custom shares";
+				type = lib.types.listOf (
+					lib.types.submodule (
+						{ config, ... }:
+						{
+							options = {
+								name = lib.mkOption {
+									type = lib.types.str;
+									description = "The name of the share";
+								};
+								root = lib.mkOption {
+									type = lib.types.str;
+									description = "The path to the root directory of the share";
+									default = "${share-root}";
+								};
+								owner = lib.mkOption {
+									type = lib.types.str;
+									description = "Owner of the share";
+									default = "${username}";
+								};
+							};
+						}
+					)
+				);
+			};
 		};
 	};
 }
