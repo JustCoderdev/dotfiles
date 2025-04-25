@@ -40,7 +40,10 @@
 
 		services = {
 			docker.enable = true;
-			samba.enable = true;
+			samba = {
+				enable = true;
+				shares.user.enable = true;
+			};
 			webserver.enable = true;
 			nixcache.enable = true;
 			nixbuilder = {

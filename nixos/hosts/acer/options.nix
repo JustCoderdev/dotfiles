@@ -30,7 +30,10 @@
 		};
 
 		services = {
-			samba.enable = true;
+			samba = {
+				enable = true;
+				shares.user.enable = true;
+			};
 			webserver.enable = true;
 			nixcache.instance-host = "msi.host.local";
 			nixbuilder.client.builders = [
