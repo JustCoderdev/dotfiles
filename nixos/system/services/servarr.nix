@@ -11,7 +11,10 @@ let
 		{ name = "sonarr";   port = 8989; }
 	];
 
-	all-services = (services) ++ [ { name = "prowlarr"; port = 9696; } ];
+	all-services = (services) ++ [
+		{ name = "prowlarr"; port = 9696; }
+		{ name = "deluge";   port = 8112; }
+	];
 in
 
 {
@@ -46,6 +49,14 @@ in
 			radarr  = (get-service-options "radarr") // { package = pkgs-unstable.radarr; }; # Movies
 			readarr = get-service-options "readarr"; # Books
 			sonarr  = get-service-options "sonarr";  # Serie
+
+			deluge = (get-service-options "deluge") // {
+				web = {
+					enable = true;
+					inherit (cfg) openFirewall;
+					port = 8112;
+				};
+			};
 		};
 
 		# PROXY
@@ -160,6 +171,7 @@ in
 		};
 
 		apps = {
+			deluge.enable = lib.mkEnableOption "Enable deluge";
 			prowlarr.enable = lib.mkEnableOption "Enable prowlarr";
 			# -------------------- #
 			lidarr.enable = lib.mkEnableOption "Enable lidarr";

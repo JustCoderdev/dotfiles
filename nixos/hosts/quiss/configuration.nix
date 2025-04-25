@@ -140,8 +140,6 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		};
 	};
 
-	environment.systemPackages = with pkgs; [ qbittorrent ];
-
 	system.services.servarr = 
 	{
 		enable = true;
