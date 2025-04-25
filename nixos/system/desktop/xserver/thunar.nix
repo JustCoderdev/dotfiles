@@ -18,8 +18,9 @@ in
 
 		services = {
 			# Thunar extensions
-			gvfs.enable = true;    # mount, trash, other
 			tumbler.enable = true; # img thumbnails
+			avahi.enable = true;   # smb share?
+			gvfs.enable = true;    # mount, trash, other
 		};
 
 		environment.systemPackages = with pkgs; [

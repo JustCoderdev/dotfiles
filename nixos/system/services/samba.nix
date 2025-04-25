@@ -13,9 +13,12 @@ in
 	config = lib.mkIf cfg.enable
 	{
 		# Autodiscovery on windows
-		services.samba-wsdd = {
-			enable = true;
-			openFirewall = true;
+		services = {
+			avahi.enable = true;   # linux discoverability?
+			samba-wsdd = {
+				enable = true;
+				openFirewall = true;
+			};
 		};
 
 		environment.systemPackages = with pkgs; [
