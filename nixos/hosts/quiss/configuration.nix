@@ -172,7 +172,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		inherit openFirewall;
 		enable = true;
 
-		dataDir = config-dir + "/calibre";
+		# dataDir = config-dir + "/calibre";
 		group = serv-group;
 	};
 
