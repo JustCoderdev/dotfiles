@@ -121,7 +121,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		{
 			locations =
 			{
-				"^~ /jellyfin/" = {
+				"^~ /jellyfin" = {
 					proxyPass = "http://127.0.0.1:8096/";
 
 					# <https://forum.jellyfin.org/t-nginx-proxy-manager-config?pid=42446#pid42446>
