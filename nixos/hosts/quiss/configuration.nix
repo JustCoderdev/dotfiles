@@ -142,7 +142,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	environment.systemPackages = with pkgs; [ qbittorrent ];
 
-	system.services.servarrs = 
+	system.services.servarr = 
 	{
 		enable = true;
 		inherit openFirewall;

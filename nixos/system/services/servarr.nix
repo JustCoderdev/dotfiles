@@ -1,7 +1,17 @@
 { config, lib, pkgs-unstable, ... }:
 
 let
-	cfg = config.system.services.servarrs;
+	cfg = config.system.services.servarr;
+
+
+	services = [
+		{ name = "lidarr";   port = 8686; }
+		{ name = "radarr";   port = 7878; }
+		{ name = "readarr";  port = 8787; }
+		{ name = "sonarr";   port = 8989; }
+	];
+
+	all-services = (services) ++ [ { name = "prowlarr"; port = 9696; } ];
 in
 
 {
@@ -53,13 +63,6 @@ in
 				+"proxy_set_header Upgrade $http_upgrade;\n"
 				+"proxy_set_header Connection $http_connection;\n"
 				+ "";
-
-			services = [
-				{ name = "lidarr";   port = 8686; }
-				{ name = "radarr";   port = 7878; }
-				{ name = "readarr";  port = 8787; }
-				{ name = "sonarr";   port = 8989; }
-			];
 		in
 		{
 			enable = cfg.proxy.enable;
@@ -105,11 +108,33 @@ in
 				# };
 			};
 		};
+
+		# AUTOCONFIGURATION SERVICE
+
+		# systemd.services.configure-servarr-stack =
+		# let
+		# 	enabled-services = builtins.filter ({ name, ... }: cfg.apps."${name}".enable) all-services;
+		# 	enabled-services-names = builtins.map ({ name, ... }: "${name}.service") enabled-services;
+		# in
+		# {
+		# 	description = "Configure servarr services";
+
+		# 	after = (enabled-services-names) ++ [ "network.target" ];
+		# 	requires = (enabled-services-names) ++ [ "network.target" ];
+
+		# 	serviceConfig.Type = "oneshot";
+		# 	script = ''
+# echo smash
+# echo smash | systemd-cat
+# '';
+		# };
+
+
 	};
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.servarrs =
+	options.system.services.servarr =
 	{
 		enable = lib.mkEnableOption "Enable servarr suite";
 
