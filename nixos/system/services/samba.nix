@@ -26,9 +26,10 @@ in
 		systemd.tmpfiles.rules = [ ]
 		++
 		(
-			lib.optionals (cfg.shares.user.enable)
-#			Type Path                                  Mode User        Group
-			"d   ${share-root}/${username}-${hostname} 0755 ${username} users"
+			lib.optionals (cfg.shares.user.enable) [
+#				Type Path                                  Mode User        Group
+				"d   ${share-root}/${username}-${hostname} 0755 ${username} users"
+			]
 		)
 		++
 		(

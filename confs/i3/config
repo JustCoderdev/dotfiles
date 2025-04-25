@@ -62,8 +62,9 @@ exec --no-startup-id i3-msg 'workspace 1; exec alacritty'
 ## CUSTOM KEYBINDINGS
 bindsym $mod+b       exec --no-startup-id firefox
 bindsym $mod+o       exec --no-startup-id obsidian
+bindsym $mod+t       exec --no-startup-id thunar
 bindsym $mod+Return  exec --no-startup-id alacritty
-bindsym $mod+F4      exec "shutdown 1 && i3-nagbar -m 'The shutdown sequence has started. The computer will shutdown in a minute. REMEMBER TO PUSH ALL UNCOMMITTED CHANGES!' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
+bindsym $mod+F4      exec "i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
 bindsym $mod+Ctrl+l   exec --no-startup-id "dm-tool lock"
 bindsym $mod+Shift+s  exec coreshot -s "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
@@ -243,7 +244,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 mode "resize" {
 	# These bindings trigger as soon as you enter the resize mode
-	
+
 	# Pressing left will shrink the window’s width.
 	# Pressing right will grow the window’s width.
 	# Pressing up will shrink the window’s height.
@@ -252,13 +253,13 @@ mode "resize" {
 	bindsym $mod+j resize shrink height 2 px or 2 ppt
 	bindsym $mod+k resize grow   height 2 px or 2 ppt
 	bindsym $mod+l resize grow   width  2 px or 2 ppt
-	
+
 	# same bindings, but for the arrow keys
 	# bindsym Left  resize shrink width 10 px or 10 ppt
 	# bindsym Down  resize grow height 10 px or 10 ppt
 	# bindsym Up    resize shrink height 10 px or 10 ppt
 	# bindsym Right resize grow width 10 px or 10 ppt
-	
+
 	# back to normal: Enter or Escape or $mod+r
 	bindsym Return mode "default"
 	bindsym Escape mode "default"

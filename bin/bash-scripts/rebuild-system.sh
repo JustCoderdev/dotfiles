@@ -31,8 +31,8 @@ echo -ne "\nAnalysing changes..."
 git restore --staged .
 if git diff --quiet -- .; then  # -- ./**/*.nix
 	echo -e " \033[31mNot found\033[0m"
-	had_changes=false
-	want_commit=false
+	had_changes=0
+	want_commit=0
 
 	# echo -e "No changes detected, \033[31mexiting\033[0m\n"
 	# shopt -u globstar
@@ -40,7 +40,7 @@ if git diff --quiet -- .; then  # -- ./**/*.nix
 	# exit 0
 else
 	echo " Found"
-	had_changes=true
+	had_changes=1
 
 	# shellcheck disable=SC2162
 	# read -rp 'Open diff? (y/N): ' diff_confirm
@@ -51,9 +51,9 @@ else
 	# shellcheck disable=SC2162
 	read -rp 'Do you want to commit? (Y/n): ' commit_confirm
 	if [[ "${commit_confirm}" == [nN] ]] || [[ "${commit_confirm}" == [nN][oO] ]]; then
-		want_commit=false
+		want_commit=0
 	else
-		want_commit=true
+		want_commit=1
 	fi
 
 	echo -ne "\n"
@@ -129,8 +129,8 @@ echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 echo -ne "\n"
 
-
-if $want_commit; then
+if [[ "$want_commit" -ne 0 || "$had_changes" -eq 0 ]];
+then
 	echo -e "nixos-rebuild switch --max-jobs \"${hprocs}\" --flake \".#${HOSTNAME}\" --option substituters \"${substituters}\"\n"
 	set +o pipefail # Disable pipafail since we check ourselves
 	# shellcheck disable=SC2024 #ah the irony
