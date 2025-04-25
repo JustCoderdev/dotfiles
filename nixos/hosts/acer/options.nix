@@ -2,6 +2,7 @@
 
 {
 	jcbin = {
+		backlight.enable = true;
 		boomer.enable = true;
 		rebuild-system.enable = true;
 	};
