@@ -146,7 +146,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		inherit openFirewall;
 
 		group = serv-group;
-		data-root = data-dir;
+		config-root = config-dir;
 		proxy = {
 			enable = true;
 			host = "quiss.server.local";

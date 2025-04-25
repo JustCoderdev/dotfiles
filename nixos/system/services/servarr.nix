@@ -32,7 +32,7 @@ in
 			{
 				inherit (cfg) openFirewall group;
 				inherit (cfg.apps."${service}") enable;
-				dataDir = cfg.data-root + "/${service}";
+				dataDir = cfg.config-root + "/${service}";
 			}
 		);
 	in
@@ -165,7 +165,7 @@ in
 			default = "maid";
 		};
 
-		data-root = lib.mkOption {
+		config-root = lib.mkOption {
 			type = lib.types.str;
 			description = "Data root";
 		};
