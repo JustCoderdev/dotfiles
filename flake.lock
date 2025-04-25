@@ -292,7 +292,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-yVoxjlfwRPpV6DMPBixmfWiuXRAbCXkY5vOxodPr0eY=",
+        "narHash": "sha256-hcnXpjVxgCE9V86AD09LPGoMRn2cMOwrriNernj9qtI=",
         "path": "./bin",
         "type": "path"
       },

@@ -177,8 +177,8 @@ if [[ "${exit_code}" == 0 ]]; then
 else
 	echo -e "\033[31mFailed\033[0m\n"
 
-	grep --color -F 'error' .nixos-switch.log
-	grep --color -F 'fail' .nixos-switch.log
+	grep -C 3 --color -F 'error' .nixos-switch.log
+	grep -C 3 --color -F 'fail' .nixos-switch.log
 	# if $had_changes; then
 	# 	git restore --staged .
 	# fi

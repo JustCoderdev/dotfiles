@@ -23,14 +23,14 @@ in
 				'';
 			};
 
-			reverseProxyURL = lib.mkOption {
-				type = lib.types.nullOr lib.types.str;
-				default = null;
-				example = "/prowlarr";
-				description = ''
-					Set the base url for reverse proxy support, default is empty (proxy disabled)
-				'';
-			};
+# 			reverseProxyURL = lib.mkOption {
+# 				type = lib.types.nullOr lib.types.str;
+# 				default = null;
+# 				example = "/prowlarr";
+# 				description = ''
+# 					Set the base url for reverse proxy support, default is empty (proxy disabled)
+# 				'';
+# 			};
 
 			user = lib.mkOption {
 				type = lib.types.str;
@@ -58,24 +58,24 @@ in
 		};
 
 
-		system.activationScripts = lib.mkIf (cfg.reverseProxyURL != null) {
-				"prowlerr_set_proxy_url".text =
-				let
-				config-file = "${cfg.dataDir}/config.xml";
-				escaped-url = lib.strings.escape [ "/" ] cfg.reverseProxyURL;
-			in ''
-if [ -e '${config-file}' ]; then
-	old_proxy=$(${pkgs._9base}/bin/awk -F '[<>]' '/UrlBase/{print $3}' '${config-file}')
+		# system.activationScripts = lib.mkIf (cfg.reverseProxyURL != null) {
+		# 		"prowlerr_set_proxy_url".text =
+		# 		let
+		# 		config-file = "${cfg.dataDir}/config.xml";
+		# 		escaped-url = lib.strings.escape [ "/" ] cfg.reverseProxyURL;
+		# 	in ''
+# if [ -e '${config-file}' ]; then
+	# old_proxy=$(${pkgs._9base}/bin/awk -F '[<>]' '/UrlBase/{print $3}' '${config-file}')
 
-	if [ "''${old_proxy}" != '${cfg.reverseProxyURL}' ]; then
-		echo "INFO: Updating prowlerr proxy url from \"''${old_proxy}\" to \"${cfg.reverseProxyURL}\""
-		${pkgs.gnused}/bin/sed 's/<UrlBase>\(.*\)<\/UrlBase>/<UrlBase>${escaped-url}<\/UrlBase>/' '${config-file}'
-	fi
-else
-	echo "ERROR: Cannot update prowlerr proxy url since the file ${config-file} doesn't exist"
-fi
-'';
-		};
+	# if [ "''${old_proxy}" != '${cfg.reverseProxyURL}' ]; then
+		# echo "INFO: Updating prowlerr proxy url from \"''${old_proxy}\" to \"${cfg.reverseProxyURL}\""
+		# ${pkgs.gnused}/bin/sed 's/<UrlBase>\(.*\)<\/UrlBase>/<UrlBase>${escaped-url}<\/UrlBase>/' '${config-file}'
+	# fi
+# else
+	# echo "ERROR: Cannot update prowlerr proxy url since the file ${config-file} doesn't exist"
+# fi
+# '';
+		# };
 
 		systemd.services.prowlarr = {
 			description = "Prowlarr";

@@ -7,6 +7,7 @@
 		./nixcache.nix
 		./kvm.nix
 		./samba.nix
+		./servarr.nix
 		./virtualbox.nix
 		./webserver.nix
 	];

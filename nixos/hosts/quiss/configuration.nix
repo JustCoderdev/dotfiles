@@ -10,8 +10,8 @@ let
 
 	config-dir = raid-mount + "/.config";
 	log-dir = raid-mount + "/.logs";
-
 	data-dir = raid-mount + "/data";
+
 	game-dir = data-dir + "/game";
 
 	serv-group = "maid";
@@ -21,7 +21,6 @@ in
 {
 	imports = [
 		inputs.nix-minecraft.nixosModules.minecraft-servers
-		../../unofficial/prowlarr.nix
 	# 	../../unofficial/duckdns.nix
 	];
 
@@ -53,16 +52,18 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	};
 
 	systemd.tmpfiles.rules = [
-#		Type Path                       Mode User Group
-		"d   ${config-dir}              0775 root ${serv-group}"
-		"d   ${log-dir}                 0775 root ${serv-group}"
+#		Type Path                    Mode User Group
+		"d   ${config-dir}           0775 root ${serv-group}"
+		"d   ${log-dir}              0775 root ${serv-group}"
+		"d   ${data-dir}             0775 root ${serv-group}"
 
-		"d   ${game-dir}                0775 root ${serv-group}"
-		"d   ${data-dir}/documents      0775 root ${serv-group}"
-		"d   ${data-dir}/downloads      0775 root ${serv-group}"
-		"d   ${data-dir}/media/movie    0775 root ${serv-group}"
-		"d   ${data-dir}/media/serie    0775 root ${serv-group}"
-		"d   ${data-dir}/music          0775 root ${serv-group}"
+		"d   ${game-dir}             0775 root ${serv-group}"
+
+		"d   ${data-dir}/documents   0775 root ${serv-group}"
+		"d   ${data-dir}/downloads   0775 root ${serv-group}"
+		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
+		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
+		"d   ${data-dir}/music       0775 root ${serv-group}"
 	];
 
 	# SAMBA
@@ -73,50 +74,109 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 			create-share = (name: root: owner: { inherit name root owner; });
 		in
 		[
-			(create-share "old-ryuji-root" data-dir settings.username)
-			(create-share     "ryuji-root" data-dir settings.username)
+			(create-share "data" raid-mount settings.username)
+			# (create-share "documents" data-mount settings.username)
+			# (create-share "old-ryuji-root" data-dir settings.username)
+			# (create-share     "ryuji-root" data-dir settings.username)
 		];
 	};
 
-	# services.samba.settings =
-	# let
-	# 	get-share = (
-	# 		name: path:
-	# 		{
-	# 			browseable = "yes";
-
-	# 			path = "${path}";
-	# 			comment = "${name}";
-
-	# 			"admin users" = "${username}";
-	# 			"guest ok" = "no";
-
-	# 			"writeable" = "yes";
-	# 			"read only" = "no";
-
-	# 			"create mask" = "0744";
-	# 			"directory mask" = "0755";
-
-	# 			"force user" = "${username}";
-	# 			"force group" = "users";
-
-	# 			# Apple - Share interop
-	# 			"vfs objects" = "catia fruit streams_xattr";
-	# 			"fruit:resource" = "file";
-	# 			"fruit:metadata" = "netatalk";
-	# 			"fruit:locking" = "netatalk";
-	# 			"fruit:encoding" = "native";
-	# 		}
-	# 	);
-	# in
-	# {
-	# 	old-ryuji-root = get-share "old-ryuji-root" "${data-dir}/old-ryuji-root";
-	# 	ryuji-root     = get-share "ryuji-root"     "${data-dir}/ryuji-root";
-	# };
-
-
 	# dns records
 	networking.hosts."10.0.0.1" = [ "msi.host.local" ];
+
+	# TUNNEL
+
+	# services.cloudflared = {
+	# 	enable = true;
+	# 	tunnels."local" = {
+	# 		credentialsFile = "${cftunnel-cred-path}";
+	# 		default = "http_status:404";
+	# 		# ingress = {
+	# 		# 	"*.domain1.com" = {
+	# 		# 		service = "http://localhost:80";
+	# 		# 	};
+	# 		# };
+	# 	};
+	# };
+
+	# DNS
+
+	# services.duckdns = {
+	# 	enable = true;
+	# 	domains = [ "thefoxburrow" ];
+	# 	tokenFile = duckdns-token-path;
+	# };
+
+	# HOST PROXY
+
+	# networking.firewall.allowedTCPPorts = [ 80 ];
+	services.nginx =
+	{
+		enable = true;
+
+		# src <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
+		virtualHosts."quiss.server.local" =
+		{
+			locations =
+			{
+				"^~ /jellyfin/" = {
+					proxyPass = "http://127.0.0.1:8096/";
+
+					# <https://forum.jellyfin.org/t-nginx-proxy-manager-config?pid=42446#pid42446>
+					extraConfig = ""
+						+ "proxy_set_header Host $host;\n"
+						+ "proxy_set_header X-Real-IP $remote_addr;\n"
+						+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+						+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+						+ "proxy_buffering off;\n";
+				};
+			};
+
+			extraConfig = ""
+				+ "client_max_body_size 20M;\n"
+				+ "add_header X-Content-Type-Options \"nosniff\";\n"
+				+ "";
+		};
+	};
+
+	environment.systemPackages = with pkgs; [ qbittorrent ];
+
+	system.services.servarrs = 
+	{
+		enable = true;
+		inherit openFirewall;
+
+		group = serv-group;
+		data-root = data-dir;
+		proxy = {
+			enable = true;
+			host = "quiss.server.local";
+		};
+
+		apps = {
+			prowlarr.enable = true;
+
+			lidarr.enable = true;
+			radarr.enable = true;
+
+			readarr.enable = true;
+			sonarr.enable = true;
+		};
+	};
+
+	# MEDIA PLAYER
+
+	services.jellyfin = {
+		inherit openFirewall;
+		enable = true;
+
+		dataDir = config-dir + "/jellyfin-data";
+		configDir = config-dir + "/jellyfin-config";
+		logDir = log-dir + "/jellyfin";
+
+		group = serv-group;
+	};
 
 	# MINECRAFT SERVERS
 
@@ -166,182 +226,4 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 			};
 		};
 	};
-
-	# TUNNEL
-
-	# services.cloudflared = {
-	# 	enable = true;
-	# 	tunnels."local" = {
-	# 		credentialsFile = "${cftunnel-cred-path}";
-	# 		default = "http_status:404";
-	# 		# ingress = {
-	# 		# 	"*.domain1.com" = {
-	# 		# 		service = "http://localhost:80";
-	# 		# 	};
-	# 		# };
-	# 	};
-	# };
-
-	# DNS
-
-	# services.duckdns = {
-	# 	enable = true;
-	# 	domains = [ "thefoxburrow" ];
-	# 	tokenFile = duckdns-token-path;
-	# };
-
-	# HOST PROXY
-
-	# networking.firewall.allowedTCPPorts = [ 443 ];
-	# services.nginx = {
-		# enable = true;
-
-		# src <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
-		# virtualHosts."quiss.host.local" = {
-		# 	locations = {
-				# "/prowlerr/".proxyPass = "http://127.0.0.1:9696";
-
-				# "^~ /jellyfin/" = {
-				# 	proxyPass = "http://127.0.0.1:8096/";
-
-				# 	# <https://forum.jellyfin.org/t-nginx-proxy-manager-config?pid=42446#pid42446>
-				# 	extraConfig = ""
-				# 		+ "proxy_set_header Host $host;\n"
-				# 		+ "proxy_set_header X-Real-IP $remote_addr;\n"
-				# 		+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-				# 		+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-				# 		+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-				# 		+ "proxy_buffering off;\n"
-
-				# 		+ "sub_filter '/web/' '/jellyfin/web/';\n"
-				# 		+ "sub_filter '/socket' '/jellyfin/socket';\n"
-				# 		+ "sub_filter '/api/' '/jellyfin/api/';\n"
-				# 		+ "sub_filter '/touchicon' '/jellyfin/web/touchicon'; # Redireccionar iconos\n"
-				# 		+ "sub_filter_once off;\n"
-
-				# 		+ "rewrite /jellyfin/(.*) /$1 break;\n"
-				# 		+ "";
-				# };
-			# };
-
-			# extraConfig = ""
-			# 	+ "client_max_body_size 20M;\n"
-			# 	+ "add_header X-Content-Type-Options \"nosniff\";\n"
-			# 	+ "";
-		# };
-	# };
-
-	# TORRENT TRACKER
-
-	# services.jackett = {
-	# 	package = pkgs-unstable.jackett;
-	# 	inherit openFirewall;
-	# 	enable = true;
-
-	# 	dataDir = config-dir + "/jackett";
-
-	# 	group = serv-group;
-	# };
-
-	# TORRENT TRACKER AND INDEXER
-
-	# unofficial.services.prowlarr = {
-	# 	inherit openFirewall;
-	# 	enable = true;
-
-	# 	reverseProxyURL = "/prowlarr";
-
-	# 	dataDir = config-dir + "/prowlarr";
-
-	# 	group = serv-group;
-	# };
-
-	# MOVIE DOWNLOADER
-
-	# services.radarr = {
-	# 	package = pkgs-unstable.radarr;
-	# 	inherit openFirewall;
-	# 	enable = true;
-
-	# 	dataDir = config-dir + "/radarr";
-
-	# 	group = serv-group;
-	# };
-
-	# SERIE DOWNLOADER
-
-	# services.sonarr = {
-	# 	inherit openFirewall;
-	# 	enable = true;
-
-	# 	dataDir = config-dir + "/sonarr";
-
-	# 	group = serv-group;
-	# };
-
-	# MEDIA PLAYER
-
-	# services.jellyfin = {
-	# 	inherit openFirewall;
-	# 	enable = true;
-
-	# 	dataDir = data-dir + "/jellyfin";
-	# 	configDir = config-dir + "/jellyfin";
-	# 	logDir = log-dir + "/jellyfin";
-
-	# 	group = serv-group;
-	# };
-
-	# Network
-
-#	networking = {
-#		useDHCP = false;
-#
-#		nftables.enable = false;
-#		networkmanager.unmanaged = [ "interface-name:eno1" "interface-name:enp8s2" ];
-#		firewall.trustedInterfaces = [ "enp8s2" ];
-#
-#		interfaces = {
-#			eno1.useDHCP = false;
-#			enp8s0.useDHCP = false;
-#
-#			br0.useDHCP = true;      # eno1   -> gateway
-#			br1 = {
-#				useDHCP = false;
-#				ipv4.addresses = [{  # enp8s2 -> display
-#					address = "192.168.1.25";
-#					prefixLength = 24;
-#				}];
-#			};
-#		};
-#
-#		bridges = {
-#			br0.interfaces = [ "eno1" ];
-#			br1.interfaces = [ "enp8s2" ];
-#		};
-#	};
-
-	# KVM
-
-#	environment.systemPackages = with pkgs; [ qemu ];
-#	programs.virt-manager.enable = true;
-#
-#	users.users.${settings.username}.extraGroups = [ "libvirtd" ];
-#	virtualisation.libvirtd = {
-#		enable = true;
-#		allowedBridges = [ "br0" "br1" ];
-#
-#		qemu = {
-#			package = pkgs.qemu_kvm;
-#			runAsRoot = true;
-#
-#			swtpm.enable = true;
-#			ovmf = {
-#				enable = true;
-#				packages = with pkgs; [
-#					(OVMF.override { secureBoot = true; tpmSupport = true; }).fd
-#				];
-#			};
-#		};
-#	};
 }
