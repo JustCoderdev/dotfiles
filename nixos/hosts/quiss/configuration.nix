@@ -198,12 +198,23 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# BOOK VIEWER
 
-	services.calibre-web = {
-		inherit openFirewall;
-		enable = true;
+	services = 
+	{
+		calibre-server = {
+			inherit openFirewall;
+			enable = true;
 
-		# dataDir = config-dir + "/calibre";
-		group = serv-group;
+			port = 8190;  # 8080
+			group = serv-group;
+		};
+		calibre-web = {
+			inherit openFirewall;
+			enable = true;
+
+			# dataDir = config-dir + "/calibre";
+			listen.port = 8193; # 8083
+			group = serv-group;
+		};
 	};
 
 	# MEDIA PLAYER
