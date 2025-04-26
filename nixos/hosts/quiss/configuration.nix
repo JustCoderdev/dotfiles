@@ -29,6 +29,7 @@ in
 
 	# Create service group
 	users.groups."${serv-group}" = { };
+	users.users.${username}.extraGroups = [ serv-group ];
 
 
 	# MDADM RAID
