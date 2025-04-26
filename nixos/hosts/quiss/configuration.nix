@@ -111,7 +111,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 	# HOST PROXY
 
-	# networking.firewall.allowedTCPPorts = [ 80 ];
+	networking.firewall.allowedTCPPorts = [ 80 ];
 	services.nginx =
 	{
 		enable = true;
@@ -123,10 +123,8 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 			locations =
 			{
-				"^~ /jellyfin" = {
-					proxyPass = "http://127.0.0.1:8096/";
-
-					# <https://forum.jellyfin.org/t-nginx-proxy-manager-config?pid=42446#pid42446>
+				"/jellyfin" = {
+					proxyPass = "http://127.0.0.1:8096";
 					extraConfig = ""
 						+ "proxy_set_header Host $host;\n"
 						+ "proxy_set_header X-Real-IP $remote_addr;\n"
@@ -137,8 +135,19 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 						+ "";
 				};
 
-				"^~ /jellyfin/socket" = {
-					proxyPass = "http://127.0.0.1:8096/";
+				"~ ^/jellyfin/web/$" = {
+					proxyPass = "http://127.0.0.1:8096";
+					extraConfig = ""
+						+ "proxy_set_header Host $host;\n"
+						+ "proxy_set_header X-Real-IP $remote_addr;\n"
+						+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+						+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+						+ "";
+				};
+
+				"/jellyfin/socket" = {
+					proxyPass = "http://127.0.0.1:8096";
 					extraConfig = ""
 						+ "proxy_http_version 1.1;\n"
 						+ "proxy_set_header Upgrade $http_upgrade;\n"
@@ -155,6 +164,8 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 
 			extraConfig = ""
 				+ "client_max_body_size 20M;\n"
+				+ "add_header X-Frame-Options \"SAMEORIGIN\";\n"
+				+ "add_header X-XSS-Protection \"1; mode=block\";\n"
 				+ "add_header X-Content-Type-Options \"nosniff\";\n"
 				+ "";
 		};
