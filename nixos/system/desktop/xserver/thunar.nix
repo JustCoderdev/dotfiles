@@ -19,7 +19,6 @@ in
 		services = {
 			# Thunar extensions
 			tumbler.enable = true; # img thumbnails
-			avahi.enable = true;   # smb share?
 			gvfs.enable = true;    # mount, trash, other
 		};
 
