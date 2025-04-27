@@ -16,7 +16,7 @@ let
 	game-dir = data-dir + "/game";
 
 	serv-group = "maid";
-	openFirewall = true;
+	openFirewall = false;
 in
 
 {
@@ -244,7 +244,7 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 			test-1-12 = {
 				enable = true;
 				package = pkgs.vanillaServers.vanilla-1_12_2;
-				openFirewall = true;
+				inherit openFirewall;
 
 				jvmOpts = "-Xms4092M -Xmx6144M";
 
