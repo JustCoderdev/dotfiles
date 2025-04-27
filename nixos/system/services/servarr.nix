@@ -86,24 +86,23 @@ in
 
 		# PROXY
 
-		services.nginx =
-		let
-			# <https://wiki.servarr.com/en/readarr/installation/reverse-proxy>
-			default-extra-config = ""
-				+"proxy_set_header Host $host;\n"
-				+"proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-				+"proxy_set_header X-Forwarded-Host $host;\n"
-				+"proxy_set_header X-Forwarded-Proto $scheme;\n"
-				+"proxy_redirect off;\n"
-				+"proxy_http_version 1.1;\n"
-				+"proxy_set_header Upgrade $http_upgrade;\n"
-				+"proxy_set_header Connection $http_connection;\n"
-				+ "";
-		in
+		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
-			enable = cfg.proxy.enable;
-
+			enable = true;
 			virtualHosts."${cfg.proxy.host}" =
+			let
+				# <https://wiki.servarr.com/en/readarr/installation/reverse-proxy>
+				default-extra-config = ""
+					+"proxy_set_header Host $host;\n"
+					+"proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+					+"proxy_set_header X-Forwarded-Host $host;\n"
+					+"proxy_set_header X-Forwarded-Proto $scheme;\n"
+					+"proxy_redirect off;\n"
+					+"proxy_http_version 1.1;\n"
+					+"proxy_set_header Upgrade $http_upgrade;\n"
+					+"proxy_set_header Connection $http_connection;\n"
+					+ "";
+			in
 			{
 				locations = { }
 				//

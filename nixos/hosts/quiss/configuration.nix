@@ -3,6 +3,7 @@
 let
 	inherit (settings) dotfiles_path username;
 	cftunnel-cred-path = dotfiles_path + "/nixos/secrets/cloudflare.cred";
+	cfdomain = "foxburrow.org";
 
 	raid-mount = "/mnt/md0";
 	config-dir = raid-mount + "/.config";
@@ -11,11 +12,11 @@ let
 	backup-dir    = data-dir + "/.backup";
 	game-dir      = data-dir + "/game";
 
-	openFirewall = false;
+	openFirewall = true;
 	serv-group = "maid";
 	proxy = {
-		enable = true;
-		host = "quiss.server.local";
+		enable = false;
+		host = cfdomain;
 	};
 in
 
@@ -27,18 +28,46 @@ in
 
 	# TUNNEL
 
-	# services.cloudflared = {
-	# 	enable = true;
-	# 	tunnels."local" = {
-	# 		credentialsFile = "${cftunnel-cred-path}";
-	# 		default = "http_status:404";
-	# 		# ingress = {
-	# 		# 	"*.domain1.com" = {
-	# 		# 		service = "http://localhost:80";
-	# 		# 	};
-	# 		# };
-	# 	};
-	# };
+	services.cloudflared = {
+		enable = true;
+		tunnels."home" =
+		let
+			services =
+			[
+				# { name =      "ssh";  port = 22;   }
+				{ name =      "www";  port = 80;   }
+				# { name =    "samba";  port = 443;  }
+
+				# { name = "jellyfin";  port = 8096; }
+				# { name =   "deluge";  port = 8112; }
+				# { name = "prowlarr";  port = 9696; }
+
+				# { name =   "radarr";  port = 7878; }
+				# { name =   "lidarr";  port = 8686; }
+				# { name =  "readarr";  port = 8787; }
+				# { name =   "sonarr";  port = 8989; }
+			];
+		in
+		{
+			credentialsFile = "${cftunnel-cred-path}";
+			default = "http_status:404";
+			ingress = (
+				(
+					builtins.listToAttrs (
+						builtins.map (
+							{ name, port }:
+							{
+								name  = "${name}.${cfdomain}";
+								value = "http://127.0.0.1:${toString port}";
+							}
+						) services
+					)
+				)
+				//
+				{ "*" = "http_status:404"; }
+			);
+		};
+	};
 
 	# ------------------------------------------------------------ #
 
@@ -74,19 +103,13 @@ in
 		(create-share "data" raid-mount settings.username)
 	];
 
-	# PROXY - homepage
+	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
 	networking.firewall.allowedTCPPorts = [ 80 ];
 	services.nginx = {
-		inherit (proxy) enable;
-		virtualHosts."quiss.server.local" = {
-			root = data-dir + "/homepage";
-			extraConfig = ""
-				+ "proxy_intercept_errors on;\n"
-				+ "error_page 400 500 404 /;\n"
-				+ "";
-		};
+		enable = true;
+		virtualHosts."www.${cfdomain}".root = data-dir + "/homepage";
 	};
 
 	# ARR Stack
