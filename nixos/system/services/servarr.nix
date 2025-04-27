@@ -56,7 +56,9 @@ in
 			in
 			(deluge-options)
 			// {
-				# package = pkgs-unstable.deluge; # doesn't include fixed version
+				# hack until baseurl bug gets fixed
+				openFirewall = lib.mkForce true;
+
 				declarative = true;
 				authFile = "${deluge-options.dataDir}/auth";
 				config = {
@@ -72,9 +74,11 @@ in
 
 				web = {
 					enable = true;
-					# inherit (cfg) openFirewall;
-					openFirewall = true; # otherwise inaccessible via nginx
 					port = 8112;
+
+					# hack until baseurl bug gets fixed
+					openFirewall = true;
+					# inherit (cfg) openFirewall;
 				};
 			};
 		};
