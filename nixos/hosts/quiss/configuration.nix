@@ -10,7 +10,7 @@ let
 	downloads-dir = data-dir + "/downloads";
 	game-dir      = data-dir + "/game";
 
-	openFirewall = false;
+	openFirewall = true;
 	serv-group = "maid";
 	proxy = {
 		enable = true;
@@ -78,7 +78,13 @@ in
 	networking.firewall.allowedTCPPorts = [ 80 ];
 	services.nginx = {
 		inherit (proxy) enable;
-		virtualHosts."quiss.server.local".root = data-dir + "/homepage";
+		virtualHosts."quiss.server.local".locations."/" = {
+			root = data-dir + "/homepage";
+			extraConfig = ""
+				+ "proxy_intercept_errors on;\n"
+				+ "error_page 400 500 404 /;\n"
+				+ "";
+		};
 	};
 
 	# ARR Stack
