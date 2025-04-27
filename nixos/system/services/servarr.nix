@@ -65,6 +65,7 @@ in
 					"download_location" = cfg.shared-downloads-dir;
 					"plugins_location" = "${deluge-options.dataDir}/plugins";
 					"enabled_plugins" = [ "Label" "Stats" ];
+					"allow_remote" = true;
 
 					"max_active_seeding" = 0;
 					"max_active_downloading" = 10;
