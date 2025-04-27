@@ -31,41 +31,24 @@ in
 	services.cloudflared = {
 		enable = true;
 		tunnels."home" =
-		let
-			services =
-			[
-				# { name =      "ssh";  port = 22;   }
-				{ name =      "www";  port = 80;   }
-				# { name =    "samba";  port = 443;  }
-
-				# { name = "jellyfin";  port = 8096; }
-				# { name =   "deluge";  port = 8112; }
-				# { name = "prowlarr";  port = 9696; }
-
-				# { name =   "radarr";  port = 7878; }
-				# { name =   "lidarr";  port = 8686; }
-				# { name =  "readarr";  port = 8787; }
-				# { name =   "sonarr";  port = 8989; }
-			];
-		in
 		{
 			credentialsFile = "${cftunnel-cred-path}";
 			default = "http_status:404";
-			ingress = (
-				(
-					builtins.listToAttrs (
-						builtins.map (
-							{ name, port }:
-							{
-								name  = "${name}.${cfdomain}";
-								value = "http://127.0.0.1:${toString port}";
-							}
-						) services
-					)
-				)
-				//
-				{ "*" = "http_status:404"; }
-			);
+			# ingress = 
+			# {
+			# 	  "ssh.foxburrow.org" = "http://127.0.0.1:22";
+			# 	  "www.foxburrow.org" =  "ssh://127.0.0.1:80";
+			# 	# "samba.foxburrow.org" = "tcp://127.0.0.1:443";
+
+			# 	# "jellyfin.foxburrow.org" = "http://127.0.0.1:8096";
+			# 	#   "deluge.foxburrow.org" = "http://127.0.0.1:8112";
+			# 	# "prowlarr.foxburrow.org" = "http://127.0.0.1:9696";
+
+			# 	#  "radarr.foxburrow.org" = "http://127.0.0.1:7878";
+			# 	#  "lidarr.foxburrow.org" = "http://127.0.0.1:8686";
+			# 	# "readarr.foxburrow.org" = "http://127.0.0.1:8787";
+			# 	#  "sonarr.foxburrow.org" = "http://127.0.0.1:8989";
+			# };
 		};
 	};
 
