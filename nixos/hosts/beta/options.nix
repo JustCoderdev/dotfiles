@@ -4,7 +4,6 @@
 	jcbin.rebuild-system.enable = true;
 
 	system.services = {
-		nixcache.instance-host = "msi.host.local";
 		nixbuilder.server = {
 			enable = true;
 			maxJobs = 6;

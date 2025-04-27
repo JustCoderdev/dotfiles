@@ -6,7 +6,6 @@
 	system.services = {
 		samba.enable = true;
 		webserver.enable = false;
-		nixcache.instance-host = "msi.host.local";
 		nixbuilder = {
 			server = {
 				enable = true;

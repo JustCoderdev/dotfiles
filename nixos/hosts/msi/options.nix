@@ -45,7 +45,6 @@
 				shares.user.enable = true;
 			};
 			webserver.enable = true;
-			nixcache.enable = true;
 			nixbuilder = {
 				server = {
 					enable = true;

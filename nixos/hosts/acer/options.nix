@@ -36,7 +36,6 @@
 				shares.user.enable = true;
 			};
 			webserver.enable = true;
-			nixcache.instance-host = "msi.host.local";
 			nixbuilder.client.builders = [
 				{
 					hostName = "msi.host.local";

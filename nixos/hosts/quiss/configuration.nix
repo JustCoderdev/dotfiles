@@ -8,9 +8,10 @@ let
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
 	downloads-dir = data-dir + "/downloads";
+	backup-dir    = data-dir + "/.backup";
 	game-dir      = data-dir + "/game";
 
-	openFirewall = true;
+	openFirewall = false;
 	serv-group = "maid";
 	proxy = {
 		enable = true;
@@ -52,6 +53,7 @@ in
 
 		"d   ${game-dir}             0775 root ${serv-group}"
 		"d   ${downloads-dir}        0775 root ${serv-group}"
+		"d   ${backup-dir}           0775 root ${serv-group}"
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
 
 		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
@@ -78,7 +80,7 @@ in
 	networking.firewall.allowedTCPPorts = [ 80 ];
 	services.nginx = {
 		inherit (proxy) enable;
-		virtualHosts."quiss.server.local".locations."/" = {
+		virtualHosts."quiss.server.local" = {
 			root = data-dir + "/homepage";
 			extraConfig = ""
 				+ "proxy_intercept_errors on;\n"
