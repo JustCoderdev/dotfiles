@@ -116,22 +116,7 @@ in
 								extraConfig = default-extra-config;
 							};
 						}
-					) (
-						builtins.filter ({ name, ... }: cfg.apps."${name}".enable) services
-					)
-					# ++
-					# builtins.map (
-					# 	{ name, port }:
-					# 	{
-					# 		name = "^~ /${name}/api";
-					# 		value = {
-					# 			proxyPass = "http://127.0.0.1:${toString port}";
-					# 			extraConfig = "auth_basic off;\n";
-					# 		};
-					# 	}
-					# ) (
-					# 	builtins.filter ({ name, ... }: cfg.apps."${name}".enable) services
-					# )
+					) (builtins.filter ({ name, ... }: cfg.apps."${name}".enable) services)
 				)
 				//
 				{
@@ -139,11 +124,6 @@ in
 						proxyPass = "http://127.0.0.1:9696";
 						extraConfig = default-extra-config;
 					};
-
-					# "~ /prowlarr(/[0-9]+)?/api" = {
-					# 	proxyPass = "http://127.0.0.1:9696";
-					# 	extraConfig = "auth_basic off;\n";
-					# };
 
 					# "/deluge" = {
 					# 	proxyPass = "http://127.0.0.1:8112";
@@ -159,8 +139,9 @@ in
 					# 		+ "proxy_hide_header Vary;\n"
 					# 		+ "proxy_busy_buffers_size 64k;\n"
 					# 		+ "proxy_temp_file_write_size 64k;\n"
-					# 		+ "proxy_set_header Accept-Encoding '';\n"
 					# 		+ "proxy_ignore_headers Cache-Control Expires;\n"
+
+					# 		+ "proxy_set_header Accept-Encoding '';\n"
 					# 		+ "proxy_set_header Referer $http_referer;\n"
 					# 		+ "proxy_set_header Host $host;\n"
 					# 		+ "proxy_set_header Cookie $http_cookie;\n"
@@ -172,6 +153,7 @@ in
 					# 		+ "proxy_set_header X-Forwarded-Ssl on;\n"
 					# 		+ "proxy_set_header X-Forwarded-Proto https;\n"
 					# 		+ "proxy_set_header Authorization '';\n"
+
 					# 		+ "proxy_buffering off;\n"
 					# 		+ "proxy_redirect off;\n"
 					# 		+ "";
