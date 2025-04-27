@@ -12,6 +12,7 @@ let
 	log-dir = raid-mount + "/.logs";
 	data-dir = raid-mount + "/data";
 
+	downloads-dir = data-dir + "/downloads";
 	game-dir = data-dir + "/game";
 
 	serv-group = "maid";
@@ -59,9 +60,9 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		"d   ${data-dir}             0775 root ${serv-group}"
 
 		"d   ${game-dir}             0775 root ${serv-group}"
+		"d   ${downloads-dir}        0775 root ${serv-group}"
 
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
-		"d   ${data-dir}/downloads   0775 root ${serv-group}"
 
 		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
 		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
@@ -178,7 +179,10 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		inherit openFirewall;
 
 		group = serv-group;
-		config-root = config-dir;
+
+		config-root-dir = config-dir;
+		shared-downloads-dir = downloads-dir;
+
 		proxy = {
 			enable = true;
 			host = "quiss.server.local";

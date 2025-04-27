@@ -32,7 +32,7 @@ in
 			{
 				inherit (cfg) openFirewall group;
 				inherit (cfg.apps."${service}") enable;
-				dataDir = cfg.config-root + "/${service}";
+				dataDir = cfg.config-root-dir + "/${service}";
 			}
 		);
 	in
@@ -50,7 +50,26 @@ in
 			readarr = get-service-options "readarr"; # Books
 			sonarr  = get-service-options "sonarr";  # Serie
 
-			deluge = (get-service-options "deluge") // {
+			deluge =
+			let
+				deluge-options = get-service-options "deluge";
+			in
+			(deluge-options)
+			// {
+				package = pkgs-unstable.deluge;
+				declarative = true;
+				authFile = "${deluge-options.dataDir}/auth";
+				config = {
+					"download_location" = cfg.shared-downloads-dir;
+					"plugins_location" = "${deluge-options.dataDir}/plugins";
+					"enabled_plugins" = [ "Label" "Stats" ];
+
+					"max_active_seeding" = 0;
+					"max_active_downloading" = 10;
+					"max_active_limit" = 15;
+					"max_connections_global" = 100;
+				};
+
 				web = {
 					enable = true;
 					inherit (cfg) openFirewall;
@@ -205,9 +224,14 @@ in
 			default = "maid";
 		};
 
-		config-root = lib.mkOption {
+		shared-downloads-dir = lib.mkOption {
 			type = lib.types.str;
-			description = "Data root";
+			description = "downloads directory path";
+		};
+
+		config-root-dir = lib.mkOption {
+			type = lib.types.str;
+			description = "Root directory for application data";
 		};
 
 		apps = {
