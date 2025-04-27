@@ -57,7 +57,6 @@ in
 			};
 		};
 
-
 		# system.activationScripts = lib.mkIf (cfg.reverseProxyURL != null) {
 		# 		"prowlerr_set_proxy_url".text =
 		# 		let

@@ -56,7 +56,7 @@ in
 			in
 			(deluge-options)
 			// {
-				package = pkgs-unstable.deluge;
+				# package = pkgs-unstable.deluge; # doesn't include fixed version
 				declarative = true;
 				authFile = "${deluge-options.dataDir}/auth";
 				config = {
@@ -72,7 +72,8 @@ in
 
 				web = {
 					enable = true;
-					inherit (cfg) openFirewall;
+					# inherit (cfg) openFirewall;
+					openFirewall = true; # otherwise inaccessible via nginx
 					port = 8112;
 				};
 			};
@@ -140,37 +141,37 @@ in
 					# 	extraConfig = "auth_basic off;\n";
 					# };
 
-					"/deluge" = {
-						proxyPass = "http://127.0.0.1:8112";
-						extraConfig = ""
-							+ "proxy_set_header X-Deluge-Base \"/deluge/\";\n"
+					# "/deluge" = {
+					# 	proxyPass = "http://127.0.0.1:8112";
+					# 	extraConfig = ""
+					# 		+ "proxy_set_header X-Deluge-Base \"/deluge/\";\n"
 
-							+ "proxy_connect_timeout 1s;\n"
-							+ "proxy_send_timeout 600;\n"
-							+ "proxy_read_timeout 36000s;\n"
-							+ "proxy_buffer_size 64k;\n"
-							+ "proxy_buffers 16 32k;\n"
-							+ "proxy_pass_header Set-Cookie;\n"
-							+ "proxy_hide_header Vary;\n"
-							+ "proxy_busy_buffers_size 64k;\n"
-							+ "proxy_temp_file_write_size 64k;\n"
-							+ "proxy_set_header Accept-Encoding '';\n"
-							+ "proxy_ignore_headers Cache-Control Expires;\n"
-							+ "proxy_set_header Referer $http_referer;\n"
-							+ "proxy_set_header Host $host;\n"
-							+ "proxy_set_header Cookie $http_cookie;\n"
-							+ "proxy_set_header X-Real-IP $remote_addr;\n"
-							+ "proxy_set_header X-Forwarded-Host $host;\n"
-							+ "proxy_set_header X-Forwarded-Server $host;\n"
-							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-							+ "proxy_set_header X-Forwarded-Port '443';\n"
-							+ "proxy_set_header X-Forwarded-Ssl on;\n"
-							+ "proxy_set_header X-Forwarded-Proto https;\n"
-							+ "proxy_set_header Authorization '';\n"
-							+ "proxy_buffering off;\n"
-							+ "proxy_redirect off;\n"
-							+ "";
-					};
+					# 		+ "proxy_connect_timeout 1s;\n"
+					# 		+ "proxy_send_timeout 600;\n"
+					# 		+ "proxy_read_timeout 36000s;\n"
+					# 		+ "proxy_buffer_size 64k;\n"
+					# 		+ "proxy_buffers 16 32k;\n"
+					# 		+ "proxy_pass_header Set-Cookie;\n"
+					# 		+ "proxy_hide_header Vary;\n"
+					# 		+ "proxy_busy_buffers_size 64k;\n"
+					# 		+ "proxy_temp_file_write_size 64k;\n"
+					# 		+ "proxy_set_header Accept-Encoding '';\n"
+					# 		+ "proxy_ignore_headers Cache-Control Expires;\n"
+					# 		+ "proxy_set_header Referer $http_referer;\n"
+					# 		+ "proxy_set_header Host $host;\n"
+					# 		+ "proxy_set_header Cookie $http_cookie;\n"
+					# 		+ "proxy_set_header X-Real-IP $remote_addr;\n"
+					# 		+ "proxy_set_header X-Forwarded-Host $host;\n"
+					# 		+ "proxy_set_header X-Forwarded-Server $host;\n"
+					# 		+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+					# 		+ "proxy_set_header X-Forwarded-Port '443';\n"
+					# 		+ "proxy_set_header X-Forwarded-Ssl on;\n"
+					# 		+ "proxy_set_header X-Forwarded-Proto https;\n"
+					# 		+ "proxy_set_header Authorization '';\n"
+					# 		+ "proxy_buffering off;\n"
+					# 		+ "proxy_redirect off;\n"
+					# 		+ "";
+					# };
 				};
 
 				extraConfig = ""
