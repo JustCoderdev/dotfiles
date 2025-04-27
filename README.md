@@ -204,6 +204,17 @@ cd ${DOT_FILES}/nixos/secrets
 echo "xyz" > duckdns.token
 ```
 
+- Cloudflared
+
+```
+cd ${DOT_FILES}/nixos/secrets/cloudflare
+
+nix-shell -p cloudflared --command 'cloudflared login'
+mv /home/${USER}/.cloudflare/cert.pem cert.pem
+
+cloudflared tunnel --origincert "$(pwd)/cert.pem" create home
+```
+
 - MDADM discord hook
 
 ```

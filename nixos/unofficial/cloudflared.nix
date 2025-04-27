@@ -314,7 +314,7 @@ in
         after = [ "cloudflared-tunnel-${name}.service" ];
         unitConfig.StopWhenUnneeded = true;
       }
-    ) config.services.cloudflared.tunnels;
+    ) config.unofficial.services.cloudflared.tunnels;
 
     systemd.services = lib.mapAttrs' (
       name: tunnel:
@@ -381,7 +381,7 @@ in
 
         environment.TUNNEL_ORIGIN_CERT = lib.mkIf (certFile != null) ''%d/cert.pem'';
       }
-    ) config.services.cloudflared.tunnels;
+    ) config.unofficial.services.cloudflared.tunnels;
   };
 
   meta.maintainers = with lib.maintainers; [

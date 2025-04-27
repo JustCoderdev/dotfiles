@@ -1,8 +1,11 @@
 { pkgs-unstable, pkgs, settings, inputs, ... }:
 
 let
+	unstable-path = inputs.nixpkgs-unstable.outPath;
+
 	inherit (settings) dotfiles_path username;
-	cftunnel-cred-path = dotfiles_path + "/nixos/secrets/cloudflare.cred";
+	cftunnel-cred-path = dotfiles_path + "/secrets/cloudflare/722afdef-b269-406d-9b56-66a36a01120e.json";
+	cftunnel-cert-path = dotfiles_path + "/secrets/cloudflare/cert.pem";
 	cfdomain = "foxburrow.org";
 
 	raid-mount = "/mnt/md0";
@@ -21,34 +24,44 @@ let
 in
 
 {
-	# imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+	disabledModules = [ "services/networking/cloudflared.nix" ];
+	imports = [ 
+		# "${unstable-path}/nixos/modules/services/networking/cloudflared.nix"
+		../../unofficial/cloudflared.nix
+	];
+
 	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+	# inputs.nix-minecraft.nixosModules.minecraft-servers
 
 	# ------------------------------------------------------------ #
 
 	# TUNNEL
 
-	services.cloudflared = {
+	unofficial.services.cloudflared =
+	{
 		enable = true;
+		certificateFile = "${cftunnel-cert-path}";
+
 		tunnels."home" =
 		{
 			credentialsFile = "${cftunnel-cred-path}";
 			default = "http_status:404";
-			# ingress = 
-			# {
-			# 	  "ssh.foxburrow.org" = "http://127.0.0.1:22";
-			# 	  "www.foxburrow.org" =  "ssh://127.0.0.1:80";
-			# 	# "samba.foxburrow.org" = "tcp://127.0.0.1:443";
+			ingress = 
+			{
+				  "ssh.foxburrow.org".service =  "ssh://127.0.0.1:22";
+				  "www.foxburrow.org".service = "http://127.0.0.1:80";
+				# "samba.foxburrow.org".service =  "tcp://127.0.0.1:443";
 
-			# 	# "jellyfin.foxburrow.org" = "http://127.0.0.1:8096";
-			# 	#   "deluge.foxburrow.org" = "http://127.0.0.1:8112";
-			# 	# "prowlarr.foxburrow.org" = "http://127.0.0.1:9696";
+				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
+				#   "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
+				# "prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
 
-			# 	#  "radarr.foxburrow.org" = "http://127.0.0.1:7878";
-			# 	#  "lidarr.foxburrow.org" = "http://127.0.0.1:8686";
-			# 	# "readarr.foxburrow.org" = "http://127.0.0.1:8787";
-			# 	#  "sonarr.foxburrow.org" = "http://127.0.0.1:8989";
-			# };
+				#  "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
+				"home-assistant.foxburrow.org".service =  "http://192.168.7.16:8123";
+				#  "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
+				# "readarr.foxburrow.org".service = "http://127.0.0.1:8787";
+				#  "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
+			};
 		};
 	};
 
