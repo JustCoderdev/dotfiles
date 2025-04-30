@@ -10,6 +10,7 @@
 			"nvidia-settings"
 
 			"helvetica-neue-lt-std"
+			"cloudflare-warp"
 			"apple-fonts"
 
 			"steam"

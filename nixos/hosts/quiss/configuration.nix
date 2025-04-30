@@ -51,28 +51,30 @@ in
 			default = "http_status:404";
 			ingress = 
 			{
-				  "ssh.foxburrow.org".service =  "ssh://127.0.0.1:22";
-				  # "www.foxburrow.org".service = "http://127.0.0.1:80";
-				 "home.foxburrow.org".service = "http://127.0.0.1:80";
+				  # "ssh.foxburrow.org".service =  "ssh://127.0.0.1:22";
 				# "samba.foxburrow.org".service =  "tcp://127.0.0.1:443";
 
-				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
-				#   "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
-				# "prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
+				  "www.foxburrow.org".service = "http://127.0.0.1:80";
+				 "home.foxburrow.org".service = "http://127.0.0.1:80";
 
-				#  "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
-				#  "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
-				# "readarr.foxburrow.org".service = "http://127.0.0.1:8787";
-				#  "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
+				# "ilovu.foxburrow.org".service = "http://127.0.0.1:6003";
+
+				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
+				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
+				"prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
+
+				 "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
+				 "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
+				"readarr.foxburrow.org".service = "http://127.0.0.1:8787";
+				 "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
 			};
 		};
 	};
 
-	programs.ssh.extraConfig = ''
-Host ssh.foxburrow.org
-ProxyCommand /usr/bin/env cloudflared access ssh --hostname %h
-'';
-
+	services.cloudflare-warp = {
+		enable = true;
+		openFirewall = true;
+	};
 
 	# ------------------------------------------------------------ #
 
