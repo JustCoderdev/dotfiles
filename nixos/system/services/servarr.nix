@@ -89,6 +89,8 @@ in
 		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
 			enable = true;
+			clientMaxBodySize = "20M";
+
 			virtualHosts."${cfg.proxy.host}" =
 			let
 				# <https://wiki.servarr.com/en/readarr/installation/reverse-proxy>

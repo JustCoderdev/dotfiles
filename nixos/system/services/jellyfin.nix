@@ -19,6 +19,8 @@ in
 		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
 			enable = true;
+			clientMaxBodySize = "20M";
+
 			virtualHosts."${cfg.proxy.host}" =
 			{
 				locations =
@@ -63,7 +65,6 @@ in
 				};
 
 				extraConfig = ""
-					+ "client_max_body_size 20M;\n"
 					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
 					+ "add_header X-XSS-Protection \"1; mode=block\";\n"
 					+ "add_header X-Content-Type-Options \"nosniff\";\n"

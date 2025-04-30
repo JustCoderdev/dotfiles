@@ -19,7 +19,7 @@ let
 	serv-group = "maid";
 	proxy = {
 		enable = false;
-		host = cfdomain;
+		host = "home." + cfdomain;
 	};
 in
 
@@ -37,6 +37,9 @@ in
 
 	# TUNNEL
 
+	# Configure DNS on cloudflare interface
+	# <https://blog.cloudflare.com/argo-tunnels-that-live-forever/>
+	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/>
 	unofficial.services.cloudflared =
 	{
 		enable = true;
@@ -49,7 +52,8 @@ in
 			ingress = 
 			{
 				  "ssh.foxburrow.org".service =  "ssh://127.0.0.1:22";
-				  "www.foxburrow.org".service = "http://127.0.0.1:80";
+				  # "www.foxburrow.org".service = "http://127.0.0.1:80";
+				 "home.foxburrow.org".service = "http://127.0.0.1:80";
 				# "samba.foxburrow.org".service =  "tcp://127.0.0.1:443";
 
 				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
@@ -57,7 +61,6 @@ in
 				# "prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
 
 				#  "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
-				"home-assistant.foxburrow.org".service =  "http://192.168.7.16:8123";
 				#  "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
 				# "readarr.foxburrow.org".service = "http://127.0.0.1:8787";
 				#  "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
@@ -103,9 +106,18 @@ in
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
 	networking.firewall.allowedTCPPorts = [ 80 ];
+	security.acme = {
+		acceptTerms = true;
+		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
+	};
 	services.nginx = {
 		enable = true;
-		virtualHosts."www.${cfdomain}".root = data-dir + "/homepage";
+		virtualHosts."${proxy.host}" =
+		{
+			# forceSSL = true;
+			# enableACME = true;
+			locations."/".root = data-dir + "/homepage";
+		};
 	};
 
 	# ARR Stack
