@@ -17,6 +17,8 @@ in
 		};
 	};
 
+	# ------------------------------------------------------------ #
+
 	options.common.core.nvidia = 
 	{
 		enable = lib.mkOption {
