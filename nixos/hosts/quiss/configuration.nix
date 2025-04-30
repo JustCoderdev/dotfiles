@@ -71,13 +71,6 @@ in
 		};
 	};
 
-	# Warp
-	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/>
-	services.cloudflare-warp = {
-		enable = true;
-		openFirewall = true;
-	};
-
 	# ------------------------------------------------------------ #
 
 	# Create service group
@@ -126,8 +119,7 @@ in
 		{
 			# forceSSL = true;
 			# enableACME = true;
-			# locations."/".
-			root = data-dir + "/homepage";
+			locations."/".root = data-dir + "/homepage";
 		};
 	};
 
