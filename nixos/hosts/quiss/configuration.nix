@@ -71,6 +71,8 @@ in
 		};
 	};
 
+	# Warp
+	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/>
 	services.cloudflare-warp = {
 		enable = true;
 		openFirewall = true;
@@ -114,17 +116,18 @@ in
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
 	networking.firewall.allowedTCPPorts = [ 80 ];
-	security.acme = {
-		acceptTerms = true;
-		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
-	};
+	# security.acme = {
+	# 	acceptTerms = true;
+	# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
+	# };
 	services.nginx = {
 		enable = true;
 		virtualHosts."${proxy.host}" =
 		{
 			# forceSSL = true;
 			# enableACME = true;
-			locations."/".root = data-dir + "/homepage";
+			# locations."/".
+			root = data-dir + "/homepage";
 		};
 	};
 
