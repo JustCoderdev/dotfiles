@@ -68,6 +68,12 @@ in
 		};
 	};
 
+	programs.ssh.extraConfig = ''
+Host ssh.foxburrow.org
+ProxyCommand /usr/bin/env cloudflared access ssh --hostname %h
+'';
+
+
 	# ------------------------------------------------------------ #
 
 	# Create service group
