@@ -210,7 +210,7 @@ echo "xyz" > duckdns.token
 cd ${DOT_FILES}/nixos/secrets/cloudflare
 
 nix-shell -p cloudflared --command 'cloudflared login'
-mv /home/${USER}/.cloudflare/cert.pem cert.pem
+mv /home/${USER}/.cloudflared/cert.pem .
 
 cloudflared tunnel --origincert "$(pwd)/cert.pem" create home
 ```
