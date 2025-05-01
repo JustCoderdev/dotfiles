@@ -19,6 +19,7 @@
 		./shell.nix
 		./ssh.nix
 		./sudo.nix
+		./wakeonlan.nix
 	];
 
 	# Core packages
