@@ -6,8 +6,9 @@
 	jcbin = {
 		backlight.enable = false;
 		boomer.enable = false;
-		rebuild-system.enable = false;
+		eep.enable = false;
 		mount-configs.enable = false;
+		rebuild-system.enable = false;
 		umount-configs.enable = false;
 	};
 

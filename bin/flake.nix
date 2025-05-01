@@ -10,17 +10,18 @@
 	
 	outputs = { self, nixpkgs, ... }:
 	let
-		programs = [ "backlight" "boomer" ];
+		programs = [
+			{ name = "boomer"; }
+			{ name = "backlight"; requiresSudo = true; }
+		];
 		bash-scripts = [
-			{ name = "mount-configs";  }
+			{ name = "mount-configs"; }
 			{ name = "umount-configs"; }
-			{
-				name = "rebuild-system";
-				requiresSudo = true;
-				# getInputs = (pkgs: with pkgs; [ vim git ]);
-			}
+			{ name = "rebuild-system";  requiresSudo = true; }
+			{ name = "eep";             requiresSudo = true; }
 		];
 
+		packageProgram = (name: pkgs: pkgs.callPackage ./${name}/default.nix { });
 		packageShellScript = (
 			name: getInputs: pkgs:
 			pkgs.writeShellApplication {
@@ -29,49 +30,57 @@
 				text = (builtins.readFile ./bash-scripts/${name}.sh);
 			}
 		);
-		generateBashScriptModule = (
-			{ name, getInputs ? (pkgs: []), requiresSudo ? false }: (
-				{ config, lib, pkgs, ... }:
-				let
-					cfg = config.jcbin.${name};
-					package = packageShellScript name getInputs pkgs;
-				in
+		generateModule = (
+			name: requiresSudo: getPackage:
+			{ config, lib, pkgs, ... }:
+			let
+				cfg = config.jcbin.${name};
+				pkg = getPackage pkgs;
+			in
+			{
+				config = lib.mkIf cfg.enable
 				{
-					config = lib.mkIf cfg.enable {
-						security.sudo = lib.mkIf requiresSudo {
-							extraRules = [{
-								commands = [{
-									command = "${package}/bin/rebuild-system";
-									options = [ "NOPASSWD" ];
-								}];
-								groups = [ "wheel" ];
+					environment.systemPackages =  [ pkg ];
+					security.sudo = lib.mkIf requiresSudo {
+						extraRules = [{
+							commands = [{
+								command = "${pkg}/bin/${name}";
+								options = [ "NOPASSWD" ];
 							}];
-						};
-
-						environment.systemPackages =  [ package ];
+							groups = [ "wheel" ];
+						}];
 					};
+				};
 
-					options.jcbin.${name}.enable = lib.mkEnableOption "Add ${name} to PATH";
-				}
-			)
+				options.jcbin.${name}.enable = lib.mkEnableOption "Add ${name} to PATH";
+			}
+		);
+		generateBashScriptModule = (
+			{ name, getInputs ? (pkgs: []), requiresSudo ? false }:
+			generateModule name requiresSudo (pkgs: packageShellScript name getInputs pkgs)
+		);
+		generateProgramModule = (
+			{ name, requiresSudo ? false }:
+			generateModule name requiresSudo (pkgs: packageProgram name pkgs)
 		);
 
 		lib = nixpkgs.lib;
 		forEach = lib.lists.forEach;
 		genAttrs = lib.attrsets.genAttrs;
 		attrValues = lib.attrsets.attrValues;
+		nameValuePair = lib.attrsets.nameValuePair;
 
-		modules = (
-			genAttrs programs (p: import ./${p}/default.nix)
-		)
+		modules = { }
 		//
 		builtins.listToAttrs (
+			forEach programs (
+				pdata:
+				nameValuePair pdata.name (generateProgramModule pdata)
+			)
+			++
 			forEach bash-scripts (
 				sdata:
-				{
-					inherit (sdata) name;
-					value = generateBashScriptModule sdata;
-				}
+				nameValuePair sdata.name (generateBashScriptModule sdata)
 			)
 		);
 
@@ -80,23 +89,24 @@
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
-		nixosModules = modules // {
+		nixosModules = (modules) // {
 			all = ( { ... }: { imports = attrValues modules; } );
 		};
 
 		packages = forAllSystems (
-			system: let pkgs = nixpkgsFor.${system}; in
+			system:
+			let
+				pkgs = nixpkgsFor.${system};
+			in
 			builtins.listToAttrs (
 				forEach bash-scripts (
-					# { name, getInputs ? (pkgs: []), requiresSudo ? false }: (
-					sdata:
-					let
-						getInputs = if (lib.attrsets.hasAttrByPath [ "getInputs" ] sdata) then sdata.getInputs else (pkgs: []);
-					in
-					{
-						inherit (sdata) name;
-						value = packageShellScript sdata.name getInputs pkgs;
-					}
+					{ name, getInputs ? (pkgs: []), ... }:
+					nameValuePair name (packageShellScript name getInputs pkgs)
+				)
+				++
+				forEach programs (
+					{ name, ... }:
+					nameValuePair name (packageProgram name pkgs)
 				)
 			)
 		);

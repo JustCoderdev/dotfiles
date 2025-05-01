@@ -60,7 +60,7 @@ in
 		let
 			wake-device-pkgs = lib.attrsets.mapAttrsToList (
 				host: mac:
-				pkgs.writeShellScriptBin "${host}-wake" "wakeonlan ${mac}"
+				pkgs.writeShellScriptBin "wake-${host}" "wakeonlan ${mac}"
 			) cfg.wakeOn.knownDevices;
 		in
 		lib.mkIf ((builtins.length wake-device-pkgs) > 0)
