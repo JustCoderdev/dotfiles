@@ -14,7 +14,6 @@ let
 	data-dir   = raid-mount + "/data";
 	downloads-dir = data-dir + "/downloads";
 	game-dir      = data-dir + "/game";
-	homepage-dir  = data-dir + "/homepage";
 
 	openFirewall = true;
 	serv-group = "maid";
@@ -119,10 +118,7 @@ in
 		{
 			# forceSSL = true;
 			# enableACME = true;
-			locations = {
-				"/".root = homepage-dir;
-				"/ilovu/".alias = homepage-dir + "/ilovu.html";
-			};
+			locations."/".root = data-dir + "/homepage";
 		};
 	};
 
