@@ -18,6 +18,12 @@
 			bluetooth.enable = false;
 			nvidia.enable = false;
 
+			network.wakeOn = {
+				lan.enabledFor = [ ];
+				wlan.enabledFor = [ ];
+				knownDevices = { };
+			};
+
 			audio = {
 				pipewire.enable = false;
 				pulseaudio.enable = false;

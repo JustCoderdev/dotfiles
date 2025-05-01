@@ -11,7 +11,15 @@
 	common = {
 		core = {
 			bluetooth.enable = true;
-			network.wakeOnLan.knownDevices.quiss = "f4:6d:04:99:cb:11";
+
+			network.wakeOn = {
+				wlan.enabledFor = [ "phy0" ];
+				knownDevices = {
+					quiss = "f4:6d:04:99:cb:11";
+					 acer = "a4:17:31:10:9e:ed";
+				};
+			};
+
 			nvidia.enable = true;
 			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
