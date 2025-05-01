@@ -6,20 +6,21 @@ let
 	inherit (settings) dotfiles_path username;
 	cftunnel-cred-path = dotfiles_path + "/secrets/cloudflare/722afdef-b269-406d-9b56-66a36a01120e.json";
 	cftunnel-cert-path = dotfiles_path + "/secrets/cloudflare/cert.pem";
+	# cf-dns-token-path  = dotfiles_path + "/secrets/cloudflare/acme-auth.token";
 	cfdomain = "foxburrow.org";
 
 	raid-mount = "/mnt/md0";
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
 	downloads-dir = data-dir + "/downloads";
-	backup-dir    = data-dir + "/.backup";
 	game-dir      = data-dir + "/game";
+	homepage-dir  = data-dir + "/homepage";
 
 	openFirewall = true;
 	serv-group = "maid";
 	proxy = {
-		enable = false;
-		host = "home." + cfdomain;
+		enable = true;
+		host = "quiss.server.local";
 	};
 in
 
@@ -32,6 +33,27 @@ in
 
 	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 	# inputs.nix-minecraft.nixosModules.minecraft-servers
+
+	# ------------------------------------------------------------ #
+
+	# Create service group
+	users.groups."${serv-group}" = { };
+	users.users.${username}.extraGroups = [ serv-group ];
+
+	systemd.tmpfiles.rules = [
+#		Type Path                    Mode User Group
+		"d   ${config-dir}           0775 root ${serv-group}"
+		"d   ${data-dir}             0775 root ${serv-group}"
+
+		"d   ${game-dir}             0775 root ${serv-group}"
+		"d   ${downloads-dir}        0775 root ${serv-group}"
+		"d   ${data-dir}/documents   0775 root ${serv-group}"
+
+		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
+		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
+		"d   ${data-dir}/music       0775 root ${serv-group}"
+		"d   ${data-dir}/books       0775 root ${serv-group}"
+	];
 
 	# ------------------------------------------------------------ #
 
@@ -51,13 +73,9 @@ in
 			default = "http_status:404";
 			ingress = 
 			{
-				  # "ssh.foxburrow.org".service =  "ssh://127.0.0.1:22";
-				# "samba.foxburrow.org".service =  "tcp://127.0.0.1:443";
-
-				  "www.foxburrow.org".service = "http://127.0.0.1:80";
-				 "home.foxburrow.org".service = "http://127.0.0.1:80";
-
-				# "ilovu.foxburrow.org".service = "http://127.0.0.1:6003";
+				     "foxburrow.org".service = "http://127.0.0.1:80";
+				 "www.foxburrow.org".service = "http://127.0.0.1:80";
+				"home.foxburrow.org".service = "http://127.0.0.1:80";
 
 				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
 				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
@@ -70,28 +88,6 @@ in
 			};
 		};
 	};
-
-	# ------------------------------------------------------------ #
-
-	# Create service group
-	users.groups."${serv-group}" = { };
-	users.users.${username}.extraGroups = [ serv-group ];
-
-	systemd.tmpfiles.rules = [
-#		Type Path                    Mode User Group
-		"d   ${config-dir}           0775 root ${serv-group}"
-		"d   ${data-dir}             0775 root ${serv-group}"
-
-		"d   ${game-dir}             0775 root ${serv-group}"
-		"d   ${downloads-dir}        0775 root ${serv-group}"
-		"d   ${backup-dir}           0775 root ${serv-group}"
-		"d   ${data-dir}/documents   0775 root ${serv-group}"
-
-		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
-		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
-		"d   ${data-dir}/music       0775 root ${serv-group}"
-		"d   ${data-dir}/books       0775 root ${serv-group}"
-	];
 
 	# ------------------------------------------------------------ #
 
@@ -112,6 +108,10 @@ in
 	# security.acme = {
 	# 	acceptTerms = true;
 	# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
+	# 	certs."${proxy.host}" = {
+	# 		# dnsProvider = "cloudflare";
+	# 		# environmentFile = cf-dns-token-path;
+	# 	};
 	# };
 	services.nginx = {
 		enable = true;
@@ -119,7 +119,10 @@ in
 		{
 			# forceSSL = true;
 			# enableACME = true;
-			locations."/".root = data-dir + "/homepage";
+			locations = {
+				"/".root = homepage-dir;
+				"/ilovu/".alias = homepage-dir + "/ilovu.html";
+			};
 		};
 	};
 

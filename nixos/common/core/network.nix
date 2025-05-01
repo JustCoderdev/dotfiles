@@ -2,6 +2,7 @@
 
 let
 	cfg = config.common.core.network;
+	has_items = (list: (builtins.length list) > 0);
 in
 
 {
@@ -31,17 +32,19 @@ in
 			];
 
 			# Wake on Lan
-			interfaces = builtins.listToAttrs (
-				lib.lists.forEach cfg.wakeOnLan.enableFor (
-					interface:
-					{
-						name = interface;
-						value = { wakeOnLan.enable = true; };
-					}
-				)
-			);
+
+			# interfaces = builtins.listToAttrs (
+			# 	lib.lists.forEach cfg.wakeOnLan.enableFor (
+			# 		interface:
+			# 		{
+			# 			name = interface;
+			# 			value = { wakeOnLan.enable = true; };
+			# 		}
+			# 	)
+			# );
 
 			# Local DNS Records
+
 			hosts =
 			{
 				"192.168.7.1"   = [ "gateway.local" ];
@@ -64,19 +67,42 @@ in
 				"192.168.7.32" = [  "msi.host.local" ];
 				"192.168.7.33" = [ "acer.host.local" ];
 			};
-		};
 
-		environment.systemPackages =
-		let
-			wake-device-pkgs = lib.attrsets.mapAttrsToList (
-				host: mac:
-				pkgs.writeShellScriptBin "${host}-wake" "wakeonlan ${mac}"
-			) cfg.wakeOnLan.knownDevices;
-		in
-		lib.mkIf ((builtins.length wake-device-pkgs) > 0)
-		(	
-			[ pkgs.wakeonlan ] ++ wake-device-pkgs
-		);
+		};
+		
+		# Wake on Lan
+		# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+		# `sudo ethtool -s enp4s0 wol g`
+
+		# systemd.network = # lib.mkIf (has_items cfg.wakeOnLan.enableFor)
+		# {
+		# 	enable = true;
+
+		# 	links = builtins.listToAttrs (
+		# 		lib.lists.forEach cfg.wakeOnLan.enableFor (
+		# 			interface:
+		# 			{
+		# 				name = "40-${interface}";
+		# 				value = {
+		# 					matchConfig.OriginalName = interface;
+		# 					linkConfig.WakeOnLan = "magic";
+		# 				};
+		# 			}
+		# 		)
+		# 	);
+		# };
+
+		# environment.systemPackages =
+		# let
+		# 	wake-device-pkgs = lib.attrsets.mapAttrsToList (
+		# 		host: mac:
+		# 		pkgs.writeShellScriptBin "${host}-wake" "wakeonlan ${mac}"
+		# 	) cfg.wakeOnLan.knownDevices;
+		# in
+		# lib.mkIf (has_items wake-device-pkgs)
+		# (	
+		# 	[ pkgs.wakeonlan ] ++ wake-device-pkgs
+		# );
 	};
 
 	# ------------------------------------------------------------ #
