@@ -151,7 +151,6 @@ in
 		group = serv-group;
 	};
 
-
 	# MINECRAFT SERVERS
 
 	# services.minecraft-servers = {

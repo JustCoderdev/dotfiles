@@ -83,14 +83,14 @@ in
 							value = {
 								proxyPass = "http://127.0.0.1:${toString port}";
 								extraConfig = ""
-									+"proxy_set_header Host $host;\n"
-									+"proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-									+"proxy_set_header X-Forwarded-Host $host;\n"
-									+"proxy_set_header X-Forwarded-Proto $scheme;\n"
-									+"proxy_redirect off;\n"
-									+"proxy_http_version 1.1;\n"
-									+"proxy_set_header Upgrade $http_upgrade;\n"
-									+"proxy_set_header Connection $http_connection;\n"
+									+ "proxy_set_header Host $host;\n"
+									+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+									+ "proxy_set_header X-Forwarded-Host $host;\n"
+									+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+									+ "proxy_redirect off;\n"
+									+ "proxy_http_version 1.1;\n"
+									+ "proxy_set_header Upgrade $http_upgrade;\n"
+									+ "proxy_set_header Connection $http_connection;\n"
 									+ "";
 							};
 						}
