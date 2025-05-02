@@ -24,6 +24,11 @@
 
 			audio.pipewire.enable = true;
 			plymouth.enable = true;
+
+			ssh.cloudflared-proxy = {
+				enable = true;
+				hosts = [ "ssh.foxburrow.org" ];
+			};
 		};
 
 		users.ryuji.image-editing = true;

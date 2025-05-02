@@ -31,6 +31,10 @@
 			};
 
 			plymouth.enable = false;
+			ssh.cloudflared-proxy = {
+				enable = false;
+				hosts = [ ];
+			};
 		};
 
 		users = {
