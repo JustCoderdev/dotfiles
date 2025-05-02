@@ -96,7 +96,8 @@ in
 	system.services.samba.shares.custom = let
 		create-share = (name: root: owner: { inherit name root owner; });
 	in [
-		(create-share "data" raid-mount settings.username)
+		(create-share "data"                 raid-mount settings.username)
+		(create-share "home-assistant-share" data-dir   settings.username)
 	];
 
 	# Homepage

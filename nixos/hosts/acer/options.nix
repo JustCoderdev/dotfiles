@@ -14,12 +14,9 @@
 		core = {
 			bluetooth.enable = true;
 
-			network.wakeOn = {
-				wlan.enabledFor = [ "phy0" ];
-				knownDevices = {
-					quiss = "f4:6d:04:99:cb:11";
-					  msi = "d4:3b:04:51:45:28";
-				};
+			network.wakeOn.knownDevices = {
+				quiss = "f4:6d:04:99:cb:11";
+				  msi = "d4:3b:04:51:45:28";
 			};
 
 			audio.pipewire.enable = true;
