@@ -13,7 +13,7 @@ let
 	downloads-dir = data-dir + "/downloads";
 	game-dir      = data-dir + "/game";
 
-	openFirewall = true;
+	openFirewall = false;
 	serv-group = "maid";
 	proxy = {
 		enable = true;
@@ -70,16 +70,16 @@ in
 			default = "http_status:404";
 			ingress = 
 			{
-				     "foxburrow.org".service = "http://127.0.0.1:80";
-				 "www.foxburrow.org".service = "http://127.0.0.1:80";
-				"home.foxburrow.org".service = "http://127.0.0.1:80";
+				     # "foxburrow.org".service = "http://127.0.0.1:80";
+				 # "www.foxburrow.org".service = "http://127.0.0.1:443";
+				"home.foxburrow.org".service = "http://127.0.0.1:443";
 
 				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
 				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
 				"prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
 
-				 "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
 				 "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
+				 "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
 				"readarr.foxburrow.org".service = "http://127.0.0.1:8787";
 				 "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
 			};
@@ -90,30 +90,26 @@ in
 
 	# SAMBA
 
-	system.services.samba.shares.custom =
-	let
+	system.services.samba.shares.custom = let
 		create-share = (name: root: owner: { inherit name root owner; });
-	in
-	[
+	in [
 		(create-share "data" raid-mount settings.username)
 	];
 
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 80 443 ];
-	services.nginx = {
+	networking.firewall.allowedTCPPorts = [ 443 ];
+	services.nginx =
+	{
 		enable = true;
-		virtualHosts."${proxy.host}" =
-		let 
+		virtualHosts."${proxy.host}" = let 
 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
-		in
-		{
+		in {
 			root = data-dir + "/homepage";
 
-			# forceSSL = true;
-			addSSL = true;
-			sslCertificate    = vhost-secrets.cert.path;
+			forceSSL = true;
+			sslCertificate = vhost-secrets.cert.path;
 			sslCertificateKey = vhost-secrets.key.path;
 		};
 	};
@@ -136,7 +132,6 @@ in
 
 			lidarr.enable = true;
 			radarr.enable = true;
-
 			readarr.enable = true;
 			sonarr.enable = true;
 		};
