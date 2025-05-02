@@ -182,55 +182,29 @@ There are 3 main directories:
 - Ruixi-rebirth waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
 - XeIaso doublas-adams-quotes for making me discover the power of flakes ([Github](https://github.com/Xe/douglas-adams-quotes/blob/main/flake.nix)[XeIasoBlog](https://xeiaso.net/))
 
-## Secrets checklist
+## Obtaining Secrets
 
-- user pwd
-
-```
-passwd ryuji
-```
-
-- user mail
+### Cloudflared
 
 ```
-cd ${DOT_FILES}/nixos/secrets
-echo "x@y.z" > user.mail
-```
-
-- DuckDNS token
-
-```
-cd ${DOT_FILES}/nixos/secrets
-echo "xyz" > duckdns.token
-```
-
-- Cloudflared
-
-```
-cd ${DOT_FILES}/nixos/secrets/cloudflare
+cd ${DOT_FILES}/secrets/cloudflare
 
 nix-shell -p cloudflared --command 'cloudflared login'
 mv /home/${USER}/.cloudflared/cert.pem .
 
 cloudflared tunnel --origincert "$(pwd)/cert.pem" create home
+mv *.json home.json
 ```
 
-- MDADM discord hook
+### WPA Supplicant psk
 
 ```
-cd ${DOT_FILES}/nixos/secrets
-echo "xyz" > mdadmhook.url
-```
-
-- WPA Supplicant psk
-
-```
-cd ${DOT_FILES}/nixos/secrets
+cd ${DOT_FILES}/secrets
 token=$(wpa_passphrase WindTower-LTE PSK)
 echo "windtower_lte_psk=${token}" > wireless.conf
 ```
 
-- nix-serve
+### Nix Serve
 
 ```
 cd /var
@@ -238,42 +212,6 @@ sudo nix-store --generate-binary-cache-key DOMAIN \
         cache-priv-key.pem cache-pub-key.pem
 
 # Update nixos/common/core/nix.nix
-```
-
-- Github ssh key [auto-generated]
-
-```
-ssh-keygen -t ed25519 \
-  -C "107036402+JustCoderdev@users.noreply.github.com" \
-  -f ~/.ssh/id_github_justcode
-
-ssh-add ~/.ssh/id_github_justcode
-
-# Add to github
-```
-
-- host ssh key [auto-generated]
-
-```
-ssh-keygen -t ed25519 \
-  -C "${USER}@${HOST}" \
-  -f "~/.ssh/id_${HOST}_${USER}"
-
-ssh-add "~/.ssh/id_${HOST}_${USER}"
-
-# Update nixos/common/users/ryuji.nix
-```
-
-- nixbuilder ssh key [auto-generated]
-
-```
-ssh-keygen -t ed25519 \
-  -C "${USER}_buildclient@${HOST}" \
-  -f "~/.ssh/id_${HOST}_${USER}_nixbuilder"
-
-ssh-add "~/.ssh/id_${HOST}_${USER}_nixbuilder"
-
-# Update nixos/system/services/nixbuilder.nix
 ```
 
 ## Emergency wiki
@@ -374,10 +312,9 @@ sudo mdadm --manage /dev/md0 -r /dev/sdc1
 sudo mdadm --manage /dev/md0 -a /dev/sdc1
 ```
 
-### Samba users
+### Edit Samba credentials
 
-> Login on iOS
-> `smb://<ip>/<share>`
+> Login with `smb://<ip>/<share>`
 
 ```
 # Create a user
