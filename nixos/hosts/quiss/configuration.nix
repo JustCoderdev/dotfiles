@@ -37,6 +37,12 @@ in
 	users.groups."${serv-group}" = { };
 	users.users.${username}.extraGroups = [ serv-group ];
 
+	users.users."hass" =
+	{
+		isNormalUser = true;
+		createHome = false;
+	};
+
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
 		"d   ${config-dir}           0775 root ${serv-group}"
