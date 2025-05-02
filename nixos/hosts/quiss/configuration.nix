@@ -68,11 +68,14 @@ in
 		{
 			credentialsFile = secrets.cloudflare.tunnel-creds."home".path;
 			default = "http_status:404";
+
+			originRequest.noTLSVerify = true;
+
 			ingress = 
 			{
-				     # "foxburrow.org".service = "http://127.0.0.1:80";
-				 # "www.foxburrow.org".service = "http://127.0.0.1:443";
-				"home.foxburrow.org".service = "http://127.0.0.1:443";
+				 "ssh.foxburrow.org".service = "ssh://127.0.0.1:22";
+
+				"home.foxburrow.org".service = "https://127.0.0.1:443";
 
 				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
 				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
