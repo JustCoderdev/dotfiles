@@ -2,6 +2,7 @@
 
 let
 	cfg = config.system.services.nixcache;
+	secrets = config.common.core.secrets;
 	instance-url =  "http://${cfg.instance-host}:${toString cfg.instance-port}?priority=30";
 in
 
@@ -19,7 +20,8 @@ in
 			package = pkgs.nix-serve-ng;
 
 			openFirewall = true;
-			secretKeyFile = "/var/cache-priv-key.pem";
+			# old "/var/cache-priv-key.pem";
+			secretKeyFile = secrets.nix-serve.priv-key.path;
 		};
 
 		nix.settings = {

@@ -16,6 +16,7 @@
 		./power.nix
 		./plymouth.nix
 		./printer.nix
+		./secrets.nix
 		./shell.nix
 		./ssh.nix
 		./sudo.nix

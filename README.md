@@ -226,14 +226,14 @@ echo "xyz" > mdadmhook.url
 
 ```
 cd ${DOT_FILES}/nixos/secrets
-wpa_passphrase WindTower-LTE PSK
-echo "windtower_lte_psk=PSK" > wireless.conf
+token=$(wpa_passphrase WindTower-LTE PSK)
+echo "windtower_lte_psk=${token}" > wireless.conf
 ```
 
 - nix-serve
 
 ```
-cd /etc
+cd /var
 sudo nix-store --generate-binary-cache-key DOMAIN \
         cache-priv-key.pem cache-pub-key.pem
 

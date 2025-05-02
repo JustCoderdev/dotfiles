@@ -1,4 +1,4 @@
-{ settings, ... }:
+{ config, settings, ... }:
 
 let
 	hostname = settings.hostname;

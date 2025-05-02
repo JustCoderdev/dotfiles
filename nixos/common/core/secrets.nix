@@ -1,0 +1,65 @@
+{ config, lib, settings, ... }:
+
+let
+	cfg = config.common.core.secrets;
+
+	mkAttrListOption = (
+		description: mkOption:
+		lib.mkOption {
+			inherit description;
+			type = lib.types.attrsOf (
+				lib.types.submodule (
+					{ name, ... }:
+					{ options = (mkOption name); }
+				)
+			);
+		}
+	);
+
+	mkSecretOptions = (
+		filename: self-cfg:
+		{
+			installed = lib.mkEnableOption "Whether secret is installed on the system";
+			path = lib.mkOption {
+				type = lib.types.nullOr lib.types.str;
+				description = "Path to secret ${filename}";
+				default = if self-cfg.installed then "${cfg.defaultPath}/${filename}" else null;
+			};
+		}
+	);
+in
+
+{
+	config = { };
+
+	# ------------------------------------------------------------ #
+
+	options.common.core.secrets =
+	{
+		defaultPath = lib.mkOption {
+			type = lib.types.str;
+			description = "Path to secrets directory";
+			default = "${settings.dotfiles_path}/secrets";
+		};
+
+		# -------------------- #
+
+		wireless = mkSecretOptions "wireless.conf" cfg.wireless;
+		discord-hook = mkSecretOptions "discordhook.url" cfg.discord-hook;
+
+		nix-serve = {
+			priv-key = mkSecretOptions "cache-priv-key.pem" cfg.nix-serve.priv-key;
+		};
+
+		duckdns = {
+			token = mkSecretOptions "duckdns.token" cfg.duckdns.token;
+		};
+
+		cloudflare = {
+			origin-cert = mkSecretOptions "cloudflare/cert.pem" cfg.cloudflare.origin-cert;
+			tunnel-creds = mkAttrListOption "Credentials for each tunnel" (
+				name: mkSecretOptions "cloudflare/tunnel-${name}.json" cfg.cloudflare.tunnel-creds."${name}"
+			);
+		};
+	};
+}

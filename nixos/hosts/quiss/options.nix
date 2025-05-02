@@ -6,11 +6,20 @@
 		rebuild-system.enable = true;
 	};
 
-	common.core.network.wakeOn = {
-		lan.enabledFor = [ "eno1" ];
-		knownDevices = {
-			 msi = "d4:3b:04:51:45:28";
-			acer = "a4:17:31:10:9e:ed";
+	common.core = {
+		secrets = {
+			discord-hook.installed = true;
+			cloudflare = {
+				origin-cert.installed = true;
+				tunnel-creds."home".installed = true;
+			};
+		};
+		network.wakeOn = {
+			lan.enabledFor = [ "eno1" ];
+			knownDevices = {
+				 msi = "d4:3b:04:51:45:28";
+				acer = "a4:17:31:10:9e:ed";
+			};
 		};
 	};
 

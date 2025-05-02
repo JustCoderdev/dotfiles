@@ -1,8 +1,9 @@
-{ settings, ... }:
+{ config, settings, ... }:
 
 let
 	inherit (settings) dotfiles_path;
-	mdadmhook-url-path = dotfiles_path + "/nixos/secrets/mdadmhook.url";
+	secrets = config.common.core.secrets;
+	mdadmhook-path = secrets.discord-hook.path;
 in
 
 {
@@ -24,7 +25,7 @@ in
 		enable = true;
 		mdadmConf = ''
 ARRAY /dev/md0 metadata=1.2 UUID=2789150c:8e613590:21576ee7:a7060788
-PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\\\": \\\"$(date) ERROR ''${1}: ''${2}\\\" }\" \"$(cat ${mdadmhook-url-path})\""
+PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\\\": \\\"$(date) ERROR ''${1}: ''${2}\\\" }\" \"$(cat ${mdadmhook-path})\""
 '';
 	};
 

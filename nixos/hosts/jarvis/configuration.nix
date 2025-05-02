@@ -1,5 +1,9 @@
 { lib, settings, ... }:
 
+let
+	secrets = config.common.core.secrets;
+in
+
 {
 	# -------------------- #
 
@@ -66,7 +70,7 @@
 
 #		wireless = {
 #			enable = lib.mkForce true;
-#			secretsFile = settings.dotfiles_path + "/nixos/secrets/wireless.conf";
+#			secretsFile = secrets.wireless.path;
 #
 #			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
 #

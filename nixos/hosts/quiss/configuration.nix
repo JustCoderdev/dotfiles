@@ -1,12 +1,10 @@
-{ pkgs-unstable, pkgs, settings, inputs, ... }:
+{ config, pkgs-unstable, pkgs, settings, inputs, ... }:
 
 let
-	unstable-path = inputs.nixpkgs-unstable.outPath;
-
 	inherit (settings) dotfiles_path username;
-	cftunnel-cred-path = dotfiles_path + "/secrets/cloudflare/722afdef-b269-406d-9b56-66a36a01120e.json";
-	cftunnel-cert-path = dotfiles_path + "/secrets/cloudflare/cert.pem";
-	# cf-dns-token-path  = dotfiles_path + "/secrets/cloudflare/acme-auth.token";
+	unstable-path = inputs.nixpkgs-unstable.outPath;
+	secrets = config.common.core.secrets;
+
 	cfdomain = "foxburrow.org";
 
 	raid-mount = "/mnt/md0";
@@ -64,11 +62,11 @@ in
 	unofficial.services.cloudflared =
 	{
 		enable = true;
-		certificateFile = "${cftunnel-cert-path}";
+		certificateFile = secrets.cloudflare.origin-cert.path;
 
 		tunnels."home" =
 		{
-			credentialsFile = "${cftunnel-cred-path}";
+			credentialsFile = secrets.cloudflare.tunnel-creds."home".path;
 			default = "http_status:404";
 			ingress = 
 			{
