@@ -16,11 +16,11 @@
 			nginx.vhosts."quiss.server.local" = {
 				cert = {
 					installed = true;
-					path = "/etc/nginx/quiss_server_local-cert.crt";
+					path = "/etc/nginx-certs/quiss_server_local-cert.crt";
 				};
 				key = {
 					installed = true;
-					path = "/etc/nginx/quiss_server_local-cert.key";
+					path = "/etc/nginx-certs/quiss_server_local-cert.key";
 				};
 			};
 		};
