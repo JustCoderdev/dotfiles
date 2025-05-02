@@ -22,6 +22,10 @@
 			audio.pipewire.enable = true;
 			plymouth.enable = true;
 
+			secrets = {
+				cloudflare.origin-cert.installed = true;
+			};
+
 			ssh.cloudflared-proxy = {
 				enable = true;
 				hosts = [ "ssh.foxburrow.org" ];

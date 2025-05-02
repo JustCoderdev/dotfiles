@@ -2,6 +2,7 @@
 
 let
 	cfg = config.common.core.ssh;
+	secrets = config.common.core.secrets;
 
 	hostname = settings.hostname;
 	username = settings.username;
@@ -168,8 +169,16 @@ Host ${host}
 		unofficial.services.cloudflared =
 		{
 			enable = lib.mkDefault cfg.cloudflared-proxy.enable;
-			# certificateFile = secrets.cloudflare.origin-cert.path;
+			certificateFile = secrets.cloudflare.origin-cert.path;
 		};
+
+		# -------------------- #
+
+		assertions = lib.lists.optionals (cfg.cloudflared-proxy.enable) ([ {
+			message = "Cloudflared proxy is enabled for ssh but the origin certificate is not installed or it's path is null";
+			assertion = secrets.cloudflare.origin-cert.installed == true
+						&& secrets.cloudflare.origin-cert.path != null;
+		} ]);
 	};
 
 	# ------------------------------------------------------------ #
