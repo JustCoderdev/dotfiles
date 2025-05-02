@@ -14,8 +14,14 @@
 				tunnel-creds."home".installed = true;
 			};
 			nginx.vhosts."quiss.server.local" = {
-				cert.installed = true;
-				key.installed = true;
+				cert = {
+					installed = true;
+					path = "/etc/nginx/quiss_server_local-cert.crt";
+				};
+				key = {
+					installed = true;
+					path = "/etc/nginx/quiss_server_local-cert.key";
+				};
 			};
 		};
 		network.wakeOn = {
