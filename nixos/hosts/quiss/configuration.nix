@@ -101,22 +101,20 @@ in
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 80 ];
-	# security.acme = {
-	# 	acceptTerms = true;
-	# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
-	# 	certs."${proxy.host}" = {
-	# 		# dnsProvider = "cloudflare";
-	# 		# environmentFile = cf-dns-token-path;
-	# 	};
-	# };
+	networking.firewall.allowedTCPPorts = [ 80 443 ];
 	services.nginx = {
 		enable = true;
 		virtualHosts."${proxy.host}" =
+		let 
+			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
+		in
 		{
+			root = data-dir + "/homepage";
+
 			# forceSSL = true;
-			# enableACME = true;
-			locations."/".root = data-dir + "/homepage";
+			addSSL = true;
+			sslCertificate    = vhost-secrets.cert.path;
+			sslCertificateKey = vhost-secrets.key.path;
 		};
 	};
 

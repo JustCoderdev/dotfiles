@@ -207,11 +207,21 @@ echo "windtower_lte_psk=${token}" > wireless.conf
 ### Nix Serve
 
 ```
-cd /var
+cd ${DOT_FILES}/secrets
 sudo nix-store --generate-binary-cache-key DOMAIN \
-        cache-priv-key.pem cache-pub-key.pem
+        nixserve/cache-priv-key.pem nixserve/cache-pub-key.pem
 
 # Update nixos/common/core/nix.nix
+```
+
+### Self Signed SSL Certificate
+
+> Guide <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
+
+```
+cd ${DOT_FILES}/secrets/nginx/VHOST
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+       -keyout VHOST-cert.key -out VHOST-cert.crt
 ```
 
 ## Emergency wiki

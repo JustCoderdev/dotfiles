@@ -48,7 +48,7 @@ in
 		discord-hook = mkSecretOptions "discordhook.url" cfg.discord-hook;
 
 		nix-serve = {
-			priv-key = mkSecretOptions "cache-priv-key.pem" cfg.nix-serve.priv-key;
+			priv-key = mkSecretOptions "nixserve/cache-priv-key.pem" cfg.nix-serve.priv-key;
 		};
 
 		duckdns = {
@@ -59,6 +59,19 @@ in
 			origin-cert = mkSecretOptions "cloudflare/cert.pem" cfg.cloudflare.origin-cert;
 			tunnel-creds = mkAttrListOption "Credentials for each tunnel" (
 				name: mkSecretOptions "cloudflare/tunnel-${name}.json" cfg.cloudflare.tunnel-creds."${name}"
+			);
+		};
+
+		nginx = {
+			vhosts = mkAttrListOption "Nginx virtual host keys and certificates" (
+				name:
+				let
+					flat-name = builtins.replaceStrings [ "." "/" ] [ "_" "_"] name;
+				in
+				{
+					cert = mkSecretOptions "nginx/${flat-name}-cert.crt" cfg.nginx.vhosts."${name}".cert;
+					key  = mkSecretOptions "nginx/${flat-name}-cert.key" cfg.nginx.vhosts."${name}".key;
+				}
 			);
 		};
 	};
