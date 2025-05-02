@@ -184,6 +184,8 @@ There are 3 main directories:
 
 ## Obtaining Secrets
 
+> All secrets are "indexed" in `nixos/common/core/secrets.nix`
+
 ### Cloudflared
 
 ```

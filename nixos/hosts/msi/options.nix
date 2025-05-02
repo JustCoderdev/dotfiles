@@ -24,6 +24,16 @@
 			nvidia.enable = true;
 			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
+
+			secrets = {
+				nix-serve.priv-key.installed = true;
+				cloudflare.origin-cert.installed = true;
+			};
+
+			ssh.cloudflared-proxy = {
+				enable = true;
+				hosts = [ "ssh.foxburrow.org" ];
+			};
 		};
 
 		users.ryuji = {
