@@ -37,12 +37,6 @@ in
 	users.groups."${serv-group}" = { };
 	users.users.${username}.extraGroups = [ serv-group ];
 
-	users.users."hass" =
-	{
-		isNormalUser = true;
-		createHome = false;
-	};
-
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
 		"d   ${config-dir}           0775 root ${serv-group}"
@@ -103,7 +97,6 @@ in
 		create-share = (name: root: owner: { inherit name root owner; });
 	in [
 		(create-share "data"                 raid-mount settings.username)
-		(create-share "home-assistant-share" data-dir   settings.username)
 	];
 
 	# Homepage

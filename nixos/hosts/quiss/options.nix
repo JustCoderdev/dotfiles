@@ -35,7 +35,6 @@
 
 	system.services = {
 		samba.enable = true;
-		webserver.enable = false;
 		nixbuilder = {
 			server = {
 				enable = true;
