@@ -23,6 +23,8 @@
 		./wakeonlan.nix
 	];
 
+	boot.tmp.cleanOnBoot = true;
+
 	# Core packages
 	environment.systemPackages = with pkgs; [
 		unzip zip wget killall

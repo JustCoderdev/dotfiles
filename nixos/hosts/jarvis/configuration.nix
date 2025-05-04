@@ -15,7 +15,6 @@ in
 	# Other
 	hardware.enableRedistributableFirmware = true;
 	nixpkgs.config.allowUnsupportedSystem = true;
-	boot.tmp.cleanOnBoot = true;
 
 	# -------------------- #
 
