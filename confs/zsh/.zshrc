@@ -25,10 +25,10 @@ DOT_FILES='/home/ryuji/.config/dotfiles'
 fpath=("${DOT_FILES}/confs/zsh/ccomp" ${fpath})
 autoload -U compinit; compinit
 _comp_options+=(globdots)
-zmodload '.cache/.zsh_complist'
+zmodload zsh/zsh_complist
 
 ## Options
-zstyle ':completion:*' cache-path "/home/${USER}/zsh/.zcompcache"
+zstyle ':completion:*' cache-path "/home/${USER}/.cache/zcompcache"
 zstyle ':completion:*' completer _extensions _complete _approximate
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' menu select

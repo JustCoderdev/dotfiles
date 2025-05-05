@@ -311,7 +311,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-J27PvWNyU+EaGA3KYrtvjf6RVJViuv5AjizsHyWnxIg=",
+        "narHash": "sha256-HaoL9nl1dGqybNH2D1I3Zf33LajWpIYLO96Em1MBuDA=",
         "path": "./confs",
         "type": "path"
       },
