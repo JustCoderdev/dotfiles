@@ -25,7 +25,7 @@ DOT_FILES='/home/ryuji/.config/dotfiles'
 fpath=("${DOT_FILES}/confs/zsh/ccomp" ${fpath})
 autoload -U compinit; compinit
 _comp_options+=(globdots)
-zmodload zsh/complist
+zmodload '.cache/.zsh_complist'
 
 ## Options
 zstyle ':completion:*' cache-path "/home/${USER}/zsh/.zcompcache"
