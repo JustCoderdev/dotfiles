@@ -134,7 +134,7 @@ in
 
 
 	# Mouse support
-	environment.systemPackages = with pkgs; [ piper libnfc ];
+	environment.systemPackages = with pkgs; [ piper libnfc ciscoPacketTracer8 ];
 	services.ratbagd.enable = true;
 
 	# Network routing
