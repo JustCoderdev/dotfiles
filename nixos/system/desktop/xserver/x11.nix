@@ -63,7 +63,7 @@ in
 			# Enable lightdm to use Gnome Keyring
 			services.login.enableGnomeKeyring = true;
 			mount.logoutTerm = true;  # Send SIGTERM # Graceful shutdown
-			mount.logoutKill = false; # Send SIGKILL # Forceful shutdown
+			mount.logoutKill = true;  # Send SIGKILL # Forceful shutdown
 		};
 	};
 }

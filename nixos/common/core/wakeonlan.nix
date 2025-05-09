@@ -7,6 +7,14 @@ in
 {
 	config =
 	{
+		services.logind = lib.mkIf (
+			(builtins.length cfg.wakeOn.lan.enabledFor) > 0
+			|| (builtins.length cfg.wakeOn.wlan.enabledFor) > 0
+		) {
+			powerKey = "suspend";
+			powerKeyLongPress = "poweroff";
+		};
+
 		systemd.services = {}
 		//
 		builtins.listToAttrs (

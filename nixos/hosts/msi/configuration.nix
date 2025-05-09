@@ -36,35 +36,35 @@ in
 {
 	# HASS DOCKER
 	# ------------------------------------------------------------ #
-	# services.home-assistant =
-	# let
-	# 	wanted-integrations = [
-	# 		"apple_tv" # "esphome"
-	# 		"homekit" "ping"
-	# 		"rpi_power" "systemmonitor"
-	# 		"uptime" "wake_on_lan"
-	# 	];
-	# in
-	# {
-	# 	enable = true;
-	# 	openFirewall = false;
+	services.home-assistant =
+	let
+		# wanted-integrations = [
+		# 	"apple_tv" # "esphome"
+		# 	"homekit" "ping"
+		# 	"rpi_power" "systemmonitor"
+		# 	"uptime" "wake_on_lan"
+		# ];
+	in
+	{
+		enable = true;
+		openFirewall = false;
 
-	# 	# Interface
-	# 	# <https://mynixos.com/nixpkgs/option/services.home-assistant.lovelaceConfig>
-	# 	lovelaceConfigWritable = true;
-	# 	customLovelaceModules = [ ];
-	# 	lovelaceConfig = { };
+		# Interface
+		# <https://mynixos.com/nixpkgs/option/services.home-assistant.lovelaceConfig>
+		lovelaceConfigWritable = true;
+		# customLovelaceModules = [ ];
+		# lovelaceConfig = { };
 
 
-	# 	configWritable = true;
-	# 	configDir = "/var/lib/hass";
-	# 	config.homeassistant = {
-	# 		name = "Burrow";
-	# 		temperature_unit = "C";
-	# 		unit_system = "metric";
-	# 	};
+		configWritable = true;
+		# configDir = "/var/lib/hass";
+		config.homeassistant = { };
+		# 	name = "Burrow";
+		# 	temperature_unit = "C";
+		# 	unit_system = "metric";
+		# };
 
-	# 	extraPackages = py-pkgs: with py-pkgs; [ psycopg2 ]; 
+		extraPackages = py-pkgs: with py-pkgs; [ psycopg2 ];
 	# 	extraComponents = (wanted-integrations)
 	# 	++ [
 	# 		# Default config
@@ -72,7 +72,7 @@ in
 
 	# 		# "assist_pipeline"      # Voice Assistant
 	# 		"backup"               # Create and restore backups
-	# 		"bluetooth"            # 
+	# 		"bluetooth"            #
 	# 		"config"               # Configure and manage HAss
 	# 		# "conversation"         # Converse with Voice Assistant
 	# 		# "dhcp"                 # Discover devices through DHCP
@@ -87,7 +87,7 @@ in
 	# 		"mobile_app"
 	# 		"my"
 	# 		# "ssdp"
-	# 		# "stream" # Proxy live streming 
+	# 		# "stream" # Proxy live streming
 	# 		# "sun"
 	# 		# "usb"
 	# 		# "webhook"
@@ -124,8 +124,8 @@ in
 	# 		# 	}
 	# 		# )
 	# 	];
-	# };
-	
+	};
+
 
 	# ------------------------------------------------------------ #
 
