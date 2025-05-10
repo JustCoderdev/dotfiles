@@ -49,14 +49,16 @@ in
 				declarative = true;
 				authFile = "${deluge-options.dataDir}/auth";
 				config = {
+					"new_release_check" = false;
+
 					"download_location" = cfg.shared-downloads-dir;
 					"plugins_location" = "${deluge-options.dataDir}/plugins";
 					"enabled_plugins" = [ "Label" "Stats" ];
 					"allow_remote" = true;
 
 					"max_active_seeding" = 0;
-					"max_active_downloading" = 10;
-					"max_active_limit" = 15;
+					"max_active_downloading" = 20;
+					"max_active_limit" = 30;
 					"max_connections_global" = 100;
 				};
 
