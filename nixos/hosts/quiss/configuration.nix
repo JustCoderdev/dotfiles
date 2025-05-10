@@ -85,17 +85,17 @@ in
 			// (create-rule "ssh"  "ssh"   22  ".*")
 			// (create-rule "home" "https" 443 "/home.*")
 
-			// (create-rule "jellyfin" "http" 8096 ".*")
-			// (create-rule "immich"   "http" 2283 ".*")
+			// (create-rule "jellyfin" "https" 443 "/jellyfin.*")
+			// (create-rule "immich"   "https" 443 ".*")
 
-			// (create-rule "deluge"   "http" 8112 ".*")
-			// (create-rule "prowlarr" "http" 9696 ".*")
-			// (create-rule "bazarr"   "http" 6767 ".*")
+			// (create-rule "deluge"   "https" 443 "/deluge.*")
+			// (create-rule "prowlarr" "https" 443 "/prowlarr.*")
+			// (create-rule "bazarr"   "https" 443 "/bazarr.*")
 
-			// (create-rule "lidarr"  "http" 8686 ".*")
-			// (create-rule "radarr"  "http" 7878 ".*")
-			// (create-rule "readarr" "http" 8787 ".*")
-			// (create-rule "sonarr"  "http" 8989 ".*")
+			// (create-rule "lidarr"  "https" 443 "/lidarr.*")
+			// (create-rule "radarr"  "https" 443 "/radarr.*")
+			// (create-rule "readarr" "https" 443 "/readarr.*")
+			// (create-rule "sonarr"  "https" 443 "/sonarr.*")
 			// {};
 		};
 	};
