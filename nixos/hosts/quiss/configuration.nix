@@ -118,6 +118,7 @@ in
 			};
 
 			# forceSSL = true;
+			addSSL = true;
 			sslCertificate = vhost-secrets.cert.path;
 			sslCertificateKey = vhost-secrets.key.path;
 		};
