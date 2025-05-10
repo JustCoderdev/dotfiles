@@ -3,6 +3,7 @@
 {
 	imports = [
 		./docker.nix
+		./immich.nix
 		./jellyfin.nix
 		./nixbuilder.nix
 		./nixcache.nix
