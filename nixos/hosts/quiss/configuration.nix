@@ -159,8 +159,8 @@ in
 
 	system.services.immich =
 	{
-		inherit openFirewall proxy;
 		enable = true;
+		openFirewall = true;
 
 		config-dir = config-dir + "/immich";
 		group = serv-group;
