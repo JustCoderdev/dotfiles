@@ -16,6 +16,7 @@ in
 		services.immich = {
 			inherit (cfg) enable openFirewall group;
 			mediaLocation = cfg.config-dir;
+			host = "127.0.0.1";
 
 			settings.server.externalDomain = "https://immich.foxburrow.org";
 			accelerationDevices = [ "/dev/dri/renderD128" ];
