@@ -5,6 +5,12 @@ let
 in
 
 {
+	disabledModules = [ "services/web-apps/immich.nix" ];
+	imports = [ 
+		# "${unstable-path}/nixos/modules/services/networking/cloudflared.nix"
+		../../unofficial/immich.nix
+	];
+
 	config = lib.mkIf cfg.enable
 	{
 		services.immich = {
