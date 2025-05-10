@@ -10,13 +10,48 @@ in
 
 	config = lib.mkIf cfg.enable
 	{
+		users.users.immich.extraGroups = [ "video" "render" ];
+
 		services.immich = {
 			inherit (cfg) enable openFirewall group;
 			mediaLocation = cfg.config-dir;
 			host = "127.0.0.1";
 
-			settings.server.externalDomain = "https://immich.foxburrow.org";
-			accelerationDevices = [ "/dev/dri/renderD128" ];
+			settings = {
+				ffmpeg = {
+					accel = "vaapi";
+					accelDecode = true;
+					preset = "veryslow";
+					transcode = "all";
+				};
+				image = {
+					colorspace = "p3";
+					extractEmbedded = false;
+					fullsize = {
+						enabled = false;
+						format = "jpeg";
+						quality = 80;
+					};
+					preview = {
+						format = "jpeg";
+						quality = 80;
+						size = 1440;
+					};
+					thumbnail = {
+						format = "jpeg";
+						quality = 80;
+						size = 250;
+					};
+				};
+				machineLearning.urls = [ "http://127.0.0.1:3003" ];
+				newVersionCheck.enabled = false;
+				server = {
+					externalDomain = "https://immich.foxburrow.org";
+					loginPageMessage = "Ryuji's Gallery; DO NOT TOUCH";
+					publicUsers = false;
+				};
+			};
+			accelerationDevices = null;
 			environment = {
 				# List of comma-separated IPs set as trusted proxies
 				"IMMICH_TRUSTED_PROXIES" = "127.0.0.1";
