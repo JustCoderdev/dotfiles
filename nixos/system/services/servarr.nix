@@ -29,11 +29,17 @@ in
 
 		services =
 		{
+			# Applications
 			lidarr  = get-service-options "lidarr";  # Music
 			radarr  = (get-service-options "radarr") // { package = pkgs-unstable.radarr; }; # Movies
 			readarr = get-service-options "readarr"; # Books
 			sonarr  = get-service-options "sonarr";  # Serie
-
+	
+			# Management
+			bazarr = {
+				inherit (cfg) openFirewall group;
+				inherit (cfg.apps.bazarr) enable;
+			};
 			deluge = let
 				deluge-options = get-service-options "deluge";
 			in (deluge-options) // {
@@ -97,6 +103,7 @@ in
 					) (
 						builtins.filter ({ name, ... }: cfg.apps."${name}".enable)
 						[
+							{ name = "bazarr";   port = 6767; }
 							{ name = "prowlarr"; port = 9696; }
 							# -------------------- #
 							{ name = "lidarr";   port = 8686; }
@@ -109,6 +116,7 @@ in
 
 				extraConfig = ""
 					+ "add_header X-Frame-Options \"SAMEORIGIN\";\n"
+					+ "large_client_header_buffers 4 16k;\n"
 					+ "";
 			};
 		};
@@ -149,6 +157,7 @@ in
 		apps = {
 			deluge.enable = lib.mkEnableOption "Enable deluge";
 			prowlarr.enable = lib.mkEnableOption "Enable prowlarr";
+			bazarr.enable = lib.mkEnableOption "Enable bazarr";
 			# -------------------- #
 			lidarr.enable = lib.mkEnableOption "Enable lidarr";
 			radarr.enable = lib.mkEnableOption "Enable radarr";
