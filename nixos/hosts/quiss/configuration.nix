@@ -69,23 +69,34 @@ in
 			originRequest.noTLSVerify = true;
 
 			ingress = 
-			{
-				 "ssh.foxburrow.org".service = "ssh://127.0.0.1:22";
+			let
+				create-rule = (
+					subdomain: proto: port: path:
+					{
+						"${subdomain}.foxburrow.org" =
+						{
+							inherit path;
+							service = "${proto}://127.0.0.1:${toString port}";
+						};
+					}
+				);
+			in
+			{ }
+			// (create-rule "ssh"  "ssh"   22  ".*")
+			// (create-rule "home" "https" 443 "/home.*")
 
-				"home.foxburrow.org".service = "https://127.0.0.1:443";
+			// (create-rule "jellyfin" "http" 8096 ".*")
+			// (create-rule "immich"   "http" 2283 ".*")
 
-				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
-				  "immich.foxburrow.org".service = "http://127.0.0.1:2283";
+			// (create-rule "deluge"   "http" 8112 ".*")
+			// (create-rule "prowlarr" "http" 9696 ".*")
+			// (create-rule "bazarr"   "http" 6767 ".*")
 
-				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
-				"prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
-				  "bazarr.foxburrow.org".service = "http://127.0.0.1:6767";
-
-				 "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
-				 "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
-				"readarr.foxburrow.org".service = "http://127.0.0.1:8787";
-				 "sonarr.foxburrow.org".service = "http://127.0.0.1:8989";
-			};
+			// (create-rule "lidarr"  "http" 8686 ".*")
+			// (create-rule "radarr"  "http" 7878 ".*")
+			// (create-rule "readarr" "http" 8787 ".*")
+			// (create-rule "sonarr"  "http" 8989 ".*")
+			// {};
 		};
 	};
 
