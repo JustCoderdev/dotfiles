@@ -23,10 +23,7 @@ in
 
 {
 	disabledModules = [ "services/networking/cloudflared.nix" ];
-	imports = [ 
-		# "${unstable-path}/nixos/modules/services/networking/cloudflared.nix"
-		../../unofficial/cloudflared.nix
-	];
+	imports = [ ../../unofficial/cloudflared.nix ];
 
 	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 	# inputs.nix-minecraft.nixosModules.minecraft-servers
@@ -105,16 +102,22 @@ in
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 443 ];
+	networking.firewall.allowedTCPPorts = [ 443 80 ];
 	services.nginx =
 	{
 		enable = true;
 		virtualHosts."${proxy.host}" = let 
 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
 		in {
-			root = data-dir + "/homepage";
+			locations = {
+				"= /home".return = "301 http://192.168.7.7/home/index.html";
+				"^~ /home/" = {
+					root = data-dir + "/homepage";
+					index = "index.html";
+				};
+			};
 
-			forceSSL = true;
+			# forceSSL = true;
 			sslCertificate = vhost-secrets.cert.path;
 			sslCertificateKey = vhost-secrets.key.path;
 		};
@@ -159,13 +162,12 @@ in
 
 	system.services.immich =
 	{
+		inherit openFirewall proxy;
 		enable = true;
-		openFirewall = true;
 
 		config-dir = config-dir + "/immich";
 		group = serv-group;
 	};
-
 
 	# MINECRAFT SERVERS
 
