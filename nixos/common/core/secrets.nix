@@ -44,22 +44,17 @@ in
 
 		# -------------------- #
 
-		wireless = mkSecretOptions "wireless.conf" cfg.wireless;
-		discord-hook = mkSecretOptions "discordhook.url" cfg.discord-hook;
-
-		nix-serve = {
-			priv-key = mkSecretOptions "nixserve/cache-priv-key.pem" cfg.nix-serve.priv-key;
-		};
-
-		duckdns = {
-			token = mkSecretOptions "duckdns.token" cfg.duckdns.token;
-		};
-
 		cloudflare = {
 			origin-cert = mkSecretOptions "cloudflare/cert.pem" cfg.cloudflare.origin-cert;
 			tunnel-creds = mkAttrListOption "Credentials for each tunnel" (
 				name: mkSecretOptions "cloudflare/tunnel-${name}.json" cfg.cloudflare.tunnel-creds."${name}"
 			);
+		};
+
+		discord-hook = mkSecretOptions "discordhook.url" cfg.discord-hook;
+
+		duckdns = {
+			token = mkSecretOptions "duckdns.token" cfg.duckdns.token;
 		};
 
 		nginx = {
@@ -74,5 +69,11 @@ in
 				}
 			);
 		};
+
+		nix-serve = {
+			priv-key = mkSecretOptions "nixserve/cache-priv-key.pem" cfg.nix-serve.priv-key;
+		};
+
+		wireless = mkSecretOptions "wireless.conf" cfg.wireless;
 	};
 }

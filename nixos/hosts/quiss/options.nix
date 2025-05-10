@@ -13,6 +13,7 @@
 				origin-cert.installed = true;
 				tunnel-creds."home".installed = true;
 			};
+
 			nginx.vhosts."quiss.server.local" = {
 				cert = {
 					installed = true;
@@ -23,6 +24,8 @@
 					path = "/etc/nginx-certs/quiss_server_local-cert.key";
 				};
 			};
+
+			nix-serve.priv-key.installed = true;
 		};
 		network.wakeOn = {
 			lan.enabledFor = [ "eno1" ];

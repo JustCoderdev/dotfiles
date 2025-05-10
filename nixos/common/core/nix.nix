@@ -27,6 +27,7 @@ in
 				trusted-public-keys =
 				[
 					"msi.host.local:jbqDHg/Ky3EjKvI0Wtf2LZyiuxcbuJarlxA26WAAeT4="
+					"quiss.server.local:58w8SsV1RIHjX+PvvOoWZ6QkGhSUcLjRkfeX/gihOoA="
 				];
 			};
 

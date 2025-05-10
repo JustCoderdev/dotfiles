@@ -26,8 +26,8 @@
 			plymouth.enable = true;
 
 			secrets = {
-				nix-serve.priv-key.installed = true;
 				cloudflare.origin-cert.installed = true;
+				nix-serve.priv-key.installed = true;
 			};
 
 			ssh.cloudflared-proxy = {
