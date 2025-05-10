@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, ... }:
 
 let
 	cfg = config.system.services.immich;
@@ -17,11 +17,12 @@ in
 			inherit (cfg) enable openFirewall group;
 			mediaLocation = cfg.config-dir;
 
-			environment = {
-				"IMMICH_TRUSTED_PROXIES" = [ "127.0.0.1" ];
-			};
-
+			settings.server.externalDomain = "https://immich.${cfg.proxy.host}";
 			accelerationDevices = [ "/dev/dri/renderD128" ];
+			environment = {
+				# List of comma-separated IPs set as trusted proxies
+				"IMMICH_TRUSTED_PROXIES" = "127.0.0.1";
+			};
 		};
 
 		# PROXY
@@ -58,13 +59,6 @@ in
 					+ "";
 			};
 		};
-		
-		# -------------------- #
-
-		assertions = [ {
-			assertion = cfg.proxy.mode != "suburl";
-			message = "Immich does not support subpath proxying";
-		} ];
 	};
 
 	# ------------------------------------------------------------ #
@@ -88,13 +82,6 @@ in
 
 		proxy = {
 			enable = lib.mkEnableOption "Add immich to nginx location";
-
-			mode = lib.mkOption {
-				type = lib.types.enum [ "subdomain" "suburl" ];
-				description = "Set the proxying mean";
-				default = "suburl";
-			};
-
 			host = lib.mkOption {
 				type = lib.types.str;
 				description = "The virtualHost";

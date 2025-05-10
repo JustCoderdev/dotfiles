@@ -78,8 +78,11 @@ in
 				"home.foxburrow.org".service = "https://127.0.0.1:443";
 
 				"jellyfin.foxburrow.org".service = "http://127.0.0.1:8096";
+				  "immich.foxburrow.org".service = "http://127.0.0.1:2283";
+
 				  "deluge.foxburrow.org".service = "http://127.0.0.1:8112";
 				"prowlarr.foxburrow.org".service = "http://127.0.0.1:9696";
+				  "bazarr.foxburrow.org".service = "http://127.0.0.1:6767";
 
 				 "lidarr.foxburrow.org".service = "http://127.0.0.1:8686";
 				 "radarr.foxburrow.org".service = "http://127.0.0.1:7878";
@@ -96,7 +99,7 @@ in
 	system.services.samba.shares.custom = let
 		create-share = (name: root: owner: { inherit name root owner; });
 	in [
-		(create-share "data"                 raid-mount settings.username)
+		(create-share "data" raid-mount settings.username)
 	];
 
 	# Homepage
@@ -132,6 +135,7 @@ in
 		apps = {
 			prowlarr.enable = true;
 			deluge.enable = true;
+			bazarr.enable = true;
 
 			lidarr.enable = true;
 			radarr.enable = true;
@@ -150,6 +154,18 @@ in
 		config-dir = config-dir + "/jellyfin";
 		group = serv-group;
 	};
+
+	# Gallery Backup
+
+	system.services.immich =
+	{
+		inherit openFirewall proxy;
+		enable = true;
+
+		config-dir = config-dir + "/immich";
+		group = serv-group;
+	};
+
 
 	# MINECRAFT SERVERS
 
