@@ -2,7 +2,6 @@
 
 let
 	cfg = config.common.core.network;
-	has_items = (list: (builtins.length list) > 0);
 in
 
 {
@@ -14,6 +13,10 @@ in
 
 		# Let user manage network
 		users.users.${settings.username}.extraGroups = [ "networkmanager" ];
+
+		# Tethering
+		services.usbmuxd.enable = true;
+		environment.systemPackages = with pkgs; [ libimobiledevice ];
 
 		# Network settings
 		networking =
