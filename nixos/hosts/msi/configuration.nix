@@ -141,74 +141,74 @@ in
 	# src: <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
 
 	# Enable kernel packet forwarding
-	boot.kernel.sysctl = {
-		"net.ipv4.conf.all.forwarding" = true;
-		"net.ipv6.conf.all.forwarding" = true;
-	};
-
-	# Check leases here
-	# /var/lib/dnsmasq/dnsmasq.leases
-	services.dnsmasq = {
-		enable = true;
-		resolveLocalQueries = false;
-		settings = {
-			# dns
-			server = [
-				"193.110.81.0" # https://www.dns0.eu/it
-				"185.253.5.0"  # https://www.dns0.eu/it
-			];
-
-			domain-needed = true;
-			bogus-priv = true;
-			no-resolv = true;
-			cache-size = 1000;
-
-			interface = "eno1";
-			no-hosts = true;
-
-			# dhcp
-			dhcp-option = "option:router,10.0.0.1";
-			dhcp-range = [ "br-lan,10.0.0.16,10.0.0.127,1h" ];
-			dhcp-host = [ "msi,10.0.0.1" ]
-				++ lib.attrsets.mapAttrsToList (name: value: (get_dhcp_host value)) confs;
-		};
-	};
-
-
-
-	networking = {
-		nftables.enable = true;
-		firewall.trustedInterfaces = [ "eno1" ];
-		networkmanager.unmanaged = [ "interface-name:eno1" ];
-
-		# Add dns record
-		hosts = { }
-		// (
-			lib.attrsets.mapAttrs' (
-				name: value:
-				lib.attrsets.nameValuePair (value.ip) ([ "${value.hostname}.${value.domain}" ])
-			) confs
-		);
-
-		nat = {
-			enable = true;
-			internalIPs = [ "10.0.0.0/24" ];
-			internalInterfaces = [ "eno1" ];
-
-			forwardPorts = [ ]
-			++ lib.attrsets.mapAttrsToList (name: value: (get_ssh_forward value)) confs;
-
-			externalInterface = "wlp3s0";
-		};
-
-		interfaces.eno1 = {
-			useDHCP = false;
-			ipv4.addresses = [
-				{
-					address = "10.0.0.1";
-					prefixLength = 24;
-				}
-			];
-		};
-	};
+# 	boot.kernel.sysctl = {
+# 		"net.ipv4.conf.all.forwarding" = true;
+# 		"net.ipv6.conf.all.forwarding" = true;
+# 	};
+# 
+# 	# Check leases here
+# 	# /var/lib/dnsmasq/dnsmasq.leases
+# 	services.dnsmasq = {
+# 		enable = true;
+# 		resolveLocalQueries = false;
+# 		settings = {
+# 			# dns
+# 			server = [
+# 				"193.110.81.0" # https://www.dns0.eu/it
+# 				"185.253.5.0"  # https://www.dns0.eu/it
+# 			];
+# 
+# 			domain-needed = true;
+# 			bogus-priv = true;
+# 			no-resolv = true;
+# 			cache-size = 1000;
+# 
+# 			interface = "eno1";
+# 			no-hosts = true;
+# 
+# 			# dhcp
+# 			dhcp-option = "option:router,10.0.0.1";
+# 			dhcp-range = [ "br-lan,10.0.0.16,10.0.0.127,1h" ];
+# 			dhcp-host = [ "msi,10.0.0.1" ]
+# 				++ lib.attrsets.mapAttrsToList (name: value: (get_dhcp_host value)) confs;
+# 		};
+# 	};
+# 
+# 
+# 
+# 	networking = {
+# 		nftables.enable = true;
+# 		firewall.trustedInterfaces = [ "eno1" ];
+# 		networkmanager.unmanaged = [ "interface-name:eno1" ];
+# 
+# 		# Add dns record
+# 		hosts = { }
+# 		// (
+# 			lib.attrsets.mapAttrs' (
+# 				name: value:
+# 				lib.attrsets.nameValuePair (value.ip) ([ "${value.hostname}.${value.domain}" ])
+# 			) confs
+# 		);
+# 
+# 		nat = {
+# 			enable = true;
+# 			internalIPs = [ "10.0.0.0/24" ];
+# 			internalInterfaces = [ "eno1" ];
+# 
+# 			forwardPorts = [ ]
+# 			++ lib.attrsets.mapAttrsToList (name: value: (get_ssh_forward value)) confs;
+# 
+# 			externalInterface = "wlp3s0";
+# 		};
+# 
+# 		interfaces.eno1 = {
+# 			useDHCP = false;
+# 			ipv4.addresses = [
+# 				{
+# 					address = "10.0.0.1";
+# 					prefixLength = 24;
+# 				}
+# 			];
+# 		};
+# 	};
 }
