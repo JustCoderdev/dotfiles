@@ -12,12 +12,7 @@ in
 			message = "Arduino tools requires you to enable c tools";
 		}];
 
-		environment.systemPackages = with pkgs; [
-			arduino screen
-		];
-
-		# Grant permission to read serial devices /dev/ttyACM0
-		users.users.${settings.username}.extraGroups = [ "dialout" ];
+		environment.systemPackages = with pkgs; [ arduino ];
 	};
 
 	# ------------------------------------------------------------ #
