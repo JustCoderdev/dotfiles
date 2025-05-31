@@ -121,7 +121,7 @@ in
 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
 		in {
 			locations = {
-				"= /home".return = "301 http://192.168.7.7/home/index.html";
+				"= /home".return = "301 /home/index.html";
 				"^~ /home/" = {
 					root = data-dir + "/homepage";
 					index = "index.html";

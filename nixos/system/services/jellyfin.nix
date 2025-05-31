@@ -14,6 +14,8 @@ in
 			logDir    = cfg.config-dir + "/log";
 		};
 
+		users.users.jellyfin.extraGroups = [ "render" "video" ];
+
 		# PROXY
 
 		services.nginx = lib.mkIf (cfg.proxy.enable)
