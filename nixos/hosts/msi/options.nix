@@ -37,8 +37,8 @@
 		};
 
 		users.ryuji = {
+			docs-editing = true;
 			image-editing = true;
-			game-developing = true;
 		};
 	};
 

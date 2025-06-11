@@ -137,6 +137,17 @@ in
 	environment.systemPackages = with pkgs; [ piper libnfc ciscoPacketTracer8 ];
 	services.ratbagd.enable = true;
 
+
+	# networking.interfaces."wlp3s0".ipv4.routes = [
+	# 	{
+	# 		address = "10.255.255.248";
+	# 		prefixLength = 30;
+	# 		via = "192.168.7.1";
+	# 		type = "unicast";
+	# 	}
+	# ];
+
+
 	# Network routing
 	# src: <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
 

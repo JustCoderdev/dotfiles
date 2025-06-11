@@ -83,6 +83,7 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			gnome-disk-utility
 			baobab
 		]
+		++ lib.optionals (cfg.docs-editing)    [ libreoffice ]
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
 		++ lib.optionals (cfg.video-editing)   [ davinci-resolve obs-studio ]
 		++ lib.optionals (cfg.game-developing) [ blender godot_4 ];
@@ -96,6 +97,11 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			type = lib.types.bool;
 			description = "Enable personal user";
 			default = true;
+		};
+		docs-editing = lib.mkOption  {
+			type = lib.types.bool;
+			description = "Add docs editing sofware to environment packages";
+			default = false;
 		};
 		image-editing = lib.mkOption  {
 			type = lib.types.bool;

@@ -41,6 +41,7 @@
 			ryuji = {
 				enable = true;
 
+				docs-editing = false;
 				image-editing = false;
 				video-editing = false;
 				game-developing = false;
