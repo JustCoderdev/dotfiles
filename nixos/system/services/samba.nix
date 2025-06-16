@@ -86,7 +86,7 @@ in
 						{
 							"security" = "user";
 
-							"hosts allow" = "192.168.7., 10.0.0.";
+							"hosts allow" = "192.168., 10.";
 							"hosts deny" = "0.0.0.0/0";
 
 							"load printers" = "no";
