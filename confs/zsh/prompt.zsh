@@ -9,6 +9,8 @@ if [[ "${SSH_TTY}" == "$(tty)" ]]; then
 		# ' ryuji@quiss ~ $ ' magenta tinted
 		PROMPT="%F{5}%n%F{8}@%F{5}%m%F{8} %~ %B%F{5}\$${SHLVL}%f%b "
 	fi
+
+	COLORTERM="truecolor"
 fi
 
 # Set fallback prompt
