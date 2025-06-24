@@ -28,7 +28,7 @@
 	# Core packages
 	environment.systemPackages = with pkgs; [
 		unzip zip wget killall
-		rsync smartmontools pciutils
+		rsync smartmontools pciutils dust
 		htop btop screen
 		ntfs3g # ntfs driver
 		vim git
