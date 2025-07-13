@@ -5,7 +5,7 @@
 		enable = true;
 		completionInit = "";
 
-		initExtra = ''
+		initContent = ''
 export DOT_NIXOS=1;
 export DOT_FILES="/home/ryuji/.config/dotfiles"
 source "''${DOT_FILES}/confs/zsh/.zshrc"

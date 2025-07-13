@@ -10,7 +10,7 @@ in
 	[
 		(
 			lib.mkIf cfg.pipewire.enable {
-				hardware.pulseaudio.enable = false;
+				services.pulseaudio.enable = false;
 
 				# Install control script
 				environment.systemPackages = with pkgs; [ pamixer ];
@@ -40,7 +40,7 @@ in
 				environment.systemPackages = with pkgs; [ pavucontrol ];
 
 				# Enable sound with pulseaudio.
-				hardware.pulseaudio = {
+				services.pulseaudio = {
 					enable = true;
 					support32Bit = true;
 				};

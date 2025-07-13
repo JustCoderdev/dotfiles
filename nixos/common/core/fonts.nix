@@ -7,7 +7,7 @@
 			helvetica-neue-lt-std
 
 			# Mono fonts
-			(nerdfonts.override { fonts = [ "RobotoMono" ]; })
+			nerd-fonts.roboto-mono
 			roboto-mono
 			iosevka
 

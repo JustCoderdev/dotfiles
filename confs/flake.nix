@@ -3,15 +3,15 @@
 
 	inputs = {
 
-		nixpkgs.url = "nixpkgs/nixos-24.11";
+		nixpkgs.url = "nixpkgs/nixos-25.05";
 
 		home-manager = {
-			url = "github:nix-community/home-manager/release-24.11";
+			url = "github:nix-community/home-manager/release-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
 		stylix = {
-			url = "github:danth/stylix/release-24.11";
+			url = "github:danth/stylix/release-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -59,7 +59,6 @@
 
 					home-manager.nixosModules.home-manager
 					{
-						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
 						home-manager.extraSpecialArgs = args;
 						home-manager.users.${cfg.username} = (

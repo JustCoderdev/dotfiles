@@ -46,7 +46,7 @@ in
 		# ];
 	in
 	{
-		enable = true;
+		enable = false;
 		openFirewall = false;
 
 		# Interface
@@ -126,15 +126,18 @@ in
 	# 	];
 	};
 
-
 	# ------------------------------------------------------------ #
 
 
-
+	services.mysql = {
+		enable = true;
+		package = pkgs.mariadb;
+	};
 
 
 	# Mouse support
-	environment.systemPackages = with pkgs; [ piper libnfc ciscoPacketTracer8 ];
+	environment.systemPackages = with pkgs; [ piper
+	ciscoPacketTracer8 dbeaver-bin ];
 	services.ratbagd.enable = true;
 
 

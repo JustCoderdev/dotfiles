@@ -123,8 +123,9 @@ cd "${DOT_FILES}"
 ```bash
 cd confs
 
-# add after nix "--extra-features 'nix-command flakes'" if using a non-flake env
-nix build .#${USER}-activation
+# add "--extra-features 'nix-command flakes'" after `nix`
+# and before `build` if using a non-flake env
+nix build ".#${USER}-activation"
 
 ./result/activate
 ```
