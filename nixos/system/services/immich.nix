@@ -63,7 +63,7 @@ in
 		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
 			enable = true;
-			clientMaxBodySize = "20M";
+			clientMaxBodySize = lib.mkOverride 980 "50000M";
 
 			virtualHosts."${cfg.proxy.host}" =
 			{
@@ -85,10 +85,6 @@ in
 							+ "";
 					};
 				};
-
-				extraConfig = ""
-					+ "client_max_body_size 50000M;\n"
-					+ "";
 			};
 		};
 	};

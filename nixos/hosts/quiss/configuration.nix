@@ -68,7 +68,7 @@ in
 
 			originRequest.noTLSVerify = true;
 
-			ingress = 
+			ingress =
 			let
 				create-rule = (
 					subdomain: proto: port: path:
@@ -117,7 +117,7 @@ in
 	services.nginx =
 	{
 		enable = true;
-		virtualHosts."${proxy.host}" = let 
+		virtualHosts."${proxy.host}" = let
 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
 		in {
 			locations = {
