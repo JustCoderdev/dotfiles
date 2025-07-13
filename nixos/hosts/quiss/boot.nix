@@ -37,12 +37,15 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 	};
 
 	# Spindown after 10 minutes
-	systemd.services.hd-idle = {
+	systemd.services.hd-idle = let
+		time_m = 10;
+		time_s = toString (time_m * 60);
+	in {
 		enable = true;
 		wantedBy = [ "multi-user.target" ];
 		serviceConfig = {
 			type = "forking";
-			ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i 600 -a sdc -i 600";
+			ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i ${time_s} -a sdc -i ${time_s}";
 		};
 	};
 }
