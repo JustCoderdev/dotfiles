@@ -23,6 +23,8 @@
 			"minecraft-server"
 			"discord"
 
+			"libsciter"
+
 			"obsidian"
 			"anytype"
 

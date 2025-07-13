@@ -82,6 +82,8 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 
 			gnome-disk-utility
 			baobab
+
+			rustdesk
 		]
 		++ lib.optionals (cfg.docs-editing)    [ libreoffice ]
 		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
