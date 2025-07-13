@@ -1,4 +1,4 @@
-{ config, settings, ... }:
+{ config, pkgs, settings, ... }:
 
 let
 	inherit (settings) dotfiles_path;
@@ -19,6 +19,7 @@ in
 	boot.initrd.kernelModules = [ "i915" ];
 
 	# Raid
+
 	# <https://discourse.nixos.org/t/i-want-to-create-a-raid0-for-var-but-im-unable-to-figure-how-to-load-mdamd-on-boot/30381/5>
 	system.nixos.tags = [ "mdadm" ];
 	boot.swraid = {
@@ -33,5 +34,15 @@ PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\
 		device = "/dev/disk/by-uuid/3e1b8cbb-9c23-4d61-a423-65245733be57";
 		fsType = "ext4";
 		options = [ "nofail" ];
+	};
+
+	# Spindown after 10 minutes
+	systemd.services.hd-idle = {
+		enable = true;
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			type = "forking";
+			ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i 600 -a sdc -i 600";
+		};
 	};
 }
