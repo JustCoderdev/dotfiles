@@ -8,6 +8,7 @@ in
 	config = lib.mkIf cfg.enable
 	{
 		environment.systemPackages = with pkgs; [ scrcpy ];
+		services.udev.packages = [ pkgs.android-udev-rules ];
 
 		programs.adb.enable = true;
 		users.users.${settings.username}.extraGroups = [ "adbusers" ];
