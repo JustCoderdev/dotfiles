@@ -7,8 +7,10 @@ in
 {
 	config = lib.mkIf cfg.enable
 	{
-		environment.systemPackages = with pkgs; [ scrcpy ];
+		boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
 		services.udev.packages = [ pkgs.android-udev-rules ];
+
+		environment.systemPackages = with pkgs; [ scrcpy ];
 
 		programs.adb.enable = true;
 		users.users.${settings.username}.extraGroups = [ "adbusers" ];
@@ -16,7 +18,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.dev.android = 
+	options.system.dev.android =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;
