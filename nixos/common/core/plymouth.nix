@@ -15,7 +15,11 @@ in
 			initrd.systemd.enable = true;
 			
 			#"plymouth.debug" # log at /var/log/plymouth-debug.log
-			kernelParams = [ "quiet" "splash" ];
+			kernelParams = [
+				"quiet" "splash"
+				"plymouth.use-simpledrm"
+				"plymouth.debug" 
+			];
 
 			plymouth = {
 				enable = true;

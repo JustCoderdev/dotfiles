@@ -39,6 +39,7 @@ in
 		allowedBridges = lib.mkOption {
 			type = lib.types.listOf lib.types.str;
 			description = "List of bridge devices that can be used by qemu:///session.";
+			default = [];
 		};
 	};
 }
