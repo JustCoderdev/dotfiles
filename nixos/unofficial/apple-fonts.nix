@@ -4,7 +4,8 @@
 
 { lib, stdenv, fetchurl, p7zip }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation
+rec {
 	name = "apple-fonts";
 	version = "1";
 
