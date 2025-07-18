@@ -37,7 +37,7 @@ let
 in
 
 {
-	config = 
+	config = lib.mkIf (cfg-hw.gpu.manufacturer == "nvidia")
 	{
 		system.nixos.tags = [ "nvidia" ];
 
@@ -69,18 +69,6 @@ in
 
 			# Enable the Nvidia settings menu,
 			nvidiaSettings = false;
-		};
-	};
-
-	# ------------------------------------------------------------ #
-
-	options.common.core.hardware.nvidia =
-	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable nvidia hardware support";
-			default = config.common.core.hardware.gpu.manufacturer == "nvidia";
-			readonly = true;
 		};
 	};
 }

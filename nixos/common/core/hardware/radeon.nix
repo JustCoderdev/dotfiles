@@ -5,7 +5,7 @@ let
 in
 
 {
-	config =
+	config = lib.mkIf (cfg-hw.gpu.manufacturer == "amd")
 	{
 		system.nixos.tags = [ "radeon" ];
 
@@ -33,17 +33,5 @@ in
 		hardware.graphics.extraPackages = with pkgs; [ amdvlk ]
 		++ lib.optionals (cfg-hw.gpu.architecture == "gcn1") [ mesa.opencl ]
 		++ lib.optionals (cfg-hw.gpu.architecture != "gcn1") [ rocmPackages.clr.icd ];
-	};
-
-	# ------------------------------------------------------------ #
-
-	options.common.core.hardware.radeon =
-	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable amd gpu hardware support";
-			default = config.common.core.hardware.gpu.manufacturer == "amd";
-			readonly = true;
-		};
 	};
 }

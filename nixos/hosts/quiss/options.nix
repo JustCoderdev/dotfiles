@@ -12,7 +12,7 @@
 				manufacturer = "intel";
 				architecture = "ivy-bridge";
 			};
-			gpu = {
+			gpu = { # Radeon HD 6750
 				manufacturer = "amd";
 				architecture = "gcn1";
 			};

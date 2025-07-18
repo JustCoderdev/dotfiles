@@ -20,7 +20,7 @@ in
 				enable = true;
 
 				extraConfig = ''
-DeviceScale=2
+DeviceScale=1
 '';
 				theme = "darnix";
 				themePackages = [ darnix-plymouth-theme ];
