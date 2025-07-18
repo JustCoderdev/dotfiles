@@ -20,11 +20,13 @@ in
 
 				displayManager.setupCommands = let
 					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-				in ''
-					${xrandr} --output VGA-1  --mode 1920x1080 --pos 0x0    --rotate normal # Acer
-					${xrandr} --output HDMI-0 --mode 1920x1080 --pos 0x0    --rotate normal # DigiQuest
-					${xrandr} --output DP-1   --mode 1920x1080 --pos 1920x0 --rotate normal # ASUS
-				'';
+				in 
+				builtins.concatStringsSep "\n" (
+					lib.attrsets.mapAttrsToList  (
+						name: value:
+						"${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal"
+					) config.common.core.hardware.displays
+				);
 			};
 
 			libinput = {

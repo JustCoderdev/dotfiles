@@ -8,10 +8,10 @@
 		./console.nix
 		./firewall.nix
 		./fonts.nix
+		./hardware
 		./locale.nix
 		./network.nix
 		./nix.nix
-		./nvidia.nix
 		./keyboard.nix
 		./power.nix
 		./plymouth.nix

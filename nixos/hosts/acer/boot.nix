@@ -7,7 +7,4 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 
 	#Virtualisation
-
-	# Intel Graphics
-	boot.initrd.kernelModules = [ "i915" ];
 }

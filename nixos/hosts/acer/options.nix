@@ -14,6 +14,19 @@
 		core = {
 			bluetooth.enable = true;
 
+			hardware = {
+				cpu.manufacturer = "intel";
+
+				displays =
+				let
+					add-display = identifier: resolution: position:
+						{ inherit identifier resolution position; };
+				in
+				{
+					laptop-monitor = add-display "VGA-1" "1920x1080" "0x0";
+				};
+			};
+			
 			network.wakeOn.knownDevices = {
 				quiss = "f4:6d:04:99:cb:11";
 				  msi = "d4:3b:04:51:45:28";

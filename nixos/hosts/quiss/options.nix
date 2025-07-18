@@ -7,6 +7,16 @@
 	};
 
 	common.core = {
+		hardware = {
+			cpu = {
+				manufacturer = "intel";
+				architecture = "ivy-bridge";
+			};
+			gpu = {
+				manufacturer = "amd";
+				architecture = "gcn1";
+			};
+		};
 		secrets = {
 			discord-hook.installed = true;
 			cloudflare = {

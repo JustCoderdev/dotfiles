@@ -17,7 +17,8 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.virtualbox = {
+	options.system.services.virtualbox =
+	{
 		enable = lib.mkOption {
 			type = lib.types.bool;
 			description = "Enable virtualbox daemon";

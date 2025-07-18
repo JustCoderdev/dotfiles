@@ -13,6 +13,26 @@
 		core = {
 			bluetooth.enable = true;
 
+			hardware = {
+				cpu = {
+					manufacturer = "intel";
+					architecture = "coffee-lake";
+				};
+				gpu = {
+					manufacturer = "nvidia";
+					architecture = "pascal";
+				};
+				displays =
+				let
+					add-display = identifier: resolution: position:
+						{ inherit identifier resolution position; };
+				in
+				{
+					digiquest = add-display "HDMI-0" "1920x1080" "0x0";
+					asus =      add-display "DP-1"   "1920x1080" "1920x0";
+				};
+			};
+
 			network.wakeOn = {
 				wlan.enabledFor = [ "phy0" ];
 				knownDevices = {
@@ -21,7 +41,6 @@
 				};
 			};
 
-			nvidia.enable = true;
 			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
 
