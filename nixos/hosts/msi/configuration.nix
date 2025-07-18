@@ -34,17 +34,22 @@ let
 in
 
 {
-	# HASS DOCKER
+	# HASS
 	# ------------------------------------------------------------ #
-	services.home-assistant =
+	# great repo <https://github.com/Mic92/dotfiles/tree/393539385b0abfc3618e886cd0bf545ac24aeb67/machines/eve/modules/home-assistant>
+
+	systemd.tmpfiles.rules =
 	let
-		# wanted-integrations = [
-		# 	"apple_tv" # "esphome"
-		# 	"homekit" "ping"
-		# 	"rpi_power" "systemmonitor"
-		# 	"uptime" "wake_on_lan"
-		# ];
+		cfg-hass = config.services.home-assistant;
 	in
+	[
+#		Type Path                                   Mode User Group
+		"d   ${cfg-hass.configDir}/blueprint        0755 hass hass"
+		"f   ${cfg-hass.configDir}/automations.yaml 0755 hass hass"
+	];
+
+
+	services.home-assistant =
 	{
 		enable = false;
 		openFirewall = false;
@@ -55,75 +60,70 @@ in
 		# customLovelaceModules = [ ];
 		# lovelaceConfig = { };
 
-
 		configWritable = true;
 		# configDir = "/var/lib/hass";
-		config.homeassistant = { };
-		# 	name = "Burrow";
-		# 	temperature_unit = "C";
-		# 	unit_system = "metric";
-		# };
+		config = {
+			default_config = { };
+			homeassistant = {
+				name = "Burrow";
+				temperature_unit = "C";
+				unit_system = "metric";
+			};
+		};
 
-		extraPackages = py-pkgs: with py-pkgs; [ psycopg2 ];
-	# 	extraComponents = (wanted-integrations)
-	# 	++ [
-	# 		# Default config
-	# 		# <https://www.home-assistant.io/integrations/default_config/>
+		customComponents =
+		[
+			(pkgs.callPackage ../../unofficial/myhome.nix {
+				OWNd-pkg = (pkgs.python313Packages.callPackage ../../unofficial/OWNd.nix {});
+			})
+		];
 
-	# 		# "assist_pipeline"      # Voice Assistant
-	# 		"backup"               # Create and restore backups
-	# 		"bluetooth"            #
-	# 		"config"               # Configure and manage HAss
-	# 		# "conversation"         # Converse with Voice Assistant
-	# 		# "dhcp"                 # Discover devices through DHCP
-	# 		# "energy"               # Energy features
-	# 		# "go2rtc"               # Camera streaming proxy
-	# 		"history"
-	# 		"homeassistant_alerts"
-	# 		# "cloud"
-	# 		"image_upload"
-	# 		"logbook"
-	# 		# "media_source"
-	# 		"mobile_app"
-	# 		"my"
-	# 		# "ssdp"
-	# 		# "stream" # Proxy live streming
-	# 		# "sun"
-	# 		# "usb"
-	# 		# "webhook"
-	# 		# "zeroconf" # Network autodiscovery
-	# 	];
+		extraComponents =
+		[
+			"apple_tv" # "esphome"
+			"homekit"
+			"ping"
+			"rpi_power"
+			"systemmonitor"
+			"uptime"
+			"wake_on_lan"
 
-	# 	# defaultIntegrations = (wanted-integrations);
-	# 	customComponents =
-	# 	[
-	# 		# (
-	# 		# 	{ lib, buildHomeAssistantComponent, fetchFromGitHub }:
-	# 		# 	buildHomeAssistantComponent {
-	# 		# 		owner = "anotherjulien";
-	# 		# 		domain = "myhome";
-	# 		# 		version = "0.9.3";
+			# Required
+			# #################### #
 
-	# 		# 		src = fetchFromGithub {
-	# 		# 			inherit owner;
-	# 		# 			repo = domain;
-	# 		# 			tag = version;
-	# 		# 			hash = "";
-	# 		# 		};
+			"analytics"
+			"google_translate"
+			"met"
+			"radio_browser"
+			"shopping_list"
 
-	# 		# 		dependencies = [
-	# 		# 			"OWNd==0.7.48"
-	# 		# 		];
+			"isal"
 
-	# 		# 		meta = with lib; {
-	# 		# 			changelog = "https://github.com/anotherjulien/MyHOME/releases/tag/${version}";
-	# 		# 			description = " MyHOME integration for Home-Assistant ";
-	# 		# 			homepage = "https://github.com/anotherjulien/MyHOME/";
-	# 		# 			license = licenses.agpl3Only;
-	# 		# 		};
-	# 		# 	}
-	# 		# )
-	# 	];
+			# Extra
+			# #################### #
+
+			# "assist_pipeline"      # Voice Assistant
+			"bluetooth"
+			# "config"               # Configure and manage HAss
+			# "conversation"         # Converse with Voice Assistant
+			# "dhcp"                 # Discover devices through DHCP
+			# "energy"               # Energy features
+			# "go2rtc"               # Camera streaming proxy
+			"history"
+			"homeassistant_alerts"
+			# "cloud"
+			"image_upload"
+			"logbook"
+			# "media_source"
+			"mobile_app"
+			"my"
+			# "ssdp"
+			# "stream" # Proxy live streming
+			# "sun"
+			# "usb"
+			# "webhook"
+			# "zeroconf" # Network autodiscovery
+		];
 	};
 
 	# ------------------------------------------------------------ #
@@ -159,7 +159,7 @@ in
 # 		"net.ipv4.conf.all.forwarding" = true;
 # 		"net.ipv6.conf.all.forwarding" = true;
 # 	};
-# 
+#
 # 	# Check leases here
 # 	# /var/lib/dnsmasq/dnsmasq.leases
 # 	services.dnsmasq = {
@@ -171,15 +171,15 @@ in
 # 				"193.110.81.0" # https://www.dns0.eu/it
 # 				"185.253.5.0"  # https://www.dns0.eu/it
 # 			];
-# 
+#
 # 			domain-needed = true;
 # 			bogus-priv = true;
 # 			no-resolv = true;
 # 			cache-size = 1000;
-# 
+#
 # 			interface = "eno1";
 # 			no-hosts = true;
-# 
+#
 # 			# dhcp
 # 			dhcp-option = "option:router,10.0.0.1";
 # 			dhcp-range = [ "br-lan,10.0.0.16,10.0.0.127,1h" ];
@@ -187,14 +187,14 @@ in
 # 				++ lib.attrsets.mapAttrsToList (name: value: (get_dhcp_host value)) confs;
 # 		};
 # 	};
-# 
-# 
-# 
+#
+#
+#
 # 	networking = {
 # 		nftables.enable = true;
 # 		firewall.trustedInterfaces = [ "eno1" ];
 # 		networkmanager.unmanaged = [ "interface-name:eno1" ];
-# 
+#
 # 		# Add dns record
 # 		hosts = { }
 # 		// (
@@ -203,18 +203,18 @@ in
 # 				lib.attrsets.nameValuePair (value.ip) ([ "${value.hostname}.${value.domain}" ])
 # 			) confs
 # 		);
-# 
+#
 # 		nat = {
 # 			enable = true;
 # 			internalIPs = [ "10.0.0.0/24" ];
 # 			internalInterfaces = [ "eno1" ];
-# 
+#
 # 			forwardPorts = [ ]
 # 			++ lib.attrsets.mapAttrsToList (name: value: (get_ssh_forward value)) confs;
-# 
+#
 # 			externalInterface = "wlp3s0";
 # 		};
-# 
+#
 # 		interfaces.eno1 = {
 # 			useDHCP = false;
 # 			ipv4.addresses = [
