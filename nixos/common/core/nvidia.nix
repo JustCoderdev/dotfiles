@@ -9,6 +9,9 @@ in
 	{
 		system.nixos.tags = [ "nvidia" ];
 
+		/* ls /dev/dri - dmesg | grep drm */
+		boot.kernelParams = [ "nvidia-drm.fbdev=1" ];
+
 		services.xserver.videoDrivers = [ "nvidia" ];
 		environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 

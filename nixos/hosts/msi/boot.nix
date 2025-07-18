@@ -8,12 +8,13 @@
 
 	#Virtualisation
 
+	# Intel Graphics
+	boot.initrd.kernelModules = [ "i915" ];
 
 	# Nvidia support
 	boot.kernelParams = [
 		"nosgx"
 		"snd-intel-dspcfg.dsp_driver=1"
-		"nvidia-drm.fbdev=1" /* ls /dev/dri - dmesg | grep drm */
 	];
 
 	hardware.nvidia = {

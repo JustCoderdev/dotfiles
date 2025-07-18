@@ -13,17 +13,15 @@ in
 	{
 		boot = {
 			initrd.systemd.enable = true;
-			
-			#"plymouth.debug" # log at /var/log/plymouth-debug.log
-			kernelParams = [
-				"quiet" "splash"
-				"plymouth.use-simpledrm"
-				"plymouth.debug" 
-			];
 
+			#"plymouth.debug" # log at /var/log/plymouth-debug.log
+			kernelParams = [ "quiet" ]; # "plymouth.use-simpledrm"
 			plymouth = {
 				enable = true;
 
+				extraConfig = ''
+DeviceScale=2
+'';
 				theme = "darnix";
 				themePackages = [ darnix-plymouth-theme ];
 			};
