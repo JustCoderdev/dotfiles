@@ -2,13 +2,23 @@
 
 {
 	#Bootloader
+
+	# -- OLD UEFI -- #
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.systemd-boot.configurationLimit = 5;
 	boot.loader.efi.canTouchEfiVariables = true;
+	# -- OLD UEFI -- #
+
+	# boot.loader.grub.enable = true;
+	# boot.loader.grub.efiSupport = true;
+	# boot.loader.grub.device = "nodev";
+	# boot.loader.grub.useOSProber = false;
+	# boot.loader.grub.gfxmodeEfi = "1920x1080";
 
 	#Virtualisation
 
 	#Mount
+
 	fileSystems =
 	{
 		"/home/WDC_WD10" =
