@@ -8,8 +8,8 @@
 #	'';
 
 	services.xserver.displayManager.setupCommands = ''
-		${pkgs.numlockx}/bin/numlockx on
-	'';
+${pkgs.numlockx}/bin/numlockx on
+'';
 
 	services.xserver.xkb = {
 		# Configure keymap in X11
