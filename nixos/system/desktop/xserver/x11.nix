@@ -6,7 +6,17 @@ let
 in
 
 {
-	config = {
+	config =
+	{
+		environment.systemPackages =
+		[
+			(
+				pkgs.writeShellScriptBin "refresh-displays" ''
+${config.services.xserver.displayManager.setupCommands}
+''
+			)
+		];
+
 		services = {
 			xserver = {
 				enable = xfce_cfg.enable || i3_cfg.enable;
