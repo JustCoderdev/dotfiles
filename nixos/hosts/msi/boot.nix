@@ -10,7 +10,6 @@
 	# -- OLD UEFI -- #
 
 	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.kernelParams = [ "video=HDMI-1:1920x1080@60D" "video=DP-1:1920x1080@60D" ];
 
 	#Virtualisation
 
