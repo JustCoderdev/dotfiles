@@ -1,4 +1,4 @@
-{ config, settings, ... }:
+{ config, pkgs, settings, ... }:
 
 {
 	#Bootloader
@@ -9,11 +9,8 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 	# -- OLD UEFI -- #
 
-	# boot.loader.grub.enable = true;
-	# boot.loader.grub.efiSupport = true;
-	# boot.loader.grub.device = "nodev";
-	# boot.loader.grub.useOSProber = false;
-	# boot.loader.grub.gfxmodeEfi = "1920x1080";
+	boot.kernelPackages = pkgs.linuxPackages_latest;
+	boot.kernelParams = [ "vga=795" ]; # set 1920x1080
 
 	#Virtualisation
 
