@@ -4,6 +4,7 @@
 	imports = [
 		../../unofficial/dotfiles-backup.nix
 		./audio.nix
+		./avahi.nix
 		./bluetooth.nix
 		./console.nix
 		./firewall.nix

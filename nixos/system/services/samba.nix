@@ -18,10 +18,29 @@ in
 			openFirewall = true;
 		};
 
+		# Autodiscovery with avahi
+		# services.avahi.extraServiceFiles.smb = ''
+# <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+# <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+# <service-group>
+	# <name replace-wildcards="yes">%h</name>
+	# <service>
+		# <type>_smb._tcp</type>
+		# <port>445</port>
+	# </service>
+# </service-group>
+# '';
+
+
 		environment.systemPackages = with pkgs; [
 			cifs-utils
 			keyutils
 		];
+
+		# Allow discovery
+		networking.firewall.extraCommands = ''
+iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
+'';
 
 		systemd.tmpfiles.rules = [ ]
 		++
@@ -76,6 +95,7 @@ in
 		in
 		{
 			enable = true;
+			package = pkgs.samba4Full;
 			openFirewall = true;
 
 			settings = builtins.listToAttrs (

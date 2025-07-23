@@ -19,7 +19,10 @@ in
 		services = {
 			# Thunar extensions
 			tumbler.enable = true; # img thumbnails
-			gvfs.enable = true;    # mount, trash, other
+			gvfs = {
+				enable = true;    # mount, trash, other
+				package = lib.mkForce pkgs.gnome.gvfs;
+			};
 		};
 
 		environment.systemPackages = with pkgs; [
