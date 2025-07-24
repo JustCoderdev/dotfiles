@@ -30,8 +30,6 @@ in
 				"browser.toolbars.bookmarks.visibility" = "always";
 
 				"browser.uiCustomization.state" = "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"ublock0_raymondhill_net-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"_3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf_-browser-action\",\"addon_darkreader_org-browser-action\",\"gdpr_cavi_au_dk-browser-action\",\"_50864413-c4c8-43b0-80b8-982c4a368ac9_-browser-action\",\"myallychou_gmail_com-browser-action\",\"_0d7cafdd-501c-49ca-8ebb-e3341caaa55e_-browser-action\",\"_5327e982-d0be-4b85-b661-dba2ef210ab8_-browser-action\",\"_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action\",\"_57015cac-9cb6-43b3-975a-b305fd4012c9_-browser-action\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"fxa-toolbar-menu-button\",\"unified-extensions-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"developer-button\",\"addon_darkreader_org-browser-action\",\"gdpr_cavi_au_dk-browser-action\",\"_50864413-c4c8-43b0-80b8-982c4a368ac9_-browser-action\",\"myallychou_gmail_com-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_0d7cafdd-501c-49ca-8ebb-e3341caaa55e_-browser-action\",\"_5327e982-d0be-4b85-b661-dba2ef210ab8_-browser-action\",\"_3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf_-browser-action\",\"screenshot-button\",\"_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action\",\"_57015cac-9cb6-43b3-975a-b305fd4012c9_-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\",\"widget-overflow-fixed-list\"],\"currentVersion\":22,\"newElementCount\":7}";
-				"browser.urlbar.placeholderName" = "awawawawa";
-				"browser.urlbar.placeholderName.private" = "awawawawa";
 
 				"browser.urlbar.shortcuts.actions" = false;
 				"browser.urlbar.shortcuts.tabs" = false;
@@ -82,11 +80,10 @@ in
 			
 			EnableTrackingProtection = {
 				Value = true;
-				Locked = true;
 				Cryptomining = true;
 				Fingerprinting = true;
 				EmailTracking = true;
-
+				Locked = true;
 			};
 
 			ExtensionSettings =
@@ -134,20 +131,20 @@ in
 			HardwareAcceleration = true;
 
 			Homepage = {
-				URL = "about:newtab";
+				URL = "about:home";
 				Additional = [ "about:newtab" ];
 				StartPage = "previous-session";
+				Locked = true;
 			};
 
 			NoDefaultBookmarks = true;
 			OfferToSaveLogins = true;
-			OfferToSaveLoginsDefault = true;
 
 			OverrideFirstRunPage = "";
 			OverridePostUpdatePage = "";
 
 			PasswordManagerEnabled = true;
-			PictureInPicture = true;
+			PictureInPicture.Enabled = true;
 			PromptForDownloadLocation = true;
 
 			SearchBar = "unified";
@@ -165,7 +162,6 @@ in
 			SearchSuggestEnabled = true;
 
 			ShowHomeButton = false;
-			SkipTermsOfUse = true;
 			StartDownloadsInTempDirectory = true;
 
 			UserMessaging = {
