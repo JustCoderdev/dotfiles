@@ -29,7 +29,7 @@
 				in
 				{
 					a-ig-monitor = add-display "eDP-1"  "1920x1080" "0x0";
-					b-ex-monitor = add-display "HDMI-1" "1920x1080" "1920x0";
+					# b-ex-monitor = add-display "HDMI-1" "1920x1080" "1920x0";
 				};
 			};
 
@@ -37,8 +37,7 @@
 			plymouth.enable = true;
 
 			secrets = {
-				cloudflare.origin-cert.installed = false;
-				nix-serve.priv-key.installed = false;
+				cloudflare.origin-cert.installed = true;
 			};
 
 			ssh.cloudflared-proxy = {
