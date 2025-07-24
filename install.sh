@@ -6,14 +6,14 @@ set -e
 
 # Check if git is installed
 if hash git >/dev/null 2>&1; then
-	echo -e "Git found"
+	echo -e "- Git is installed"
 else
 	echo -e "Git not found, quitting..."
 	exit 1
 fi
 
 if hash vim >/dev/null 2>&1; then
-	echo -e "Vim found"
+	echo -e "- Vim is installed"
 	EDITOR='vim'
 else
 	echo -e "Vim not found, quitting..."

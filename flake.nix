@@ -97,17 +97,9 @@
 				modules = (getModules settings)
 				++ [
 					({ pkgs, modulesPath, ... }: {
-						imports = [
-							"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-
-							./nixos/common/core
-							./nixos/common/users
-							./nixos/system/services
-						];
-
+						imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 						jcbin = {
 							rebuild-system.enable = true;
-							mount-configs.enable = true;
 						};
 					})
 				];
@@ -176,10 +168,10 @@
 		nixosConfigurations =
 		{
 			virtualmachine = system-builder "virtualmachine" "x86_64-linux"  "ryuji";
-                                                                                         
+
 			alpha          = system-builder "alpha"          "x86_64-linux"  "ryuji";
 			beta           = system-builder "beta"           "x86_64-linux"  "ryuji";
-                                                                                         
+
 			quiss          = system-builder "quiss"          "x86_64-linux"  "ryuji";
 			jarvis         = system-builder "jarvis"         "aarch64-linux" "ryuji";
 
@@ -213,7 +205,8 @@
 
 		# nix run
 		apps = forAllSystems (
-			system: let pkgs = nixpkgsFor.${system}; in
+			system:
+			let pkgs = nixpkgsFor.${system}; in
 			{
 				# test-iso-x86_64 = {
 				# 	type = "app";
@@ -225,19 +218,19 @@
 				# 	program = "nix build .#nixosConfigurations.img-raspi3.config.system.build.sdImage";
 				# };
 			}
-			# //
-			# builtins.listToAttrs (
-			# 	listAllSystems (
-			# 		system:
-			# 		{
-			# 			name = "build-iso-${system}";
-			# 			value = {
-			# 				type = "app";
-			# 				program = "nix build .#nixosConfigurations.iso-${system}.config.system.build.isoImage";
-			# 			};
-			# 		}
-			# 	)
-			# )
+			//
+			builtins.listToAttrs (
+				listAllSystems (
+					system: let pkgs = nixpkgsFor.${system}; in
+					{
+						name = "build-iso-cd-${system}";
+						value = {
+							type = "app";
+							program = "nix build .\\#nixosConfigurations.iso-cd-${system}.config.system.build.isoImage";
+						};
+					}
+				)
+			)
 		);
 
 		# nix develop

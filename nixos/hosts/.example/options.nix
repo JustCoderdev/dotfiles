@@ -17,7 +17,17 @@
 	common = {
 		core = {
 			bluetooth.enable = false;
-			nvidia.enable = false;
+			hardware = {
+				displays =
+				let
+					add-display = identifier: resolution: position:
+						{ inherit identifier resolution position; };
+				in
+				{
+					# Check all displays with xrandr
+					display = add-display "HDMI-0" "1920x1080" "0x0";
+				};
+			};
 
 			network.wakeOn = {
 				lan.enabledFor = [ ];
@@ -73,10 +83,26 @@
 			samba.enable = false;
 			virtualbox.enable = false;
 			webserver.enable = false;
-			nixcache.enable = false;
+			nixcache = {
+				enable = false;
+				instance-host = "msi.host.local";
+			};
 			nixbuilder = {
 				server.enable = false;
-				client.builders = [ ];
+				client.builders =
+				let
+					gen-builder = (
+						hostName: maxJobs:
+						{
+							inherit hostName maxJobs;
+							features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+							systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+						}
+					);
+				in
+				[
+					(gen-builder "msi.host.local" 6)
+				];
 			};
 		};
 	};

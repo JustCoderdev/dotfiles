@@ -24,11 +24,11 @@ in
 	let
 		mkStrOption = (
 			description:
-			lib.mkOption { inherit description; type = lib.types.str; }
+			lib.mkOption { inherit description; type = lib.types.nullOr lib.types.str; default = null; }
 		);
 		mkEnumOption = (
 			description: enum-items:
-			lib.mkOption { inherit description; type = lib.types.enum enum-items; }
+			lib.mkOption { inherit description; type = lib.types.nullOr (lib.types.enum enum-items); default = null; }
 		);
 	in
 	{
