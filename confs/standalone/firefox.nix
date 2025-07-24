@@ -88,26 +88,29 @@ in
 
 			ExtensionSettings =
 			let
-				gen-install-url = (
+				gen-extension-data = (
 					addon-name: 
-					{ install_url = "https://addons.mozilla.org/firefox/downloads/latest/${addon-name}/latest.xpi"; }
+					{
+						install_url = "https://addons.mozilla.org/firefox/downloads/latest/${addon-name}/latest.xpi";
+						installation_mode = "force_installed";
+					}
 				);
 			in
 			{
 				"*" = {
 					default_area = "menupanel";
-					installation_mode = "force_installed";
+					installation_mode = "allow";
 					private_browsing = true;
 				};
-				"addon@darkreader.org" = gen-install-url "darkreader";
-				"{5327e982-d0be-4b85-b661-dba2ef210ab8}" = gen-install-url "link-redirect-trace-addon";
-				"sponsorBlocker@ajay.app" = gen-install-url "sponsorblock";
-				"uBlock0@raymondhill.net" = gen-install-url "ublock-origin";
-				"myallychou@gmail.com" = gen-install-url "youtube-recommended-videos";
-				"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}" = gen-install-url "youtube-nonstop";
-				"firefox-compact-dark@mozilla.org" = gen-install-url "firefox-compact-dark@mozilla.org";
-				"{57015cac-9cb6-43b3-975a-b305fd4012c9}" = gen-install-url "two-finger-history-jump";
-				"{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = gen-install-url "user-agent-string-switcher";
+				"addon@darkreader.org" = gen-extension-data "darkreader";
+				"{5327e982-d0be-4b85-b661-dba2ef210ab8}" = gen-extension-data "link-redirect-trace-addon";
+				"sponsorBlocker@ajay.app" = gen-extension-data "sponsorblock";
+				"uBlock0@raymondhill.net" = gen-extension-data "ublock-origin";
+				"myallychou@gmail.com" = gen-extension-data "youtube-recommended-videos";
+				"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}" = gen-extension-data "youtube-nonstop";
+				"firefox-compact-dark@mozilla.org" = gen-extension-data "firefox-compact-dark@mozilla.org";
+				"{57015cac-9cb6-43b3-975a-b305fd4012c9}" = gen-extension-data "two-finger-history-jump";
+				"{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = gen-extension-data "user-agent-string-switcher";
 			};
 
 			FirefoxHome = {
