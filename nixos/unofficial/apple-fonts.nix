@@ -11,12 +11,12 @@ rec {
 
 	pro = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
-		hash = "sha256-IccB0uWWfPCidHYX6sAusuEZX906dVYo8IaqeX7/O88=";
+		hash = "sha256-090HwtgILtK/KGoOzcwz1iAtoiShKAVjiNhUDQtO+gQ=";
 	};
 
 	compact = fetchurl {
 		url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
-		hash = "sha256-PlraM6SwH8sTxnVBo6Lqt9B6tAZDC//VCPwr/PNcnlk=";
+		hash = "sha256-z70mts7oFaMTt4q7p6M7PzSw4auOEaiaJPItYqUpN0A=";
 	};
 
 	mono = fetchurl {

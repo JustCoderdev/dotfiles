@@ -97,7 +97,7 @@
 				extraSpecialArgs = args;
 				pkgs = nixpkgsFor.${system};
 				modules = [
-					inputs.stylix.homeManagerModules.stylix
+					inputs.stylix.homeModules.stylix
 					./stylix/base.nix { stylix.module = { inherit wallpapers_path; }; }
 					./stylix/hm.nix
 

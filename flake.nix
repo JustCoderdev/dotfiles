@@ -185,6 +185,7 @@
 
 			msi            = system-builder "msi"            "x86_64-linux"  "ryuji";
 			acer           = system-builder "acer"           "x86_64-linux"  "ryuji";
+			asus           = system-builder "asus"           "x86_64-linux"  "ryuji";
 		}
 		//
 		builtins.listToAttrs (

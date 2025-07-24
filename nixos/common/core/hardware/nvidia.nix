@@ -44,8 +44,8 @@ in
 		/* ls /dev/dri - sudo dmesg | grep drm */
 		boot.kernelParams = [ "nvidia-drm.fbdev=1" ]
 		++ lib.optionals (using-cpu-intel) [
-			"nosgx"
-			"snd-intel-dspcfg.dsp_driver=1"
+			# "nosgx"
+			# "snd-intel-dspcfg.dsp_driver=1"
 		];
 
 		services.xserver.videoDrivers = [ "nvidia" ];
