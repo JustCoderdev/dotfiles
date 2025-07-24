@@ -38,6 +38,7 @@ in
 		};
 
 		gpu = {
+			has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
 			manufacturer = mkEnumOption "GPU manufacturer" [ "intel" "amd" "nvidia" ];
 			architecture = mkStrOption "GPU architecture";
 		};

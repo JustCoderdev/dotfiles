@@ -44,11 +44,13 @@ in
 		/* ls /dev/dri - sudo dmesg | grep drm */
 		boot.kernelParams = [ "nvidia-drm.fbdev=1" ]
 		++ lib.optionals (using-cpu-intel) [
-			# "nosgx"
-			# "snd-intel-dspcfg.dsp_driver=1"
+			"nosgx"
+			"snd-intel-dspcfg.dsp_driver=1"
 		];
 
-		services.xserver.videoDrivers = [ "nvidia" ];
+		services.xserver.videoDrivers = [ ]
+		++ lib.optionals (cfg-hw.gpu.has-iGPU) [ "nvidia" ];
+
 		environment = {
 			sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 			systemPackages = with pkgs; [ nvitop ]; # radeontop for amd

@@ -28,7 +28,6 @@ in
 			"d   ${uhome}/Developer             0755 ${uname} users"
 			"d   ${uhome}/Developer/Github      0755 ${uname} users"
 			"d   ${uhome}/Developer/Projects    0755 ${uname} users"
-			"d   ${uhome}/Pictures/Screenshots  0755 ${uname} users"
 		];
 
 		users.users.${uname} = {
@@ -46,6 +45,7 @@ in
 			openssh.authorizedKeys.keys = [
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/ ryuji@acer"
+				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D ryuji@asus"
 			];
 		};
 
