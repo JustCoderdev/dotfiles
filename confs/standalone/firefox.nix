@@ -108,9 +108,9 @@ in
 				"uBlock0@raymondhill.net" = gen-extension-data "ublock-origin";
 				"myallychou@gmail.com" = gen-extension-data "youtube-recommended-videos";
 				"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}" = gen-extension-data "youtube-nonstop";
-				"firefox-compact-dark@mozilla.org" = gen-extension-data "firefox-compact-dark@mozilla.org";
-				"{57015cac-9cb6-43b3-975a-b305fd4012c9}" = gen-extension-data "two-finger-history-jump";
-				"{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = gen-extension-data "user-agent-string-switcher";
+				"firefox-compact-dark@mozilla.org" = gen-extension-data "default-compact-dark-theme";
+				# "{57015cac-9cb6-43b3-975a-b305fd4012c9}" = gen-extension-data "two-finger-history-jump";
+				# "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = gen-extension-data "user-agent-string-switcher";
 			};
 
 			FirefoxHome = {
