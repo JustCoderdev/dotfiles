@@ -156,7 +156,7 @@ in
 				Remove = [ "DuckDuckGo" "Bing" "Ecosia" "Qwant" "Wikipedia" ];
 				Add = [ {
 					Name = "DuckDuckGo*";
-					URLTemplate = "https://duckduckgo.com/q={searchTerms}&kah=uk-en%2Cit-it&k1=-1&k5=2&kak=-1&kao=-1&kap=-1&kaq=-1&kau=-1&kax=-1&kbe=0&kbg=-1&kl=wt-wt&kp=-2&kpsb=-1&kz=-1&kaj=m";
+					URLTemplate = "https://duckduckgo.com/{searchTerms}&kah=uk-en%2Cit-it&k1=-1&k5=2&kak=-1&kao=-1&kap=-1&kaq=-1&kau=-1&kax=-1&kbe=0&kbg=-1&kl=wt-wt&kp=-2&kpsb=-1&kz=-1&kaj=m";
 					Method = "GET";
 					IconURL = "https://duckduckgo.com/favicon.ico";
 					Alias = "@ddg";
