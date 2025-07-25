@@ -1,0 +1,137 @@
+hl4684:
+  mac: '00:03:50:01:06:48'
+  light:
+    light_entrata:
+      where: '11'
+      name: Luce Entrata
+    light_salotto_est:
+      where: '12'
+      name: Luce Salotto EST
+    light_salotto_ovest:
+      where: '13'
+      name: Luce Salotto OVEST
+    light_salotto_sud:
+      where: '14'
+      name: Luce Salotto SUD
+      
+    light_salotto_balcone_est:
+      where: '22'
+      name: Luce Salotto Balcone EST
+    light_salotto_balcone_ovest:
+      where: '23'
+      name: Luce Salotto Balcone OVEST
+      
+      
+    light_cucina_sud:
+      where: '15'
+      name: Luce Cucina SUD
+    light_cucina_est:
+      where: '16'
+      name: Luce Cucina EST
+    light_cucina_ovest:
+      where: '18'
+      name: Luce Cucina OVEST
+    light_cucina_piano:
+      where: '17'
+      name: Luce Cucina Piano Lavoro
+
+    light_cucina_balcone:
+      where: '21'
+      name: Luce Cucina Balcone
+      
+      
+    light_corridoio:
+      where: '24'
+      name: Luce Corridoio
+      
+      
+    light_matrimoniale:
+      where: '31'
+      name: Luce Matrimoniale
+    light_matrimoniale_alto:
+      where: '32'
+      name: Luce Matrimoniale Alto
+    
+    light_matrimoniale_balcone:
+      where: '33'
+      name: Luce Matrimoniale Balcone
+      
+      
+    light_cameretta:
+      where: '34'
+      name: Luce Cameretta
+      
+      
+    light_bagno:
+      where: '35'
+      name: Luce Bagno
+    light_bagno_specchio:
+      where: '36'
+      name: Luce Bagno Specchio
+      
+      
+      
+  climate:
+    zone_1:
+      zone: '1'
+      name: 'Termostato Soggiorno'
+      heat: True
+      cool: False
+      standalone: True
+    zone_2:
+      zone: '2'
+      name: 'Termostato Matrimoniale'
+      heat: True
+      cool: False
+      standalone: True
+    zone_3:
+      zone: '3'
+      name: 'Termostato Cameretta'
+      heat: True
+      cool: False
+      standalone: True
+    zone_4:
+      zone: '4'
+      name: 'Termostato Bagno'
+      heat: True
+      cool: False
+      standalone: True
+      
+      
+      
+  cover:
+    cover_salotto_ovest_1:
+      where: '41'
+      name: Tapparella Salotto OVEST 1
+    cover_salotto_ovest_2:
+      where: '42'
+      name: Tapparella Salotto OVEST 2
+    cover_salotto_sud:
+      where: '43'
+      name: Tapparella Salotto SUD
+
+
+    cover_cucina_SUD:
+      where: '44'
+      name: Tapparella Cucina SUD
+    cover_cucina_est:
+      where: '45'
+      name: Tapparella Cucina EST
+
+
+    cover_matrimoniale:
+      where: '46'
+      name: Tapparella Matrimoniale
+
+
+    cover_cameretta_est:
+      where: '47'
+      name: Tapparella Cameretta EST
+    cover_cameretta_nord:
+      where: '48'
+      name: Tapparella Cameretta NORD
+
+
+    cover_bagno:
+      where: '49'
+      name: Tapparella Bagno
