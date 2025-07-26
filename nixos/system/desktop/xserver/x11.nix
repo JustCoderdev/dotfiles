@@ -22,19 +22,23 @@ ${config.services.xserver.displayManager.setupCommands}
 				enable = xfce_cfg.enable || i3_cfg.enable;
 				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
 
-				#MSI:
-				# - DVI-D-0 : disconnected
-				# - HDMI-0  : connected (DigiQuest)
-				# - DP-0    : disconnected
-				# - DP-1    : connected (ASUS)
-
 				displayManager.setupCommands = let
 					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+					grep = "${pkgs.gnugrep}/bin/grep";
 				in 
 				builtins.concatStringsSep "\n" (
 					lib.attrsets.mapAttrsToList  (
 						name: value:
-						"${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal"
+''
+${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
+if [[ "''${?}" -eq 0 ]]; then
+	echo -e "Display ${value.identifier} \033[32mconnected\033[0m"
+	${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal
+else
+	echo -e "Display ${value.identifier} \033[31mdisconnected\033[0m"
+	${xrandr} --output ${value.identifier} --off
+fi
+''
 					) config.common.core.hardware.displays
 				);
 			};
