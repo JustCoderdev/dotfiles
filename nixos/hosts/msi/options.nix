@@ -28,7 +28,7 @@
 						{ inherit identifier resolution position; };
 				in
 				{
-					a-digiquest = add-display "HDMI-0" "1920x1080" "0x0";
+					a-digiquest = add-display "HDMI-1" "1920x1080" "0x0";
 					b-asus =      add-display "DP-1"   "1920x1080" "1920x0";
 				};
 			};
