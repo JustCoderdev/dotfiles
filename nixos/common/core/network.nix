@@ -57,6 +57,7 @@ in
 				# CLIENTS
 				"192.168.7.32" = [  "msi.host.local" ];
 				"192.168.7.33" = [ "acer.host.local" ];
+				"192.168.7.34" = [ "asus.host.local" ];
 			};
 		};
 	};
