@@ -36,6 +36,7 @@ in
 
 			isNormalUser = true;
 			createHome = true;
+			homeMode = "701";
 
 			initialPassword = "${uname}";
 

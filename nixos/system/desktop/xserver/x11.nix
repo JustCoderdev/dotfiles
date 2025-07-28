@@ -17,7 +17,12 @@ ${config.services.xserver.displayManager.setupCommands}
 			)
 		];
 
-		services = {
+		services =
+		{
+			displayManager.execCmd = lib.mkForce ''
+export PATH=${pkgs.lightdm}/sbin:$PATH
+GTK_THEME=Adawaita:dark exec ${pkgs.lightdm}/sbin/lightdm
+'';
 			xserver = {
 				enable = xfce_cfg.enable || i3_cfg.enable;
 				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
