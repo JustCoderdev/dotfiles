@@ -49,11 +49,11 @@ in
 		];
 
 		services.xserver.videoDrivers = [ ]
-		++ lib.optionals (cfg-hw.gpu.has-iGPU) [ "nvidia" ];
+		++ lib.optionals (!cfg-hw.gpu.has-iGPU) [ "nvidia" ];
 
 		environment = {
 			sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-			systemPackages = with pkgs; [ nvitop ]; # radeontop for amd
+			systemPackages = with pkgs; [ nvitop nvtopPackages.nvidia ]; # radeontop for amd
 		};
 
 		hardware.nvidia =
@@ -70,7 +70,7 @@ in
 			open = false && ge-turing; 
 
 			# Enable the Nvidia settings menu,
-			nvidiaSettings = false;
+			nvidiaSettings = true;
 		};
 	};
 }
