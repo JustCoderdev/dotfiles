@@ -34,6 +34,7 @@ let
 		feynman =      (add-arch 2028 "stable");
 	};
 	ge-turing = nvidia-archs.turing.year >= nvidia-archs.${cfg-hw.gpu.architecture}.year;
+	gt-turing = nvidia-archs.turing.year > nvidia-archs.${cfg-hw.gpu.architecture}.year;
 in
 
 {
@@ -49,12 +50,7 @@ in
 		];
 
 		services.xserver.videoDrivers = [ ]
-		++ lib.optionals (!cfg-hw.gpu.has-iGPU) [ "nvidia" ];
-
-		environment = {
-			sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-			systemPackages = with pkgs; [ nvitop nvtopPackages.nvidia ]; # radeontop for amd
-		};
+		++ lib.optionals (!cfg-hw.cpu.has-iGPU) [ "nvidia" ];
 
 		hardware.nvidia =
 		{
@@ -63,7 +59,7 @@ in
 
 			powerManagement = {
 				enable = false;  # saves gpu state to /tmp
-				finegrained = false && ge-turing;  # gpu off when idle (Turing or newer)
+				finegrained = cfg-hw.gpu.offload.enable && ge-turing;  # gpu off when idle (Turing or newer)
 			};
 
 			# Use open source driver (Turing or newer)
@@ -71,6 +67,53 @@ in
 
 			# Enable the Nvidia settings menu,
 			nvidiaSettings = true;
+			dynamicBoost.enable = true && cfg-hw.cpu.has-iGPU;
+
+			# Offload
+			prime = {
+				offload.enable = cfg-hw.gpu.offload.enable;
+				inherit (cfg-hw.gpu.offload) intelBusId nvidiaBusId;
+			};
 		};
+
+
+		environment = {
+			sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+
+			systemPackages = with pkgs; [ nvitop nvtopPackages.nvidia ] # radeontop for amd
+				++ lib.optionals (!cfg-hw.cpu.has-iGPU) [ pkgs.libva-utils ];
+
+			# VAAPI
+			variables = lib.mkIf (!cfg-hw.cpu.has-iGPU) {
+				NVD_BACKEND = "direct";
+				LIBVA_DRIVER_NAME = "nvidia";
+				MOZ_DISABLE_RDD_SANDBOX = "1"; # Firefox
+			};
+		};
+
+		programs.firefox.preferences =
+		let
+			ffVersion = config.programs.firefox.package.version;
+		in
+			lib.mkIf (cfg-hw.cpu.has-iGPU) {
+			"media.ffmpeg.vaapi.enabled" = lib.versionOlder ffVersion "137.0.0";
+			"media.hardware-video-decoding.force-enabled" = lib.versionAtLeast ffVersion "137.0.0";
+			"media.rdd-ffmpeg.enabled" = lib.versionOlder ffVersion "97.0.0";
+			"media.av1.enabled" = gt-turing;
+			"gfx.x11-egl.force-enabled" = true;
+			"widget.dmabuf.force-enabled" = true;
+		};
+
+		assertions = [ ]
+		++ lib.lists.optionals (cfg-hw.gpu.offload.enable) [
+			{
+				assertion = cfg-hw.offload.intelBusId != null;
+				message = "GPU offload is enabled but the intelBusId is not provided";
+			}
+			{
+				assertion = cfg-hw.offload.nvidiaBusId != null;
+				message = "GPU offload is enabled but the nvidiaBusId is not provided";
+			}
+		];
 	};
 }

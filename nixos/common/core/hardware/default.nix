@@ -35,12 +35,21 @@ in
 		cpu = {
 			manufacturer = mkEnumOption "CPU manufacturer" [ "intel" "amd" ];
 			architecture = mkStrOption "CPU architecture";
+			has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
 		};
 
 		gpu = {
-			has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
 			manufacturer = mkEnumOption "GPU manufacturer" [ "intel" "amd" "nvidia" ];
 			architecture = mkStrOption "GPU architecture";
+			offload = {
+				enable = lib.mkOption {
+					description = "Whether to enable gpu offload";
+					type = lib.types.bool;
+					default = cfg.cpu.has-iGPU;
+				};
+				intelBusId = mkStrOption "Intel bus id";
+				nvidiaBusId = mkStrOption "Nvidia bus id";
+			};
 		};
 
 		displays = lib.mkOption {
