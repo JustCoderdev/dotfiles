@@ -39,12 +39,10 @@ in
 		package = pkgs.mariadb;
 	};
 
-
 	# Mouse support
 	environment.systemPackages = with pkgs; [ piper
 	ciscoPacketTracer8 dbeaver-bin ];
 	services.ratbagd.enable = true;
-
 
 	# networking.interfaces."wlp3s0".ipv4.routes = [
 	# 	{
