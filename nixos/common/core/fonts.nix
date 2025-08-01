@@ -3,7 +3,7 @@
 {
 	fonts = {
 		packages = with pkgs; [
-			(callPackage  ../../unofficial/apple-fonts.nix {})
+			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {})
 			helvetica-neue-lt-std
 
 			# Mono fonts

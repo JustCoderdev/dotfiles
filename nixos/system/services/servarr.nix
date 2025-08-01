@@ -5,7 +5,7 @@ let
 in
 
 {
-	imports = [ ../../unofficial/prowlarr.nix ];
+	imports = [ ../../unofficial/modules/prowlarr.nix ];
 
 	# ------------------------------------------------------------ #
 

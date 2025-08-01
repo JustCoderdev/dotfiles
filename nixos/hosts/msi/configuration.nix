@@ -229,8 +229,8 @@ in
 
 		customComponents =
 		[
-			(pkgs.callPackage ../../unofficial/myhome.nix {
-				OWNd-pkg = (pkgs.python313Packages.callPackage ../../unofficial/OWNd.nix {});
+			(pkgs.callPackage ../../unofficial/pkgs/myhome.nix {
+				OWNd-pkg = (pkgs.python313Packages.callPackage ../../unofficial/pkgs/OWNd.nix {});
 			})
 		];
 

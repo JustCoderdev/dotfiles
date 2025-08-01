@@ -6,7 +6,7 @@ in
 
 {
 	disabledModules = [ "services/web-apps/immich.nix" ];
-	imports = [ ../../unofficial/immich.nix ];
+	imports = [ ../../unofficial/modules/immich.nix ];
 
 	config = lib.mkIf cfg.enable
 	{

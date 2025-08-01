@@ -27,7 +27,7 @@ xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal
 
 		environment.systemPackages = [
 #			(pkgs.where-is-my-sddm-theme.override { })
-			(pkgs.callPackage  ../../../unofficial/where-is-my-sddm-theme.nix {
+			(pkgs.callPackage  ../../../unofficial/pkgs/where-is-my-sddm-theme.nix {
 				variants = [ "qt5" ];
 				themeConfig.General = {
 					passwordInputWidth = "0.3";

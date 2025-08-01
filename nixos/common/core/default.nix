@@ -2,7 +2,7 @@
 
 {
 	imports = [
-		../../unofficial/dotfiles-backup.nix
+		../../unofficial/modules/dotfiles-backup.nix
 		./audio.nix
 		./avahi.nix
 		./bluetooth.nix
