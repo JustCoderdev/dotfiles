@@ -77,6 +77,8 @@
 			net.enable = true;
 		};
 
+		gaming.enable = true;
+
 		services = {
 			samba.enable = true;
 			webserver.enable = true;

@@ -107,11 +107,11 @@ in
 		assertions = [ ]
 		++ lib.lists.optionals (cfg-hw.gpu.offload.enable) [
 			{
-				assertion = cfg-hw.offload.intelBusId != null;
+				assertion = cfg-hw.gpu.offload.intelBusId != null;
 				message = "GPU offload is enabled but the intelBusId is not provided";
 			}
 			{
-				assertion = cfg-hw.offload.nvidiaBusId != null;
+				assertion = cfg-hw.gpu.offload.nvidiaBusId != null;
 				message = "GPU offload is enabled but the nvidiaBusId is not provided";
 			}
 		];
