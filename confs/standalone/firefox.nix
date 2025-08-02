@@ -135,7 +135,7 @@ in
 
 			Homepage = {
 				URL = "about:home";
-				Additional = [ "about:newtab" ];
+				# Additional = [ "about:newtab" ];
 				StartPage = "previous-session";
 				Locked = true;
 			};
