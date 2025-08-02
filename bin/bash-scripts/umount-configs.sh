@@ -38,6 +38,7 @@ ulink "${homepath}/.config/alacritty"  # Alacritty
 ulink "${homepath}/.config/clang"      # Clang
 ulink "${homepath}/.config/i3"         # i3
 ulink "${homepath}/.config/waybar"     # Waybar
+ulink "${homepath}/.config/MangoHud"   # MangoHud
 
 ulink "${homepath}/.clang-format"      # Clang format
 ulink "${homepath}/.emacs"             # Emacs

@@ -55,6 +55,7 @@ link "${DOT_FILES}/confs/alacritty"      "${homepath}/.config"  # Alacritty
 link "${DOT_FILES}/confs/clang"          "${homepath}/.config"  # Clang
 link "${DOT_FILES}/confs/i3"             "${homepath}/.config"  # i3
 link "${DOT_FILES}/confs/waybar"         "${homepath}/.config"  # Waybar
+link "${DOT_FILES}/confs/mangohud"       "${homepath}/.config/MangoHud"  # MangoHud
 
 link "${DOT_FILES}/confs/clang/.clang-format"    "${homepath}"  # Clang format
 link "${DOT_FILES}/confs/emacs/.emacs"           "${homepath}"  # Emacs

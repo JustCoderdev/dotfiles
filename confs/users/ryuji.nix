@@ -6,6 +6,8 @@ let
 		# "hyprland"
 		# "waybar"
 
+		"mangohud"
+
 		"neovim"
 		"emacs"
 

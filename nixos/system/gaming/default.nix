@@ -16,6 +16,7 @@ in
 		[
 			discord # Run with --disable-gpu
 
+			libstrangle # "Strangle" lock fps
 			goverlay # Edit overlay
 			mangohud # Overlay
 
@@ -27,6 +28,9 @@ in
 
 			# For both
 			# gamemoderun mangohud %command%
+
+			# For both
+			# strangle 60 gamemoderun mangohud %command%
 
 			prismlauncher  # Minecraft launcher
 
