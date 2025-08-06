@@ -5,14 +5,11 @@ let
 in
 
 {
-	disabledModules = [ "services/web-apps/immich.nix" ];
-	imports = [ ../../unofficial/modules/immich.nix ];
-
 	config = lib.mkIf cfg.enable
 	{
 		users.users.immich.extraGroups = [ "video" "render" ];
 
-		services.immich = {
+		unofficial.services.immich = {
 			inherit (cfg) enable openFirewall group;
 			mediaLocation = cfg.config-dir;
 			host = "127.0.0.1";

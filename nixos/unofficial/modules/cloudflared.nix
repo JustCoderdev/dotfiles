@@ -159,34 +159,6 @@ let
   };
 in
 {
-  imports = [
-    (lib.mkRemovedOptionModule
-      [
-        "services"
-        "cloudflared"
-        "user"
-      ]
-      ''
-        Cloudflared now uses a dynamic user, and this option no longer has any effect.
-
-        If the user is still necessary, please define it manually using users.users.cloudflared.
-      ''
-    )
-
-    (lib.mkRemovedOptionModule
-      [
-        "services"
-        "cloudflared"
-        "group"
-      ]
-      ''
-        Cloudflared now uses a dynamic user, and this option no longer has any effect.
-
-        If the group is still necessary, please define it manually using users.groups.cloudflared.
-      ''
-    )
-  ];
-
   options.unofficial.services.cloudflared = {
     inherit certificateFile;
 

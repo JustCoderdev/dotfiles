@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-#	services.fusuma.enable = true;
-
 #	boot.initrd.preLVMCommands = ''
 #		${pkgs.kbd}/bin/setleds +num
 #	'';

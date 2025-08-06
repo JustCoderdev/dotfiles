@@ -5,10 +5,6 @@ let
 in
 
 {
-	imports = [ ../../unofficial/modules/prowlarr.nix ];
-
-	# ------------------------------------------------------------ #
-
 	config =
 	let
 		get-service-options = (

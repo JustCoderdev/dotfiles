@@ -22,9 +22,6 @@ let
 in
 
 {
-	disabledModules = [ "services/networking/cloudflared.nix" ];
-	imports = [ ../../unofficial/modules/cloudflared.nix ];
-
 	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 	# inputs.nix-minecraft.nixosModules.minecraft-servers
 

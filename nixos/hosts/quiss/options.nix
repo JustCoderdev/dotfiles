@@ -48,6 +48,7 @@
 
 	system.services = {
 		samba.enable = true;
+		nixcache.enable = true;
 		nixbuilder = {
 			server = {
 				enable = true;

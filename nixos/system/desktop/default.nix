@@ -7,7 +7,6 @@ in
 
 {
 	imports = [
-		../../unofficial/modules/fusuma.nix
 		./xserver
 		./wayland
 	];

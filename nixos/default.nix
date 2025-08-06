@@ -9,6 +9,8 @@
 		./system/dev
 		./system/gaming
 		./system/services
+
+		./unofficial/modules
 	];
 
 	config = {

@@ -10,14 +10,6 @@ let
 in
 
 {
-	disabledModules = [ "services/networking/cloudflared.nix" ];
-	imports = [ 
-		# "${unstable-path}/nixos/modules/services/networking/cloudflared.nix"
-		../../unofficial/modules/cloudflared.nix
-	];
-
-	# ------------------------------------------------------------ #
-
 	config =
 	{
 		# Prompt for passphrase

@@ -1,85 +1,46 @@
-{ lib, settings, ... }:
-
-let
-	secrets = config.common.core.secrets;
-in
+{ ... }:
 
 {
-	# -------------------- #
+	# ------------------------------------------------------------ #
 
-	# Disable unbuildable services
-	services.printing.enable = lib.mkForce false;
-	services.thermald.enable = lib.mkForce false;
-	networking.networkmanager.plugins = lib.mkForce [ ];
+	# TUNNEL
 
-	# Other
-	hardware.enableRedistributableFirmware = true;
-	nixpkgs.config.allowUnsupportedSystem = true;
-
-	# -------------------- #
-
-	systemd.network = {
+	# Configure DNS on cloudflare interface
+	# <https://blog.cloudflare.com/argo-tunnels-that-live-forever/>
+	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/>
+	unofficial.services.cloudflared =
+	{
 		enable = true;
+		certificateFile = secrets.cloudflare.origin-cert.path;
 
-		netdevs =
+		tunnels."jarvis-hass" =
 		{
-			# Display
-			"10-br0".netdevConfig = {
-				Kind = "bridge";
-				Name = "br0";
-			};
-		};
+			credentialsFile = secrets.cloudflare.tunnel-creds."jarvis-hass".path;
+			default = "http_status:404";
 
-		networks = 
-		{
-			"20-enu1u1" = {
-				matchConfig.Name = "enu1u1";
-				networkConfig.Bridge = "br0";
-				linkConfig.RequiredForOnline = "enslaved";
-			};
+			originRequest.noTLSVerify = true;
 
-			"30-br0" = {
-				matchConfig.Name = "br0";
-				bridgeConfig = {};
-				address = [ "192.168.1.25/24" ];
-				networkConfig.DHCP = "no"; # "ipv4"
-			};
+			ingress =
+			let
+				create-rule = (
+					subdomain: proto: port: path:
+					{
+						"${subdomain}.foxburrow.org" =
+						{
+							inherit path;
+							service = "${proto}://127.0.0.1:${toString port}";
+						};
+					}
+				);
+			in
+			{ }
+			// (create-rule "hass"  "http" 8123 "/hass.*")
+			// {};
 		};
 	};
 
+	# ------------------------------------------------------------ #
 
-	networking = {
-		useDHCP = false;
 
-		hosts =
-		{
-			# "10.0.0.1"   = [ "gateway.local" ];
-			# "10.0.0.2"   = [  "switch.local" ];
-
-			# SERVERS
-			# "10.0.0.3" = [     "alpha.server.local" ];
-			# "10.0.0.4" = [ "alpha-ilo.server.local" ];
-
-			# "10.0.0.5" = [     "beta.server.local" ];
-			# "10.0.0.6" = [ "beta-ilo.server.local" ];
-
-			# "10.0.0.7" = [  "quiss.server.local" ];
-			# "10.0.0.8" = [ "jarvis.server.local" ];
-		};
-
-#		wireless = {
-#			enable = lib.mkForce true;
-#			secretsFile = secrets.wireless.path;
-#
-#			networks."WindTower-LTE".psk = "ext:windtower_lte_psk";
-#
-#			userControlled.enable = true;
-#			interfaces = [ "wlan0" ];
-#		};
-
-		nftables.enable = false;
-		networkmanager.unmanaged = [ "interface-name:enu1u1" ]; # "interface-name:wlan0" 
-		firewall.trustedInterfaces = [ "enu1u1" ];
-	};
 }
 

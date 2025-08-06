@@ -2,11 +2,11 @@
 
 {
 	imports = [
-		../../unofficial/modules/dotfiles-backup.nix
 		./audio.nix
 		./avahi.nix
 		./bluetooth.nix
 		./console.nix
+		./dotfiles-backup.nix
 		./firewall.nix
 		./fonts.nix
 		./hardware

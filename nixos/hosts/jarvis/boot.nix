@@ -10,4 +10,17 @@
 	boot.loader.generic-extlinux-compatible.enable = true;
 
 	swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+
+	# -------------------- #
+
+	# Disable unbuildable services
+	services.printing.enable = lib.mkForce false;
+	services.thermald.enable = lib.mkForce false;
+	networking.networkmanager.plugins = lib.mkForce [ ];
+
+	# Other
+	hardware.enableRedistributableFirmware = true;
+	nixpkgs.config.allowUnsupportedSystem = true;
+
+	# -------------------- #
 }

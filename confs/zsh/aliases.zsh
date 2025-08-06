@@ -38,7 +38,8 @@ alias mk="make"
 ## git
 alias gs="git status"
 alias gl="git log --all --color --decorate --oneline --graph"
-alias gd="git diff --cached"
+alias gd="git diff"
+alias gdc="git diff --cached"
 
 alias gf="git fetch"
 alias gp="git push"

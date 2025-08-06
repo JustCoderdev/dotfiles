@@ -8,7 +8,7 @@
   ...
 }:
 let
-  cfg = config.services.immich;
+  cfg = config.unofficial.services.immich;
   format = pkgs.formats.json { };
   isPostgresUnixSocket = lib.hasPrefix "/" cfg.database.host;
   isRedisUnixSocket = lib.hasPrefix "/" cfg.redis.host;
@@ -51,7 +51,7 @@ let
     ;
 in
 {
-  options.services.immich = {
+  options.unofficial.services.immich = {
     enable = mkEnableOption "Immich";
     package = lib.mkPackageOption pkgs "immich" { };
 

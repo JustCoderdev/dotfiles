@@ -13,15 +13,15 @@ hl4684:
     light_salotto_sud:
       where: '14'
       name: Luce Salotto SUD
-      
+
     light_salotto_balcone_est:
       where: '22'
       name: Luce Salotto Balcone EST
     light_salotto_balcone_ovest:
       where: '23'
       name: Luce Salotto Balcone OVEST
-      
-      
+
+
     light_cucina_sud:
       where: '15'
       name: Luce Cucina SUD
@@ -38,39 +38,39 @@ hl4684:
     light_cucina_balcone:
       where: '21'
       name: Luce Cucina Balcone
-      
-      
+
+
     light_corridoio:
       where: '24'
       name: Luce Corridoio
-      
-      
+
+
     light_matrimoniale:
       where: '31'
       name: Luce Matrimoniale
     light_matrimoniale_alto:
       where: '32'
       name: Luce Matrimoniale Alto
-    
+
     light_matrimoniale_balcone:
       where: '33'
       name: Luce Matrimoniale Balcone
-      
-      
+
+
     light_cameretta:
       where: '34'
       name: Luce Cameretta
-      
-      
+
+
     light_bagno:
       where: '35'
       name: Luce Bagno
     light_bagno_specchio:
       where: '36'
       name: Luce Bagno Specchio
-      
-      
-      
+
+
+
   climate:
     zone_1:
       zone: '1'
@@ -96,9 +96,9 @@ hl4684:
       heat: True
       cool: False
       standalone: True
-      
-      
-      
+
+
+
   cover:
     cover_salotto_ovest_1:
       where: '41'
