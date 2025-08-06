@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
 	cfg = config.common.core.hardware;
@@ -8,7 +8,8 @@ let
 in
 
 {
-	imports = [ ./nvidia.nix ./radeon.nix ];
+	imports = [ ./nvidia.nix ./radeon.nix ] 
+		++ lib.optionals (settings.is-raspi3 == true) [ ./raspi3.nix ];
 
 	config =
 	{

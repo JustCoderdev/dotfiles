@@ -15,8 +15,8 @@ in
 		users.users.${settings.username}.extraGroups = [ "networkmanager" ];
 
 		# Tethering
-		services.usbmuxd.enable = true;
-		environment.systemPackages = with pkgs; [ libimobiledevice ];
+		# services.usbmuxd.enable = true;
+		# environment.systemPackages = with pkgs; [ libimobiledevice ];
 
 		# Network settings
 		networking =
