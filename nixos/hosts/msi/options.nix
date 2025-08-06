@@ -107,6 +107,7 @@
 				[
 					(gen-builder "alpha.server.local" 8)
 					(gen-builder  "beta.server.local" 6)
+					(gen-builder "quiss.server.local" 4)
 				];
 			};
 		};
