@@ -3,6 +3,7 @@
 {
 	imports = [
 		./docker.nix
+		./home-assistant.nix
 		./immich.nix
 		./jellyfin.nix
 		./nixbuilder.nix
