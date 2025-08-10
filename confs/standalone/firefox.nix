@@ -44,6 +44,7 @@ in
 
 				"dom.security.https_only_mode" = false;
 				"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+				"security.tls.version.enable-deprecated" = true; # Needed for ilo
 				"sidebar.visibility" = "hide-sidebar";
 				"ui.key.menuAccessKeyFocuses" = false; # Disable `esc` key for menu
 			};
