@@ -180,7 +180,6 @@
 				++ [
 					({ settings, ... }: {
 						jcbin.rebuild-system.enable = true;
-						common.core.hardware.is-raspi3 = true;
 
 						# -------------------- #
 
@@ -212,7 +211,6 @@
 						];
 
 						jcbin.rebuild-system.enable = true;
-						common.core.hardware.is-raspi3 = true;
 
 						# -------------------- #
 
