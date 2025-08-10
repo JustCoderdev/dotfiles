@@ -13,8 +13,8 @@ in
 		networks."${beta-port-to-alpha}" = {
 			matchConfig.Name = beta-port-to-alpha;
 			address = [ "${beta-ip}/30" ];
+			linkConfig.RequiredForOnline = "no";
 		};
-		linkConfig.RequiredForOnline = "no";
 	};
 
 
