@@ -6,7 +6,7 @@ let
 in
 
 {
-	config =
+	config = lib.mkIf (xfce_cfg.enable || i3_cfg.enable)
 	{
 		environment.systemPackages =
 		[
@@ -24,7 +24,7 @@ export PATH=${pkgs.lightdm}/sbin:$PATH
 GTK_THEME=Adawaita:dark exec ${pkgs.lightdm}/sbin/lightdm
 '';
 			xserver = {
-				enable = xfce_cfg.enable || i3_cfg.enable;
+				enable = true;
 				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
 
 				displayManager.setupCommands = let
