@@ -1,7 +1,8 @@
-{ lib, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 {
-	stylix = {
+	stylix =
+	{
 		iconTheme = {
 			enable = true;
 			package = pkgs.adwaita-icon-theme;
