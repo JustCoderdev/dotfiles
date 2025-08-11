@@ -9,7 +9,7 @@ in
 	{
 		users.users.immich.extraGroups = [ "video" "render" ];
 
-		unofficial.services.immich = {
+		services.immich = {
 			inherit (cfg) enable openFirewall group;
 			mediaLocation = cfg.config-dir;
 			host = "127.0.0.1";
@@ -48,6 +48,7 @@ in
 					publicUsers = false;
 				};
 			};
+
 			accelerationDevices = null;
 			environment = {
 				# List of comma-separated IPs set as trusted proxies
