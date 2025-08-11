@@ -9,7 +9,7 @@
 			# Mono fonts
 			nerd-fonts.roboto-mono
 			roboto-mono
-			iosevka
+			# iosevka
 
 			# JPN fonts
 			ipaexfont
