@@ -52,6 +52,8 @@ in
 			environment = {
 				# List of comma-separated IPs set as trusted proxies
 				"IMMICH_TRUSTED_PROXIES" = "127.0.0.1";
+				"DB_STORAGE_TYPE" = "HDD";
+				"IMMICH_LOG_LEVEL" = "verbose";
 			};
 		};
 
