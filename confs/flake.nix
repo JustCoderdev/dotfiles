@@ -54,7 +54,7 @@
 				imports =
 				[
 					inputs.stylix.nixosModules.stylix
-					./stylix/base.nix { stylix.module = { inherit wallpapers_path; }; }
+					./stylix/base.nix { stylix.module = { inherit wallpapers_path; inherit (args) has_de; }; }
 					./stylix/nixos.nix
 
 					home-manager.nixosModules.home-manager
@@ -99,7 +99,7 @@
 				pkgs = nixpkgsFor.${system};
 				modules = [
 					inputs.stylix.homeModules.stylix
-					./stylix/base.nix { stylix.module = { inherit wallpapers_path; }; }
+					./stylix/base.nix { stylix.module = { inherit wallpapers_path has_de; }; }
 					./stylix/hm.nix
 
 					./users/${username}.nix

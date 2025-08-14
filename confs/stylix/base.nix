@@ -9,7 +9,7 @@ in
 	{
 		stylix  =
 		{
-			enable = lib.mkForce config.jcconfs.has_de;
+			enable = true && !cfg.has_de;
 
 			polarity = "dark";
 			base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
@@ -40,6 +40,7 @@ in
 
 	options.stylix.module =
 	{
+		has_de = lib.mkEnableOption "Specify if a desktop environment is present";
 		wallpapers_path = lib.mkOption {
 			type = lib.types.path;
 			description = "Specify the wallpapers directory";
