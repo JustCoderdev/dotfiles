@@ -14,7 +14,7 @@
 	system.services = {
 		home-assistant = {
 			enable = true;
-			openFirewall = false;
+			openFirewall = true;
 			proxy = {
 				enable = true;
 				host = "jarvis.server.local";

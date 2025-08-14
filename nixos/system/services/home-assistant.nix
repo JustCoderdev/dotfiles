@@ -118,7 +118,7 @@ in
 			enable = true;
 			virtualHosts."${cfg.proxy.host}" =
 			{
-				locations."^~ /home-assistant" = {
+				locations."^~ /hass" = {
 					proxyPass = "http://127.0.0.1:${toString hass-port}";
 					extraConfig = ""
 						+ "proxy_set_header Host $host;\n"
