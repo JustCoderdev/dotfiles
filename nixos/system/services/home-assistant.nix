@@ -21,7 +21,6 @@ in
 		in
 		[
 #		Type Path                                                         Mode User Group Age Argmuent
-			"d   ${cfg-hass.configDir}/blueprint                              0755 hass hass"
 			"L+  ${cfg-hass.configDir}/myhome.yaml                            0755 hass hass  -   ${myhome_yaml}"
 		];
 

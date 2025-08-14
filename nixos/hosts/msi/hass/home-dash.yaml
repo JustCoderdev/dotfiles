@@ -76,7 +76,7 @@ views:
               - temperature
               - humidity
             type: area
-            area: camera_da_letto
+            area: cameretta
           - type: tile
             entity: light.luce_cameretta
       - type: grid
@@ -92,7 +92,7 @@ views:
               - temperature
               - humidity
             type: area
-            area: camera_matrimoniale
+            area: matrimoniale
           - type: tile
             entity: light.luce_matrimoniale
           - type: tile
