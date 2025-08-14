@@ -15,6 +15,17 @@ pushd "${DOT_FILES}/" > /dev/null || exit
 shopt -s globstar
 
 
+publish_on_discord () {
+	message="${1}"
+
+	discordhook_path="${DOT_FILES}/secrets/discordhook.url"
+	if [ -e "${discordhook_path}" ]; then
+		completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
+		curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completed_message}\" }" "$(cat "${discordhook_path}")"
+	fi
+}
+
+
 # Check for input
 HOST_SHELL="${HOSTNAME:-}"
 HOST_INPUT="${1:-}"
@@ -154,18 +165,6 @@ else
 	echo -e "\n\033[31mNixOS rebuild failed\033[0m (code: $exit_code)"
 fi
 
-discordhook_path="${DOT_FILES}/secrets/discordhook.url"
-if [ -e "${discordhook_path}" ]; then
-	completion_message="Nixos rebuild terminated (code: ${exit_code})"
-	if [[ "${exit_code}" == 0 ]];
-	then
-		completion_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[32mNixos rebuild completed successfully\u001b[0m\n\`\`\`"
-	else
-		completion_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[31mNixos rebuild failed\u001b[0m\n\`\`\`"
-	fi
-	curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completion_message}\" }" "$(cat "${discordhook_path}")"
-fi
-
 echo -ne "\rExit in 3" && sleep 1
 echo -ne "\rExit in 2" && sleep 1
 echo -ne "\rExit in 1" && sleep 1
@@ -184,12 +183,15 @@ if [[ "${exit_code}" == 0 ]]; then
 
 		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
+
+		publish_on_discord "\u001b[32mNixOS rebuild #${generation} completed successfully\u001b[0m"
 	fi
 
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 
 else
 	echo -e "\033[31mFailed\033[0m\n"
+	publish_on_discord "\u001b[31mNixOS rebuild failed\u001b[0m"
 
 	grep -C 3 --color -F 'error' .nixos-switch.log
 	grep -C 3 --color -F 'fail' .nixos-switch.log
@@ -205,6 +207,8 @@ else
 		vim -R .nixos-switch.log
 	fi
 fi
+
+
 
 shopt -u globstar
 popd > /dev/null || exit
