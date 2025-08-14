@@ -126,7 +126,7 @@
 				];
 			in
 			{
-				enable = true;
+				enable = false;
 				outnetwork.interface = "wlp3s0";
 				subnetwork =
 				{
