@@ -188,12 +188,13 @@ There are 3 main directories:
 
 ```
 cd ${DOT_FILES}/secrets/cloudflare
+nix-shell -p cloudflared 
 
-nix-shell -p cloudflared --command 'cloudflared login'
+cloudflared login
 mv /home/${USER}/.cloudflared/cert.pem .
 
 cloudflared tunnel --origincert "$(pwd)/cert.pem" create home
-mv *.json home.json
+mv *.json tunnel-home.json
 ```
 
 ### WPA Supplicant psk

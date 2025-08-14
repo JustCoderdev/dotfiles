@@ -20,7 +20,6 @@
 				host = "jarvis.server.local";
 			};
 		};
-		nixcache.instance-host = "quiss.server.local";
 		nixbuilder = {
 			client.builders =
 			let
@@ -40,5 +39,6 @@
 				# (gen-builder  "beta.server.local" 6)
 			];
 		};
+		nixcache.instance-host = "quiss.server.local";
 	};
 }

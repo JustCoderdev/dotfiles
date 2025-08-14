@@ -124,7 +124,8 @@ if [ -z "${procs:-}" ]; then
 	procs="2"
 fi
 
-hprocs="$(( procs * 2 / 3 ))"
+hprocs=$((procs - 1))
+#hprocs="$(( procs * 2 / 3 ))"
 echo -e "Detected ${procs} processors, using ${hprocs} of them."
 
 echo -ne "\n"
