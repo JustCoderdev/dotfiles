@@ -184,7 +184,7 @@ if [[ "${exit_code}" == 0 ]]; then
 		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 
-		publish_on_discord "\u001b[32mNixOS rebuild #${generation} completed successfully\u001b[0m"
+		publish_on_discord "NixOS rebuild #${generation} completed\n\u001b[32mCommitted as: ${message}\u001b[0m"
 	fi
 
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
