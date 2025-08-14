@@ -201,7 +201,7 @@
 			lib.nixosSystem {
 				inherit (settings) system;
 				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
-				modules = (getUserModules settings)
+				modules = (getUserModules username)
 				++ [
 					({ pkgs, modulesPath, ... }: {
 						imports = [
@@ -211,6 +211,22 @@
 						];
 
 						jcbin.rebuild-system.enable = true;
+						system.services.nixbuilder.client.builders =
+						let
+							gen-builder = (
+								hostName: maxJobs:
+								{
+									inherit hostName maxJobs;
+									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+								}
+							);
+						in
+						[
+							(gen-builder "alpha.server.local" 8)
+							(gen-builder  "beta.server.local" 6)
+							(gen-builder "quiss.server.local" 4)
+						];
 
 						# -------------------- #
 
@@ -282,7 +298,7 @@
 						let inherit (host-data) hostname username system; in
 						{
 							name = "${hostname}-${username}_raspi3-img-sd_${system}_build-from_${build-platform-system}";
-							value = host-raspi3-img-sd-builder build-platform-system host-data;
+							value = host-raspi3-img-sd-builder build-platform-system host-data.username;
 						}
 					) (
 						builtins.filter (host-data: host-data.system == "aarch64-linux") hosts-list

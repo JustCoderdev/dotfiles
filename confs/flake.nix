@@ -65,7 +65,7 @@
 							{ ... }:
 							{
 								imports = [
-									inputs.stylix.homeModules.stylix
+									# inputs.stylix.homeModules.stylix
 									./stylix/hm.nix
 									./users/${cfg.username}.nix
 								];
@@ -134,7 +134,7 @@
 			let pkgs = nixpkgsFor.${system}; in
 			{
 				ryuji-activation       = self.homeConfigurations."${system}".ryuji.activationPackage;
-				ryuji-no-de-activation = self.homeConfigurations."${system}".ryuji-no-de.activationPackage;
+				ryuji-activation-no-de = self.homeConfigurations."${system}".ryuji-no-de.activationPackage;
 
 				# ryuji-activation       = (homeBuilder "ryuji" system true).activationPackage;
 				# ryuji-no-de-activation = (homeBuilder "ryuji" system false).activationPackage;

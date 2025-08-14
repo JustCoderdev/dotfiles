@@ -38,7 +38,7 @@ in
 		];
 
 		# Allow discovery
-		networking.firewall.extraCommands = ''
+		networking.firewall.extraCommands = lib.mkIf (!config.networking.nftables.enable) ''
 iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
 '';
 

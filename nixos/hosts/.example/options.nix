@@ -94,13 +94,6 @@
 
 		services = {
 			docker.enable = false;
-			samba.enable = false;
-			virtualbox.enable = false;
-			webserver.enable = false;
-			nixcache = {
-				enable = false;
-				instance-host = "msi.host.local";
-			};
 			nixbuilder = {
 				server.enable = false;
 				client.builders =
@@ -118,6 +111,33 @@
 					(gen-builder "msi.host.local" 6)
 				];
 			};
+			nixcache = {
+				enable = false;
+				instance-host = "msi.host.local";
+			};
+			routing =
+			{
+				enable = false;
+				outnetwork.interface = "";
+				subnetwork = {
+					interface = "";
+					address = "";
+					mask = 0;
+					self-ip = "";
+				};
+				dhcp = {
+					enable = false;
+					range = ""; 
+					reserved-leases = [];
+				};
+				nat = {
+					enable = false;
+					forwarded-ports = [];
+				};
+			};
+			samba.enable = false;
+			virtualbox.enable = false;
+			webserver.enable = false;
 		};
 	};
 }

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 
 {
 	imports = [
@@ -6,9 +6,10 @@
 		./home-assistant.nix
 		./immich.nix
 		./jellyfin.nix
+		./kvm.nix
 		./nixbuilder.nix
 		./nixcache.nix
-		./kvm.nix
+		./routing.nix
 		./samba.nix
 		./servarr.nix
 		./virtualbox.nix

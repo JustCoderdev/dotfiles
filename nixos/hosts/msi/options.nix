@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
 	jcbin = {
@@ -80,12 +80,6 @@
 
 		services = {
 			docker.enable = true;
-			samba = {
-				enable = true;
-				shares.user.enable = true;
-			};
-			webserver.enable = true;
-			nixcache.enable = true;
 			nixbuilder = {
 				server = {
 					enable = true;
@@ -110,6 +104,60 @@
 					(gen-builder "quiss.server.local" 4)
 				];
 			};
+			nixcache.enable = true;
+			routing =
+			let
+				get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
+				hosts = [
+					(get_conf "switch"    "58:97:1e:94:b7:40" "10.0.0.2" "local")
+
+					# -------------------- #
+
+					(get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local")
+					(get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local")
+
+					(get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local")
+					(get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local")
+
+					(get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local")
+					(get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.local")
+				];
+			in
+			{
+				enable = true;
+				outnetwork.interface = "wlp3s0";
+				subnetwork =
+				{
+					interface = "eno1";
+					address = "10.0.0.0";
+					mask = 24;
+					self-ip = "10.0.0.1";
+				};
+				dhcp = {
+					enable = true;
+					range = "10.0.0.16,10.0.0.127"; 
+					reserved-leases = hosts;
+				};
+				nat = {
+					enable = true;
+					forwarded-ports = builtins.map (
+						{ reserved-ip, ... }:
+						let
+							last-byte = lib.lists.last (lib.strings.splitString "." reserved-ip);
+						in
+						{
+							proto = "tcp";
+							sourcePort = lib.strings.toInt "50${last-byte}22";
+							destination = "${reserved-ip}:22";
+						}
+					) hosts;
+				};
+			};
+			samba = {
+				enable = true;
+				shares.user.enable = true;
+			};
+			webserver.enable = true;
 		};
 	};
 }
