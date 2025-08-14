@@ -176,7 +176,15 @@
 			lib.nixosSystem {
 				inherit (host-data) system;
 				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
-				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username)
+				modules = 
+				[
+					# (getHostModules host-data.hostname)
+					# ./nixos/hosts/${hostname}/hardware-configuration.nix
+					./nixos/hosts/${hostname}/boot.nix
+					./nixos/hosts/${hostname}/options.nix
+					./nixos/hosts/${hostname}/configuration.nix
+				]
+				++ (getUserModules host-data.username)
 				++ [
 					({ settings, ... }: {
 						jcbin.rebuild-system.enable = true;

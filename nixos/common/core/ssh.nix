@@ -132,6 +132,7 @@ You are accessing ${hostname}, one of my devices. DO NOT TOUCH
 '';
 
 			settings = {
+				LogLevel = "DEBUG3";
 				PermitRootLogin = "no";
 
 				UsePAM = true;

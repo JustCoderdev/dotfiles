@@ -109,17 +109,19 @@
 			let
 				get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
 				hosts = [
-					(get_conf "switch"    "58:97:1e:94:b7:40" "10.0.0.2" "local")
+					# (get_conf "switch"    "58:97:1e:94:b7:40" "10.0.0.2" "local")
 
 					# -------------------- #
 
-					(get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local")
-					(get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local")
+					(get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.local")
+					# (get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local")
+					# (get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local")
 
-					(get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local")
-					(get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local")
+					(get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local")
+					# (get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local")
+					# (get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local")
 
-					(get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local")
+					# (get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local")
 					(get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.local")
 				];
 			in

@@ -86,7 +86,8 @@ Host ${builder.hostName}
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIINNmsEslUoxDlBlJwsgywTD65lyhMQc4SK+XSUNaEh9 ryuji_buildclient@acer"
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILdgiQXUALwdkdhB4gfcIABtB09Bk/Ukpt5x8LiD0D5M ryuji_buildclient@asus"
 
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBE1GIRd5lcOktNue8wZmHtXzPAINRTFydaARWBkdroN ryuji_buildclient@niximg"
+						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBE1GlRd5lcOktNue8wZmHtXzPAINRTFydaARWBkdroN ryuji_buildclient@niximg"
+									 
 					];
 				};
 			}

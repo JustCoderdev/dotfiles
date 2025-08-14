@@ -132,12 +132,9 @@ nix build ".#${USER}-activation"
 
 - With NixOS
 
-> If you get a "relative path error for ./bin..."
->
-> - Remove local inputs from flake.nix (jcbin and jcconfs)
-> - Start rebuild `./bin/bash-scrips/rebuild-system.sh`
-> - Wait for rebuild to fail
-> - Add local inputs back
+> You will get "relative path error for ./bin..."
+> To fix it remove any mention of jcbin and jcconfs from `flake.lock`
+> and rebuild `./bin/bash-scrips/rebuild-system.sh`
 
 ```bash
 ./install.sh
