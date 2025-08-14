@@ -201,14 +201,15 @@
         ]
       },
       "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-VfE8IohNzW81DVjISmTIUP8iPwc3sv+767w03r7fVlk=",
         "path": "./bin",
         "type": "path"
       },
       "original": {
         "path": "./bin",
         "type": "path"
-      },
-      "parent": []
+      }
     },
     "jcconfs": {
       "inputs": {
@@ -219,14 +220,15 @@
         "stylix": "stylix"
       },
       "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-wz6nUYujuuHUXA2YHo0MrpiqZOaeNyiMx4TiGMS9z4o=",
         "path": "./confs",
         "type": "path"
       },
       "original": {
         "path": "./confs",
         "type": "path"
-      },
-      "parent": []
+      }
     },
     "nix-minecraft": {
       "inputs": {
