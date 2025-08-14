@@ -38,7 +38,7 @@ in
 				);
 			in
 			{ }
-			// (create-rule "hass"  "http" 8123 "/hass.*")
+			// (create-rule "hass" "http" 8123 ".*")
 			// {};
 		};
 	};
