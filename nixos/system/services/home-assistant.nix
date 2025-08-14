@@ -118,7 +118,7 @@ in
 			enable = true;
 			virtualHosts."${cfg.proxy.host}" =
 			{
-				locations."^~ /hass" = {
+				locations."/" = {
 					proxyPass = "http://127.0.0.1:${toString hass-port}";
 					extraConfig = ""
 						+ "proxy_set_header Host $host;\n"
@@ -135,6 +135,14 @@ in
 					+ "";
 			};
 		};
+
+		assertions = [
+			{
+				message = "Cannot enable home-assistant and immich under proxy because they both use the same base url path (/)";
+				assertion = !config.system.services.immich.enable;
+			}
+		];
+		
 	};
 
 	# ------------------------------------------------------------ #
