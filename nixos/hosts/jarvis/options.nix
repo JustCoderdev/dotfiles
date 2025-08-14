@@ -5,9 +5,12 @@
 
 	common.core = {
 		bluetooth.enable = true;
-		secrets.cloudflare = {
-			origin-cert.installed = true;
-			tunnel-creds."jarvis-hass".installed = true;
+		secrets = {
+			cloudflare = {
+				origin-cert.installed = true;
+				tunnel-creds."jarvis-hass".installed = true;
+			};
+			wireless.installed = true;
 		};
 	};
 

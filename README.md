@@ -203,6 +203,7 @@ mv *.json tunnel-home.json
 cd ${DOT_FILES}/secrets
 token=$(wpa_passphrase WindTower-LTE PSK)
 echo "windtower_lte_psk=${token}" > wireless.conf
+vim wireless.conf
 ```
 
 ### Nix Serve

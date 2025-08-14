@@ -46,5 +46,23 @@ in
 	# ------------------------------------------------------------ #
 
 	networking.hosts."192.168.1.50" = [ "display.local" ];
+
+	systemd.network = {
+		enable = true;
+		networks."enu1u1" = {
+			matchConfig.Name = "enu1u1";
+			address = [ "192.168.1.1/24" ];
+			linkConfig.RequiredForOnline = "no";
+		};
+	};
+
+	networking = {
+		networkmanager.enable = lib.mkForce false;
+		wireless = {
+			enable = lib.mkForce true;
+			secretsFile = config.common.core.secrets.wireless.path;
+			networks."WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
+		};
+	};
 }
 
