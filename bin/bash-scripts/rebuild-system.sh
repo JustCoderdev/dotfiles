@@ -147,10 +147,23 @@ else
 	set -o pipefail # Re-enable pipefail
 fi
 
-if [[ "${exit_code}" == 0 ]]; then
-echo  -e "\n\033[34mNixOS rebuild completed\033[0m (code: $exit_code)"
+if [[ "${exit_code}" == 0 ]];
+then
+	echo -e "\n\033[34mNixOS rebuild completed\033[0m (code: $exit_code)"
 else
-echo  -e "\n\033[31mNixOS rebuild failed\033[0m (code: $exit_code)"
+	echo -e "\n\033[31mNixOS rebuild failed\033[0m (code: $exit_code)"
+fi
+
+discordhook_path="${DOT_FILES}/secrets/discordhook.url"
+if [ -e "${discordhook_path}" ]; then
+	completion_message="Nixos rebuild terminated (code: ${exit_code})"
+	if [[ "${exit_code}" == 0 ]];
+	then
+		completion_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[32mNixos rebuild completed successfully\u001b[0m\n\`\`\`"
+	else
+		completion_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[31mNixos rebuild failed\u001b[0m\n\`\`\`"
+	fi
+	curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completion_message}\" }" "$(cat "${discordhook_path}")"
 fi
 
 echo -ne "\rExit in 3" && sleep 1
