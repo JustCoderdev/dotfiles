@@ -22,6 +22,8 @@ publish_on_discord () {
 	if [ -e "${discordhook_path}" ]; then
 		completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
 		curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completed_message}\" }" "$(cat "${discordhook_path}")"
+	else
+		echo -e "Discord hook url was not found, ignoring"
 	fi
 }
 
@@ -174,17 +176,20 @@ if [[ "${exit_code}" == 0 ]]; then
 	echo -e "Done\n"
 
 	## Commit changes
-	if [[ "${had_changes}" -ne 0 && "${want_commit}" -ne 0 ]]; then
+	if [[ "${had_changes}" -ne 0 && "${want_commit}" -ne 0 ]];
+	then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-		message="NixOS build ${HOSTNAME}#${generation}"
+		publish_on_discord "NixOS rebuild #${generation} completed\n"
 
+		message="NixOS build ${HOSTNAME}#${generation}"
 		read -rp "${message}: " commit_msg
 		message="${message}: ${commit_msg}"
 
 		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
+	else
 
-		publish_on_discord "NixOS rebuild #${generation} completed\n\u001b[32mCommitted as: ${message}\u001b[0m"
+		publish_on_discord "NixOS rebuild completed\n"
 	fi
 
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
