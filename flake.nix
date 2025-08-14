@@ -180,9 +180,9 @@
 				[
 					# (getHostModules host-data.hostname)
 					# ./nixos/hosts/${hostname}/hardware-configuration.nix
-					./nixos/hosts/${hostname}/boot.nix
-					./nixos/hosts/${hostname}/options.nix
-					./nixos/hosts/${hostname}/configuration.nix
+					./nixos/hosts/${host-data.hostname}/boot.nix
+					./nixos/hosts/${host-data.hostname}/options.nix
+					./nixos/hosts/${host-data.hostname}/configuration.nix
 				]
 				++ (getUserModules host-data.username)
 				++ [
