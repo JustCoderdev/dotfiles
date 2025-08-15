@@ -64,6 +64,11 @@ in
 					trusted_proxies = lib.mkIf (cfg.proxy.enable) [ "127.0.0.1" ];
 					use_x_forwarded_for = cfg.proxy.enable;
 				};
+
+				shell_command = {
+					usb_ports_on  = "sudo usb-ports-on";
+					usb_ports_off = "sudo usb-ports-off";
+				};
 			};
 
 			customComponents =
