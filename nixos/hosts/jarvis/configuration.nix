@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -80,6 +80,7 @@ in
 
 	networking = {
 		useDHCP = true;
+		useNetworkd = true;
 		networkmanager.enable = lib.mkForce false;
 
 		wireless = {
@@ -91,6 +92,40 @@ in
 			networks."WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
 			secretsFile = config.common.core.secrets.wireless.path;
 		};
+	};
+
+
+	environment.systemPackages =
+	let
+		usb-ports-off-pkg = pkgs.writeShellApplication {
+			name = "usb-ports-off";
+			runtimeInputs = [ pkgs.uhubctl ];
+			text = "uhubctl -l 1-1 -p 2 -a 0";
+		};
+		usb-ports-on-pkg = pkgs.writeShellApplication {
+			name = "usb-ports-on";
+			runtimeInputs = [ pkgs.uhubctl ];
+			text = "uhubctl -l 1-1 -p 2 -a 1";
+		};
+	in
+	[
+		usb-ports-off-pkg
+		usb-ports-on-pkg
+	];
+
+	security.sudo = {
+		enable = true;
+		extraRules = [{
+			groups = [ "wheel" "hass" ];
+			commands =
+			let
+				gen-command = (name: { command = "/run/current-system/sw/bin/${name}"; options = [ "NOPASSWD" ]; });
+			in
+			[
+				(gen-command "usb-ports-off")
+				(gen-command "usb-ports-on")
+			];
+		}];
 	};
 }
 

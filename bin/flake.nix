@@ -15,10 +15,10 @@
 			{ name = "backlight"; requiresSudo = true; }
 		];
 		bash-scripts = [
-			{ name = "mount-configs"; }
+			{ name = "mount-configs";  }
 			{ name = "umount-configs"; }
-			{ name = "rebuild-system";  requiresSudo = true; }
-			{ name = "eep";             requiresSudo = true; }
+			{ name = "rebuild-system"; }
+			{ name = "eep";  requiresSudo = true; }
 		];
 
 		packageProgram = (name: pkgs: pkgs.callPackage ./${name}/default.nix { });
@@ -43,11 +43,11 @@
 					environment.systemPackages =  [ pkg ];
 					security.sudo = lib.mkIf requiresSudo {
 						extraRules = [{
+							groups = [ "users" ];
 							commands = [{
-								command = "${pkg}/bin/${name}";
+								command = "/run/current-system/sw/bin/${name}";
 								options = [ "NOPASSWD" ];
 							}];
-							groups = [ "wheel" ];
 						}];
 					};
 				};
