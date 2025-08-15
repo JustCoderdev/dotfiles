@@ -19,7 +19,7 @@ views:
               - temperature
               - humidity
             type: area
-            area: soggiorno
+            area: salotto
           - type: tile
             entity: light.luce_salotto_est
           - type: tile
@@ -129,25 +129,11 @@ views:
     max_columns: 2
     cards: []
   - type: sections
-    max_columns: 4
+    max_columns: 2
     title: Tapparelle
     path: tapparelle
     icon: mdi:window-shutter
     sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: Bagno
-            heading_style: title
-            icon: mdi:bathtub
-          - type: entities
-            entities:
-              - entity: cover.tapparella_bagno
-            show_header_toggle: false
-            state_color: false
-            grid_options:
-              columns: full
-        column_span: 4
       - type: grid
         cards:
           - type: heading
@@ -162,32 +148,7 @@ views:
             show_header_toggle: false
             grid_options:
               columns: full
-        column_span: 4
-      - type: grid
-        cards:
-          - type: heading
-            heading: Cameretta
-            heading_style: title
-            icon: mdi:bed-single
-          - type: entities
-            entities:
-              - entity: cover.tapparella_cameretta_est
-              - entity: cover.tapparella_cameretta_nord
-            grid_options:
-              columns: full
-        column_span: 4
-      - type: grid
-        cards:
-          - type: heading
-            heading: Matrimoniale
-            heading_style: title
-            icon: mdi:bed-double
-          - type: entities
-            entities:
-              - entity: cover.tapparella_matrimoniale
-            grid_options:
-              columns: full
-        column_span: 4
+        column_span: 1
       - type: grid
         cards:
           - type: heading
@@ -200,13 +161,50 @@ views:
               - entity: cover.tapparella_cucina_sud
             grid_options:
               columns: full
-        column_span: 4
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading: Bagno
+            heading_style: title
+            icon: mdi:bathtub
+          - type: entities
+            entities:
+              - entity: cover.tapparella_bagno
+            show_header_toggle: false
+            state_color: false
+            grid_options:
+              columns: full
+      - type: grid
+        cards:
+          - type: heading
+            heading: Cameretta
+            heading_style: title
+            icon: mdi:bed-single
+          - type: entities
+            entities:
+              - entity: cover.tapparella_cameretta_est
+              - entity: cover.tapparella_cameretta_nord
+            grid_options:
+              columns: full
+      - type: grid
+        cards:
+          - type: heading
+            heading: Matrimoniale
+            heading_style: title
+            icon: mdi:bed-double
+          - type: entities
+            entities:
+              - entity: cover.tapparella_matrimoniale
+            grid_options:
+              columns: full
     header:
       card:
         type: markdown
         content: '# Controllo Tapparelle'
+    cards: []
   - type: sections
-    max_columns: 4
+    max_columns: 2
     title: Termostato
     path: termostato
     icon: mdi:thermostat
@@ -218,10 +216,10 @@ views:
             heading_style: title
             icon: mdi:texture-box
           - type: thermostat
-            entity: climate.termostato_soggiorno_1
+            entity: climate.termostato_soggiorno
             show_current_as_primary: true
           - type: thermostat
-            entity: climate.termostato_bagno_4
+            entity: climate.termostato_bagno
             show_current_as_primary: true
         column_span: 1
       - type: grid
@@ -231,26 +229,31 @@ views:
             heading_style: title
             icon: mdi:bed-king
           - type: thermostat
-            entity: climate.termostato_matrimoniale_2
+            entity: climate.termostato_matrimoniale
             show_current_as_primary: true
           - type: thermostat
-            entity: climate.termostato_cameretta_3
+            entity: climate.termostato_cameretta
             show_current_as_primary: true
     header:
       card:
         type: markdown
         content: '# Controllo Termostato'
+    cards: []
   - type: sections
-    max_columns: 4
+    max_columns: 2
     icon: mdi:gauge
     path: ''
     visible:
-      - user: 972c0e42490b401d833d3f4b2945c4ee
+      - user: d35ec065e1c14502924b0822b389c5c3
     sections:
       - type: grid
         cards:
+          - type: heading
+            icon: mdi:memory
+            heading: Processor
+            heading_style: title
           - type: tile
-            entity: binary_sensor.192_168_1_50
+            entity: binary_sensor.display_local
             features_position: bottom
             vertical: false
             grid_options:
@@ -269,10 +272,11 @@ views:
             period: 5minute
             type: statistics-graph
             entities:
-              - sensor.system_monitor_load_1m
+              - sensor.system_monitor_load_5_min
             stat_types:
-              - max
               - mean
+              - max
+              - min
             title: CPU Load
             logarithmic_scale: false
             hide_legend: true
@@ -286,6 +290,10 @@ views:
               rows: 2
       - type: grid
         cards:
+          - type: heading
+            icon: mdi:sd
+            heading: Memory
+            heading_style: title
           - chart_type: line
             period: 5minute
             type: statistics-graph
@@ -297,17 +305,6 @@ views:
               - max
             title: RAM
           - type: gauge
-            entity: sensor.system_monitor_swap_usage
-            name: Swap Usage
-            needle: true
-            severity:
-              green: 0
-              yellow: 40
-              red: 80
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: gauge
             entity: sensor.system_monitor_memory_usage
             needle: true
             severity:
@@ -318,13 +315,25 @@ views:
             grid_options:
               columns: 6
               rows: auto
+          - type: gauge
+            entity: sensor.system_monitor_swap_usage
+            name: Swap Usage
+            needle: true
+            severity:
+              green: 0
+              yellow: 40
+              red: 80
+            grid_options:
+              columns: 6
+              rows: auto
     header:
       card:
         type: markdown
         content: '# System Status'
     badges: []
+    cards: []
   - type: sections
-    max_columns: 4
+    max_columns: 2
     title: Devices
     path: devices
     icon: mdi:devices
@@ -337,9 +346,9 @@ views:
             icon: mdi:link-variant
           - type: history-graph
             entities:
-              - entity: binary_sensor.192_168_7_7
-              - entity: binary_sensor.192_168_7_32
-              - entity: binary_sensor.192_168_1_50
+              - entity: binary_sensor.quiss_server_local
+              - entity: binary_sensor.msi_host_local
+              - entity: binary_sensor.display_local
             title: History
             logarithmic_scale: false
           - type: tile
@@ -360,30 +369,31 @@ views:
             type: button
             tap_action:
               action: toggle
-            entity: button.wake_on_lan_f4_6d_04_99_cb_11
-            show_state: false
-            grid_options:
-              columns: 6
-              rows: 2
+            name: Wake Quiss
+            entity: button.wake_on_lan_quiss
           - show_name: true
             show_icon: true
             type: button
             tap_action:
               action: toggle
-            entity: button.wake_on_lan_d4_3b_04_51_45_28
+            show_state: false
+            grid_options:
+              columns: 6
+              rows: 2
+            entity: button.wake_on_lan_msi
             name: Wake MSI
           - type: tile
             features_position: bottom
             vertical: false
-            entity: binary_sensor.192_168_7_7
+            entity: binary_sensor.quiss_server_local
           - type: tile
             features_position: bottom
             vertical: false
-            entity: binary_sensor.192_168_7_32
+            entity: binary_sensor.msi_host_local
     header:
       card:
         type: markdown
         content: '# Devices'
     visible:
-      - user: 972c0e42490b401d833d3f4b2945c4ee
+      - user: d35ec065e1c14502924b0822b389c5c3
     cards: []
