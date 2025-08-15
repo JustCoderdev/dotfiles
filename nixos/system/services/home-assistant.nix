@@ -39,6 +39,8 @@ in
 				# <https://www.home-assistant.io/integrations/default_config/>
 				# default_config = { };
 
+				automation = "!include automations.yaml";
+
 				bluetooth = {};
 				config = {};
 				history = {};
