@@ -63,7 +63,7 @@ in
 		wireless = {
 			enable = lib.mkForce true;
 
-			userControlled.enable = true;
+			userControlled.enable = false;
 			interfaces = [ "wlan0" ];
 
 			networks."WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
