@@ -72,25 +72,25 @@ hl4684:
 
 
   climate:
-    zone_1:
+    zone_salotto:
       zone: '1'
-      name: 'Termostato Soggiorno'
+      name: 'Termostato Salotto'
       heat: True
       cool: False
       standalone: True
-    zone_2:
+    zone_matrimoniale:
       zone: '2'
       name: 'Termostato Matrimoniale'
       heat: True
       cool: False
       standalone: True
-    zone_3:
+    zone_cameretta:
       zone: '3'
       name: 'Termostato Cameretta'
       heat: True
       cool: False
       standalone: True
-    zone_4:
+    zone_bagno:
       zone: '4'
       name: 'Termostato Bagno'
       heat: True
