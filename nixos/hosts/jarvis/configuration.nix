@@ -47,6 +47,28 @@ in
 
 	networking.hosts."192.168.1.50" = [ "display.local" ];
 
+	networking.firewall.allowedTCPPorts = [ 80 ];
+# 	services.nginx =
+# 	{
+# 		enable = true;
+# 		virtualHosts."${proxy.host}" = let
+# 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
+# 		in {
+# 			locations = {
+# 				"= /home".return = "301 /home/index.html";
+# 				"^~ /home/" = {
+# 					root = data-dir + "/homepage";
+# 					index = "index.html";
+# 				};
+# 			};
+# 
+# 			# forceSSL = true;
+# 			addSSL = true;
+# 			sslCertificate = vhost-secrets.cert.path;
+# 			sslCertificateKey = vhost-secrets.key.path;
+# 		};
+# 	};
+
 	systemd.network = {
 		enable = true;
 		networks."enu1u1" = {
