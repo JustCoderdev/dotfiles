@@ -50,7 +50,7 @@ in
 			];
 		};
 
-		system.userActivationScripts =
+		system.activationScripts =
 		{
 			correct-ssh-perms.text = ''
 # Permission table found here
