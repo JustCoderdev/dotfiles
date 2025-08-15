@@ -1,14 +1,8 @@
-{ config, lib, pkgs, settings, ... }:
-
-let
-	cfg = config.stylix.module;
-in
+{ lib, pkgs, settings, ... }:
 
 {
 	stylix =
 	{
-		enable = true && cfg.has_de;
-
 		iconTheme = {
 			enable = true;
 			package = pkgs.adwaita-icon-theme;

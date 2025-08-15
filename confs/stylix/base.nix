@@ -7,8 +7,7 @@ in
 {
 	config =
 	{
-		stylix =
-		{
+		stylix = {
 			enable = true && cfg.has_de;
 
 			polarity = "dark";

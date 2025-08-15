@@ -65,9 +65,10 @@
 							{ ... }:
 							{
 								imports = [
-									# inputs.stylix.homeModules.stylix
+									inputs.stylix.homeModules.stylix
 									./stylix/base.nix 
 									./stylix/hm.nix
+
 									./users/${cfg.username}.nix
 								];
 
