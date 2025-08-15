@@ -45,7 +45,7 @@
 						extraRules = [{
 							groups = [ "users" ];
 							commands = [{
-								command = "${pkg}/bin/${name}";
+								command = "${config.system.path}/bin/${name}";
 								options = [ "NOPASSWD" ];
 							}];
 						}];
