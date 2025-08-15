@@ -7,9 +7,9 @@ in
 {
 	config =
 	{
-		stylix = lib.mkIf (cfg.has_de)
+		stylix =
 		{
-			enable = true;
+			enable = true && cfg.has_de;
 
 			polarity = "dark";
 			base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";

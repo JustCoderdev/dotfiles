@@ -5,8 +5,10 @@ let
 in
 
 {
-	stylix = lib.mkIf (cfg.has_de)
+	stylix =
 	{
+		enable = true && cfg.has_de;
+
 		autoEnable = true;
 		targets.plymouth.enable = false;
 		targets.lightdm.enable = true;

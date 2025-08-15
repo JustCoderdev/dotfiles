@@ -65,11 +65,17 @@
 							{ ... }:
 							{
 								imports = [
-									inputs.stylix.homeModules.stylix
-									./stylix/base.nix { stylix.module = { inherit wallpapers_path; inherit (cfg) has_de; }; }
+									# inputs.stylix.homeModules.stylix
+									./stylix/base.nix 
 									./stylix/hm.nix
 									./users/${cfg.username}.nix
 								];
+
+								stylix.enable = true && cfg.has_de;
+								stylix.module = {
+									inherit wallpapers_path;
+									inherit (cfg) has_de;
+								};
 							}
 						);
 					}

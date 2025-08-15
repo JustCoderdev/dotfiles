@@ -5,8 +5,10 @@ let
 in
 
 {
-	stylix = lib.mkIf (cfg.has_de)
+	stylix =
 	{
+		enable = true && cfg.has_de;
+
 		iconTheme = {
 			enable = true;
 			package = pkgs.adwaita-icon-theme;
