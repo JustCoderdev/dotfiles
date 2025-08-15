@@ -1,0 +1,205 @@
+- id: '1755262918335'
+  alias: Luce Cucina always on
+  description: ''
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: a6eb70f525f5cb55c264631e3e457798
+    entity_id: c96683885f662bdf5ea17af44f61689a
+    domain: light
+  mode: single
+- id: '1755263756265'
+  alias: Notify on eccessive processor temperature
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.system_monitor_processor_temperature
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    above: 50
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: 'Processor temperature above 50-C '
+    title: Jarvis status
+  mode: single
+- id: '1755266755250'
+  alias: Notify on eccessive processor load
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.system_monitor_processor_use
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    above: 1
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Processor load above 1-Task
+    title: Jarvis status
+  mode: single
+- id: '1755266935685'
+  alias: Notify MSI Connection
+  description: ''
+  triggers:
+  - type: connected
+    device_id: e77074a9796df65d5d5931eaac83139c
+    entity_id: 9656ab23b4e3544e9b640a2d7ec0481c
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Connected to network
+    title: MSI status
+  mode: single
+- id: '1755266999900'
+  alias: Notify MSI Disconnection
+  description: ''
+  triggers:
+  - type: not_connected
+    device_id: e77074a9796df65d5d5931eaac83139c
+    entity_id: 9656ab23b4e3544e9b640a2d7ec0481c
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Disconnected from network 5 seconds ago
+    title: MSI status
+  mode: single
+- id: '1755267083232'
+  alias: Notify Quiss Connection
+  description: ''
+  triggers:
+  - type: connected
+    device_id: 5c4f3dd8547ba4555aa077765c9a9f03
+    entity_id: b7ea981cd4b2fd6dfb21dc95ff6e937c
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Connected to network
+    title: Quiss status
+  mode: single
+- id: '1755267111418'
+  alias: Notify Quiss Disconnection
+  description: ''
+  triggers:
+  - type: not_connected
+    device_id: 5c4f3dd8547ba4555aa077765c9a9f03
+    entity_id: b7ea981cd4b2fd6dfb21dc95ff6e937c
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Disconnected from network 5 seconds ago
+    title: Quiss status
+  mode: single
+- id: '1755267318451'
+  alias: Notify Display Connection
+  description: ''
+  triggers:
+  - type: connected
+    device_id: 2fc88ab5eb44558e84ec37a486ec0eca
+    entity_id: 031d9b56b97703ee4428e8102a1bb951
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Connected to network
+    title: Display status
+  mode: single
+- id: '1755267363821'
+  alias: Notify Display Disconnection
+  description: ''
+  triggers:
+  - type: not_connected
+    device_id: 2fc88ab5eb44558e84ec37a486ec0eca
+    entity_id: 031d9b56b97703ee4428e8102a1bb951
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Disconnected from network 5 seconds ago
+    title: Display status
+  mode: single
+- id: '1755267931707'
+  alias: Tapparella Bagno down
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: d936572c99cafa5e33a15a245deda3c6
+    entity_id: 0923d682e74f719afb7b870e2417d03b
+    domain: light
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: bcb365ffbf832353239692a34918a62b
+    entity_id: bce239ce2a319fcbb7dc3bcd24babd84
+    domain: light
+  actions:
+  - device_id: cd01d6b421691ec8773f6081c27ce689
+    domain: cover
+    entity_id: af1252f760fff092e52e7dc6451ba53c
+    type: close
+  mode: single
+- id: '1755267977716'
+  alias: Tapparella Bagno stop
+  description: ''
+  triggers:
+  - type: turned_off
+    device_id: d936572c99cafa5e33a15a245deda3c6
+    entity_id: 0923d682e74f719afb7b870e2417d03b
+    domain: light
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: bcb365ffbf832353239692a34918a62b
+    entity_id: bce239ce2a319fcbb7dc3bcd24babd84
+    domain: light
+  actions:
+  - device_id: cd01d6b421691ec8773f6081c27ce689
+    domain: cover
+    entity_id: af1252f760fff092e52e7dc6451ba53c
+    type: stop
+  mode: single
