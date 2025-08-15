@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -57,11 +57,17 @@ in
 	};
 
 	networking = {
+		useDHCP = true;
 		networkmanager.enable = lib.mkForce false;
+
 		wireless = {
 			enable = lib.mkForce true;
-			secretsFile = config.common.core.secrets.wireless.path;
+
+			userControlled.enable = true;
+			interfaces = [ "wlan0" ];
+
 			networks."WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
+			secretsFile = config.common.core.secrets.wireless.path;
 		};
 	};
 }

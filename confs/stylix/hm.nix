@@ -1,7 +1,7 @@
 { config, lib, pkgs, settings, ... }:
 
 {
-	stylix =
+	stylix = 
 	{
 		iconTheme = {
 			enable = true;
