@@ -2,13 +2,16 @@
 
 let
 	secrets = config.common.core.secrets;
-	usb-pkgs =
+	usb-pkgs-data =
 	let
 		write-usb-app = (
 			name: text:
-			pkgs.writeShellApplication {
-				inherit name text;
-				runtimeInputs = [ pkgs.uhubctl ];
+			{
+				inherit name;
+				pkg = pkgs.writeShellApplication {
+					inherit name text;
+					runtimeInputs = [ pkgs.uhubctl ];
+				};
 			}
 		);
 	in
@@ -107,15 +110,16 @@ in
 		};
 	};
 
-	environment.systemPackages = (usb-pkgs) ++ [];
+	environment.systemPackages = [] ++ (
+		builtins.map (pkg-data: pkg-data.pkg) usb-pkgs-data
+	);
 	security.sudo = {
 		enable = true;
 		extraRules = [{
 			groups = [ "wheel" "hass" ];
 			commands = builtins.map (
-				pkg: { command = "${pkg}"; options = [ "NOPASSWD" ]; }
-			) usb-pkgs;
+				pkg-data: { command = "${pkg-data.pkg}/bin/${pkg-data.name}"; options = [ "NOPASSWD" ]; }
+			) usb-pkgs-data;
 		}];
 	};
 }
-
