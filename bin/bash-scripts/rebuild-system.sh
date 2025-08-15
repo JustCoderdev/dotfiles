@@ -106,7 +106,10 @@ else
 	then
 		echo -n "pinging... "
 
+		set +e # Disable error since it might return non-zero
 		ping -c 4 "${DOT_NIX_SUB_URL}" > /dev/null 2>&1
+		set -e # Re-enable error checking
+
 		# shellcheck disable=SC2181 #ah the irony
 		if [[ "${?}" -eq 0 ]]; then
 			echo -e "\033[32mONLINE\033[0m"

@@ -7,7 +7,7 @@ in
 {
 	config =
 	{
-		stylix  = lib.mkIf (cfg.has_de)
+		stylix = lib.mkIf (cfg.has_de)
 		{
 			enable = true;
 

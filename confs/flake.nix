@@ -65,7 +65,7 @@
 							{ ... }:
 							{
 								imports = [
-									# inputs.stylix.homeModules.stylix
+									inputs.stylix.homeModules.stylix
 									./stylix/base.nix { stylix.module = { inherit wallpapers_path; inherit (cfg) has_de; }; }
 									./stylix/hm.nix
 									./users/${cfg.username}.nix

@@ -1,15 +1,17 @@
 { config, lib, pkgs, settings, ... }:
 
+let
+	cfg = config.stylix.module;
+in
+
 {
-	stylix = 
+	stylix = lib.mkIf (cfg.has_de)
 	{
 		iconTheme = {
 			enable = true;
 			package = pkgs.adwaita-icon-theme;
 			dark = "Adawaita";
 		};
-
-		autoEnable = true;
 
 		targets = {
 			alacritty.enable = false;
