@@ -2,6 +2,20 @@
 
 let
 	secrets = config.common.core.secrets;
+	usb-pkgs =
+	let
+		write-usb-app = (
+			name: text:
+			pkgs.writeShellApplication {
+				inherit name text;
+				runtimeInputs = [ pkgs.uhubctl ];
+			}
+		);
+	in
+	[
+		(write-usb-app "usb-ports-off" "uhubctl -l 1-1 -p 2 -a 0")
+		(write-usb-app "usb-ports-on"  "uhubctl -l 1-1 -p 2 -a 1")
+	];
 in
 
 {
@@ -80,7 +94,6 @@ in
 
 	networking = {
 		useDHCP = true;
-		useNetworkd = true;
 		networkmanager.enable = lib.mkForce false;
 
 		wireless = {
@@ -94,37 +107,14 @@ in
 		};
 	};
 
-
-	environment.systemPackages =
-	let
-		usb-ports-off-pkg = pkgs.writeShellApplication {
-			name = "usb-ports-off";
-			runtimeInputs = [ pkgs.uhubctl ];
-			text = "uhubctl -l 1-1 -p 2 -a 0";
-		};
-		usb-ports-on-pkg = pkgs.writeShellApplication {
-			name = "usb-ports-on";
-			runtimeInputs = [ pkgs.uhubctl ];
-			text = "uhubctl -l 1-1 -p 2 -a 1";
-		};
-	in
-	[
-		usb-ports-off-pkg
-		usb-ports-on-pkg
-	];
-
+	environment.systemPackages = (usb-pkgs) ++ [];
 	security.sudo = {
 		enable = true;
 		extraRules = [{
 			groups = [ "wheel" "hass" ];
-			commands =
-			let
-				gen-command = (name: { command = "/run/current-system/sw/bin/${name}"; options = [ "NOPASSWD" ]; });
-			in
-			[
-				(gen-command "usb-ports-off")
-				(gen-command "usb-ports-on")
-			];
+			commands = builtins.map (
+				pkg: { command = "${pkg}"; options = [ "NOPASSWD" ]; }
+			) usb-pkgs;
 		}];
 	};
 }
