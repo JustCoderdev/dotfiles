@@ -72,6 +72,7 @@
 			};
 
 			neko.enable = true;
+			hass.enable = true;
 		};
 	};
 

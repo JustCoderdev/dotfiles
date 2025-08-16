@@ -25,6 +25,8 @@ in
 		# ------------------------------------------------------------ #
 		# great repo <https://github.com/Mic92/dotfiles/tree/393539385b0abfc3618e886cd0bf545ac24aeb67/machines/eve/modules/home-assistant>
 
+
+		# Generate files
 		systemd.tmpfiles.rules =
 		let
 			myhome_yaml = pkgs.writeText "myhome.yaml" (
@@ -125,6 +127,17 @@ in
 			"L+  ${cfg-hass.configDir}/myhome.nix   0755 hass hass  -   ${myhome_nix}"
 		];
 
+
+		# Generate hass key
+		users.users."hass".createHome = lib.mkForce true;
+		services.openssh.hostKeys = [ {
+			type = "ed25519";
+			comment = "hass@${settings.hostname}";
+			path = "/home/hass/.ssh/id_${settings.hostname}_hass";
+		} ];
+
+
+		# Enable hass service
 		services.home-assistant =
 		{
 			inherit (cfg) enable openFirewall;
