@@ -16,7 +16,7 @@ in
 			extraGroups = [ "users" ];
 			
 			openssh.authorizedKeys.keys = [
-
+				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDhsz69l4TWZ+vbGHNr5Ec5dgEoq40bj90Wkh1wPkESt hass@jarvis"
 			];
 		};
 	};
