@@ -4,6 +4,18 @@ let
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
 	hass-port = 8123;
+
+	wol-devices =
+	let
+		add-wol-dev = (
+			name: domain: mac: 
+			{ inherit name domain mac; }
+		);
+	in
+	[
+		(add-wol-dev "quiss" "server.local" "f4:6d:04:99:cb:11")
+		(add-wol-dev "msi"   "host.local"   "d4:3b:04:51:45:28")
+	];
 in
 
 {
@@ -18,10 +30,99 @@ in
 			myhome_yaml = pkgs.writeText "myhome.yaml" (
 				builtins.readFile "${dotfiles}/nixos/hosts/msi/hass/myhome.yaml"
 			);
+
+			myhome_nix =
+			let
+				id-from-name = (
+					name:
+					builtins.replaceStrings [" "] ["_"]
+						(lib.strings.toLower name)
+				);
+				add-light = (
+					where: name:
+					lib.attrsets.nameValuePair
+						(id-from-name name)
+						({ inherit where name; })
+				);
+				add-climate = (
+					zone: name:
+					lib.attrsets.nameValuePair (id-from-name name) (
+						{
+							inherit zone name;
+							heat = true;
+							cool = false;
+							standalone = true;
+						}
+					)
+				);
+				add-cover = add-light;
+				lights =
+				[
+					(add-light 11 "Luce Entrata")
+					(add-light 24 "Luce Corridoio")
+
+					(add-light 12 "Luce Salotto EST")
+					(add-light 13 "Luce Salotto OVEST")
+					(add-light 14 "Luce Salotto SUD")
+					(add-light 22 "Luce Salotto Balcone EST")
+					(add-light 23 "Luce Salotto Balcone OVEST")
+
+					(add-light 15 "Luce Cucina SUD")
+					(add-light 16 "Luce Cucina EST")
+					(add-light 17 "Luce Cucina OVEST")
+					(add-light 18 "Luce Cucina Piano Lavoro")
+					(add-light 21 "Luce Cucina Balcone")
+
+					(add-light 31 "Luce Matrimoniale")
+					(add-light 32 "Luce Matrimoniale Alto")
+					(add-light 33 "Luce Matrimoniale Balcone")
+
+					(add-light 34 "Luce Cameretta")
+
+					(add-light 35 "Luce Bagno")
+					(add-light 36 "Luce Bagno Specchio")
+				];
+				climates =
+				[
+					(add-climate 1 "Termostato Salotto")
+					(add-climate 2 "Termostato Matrimoniale")
+					(add-climate 3 "Termostato Cameretta")
+					(add-climate 4 "Termostato Bagno")
+				];
+				covers =
+				[
+					(add-cover 41 "Tapparella Salotto OVEST 1")
+					(add-cover 42 "Tapparella Salotto OVEST 2")
+					(add-cover 43 "Tapparella Salotto SUD")
+
+					(add-cover 44 "Tapparella Cucina SUD")
+					(add-cover 45 "Tapparella Cucina EST")
+
+					(add-cover 46 "Tapparella Matrimoniale")
+
+					(add-cover 47 "Tapparella Cameretta EST")
+					(add-cover 48 "Tapparella Cameretta NORD")
+
+					(add-cover 49 "Tapparella Bagno")
+				];
+			in
+			(
+				(pkgs.formats.yaml {}).generate "myhome-nix.yaml"
+				{
+					hl4684 =
+					{
+						mac = "00:03:50:01:06:48";
+						light = builtins.listToAttrs lights;
+						climate = builtins.listToAttrs climates;
+						cover = builtins.listToAttrs covers;
+					};
+				}
+			);
 		in
 		[
-#		Type Path                                                         Mode User Group Age Argmuent
-			"L+  ${cfg-hass.configDir}/myhome.yaml                            0755 hass hass  -   ${myhome_yaml}"
+#		Type Path                                   Mode User Group Age Argmuent
+			"L+  ${cfg-hass.configDir}/myhome.yaml  0755 hass hass  -   ${myhome_yaml}"
+			"L+  ${cfg-hass.configDir}/myhome.nix   0755 hass hass  -   ${myhome_nix}"
 		];
 
 		services.home-assistant =
@@ -40,13 +141,26 @@ in
 				# default_config = { };
 
 				automation = "!include automations.yaml";
+				logger.logs."homeassistant.components.shell_command" = "debug";
 
-				bluetooth = {};
+				# bluetooth = {};
 				config = {};
 				history = {};
 				recorder.commit_interval = 30;
 				image_upload = {};
 				mobile_app = {};
+
+				wake_on_lan = {};
+				switch = []
+				++ builtins.map (
+					{ name, domain, mac }:
+					{
+						inherit mac name;
+						platform = "wake_on_lan";
+						host = "${name}.${domain}";
+						turn_off.action = "shell_command.remote_${name}_eep";
+					}
+				) wol-devices;
 
 				homeassistant = {
 					name = "Burrow";
@@ -68,7 +182,17 @@ in
 				shell_command = {
 					usb_ports_on  = "sudo usb-ports-on";
 					usb_ports_off = "sudo usb-ports-off";
-				};
+				}
+				//
+				builtins.listToAttrs (
+					builtins.map (
+						{ name, domain, mac }:
+						{
+							name = "remote_${name}_eep";
+							value = "ssh hass@${name}.${domain} sudo eep";
+						}
+					) wol-devices
+				);
 			};
 
 			customComponents =
@@ -101,7 +225,7 @@ in
 				# #################### #
 
 				# "assist_pipeline"      # Voice Assistant
-				"bluetooth"
+				# "bluetooth"
 				"config"                 # Configure and manage HAss
 				# "conversation"         # Converse with Voice Assistant
 				# "dhcp"                 # Discover devices through DHCP
