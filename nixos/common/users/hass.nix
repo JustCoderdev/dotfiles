@@ -2,10 +2,11 @@
 
 let
 	cfg = config.common.users.hass;
+	cfg-hass = config.system.services.home-assistant;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable && !cfg-hass.enable)
 	{
 		users.users."hass" =
 		{
