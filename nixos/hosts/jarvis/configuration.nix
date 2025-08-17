@@ -118,8 +118,11 @@ in
 		extraRules = [{
 			groups = [ "wheel" "hass" ];
 			commands = builtins.map (
-				# "${pkg-data.pkg}/bin/${pkg-data.name}"
-				pkg-data: { command = "${config.system.path}/bin/${pkg-data.name}"; options = [ "NOPASSWD" ]; }
+				pkg-data:
+				{
+					command = "${config.system.path}/bin/${pkg-data.name}";
+					options = [ "NOPASSWD" ];
+				}
 			) usb-pkgs-data;
 		}];
 	};

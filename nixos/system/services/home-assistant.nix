@@ -29,11 +29,7 @@ in
 		# Generate files
 		systemd.tmpfiles.rules =
 		let
-			myhome_yaml = pkgs.writeText "myhome.yaml" (
-				builtins.readFile "${dotfiles}/nixos/hosts/msi/hass/myhome.yaml"
-			);
-
-			myhome_nix =
+			myhome_yaml =
 			let
 				id-from-name = (
 					name:
@@ -124,7 +120,6 @@ in
 		[
 #		Type Path                                   Mode User Group Age Argmuent
 			"L+  ${cfg-hass.configDir}/myhome.yaml  0755 hass hass  -   ${myhome_yaml}"
-			"L+  ${cfg-hass.configDir}/myhome.nix   0755 hass hass  -   ${myhome_nix}"
 		];
 
 
@@ -147,8 +142,7 @@ in
 			lovelaceConfigWritable = true;
 			configWritable = true;
 
-			# configDir = "/var/lib/hass";
-
+			configDir = "/var/lib/hass";
 			config = {
 				# <https://www.home-assistant.io/integrations/default_config/>
 				# default_config = { };
@@ -193,8 +187,8 @@ in
 				};
 
 				shell_command = {
-					usb_ports_on  = "sudo usb-ports-on";
-					usb_ports_off = "sudo usb-ports-off";
+					usb_ports_on  = "/usr/bin/env bash -c 'sudo usb-ports-on'";
+					usb_ports_off = "/usr/bin/env bash -c 'sudo usb-ports-off'";
 				}
 				//
 				builtins.listToAttrs (
@@ -202,7 +196,7 @@ in
 						{ name, domain, mac }:
 						{
 							name = "remote_${name}_eep";
-							value = "ssh hass@${name}.${domain} sudo eep";
+							value = "/usr/bin/env bash -c 'ssh hass@${name}.${domain} sudo eep'";
 						}
 					) wol-devices
 				);
