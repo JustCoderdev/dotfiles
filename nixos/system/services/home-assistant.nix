@@ -4,6 +4,7 @@ let
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
 	hass-port = 8123;
+	hass-ssh-key-path = "/home/hass/.ssh/id_${settings.hostname}_hass";
 
 	wol-devices =
 	let
@@ -67,8 +68,8 @@ in
 
 					(add-light 15 "Luce Cucina SUD")
 					(add-light 16 "Luce Cucina EST")
-					(add-light 17 "Luce Cucina OVEST")
-					(add-light 18 "Luce Cucina Piano Lavoro")
+					(add-light 17 "Luce Cucina Piano Lavoro")
+					(add-light 18 "Luce Cucina OVEST")
 					(add-light 21 "Luce Cucina Balcone")
 
 					(add-light 31 "Luce Matrimoniale")
@@ -128,9 +129,16 @@ in
 		services.openssh.hostKeys = [ {
 			type = "ed25519";
 			comment = "hass@${settings.hostname}";
-			path = "/home/hass/.ssh/id_${settings.hostname}_hass";
+			path = hass-ssh-key-path;
 		} ];
 
+
+		# Allow home assistant to run the `sudo` command
+		systemd.services.home-assistant = {
+			serviceConfig = {
+				NoNewPrivileges = lib.mkForce true;
+			};
+		};
 
 		# Enable hass service
 		services.home-assistant =
@@ -224,7 +232,7 @@ in
 						{ name, domain, mac }:
 						{
 							name = "remote_${name}_eep";
-							value = "${pkgs.openssh}/bin/ssh hass-agent@${name}.${domain} sudo eep";
+							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
 						}
 					) wol-devices
 				);
@@ -254,7 +262,7 @@ in
 #				"radio_browser"
 #				"shopping_list"
 
-#				"isal"
+				"isal"
 
 				# Default Components
 				# #################### #
