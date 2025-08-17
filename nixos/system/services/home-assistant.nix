@@ -137,8 +137,11 @@ in
 			serviceConfig = {
 				NoNewPrivileges = lib.mkForce false;
 				RestrictSUIDSGID = lib.mkForce false;
+				DeviceAllow = [ "char-usb rw" ];
 			};
 		};
+
+		users.users."hass".extraGroups = [ "dialout" ];
 
 		# Enable hass service
 		services.home-assistant =
@@ -166,6 +169,7 @@ in
 				};
 
 				automation = "!include automations.yaml";
+				logger.default = "info";
 
 				http = {
 					server_host = (
@@ -176,11 +180,6 @@ in
 					server_port = hass-port;
 					trusted_proxies = lib.mkIf (cfg.proxy.enable) [ "127.0.0.1" ];
 					use_x_forwarded_for = cfg.proxy.enable;
-				};
-
-				logger = {
-					default = "info";
-					logs."homeassistant.components.shell_command" = "debug";
 				};
 
 
@@ -216,8 +215,8 @@ in
 						name = builtins.replaceStrings ["-"] ["_"] name;
 						value = (
 							if pkg != null
-							then "${config.security.wrapperDir}/sudo ${pkg}/bin/${name}"
-							else ""
+							then "${pkg}/bin/${name}"
+							else "echo 'Package ${name} is not present!'; exit -1;"
 						);
 					}
 				) cfg.packages.usb
@@ -251,11 +250,11 @@ in
 				# Required
 				# #################### #
 
-#				"analytics"
-#				"google_translate"
-#				"met"
-#				"radio_browser"
-#				"shopping_list"
+				"analytics"
+				"google_translate"
+				"met"
+				"radio_browser"
+				"shopping_list"
 				"isal"
 
 				# Default Components

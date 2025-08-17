@@ -114,18 +114,28 @@ in
 		lib.attrsets.mapAttrsToList (name: pkg: pkg) usb-pkgs
 	);
 
+	services.udev.extraRules = ''
+# This is for Linux before 6.0:
+SUBSYSTEM=="usb", DRIVER=="hub|usb", MODE="0664", GROUP="dialout"
+
+# This is for Linux 6.0 or later (ok to keep this block present for older Linux kernels):
+SUBSYSTEM=="usb", DRIVER=="hub|usb", \
+	RUN+="/bin/sh -c \"chown -f root:dialout $sys$devpath/*port*/disable || true\"" \
+	RUN+="/bin/sh -c \"chmod -f 660 $sys$devpath/*port*/disable || true\""
+'';
+
 	system.services.home-assistant.packages.usb = { } // usb-pkgs;
-	security.sudo = {
-		enable = true;
-		extraRules = [{
-			groups = [ "wheel" "hass" ];
-			commands = lib.attrsets.mapAttrsToList (
-				name: pkg:
-				{
-					command = "${config.system.path}/bin/${name}";
-					options = [ "NOPASSWD" ];
-				}
-			) usb-pkgs;
-		}];
-	};
+	# security.sudo = {
+	# 	enable = true;
+	# 	extraRules = [{
+	# 		groups = [ "wheel" "hass" ];
+	# 		commands = lib.attrsets.mapAttrsToList (
+	# 			name: pkg:
+	# 			{
+	# 				command = "${config.system.path}/bin/${name}";
+	# 				options = [ "NOPASSWD" ];
+	# 			}
+	# 		) usb-pkgs;
+	# 	}];
+	# };
 }
