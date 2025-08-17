@@ -136,6 +136,7 @@ in
 		systemd.services.home-assistant = {
 			serviceConfig = {
 				NoNewPrivileges = lib.mkForce false;
+				RestrictSUIDSGID = lib.mkForce false;
 			};
 		};
 
