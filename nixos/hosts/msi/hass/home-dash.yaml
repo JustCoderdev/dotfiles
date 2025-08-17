@@ -272,14 +272,15 @@ views:
             period: 5minute
             type: statistics-graph
             entities:
-              - sensor.system_monitor_load_5_min
+              - sensor.system_monitor_load_1_min
+              - sensor.system_monitor_processor_use
             stat_types:
               - mean
               - max
               - min
             title: CPU Load
             logarithmic_scale: false
-            hide_legend: true
+            hide_legend: false
           - graph: line
             type: sensor
             entity: sensor.system_monitor_processor_temperature
@@ -303,6 +304,7 @@ views:
             stat_types:
               - mean
               - max
+              - min
             title: RAM
           - type: gauge
             entity: sensor.system_monitor_memory_usage
@@ -351,13 +353,6 @@ views:
               - entity: binary_sensor.display_local
             title: History
             logarithmic_scale: false
-          - type: tile
-            features_position: bottom
-            vertical: false
-            entity: sensor.uptime
-            grid_options:
-              columns: 12
-              rows: 1
       - type: grid
         cards:
           - type: heading
@@ -367,21 +362,14 @@ views:
           - show_name: true
             show_icon: true
             type: button
-            tap_action:
-              action: toggle
-            name: Wake Quiss
-            entity: button.wake_on_lan_quiss
+            entity: switch.quiss
+            show_state: false
+            icon: mdi:gesture-tap-button
           - show_name: true
             show_icon: true
             type: button
-            tap_action:
-              action: toggle
-            show_state: false
-            grid_options:
-              columns: 6
-              rows: 2
-            entity: button.wake_on_lan_msi
-            name: Wake MSI
+            entity: switch.msi
+            icon: mdi:gesture-tap-button
           - type: tile
             features_position: bottom
             vertical: false
@@ -397,3 +385,6 @@ views:
     visible:
       - user: d35ec065e1c14502924b0822b389c5c3
     cards: []
+    badges:
+      - type: entity
+        entity: sensor.uptime
