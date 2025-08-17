@@ -59,8 +59,6 @@
 				docs-editing = true;
 				image-editing = true;
 			};
-
-			neko.enable = true;
 		};
 	};
 
