@@ -1,14 +1,13 @@
 { config, lib, ... }:
 
 let
-	cfg = config.common.users.hass;
-	cfg-hass = config.system.services.home-assistant;
+	cfg = config.common.users.hass-agent;
 in
 
 {
-	config = lib.mkIf (cfg.enable && !cfg-hass.enable)
+	config = lib.mkIf (cfg.enable)
 	{
-		users.users."hass" =
+		users.users."hass-agent" =
 		{
 			isNormalUser = true;
 			createHome = false;
@@ -23,7 +22,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.common.users.hass =
+	options.common.users.hass-agent =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;

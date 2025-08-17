@@ -71,8 +71,8 @@
 				game-developing = false;
 			};
 
-			neko.enable = true;
-			hass.enable = true;
+			neko-agent.enable = true;
+			hass-agent.enable = true;
 		};
 	};
 

@@ -2,23 +2,21 @@
 
 let
 	secrets = config.common.core.secrets;
-	usb-pkgs-data =
+	usb-pkgs =
 	let
 		write-usb-app = (
 			name: text:
 			{
-				inherit name;
-				pkg = pkgs.writeShellApplication {
+				"${name}" = pkgs.writeShellApplication {
 					inherit name text;
 					runtimeInputs = [ pkgs.uhubctl ];
 				};
 			}
 		);
-	in
-	[
-		(write-usb-app "usb-ports-off" "uhubctl -l 1-1 -p 2 -a 0")
-		(write-usb-app "usb-ports-on"  "uhubctl -l 1-1 -p 2 -a 1")
-	];
+	in {}
+	// (write-usb-app "usb-ports-off" "uhubctl -l 1-1 -p 2 -a 0")
+	// (write-usb-app "usb-ports-on"  "uhubctl -l 1-1 -p 2 -a 1")
+	;
 in
 
 {
@@ -111,19 +109,21 @@ in
 	};
 
 	environment.systemPackages = [] ++ (
-		builtins.map (pkg-data: pkg-data.pkg) usb-pkgs-data
+		lib.attrsets.mapAttrsToList (name: pkg: pkg) usb-pkgs
 	);
+
+	system.services.home-assistant.packages.usb = { } // usb-pkgs;
 	security.sudo = {
 		enable = true;
 		extraRules = [{
 			groups = [ "wheel" "hass" ];
-			commands = builtins.map (
-				pkg-data:
+			commands = lib.attrsets.mapAttrsToList (
+				name: pkg:
 				{
-					command = "${config.system.path}/bin/${pkg-data.name}";
+					command = "${config.system.path}/bin/${name}";
 					options = [ "NOPASSWD" ];
 				}
-			) usb-pkgs-data;
+			) usb-pkgs;
 		}];
 	};
 }

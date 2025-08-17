@@ -1,13 +1,13 @@
 { config, lib, ... }:
 
 let
-	cfg = config.common.users.neko;
+	cfg = config.common.users.neko-agent;
 in
 
 {
 	config = lib.mkIf cfg.enable
 	{
-		users.users."neko" =
+		users.users."neko-agent" =
 		{
 			isNormalUser = true;
 			createHome = false;
@@ -21,7 +21,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.common.users.neko =
+	options.common.users.neko-agent =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;

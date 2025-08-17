@@ -2,8 +2,8 @@
 
 {
 	imports = [
-		./hass.nix
-		./neko.nix
+		./hass-agent.nix
+		./neko-agent.nix
 		./ryuji.nix
 	];
 }

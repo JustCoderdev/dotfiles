@@ -143,37 +143,21 @@ in
 			configWritable = true;
 
 			configDir = "/var/lib/hass";
-			config = {
+			config =
+			{
 				# <https://www.home-assistant.io/integrations/default_config/>
 				# default_config = { };
 
-				automation = "!include automations.yaml";
-				logger.logs."homeassistant.components.shell_command" = "debug";
 
-				# bluetooth = {};
-				config = {};
-				history = {};
-				recorder.commit_interval = 30;
-				image_upload = {};
-				mobile_app = {};
-
-				wake_on_lan = {};
-				switch = []
-				++ builtins.map (
-					{ name, domain, mac }:
-					{
-						inherit mac name;
-						platform = "wake_on_lan";
-						host = "${name}.${domain}";
-						turn_off.action = "shell_command.remote_${name}_eep";
-					}
-				) wol-devices;
+				# --- System --- #
 
 				homeassistant = {
 					name = "Burrow";
 					temperature_unit = "C";
 					unit_system = "metric";
 				};
+
+				automation = "!include automations.yaml";
 
 				http = {
 					server_host = (
@@ -186,17 +170,61 @@ in
 					use_x_forwarded_for = cfg.proxy.enable;
 				};
 
-				shell_command = {
-					usb_ports_on  = "/usr/bin/env bash -c 'sudo usb-ports-on'";
-					usb_ports_off = "/usr/bin/env bash -c 'sudo usb-ports-off'";
-				}
+				logger = {
+					default = "info";
+					logs."homeassistant.components.shell_command" = "debug";
+				};
+
+
+				# --- Integrations --- #
+
+				bluetooth = {};
+				config = {};
+				history = {};
+				recorder.commit_interval = 30;
+				image_upload = {};
+				mobile_app = {};
+				sun = { };
+
+				# Wake on LAN
+				wake_on_lan = {};
+				switch = []
+				++ builtins.map (
+					{ name, domain, mac }:
+					{
+						inherit mac name;
+						platform = "wake_on_lan";
+						host = "${name}.${domain}";
+						turn_off.action = "shell_command.remote_${name}_eep";
+					}
+				) wol-devices;
+
+
+				shell_command = {}
+				//
+				lib.attrsets.mapAttrs' (
+					name: pkg:
+					{
+						name = builtins.replaceStrings [" "] ["_"] name;
+						value = (
+							if pkg != null
+							then "${pkgs.sudo}/bin/sudo ${pkg}/bin/${name}"
+							else ""
+						);
+					}
+				) cfg.packages.usb
+				# //
+				# {
+				# 	usb_ports_on  = "${pkgs.sudo}/bin/sudo usb-ports-on";
+				# 	usb_ports_off = "${pkgs.sudo}/bin/sudo usb-ports-off";
+				# }
 				//
 				builtins.listToAttrs (
 					builtins.map (
 						{ name, domain, mac }:
 						{
 							name = "remote_${name}_eep";
-							value = "/usr/bin/env bash -c 'ssh hass@${name}.${domain} sudo eep'";
+							value = "${pkgs.openssh}/bin/ssh hass-agent@${name}.${domain} sudo eep";
 						}
 					) wol-devices
 				);
@@ -232,7 +260,7 @@ in
 				# #################### #
 
 				# "assist_pipeline"      # Voice Assistant
-				# "bluetooth"
+				"bluetooth"
 				"config"                 # Configure and manage HAss
 				# "conversation"         # Converse with Voice Assistant
 				# "dhcp"                 # Discover devices through DHCP
@@ -291,8 +319,23 @@ in
 		proxy = {
 			enable = lib.mkEnableOption "Add nginx locations for home assistant";
 			host = lib.mkOption {
-				type = lib.types.str;
 				description = "The virtualHost";
+				type = lib.types.str;
+			};
+		};
+
+		packages = {
+			usb = {
+				usb-ports-on = lib.mkOption {
+					description = "The usb-ports-on package or null";
+					type = lib.types.nullOr lib.types.package;
+					default = null;
+				};
+				usb-ports-off = lib.mkOption {
+					description = "The usb-ports-off package or null";
+					type = lib.types.nullOr lib.types.package;
+					default = null;
+				};
 			};
 		};
 
