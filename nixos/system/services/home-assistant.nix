@@ -178,13 +178,13 @@ in
 
 				# --- Integrations --- #
 
-				bluetooth = {};
+				# bluetooth = {};
 				config = {};
 				history = {};
 				recorder.commit_interval = 30;
 				image_upload = {};
 				mobile_app = {};
-				sun = { };
+				# sun = { };
 
 				# Wake on LAN
 				wake_on_lan = {};
@@ -205,7 +205,7 @@ in
 				lib.attrsets.mapAttrs' (
 					name: pkg:
 					{
-						name = builtins.replaceStrings [" "] ["_"] name;
+						name = builtins.replaceStrings ["-"] ["_"] name;
 						value = (
 							if pkg != null
 							then "${pkgs.sudo}/bin/sudo ${pkg}/bin/${name}"
@@ -260,7 +260,7 @@ in
 				# #################### #
 
 				# "assist_pipeline"      # Voice Assistant
-				"bluetooth"
+				# "bluetooth"
 				"config"                 # Configure and manage HAss
 				# "conversation"         # Converse with Voice Assistant
 				# "dhcp"                 # Discover devices through DHCP
