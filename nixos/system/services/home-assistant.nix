@@ -4,7 +4,7 @@ let
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
 	hass-port = 8123;
-	hass-ssh-key-path = "/home/hass/.ssh/id_${settings.hostname}_hass";
+	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${settings.hostname}_hass";
 
 	wol-devices =
 	let
@@ -125,7 +125,6 @@ in
 
 
 		# Generate hass key
-		users.users."hass".createHome = lib.mkForce true;
 		services.openssh.hostKeys = [ {
 			type = "ed25519";
 			comment = "hass@${settings.hostname}";
@@ -136,7 +135,7 @@ in
 		# Allow home assistant to run the `sudo` command
 		systemd.services.home-assistant = {
 			serviceConfig = {
-				NoNewPrivileges = lib.mkForce true;
+				NoNewPrivileges = lib.mkForce false;
 			};
 		};
 
@@ -208,7 +207,11 @@ in
 				) wol-devices;
 
 
-				shell_command = {}
+				shell_command =
+				{
+					id_me = "${pkgs.coreutils-full}/bin/id";
+					ls_ssh = "${pkgs.coreutils-full}/bin/ls -la /home/hass/.ssh";
+				}
 				//
 				lib.attrsets.mapAttrs' (
 					name: pkg:
@@ -221,11 +224,6 @@ in
 						);
 					}
 				) cfg.packages.usb
-				# //
-				# {
-				# 	usb_ports_on  = "${pkgs.sudo}/bin/sudo usb-ports-on";
-				# 	usb_ports_off = "${pkgs.sudo}/bin/sudo usb-ports-off";
-				# }
 				//
 				builtins.listToAttrs (
 					builtins.map (
@@ -261,7 +259,6 @@ in
 #				"met"
 #				"radio_browser"
 #				"shopping_list"
-
 				"isal"
 
 				# Default Components
