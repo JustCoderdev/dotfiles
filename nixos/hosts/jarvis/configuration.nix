@@ -93,10 +93,12 @@ in
 		};
 	};
 
-	networking = {
-		useDHCP = true;
+	networking =
+	{
+		useDHCP = false;
 		networkmanager.enable = lib.mkForce false;
-
+		interfaces."wlan0".useDHCP = true;
+		
 		wireless = {
 			enable = lib.mkForce true;
 

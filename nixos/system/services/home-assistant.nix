@@ -207,11 +207,7 @@ in
 				) wol-devices;
 
 
-				shell_command =
-				{
-					id_me = "${pkgs.coreutils-full}/bin/id";
-					ls_ssh = "${pkgs.coreutils-full}/bin/ls -la /home/hass/.ssh";
-				}
+				shell_command = { }
 				//
 				lib.attrsets.mapAttrs' (
 					name: pkg:
@@ -230,7 +226,7 @@ in
 						{ name, domain, mac }:
 						{
 							name = "remote_${name}_eep";
-							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
+							value = "${config.security.wrappers.sudo.source}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
 						}
 					) wol-devices
 				);
