@@ -215,7 +215,7 @@ in
 						name = builtins.replaceStrings ["-"] ["_"] name;
 						value = (
 							if pkg != null
-							then "${pkgs.sudo}/bin/sudo ${pkg}/bin/${name}"
+							then "${config.security.wrapperDir}/sudo ${pkg}/bin/${name}"
 							else ""
 						);
 					}
@@ -226,7 +226,7 @@ in
 						{ name, domain, mac }:
 						{
 							name = "remote_${name}_eep";
-							value = "${config.security.wrappers.sudo.source}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
+							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
 						}
 					) wol-devices
 				);
