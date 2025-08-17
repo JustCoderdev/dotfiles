@@ -39,6 +39,14 @@
 				};
 			};
 
+			network.wakeOn = {
+				knownDevices = {
+					  msi = "d4:3b:04:51:45:28";
+					quiss = "f4:6d:04:99:cb:11";
+					 acer = "a4:17:31:10:9e:ed";
+				};
+			};
+
 			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
 
