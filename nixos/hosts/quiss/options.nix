@@ -1,10 +1,7 @@
 { ... }:
 
 {
-	jcbin = {
-		eep.enable = true;
-		rebuild-system.enable = true;
-	};
+	jcbin.rebuild-system.enable = true;
 
 	common.core = {
 		hardware = {
