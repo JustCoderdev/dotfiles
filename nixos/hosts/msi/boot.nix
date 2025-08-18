@@ -9,6 +9,23 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 	# -- OLD UEFI -- #
 
+
+	# boot.loader.grub.enable = true;
+	# boot.loader.grub.device = "nodev";
+	# boot.loader.grub.efiSupport = true;
+	# boot.loader.grub.efiInstallAsRemovable = true;
+	# boot.loader.grub.useOSProber = false;
+	# boot.loader.grub.extraEntries = ''
+# menuentry "Reboot" {
+	# reboot
+# }
+# menuentry "Poweroff" {
+	# halt
+# }
+# '';
+
+
+
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	#Virtualisation
