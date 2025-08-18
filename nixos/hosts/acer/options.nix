@@ -4,7 +4,6 @@
 	jcbin = {
 		backlight.enable = true;
 		boomer.enable = true;
-		eep.enable = true;
 		rebuild-system.enable = true;
 	};
 
