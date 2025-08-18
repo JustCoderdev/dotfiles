@@ -163,7 +163,7 @@ in
 				};
 
 				automation = "!include automations.yaml";
-				logger.default = "info";
+				logger.default = "debug";
 
 				http = {
 					server_host = (
