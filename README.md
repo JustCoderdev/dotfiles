@@ -314,7 +314,7 @@ blkid # check if md0 shows up
 
 ### Mdadm maintenance
 
-src <https://www.thomas-krenn.com/en/wiki/Mdadm_recovery_and_resync>
+Source <https://www.thomas-krenn.com/en/wiki/Mdadm_recovery_and_resync>
 
 ```bash
 # hot remove
@@ -336,3 +336,30 @@ sudo smbpasswd -a <username>
 sudo pdbedit -L
 ```
 
+### No space left on device `/boot`
+
+Source <https://blog.tiserbox.com/posts/2024-04-15-how-to-fix-boot-volume-running-out-of-disk-space-in-nix-os.html>
+
+```
+# Check occupied space
+df -h /boot
+
+# Display all installed profiles
+nix profile history \
+    --profile /nix/var/nix/profiles/system
+
+# Remove profiles older than 14 days
+sudo nix profile wipe-history 
+    --profile /nix/var/nix/profiles/system \
+    --older-than 14d
+
+# Run garbage collection
+nix store gc
+
+# (You might need to move kernels out of /boot/kernels)
+mkdir -p /home/$USER/Documents/kernels
+sudo mv /boot/kernels/* /home/$USER/Documents/kernels
+
+# Rebuild
+rebuild-system
+```
