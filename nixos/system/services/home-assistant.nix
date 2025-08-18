@@ -6,9 +6,11 @@ let
 	hass-port = 8123;
 	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${settings.hostname}_hass";
 
-	add-wo-dev = (name: domain: mac: { inherit name domain mac; });
-	wol-devices  = [ (add-wo-dev "quiss" "server.local" "f4:6d:04:99:dc:9a") ];
-	wowl-devices = [ (add-wo-dev "msi"   "host.local"   "d4:3b:04:51:45:28") ];
+	add-wol-dev  = (name: domain: mac: { inherit name domain mac; command = "sudo poweroff"; });
+	add-wowl-dev = (name: domain: mac: { inherit name domain mac; command = "sudo eep"; });
+
+	wol-devices  = [ (add-wol-dev  "quiss" "server.local" "f4:6d:04:99:dc:9a") ];
+	wowl-devices = [ (add-wowl-dev "msi"   "host.local"   "d4:3b:04:51:45:28") ];
 in
 
 {
@@ -125,15 +127,15 @@ in
 
 
 		# Allow home assistant to run the `sudo` command
-		systemd.services.home-assistant = {
-			serviceConfig = {
-				NoNewPrivileges = lib.mkForce false;
-				RestrictSUIDSGID = lib.mkForce false;
-				# DeviceAllow = [ "char-usb rw" ];
-			};
-		};
+		# systemd.services.home-assistant = {
+		# 	serviceConfig = {
+		# 		NoNewPrivileges = lib.mkForce false;
+		# 		RestrictSUIDSGID = lib.mkForce false;
+		# 		DeviceAllow = [ "char-usb rw" ];
+		# 	};
+		# };
 
-		users.users."hass".extraGroups = [ "dialout" ];
+		# users.users."hass".extraGroups = [ "dialout" ];
 
 		# Enable hass service
 		services.home-assistant =
@@ -189,7 +191,7 @@ in
 				wake_on_lan = {};
 				switch = []
 				++ builtins.map (
-					{ name, domain, mac }:
+					{ name, domain, mac, ... }:
 					{
 						inherit mac name;
 						platform = "wake_on_lan";
@@ -219,19 +221,7 @@ in
 							name = "remote_${name}_wo_poweroff";
 							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} ${command}";
 						}
-					) (
-						(
-							builtins.map (
-								{ ... }@data: { inherit (data) name domain mac; command = "sudo poweroff"; }
-							) wol-devices
-						)
-						++ 
-						(
-							builtins.map (
-								{ ... }@data: { inherit (data) name domain mac; command = "sudo eep"; }
-							) wowl-devices
-						)
-					)
+					) (wol-devices ++ wowl-devices)
 				);
 			};
 
