@@ -6,17 +6,9 @@ let
 	hass-port = 8123;
 	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${settings.hostname}_hass";
 
-	wol-devices =
-	let
-		add-wol-dev = (
-			name: domain: mac: 
-			{ inherit name domain mac; }
-		);
-	in
-	[
-		(add-wol-dev "quiss" "server.local" "f4:6d:04:99:cb:11")
-		(add-wol-dev "msi"   "host.local"   "d4:3b:04:51:45:28")
-	];
+	add-wo-dev = (name: domain: mac: { inherit name domain mac; });
+	wol-devices  = [ (add-wo-dev "quiss" "server.local" "f4:6d:04:99:dc:9a") ];
+	wowl-devices = [ (add-wo-dev "msi"   "host.local"   "d4:3b:04:51:45:28") ];
 in
 
 {
@@ -137,7 +129,7 @@ in
 			serviceConfig = {
 				NoNewPrivileges = lib.mkForce false;
 				RestrictSUIDSGID = lib.mkForce false;
-				DeviceAllow = [ "char-usb rw" ];
+				# DeviceAllow = [ "char-usb rw" ];
 			};
 		};
 
@@ -202,10 +194,9 @@ in
 						inherit mac name;
 						platform = "wake_on_lan";
 						host = "${name}.${domain}";
-						turn_off.action = "shell_command.remote_${name}_eep";
+						turn_off.action = "shell_command.remote_${name}_wo_poweroff";
 					}
-				) wol-devices;
-
+				) (wol-devices ++ wowl-devices);
 
 				shell_command = { }
 				//
@@ -215,7 +206,7 @@ in
 						name = builtins.replaceStrings ["-"] ["_"] name;
 						value = (
 							if pkg != null
-							then "${pkg}/bin/${name}"
+							then "${pkgs.coreutils-full}/bin/id; ${pkg}/bin/${name}"
 							else "echo 'Package ${name} is not present!'; exit -1;"
 						);
 					}
@@ -223,12 +214,24 @@ in
 				//
 				builtins.listToAttrs (
 					builtins.map (
-						{ name, domain, mac }:
+						{ name, domain, mac, command }:
 						{
-							name = "remote_${name}_eep";
-							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} sudo eep";
+							name = "remote_${name}_wo_poweroff";
+							value = "${pkgs.openssh}/bin/ssh -i '${hass-ssh-key-path}' hass-agent@${name}.${domain} ${command}";
 						}
-					) wol-devices
+					) (
+						(
+							builtins.map (
+								{ ... }@data: { inherit (data) name domain mac; command = "sudo poweroff"; }
+							) wol-devices
+						)
+						++ 
+						(
+							builtins.map (
+								{ ... }@data: { inherit (data) name domain mac; command = "sudo eep"; }
+							) wowl-devices
+						)
+					)
 				);
 			};
 
