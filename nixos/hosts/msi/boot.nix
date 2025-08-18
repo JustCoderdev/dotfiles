@@ -4,25 +4,25 @@
 	#Bootloader
 
 	# -- OLD UEFI -- #
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.systemd-boot.configurationLimit = 5;
+	# boot.loader.systemd-boot.enable = true;
+	# boot.loader.systemd-boot.configurationLimit = 5;
 	boot.loader.efi.canTouchEfiVariables = true;
 	# -- OLD UEFI -- #
 
 
-	# boot.loader.grub.enable = true;
-	# boot.loader.grub.device = "nodev";
-	# boot.loader.grub.efiSupport = true;
+	boot.loader.grub.enable = true;
+	boot.loader.grub.device = "nodev";
+	boot.loader.grub.efiSupport = true;
 	# boot.loader.grub.efiInstallAsRemovable = true;
-	# boot.loader.grub.useOSProber = false;
-	# boot.loader.grub.extraEntries = ''
-# menuentry "Reboot" {
-	# reboot
-# }
-# menuentry "Poweroff" {
-	# halt
-# }
-# '';
+	boot.loader.grub.useOSProber = false;
+	boot.loader.grub.extraEntries = ''
+menuentry "Reboot" {
+	reboot
+}
+menuentry "Poweroff" {
+	halt
+}
+'';
 
 
 
