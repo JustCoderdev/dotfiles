@@ -28,7 +28,7 @@
 			};
 			
 			network.wakeOn.knownDevices = {
-				quiss = "f4:6d:04:99:cb:11";
+				quiss = "f4:6d:04:99:dc:9a";
 				  msi = "d4:3b:04:51:45:28";
 			};
 

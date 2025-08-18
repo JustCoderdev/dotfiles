@@ -38,7 +38,7 @@
 			network.wakeOn = {
 				wlan.enabledFor = [ "phy0" ];
 				knownDevices = {
-					quiss = "f4:6d:04:99:cb:11";
+					quiss = "f4:6d:04:99:dc:9a";
 					 acer = "a4:17:31:10:9e:ed";
 				};
 			};
