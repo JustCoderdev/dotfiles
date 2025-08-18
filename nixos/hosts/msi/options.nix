@@ -3,6 +3,7 @@
 {
 	jcbin = {
 		boomer.enable = true;
+		eep.enable = true;
 		rebuild-system.enable = true;
 	};
 
