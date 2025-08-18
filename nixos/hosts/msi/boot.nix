@@ -9,23 +9,11 @@
 	# boot.loader.efi.canTouchEfiVariables = true;
 	# -- OLD UEFI -- #
 
-
 	boot.loader.grub.enable = true;
-	boot.loader.grub.device = "nodev";
-	boot.loader.grub.efiSupport = true;
-	boot.loader.grub.efiInstallAsRemovable = true;
-	boot.loader.grub.useOSProber = false;
-	boot.loader.grub.gfxmodeBios = "1920x1080";
-	boot.loader.grub.gfxmodeEfi = "1920x1080";
-	boot.loader.grub.extraEntries = ''
-menuentry "Reboot" {
-	reboot
-}
-menuentry "Poweroff" {
-	halt
-}
-'';
-
+	common.core.bootloader = {
+		support-efi = true;
+		display-resolution = "1920x1080";
+	};
 
 
 	boot.kernelPackages = pkgs.linuxPackages_latest;

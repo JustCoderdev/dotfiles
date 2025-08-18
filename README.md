@@ -341,6 +341,8 @@ sudo pdbedit -L
 Source <https://blog.tiserbox.com/posts/2024-04-15-how-to-fix-boot-volume-running-out-of-disk-space-in-nix-os.html>
 
 ```
+sudo su
+
 # Check occupied space
 df -h /boot
 
@@ -363,3 +365,27 @@ sudo mv /boot/kernels/* /home/$USER/Documents/kernels
 # Rebuild
 rebuild-system
 ```
+
+### GRUB doesn't start because of EFI
+
+```nix
+grub.nix
+
+boot.loader.efi.canTouchEfiVariables = false;
+
+boot.loader.grub.enable = true;
+boot.loader.grub.device = "nodev";
+boot.loader.grub.efiSupport = true;
+boot.loader.grub.efiInstallAsRemovable = true;
+```
+
+Regenerate boot `BOOTX64.EFI`
+
+```
+sudo su
+mkdir -p /home/$USER/Documents/boot
+mv -r /boot/* /home/$USER/Documents/boot
+
+rm -rv /boot/*
+```
+

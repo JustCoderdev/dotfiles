@@ -5,6 +5,7 @@
 		./audio.nix
 		./avahi.nix
 		./bluetooth.nix
+		./bootloader.nix
 		./console.nix
 		./dotfiles-backup.nix
 		./firewall.nix
