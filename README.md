@@ -368,6 +368,8 @@ rebuild-system
 
 ### GRUB doesn't start because of EFI
 
+Source <https://discourse.nixos.org/t/systemd-boot-keeps-starting-even-if-grub-is-installed/23065/8>
+
 ```nix
 grub.nix
 
