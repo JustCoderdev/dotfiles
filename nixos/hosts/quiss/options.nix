@@ -35,7 +35,7 @@
 			nix-serve.priv-key.installed = true;
 		};
 		network.wakeOn = {
-			lan.enabledFor = [ "eno1" ];
+			lan.enabledFor = [ "eno1" "enp8s2" ];
 			knownDevices = {
 				 msi = "d4:3b:04:51:45:28";
 				acer = "a4:17:31:10:9e:ed";
