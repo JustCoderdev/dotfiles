@@ -46,6 +46,20 @@ in
 		"d   ${data-dir}/books       0775 root ${serv-group}"
 	];
 
+
+	# Spindown after 10 minutes
+	systemd.services.hd-idle = let
+		time_m = 10;
+		time_s = toString (time_m * 60);
+	in {
+		enable = true;
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			type = "forking";
+			ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i ${time_s} -a sdc -i ${time_s}";
+		};
+	};
+
 	# ------------------------------------------------------------ #
 
 	# TUNNEL
