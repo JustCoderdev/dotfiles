@@ -6,15 +6,17 @@
 	# -- OLD UEFI -- #
 	# boot.loader.systemd-boot.enable = true;
 	# boot.loader.systemd-boot.configurationLimit = 5;
-	boot.loader.efi.canTouchEfiVariables = true;
+	# boot.loader.efi.canTouchEfiVariables = true;
 	# -- OLD UEFI -- #
 
 
 	boot.loader.grub.enable = true;
 	boot.loader.grub.device = "nodev";
 	boot.loader.grub.efiSupport = true;
-	# boot.loader.grub.efiInstallAsRemovable = true;
+	boot.loader.grub.efiInstallAsRemovable = true;
 	boot.loader.grub.useOSProber = false;
+	boot.loader.grub.gfxmodeBios = "1920x1080";
+	boot.loader.grub.gfxmodeEfi = "1920x1080";
 	boot.loader.grub.extraEntries = ''
 menuentry "Reboot" {
 	reboot
