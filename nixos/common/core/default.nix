@@ -18,6 +18,7 @@
 		./power.nix
 		./plymouth.nix
 		./printer.nix
+		./rescue.nix
 		./secrets.nix
 		./shell.nix
 		./ssh.nix

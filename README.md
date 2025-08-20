@@ -100,6 +100,26 @@ Included configuration files
 - `DOT_NIX_SUB_URL`: The url to a nix substituter
 - `DOT_NIX_SUB_PORT`: The port of the nix subsituter
 
+## TODO
+
+### Fix
+
+- Hass wake on lan
+- Hass usb ports
+
+### Edit
+
+- Grub rescue entry
+- Grub by default
+- Grub theme
+
+### New
+
+- Fusuma
+- Authelia
+- Auto rebuild pusher
+- Network hostname autodiscovery
+
 ## Installation guide
 
 1. Clone
@@ -218,7 +238,7 @@ sudo nix-store --generate-binary-cache-key DOMAIN \
 
 ### Self Signed SSL Certificate
 
-> Guide <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
+Source <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
 
 ```
 cd ${DOT_FILES}/secrets/nginx/VHOST
@@ -292,7 +312,7 @@ cat /sys/class/power_supply/<BAT>/charge_full
 
 ### Setup mdadm raid
 
-Guides
+Sources
 
 - <https://www.jeffgeerling.com/blog/2021/htgwa-create-raid-array-linux-mdadm>
 - <https://www.youtube.com/watch?v=CJ0ed38N8-s>
@@ -391,3 +411,98 @@ mv -r /boot/* /home/$USER/Documents/boot
 rm -rv /boot/*
 ```
 
+### Shrink partition (& fs)
+
+Sources
+
+- Shrink file system <https://access.redhat.com/articles/1196333>
+- Resize partition <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/s2-disk-storage-parted-resize-part>
+
+```
+# Check fs integrity
+sudo e2fsck -f /dev/sda1
+
+# Resize fs
+sudo resize2fs /dev/sda1 31G
+
+# Check size
+sudo mount /dev/sda1 /mnt/part
+df -h /mnt/part
+sudo umount /mnt/part
+
+# Open disk in fdisk
+sudo fdisk /dev/sda
+p      # Find partition number
+d      # Delete partition
+    2      # partition number
+n      # Create new partition 
+    p      # primary
+    2      # partition number
+    CR     # first sector
+    +31G   # size / last sector
+w      # Save and exit
+```
+
+### Moving the nix store
+
+Source <https://wiki.nixos.org/wiki/Storage_optimization#Moving_the_store>
+
+1. Create a new partition and mount it over `/mnt`
+
+```
+sudo mount -o defaults,noatime /dev/disk/by-label/nix /mnt/nix
+```
+
+2. Copy everything from `/nix` to `/mnt` (Trailing slashes are important)
+
+```
+sudo rsync --archive --hard-links --acls --one-file-system --verbose /nix/{store,var} /mnt/nix
+```
+
+3. Mount the new partition as the new `/nix`
+
+```
+sudo umount /mnt/nix
+sudo mount /dev/disk/by-label/nix /nix
+```
+
+4. Restart nix-daemon
+
+```
+sudo systemctl stop nix-daemon.service
+sudo systemctl restart nix-daemon.socket
+sudo systemctl start nix-daemon.service
+```
+
+5. Add the new `/nix` partition to `nixos/hosts/$HOST/boot.nix`
+
+```nix
+# -- IMPORTANT -- #
+fileSystems."/nix" = {
+	device = "/dev/disk/by-label/nix";
+	fsType = "ext4";
+	neededForBoot = true;
+	options = [ "noatime" ];
+};
+# -- IMPORTANT -- #
+```
+
+6. Rebuild
+
+7. Reboot
+
+8. Check that `/nix` is mounted over your partition
+
+```
+sudo mount | grep "/nix" && echo "Nix store is on a new partition" || echo "Nix is on the old partition"
+```
+
+9. Delete the old store
+
+```
+sudo mkdir /tmp/old_root
+sudo mount --bind / /tmp/old_root
+sudo rm --recursive /tmp/old_root/nix
+sudo umount /tmp/old_root
+sudo rmdir /tmp/old_root
+```
