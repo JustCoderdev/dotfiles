@@ -8,54 +8,40 @@ in
 {
 	config =
 	let
-		# Create systemd service
-		# Source <https://wiki.archlinux.org/title/Wake-on-LAN#systemd_service>
-		create-oneshot-service = (
-			name: { description, command, ... }:
+		# Create dispatcher script
+		# Source <https://discourse.nixos.org/t/run-script-on-network-interface-down/9167/2>
+		create-dispatcher-script = (
+			name: interface: command:
 			{
-				inherit name;
-				value = {
-					inherit description;
-					wantedBy = [ "multi-user.target" ];
-					requires = [ "network.target" ];
-					after = [ "network.target" ];
-					serviceConfig = {
-						Type = "oneshot";
-						RemainAfterExit = "yes";
-						Group = "root";
-						User = "root";
-						ExecStart = command;
-					};
-				};
+				source = pkgs.writeText "enable-${name}-${interface}" ''
+#!/usr/bin/env ${pkgs.bash}/bin/bash
+
+if [[ "$1" == "${interface}" && "$2" == "up" ]]; then
+	logger "Interface ${interface} has been detected as up, enabling ${name}"
+	${command}
+fi
+'';
+				type = "basic";
 			}
 		);
 	in
 	{
-		systemd.services = {}
-		//
-		builtins.listToAttrs (
-			lib.lists.forEach cfg.lan.enabledFor (
-				interface:
-				# `sudo ethtool -s enp4s0 wol g`
-				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
-				create-oneshot-service "wakeonlan-${interface}" {
-					description = "Enable WakeOnLan for interface ${interface}";
-					command = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
-				}
-			)
+		networking.networkmanager.dispatcherScripts = [ ]
+		++
+		lib.lists.forEach cfg.lan.enabledFor (
+			interface:
+			# `sudo ethtool -s enp4s0 wol g`
+			# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+			create-dispatcher-script "wakeonlan" interface "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g"
 		)
-		//
-		builtins.listToAttrs (
-			lib.lists.forEach cfg.wlan.enabledFor (
-				phy:
-				# `sudo iw phy0 wowlan enable magic-packet disconnect`
-				# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
-				create-oneshot-service "wakeonwlan-${phy}" {
-					description = "Enable WakeOnWLAN for interface ${phy}";
-					command = "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect";
-				}
-			)
-		);
+		# ++
+		# lib.lists.forEach cfg.wlan.enabledFor (
+		# 	phy:
+		# 	# `sudo iw phy0 wowlan enable magic-packet disconnect`
+		# 	# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
+		# 	create-dispatcher-script "wakeonwlan" phy "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g"
+		# )
+		;
 
 		# -------------------- #
 
