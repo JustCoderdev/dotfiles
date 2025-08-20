@@ -8,30 +8,30 @@ let
 in
 
 {
-	config = lib.mkIf (cfg.enable)
-	let
-		netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
-			modules = [ (pkgs.path + "/nixos/modules/installer/netboot/netboot-minimal.nix") ];
-		};
+	# config = lib.mkIf (cfg.enable)
+	# let
+	# 	netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
+	# 		modules = [ (pkgs.path + "/nixos/modules/installer/netboot/netboot-minimal.nix") ];
+	# 	};
 
-		build = netboot.config.system.build;
-		boot = netboot.config.boot;
-	in
-	{
-		boot.loader.grub =
-		{
-			extraEntries = ''
-menuentry "Nixos Installer" {
-	linux ($drive1)/rescue-kernel init=${build.toplevel}/init ${toString boot.kernelParams}
-	initrd ($drive1)/rescue-initrd
-}
-'';
-			extraFiles = {
-				"rescue-kernel" = "${build.kernel}/bzImage";
-				"rescue-initrd" = "${build.netbootRamdisk}/initrd";
-			};
-		};
-	};
+	# 	build = netboot.config.system.build;
+	# 	boot = netboot.config.boot;
+	# in
+	# {
+	# 	boot.loader.grub =
+	# 	{
+	# 		extraEntries = ''
+# menuentry "Nixos Installer" {
+	# linux ($drive1)/rescue-kernel init=${build.toplevel}/init ${toString boot.kernelParams}
+	# initrd ($drive1)/rescue-initrd
+# }
+# '';
+	# 		extraFiles = {
+	# 			"rescue-kernel" = "${build.kernel}/bzImage";
+	# 			"rescue-initrd" = "${build.netbootRamdisk}/initrd";
+	# 		};
+	# 	};
+	# };
 
 	# ------------------------------------------------------------ #
 

@@ -1,7 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	cfg = config.common.core.network;
+	cfg = config.common.core.network.wakeOn;
+	has-items = list: (builtins.length list) > 0;
 in
 
 {
@@ -33,7 +34,7 @@ in
 		systemd.services = {}
 		//
 		builtins.listToAttrs (
-			lib.lists.forEach cfg.wakeOn.lan.enabledFor (
+			lib.lists.forEach cfg.lan.enabledFor (
 				interface:
 				# `sudo ethtool -s enp4s0 wol g`
 				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
@@ -45,7 +46,7 @@ in
 		)
 		//
 		builtins.listToAttrs (
-			lib.lists.forEach cfg.wakeOn.wlan.enabledFor (
+			lib.lists.forEach cfg.wlan.enabledFor (
 				phy:
 				# `sudo iw phy0 wowlan enable magic-packet disconnect`
 				# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
@@ -63,12 +64,11 @@ in
 			wake-device-pkgs = lib.attrsets.mapAttrsToList (
 				host: mac:
 				pkgs.writeShellScriptBin "wake-${host}" "wakeonlan ${mac}"
-			) cfg.wakeOn.knownDevices;
+			) cfg.knownDevices;
 		in
-		lib.mkIf ((builtins.length wake-device-pkgs) > 0)
-		(	
-			[ pkgs.wakeonlan ] ++ wake-device-pkgs
-		);
+		[ ]
+		++ lib.lists.optionals (has-items wake-device-pkgs) [ pkgs.wakeonlan ] ++ wake-device-pkgs
+		++ lib.lists.optionals (has-items cfg.lan.enabledFor || has-items cfg.wlan.enabledFor) [ pkgs.ethtool ];
 	};
 
 	# ------------------------------------------------------------ #
