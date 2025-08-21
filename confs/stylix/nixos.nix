@@ -11,7 +11,8 @@
 		autoEnable = true;
 		targets = 
 		{
-			plymouth.enable = true;
+			plymouth.enable = false;
+
 			lightdm = {
 				enable = true;
 				useWallpaper = true;

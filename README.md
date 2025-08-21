@@ -110,7 +110,6 @@ Included configuration files
 
 - Grub rescue entry
 - Grub by default
-- Grub theme
 
 ### New
 
