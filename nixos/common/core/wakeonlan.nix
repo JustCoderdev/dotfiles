@@ -25,6 +25,7 @@ in
 						# User = "root";
 						ExecStart = command;
 						StandardError = "journal";
+						StandardOutput = "journal";
 					};
 				};
 			}
@@ -38,9 +39,10 @@ in
 				interface:
 				# `sudo ethtool -s enp4s0 wol g`
 				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
-				create-oneshot-service "wakeonlan-${interface}" {
+				let
+					name = "enable-wakeonlan-${interface}";
 					description = "Enable WakeOnLan for interface ${interface}";
-					command = ''
+					command-bin = pkgs.writeShellScriptBin name ''
 echo "Enabling wakeonlan for interface ${interface}"
 
 check_if_set() {
@@ -65,8 +67,12 @@ do
 	fi
 done
 
-echo "Wake on lan was already enabled
+echo "Wake on lan was already enabled"
 '';
+				in
+				create-oneshot-service name {
+					inherit description;
+					command = "${command-bin}/bin/${name}";
 				}
 			)
 		)
