@@ -17,7 +17,7 @@ in
 				value = {
 					inherit description;
 					after = [ "network.target" ];
-					requiredBy = [ "multi-user.target" ];
+					wantedBy = [ "multi-user.target" ];
 					serviceConfig = {
 						Type = "oneshot";
 						RemainAfterExit = "yes";
