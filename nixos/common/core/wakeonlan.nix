@@ -13,14 +13,15 @@ in
 			{
 				# `sudo ethtool -s enp4s0 wol g`
 				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+				# Systemd service: <https://photostructure.com/coding/wake-on-lan/>
 				inherit name;
 				value = {
 					inherit description;
-					after = [ "network.target" ];
-					wantedBy = [ "multi-user.target" ];
+					after = [ "network-online.target" ];
+					wantedBy = [ "network-online.target" ];
 					serviceConfig = {
 						Type = "oneshot";
-						RemainAfterExit = "yes";
+						# RemainAfterExit = "yes";
 						# Group = "root";
 						# User = "root";
 						ExecStart = command;
