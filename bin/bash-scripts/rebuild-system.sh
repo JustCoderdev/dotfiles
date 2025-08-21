@@ -20,7 +20,8 @@ publish_on_discord () {
 
 	discordhook_path="${DOT_FILES}/secrets/discordhook.url"
 	if [ -e "${discordhook_path}" ]; then
-		completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
+		# completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
+		completed_message="[${HOSTNAME}] ${message}"
 		curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completed_message}\" }" "$(cat "${discordhook_path}")"
 	else
 		echo -e "Discord hook url was not found, ignoring"
@@ -199,7 +200,7 @@ if [[ "${exit_code}" == 0 ]]; then
 
 else
 	echo -e "\033[31mFailed\033[0m\n"
-	publish_on_discord "\u001b[31mNixOS rebuild failed\u001b[0m"
+	publish_on_discord "/!\\ NixOS rebuild failed /!\\\n\`\`\`\n$(tail -n 4 .nixos-switch.log)\n\`\`\`"
 
 	grep -C 3 --color -F 'error' .nixos-switch.log
 	grep -C 3 --color -F 'fail' .nixos-switch.log

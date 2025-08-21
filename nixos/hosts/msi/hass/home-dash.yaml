@@ -125,9 +125,26 @@ views:
       card:
         type: markdown
         content: '# Controllo Luci'
-    badges: []
-    max_columns: 2
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false
     cards: []
+    max_columns: 2
+    subview: false
   - type: sections
     max_columns: 2
     title: Tapparelle
@@ -203,6 +220,23 @@ views:
         type: markdown
         content: '# Controllo Tapparelle'
     cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false
   - type: sections
     max_columns: 2
     title: Termostato
@@ -239,6 +273,91 @@ views:
         type: markdown
         content: '# Controllo Termostato'
     cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false
+  - type: sections
+    max_columns: 2
+    title: Devices
+    path: devices
+    icon: mdi:devices
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Availability
+            heading_style: title
+            icon: mdi:link-variant
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.quiss_server_local
+              - entity: binary_sensor.msi_host_local
+              - entity: binary_sensor.display_local
+            title: History
+            logarithmic_scale: false
+      - type: grid
+        cards:
+          - type: heading
+            heading: Wake
+            heading_style: title
+            icon: mdi:lightning-bolt
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.quiss
+            show_state: false
+            icon: mdi:gesture-tap-button
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.msi
+            icon: mdi:gesture-tap-button
+          - type: tile
+            features_position: bottom
+            vertical: false
+            entity: binary_sensor.quiss_server_local
+          - type: tile
+            features_position: bottom
+            vertical: false
+            entity: binary_sensor.msi_host_local
+    header:
+      card:
+        type: markdown
+        content: '# Devices'
+    visible:
+      - user: d35ec065e1c14502924b0822b389c5c3
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false
   - type: sections
     max_columns: 2
     icon: mdi:gauge
@@ -249,25 +368,40 @@ views:
       - type: grid
         cards:
           - type: heading
-            icon: mdi:memory
-            heading: Processor
+            heading: Power
             heading_style: title
+            icon: mdi:power-plug
           - type: tile
-            entity: binary_sensor.display_local
+            entity: binary_sensor.rpi_power_status
             features_position: bottom
             vertical: false
             grid_options:
-              columns: 6
+              columns: 12
               rows: 1
-            name: Display
+            name: Power Supply
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Connectivity
+            icon: mdi:electric-switch
           - type: tile
             entity: sensor.system_monitor_ipv4_address_enu1u1
             features_position: bottom
             vertical: false
             grid_options:
-              columns: 6
+              columns: 12
               rows: 1
             name: enu1u1
+            hide_state: false
+            show_entity_picture: false
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:memory
+            heading: Processor
+            heading_style: title
           - chart_type: line
             period: 5minute
             type: statistics-graph
@@ -332,59 +466,21 @@ views:
       card:
         type: markdown
         content: '# System Status'
-    badges: []
-    cards: []
-  - type: sections
-    max_columns: 2
-    title: Devices
-    path: devices
-    icon: mdi:devices
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: Availability
-            heading_style: title
-            icon: mdi:link-variant
-          - type: history-graph
-            entities:
-              - entity: binary_sensor.quiss_server_local
-              - entity: binary_sensor.msi_host_local
-              - entity: binary_sensor.display_local
-            title: History
-            logarithmic_scale: false
-      - type: grid
-        cards:
-          - type: heading
-            heading: Wake
-            heading_style: title
-            icon: mdi:lightning-bolt
-          - show_name: true
-            show_icon: true
-            type: button
-            entity: switch.quiss
-            show_state: false
-            icon: mdi:gesture-tap-button
-          - show_name: true
-            show_icon: true
-            type: button
-            entity: switch.msi
-            icon: mdi:gesture-tap-button
-          - type: tile
-            features_position: bottom
-            vertical: false
-            entity: binary_sensor.quiss_server_local
-          - type: tile
-            features_position: bottom
-            vertical: false
-            entity: binary_sensor.msi_host_local
-    header:
-      card:
-        type: markdown
-        content: '# Devices'
-    visible:
-      - user: d35ec065e1c14502924b0822b389c5c3
-    cards: []
     badges:
       - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
         entity: sensor.uptime
+        show_entity_picture: false
+    cards: []

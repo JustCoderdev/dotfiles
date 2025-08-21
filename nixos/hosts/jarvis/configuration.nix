@@ -124,6 +124,7 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 	RUN+="/bin/sh -c \"chmod -f 660 $sys$devpath/*port*/disable || true\""
 '';
 
+	users.users."hass".extraGroups = [ "dialout" ];
 	system.services.home-assistant.packages.usb = { } // usb-pkgs;
 	# security.sudo = {
 	# 	enable = true;

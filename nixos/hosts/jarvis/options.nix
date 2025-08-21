@@ -42,6 +42,5 @@
 				# (gen-builder  "beta.server.local" 6)
 			];
 		};
-		nixcache.instance-host = "quiss.server.local";
 	};
 }

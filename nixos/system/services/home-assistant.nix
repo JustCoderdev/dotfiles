@@ -126,16 +126,17 @@ in
 		} ];
 
 
-		# Allow home assistant to run the `sudo` command
-		# systemd.services.home-assistant = {
-		# 	serviceConfig = {
-		# 		NoNewPrivileges = lib.mkForce false;
-		# 		RestrictSUIDSGID = lib.mkForce false;
-		# 		DeviceAllow = [ "char-usb rw" ];
-		# 	};
-		# };
-
-		# users.users."hass".extraGroups = [ "dialout" ];
+		# Allow home assistant to access usb options
+		systemd.services.home-assistant.serviceConfig.DeviceAllow = [ ]
+		++ lib.lists.optionals (
+			builtins.any (pkg: pkg != null) (
+				lib.attrsets.mapAttrsToList (name: pkg: pkg) cfg.packages.usb
+			)
+		) [
+			"char-usb rw"
+			"char-usb_device rw"
+			"/dev/bus/usb rw"
+		];
 
 		# Enable hass service
 		services.home-assistant =
@@ -163,7 +164,11 @@ in
 				};
 
 				automation = "!include automations.yaml";
-				logger.default = "debug";
+
+				logger = {
+					default = "info";
+					logs."homeassistant.components.shell_command" = "debug";
+				};
 
 				http = {
 					server_host = (
@@ -208,7 +213,7 @@ in
 						name = builtins.replaceStrings ["-"] ["_"] name;
 						value = (
 							if pkg != null
-							then "${pkgs.coreutils-full}/bin/id; ${pkg}/bin/${name}"
+							then "${pkg}/bin/${name}"
 							else "echo 'Package ${name} is not present!'; exit -1;"
 						);
 					}
