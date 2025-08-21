@@ -17,7 +17,7 @@ in
 				value = {
 					inherit description;
 					after = [ "network.target" ];
-					wantedBy = [ "multi-user.target" ];
+					requiredBy = [ "multi-user.target" ];
 					serviceConfig = {
 						Type = "oneshot";
 						# RemainAfterExit = "yes";
@@ -40,7 +40,33 @@ in
 				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
 				create-oneshot-service "wakeonlan-${interface}" {
 					description = "Enable WakeOnLan for interface ${interface}";
-					command = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
+					command = ''
+echo "Enabling wakeonlan for interface ${interface}"
+
+check_if_set() {
+	sudo ${pkgs.ethtool}/bin/ethtool ${interface} | ${pkgs.gnugrep}/bin/grep 'Wake-on: g'
+	is_set=$?
+}
+
+check_if_set;
+
+while [[ $is_set -eq 1 ]]
+do
+	${pkgs.ethtool}/bin/ethtool -s ${interface} wol g
+
+	check_if_set;
+	if [[ $is_set -eq 1 ]];
+	then
+		echo -e "\t- Attempt failed"
+		sleep 0.2
+	else
+		echo -e "Successfully enabled wake on lan for interface ${interface}"
+		exit 0
+	fi
+done
+
+echo "Wake on lan was already enabled
+'';
 				}
 			)
 		)
