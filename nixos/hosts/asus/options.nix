@@ -53,7 +53,7 @@
 			};
 
 			ssh.cloudflared-proxy = {
-				enable = false;
+				enable = true;
 				hosts = [ "ssh.foxburrow.org" ];
 			};
 		};
