@@ -27,6 +27,9 @@
 	];
 
 	boot.tmp.cleanOnBoot = true;
+	systemd.extraConfig = ''
+DefaultTimeoutStopSec=10s
+'';
 
 	# Core packages
 	environment.systemPackages = with pkgs; [
