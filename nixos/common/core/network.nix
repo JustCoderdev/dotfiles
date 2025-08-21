@@ -36,15 +36,12 @@ in
 
 			# Local DNS Records
 
-			hosts = { }
-			//
+			hosts =
 			{
 				# NETWORK
 				"192.168.7.1"   = [ "gateway.local" ];
 				"192.168.7.2"   = [  "switch.local" ];
-			}
-			//
-			{
+
 				# SERVERS
 				"192.168.7.3" = [     "alpha.server.local" ];
 				"192.168.7.4" = [ "alpha-ilo.server.local" ];
@@ -52,17 +49,13 @@ in
 				"192.168.7.5" = [     "beta.server.local" ];
 				"192.168.7.6" = [ "beta-ilo.server.local" ];
 
-				"192.168.7.7" = [  "quiss.server.local" ];
-				"192.168.7.8" = [ "jarvis.server.local" ];
-			}
-			//
-			{
+				"192.168.7.7" = [  "quiss.server.local" "samba.service.local" "immich.service.local" ];
+				"192.168.7.8" = [ "jarvis.server.local" "home-assistant.service.local" ];
+
 				# SERVICES
-				"192.168.7.7" = [  "samba.service.local" "immich.service.local" ];
-				"192.168.7.8" = [  "home-assistant.service.local" ];
-			}
-			//
-			{
+				# "192.168.7.7" = [  "samba.service.local" "immich.service.local" ];
+				# "192.168.7.8" = [  "home-assistant.service.local" ];
+
 				# CLIENTS
 				"192.168.7.32" = [  "msi.host.local" ];
 				"192.168.7.33" = [ "acer.host.local" ];
