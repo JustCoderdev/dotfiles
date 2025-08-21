@@ -46,7 +46,7 @@ in
 echo "Enabling wakeonlan for interface ${interface}"
 
 check_if_set() {
-	sudo ${pkgs.ethtool}/bin/ethtool ${interface} | ${pkgs.gnugrep}/bin/grep 'Wake-on: g'
+	${pkgs.ethtool}/bin/ethtool ${interface} | ${pkgs.gnugrep}/bin/grep 'Wake-on: g'
 	is_set=$?
 }
 
