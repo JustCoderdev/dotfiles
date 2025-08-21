@@ -100,7 +100,8 @@ echo "Wake on lan was already enabled"
 		in
 		[ ]
 		++ lib.lists.optionals (has-items wake-device-pkgs) [ pkgs.wakeonlan ] ++ wake-device-pkgs
-		++ lib.lists.optionals (has-items cfg.lan.enabledFor || has-items cfg.wlan.enabledFor) [ pkgs.ethtool ];
+		++ lib.lists.optionals (has-items cfg.lan.enabledFor) [ pkgs.ethtool ]
+		++ lib.lists.optionals (has-items cfg.wlan.enabledFor) [ pkgs.iw ];
 	};
 
 	# ------------------------------------------------------------ #
