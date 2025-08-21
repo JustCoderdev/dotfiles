@@ -20,7 +20,7 @@ in
 					requiredBy = [ "multi-user.target" ];
 					serviceConfig = {
 						Type = "oneshot";
-						# RemainAfterExit = "yes";
+						RemainAfterExit = "yes";
 						# Group = "root";
 						# User = "root";
 						ExecStart = command;
