@@ -404,9 +404,7 @@ Regenerate boot `BOOTX64.EFI`
 ```
 sudo su
 mkdir -p /home/$USER/Documents/boot
-mv -r /boot/* /home/$USER/Documents/boot
-
-rm -rv /boot/*
+mv /boot/* /home/$USER/Documents/boot
 ```
 
 ### Shrink partition (& fs)
