@@ -22,7 +22,7 @@ in
 				extraConfig = ''
 DeviceScale=1
 '';
-				theme = "darnix";
+				theme = lib.mkDefault "darnix";
 				themePackages = [ darnix-plymouth-theme ];
 			};
 		};

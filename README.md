@@ -104,7 +104,6 @@ Included configuration files
 
 ### Fix
 
-- Hass wake on lan
 - Hass usb ports
 
 ### Edit

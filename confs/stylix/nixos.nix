@@ -9,7 +9,17 @@
 		};
 
 		autoEnable = true;
-		targets.plymouth.enable = false;
-		targets.lightdm.enable = true;
+		targets = 
+		{
+			plymouth.enable = true;
+			lightdm = {
+				enable = true;
+				useWallpaper = true;
+			};
+			grub = {
+				enable = true;
+				useWallpaper = true;
+			};
+		};
 	};
 }
