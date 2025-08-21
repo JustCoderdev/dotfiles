@@ -7,41 +7,53 @@ in
 
 {
 	config =
-	let
-		# Create dispatcher script
-		# Source <https://discourse.nixos.org/t/run-script-on-network-interface-down/9167/2>
-		create-dispatcher-script = (
-			name: interface: command:
-			{
-				source = pkgs.writeText "enable-${name}-${interface}" ''
-#!/usr/bin/env ${pkgs.bash}/bin/bash
-
-if [[ "$1" == "${interface}" && "$2" == "up" ]]; then
-	logger "Interface ${interface} has been detected as up, enabling ${name}"
-	${command}
-fi
-'';
-				type = "basic";
-			}
-		);
-	in
 	{
-		networking.networkmanager.dispatcherScripts = [ ]
-		++
-		lib.lists.forEach cfg.lan.enabledFor (
-			interface:
-			# `sudo ethtool -s enp4s0 wol g`
-			# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
-			create-dispatcher-script "wakeonlan" interface "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g"
+		systemd.services = {}
+		//
+		builtins.listToAttrs (
+			lib.lists.forEach cfg.wakeOn.lan.enabledFor (
+				interface:
+				{
+					# `sudo ethtool -s enp4s0 wol g`
+					# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+					name = "wakeonlan-${interface}";
+					value = {
+						description = "Enable WakeOnLan for interface ${interface}";
+						wantedBy = [ "basic.target" ];
+						serviceConfig = {
+							Type = "oneshot";
+							RemainAfterExit = "yes";
+							Group = "root";
+							User = "root";
+							ExecStart = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
+							# ExecStop  = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol d";
+						};
+					};
+				}
+			)
 		)
-		# ++
-		# lib.lists.forEach cfg.wlan.enabledFor (
-		# 	phy:
-		# 	# `sudo iw phy0 wowlan enable magic-packet disconnect`
-		# 	# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
-		# 	create-dispatcher-script "wakeonwlan" phy "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g"
-		# )
-		;
+		//
+		builtins.listToAttrs (
+			lib.lists.forEach cfg.wakeOn.wlan.enabledFor (
+				phy:
+				{
+					# `sudo iw phy0 wowlan enable magic-packet disconnect`
+					# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
+					name = "wakeonwlan-${phy}";
+					value = {
+						description = "Enable WakeOnWLAN for interface ${phy}";
+						wantedBy = [ "basic.target" ];
+						serviceConfig = {
+							Type = "oneshot";
+							RemainAfterExit = "yes";
+							Group = "root";
+							User = "root";
+							ExecStart = "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect";
+						};
+					};
+				}
+			)
+		);
 
 		# -------------------- #
 
