@@ -16,13 +16,15 @@ in
 				inherit name;
 				value = {
 					inherit description;
-					wantedBy = [ "basic.target" ];
+					after = [ "network.target" ];
+					wantedBy = [ "multi-user.target" ];
 					serviceConfig = {
 						Type = "oneshot";
 						# RemainAfterExit = "yes";
 						# Group = "root";
 						# User = "root";
 						ExecStart = command;
+						StandardError = "journal";
 					};
 				};
 			}
