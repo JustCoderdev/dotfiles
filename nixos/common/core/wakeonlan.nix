@@ -7,50 +7,50 @@ in
 
 {
 	config =
+	let
+		create-oneshot-service = (
+			name: { description, command, ... }:
+			{
+				# `sudo ethtool -s enp4s0 wol g`
+				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+				inherit name;
+				value = {
+					inherit description;
+					wantedBy = [ "basic.target" ];
+					serviceConfig = {
+						Type = "oneshot";
+						# RemainAfterExit = "yes";
+						# Group = "root";
+						# User = "root";
+						ExecStart = command;
+					};
+				};
+			}
+		);
+	in
 	{
 		systemd.services = {}
 		//
 		builtins.listToAttrs (
-			lib.lists.forEach cfg.wakeOn.lan.enabledFor (
+			lib.lists.forEach cfg.lan.enabledFor (
 				interface:
-				{
-					# `sudo ethtool -s enp4s0 wol g`
-					# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
-					name = "wakeonlan-${interface}";
-					value = {
-						description = "Enable WakeOnLan for interface ${interface}";
-						wantedBy = [ "basic.target" ];
-						serviceConfig = {
-							Type = "oneshot";
-							RemainAfterExit = "yes";
-							Group = "root";
-							User = "root";
-							ExecStart = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
-							# ExecStop  = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol d";
-						};
-					};
+				# `sudo ethtool -s enp4s0 wol g`
+				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+				create-oneshot-service "wakeonlan-${interface}" {
+					description = "Enable WakeOnLan for interface ${interface}";
+					command = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
 				}
 			)
 		)
 		//
 		builtins.listToAttrs (
-			lib.lists.forEach cfg.wakeOn.wlan.enabledFor (
+			lib.lists.forEach cfg.wlan.enabledFor (
 				phy:
-				{
-					# `sudo iw phy0 wowlan enable magic-packet disconnect`
-					# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
-					name = "wakeonwlan-${phy}";
-					value = {
-						description = "Enable WakeOnWLAN for interface ${phy}";
-						wantedBy = [ "basic.target" ];
-						serviceConfig = {
-							Type = "oneshot";
-							RemainAfterExit = "yes";
-							Group = "root";
-							User = "root";
-							ExecStart = "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect";
-						};
-					};
+				# `sudo iw phy0 wowlan enable magic-packet disconnect`
+				# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
+				create-oneshot-service "wakeonwlan-${phy}" {
+					description = "Enable WakeOnWLAN for interface ${phy}";
+					command = "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect";
 				}
 			)
 		);
