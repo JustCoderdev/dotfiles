@@ -30,6 +30,7 @@ in
 
 			# Tools
 			ascii ripgrep
+			jetbrains.clion
 
 			# Debugging
 			gdb valgrind

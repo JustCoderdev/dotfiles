@@ -41,6 +41,7 @@
 			"steam-run"
 			"steamcmd"
 
+			"clion"
 			"davinci-resolve"
 			"minecraft-server"
 			"discord"
