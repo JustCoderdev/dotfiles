@@ -7,6 +7,9 @@
 	};
 
 	boot.kernelModules = [ "v4l2loopback" ];
+	boot.extraModulePackages = [ pkgs.linuxKernel.packages.linux_6_15.v4l2loopback ];
+	networking.firewall.allowedUDPPorts = [ 8854 ]; # GoPro 
+
 
 	# Mouse support
 	services.ratbagd.enable = true;
