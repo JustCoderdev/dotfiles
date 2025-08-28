@@ -69,6 +69,7 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		environment.systemPackages = with pkgs;
 		[
 			nix-tree
+			(callPackage ../../unofficial/pkgs/schemer2.nix { })
 		]
 		++ lib.optionals (is_desk_available && has_desktop)
 		[
