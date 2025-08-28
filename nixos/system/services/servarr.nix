@@ -78,8 +78,23 @@ in
 			clientMaxBodySize = lib.mkOverride 990 "20M";
 
 			virtualHosts."${cfg.proxy.host}" =
+			let
+				enabled-apps = builtins.filter (
+					{ name, ... }: cfg.apps."${name}".enable
+				) [
+					{ name = "bazarr";   port = 6767; }
+					{ name = "prowlarr"; port = 9696; }
+					# -------------------- #
+					{ name = "lidarr";   port = 8686; }
+					{ name = "radarr";   port = 7878; }
+					{ name = "readarr";  port = 8787; }
+					{ name = "sonarr";   port = 8989; }
+				];
+			in
 			{
-				locations = builtins.listToAttrs (
+				locations =
+				{ } //
+				builtins.listToAttrs (
 					builtins.map (
 						{ name, port }:
 						{
@@ -98,18 +113,20 @@ in
 									+ "";
 							};
 						}
-					) (
-						builtins.filter ({ name, ... }: cfg.apps."${name}".enable)
-						[
-							{ name = "bazarr";   port = 6767; }
-							{ name = "prowlarr"; port = 9696; }
-							# -------------------- #
-							{ name = "lidarr";   port = 8686; }
-							{ name = "radarr";   port = 7878; }
-							{ name = "readarr";  port = 8787; }
-							{ name = "sonarr";   port = 8989; }
-						]
-					)
+					) enabled-apps
+				# Enable only if in control of subpaths
+				# )
+				# //
+				# builtins.listToAttrs (
+				# 	builtins.map (
+				# 		{ name, port }:
+				# 		{
+				# 			name = "/";
+				# 			value = {
+				# 				return = "301 /${name}";
+				# 			};
+				# 		}
+				# 	) enabled-apps
 				);
 
 				extraConfig = ""

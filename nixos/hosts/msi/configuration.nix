@@ -6,6 +6,8 @@
 		package = pkgs.mariadb;
 	};
 
+	boot.kernelModules = [ "v4l2loopback" ];
+
 	# Mouse support
 	services.ratbagd.enable = true;
 	environment.systemPackages = with pkgs; [ piper ]
