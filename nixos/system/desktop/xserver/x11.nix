@@ -10,6 +10,7 @@ in
 	{
 		environment.systemPackages =
 		[
+			pkgs.gcr # Provides org.gnome.keyring.SystemPrompter
 			(
 				pkgs.writeShellScriptBin "refresh-displays" ''
 ${config.services.xserver.displayManager.setupCommands}
@@ -68,12 +69,12 @@ fi
 			};
 
 			# org.freedesktop.secrets
-			dbus.packages = with pkgs; [
-				pass-secret-service
-				gnome-keyring
-			];
+			# dbus.packages = with pkgs; [
+			# 	pass-secret-service
+			# 	gnome-keyring
+			# ];
 
-			passSecretService.enable = true;
+			# passSecretService.enable = true;
 			gnome.gnome-keyring.enable = true;
 		};
 
@@ -83,6 +84,7 @@ fi
 		security.pam = {
 			# Enable lightdm to use Gnome Keyring
 			services.login.enableGnomeKeyring = true;
+			services.display-manager.enableGnomeKeyring = true;
 			mount.logoutTerm = true;  # Send SIGTERM # Graceful shutdown
 			mount.logoutKill = true;  # Send SIGKILL # Forceful shutdown
 		};
