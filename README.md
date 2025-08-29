@@ -104,19 +104,21 @@ Included configuration files
 
 ### Fix
 
-- Hass usb ports
+- Migrate all hosts to grub
+- Find a way to persist WakeOnLan
+- Connect gopro stream to hass and to rtmp nginx
 
 ### Edit
 
 - Grub rescue entry
-- Grub by default
+- Add "host manifest"
 
 ### New
 
 - Fusuma
 - Authelia
 - Auto rebuild pusher
-- Network hostname autodiscovery
+- ~~Network hostname autodiscovery~~
 
 ## Installation guide
 
