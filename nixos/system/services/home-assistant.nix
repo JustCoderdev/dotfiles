@@ -165,10 +165,7 @@ in
 
 				automation = "!include automations.yaml";
 
-				logger = {
-					default = "info";
-					logs."homeassistant.components.shell_command" = "debug";
-				};
+				logger.default = "info";
 
 				http = {
 					server_host = (
@@ -264,7 +261,7 @@ in
 				# "conversation"         # Converse with Voice Assistant
 				# "dhcp"                 # Discover devices through DHCP
 				# "energy"               # Energy features
-				# "go2rtc"               # Camera streaming proxy
+				"go2rtc"                 # Camera streaming proxy
 				"history"
 				"recorder"
 				# "homeassistant_alerts"
