@@ -93,8 +93,8 @@ in
 				);
 			in
 			{ }
-			// (create-rule "ssh"  "ssh"   22  ".*")
-			// (create-rule "home" "https" 443 "/home.*")
+			// (create-rule "quiss" "ssh"    22 ".*")
+			// (create-rule "home"  "https" 443 "/home.*")
 
 			// (create-rule "jellyfin" "https" 443 "/jellyfin.*")
 			// (create-rule "immich"   "https" 443 ".*")

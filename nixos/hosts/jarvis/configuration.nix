@@ -53,7 +53,8 @@ in
 				);
 			in
 			{ }
-			// (create-rule "hass" "http" 8123 ".*")
+			// (create-rule "jarvis" "ssh"  22 ".*")
+			// (create-rule "hass"   "http" 80 ".*")
 			// {};
 		};
 	};
@@ -69,14 +70,6 @@ in
 # 		virtualHosts."${proxy.host}" = let
 # 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
 # 		in {
-# 			locations = {
-# 				"= /home".return = "301 /home/index.html";
-# 				"^~ /home/" = {
-# 					root = data-dir + "/homepage";
-# 					index = "index.html";
-# 				};
-# 			};
-# 
 # 			# forceSSL = true;
 # 			addSSL = true;
 # 			sslCertificate = vhost-secrets.cert.path;
@@ -126,17 +119,4 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 
 	users.users."hass".extraGroups = [ "dialout" ];
 	system.services.home-assistant.packages.usb = { } // usb-pkgs;
-	# security.sudo = {
-	# 	enable = true;
-	# 	extraRules = [{
-	# 		groups = [ "wheel" "hass" ];
-	# 		commands = lib.attrsets.mapAttrsToList (
-	# 			name: pkg:
-	# 			{
-	# 				command = "${config.system.path}/bin/${name}";
-	# 				options = [ "NOPASSWD" ];
-	# 			}
-	# 		) usb-pkgs;
-	# 	}];
-	# };
 }
