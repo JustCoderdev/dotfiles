@@ -138,6 +138,13 @@ in
 			"/dev/bus/usb rw"
 		];
 
+		services.go2rtc = {
+			enable = true;
+			settings = {
+				streams.gopro = "msi.host.local:1935";
+			};
+		};
+
 		# Enable hass service
 		services.home-assistant =
 		{
@@ -188,6 +195,11 @@ in
 				image_upload = {};
 				mobile_app = {};
 				# sun = { };
+
+				go2rtc = {
+					debug_ui = true;
+					url = "http://127.0.0.1:1984";
+				};
 
 				# Wake on LAN
 				wake_on_lan = {};
