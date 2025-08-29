@@ -19,13 +19,17 @@ ${config.services.xserver.displayManager.setupCommands}
 			)
 		];
 
-		systemd.tmpfiles.rules = [
+		systemd.tmpfiles.rules =
+		let
+			ldm-grp = config.users.users.lightdm.group;
+		in
+		[
 			# Fix icon without exposing home folder
 			# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
 
-#			Type Path                                                 Mode User Group Age Argument
-			"f+  /var/lib/AccountsService/users/${username}  0600 root root  -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.JPEG\\n"
-			"L+  /var/lib/AccountsService/icons/${username}  -    -    -     -   ${dotfiles_path}/confs/users/${username}.JPEG"
+#			Type Path                                        Mode User Group      Age Argument
+			"f+  /var/lib/AccountsService/users/${username}  0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.JPEG\\n"
+			"L+  /var/lib/AccountsService/icons/${username}  0640 root ${ldm-grp} -   ${dotfiles_path}/confs/users/${username}.JPEG"
 		];
 
 		services =
@@ -36,7 +40,10 @@ ${config.services.xserver.displayManager.setupCommands}
 
 				displayManager =
 				{
-					lightdm.greeters.gtk.extraConfig = ''user-background = false'';
+					lightdm.greeters.gtk = {
+						extraConfig = ''user-background = false'';
+						indicators = [ ];
+					};
 
 					setupCommands = let
 						xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
