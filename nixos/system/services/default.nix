@@ -10,6 +10,7 @@
 		./nixbuilder.nix
 		./nixcache.nix
 		./routing.nix
+		./rtmp.nix
 		./samba.nix
 		./servarr.nix
 		./virtualbox.nix
