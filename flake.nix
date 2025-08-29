@@ -29,7 +29,7 @@
 
 	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
 	let
-		dotfiles = ./.;
+		dotfiles_store_path = ./.;
 
 		# TODO: Create manifest for each directory under `nixos/hosts`
 		hosts-list =
@@ -88,8 +88,8 @@
 			host-data: is-raspi3:
 			{
 				inherit (host-data) hostname system;
-				inherit (import ./confs/settings/${host-data.username}.nix) username dotfiles_path special_pkgs;
-				inherit is-raspi3;
+				inherit (import ./confs/settings/${host-data.username}.nix) username dotfiles_abs_path special_pkgs;
+				inherit is-raspi3 dotfiles_store_path;
 			}
 		);
 
@@ -117,7 +117,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username);
 			}
 		);
@@ -134,7 +134,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username)
 				++ [
 					({ modulesPath, ... }: {
@@ -152,7 +152,7 @@
 			in
 			lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				modules = (getUserModules username)
 				++ [
 					({ pkgs, modulesPath, ... }: {
@@ -175,7 +175,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				modules = 
 				[
 					# (getHostModules host-data.hostname)
@@ -208,7 +208,7 @@
 			in
 			lib.nixosSystem {
 				inherit (settings) system;
-				specialArgs = { inherit inputs pkgs-unstable settings dotfiles; };
+				specialArgs = { inherit inputs pkgs-unstable settings; };
 				modules = (getUserModules username)
 				++ [
 					({ pkgs, modulesPath, ... }: {

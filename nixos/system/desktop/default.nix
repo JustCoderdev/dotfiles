@@ -37,7 +37,7 @@ in
 		in {
 			enable = true;
 			settings = (builtins.readFile
-				 "${settings.dotfiles_path}/confs/fusuma/${prefix}_config.yml");
+				 "${settings.dotfiles_abs_path}/confs/fusuma/${prefix}_config.yml");
 		};
 
 		environment.systemPackages = [

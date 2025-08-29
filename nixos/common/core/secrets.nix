@@ -39,7 +39,7 @@ in
 		defaultPath = lib.mkOption {
 			type = lib.types.str;
 			description = "Path to secrets directory";
-			default = "${settings.dotfiles_path}/secrets";
+			default = "${settings.dotfiles_abs_path}/secrets";
 		};
 
 		# -------------------- #

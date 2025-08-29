@@ -7,7 +7,8 @@ in
 {
 	config =
 	{
-		stylix = {
+		stylix =
+		{
 			enable = true && cfg.has_de;
 
 			polarity = "dark";
@@ -15,8 +16,7 @@ in
 			image = "${cfg.wallpapers_path}/space_engineers.png";
 
 			cursor = {
-				name = "Adwaita"; # breeze_cursors
-				package = pkgs.adwaita-icon-theme;
+				inherit (cfg.theme) package name;
 				size = 18;
 			};
 
@@ -34,7 +34,6 @@ in
 		};
 	};
 
-
 	# ------------------------------------------------------------ #
 
 	options.stylix.module =
@@ -43,6 +42,18 @@ in
 		wallpapers_path = lib.mkOption {
 			type = lib.types.path;
 			description = "Specify the wallpapers directory";
+		};
+		theme = {
+			name = lib.mkOption {
+				type = lib.types.nullOr lib.types.str;
+				description = "The theme name within the package";
+				default = "Adwaita";
+			};
+			package = lib.mkOption {
+				type = lib.types.package;
+				description = "Package providing the theme";
+				default = pkgs.adwaita-icon-theme;
+			};
 		};
 	};
 }

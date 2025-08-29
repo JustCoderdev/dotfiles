@@ -1,7 +1,7 @@
 { config, pkgs-unstable, pkgs, settings, inputs, ... }:
 
 let
-	inherit (settings) dotfiles_path username;
+	inherit (settings) dotfiles_abs_path username;
 	unstable-path = inputs.nixpkgs-unstable.outPath;
 	secrets = config.common.core.secrets;
 

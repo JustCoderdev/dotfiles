@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, dotfiles, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
 	cfg = config.system.services.home-assistant;

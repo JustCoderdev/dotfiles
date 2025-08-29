@@ -1,12 +1,17 @@
-{ lib, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
+
+let
+	cfg = config.stylix.module;
+in
 
 {
 	stylix =
 	{
-		iconTheme = {
+		icons = {
 			enable = true;
-			package = pkgs.adwaita-icon-theme;
-			dark = "Adawaita";
+			inherit (cfg.theme) package;
+			light = cfg.theme.name;
+			dark = cfg.theme.name;
 		};
 
 		targets = {

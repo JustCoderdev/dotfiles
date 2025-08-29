@@ -3,7 +3,7 @@
 let
 	xfce_cfg = config.system.desktop.xfce;
 	i3_cfg = config.system.desktop.i3;
-	inherit (settings) username dotfiles_path;
+	inherit (settings) username dotfiles_store_path;
 in
 
 {
@@ -22,14 +22,15 @@ ${config.services.xserver.displayManager.setupCommands}
 		systemd.tmpfiles.rules =
 		let
 			ldm-grp = config.users.users.lightdm.group;
+			icon-path = "${username}.JPEG";
 		in
 		[
 			# Fix icon without exposing home folder
 			# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
 
 #			Type Path                                        Mode User Group      Age Argument
-			"f+  /var/lib/AccountsService/users/${username}  0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.JPEG\\n"
-			"L+  /var/lib/AccountsService/icons/${username}  0640 root ${ldm-grp} -   ${dotfiles_path}/confs/users/${username}.JPEG"
+			"f+  /var/lib/AccountsService/users/${username}  0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-path}\\n"
+			"L+  /var/lib/AccountsService/icons/${icon-path} 0640 root ${ldm-grp} -   ${dotfiles_store_path}/confs/users/${icon-path}"
 		];
 
 		services =
@@ -42,7 +43,7 @@ ${config.services.xserver.displayManager.setupCommands}
 				{
 					lightdm.greeters.gtk = {
 						extraConfig = ''user-background = false'';
-						indicators = [ ];
+						indicators = [ "~clock" "~power" ];
 					};
 
 					setupCommands = let
