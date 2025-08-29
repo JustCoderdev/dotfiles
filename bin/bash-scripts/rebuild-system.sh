@@ -14,14 +14,23 @@ fi
 pushd "${DOT_FILES}/" > /dev/null || exit
 shopt -s globstar
 
-
 publish_on_discord () {
-	message="${1}"
+	message_raw="${1}"
+	message_raw=${message_raw//\\/\\\\} # \
+	message_raw=${message_raw//\//\\\/} # /
+	# message_raw=${message_raw//\'/\\\'} # ' (not strictly needed ?)
+	message_raw=${message_raw//\"/\\\"} # "
+	message_raw=${message_raw//	/\\t} # \t (tab)
+	message_raw=${message_raw//
+/\\n} # \n (newline)
+	message_raw=${message_raw///\\r} # \r (carriage return)
+	message_raw=${message_raw///\\f} # \f (form feed)
+	message=${message_raw///\\b} # \b (backspace)
 
 	discordhook_path="${DOT_FILES}/secrets/discordhook.url"
 	if [ -e "${discordhook_path}" ]; then
 		# completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
-		completed_message="[${HOSTNAME}] ${message}"
+		completed_message="## [${HOSTNAME}] ${message}"
 		curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completed_message}\" }" "$(cat "${discordhook_path}")"
 	else
 		echo -e "Discord hook url was not found, ignoring"
@@ -183,7 +192,7 @@ if [[ "${exit_code}" == 0 ]]; then
 	if [[ "${had_changes}" -ne 0 && "${want_commit}" -ne 0 ]];
 	then
 		generation=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-		publish_on_discord "NixOS rebuild #${generation} completed\n"
+		publish_on_discord "NixOS rebuild #${generation} completed"
 
 		message="NixOS build ${HOSTNAME}#${generation}"
 		read -rp "${message}: " commit_msg
@@ -193,14 +202,17 @@ if [[ "${exit_code}" == 0 ]]; then
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"
 	else
 
-		publish_on_discord "NixOS rebuild completed\n"
+		publish_on_discord "NixOS rebuild completed"
 	fi
 
 	echo -e "\033[34mNixOS Rebuild Completed!\033[0m\n"
 
 else
 	echo -e "\033[31mFailed\033[0m\n"
-	publish_on_discord "/!\\ NixOS rebuild failed /!\\\n\`\`\`\n$(tail -n 4 .nixos-switch.log)\n\`\`\`"
+	msg=$'/!\\ NixOS rebuild failed /!\\ \n ```'
+	log="$(tail -n 8 .nixos-switch.log)"
+	post_log=$'```\n\n'
+	publish_on_discord "${msg}${log}${post_log}"
 
 	grep -C 3 --color -F 'error' .nixos-switch.log
 	grep -C 3 --color -F 'fail' .nixos-switch.log
