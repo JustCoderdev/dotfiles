@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, settings, wallpapers_path, ... }:
+{ inputs, lib, pkgs, settings, ... }:
 
 let
 	modules = [

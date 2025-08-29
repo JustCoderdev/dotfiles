@@ -24,10 +24,10 @@ in
 
 		systemd.tmpfiles.rules =
 		[
-#			Type Path                           Mode User     Group Age Argument
-			"d   ${uhome}/Developer             0755 ${uname} users"
-			"d   ${uhome}/Developer/Github      0755 ${uname} users"
-			"d   ${uhome}/Developer/Projects    0755 ${uname} users"
+#			Type Path                        Mode User     Group Age Argument
+			"d   ${uhome}/Developer          0755 ${uname} users"
+			"d   ${uhome}/Developer/Github   0755 ${uname} users"
+			"d   ${uhome}/Developer/Projects 0755 ${uname} users"
 		];
 
 		users.users.${uname} = {
@@ -36,11 +36,8 @@ in
 
 			isNormalUser = true;
 			createHome = true;
-			homeMode = "701";
 
 			initialPassword = "${uname}";
-
-			# packages = with pkgs; [ ];
 			extraGroups = [ "wheel" "dialout" "kvm" ];
 
 			openssh.authorizedKeys.keys = [

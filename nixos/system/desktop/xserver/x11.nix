@@ -3,6 +3,7 @@
 let
 	xfce_cfg = config.system.desktop.xfce;
 	i3_cfg = config.system.desktop.i3;
+	inherit (settings) username dotfiles_path;
 in
 
 {
@@ -18,23 +19,32 @@ ${config.services.xserver.displayManager.setupCommands}
 			)
 		];
 
+		systemd.tmpfiles.rules = [
+			# Fix icon without exposing home folder
+			# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
+
+#			Type Path                                                 Mode User Group Age Argument
+			"f+  /var/lib/AccountsService/users/${username}  0600 root root  -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.JPEG\\n"
+			"L+  /var/lib/AccountsService/icons/${username}  -    -    -     -   ${dotfiles_path}/confs/users/${username}.JPEG"
+		];
+
 		services =
 		{
-			displayManager.execCmd = lib.mkForce ''
-export PATH=${pkgs.lightdm}/sbin:$PATH
-GTK_THEME=Adawaita:dark exec ${pkgs.lightdm}/sbin/lightdm
-'';
 			xserver = {
 				enable = true;
 				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
 
-				displayManager.setupCommands = let
-					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-					grep = "${pkgs.gnugrep}/bin/grep";
-				in 
-				builtins.concatStringsSep "\n" (
-					lib.attrsets.mapAttrsToList  (
-						name: value:
+				displayManager =
+				{
+					lightdm.greeters.gtk.extraConfig = ''user-background = false'';
+
+					setupCommands = let
+						xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+						grep = "${pkgs.gnugrep}/bin/grep";
+					in
+					builtins.concatStringsSep "\n" (
+						lib.attrsets.mapAttrsToList  (
+							name: value:
 ''
 ${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
 if [[ "''${?}" -eq 0 ]]; then
@@ -45,8 +55,9 @@ else
 	${xrandr} --output ${value.identifier} --off
 fi
 ''
-					) config.common.core.hardware.displays
-				);
+						) config.common.core.hardware.displays
+					);
+				};
 			};
 
 			libinput = {
