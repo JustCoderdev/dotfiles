@@ -160,7 +160,7 @@
 				};
 			};
 			rtmp = {
-				enable = false;
+				enable = true;
 				openFirewall = true;
 				proxy.enable = true;
 			};
