@@ -141,7 +141,8 @@ in
 		services.go2rtc = {
 			enable = true;
 			settings = {
-				streams.gopro = "msi.host.local:1935";
+				streams.gopro = "rtsp://192.168.7.209/gopro";
+				# streams.gopro = "rtsp://msi.host.local/gopro";
 			};
 		};
 
@@ -196,12 +197,27 @@ in
 				mobile_app = {};
 				# sun = { };
 
+
+				# Camera
+
 				go2rtc = {
-					debug_ui = true;
+					# debug_ui = true;
 					url = "http://127.0.0.1:1984";
 				};
 
+				stream = {};
+				camera = [
+					{
+						platform = "generic";
+						name = "GoProNerio2";
+						stream_source = config.services.go2rtc.settings.streams.gopro;
+						framerate = 30;
+					}
+				];
+
+
 				# Wake on LAN
+
 				wake_on_lan = {};
 				switch = []
 				++ builtins.map (
@@ -213,6 +229,9 @@ in
 						turn_off.action = "shell_command.remote_${name}_wo_poweroff";
 					}
 				) (wol-devices ++ wowl-devices);
+
+
+				# Commands
 
 				shell_command = { }
 				//
@@ -253,6 +272,7 @@ in
 				"systemmonitor"
 				"uptime"
 				"wake_on_lan"
+				# "generic"                 # Camera
 
 				# Required
 				# #################### #
@@ -281,6 +301,7 @@ in
 				"image_upload"
 				"logbook"
 				"mobile_app"
+				"stream"
 			];
 		};
 

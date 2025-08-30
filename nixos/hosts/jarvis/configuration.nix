@@ -63,7 +63,7 @@ in
 
 	networking.hosts."192.168.1.50" = [ "display.local" ];
 
-	networking.firewall.allowedTCPPorts = [ 80 ];
+	networking.firewall.allowedTCPPorts = [ 80 1984 ];
 # 	services.nginx =
 # 	{
 # 		enable = true;
