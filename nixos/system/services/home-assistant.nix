@@ -143,6 +143,12 @@ in
 			settings = {
 				streams.gopro = "rtmp://192.168.7.209/gopro";
 				# streams.gopro = "rtmp://msi.host.local/gopro";
+
+				rtsp = {
+					listen = "127.0.0.1:8554";
+					# username: "admin"
+					# password: "pass"
+				};
 			};
 		};
 
@@ -253,6 +259,7 @@ in
 
 			customComponents =
 			[
+				(pkgs.callPackage ../../unofficial/pkgs/WebRTC.nix { })
 				(pkgs.callPackage ../../unofficial/pkgs/myhome.nix {
 					OWNd-pkg = (pkgs.python313Packages.callPackage ../../unofficial/pkgs/OWNd.nix {});
 				})
