@@ -137,6 +137,11 @@
 					forwarded-ports = [];
 				};
 			};
+			rtmp = {
+				enable = false;
+				openFirewall = false;
+				proxy.enable = false;
+			};
 			samba.enable = false;
 			virtualbox.enable = false;
 			webserver.enable = false;

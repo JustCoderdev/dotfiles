@@ -1,22 +1,5 @@
-# RTMP Configuration snippets by videosdk
-# Source <https://www.videosdk.live/developer-hub/rtmp/rtmp-server-nginx>
-
-# Command to stream gopro HERO3 stream
-# Source <https://gist.github.com/laurieainley/7663756>
-# `ffmpeg -re \
-#		-i http://10.5.5.9:8080/live/amba.m3u8 \
-#		-c copy -c:a aac -strict experimental -b:a 96k -ac 2 -ar 44100 \
-#		-f flv "rtmp:127.0.0.1/live live=1"`
-
-# PyHero to command the gopro remotely
-# Source <https://github.com/Splinter0/PyHero>
-
-# FFX: http://127.0.0.1:8080/stat/gopro
+# FFX: http://127.0.0.1:8080/stat
 # VLC: rtmp://127.0.0.1/gopro
-# CMD: ffmpeg -re \
-#			-i http://10.5.5.9:8080/live/amba.m3u8 \
-#			-c copy -c:a aac -strict experimental -b:a 96k -ac 2 -ar 44100 \
-#			-f flv "rtmp:127.0.0.1/gopro live=1"
 
 { config, lib, pkgs, ... }:
 
@@ -29,97 +12,86 @@ in
 	config =
 	{
 		networking.firewall.allowedTCPPorts = (lib.mkIf cfg.openFirewall) [ rtmp_port ];
-		environment.systemPackages =  [ pkgs.ffmpeg ];
+
+		systemd.tmpfiles.rules =
+		let
+			nginx = config.users.users.nginx;
+		in
+		[
+#			Type Path       Mode User          Group          Age Argument
+			"d   /srv/nginx 0711 ${nginx.name} ${nginx.group}"
+		];
 
 		services.nginx = (lib.mkIf cfg.proxy.enable)
 		{
 			enable = true;
 			additionalModules = [ pkgs.nginxModules.rtmp ];
+			logError = "stderr debug";
 
+			# Sources:
+			# - RTMP Directives <https://github.com/arut/nginx-rtmp-module/wiki/Directives>
+			# - Snippets by videosdk <https://www.videosdk.live/developer-hub/rtmp/rtmp-server-nginx>
 			appendConfig = ''
-error_log logs/error.log warn;
-
 rtmp {
 	server {
-		listen 1935;
+		listen ${toString rtmp_port};
 		chunk_size 4096;
 
 		application gopro {
 			live on;
 
 			# Record
-			record all;
-			record_path /tmp/av;
-			record_max_size 1K;
-			record_unique on;
+			record off;
 
 			# Allow only localhost
 			allow publish 127.0.0.1;
 			deny publish all;
 
-			exec_static ${pkgs.ffmpeg}
+			# # HLS 
+			# hls on;
+			# hls_path /srv/nginx/hls/;
+
+			# # DASH
+			# dash on;
+			# dash_path /srv/nginx/dash/;
+
+			# Command to stream gopro HERO3 stream
+			# Source <https://gist.github.com/laurieainley/7663756>
+			exec_pull ${pkgs.ffmpeg}/bin/ffmpeg
 				-loglevel verbose
 				-re -i http://10.5.5.9:8080/live/amba.m3u8
 				-c copy -c:a aac
 				-strict experimental
 				-b:a 96k -ac 2
 				-ar 44100 -f flv
-				"rtmp:127.0.0.1/gopro/live live=1";
-		}
-
-
-		application relay {
-			live on;
-
-
-			# --- Recording --- #
-
-			record off;
-			# record all;
-			# record_path /var/recordings;
-
-
-			# --- HTTP Live Streaming --- #
-			# hls on;
-			# hls_path /tmp/hls;
-			# hls_fragment 3;
-
-			# dash on;
-			# dash_path /tmp/dash;
-
-
-			# --- Block / Allow Policy --- #
-			allow publish 127.0.0.1;
-			# allow publish 10.5.5.9;
-			deny publish all;
-			allow play all;
+				"rtmp:127.0.0.1/gopro live=1";
 		}
 	}
 }
 '';
-			appendHttpConfig = ''
+			appendHttpConfig =
+			let
+				rtmp = pkgs.fetchFromGitHub {
+					owner = "arut";
+					repo = "nginx-rtmp-module";
+					rev = "61cb33491701632f36faaa331915b857bfc295b2";
+					sha256 = "sha256-rK4RY9kxzaXQtzp1vvJ3rEHtt+fcYI5sNMZoYxfZI00=";
+				};
+			in
+''
 	server {
-		listen 8080;
-
-
-		# --- Live stream page --- #
-
-		location /live {
-			root /tmp;
-		}
-
+		listen 127.0.0.1:8080;
 
 		# --- Stat page --- #
 
 		location /stat {
 			rtmp_stat all;
 			rtmp_stat_stylesheet stat.xsl;
-			allow all;
 			add_header Refresh "3; $request_uri";
 		}
 
 		location /stat.xsl {
-			root /tmp/nginx;
+			root ${rtmp.outPath};
 		}
 	}
 '';
