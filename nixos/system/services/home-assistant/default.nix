@@ -170,9 +170,9 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 
 			customComponents =
 			[
-				(pkgs.callPackage ../../unofficial/pkgs/WebRTC.nix { })
-				(pkgs.callPackage ../../unofficial/pkgs/myhome.nix {
-					OWNd-pkg = (pkgs.python313Packages.callPackage ../../unofficial/pkgs/OWNd.nix {});
+				(pkgs.callPackage ../../../unofficial/pkgs/WebRTC.nix { })
+				(pkgs.callPackage ../../../unofficial/pkgs/myhome.nix {
+					OWNd-pkg = (pkgs.python313Packages.callPackage ../../../unofficial/pkgs/OWNd.nix {});
 				})
 			];
 
