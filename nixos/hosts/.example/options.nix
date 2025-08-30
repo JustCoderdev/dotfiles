@@ -7,6 +7,7 @@
 		backlight.enable = false;
 		boomer.enable = false;
 		eep.enable = false;
+		gopro-control.enable = false;
 		mount-configs.enable = false;
 		rebuild-system.enable = false;
 		umount-configs.enable = false;

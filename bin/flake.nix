@@ -13,12 +13,13 @@
 		programs = [
 			{ name = "boomer"; }
 			{ name = "backlight"; requiresSudo = true; }
+			{ name = "gopro-control";}
 		];
 		bash-scripts = [
+			{ name = "eep"; requiresSudo = true; }
 			{ name = "mount-configs";  }
-			{ name = "umount-configs"; }
 			{ name = "rebuild-system"; }
-			{ name = "eep";  requiresSudo = true; }
+			{ name = "umount-configs"; }
 		];
 
 		packageProgram = (name: pkgs: pkgs.callPackage ./${name}/default.nix { });
