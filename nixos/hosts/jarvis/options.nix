@@ -36,6 +36,7 @@
 				);
 			in
 			[
+				(gen-builder      "192.168.7.209" 6) # Wired MSI
 				(gen-builder     "msi.host.local" 6)
 				(gen-builder "quiss.server.local" 4)
 				# (gen-builder "alpha.server.local" 8)

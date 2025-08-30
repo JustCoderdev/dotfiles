@@ -141,8 +141,8 @@ in
 		services.go2rtc = {
 			enable = true;
 			settings = {
-				streams.gopro = "rtsp://192.168.7.209/gopro";
-				# streams.gopro = "rtsp://msi.host.local/gopro";
+				streams.gopro = "rtmp://192.168.7.209/gopro";
+				# streams.gopro = "rtmp://msi.host.local/gopro";
 			};
 		};
 
@@ -206,14 +206,7 @@ in
 				};
 
 				stream = {};
-				camera = [
-					{
-						platform = "generic";
-						name = "GoProNerio2";
-						stream_source = config.services.go2rtc.settings.streams.gopro;
-						framerate = 30;
-					}
-				];
+
 
 
 				# Wake on LAN
