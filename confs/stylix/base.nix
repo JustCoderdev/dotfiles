@@ -47,7 +47,7 @@ in
 			name = lib.mkOption {
 				type = lib.types.nullOr lib.types.str;
 				description = "The theme name within the package";
-				default = "Adwaita";
+				default = "Adwaita:dark";
 			};
 			package = lib.mkOption {
 				type = lib.types.package;
