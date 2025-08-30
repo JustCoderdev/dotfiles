@@ -106,7 +106,6 @@ Included configuration files
 
 - Migrate all hosts to grub
 - Find a way to persist WakeOnLan
-- Connect gopro stream to hass and to rtmp nginx
 
 ### Edit
 

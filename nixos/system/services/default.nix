@@ -3,7 +3,7 @@
 {
 	imports = [
 		./docker.nix
-		./home-assistant.nix
+		./home-assistant
 		./immich.nix
 		./jellyfin.nix
 		./kvm.nix

@@ -6,7 +6,7 @@
     event: start
   conditions: []
   actions:
-  - type: turn_off
+  - type: turn_on
     device_id: a6eb70f525f5cb55c264631e3e457798
     entity_id: c96683885f662bdf5ea17af44f61689a
     domain: light
@@ -22,17 +22,20 @@
       hours: 0
       minutes: 0
       seconds: 10
-    above: 50
+    above: 55
   conditions: []
   actions:
   - device_id: b034108f481f54df2a1c9d8837fe2fc5
     domain: mobile_app
     type: notify
-    message: 'Processor temperature above 50-C '
+    message: Processor temperature above 55-C for the last 10 seconds
     title: Jarvis status
+  - action: shell_command.usb_ports_on
+    metadata: {}
+    data: {}
   mode: single
 - id: '1755266755250'
-  alias: Notify on eccessive processor load
+  alias: Notify on higher than usual processor use
   description: ''
   triggers:
   - trigger: numeric_state
@@ -42,13 +45,13 @@
       hours: 0
       minutes: 0
       seconds: 10
-    above: 1
+    above: 20
   conditions: []
   actions:
   - device_id: b034108f481f54df2a1c9d8837fe2fc5
     domain: mobile_app
     type: notify
-    message: Processor load above 1-Task
+    message: Processor use above 20%
     title: Jarvis status
   mode: single
 - id: '1755266935685'
@@ -128,8 +131,8 @@
   description: ''
   triggers:
   - type: connected
-    device_id: 2fc88ab5eb44558e84ec37a486ec0eca
-    entity_id: 031d9b56b97703ee4428e8102a1bb951
+    device_id: ee357722e751abea15a2c7ad3bea14a0
+    entity_id: 4dedad0d350c20bf015bf5c918eff920
     domain: binary_sensor
     trigger: device
   conditions: []
@@ -139,27 +142,37 @@
     type: notify
     message: Connected to network
     title: Display status
+  - action: automation.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: automation.notify_display_connection
   mode: single
 - id: '1755267363821'
   alias: Notify Display Disconnection
   description: ''
   triggers:
   - type: not_connected
-    device_id: 2fc88ab5eb44558e84ec37a486ec0eca
-    entity_id: 031d9b56b97703ee4428e8102a1bb951
+    device_id: ee357722e751abea15a2c7ad3bea14a0
+    entity_id: 4dedad0d350c20bf015bf5c918eff920
     domain: binary_sensor
     trigger: device
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 35
   conditions: []
   actions:
   - device_id: b034108f481f54df2a1c9d8837fe2fc5
     domain: mobile_app
     type: notify
-    message: Disconnected from network 5 seconds ago
+    message: Disconnected from network 35 seconds ago
     title: Display status
+  - action: automation.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: automation.notify_display_connection
   mode: single
 - id: '1755267931707'
   alias: Tapparella Bagno down
@@ -202,4 +215,27 @@
     domain: cover
     entity_id: af1252f760fff092e52e7dc6451ba53c
     type: stop
+  mode: single
+- id: '1755276773653'
+  alias: 'Notify on return to regular processor temperature '
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.system_monitor_processor_temperature
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    below: 40
+  conditions: []
+  actions:
+  - device_id: b034108f481f54df2a1c9d8837fe2fc5
+    domain: mobile_app
+    type: notify
+    message: Processor temperature back to normal temperature (under 40-C)
+    title: Jarvis status
+  - action: shell_command.usb_ports_off
+    metadata: {}
+    data: {}
   mode: single

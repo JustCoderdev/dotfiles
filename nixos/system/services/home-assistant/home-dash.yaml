@@ -162,7 +162,7 @@ views:
               - entity: cover.tapparella_salotto_ovest_1
               - entity: cover.tapparella_salotto_ovest_2
               - entity: cover.tapparella_salotto_sud
-            show_header_toggle: false
+            show_header_toggle: true
             grid_options:
               columns: full
         column_span: 1
@@ -178,6 +178,7 @@ views:
               - entity: cover.tapparella_cucina_sud
             grid_options:
               columns: full
+            show_header_toggle: true
         column_span: 1
       - type: grid
         cards:
@@ -188,7 +189,7 @@ views:
           - type: entities
             entities:
               - entity: cover.tapparella_bagno
-            show_header_toggle: false
+            show_header_toggle: true
             state_color: false
             grid_options:
               columns: full
@@ -204,6 +205,7 @@ views:
               - entity: cover.tapparella_cameretta_nord
             grid_options:
               columns: full
+            show_header_toggle: true
       - type: grid
         cards:
           - type: heading
@@ -215,6 +217,7 @@ views:
               - entity: cover.tapparella_matrimoniale
             grid_options:
               columns: full
+            show_header_toggle: true
     header:
       card:
         type: markdown
@@ -292,74 +295,6 @@ views:
         show_entity_picture: false
   - type: sections
     max_columns: 2
-    title: Devices
-    path: devices
-    icon: mdi:devices
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: Availability
-            heading_style: title
-            icon: mdi:link-variant
-          - type: history-graph
-            entities:
-              - entity: binary_sensor.quiss_server_local
-              - entity: binary_sensor.msi_host_local
-              - entity: binary_sensor.display_local
-            title: History
-            logarithmic_scale: false
-      - type: grid
-        cards:
-          - type: heading
-            heading: Wake
-            heading_style: title
-            icon: mdi:lightning-bolt
-          - show_name: true
-            show_icon: true
-            type: button
-            entity: switch.quiss
-            show_state: false
-            icon: mdi:gesture-tap-button
-          - show_name: true
-            show_icon: true
-            type: button
-            entity: switch.msi
-            icon: mdi:gesture-tap-button
-          - type: tile
-            features_position: bottom
-            vertical: false
-            entity: binary_sensor.quiss_server_local
-          - type: tile
-            features_position: bottom
-            vertical: false
-            entity: binary_sensor.msi_host_local
-    header:
-      card:
-        type: markdown
-        content: '# Devices'
-    visible:
-      - user: d35ec065e1c14502924b0822b389c5c3
-    cards: []
-    badges:
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: binary_sensor.display_local
-        name: Display
-        show_entity_picture: false
-        state_content:
-          - state
-          - last_changed
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.uptime
-        show_entity_picture: false
-  - type: sections
-    max_columns: 2
     icon: mdi:gauge
     path: ''
     visible:
@@ -415,6 +350,7 @@ views:
             title: CPU Load
             logarithmic_scale: false
             hide_legend: false
+            days_to_show: 1
           - graph: line
             type: sensor
             entity: sensor.system_monitor_processor_temperature
@@ -423,6 +359,10 @@ views:
             grid_options:
               columns: 12
               rows: 2
+            hours_to_show: 24
+            limits:
+              min: 35
+              max: 100
       - type: grid
         cards:
           - type: heading
@@ -440,6 +380,7 @@ views:
               - max
               - min
             title: RAM
+            days_to_show: 1
           - type: gauge
             entity: sensor.system_monitor_memory_usage
             needle: true
@@ -484,3 +425,80 @@ views:
         entity: sensor.uptime
         show_entity_picture: false
     cards: []
+  - type: sections
+    max_columns: 2
+    title: Devices
+    path: devices
+    icon: mdi:devices
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Availability
+            heading_style: title
+            icon: mdi:link-variant
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.quiss_server_local
+              - entity: binary_sensor.msi_host_local
+              - entity: binary_sensor.display_local
+            title: History
+            logarithmic_scale: false
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: tile
+            features_position: bottom
+            vertical: false
+            entity: binary_sensor.quiss_server_local
+          - type: tile
+            features_position: bottom
+            vertical: false
+            entity: binary_sensor.msi_host_local
+          - type: heading
+            heading: Wake
+            heading_style: title
+            icon: mdi:lightning-bolt
+          - type: tile
+            entity: switch.quiss
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: switch.msi
+            features_position: bottom
+            vertical: false
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            icon: mdi:cctv
+            heading: Cameras
+          - type: custom:webrtc-camera
+            title: NerioGoPro2
+            url: gopro
+            muted: true
+            ui: true
+    header:
+      card:
+        type: markdown
+        content: '# Devices'
+    visible:
+      - user: d35ec065e1c14502924b0822b389c5c3
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false

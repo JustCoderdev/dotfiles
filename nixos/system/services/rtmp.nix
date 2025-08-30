@@ -47,14 +47,6 @@ rtmp {
 			allow publish 127.0.0.1;
 			deny publish all;
 
-			# # HLS 
-			# hls on;
-			# hls_path /srv/nginx/hls/;
-
-			# # DASH
-			# dash on;
-			# dash_path /srv/nginx/dash/;
-
 			# Command to stream gopro HERO3 stream
 			# Source <https://gist.github.com/laurieainley/7663756>
 			exec_pull ${pkgs.ffmpeg}/bin/ffmpeg
@@ -87,7 +79,7 @@ rtmp {
 		location /stat {
 			rtmp_stat all;
 			rtmp_stat_stylesheet stat.xsl;
-			add_header Refresh "3; $request_uri";
+			# add_header Refresh "3; $request_uri";
 		}
 
 		location /stat.xsl {
