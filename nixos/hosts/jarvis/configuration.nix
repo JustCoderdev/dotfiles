@@ -91,7 +91,7 @@ in
 	{
 		useDHCP = false;
 		networkmanager.enable = lib.mkForce false;
-		# interfaces."wlan0".useDHCP = true;
+		interfaces."wlan0".useDHCP = true;
 		interfaces."enu1u1".useDHCP = true;
 		
 		wireless = {
