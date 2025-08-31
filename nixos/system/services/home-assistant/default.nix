@@ -50,6 +50,7 @@ in
 
 		# Go2RTC debug webpage
 		# <http://home-assistant.service.local:1984>
+		networking.firewall.allowedTCPPorts = [ 1984 ];
 		services.go2rtc = {
 			enable = true;
 			settings.streams = {
