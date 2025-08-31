@@ -70,5 +70,38 @@
 				(gen-builder  "beta.server.local" 6)
 			];
 		};
+		routing =
+		let
+			get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
+			hosts = [
+				(get_conf "display" "00:03:50:01:06:48" "192.168.1.50" "local")
+			];
+		in
+		{
+			enable = true;
+			outnetwork.interface = "eno1";
+			subnetwork =
+			{
+				interface = "enp8s2";
+				address = "192.168.1.0";
+				mask = 24;
+				self-ip = "192.168.1.1";
+			};
+			dhcp = {
+				enable = false;
+				range = "10.0.0.16,10.0.0.127"; 
+				reserved-leases = [ ];
+			};
+			nat = {
+				enable = true;
+				forwarded-ports = [
+					{
+						proto = "tcp";
+						sourcePort = 20000;
+						destination = "192.168.1.50:20000";
+					}
+				];
+			};
+		};
 	};
 }
