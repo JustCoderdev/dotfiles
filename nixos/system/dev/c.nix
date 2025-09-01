@@ -31,6 +31,7 @@ in
 			# Tools
 			ascii ripgrep
 			jetbrains.clion
+			vscode
 
 			# Debugging
 			gdb valgrind

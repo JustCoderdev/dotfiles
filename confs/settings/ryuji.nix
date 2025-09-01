@@ -42,6 +42,8 @@
 			"steamcmd"
 
 			"clion"
+			"vscode"
+
 			"davinci-resolve"
 			"minecraft-server"
 			"discord"
