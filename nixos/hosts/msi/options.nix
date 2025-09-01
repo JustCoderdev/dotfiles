@@ -159,11 +159,6 @@
 					) hosts;
 				};
 			};
-			rtmp = {
-				enable = true;
-				openFirewall = true;
-				proxy.enable = true;
-			};
 			samba = {
 				enable = true;
 				shares.user.enable = true;

@@ -11,7 +11,9 @@ in
 {
 	config =
 	{
-		networking.firewall.allowedTCPPorts = (lib.mkIf cfg.openFirewall) [ rtmp_port ];
+		networking.firewall.allowedTCPPorts = (lib.mkIf cfg.openFirewall) (
+			[ rtmp_port ] ++ lib.lists.optionals (cfg.stat-webpage.enable) [ cfg.stat-webpage.port ]
+		);
 
 		systemd.tmpfiles.rules =
 		let
@@ -61,32 +63,37 @@ rtmp {
 	}
 }
 '';
-			appendHttpConfig =
-			let
-				rtmp = pkgs.fetchFromGitHub {
-					owner = "arut";
-					repo = "nginx-rtmp-module";
-					rev = "61cb33491701632f36faaa331915b857bfc295b2";
-					sha256 = "sha256-rK4RY9kxzaXQtzp1vvJ3rEHtt+fcYI5sNMZoYxfZI00=";
-				};
-			in
-''
+			appendHttpConfig = lib.mkIf (cfg.stat-webpage.enable)
+			(
+				let
+					rtmp = pkgs.fetchFromGitHub {
+						owner = "arut";
+						repo = "nginx-rtmp-module";
+						rev = "61cb33491701632f36faaa331915b857bfc295b2";
+						sha256 = "sha256-rK4RY9kxzaXQtzp1vvJ3rEHtt+fcYI5sNMZoYxfZI00=";
+					};
+				in ''
 	server {
-		listen 127.0.0.1:8080;
+		listen 127.0.0.1:${cfg.stat-webpage.port};
 
 		# --- Stat page --- #
 
 		location /stat {
 			rtmp_stat all;
 			rtmp_stat_stylesheet stat.xsl;
-			# add_header Refresh "3; $request_uri";
+			${
+				if cfg.auto-refresh
+				then "add_header Refresh \"3; $request_uri\";"
+				else ""
+			}
 		}
 
 		location /stat.xsl {
 			root ${rtmp.outPath};
 		}
 	}
-'';
+''
+			);
 		};
 	};
 
@@ -96,6 +103,16 @@ rtmp {
 	{
 		enable = lib.mkEnableOption "Enable rtmp support";
 		openFirewall = lib.mkEnableOption "Open firewall for all services";
+
+		stat-webpage =  {
+			enable = lib.mkEnableOption "Create the /stat page to show all active streams";
+			auto-refresh = lib.mkEnableOption "Whether the page should autorefresh every 3 seconds";
+			port = lib.mkOption {
+				type = lib.types.port;
+				description = "Port on which to serve the /stat page";
+				default = 8080;
+			};
+		};
 
 		proxy = {
 			enable = lib.mkEnableOption "Add nginx locations for each active services";
