@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
 	services.mysql = {
@@ -19,4 +19,13 @@
 	# 		type = "unicast";
 	# 	}
 	# ];
+
+	# DDNS
+
+	services.cloudflare-dyndns =
+	{
+		enable = true;
+		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
+		domains = [ "msi.foxburrow.org" ];
+	};
 }

@@ -46,6 +46,7 @@ in
 
 		cloudflare = {
 			origin-cert = mkSecretOptions "cloudflare/cert.pem" cfg.cloudflare.origin-cert;
+			api-token = mkSecretOptions "cloudflare/api.token" cfg.cloudflare.api-token;
 			tunnel-creds = mkAttrListOption "Credentials for each tunnel" (
 				name: mkSecretOptions "cloudflare/tunnel-${name}.json" cfg.cloudflare.tunnel-creds."${name}"
 			);

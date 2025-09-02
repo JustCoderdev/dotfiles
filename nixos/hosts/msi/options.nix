@@ -48,7 +48,10 @@
 			plymouth.enable = true;
 
 			secrets = {
-				cloudflare.origin-cert.installed = true;
+				cloudflare = {
+					origin-cert.installed = true;
+					api-token.installed = true;
+				};
 				nix-serve.priv-key.installed = true;
 			};
 
