@@ -219,14 +219,13 @@ in
 		client =
 		{
 			enable = true;
-			# servers.msi = {
-			# 		endpoint = "msi.foxburrow.org:51820";
-			# 		publicKey = "xyz";
+			servers.msi = {
+				endpoint = "msi.foxburrow.org:51820";
+				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
 
-			# 		tunnel-ip = "10.255.250.0/24";
-			# 		forwarded-ips = [ "0.0.0.0/0" ]
-			# 	};
-			# };
+				tunnel-ip = "10.255.250.1/24";
+				forwarded-ips = [ "127.0.0.0/8" ];
+			};
 		};
 	};
 
