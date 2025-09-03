@@ -124,7 +124,7 @@ in
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 443 80 ];
+	networking.firewall.allowedTCPPorts = [ 443 80 20000 ];
 	services.nginx =
 	{
 		enable = true;
@@ -144,7 +144,27 @@ in
 			sslCertificate = vhost-secrets.cert.path;
 			sslCertificateKey = vhost-secrets.key.path;
 		};
+		streamConfig = ''
+	server {
+		listen 20000;
+		proxy_pass 192.168.1.50:20000;
+	}
+'';
 	};
+
+	# Connect to display
+
+	networking = {
+		networkmanager.unmanaged = [ "interface-name:enp8s2" ];
+		interfaces."enp8s2" = {
+			useDHCP = false;
+			ipv4.addresses = [ {
+				address = "192.168.1.1";
+				prefixLength = 24;
+			} ];
+		};
+	};
+
 
 	# ARR Stack
 

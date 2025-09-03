@@ -19,6 +19,7 @@ in
 					inherit description;
 					after = [ "network-online.target" ];
 					wantedBy = [ "network-online.target" ];
+					wants = [ "network-online.target" ];
 					serviceConfig = {
 						Type = "oneshot";
 						# RemainAfterExit = "yes";
