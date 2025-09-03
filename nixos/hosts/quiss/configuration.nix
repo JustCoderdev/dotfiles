@@ -212,6 +212,24 @@ in
 		group = serv-group;
 	};
 
+	# WIREGUARD CLIENT
+
+	system.services.wireguard = {
+		openFirewall = true;
+		client =
+		{
+			enable = true;
+			# servers.msi = {
+			# 		endpoint = "msi.foxburrow.org:51820";
+			# 		publicKey = "xyz";
+
+			# 		tunnel-ip = "10.255.250.0/24";
+			# 		forwarded-ips = [ "0.0.0.0/0" ]
+			# 	};
+			# };
+		};
+	};
+
 	# MINECRAFT SERVERS
 
 	# services.minecraft-servers = {

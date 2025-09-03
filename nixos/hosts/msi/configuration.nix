@@ -28,4 +28,31 @@
 		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
 		domains = [ "msi.foxburrow.org" ];
 	};
+
+	# Wireguard
+
+	system.services.wireguard = {
+		openFirewall = true;
+		server =
+		{
+			enable = true;
+
+			tunnel-network = "10.255.250.0/24";
+			tunnel-ip = "10.255.250.1/24";
+
+			external-interface = "wlp3s0";
+			internal-interface = "wg-server";
+
+			peers =
+			let
+				add-peer = (
+					publicKey: ip:
+					{ inherit publicKey ip; }
+				);
+			in
+			{
+				# quiss = (add-peer "xyz" "10.255.250.2")
+			};
+		};
+	};
 }

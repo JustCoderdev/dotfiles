@@ -15,5 +15,6 @@
 		./servarr.nix
 		./virtualbox.nix
 		./webserver.nix
+		./wireguard.nix
 	];
 }
