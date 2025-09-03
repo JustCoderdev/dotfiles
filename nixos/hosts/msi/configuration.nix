@@ -51,7 +51,7 @@
 				);
 			in
 			{
-				# quiss = (add-peer "xyz" "10.255.250.2")
+				quiss = (add-peer "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=" "10.255.250.2");
 			};
 		};
 	};
