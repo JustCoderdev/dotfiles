@@ -63,14 +63,15 @@
 	services.nginx =
 	{
 		enable = true;
-	# 	virtualHosts."msi.foxburrow.org" =
-	# 	{
+		virtualHosts."msi.foxburrow.org" =
+		{
 	# 		locations."/".proxyPass = "https://10.255.250.2";
+			locations."/".root = "/var/www/msi";
 
-	# 		# addSSL = true;
-	# 		forceSSL = true;
-	# 		enableACME = true;
-	# 	};
+			# addSSL = true;
+			# forceSSL = true;
+			# enableACME = true;
+		};
 	};
 
 	# security.acme = {
