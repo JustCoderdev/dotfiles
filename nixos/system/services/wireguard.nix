@@ -27,7 +27,7 @@ in
 				// lib.attrsets.optionalAttrs (cfg.server.enable) (
 					{
 						"${cfg.server.internal-interface}" = {
-							ips = [ cfg.server.tunnel-ip ];
+							ips = [ cfg.server.self-ip ];
 							listenPort = wg-port;
 
 							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${cfg.server.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
@@ -49,12 +49,12 @@ in
 				)
 				// lib.attrsets.optionalAttrs (cfg.client.enable) (
 					lib.attrsets.mapAttrs' (
-						name: { endpoint, publicKey, tunnel-ip, forwarded-ips }:
+						name: { endpoint, publicKey, self-ip, allowed-ips }:
 						{
 							inherit name;
 							value =
 							{
-								ips = [ "${tunnel-ip}" ];
+								ips = [ "${self-ip}" ];
 								listenPort = wg-port;
 
 								privateKeyFile = "${secrets.defaultPath}/wireguard/self";
@@ -62,7 +62,7 @@ in
 
 								peers = [ {
 									inherit publicKey endpoint;
-									allowedIPs = forwarded-ips;
+									allowedIPs = allowed-ips;
 									persistentKeepalive = 25;
 								} ];
 							};
@@ -100,8 +100,8 @@ in
 								endpoint = mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
 								publicKey = mkStrOption "The public key of the peer";
 
-								tunnel-ip = mkStrOption "The IP address and subnet of the client's end of the tunnel interface";
-								forwarded-ips = lib.mkOption {
+								self-ip = mkStrOption "The IP address and subnet of the client's end of the tunnel interface";
+								allowed-ips = lib.mkOption {
 									description = "All subnets allowed to be forwarded (0.0.0.0/0)";
 									type = lib.types.listOf lib.types.str;
 									default = [];
@@ -118,7 +118,7 @@ in
 			enable = lib.mkEnableOption "Enable wireguard vpn as server";
 
 			tunnel-network = mkStrOption "The IP address and subnet of the network tunnel";
-			tunnel-ip = mkStrOption "The IP address and subnet of the server's end of the tunnel interface";
+			self-ip = mkStrOption "The IP address and subnet of the server's end of the tunnel interface";
 
 			external-interface = mkStrOption "The external interface the server routes to";
 			internal-interface = mkStrOption "The name of the wireguard interface of the server";

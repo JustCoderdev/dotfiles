@@ -38,7 +38,7 @@
 			enable = true;
 
 			tunnel-network = "10.255.250.0/24";
-			tunnel-ip = "10.255.250.1/24";
+			self-ip = "10.255.250.1/24";
 
 			external-interface = "wlp3s0";
 			internal-interface = "wg-server";
