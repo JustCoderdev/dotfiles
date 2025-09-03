@@ -32,7 +32,7 @@
 				  msi = "d4:3b:04:51:45:28";
 			};
 
-			audio.pipewire.enable = true;
+			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
 
 			secrets = {
