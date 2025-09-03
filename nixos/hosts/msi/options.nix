@@ -105,12 +105,11 @@
 					);
 				in
 				[
-					(gen-builder "alpha.server.local" 8)
-					(gen-builder  "beta.server.local" 6)
-					(gen-builder "quiss.server.local" 4)
+					(gen-builder "alpha.server.lan" 8)
+					(gen-builder  "beta.server.lan" 6)
+					(gen-builder "quiss.server.lan" 4)
 				];
 			};
-			nixcache.enable = true;
 			# routing =
 			# let
 			# 	get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
@@ -119,16 +118,16 @@
 
 			# 		# -------------------- #
 
-			# 		(get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.local")
-			# 		# (get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.local")
-			# 		# (get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.local")
+			# 		(get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.2" "server.lan")
+			# 		# (get_conf "alpha"     "1c:c1:de:be:c6:c4" "10.0.0.3" "server.lan")
+			# 		# (get_conf "alpha-ilo" "1c:c1:de:be:c6:c6" "10.0.0.4" "server.lan")
 
-			# 		(get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.local")
-			# 		# (get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.local")
-			# 		# (get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.local")
+			# 		(get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.4" "server.lan")
+			# 		# (get_conf "beta"      "30:8d:99:b2:88:df" "10.0.0.5" "server.lan")
+			# 		# (get_conf "beta-ilo"  "30:8d:99:b2:88:dd" "10.0.0.6" "server.lan")
 
-			# 		# (get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.local")
-			# 		(get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.local")
+			# 		# (get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.lan")
+			# 		(get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.lan")
 			# 	];
 			# in
 			# {

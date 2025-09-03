@@ -17,7 +17,7 @@ let
 	serv-group = "maid";
 	proxy = {
 		enable = true;
-		host = "quiss.server.local";
+		host = "quiss.server.lan";
 	};
 in
 

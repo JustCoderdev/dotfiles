@@ -9,8 +9,8 @@ let
 	add-wol-dev  = (name: domain: mac: { inherit name domain mac; command = "sudo poweroff"; });
 	add-wowl-dev = (name: domain: mac: { inherit name domain mac; command = "sudo eep"; });
 
-	wol-devices  = [ (add-wol-dev  "quiss" "server.local" "f4:6d:04:99:dc:9a") ];
-	wowl-devices = [ (add-wowl-dev "msi"   "host.local"   "d4:3b:04:51:45:28") ];
+	wol-devices  = [ (add-wol-dev  "quiss" "server.lan" "f4:6d:04:99:dc:9a") ];
+	wowl-devices = [ (add-wowl-dev "msi"   "host.lan"   "d4:3b:04:51:45:28") ];
 in
 
 {

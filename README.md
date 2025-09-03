@@ -110,10 +110,10 @@ Included configuration files
 ### Edit
 
 - Grub rescue entry
-- Add "host manifest"
 
 ### New
 
+- Add "host manifest"
 - Fusuma
 - Authelia
 - Auto rebuild pusher

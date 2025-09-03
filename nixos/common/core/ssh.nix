@@ -22,14 +22,14 @@ in
 			startAgent = true;
 
 			# knownHosts = {
-			# 	"switch.local".publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO+9uie4nmHjCRgYbn8s1WeLj/jSKotEO08cZ6j2ZUffkOeTOh2e+1AAB+NYMDeF/q96K/dbHWT/Ip2W2p0CjNHcVlixIToKrd8UqD6mUmp7JE5/S1h9P1wZPKS3zbe3fyJ2sA+8ALucbWdYBlZyWU0ZWji5dzFTa0GFi976d8hj1oNbBCZBiajWzayUJeNhVCxPytLBAAodJuTgieAJ8K3wPX0q7Pf0Mz3JPetmMbt/wTkQU4cems8we0d8bkXbox3EW/TUQx7i2GF+xs3E+Q7C7SqjyzhUnDK4UWIO8SbGYmvsKIJEmyix7O21a0Y/5tEm0RXS1TcFp1wg4WIejP";
+			# 	"switch.lan".publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO+9uie4nmHjCRgYbn8s1WeLj/jSKotEO08cZ6j2ZUffkOeTOh2e+1AAB+NYMDeF/q96K/dbHWT/Ip2W2p0CjNHcVlixIToKrd8UqD6mUmp7JE5/S1h9P1wZPKS3zbe3fyJ2sA+8ALucbWdYBlZyWU0ZWji5dzFTa0GFi976d8hj1oNbBCZBiajWzayUJeNhVCxPytLBAAodJuTgieAJ8K3wPX0q7Pf0Mz3JPetmMbt/wTkQU4cems8we0d8bkXbox3EW/TUQx7i2GF+xs3E+Q7C7SqjyzhUnDK4UWIO8SbGYmvsKIJEmyix7O21a0Y/5tEm0RXS1TcFp1wg4WIejP";
 
-			# 	"alpha.server.local".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKfJlm+Spo7dn2bgfsikaJrm2tts4mVdzgou5+yEqg5X";
-			# 	 "beta.server.local".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/IbY/KBg/V4ZHUoJ02/WdetpcyvqR1K1D4fD7PuJOk";
-			# 	"quiss.server.local".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOrn6ho3e3IVEKrZWsWP2hkAHt1KT2N0FHG3JnRN+I7F";
+			# 	"alpha.server.lan".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKfJlm+Spo7dn2bgfsikaJrm2tts4mVdzgou5+yEqg5X";
+			# 	 "beta.server.lan".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/IbY/KBg/V4ZHUoJ02/WdetpcyvqR1K1D4fD7PuJOk";
+			# 	"quiss.server.lan".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOrn6ho3e3IVEKrZWsWP2hkAHt1KT2N0FHG3JnRN+I7F";
 
-			# 	 "msi.host.local".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7";
-			# 	"acer.host.local".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/";
+			# 	 "msi.host.lan".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7";
+			# 	"acer.host.lan".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/";
 
 			# 	"github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 			# };

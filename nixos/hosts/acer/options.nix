@@ -80,8 +80,8 @@
 				);
 			in
 			[
-				(gen-builder "msi.host.local" 6)
-				(gen-builder "quiss.server.local" 4)
+				(gen-builder     "msi.host.lan" 6)
+				(gen-builder "quiss.server.lan" 4)
 			];
 		};
 	};

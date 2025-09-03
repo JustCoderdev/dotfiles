@@ -21,7 +21,7 @@
 				tunnel-creds."home".installed = true;
 			};
 
-			nginx.vhosts."quiss.server.local" = {
+			nginx.vhosts."quiss.server.lan" = {
 				cert = {
 					installed = true;
 					path = "/etc/nginx-certs/quiss_server_local-cert.crt";
@@ -45,7 +45,6 @@
 
 	system.services = {
 		samba.enable = true;
-		nixcache.enable = true;
 		nixbuilder = {
 			server = {
 				enable = true;
@@ -65,9 +64,9 @@
 				);
 			in
 			[
-				(gen-builder     "msi.host.local" 6)
-				(gen-builder "alpha.server.local" 8)
-				(gen-builder  "beta.server.local" 6)
+				(gen-builder     "msi.host.lan" 6)
+				(gen-builder "alpha.server.lan" 8)
+				(gen-builder  "beta.server.lan" 6)
 			];
 		};
 		# routing =

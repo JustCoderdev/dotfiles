@@ -20,7 +20,7 @@
 			openFirewall = false;
 			proxy = {
 				enable = true;
-				host = "jarvis.server.local";
+				host = "jarvis.server.lan";
 			};
 		};
 		nixbuilder = {
@@ -36,11 +36,10 @@
 				);
 			in
 			[
-				(gen-builder      "192.168.7.209" 6) # Wired MSI
-				(gen-builder     "msi.host.local" 6)
-				(gen-builder "quiss.server.local" 4)
-				# (gen-builder "alpha.server.local" 8)
-				# (gen-builder  "beta.server.local" 6)
+				(gen-builder     "msi.host.lan" 6)
+				(gen-builder "quiss.server.lan" 4)
+				# (gen-builder "alpha.server.lan" 8)
+				# (gen-builder  "beta.server.lan" 6)
 			];
 		};
 	};

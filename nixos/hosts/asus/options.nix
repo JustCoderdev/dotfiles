@@ -102,7 +102,7 @@
 					);
 				in
 				[
-					(gen-builder "msi.host.local" 6)
+					(gen-builder "msi.host.lan" 6)
 				];
 			};
 		};

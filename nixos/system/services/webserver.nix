@@ -12,7 +12,7 @@ in
 		services.nginx = {
 			enable = true;
 
-			virtualHosts."${hostname}.host.local" = {
+			virtualHosts."${hostname}.host.lan" = {
 				root = "/var/www/${hostname}";
 				# enableACME = true;
 				# forceSSL = true;

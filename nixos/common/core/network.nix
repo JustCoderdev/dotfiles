@@ -22,7 +22,7 @@ in
 		networking =
 		{
 			hostName = settings.hostname;
-			domain = "host.local";
+			domain = "host.lan";
 
 			firewall = {
 				enable = true;
@@ -44,27 +44,27 @@ in
 			hosts =
 			{
 				# NETWORK
-				"192.168.7.1"   = [ "gateway.local" ];
-				"192.168.7.2"   = [  "switch.local" ];
+				"192.168.7.1"   = [ "gateway.lan" ];
+				"192.168.7.2"   = [  "switch.lan" ];
 
 				# SERVERS
-				"192.168.7.3" = [     "alpha.server.local" ];
-				"192.168.7.4" = [ "alpha-ilo.server.local" ];
+				"192.168.7.3" = [     "alpha.server.lan" ];
+				"192.168.7.4" = [ "alpha-ilo.server.lan" ];
 
-				"192.168.7.5" = [     "beta.server.local" ];
-				"192.168.7.6" = [ "beta-ilo.server.local" ];
+				"192.168.7.5" = [     "beta.server.lan" ];
+				"192.168.7.6" = [ "beta-ilo.server.lan" ];
 
-				"192.168.7.7" = [  "quiss.server.local" "samba.service.local" "immich.service.local" ];
-				"192.168.7.8" = [ "jarvis.server.local" "home-assistant.service.local" ];
+				"192.168.7.7" = [  "quiss.server.lan" "samba.service.lan" "immich.service.lan" ];
+				"192.168.7.8" = [ "jarvis.server.lan" "home-assistant.service.lan" ];
 
 				# SERVICES
-				# "192.168.7.7" = [  "samba.service.local" "immich.service.local" ];
-				# "192.168.7.8" = [  "home-assistant.service.local" ];
+				# "192.168.7.7" = [  "samba.service.lan" "immich.service.lan" ];
+				# "192.168.7.8" = [  "home-assistant.service.lan" ];
 
 				# CLIENTS
-				"192.168.7.32" = [  "msi.host.local" ];
-				"192.168.7.33" = [ "acer.host.local" ];
-				"192.168.7.34" = [ "asus.host.local" ];
+				"192.168.7.32" = [  "msi.host.lan" ];
+				"192.168.7.33" = [ "acer.host.lan" ];
+				"192.168.7.34" = [ "asus.host.lan" ];
 			};
 		};
 	};
