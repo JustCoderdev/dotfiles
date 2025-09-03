@@ -8,7 +8,6 @@
 		./bootloader.nix
 		./console.nix
 		./dotfiles-backup.nix
-		./firewall.nix
 		./fonts.nix
 		./hardware
 		./locale.nix

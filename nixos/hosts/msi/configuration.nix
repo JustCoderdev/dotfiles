@@ -55,4 +55,26 @@
 			};
 		};
 	};
+
+	# Nginx quiss proxy
+
+	# Port 80 opened for acme
+	networking.firewall.allowedTCPPorts = [ 443 80 ];
+	services.nginx =
+	{
+		enable = true;
+	# 	virtualHosts."msi.foxburrow.org" =
+	# 	{
+	# 		locations."/".proxyPass = "https://10.255.250.2";
+
+	# 		# addSSL = true;
+	# 		forceSSL = true;
+	# 		enableACME = true;
+	# 	};
+	};
+
+	# security.acme = {
+	# 	acceptTerms = true;
+	# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
+	# };
 }

@@ -24,6 +24,11 @@ in
 			hostName = settings.hostname;
 			domain = "host.local";
 
+			firewall = {
+				enable = true;
+				allowPing = true;
+			};
+
 			networkmanager.enable = true;
 			wireless.enable = false; # disable wpa_supplicant.
 			# dhcpcd.enable = false;
