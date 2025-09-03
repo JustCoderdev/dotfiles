@@ -17,6 +17,8 @@ in
 		# Check if it works `nix-shell -p libva-utils --run vainfo`
 		users.users.jellyfin.extraGroups = [ "render" "video" ];
 		hardware.graphics.extraPackages = with pkgs; [
+			vaapiVdpau
+			libvdpau-va-gl
 			intel-media-driver
 			intel-ocl
 			intel-vaapi-driver
