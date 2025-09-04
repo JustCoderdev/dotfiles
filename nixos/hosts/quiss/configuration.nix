@@ -145,13 +145,10 @@ in
 			sslCertificateKey = vhost-secrets.key.path;
 		};
 		streamConfig = ''
-	limit_conn_zone $binary_remote_addr zone=ip_addr:10m;
-
 	server {
 		listen 20000;
 		proxy_pass 192.168.1.50:20000;
 
-		limit_conn ip_addr 1;
 		allow 192.168.7.8; # jarvis
 		deny  all;
 	}
