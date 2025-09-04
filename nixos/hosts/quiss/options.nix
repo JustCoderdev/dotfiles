@@ -15,6 +15,7 @@
 			};
 		};
 		secrets = {
+			nginx.basic_auth."dashboard".file.installed = true;
 			discord-hook.installed = true;
 			cloudflare = {
 				origin-cert.installed = true;

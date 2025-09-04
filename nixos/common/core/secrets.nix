@@ -69,9 +69,13 @@ in
 					key  = mkSecretOptions "nginx/${flat-name}-cert.key" cfg.nginx.vhosts."${name}".key;
 				}
 			);
+			basic_auth = mkAttrListOption "Nginx basic auth file users file" (
+				service:
+				{
+					file = mkSecretOptions "nginx/${service}.users" cfg.nginx.basic_auth."${service}".file;
+				}
+			);
 		};
-
-
 
 		nix-serve = {
 			priv-key = mkSecretOptions "nixserve/cache-priv-key.pem" cfg.nix-serve.priv-key;

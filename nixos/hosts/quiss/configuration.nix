@@ -148,8 +148,31 @@ in
 	server {
 		listen 20000;
 		proxy_pass 192.168.1.50:20000;
+
+		limit_conn ip_addr 1;
+		allow 192.168.7.8; # jarvis
+		deny  all;
 	}
 '';
+
+	# server {
+	# 	listen 80;
+		
+	# 	location /api {
+	# 		limit_except GET {
+	# 			auth_basic "NGINX Plus API";
+	# 			auth_basic_user_file ${secrets.nginx.basic_auth."dashboard".file.path};
+	# 		}
+		
+	# 		api	write=on;
+	# 	}
+		
+	# 	location = /dashboard.html {
+	# 		root	/usr/share/nginx/html;
+	# 	}
+	# }
+# '';
+
 	};
 
 	# Connect to display
