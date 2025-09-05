@@ -21,8 +21,6 @@ in
 			libvdpau-va-gl
 		];
 
-		services.xserver.enable = true;
-
 		# PROXY
 
 		services.nginx = lib.mkIf (cfg.proxy.enable)

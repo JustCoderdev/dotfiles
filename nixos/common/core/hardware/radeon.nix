@@ -13,7 +13,7 @@ in
 		services.xserver.videoDrivers = [ "amdgpu" ];
 		
 		boot.kernelParams = []
-		++ lib.optionals (cfg-hw.gpu.architecture == "tera-scale")
+		++ lib.optionals (cfg-hw.gpu.architecture == "gcn1")
 		[
 			"radeon.si_support=0" "amdgpu.si_support=1"
 		]
@@ -21,15 +21,20 @@ in
 		[
 			"radeon.cik_support=0" "amdgpu.cik_support=1"
 		];
+	
 
-		systemd.tmpfiles.rules = [
-#			Type Path          Mode User Group Age Argument
-			"L+  /opt/rocm/hip -    -    -     -   ${pkgs.rocmPackages.clr}"
-		];
+		# gcn > 3
+		# Source <https://nixos.wiki/wiki/AMD_GPU>
+		#systemd.tmpfiles.rules = [
+##			Type Path          Mode User Group Age Argument
+		#	"L+  /opt/rocm/hip -    -    -     -   ${pkgs.rocmPackages.clr}"
+		#];
 
 		environment.systemPackages = with pkgs; [ radeontop clinfo ]; 
 
 		hardware.graphics = {
+			enable = true;      # Enable Vulkan
+			enable32Bit = true; # Enable Vulkan for 32-bit
 			extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
 			extraPackages = with pkgs; [ amdvlk ]
 			++ lib.optionals (cfg-hw.gpu.architecture == "gcn1") [ mesa.opencl ]

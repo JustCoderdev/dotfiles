@@ -9,9 +9,15 @@
 				manufacturer = "intel";
 				architecture = "ivy-bridge";
 			};
-			gpu = { # Radeon HD 6750
+			# Radeon HD 6750
+			# gpu = {
+			# 	manufacturer = "amd";
+			# 	architecture = "gcn1";
+			# };
+			# AMD FirePro W4300
+			gpu = {
 				manufacturer = "amd";
-				architecture = "gcn1";
+				architecture = "gcn2";
 			};
 		};
 		secrets = {
