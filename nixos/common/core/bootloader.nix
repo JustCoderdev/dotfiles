@@ -43,11 +43,17 @@ in
 
 				extraEntries = ''
 submenu "Power options" {
+
+	menuentry "Poweroff" {
+		halt
+	}
+
 	menuentry "Reboot" {
 		reboot
 	}
-	menuentry "Poweroff" {
-		halt
+
+	menuentry "Reboot to Firmware" {
+		fwsetup
 	}
 }
 '';

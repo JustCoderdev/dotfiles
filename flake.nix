@@ -31,7 +31,6 @@
 	let
 		dotfiles_store_path = ./.;
 
-		# TODO: Create manifest for each directory under `nixos/hosts`
 		hosts-list =
 		let
 			add-host = (
