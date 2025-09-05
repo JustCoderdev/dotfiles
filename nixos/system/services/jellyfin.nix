@@ -19,10 +19,9 @@ in
 		hardware.graphics.extraPackages = with pkgs; [
 			vaapiVdpau
 			libvdpau-va-gl
-			intel-media-driver
-			intel-ocl
-			intel-vaapi-driver
 		];
+
+		services.xserver.enable = true;
 
 		# PROXY
 

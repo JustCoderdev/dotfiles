@@ -23,15 +23,17 @@ in
 		];
 
 		systemd.tmpfiles.rules = [
-#				Type Path          Mode User Group Age Argument
+#			Type Path          Mode User Group Age Argument
 			"L+  /opt/rocm/hip -    -    -     -   ${pkgs.rocmPackages.clr}"
 		];
 
 		environment.systemPackages = with pkgs; [ radeontop clinfo ]; 
 
-		hardware.graphics.extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
-		hardware.graphics.extraPackages = with pkgs; [ amdvlk ]
-		++ lib.optionals (cfg-hw.gpu.architecture == "gcn1") [ mesa.opencl ]
-		++ lib.optionals (cfg-hw.gpu.architecture != "gcn1") [ rocmPackages.clr.icd ];
+		hardware.graphics = {
+			extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+			extraPackages = with pkgs; [ amdvlk ]
+			++ lib.optionals (cfg-hw.gpu.architecture == "gcn1") [ mesa.opencl ]
+			++ lib.optionals (cfg-hw.gpu.architecture != "gcn1") [ rocmPackages.clr.icd ];
+		};
 	};
 }

@@ -13,6 +13,12 @@ in
 
 	config =
 	{
+		hardware.graphics = {
+			enable = true;
+			enable32Bit = true;
+		};
+
+
 		# -- CPU INTEL -- #
 
 		boot.initrd.kernelModules = []

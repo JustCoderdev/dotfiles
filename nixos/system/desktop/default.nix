@@ -21,15 +21,6 @@ in
 			config.common.default = [ "gtk" ];
 		};
 
-		hardware.graphics = {
-			enable = true;
-			enable32Bit = true;
-
-#			extraPackages = [
-#				(lib.mkIf video-editing pkgs.intel-compute-runtime)
-#			];
-		};
-
 		unofficial.services.fusuma = let
 			prefix = if i3.enable then "i3"
 				else if hyprland.enable then "hyprland"
