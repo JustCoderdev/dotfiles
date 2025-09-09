@@ -11,14 +11,10 @@
 	environment.systemPackages = with pkgs; [ piper ]
 	++ [ ciscoPacketTracer8 dbeaver-bin ]; # more packages support
 
-	# networking.interfaces."wlp3s0".ipv4.routes = [
-	# 	{
-	# 		address = "10.255.255.248";
-	# 		prefixLength = 30;
-	# 		via = "192.168.7.1";
-	# 		type = "unicast";
-	# 	}
-	# ];
+	networking.hosts = {
+		"192.168.1.5"   = [  "msi.host.lan" ];
+		"192.168.1.8"   = [ "asus.host.lan" ];
+	};
 
 	# DDNS
 
