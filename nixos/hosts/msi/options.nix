@@ -105,9 +105,9 @@
 					);
 				in
 				[
-					(gen-builder "alpha.server.lan" 8)
-					(gen-builder  "beta.server.lan" 6)
-					(gen-builder "quiss.server.lan" 4)
+					# (gen-builder "alpha.server.lan" 8)
+					# (gen-builder  "beta.server.lan" 6)
+					# (gen-builder "quiss.server.lan" 4)
 				];
 			};
 			# routing =

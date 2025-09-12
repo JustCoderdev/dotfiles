@@ -102,6 +102,7 @@
 					);
 				in
 				[
+					(gen-builder "msi.foxburrow.org" 6)
 					(gen-builder "msi.host.lan" 6)
 				];
 			};

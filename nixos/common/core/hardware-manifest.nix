@@ -18,9 +18,23 @@ in
 				{
 					options = 
 					{
+# users
+#	ryuji
+#		ssh key
+
 # services
 #	nix builder
 #	nix cache
+
+# hardware
+#	cpu
+#		intel  = {}
+#		amd  = {}
+#	gpu
+#		radeon = []
+#		nvidia = []
+#		intel  = []
+
 
 # network
 #	networks

@@ -71,9 +71,9 @@
 				);
 			in
 			[
-				(gen-builder     "msi.host.lan" 6)
-				(gen-builder "alpha.server.lan" 8)
-				(gen-builder  "beta.server.lan" 6)
+				# (gen-builder     "msi.host.lan" 6)
+				# (gen-builder "alpha.server.lan" 8)
+				# (gen-builder  "beta.server.lan" 6)
 			];
 		};
 		# routing =
