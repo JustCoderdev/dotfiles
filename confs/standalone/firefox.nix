@@ -15,7 +15,7 @@ in
 	programs.firefox =
 	{
 		enable = true && has_de;
-		package = pkgs.firefox-esr;
+		package = pkgs.firefox;
 
 		profiles.${username} =
 		{
@@ -48,17 +48,6 @@ in
 				"sidebar.visibility" = "hide-sidebar";
 				"ui.key.menuAccessKeyFocuses" = false; # Disable `esc` key for menu
 			};
-
-			# nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
-#			extensions = with addons; [
-#				improved-tube
-#				keepa
-#				remove-youtube-s-suggestions
-#				sponsorblock
-#				ublock-origin
-#				user-agent-string-switcher
-#				youtube-nonstop
-#			];
 		};
 
 		# <https://mozilla.github.io/policy-templates/>
@@ -103,15 +92,15 @@ in
 					installation_mode = "allow";
 					private_browsing = true;
 				};
-				"addon@darkreader.org" = gen-extension-data "darkreader";
-				"{5327e982-d0be-4b85-b661-dba2ef210ab8}" = gen-extension-data "link-redirect-trace-addon";
-				"sponsorBlocker@ajay.app" = gen-extension-data "sponsorblock";
-				"uBlock0@raymondhill.net" = gen-extension-data "ublock-origin";
-				"myallychou@gmail.com" = gen-extension-data "youtube-recommended-videos";
-				"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}" = gen-extension-data "youtube-nonstop";
+				"addon@darkreader.org"                          = gen-extension-data "darkreader";
+				"{5327e982-d0be-4b85-b661-dba2ef210ab8}"        = gen-extension-data "link-redirect-trace-addon";
+				"sponsorBlocker@ajay.app"                       = gen-extension-data "sponsorblock";
+				"uBlock0@raymondhill.net"                       = gen-extension-data "ublock-origin";
+				"myallychou@gmail.com"                          = gen-extension-data "youtube-recommended-videos";
+				"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}"        = gen-extension-data "youtube-nonstop";
 				"default-compact-dark-theme@glitchii.github.io" = gen-extension-data "default-compact-dark-theme";
-				# "{57015cac-9cb6-43b3-975a-b305fd4012c9}" = gen-extension-data "two-finger-history-jump";
-				# "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = gen-extension-data "user-agent-string-switcher";
+				# "{57015cac-9cb6-43b3-975a-b305fd4012c9}"        = gen-extension-data "two-finger-history-jump";
+				# "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}"        = gen-extension-data "user-agent-string-switcher";
 			};
 
 			FirefoxHome = {
@@ -166,7 +155,7 @@ in
 			SearchSuggestEnabled = true;
 
 			ShowHomeButton = false;
-			StartDownloadsInTempDirectory = true;
+			StartDownloadsInTempDirectory = false;
 
 			UserMessaging = {
 				ExtensionRecommendations = false;

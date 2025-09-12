@@ -52,7 +52,7 @@ font pango:robotomono medium 10
 
 
 ## STARTUP APP
-exec --no-startup-id i3-msg 'workspace 2; exec firefox-esr'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox'
 exec --no-startup-id i3-msg 'workspace 1; exec alacritty'
 
 # assign [class="Firefox"]   number 1
@@ -60,7 +60,7 @@ exec --no-startup-id i3-msg 'workspace 1; exec alacritty'
 
 
 ## CUSTOM KEYBINDINGS
-bindsym $mod+b       exec --no-startup-id firefox-esr
+bindsym $mod+b       exec --no-startup-id firefox
 bindsym $mod+o       exec --no-startup-id obsidian
 bindsym $mod+t       exec --no-startup-id thunar
 bindsym $mod+Return  exec --no-startup-id alacritty

@@ -22,7 +22,9 @@
 	{
 		enable = true;
 		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
-		domains = [ "msi.foxburrow.org" ];
+		domains = [
+			"msi.foxburrow.org"
+		];
 	};
 
 	# Wireguard
