@@ -9,7 +9,8 @@ in
 	config = lib.mkMerge
 	[
 		(
-			lib.mkIf cfg.pipewire.enable {
+			lib.mkIf (cfg.pipewire.enable)
+			{
 				services.pulseaudio.enable = false;
 
 				# Install control script
@@ -33,11 +34,12 @@ in
 		)
 
 		(
-			lib.mkIf cfg.pulseaudio.enable {
+			lib.mkIf (cfg.pulseaudio.enable)
+			{
 				services.pipewire.enable = false;
 
 				# Install control script
-				environment.systemPackages = with pkgs; [ pavucontrol ];
+				environment.systemPackages = with pkgs; [ pavucontrol alsa-utils ];
 
 				# Enable sound with pulseaudio.
 				services.pulseaudio = {
