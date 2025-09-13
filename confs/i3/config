@@ -67,8 +67,10 @@ bindsym $mod+Return  exec --no-startup-id alacritty
 bindsym $mod+F4      exec "i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 
 bindsym $mod+Ctrl+l   exec --no-startup-id "dm-tool lock"
-bindsym $mod+Shift+s  exec coreshot -s "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
-#bindsym $mod+Ctrl+s  exec coreshot -f "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
+# bindsym $mod+Ctrl+s   exec coreshot -f "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
+# bindsym $mod+Shift+s  exec coreshot -s "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
+bindsym $mod+Shift+s  exec shotgun "$(hacksaw -f "-i %i -g %g")" - | xclip -t 'image/png' -selection clipboard
+
 
 
 ## "Borrowed" KEYBINDINGS

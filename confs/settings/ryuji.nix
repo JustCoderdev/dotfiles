@@ -51,7 +51,6 @@
 			"libsciter"
 
 			"obsidian"
-			"anytype"
 
 			"google-chrome"
 			"ciscoPacketTracer8"

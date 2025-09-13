@@ -10,7 +10,7 @@ stdenv.mkDerivation
 	nativeBuildInputs = [ gcc ];
 	buildInputs = [ ];
 	
-	buildPhase = '' ./build.sh '';
+	buildPhase = (builtins.readFile ./build.sh);
 
 	installPhase = ''
 mkdir -p $out/bin

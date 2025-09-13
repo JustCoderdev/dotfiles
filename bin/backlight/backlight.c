@@ -20,9 +20,9 @@ typedef unsigned long int n64;
 
 FILE *tty2;
 
-char default_path[PATH_LEN+1] = "/sys/class/backlight/intel_backlight";
-char brightness_max_path[PATH_LEN+1];
-char brightness_path[PATH_LEN+1];
+char default_path[PATH_LEN] = "/sys/class/backlight/intel_backlight";
+char brightness_max_path[PATH_LEN];
+char brightness_path[PATH_LEN];
 
 static void print_usage(FILE *stream, char *program)
 { /* clang-format off */
@@ -183,7 +183,7 @@ static void flags_parse(char *program, char *token, int *argc, char ***argv)
 						__LINE__);
 				exit(1);
 			}
-			strncpy(default_path, token, PATH_LEN);
+			strncpy(default_path, token, PATH_LEN-1);
 			break;
 
 		default:
@@ -204,10 +204,10 @@ int main(int argc, char **argv)
 	if(tty2 == NULL) tty2 = stdout;
 
 	strncpy(brightness_path, default_path, PATH_LEN);
-	strncat(brightness_path, "/brightness", PATH_LEN);
+	strncat(brightness_path, "/brightness", PATH_LEN-1);
 
 	strncpy(brightness_max_path, default_path, PATH_LEN);
-	strncat(brightness_max_path, "/max_brightness", PATH_LEN);
+	strncat(brightness_max_path, "/max_brightness", PATH_LEN-1);
 
 	if(argc == 0)
 	{
@@ -232,13 +232,13 @@ int main(int argc, char **argv)
 			}
 		}
 
-		else if(strncmp(token, "max", PATH_LEN) == 0)
+		else if(strncmp(token, "max", PATH_LEN-1) == 0)
 		{
 			n64 max_brightness = brightness_get(brightness_max_path);
 			printf("%lu", max_brightness);
 			exit(0);
 		}
-		else if(strncmp(token, "set", PATH_LEN) == 0)
+		else if(strncmp(token, "set", PATH_LEN-1) == 0)
 		{
 			n64 max_brightness, value = 0;
 			n8 token_len;
@@ -296,7 +296,7 @@ int main(int argc, char **argv)
 			fprintf(stddeb, "DEBUG: Current brightness is %lu\n", value);
 			exit(0);
 		}
-		else if(strncmp(token, "inc", PATH_LEN) == 0)
+		else if(strncmp(token, "inc", PATH_LEN-1) == 0)
 		{
 			n64 max_brightness, brightness, value = 0;
 			n8 token_len;
@@ -356,7 +356,7 @@ int main(int argc, char **argv)
 			fprintf(stddeb, "DEBUG: Current brightness is %lu\n", brightness);
 			exit(0);
 		}
-		else if(strncmp(token, "dec", PATH_LEN) == 0)
+		else if(strncmp(token, "dec", PATH_LEN-1) == 0)
 		{
 			n64 max_brightness, brightness, value = 0;
 			n8 token_len;
