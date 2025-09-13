@@ -52,10 +52,16 @@ in
 
 		services.journald.extraConfig = "SystemMaxUse=1G";
 
-		nixpkgs.config = let pkgs = settings.special_pkgs; in {
-			permittedInsecurePackages = pkgs.insecure;
-			allowUnfreePredicate = pkg: builtins.elem
-				(lib.getName pkg) pkgs.unfree;
+		nixpkgs =
+		{
+			config = let pkgs = settings.special_pkgs; in
+			{
+				permittedInsecurePackages = pkgs.insecure;
+				allowUnfreePredicate = (
+					pkg:
+					builtins.elem (lib.getName pkg) pkgs.unfree
+				);
+			};
 		};
 	};
 }

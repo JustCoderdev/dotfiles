@@ -17,8 +17,15 @@ in
 				extraPackages = with pkgs; [
 					dmenu
 					i3status
+
+					# Media player controls
 					playerctl
-					CuboCore.coreshot
+
+					# Screenshot utility
+					# CuboCore.coreshot
+					# (callPackage ../../../unofficial/pkgs/hacksaw.nix)
+					shotgun
+					xclip
 				];
 			};
 		};

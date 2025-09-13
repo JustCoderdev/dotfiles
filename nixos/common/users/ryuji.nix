@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, pkgs-unstable, ... }:
 
 let
 	cfg = config.common.users.ryuji;
@@ -67,6 +67,10 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		[
 			nix-tree
 			(callPackage ../../unofficial/pkgs/schemer2.nix { })
+		]
+		++
+		[
+			pkgs-unstable.libxcb
 		]
 		++ lib.optionals (is_desk_available && has_desktop)
 		[
