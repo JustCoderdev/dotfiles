@@ -1,6 +1,6 @@
-{ mkDerivation, gcc }:
+{ stdenv, gcc }:
 
-mkDerivation
+stdenv.mkDerivation
 {
 	name = "backlight";
 	version = "1.0";
