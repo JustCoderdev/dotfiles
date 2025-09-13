@@ -1,21 +1,16 @@
-{ stdenv, clang }:
+{ mkDerivation, gcc }:
 
-stdenv.mkDerivation {
+mkDerivation
+{
 	name = "backlight";
 	version = "1.0";
 	src = ./.;
 
 	# Compilation - Runtime dependencies
-	nativeBuildInputs = [ clang ];
+	nativeBuildInputs = [ gcc ];
 	buildInputs = [ ];
 	
-	buildPhase = ''
-clang -xc -Wall -Wextra -Werror -Wpedantic \
--pedantic -pedantic-errors -std=c89 \
--fcolor-diagnostics -lm \
-"backlight.c" -o "backlight"
-chmod +x "backlight"
-'';
+	buildPhase = '' ./build.sh '';
 
 	installPhase = ''
 mkdir -p $out/bin

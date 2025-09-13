@@ -20,11 +20,11 @@ typedef unsigned long int n64;
 
 FILE *tty2;
 
-char default_path[PATH_LEN] = "/sys/class/backlight/intel_backlight";
-char brightness_max_path[PATH_LEN];
-char brightness_path[PATH_LEN];
+char default_path[PATH_LEN+1] = "/sys/class/backlight/intel_backlight";
+char brightness_max_path[PATH_LEN+1];
+char brightness_path[PATH_LEN+1];
 
-void print_usage(FILE *stream, char *program)
+static void print_usage(FILE *stream, char *program)
 { /* clang-format off */
 	fprintf(stream,
 			"Backlight\n"
@@ -38,13 +38,24 @@ void print_usage(FILE *stream, char *program)
 			"Commands:\n"
 				"\t<br>\t\tPrint current brightness\n"
 				"\tmax\t\tPrint max brightness\n"
+				"\n"
 				"\tset <0-max>\tSet brightness to value\n"
-				"\tset max\tSet brightness to max brighness\n"
+				"\tset max\t\tSet brightness to max brighness\n"
+				"\tset <0%%-100%%>\tSet brightness to value as percentage\n"
+				"\n"
+	, program); fprintf(stream,
 				"\tinc <0-max>\tIncrement brightness by value\n"
-				"\tdec <0-max>\tDecement brightness by value\n", program);
+				"\tinc <0%%-100%%>\tIncrement brightness by value as percentage\n"
+				"\n"
+				"\tdec <0-max>\tDecement brightness by value\n"
+				"\tdec <0%%-100%%>\tDecement brightness by value as percentage\n"
+			"Notes:\n"
+				"\tThe percentage accepts only whole numbers and not floating point ones (YES 15%%, NO 25.5%%)\n"
+				"\n"
+	);
 } /* clang-format on */
 
-n64 brightness_get(char *file_path)
+static n64 brightness_get(char *file_path)
 {
 	FILE *file;
 
@@ -68,7 +79,7 @@ n64 brightness_get(char *file_path)
 	}
 
 	while((c = getc(file)) != EOF && i < (BUFF_LEN - 1))
-		buffer[i++] = c;
+		buffer[i++] = (char)c;
 
 	errno = 0;
 	brightness = strtoul(buffer, NULL, 10);
@@ -88,7 +99,7 @@ n64 brightness_get(char *file_path)
 	return brightness;
 }
 
-void brightness_set(n64 value)
+static void brightness_set(n64 value)
 {
 	FILE *brightness_file = fopen(brightness_path, "w");
 	if(brightness_file == NULL)
@@ -114,18 +125,21 @@ void brightness_set(n64 value)
 
 	fclose(brightness_file);
 }
-char *shift(int *argc, char ***argv)
+
+static char *shift(int *argc, char ***argv)
 {
 	if((*argc)--) return *((*argv)++);
 	return NULL;
 }
 
-n64 token_parse_n64(char *token)
+static n64 token_parse_n64(char *token)
 {
 	n64 value = 0;
 	n8 token_len, i;
 
-	token_len = strlen(token);
+	assert(strlen(token) < 256);
+	token_len = (n8)strlen(token);
+
 	for(i = 0; i < token_len; ++i)
 	{
 		if(token[i] < '0' || token[i] > '9')
@@ -139,7 +153,7 @@ n64 token_parse_n64(char *token)
 			exit(1);
 		}
 
-		value += (token[i] - '0') * pow(10, token_len - i - 1);
+		value += (n64)((token[i] - '0') * pow(10, token_len - i - 1));
 	}
 
 	fprintf(stddeb,
@@ -150,7 +164,7 @@ n64 token_parse_n64(char *token)
 	return value;
 }
 
-void flags_parse(char *program, char *token, int *argc, char ***argv)
+static void flags_parse(char *program, char *token, int *argc, char ***argv)
 {
 	switch(token[1])
 	{
@@ -201,6 +215,7 @@ int main(int argc, char **argv)
 		printf("%lu", brightness);
 		exit(0);
 	}
+
 	while(argc > 0)
 	{
 		char *token = shift(&argc, &argv);
@@ -216,6 +231,7 @@ int main(int argc, char **argv)
 				exit(0);
 			}
 		}
+
 		else if(strncmp(token, "max", PATH_LEN) == 0)
 		{
 			n64 max_brightness = brightness_get(brightness_max_path);
@@ -225,6 +241,7 @@ int main(int argc, char **argv)
 		else if(strncmp(token, "set", PATH_LEN) == 0)
 		{
 			n64 max_brightness, value = 0;
+			n8 token_len;
 
 			token = shift(&argc, &argv);
 			if(token == NULL)
@@ -237,15 +254,34 @@ int main(int argc, char **argv)
 				exit(1);
 			}
 
+			assert(strlen(token) < 256);
+			token_len = (n8)strlen(token);
+
 			max_brightness = brightness_get(brightness_max_path);
 			fprintf(stddeb, "DEBUG: Max brightness is %lu\n", max_brightness);
 
-			if(strncmp(token, "max", 3) == 0 && strlen(token) == 3)
+			if(token_len == 3 && strncmp(token, "max", 3) == 0)
+			{
 				value = max_brightness;
-			else
-				value = token_parse_n64(token);
+			}
+			else if(token_len > 1 && token[token_len-1] == '%')
+			{
+				n64 percentage;
 
-			if(value < 0 || value > max_brightness)
+				fprintf(stddeb, "DEBUG: Calculating percentage from token %*s\n", token_len, token);
+
+				token[token_len-1] = '\0';
+				percentage = token_parse_n64(token);
+				value = (n64)((float)percentage / 100.0f * (float)max_brightness);
+
+				fprintf(stddeb, "DEBUG: Percentage result is %lu / 100 * %lu = %lu\n", percentage, max_brightness, value);
+			}
+			else
+			{
+				value = token_parse_n64(token);
+			}
+
+			if(value > max_brightness)
 			{
 				fprintf(stderr,
 						"ERROR:%s:%d: Argument `%lu` out of bounds (0, %lu)\n",
@@ -263,6 +299,7 @@ int main(int argc, char **argv)
 		else if(strncmp(token, "inc", PATH_LEN) == 0)
 		{
 			n64 max_brightness, brightness, value = 0;
+			n8 token_len;
 
 			token = shift(&argc, &argv);
 			if(token == NULL)
@@ -274,14 +311,34 @@ int main(int argc, char **argv)
 						__LINE__);
 				exit(1);
 			}
-			value = token_parse_n64(token);
+
+			assert(strlen(token) < 256);
+			token_len = (n8)strlen(token);
 
 			max_brightness = brightness_get(brightness_max_path);
-			brightness = brightness_get(brightness_path);
 			fprintf(stddeb, "DEBUG: Max brightness is %lu\n", max_brightness);
+
+			brightness = brightness_get(brightness_path);
 			fprintf(stddeb, "DEBUG: Current brightness is %lu\n", brightness);
 
-			if(value < 0 || value > max_brightness)
+			if(token_len > 1 && token[token_len-1] == '%')
+			{
+				n64 percentage;
+
+				fprintf(stddeb, "DEBUG: Calculating percentage from token %*s\n", token_len, token);
+
+				token[token_len-1] = '\0';
+				percentage = token_parse_n64(token);
+				value = (n64)((float)percentage / 100.0f * (float)max_brightness);
+
+				fprintf(stddeb, "DEBUG: Percentage result is %lu / 100 * %lu = %lu\n", percentage, max_brightness, value);
+			}
+			else
+			{
+				value = token_parse_n64(token);
+			}
+
+			if(value > max_brightness)
 			{
 				fprintf(stderr,
 						"ERROR:%s:%d: Argument `%lu` out of bounds (0, %lu)\n",
@@ -302,6 +359,7 @@ int main(int argc, char **argv)
 		else if(strncmp(token, "dec", PATH_LEN) == 0)
 		{
 			n64 max_brightness, brightness, value = 0;
+			n8 token_len;
 
 			token = shift(&argc, &argv);
 			if(token == NULL)
@@ -313,14 +371,34 @@ int main(int argc, char **argv)
 						__LINE__);
 				exit(1);
 			}
-			value = token_parse_n64(token);
+
+			assert(strlen(token) < 256);
+			token_len = (n8)strlen(token);
 
 			max_brightness = brightness_get(brightness_max_path);
-			brightness = brightness_get(brightness_path);
 			fprintf(stddeb, "DEBUG: Max brightness is %lu\n", max_brightness);
+
+			brightness = brightness_get(brightness_path);
 			fprintf(stddeb, "DEBUG: Current brightness is %lu\n", brightness);
 
-			if(value < 0 || value > max_brightness)
+			if(token_len > 1 && token[token_len-1] == '%')
+			{
+				n64 percentage;
+
+				fprintf(stddeb, "DEBUG: Calculating percentage from token %*s\n", token_len, token);
+
+				token[token_len-1] = '\0';
+				percentage = token_parse_n64(token);
+				value = (n64)((float)percentage / 100.0f * (float)max_brightness);
+
+				fprintf(stddeb, "DEBUG: Percentage result is %lu / 100 * %lu = %lu\n", percentage, max_brightness, value);
+			}
+			else
+			{
+				value = token_parse_n64(token);
+			}
+
+			if(value > max_brightness)
 			{
 				fprintf(stderr,
 						"ERROR:%s:%d: Argument `%lu` out of bounds (0, %lu)\n",
