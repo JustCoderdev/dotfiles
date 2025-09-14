@@ -76,6 +76,7 @@
 				# (gen-builder  "beta.server.lan" 6)
 			];
 		};
+		nixcache.enable = true;
 		# routing =
 		# let
 		# 	get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
