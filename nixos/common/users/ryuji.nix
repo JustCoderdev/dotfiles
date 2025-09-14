@@ -70,7 +70,7 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		]
 		++
 		[
-			# pkgs-unstable.libxcb
+			pkgs-unstable.libxcb
 		]
 		++ lib.optionals (is_desk_available && has_desktop)
 		[
