@@ -10,23 +10,22 @@
 stdenv.mkDerivation
 rec {
 	name = "hacksaw";
-	version = "fd6b6bd1be435dd546e7efd0ed8800623bb098fa";
+	version = "1.0.4";
 
 	src = fetchFromGitHub {
 		owner = "neXromancers";
 		repo = "hacksaw";
-		rev = version;
-		hash = "";
+		rev = "115bb30c870ff19a03a0a101e145ad8a822193e2";
+		hash = "0ncyr0rw9f4bnvxcq6i8vkgj0ixg060inrssbwz4y3nq9nakbp61";
 	};
 
-	nativeBuildInputs = [ cargo python3 libxcb ]; # pkgconfig
+	nativeBuildInputs = [ cargo python3 ]; # pkgconfig
 	buildInputs = [ libX11 libXrandr libxcb ];
 
 	installPhase = ''
 cargo install --path .
-pwd
-# mkdir -p $out/bin
-# mv Library/Fonts/* $out/fontfiles
+mkdir -p $out/bin
+mv target/release/hacksaw $out/bin
 '';
 
 	meta = with lib; {

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
 	cfg = config.system.desktop.i3;
@@ -23,7 +23,13 @@ in
 
 					# Screenshot utility
 					# CuboCore.coreshot
-					# (callPackage ../../../unofficial/pkgs/hacksaw.nix)
+					(
+						callPackage ../../../unofficial/pkgs/hacksaw.nix {
+							inherit (pkgs) cargo python3;
+							inherit (pkgs.xorg) libX11 libXrandr;
+							inherit (pkgs-unstable) libxcb;
+						}
+					)
 					shotgun
 					xclip
 				];
