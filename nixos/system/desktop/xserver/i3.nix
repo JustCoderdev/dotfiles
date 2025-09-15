@@ -25,7 +25,7 @@ in
 					# CuboCore.coreshot
 					(
 						callPackage ../../../unofficial/pkgs/hacksaw.nix {
-							inherit (pkgs) cargo python3;
+							inherit (pkgs) python3; # pkg-config
 							inherit (pkgs.xorg) libX11 libXrandr;
 							inherit (pkgs-unstable) libxcb;
 						}

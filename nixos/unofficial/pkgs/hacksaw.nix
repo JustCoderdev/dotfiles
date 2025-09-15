@@ -2,12 +2,12 @@
 # Source <https://github.com/neXromancers/nixromancers/blob/master/pkgs/tools/misc/hacksaw/generic.nix>
 
 {
-	lib, stdenv, fetchFromGitHub, callPackage, # pkgconfig,
-	cargo, python3, libxcb,    # native build inputs
+	lib, stdenv, rustPlatform, fetchFromGitHub,
+	python3, libxcb,  # native build inputs       pkg-config,
 	libX11, libXrandr  # build inputs
 }:
 
-stdenv.mkDerivation
+rustPlatform.buildRustPackage
 rec {
 	name = "hacksaw";
 	version = "1.0.4";
@@ -16,17 +16,24 @@ rec {
 		owner = "neXromancers";
 		repo = "hacksaw";
 		rev = "115bb30c870ff19a03a0a101e145ad8a822193e2";
-		hash = "0ncyr0rw9f4bnvxcq6i8vkgj0ixg060inrssbwz4y3nq9nakbp61";
+		hash = "sha256-wdw1lU3YDk8+X1pnG4EBr0cg39woGsz6tou4xDPInlk=";
 	};
 
-	nativeBuildInputs = [ cargo python3 ]; # pkgconfig
-	buildInputs = [ libX11 libXrandr libxcb ];
+	
+	cargoLock = {
+		lockFile = ./hacksaw-Cargo.lock;
+		outputHashes = { };
+	};
 
-	installPhase = ''
-cargo install --path .
-mkdir -p $out/bin
-mv target/release/hacksaw $out/bin
-'';
+	
+	postPatch = ''
+		# Overwrite cargo.lock because the one in the upstream repo has duplicates entries.
+		cp ${cargoLock.lockFile} Cargo.lock
+	'';
+
+	nativeBuildInputs = [ python3 ]; # pkg-config
+	# buildFeatures = lib.optionals (stdenv.hostPlatform.isLinux) [ "linux-pkg-config" ];
+	buildInputs = [ libX11 libXrandr libxcb ];
 
 	meta = with lib; {
 		description = "Lets you select areas of your screen (on X11)";
