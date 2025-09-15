@@ -67,7 +67,8 @@ bindsym $mod+Z       exec --no-startup-id boomer
 bindsym $mod+Return  exec --no-startup-id alacritty
 bindsym $mod+F4      exec "i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'"
 bindsym $mod+Ctrl+l  exec --no-startup-id "dm-tool lock"
-bindsym $mod+Shift+s exec shotgun "$(hacksaw -f "-i %i -g %g")" - | xclip -t 'image/png' -selection clipboard
+bindsym $mod+Shift+s exec shotgun $(hacksaw -f '-i %i -g %g') "/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png"
+
 
 
 
@@ -85,14 +86,13 @@ bindsym $mod+Shift+s exec shotgun "$(hacksaw -f "-i %i -g %g")" - | xclip -t 'im
 # bindsym XF86AudioMute               exec --no-startup-id "pamixer -t"
 
 # Pulseaudio Audio controls
-bindsym XF86AudioRaiseVolume            exec --no-startup-id "amixer sset Master 5%+   && killall -s USR1 -- i3status"
-bindsym XF86AudioLowerVolume            exec --no-startup-id "amixer sset Master 5%-   && killall -s USR1 -- i3status"
-bindsym Shift+XF86AudioRaiseVolume      exec --no-startup-id "amixer sset Master 15%+  && killall -s USR1 -- i3status"
-bindsym Shift+XF86AudioLowerVolume      exec --no-startup-id "amixer sset Master 15%-  && killall -s USR1 -- i3status"
-bindsym Ctrl+Shift+XF86AudioRaiseVolume exec --no-startup-id "amixer sset Master 100%+ && killall -s USR1 -- i3status"
-bindsym Ctrl+Shift+XF86AudioLowerVolume exec --no-startup-id "amixer sset Master 100%- && killall -s USR1 -- i3status"
-
-bindsym XF86AudioMute               exec --no-startup-id "amixer sset Master toggle && killall -s USR1 -- i3status"
+bindsym XF86AudioRaiseVolume            exec --no-startup-id "amixer sset Master    5%+ && killall -s USR1 -- i3status"
+bindsym XF86AudioLowerVolume            exec --no-startup-id "amixer sset Master    5%- && killall -s USR1 -- i3status"
+bindsym Shift+XF86AudioRaiseVolume      exec --no-startup-id "amixer sset Master   15%+ && killall -s USR1 -- i3status"
+bindsym Shift+XF86AudioLowerVolume      exec --no-startup-id "amixer sset Master   15%- && killall -s USR1 -- i3status"
+bindsym Ctrl+Shift+XF86AudioRaiseVolume exec --no-startup-id "amixer sset Master  100%+ && killall -s USR1 -- i3status"
+bindsym Ctrl+Shift+XF86AudioLowerVolume exec --no-startup-id "amixer sset Master  100%- && killall -s USR1 -- i3status"
+bindsym XF86AudioMute                   exec --no-startup-id "amixer sset Master toggle && killall -s USR1 -- i3status"
 
 # Custom Screen brightness controls
 bindsym XF86MonBrightnessUp              exec --no-startup-id "sudo backlight inc 5%  && killall -s USR1 -- i3status"
