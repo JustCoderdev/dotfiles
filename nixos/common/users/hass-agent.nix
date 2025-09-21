@@ -7,7 +7,7 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		services.xserver.displayManager.hiddenUsers = [ "hass-agent" ];
+		services.displayManager.hiddenUsers = [ "hass-agent" ];
 		users.users."hass-agent" =
 		{
 			isNormalUser = true;

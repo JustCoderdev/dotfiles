@@ -124,11 +124,13 @@ in
 			HardwareAcceleration = true;
 
 			Homepage = {
-				URL = "about:home";
+				# URL = "about:home";
 				# Additional = [ "about:newtab" ];
 				StartPage = "previous-session";
 				Locked = true;
 			};
+
+			InstallAddonsPermission.Default = false;
 
 			NoDefaultBookmarks = true;
 			OfferToSaveLogins = true;
@@ -155,6 +157,7 @@ in
 			SearchSuggestEnabled = true;
 
 			ShowHomeButton = false;
+			SkipTermsOfUse = true;
 			StartDownloadsInTempDirectory = false;
 
 			UserMessaging = {

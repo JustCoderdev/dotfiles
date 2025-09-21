@@ -7,7 +7,7 @@ in
 {
 	config = lib.mkIf cfg.enable
 	{
-		services.xserver.displayManager.hiddenUsers = [ "neko-agent" ];
+		services.displayManager.hiddenUsers = [ "neko-agent" ];
 		users.users."neko-agent" =
 		{
 			isNormalUser = true;

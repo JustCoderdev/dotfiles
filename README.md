@@ -119,6 +119,10 @@ Included configuration files
 - Auto rebuild pusher
 - ~~Network hostname autodiscovery~~
 
+### Unresolved
+
+- Firefox new (stupid) policies (AI summary, "trending search suggestions")
+
 ## Installation guide
 
 1. Clone
