@@ -41,11 +41,17 @@ in
 
 				"doh-rollout.doneFirstRun" = true;
 				"doh-rollout.home-region" = "IT";
-
 				"dom.security.https_only_mode" = false;
+
 				"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
 				"security.tls.version.enable-deprecated" = true; # Needed for ilo
+
+				"sidebar.main.tools" = "";
+				"sidebar.new-sidebar.has-used" = true;
+				"sidebar.old-sidebar.has-used" = true;
 				"sidebar.visibility" = "hide-sidebar";
+
+				"signon.firefoxRelay.feature" = "disabled";
 				"ui.key.menuAccessKeyFocuses" = false; # Disable `esc` key for menu
 			};
 		};
@@ -124,7 +130,7 @@ in
 			HardwareAcceleration = true;
 
 			Homepage = {
-				# URL = "about:home";
+				URL = "about:home";
 				# Additional = [ "about:newtab" ];
 				StartPage = "previous-session";
 				Locked = true;
