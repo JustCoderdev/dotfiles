@@ -15,7 +15,7 @@ in
 	{
 		hardware.graphics = {
 			enable = true;
-			enable32Bit = true;
+			enable32Bit = (settings.system == "x86_64-linux");
 		};
 
 
