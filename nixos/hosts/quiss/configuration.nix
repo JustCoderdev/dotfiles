@@ -99,7 +99,7 @@ in
 			// (create-rule "jellyfin" "https" 443 "/jellyfin.*")
 			// (create-rule "immich"   "https" 443 ".*")
 
-			// (create-rule "deluge"   "https" 443 "/deluge.*")
+			// (create-rule "deluge"   "https" 443 ".*")
 			// (create-rule "prowlarr" "https" 443 "/prowlarr.*")
 			// (create-rule "bazarr"   "https" 443 "/bazarr.*")
 
