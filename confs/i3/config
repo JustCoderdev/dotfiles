@@ -130,7 +130,7 @@ set $nilCol        "#000000"
 
 # class                 border    backgr.      text         indicator    child_border
 client.focused          $bgColor  $CyanColor   $whiteColor  $CyanColor   $CyanColor
-client.focused_inactive $bgColor  $blackColor  $whiteColor  $blackColor  $blackColor
+client.focused_inactive $bgColor  $blackColor  $grayColor   $blackColor  $blackColor
 client.unfocused        $bgColor  $blackColor  $grayColor   $blackColor  $blackColor
 client.urgent           $bgColor  $RedColor    $whiteColor  $RedColor    $RedColor
 client.placeholder      $nilCol   $bgColor     $whiteColor  $nilCol      $bgColor

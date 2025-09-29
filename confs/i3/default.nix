@@ -206,11 +206,11 @@ in
 			in
 			{
 				background = lib.mkForce (col.background);
-				focused         = (get-default {})                          // (add-tint col.focused    {});
-				urgent          = (get-default {})                          // (add-tint col.urgent     {});
-				focusedInactive = (get-default {})                          // (add-tint col.unfocused  {});
-				unfocused       = (get-default { text = col.gray_bright; }) // (add-tint col.unfocused  {});
-				placeholder     = (get-default { border = col.nil;       }) // (add-tint col.background { indicator = col.nil; });
+				focused         = (get-default {})                    // (add-tint col.focused    {});
+				urgent          = (get-default {})                    // (add-tint col.urgent     {});
+				focusedInactive = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
+				unfocused       = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
+				placeholder     = (get-default { border = col.nil; }) // (add-tint col.background { indicator = col.nil; });
 			};
 
 
@@ -244,7 +244,7 @@ in
 					default-inactive = {
 						inherit (col) background;
 						border = col.background;
-						text = col.gray;
+						text = col.gray_bright;
 					};
 				in
 				{
@@ -260,7 +260,7 @@ in
 					urgentWorkspace = {
 						background = col.urgent_alt;
 						border = col.background;
-						text = col.gray;
+						text = col.gray_bright;
 					};
 
 					activeWorkspace = default-inactive;

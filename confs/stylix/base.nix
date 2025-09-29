@@ -46,8 +46,8 @@ in
 					red_bright   = "#fb7979";
 					red          = "#a46060";
 
-					gray         = "#989898";
-					gray_bright  = "#0f0a0f";
+					gray         = "#929293";
+					gray_bright  = "#989898";
 
 					black = "#373b41";
 					white = "#ffffff";
