@@ -7,8 +7,8 @@ let
 		background = base00;
 		alt-background = base01;
 
-		gray = base02;
-		unfocused = base03;
+		unfocused = base02;
+		alt-unfocused = base03;
 
 		alt-text = base04;
 		text = base05;
@@ -49,6 +49,12 @@ in
 			modifier = "Mod4";
 
 			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
+
+			workspaceAutoBackAndForth = true;
+			window = {
+				border = 0;
+				hideEdgeBorders = "both";
+			};
 
 			startup =
 			let
@@ -208,11 +214,11 @@ in
 			in
 			{
 				background = lib.mkForce (col.background);
-				focused         = (get-default {})                    // (add-tint col.focused    {});
-				urgent          = (get-default {})                    // (add-tint col.error      {});
-				focusedInactive = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
-				unfocused       = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
-				placeholder     = (get-default {})                    // (add-tint col.background {});
+				focused         = (get-default {})                        // (add-tint col.focused       {});
+				urgent          = (get-default {})                        // (add-tint col.error         {});
+				focusedInactive = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
+				unfocused       = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
+				placeholder     = (get-default {})                        // (add-tint col.background    {});
 			};
 
 
@@ -244,8 +250,8 @@ in
 				colors =
 				let
 					default-inactive = {
-						inherit (col) background;
-						border = col.background;
+						background = col.alt-background;
+						border = col.alt-background;
 						text = col.unfocused;
 					};
 				in
