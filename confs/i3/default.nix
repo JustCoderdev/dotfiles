@@ -1,4 +1,4 @@
-{ config, lib, settings, pkgs, ... }:
+{ config, lib, settings, ... }:
 
 let
 	stylix-cfg = config.stylix;
@@ -68,17 +68,17 @@ in
 			keybindings =
 			let
 				exec = (command: "exec --nostartup-id \"${command}\"");
-				exec-n-reload-bar = (command: (exec "'${command}' && ${pkgs.killall}/bin/killall -s USR1 -- i3status"));
+				exec-n-reload-bar = (command: (exec "'${command}' && killall -s USR1 -- i3status"));
 				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
 			in
 			{
 				# Custom keybindings
 
-				"${mod}+Return"  = (exec "${pkgs.alacritty}/bin/alacritty");
-				"${mod}+b"       = (exec "${pkgs.firefox}/bin/firefox");
-				"${mod}+t"       = (exec "${pkgs.xfce.thunar}/bin/thunar");
-				"${mod}+Ctrl+l"  = (exec "${pkgs.lightdm}/bin/dm-tool lock");
-				"${mod}+o"       = (exec "${pkgs.obsidian}/bin/obsidian");
+				"${mod}+Return"  = (exec "alacritty");
+				"${mod}+b"       = (exec "firefox");
+				"${mod}+t"       = (exec "thunar");
+				"${mod}+Ctrl+l"  = (exec "dm-tool lock");
+				"${mod}+o"       = (exec "obsidian");
 
 				"${mod}+Z"       = (exec "boomer");
 				"${mod}+F4"      = "exec \"i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'\"";
