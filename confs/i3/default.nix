@@ -24,10 +24,7 @@
 		{
 			modifier = "Mod4";
 
-			fonts =  {
-				names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
-				style = "medium";
-			};
+			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
 
 			startup =
 			let
@@ -49,9 +46,8 @@
 			# TODO: set programs as ${pkgs....}
 			keybindings =
 			let
-				exec = (command: "exec --nostartup-id ${command}");
-				exec-n-reload-bar = (command: "exec --nostartup-id '${command}' && ${pkgs.killall} -s USR1 -- i3status");
-
+				exec = (command: "exec --nostartup-id \"${command}\"");
+				exec-n-reload-bar = (command: (exec "'${command}' && ${pkgs.killall} -s USR1 -- i3status"));
 				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
 			in
 			{
@@ -240,7 +236,7 @@
 				{
 					fonts = lib.mkForce (i3-cfg.fonts);
 					statusCommand = "i3status -c /home/\${USER}/.config/i3/i3status.conf";
-					extraConfig = "separator_symbol '|'";
+					extraConfig = "separator_symbol \"|\"";
 				}
 				// config.stylix.targets.i3.exportedBarConfig
 			) ];
