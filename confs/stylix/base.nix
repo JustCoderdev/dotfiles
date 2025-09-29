@@ -46,37 +46,36 @@ in
 					red_bright   = "#fb7979";
 					red          = "#a46060";
 
+					gray_dark    = "#373b41";
 					gray         = "#929293";
 					gray_bright  = "#989898";
 
-					black = "#373b41";
+					black = "#000000";
 					white = "#ffffff";
 
 					foreground = white;
 					background = "#262626";
-
-					nil = "#000000";
 				};
 			in
 			{
-				base00 = i3-colors.nil;         # ----         # background
-				base01 = i3-colors.background;  # ---
-				base02 = i3-colors.black;       # --
-				base03 = i3-colors.gray;        # -            # separator, unfocused
+				base00 = i3-colors.background;   # ----   # default background       # background
+				base01 = i3-colors.gray_dark;    # ---    # alternative background
+				base02 = i3-colors.gray;         # --     # selection background
+				base03 = i3-colors.gray_bright;  # -                                 # separator, unfocused
 
-				base04 = i3-colors.gray_bright; # +
-				base05 = i3-colors.foreground;  # ++           # text
-				base06 = i3-colors.white;       # +++
-				base07 = i3-colors.white;       # ++++
+				base04 = i3-colors.foreground;   # +      # alternate text
+				base05 = i3-colors.foreground;   # ++     # default text             # text
+				base06 = i3-colors.foreground;   # +++     
+				base07 = i3-colors.foreground;   # ++++
 
-				base08 = i3-colors.red;         # red          # urgent
-				base09 = i3-colors.red_bright;  # orange
-				base0A = "#fabd2f";             # yellow
-				base0B = i3-colors.cyan;        # green        # indicator
-				base0C = i3-colors.cyan;        # aqua/cyan
-				base0D = i3-colors.cyan;        # blue         #focused
-				base0E = "#d3869b";             # purple
-				base0F = "#d65d0e";             # brown
+				base08 = i3-colors.red;          # red          # error              # urgent
+				base09 = i3-colors.red_bright;   # orange       # urgent
+				base0A = "#fabd2f";              # yellow       # warning
+				base0B = i3-colors.green;        # green                             # indicator
+				base0C = i3-colors.green_bright; # cyan
+				base0D = i3-colors.cyan;         # blue                              # border, focused
+				base0E = "#d3869b";              # purple
+				base0F = "#d65d0e";              # brown
 			};
 
 			cursor = {

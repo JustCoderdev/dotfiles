@@ -4,17 +4,19 @@ let
 	stylix-cfg = config.stylix;
 	col = with stylix-cfg.base16Scheme;
 	{
-		nil = base00;
-		background = base01;
-		unfocused = base02;
-		gray = base03;
-		gray_bright = base04;
+		background = base00;
+		alt-background = base01;
 
+		gray = base02;
+		unfocused = base03;
+
+		alt-text = base04;
 		text = base05;
-		urgent = base08;
-		urgent_alt = base09;
-		focused = base0B;
-		indicator = focused;
+
+		error = base08;
+		urgent = base09;
+
+		focused = base0D;
 	};
 
 	ifnull = (
@@ -67,7 +69,7 @@ in
 
 			keybindings =
 			let
-				exec = (command: "exec --nostartup-id \"${command}\"");
+				exec = (command: "exec --no-startup-id \"${command}\"");
 				exec-n-reload-bar = (command: (exec "'${command}' && killall -s USR1 -- i3status"));
 				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
 			in
@@ -207,10 +209,10 @@ in
 			{
 				background = lib.mkForce (col.background);
 				focused         = (get-default {})                    // (add-tint col.focused    {});
-				urgent          = (get-default {})                    // (add-tint col.urgent     {});
+				urgent          = (get-default {})                    // (add-tint col.error      {});
 				focusedInactive = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
 				unfocused       = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
-				placeholder     = (get-default { border = col.nil; }) // (add-tint col.background { indicator = col.nil; });
+				placeholder     = (get-default {})                    // (add-tint col.background {});
 			};
 
 
@@ -244,23 +246,23 @@ in
 					default-inactive = {
 						inherit (col) background;
 						border = col.background;
-						text = col.gray_bright;
+						text = col.unfocused;
 					};
 				in
 				{
-					background = col.nil;
+					inherit (col) background;
 					statusline = col.text;
-					separator  = col.background;
+					separator  = col.alt-background;
 
 					focusedWorkspace = {
-						inherit (col) text;
 						background = col.unfocused;
 						border = col.unfocused;
+						inherit (col) text;
 					};
 					urgentWorkspace = {
-						background = col.urgent_alt;
+						background = col.urgent;
 						border = col.background;
-						text = col.gray_bright;
+						text = col.unfocused;
 					};
 
 					activeWorkspace = default-inactive;
