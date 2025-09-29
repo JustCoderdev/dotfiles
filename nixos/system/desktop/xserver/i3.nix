@@ -17,12 +17,9 @@ in
 				extraPackages = with pkgs; [
 					dmenu
 					i3status
-
-					# Media player controls
 					playerctl
 
-					# Screenshot utility
-					# CuboCore.coreshot
+					# Screenshot utilities
 					(
 						callPackage ../../../unofficial/pkgs/hacksaw.nix {
 							inherit (pkgs) python3; # pkg-config

@@ -14,9 +14,10 @@ in
 			dark = cfg.theme.name;
 		};
 
+		autoEnable = true;
+
 		targets = {
 			alacritty.enable = false;
-			i3.enable = false;
 			neovim.enable = false;
 			waybar.enable = false;
 			emacs.enable = false;

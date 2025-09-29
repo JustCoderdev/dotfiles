@@ -14,6 +14,7 @@ in
 		};
 
 		autoEnable = true;
+
 		targets =
 		{
 			plymouth.enable = false;
