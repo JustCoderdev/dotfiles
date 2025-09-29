@@ -43,10 +43,12 @@ in
 					green_bright = "#bce1af";
 					green        = "#527251";
 
-					red_bright   = "#e49393";
+					red_bright   = "#fb7979";
 					red          = "#a46060";
 
-					gray  = "#ffaaff";
+					gray         = "#989898";
+					gray_bright  = "#0f0a0f";
+
 					black = "#373b41";
 					white = "#ffffff";
 
@@ -62,8 +64,8 @@ in
 				base02 = i3-colors.black;       # --
 				base03 = i3-colors.gray;        # -            # separator, unfocused
 
-				base04 = i3-colors.foreground;  # +
-				base05 = i3-colors.white;       # ++           # text
+				base04 = i3-colors.gray_bright; # +
+				base05 = i3-colors.foreground;  # ++           # text
 				base06 = i3-colors.white;       # +++
 				base07 = i3-colors.white;       # ++++
 

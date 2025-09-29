@@ -1,5 +1,28 @@
 { config, lib, settings, pkgs, ... }:
 
+let
+	stylix-cfg = config.stylix;
+	col = with stylix-cfg.base16Scheme;
+	{
+		nil = base00;
+		background = base01;
+		unfocused = base02;
+		gray = base03;
+		gray_bright = base04;
+
+		text = base05;
+		urgent = base08;
+		urgent_alt = base09;
+		focused = base0B;
+		indicator = focused;
+	};
+
+	ifnull = (
+		var: substitute:
+		if var == null then substitute else var
+	);
+in
+
 {
 	home.file = {
 		# ".config/i3/config".source = ./config;
@@ -14,7 +37,6 @@
 		ku = if vim-mode then "k" else "Up";
 		kr = if vim-mode then "l" else "Right";
 
-		stylix-cfg = config.stylix;
 		i3-cfg = config.xsession.windowManager.i3.config;
 		mod = i3-cfg.modifier;
 	in
@@ -43,24 +65,22 @@
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
-			# TODO: set programs as ${pkgs....}
 			keybindings =
 			let
 				exec = (command: "exec --nostartup-id \"${command}\"");
-				exec-n-reload-bar = (command: (exec "'${command}' && ${pkgs.killall} -s USR1 -- i3status"));
+				exec-n-reload-bar = (command: (exec "'${command}' && ${pkgs.killall}/bin/killall -s USR1 -- i3status"));
 				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
 			in
 			{
 				# Custom keybindings
 
-				"${mod}+Return"  = (exec "alacritty");
-				"${mod}+b"       = (exec "firefox");
-				"${mod}+t"       = (exec "thunar");
-				"${mod}+Ctrl+l"  = (exec "'dm-tool lock'");
+				"${mod}+Return"  = (exec "${pkgs.alacritty}/bin/alacritty");
+				"${mod}+b"       = (exec "${pkgs.firefox}/bin/firefox");
+				"${mod}+t"       = (exec "${pkgs.xfce.thunar}/bin/thunar");
+				"${mod}+Ctrl+l"  = (exec "${pkgs.lightdm}/bin/dm-tool lock");
+				"${mod}+o"       = (exec "${pkgs.obsidian}/bin/obsidian");
 
-				"${mod}+o"       = (exec "obsidian");
 				"${mod}+Z"       = (exec "boomer");
-
 				"${mod}+F4"      = "exec \"i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'\"";
 				"${mod}+Shift+s" = "exec shotgun $(hacksaw -f '-i %i -g %g') \"/home/$USER/Pictures/Screenshots/screenshot_$(date '+%Y-%m-%d_%H:%M:%S').png\"";
 
@@ -167,24 +187,6 @@
 
 			colors =
 			let
-				col = with stylix-cfg.base16Scheme;
-				{
-					nil = base00;
-					background = base01;
-					unfocused = base02;
-					gray = base03;
-
-					text = base05;
-					urgent = base08;
-					focused = base0B;
-					indicator = focused;
-				};
-
-				ifnull = (
-					var: substitute:
-					if var == null then substitute else var
-				);
-
 				get-default = (
 					{ border ? null, text ? null, ... }:
 					{
@@ -204,11 +206,11 @@
 			in
 			{
 				background = lib.mkForce (col.background);
-				focused         = (get-default {})                    // (add-tint col.focused    {});
-				urgent          = (get-default {})                    // (add-tint col.urgent     {});
-				focusedInactive = (get-default {})                    // (add-tint col.unfocused  {});
-				unfocused       = (get-default { text = col.gray;  }) // (add-tint col.unfocused  {});
-				placeholder     = (get-default { border = col.nil; }) // (add-tint col.background { indicator = col.nil; });
+				focused         = (get-default {})                          // (add-tint col.focused    {});
+				urgent          = (get-default {})                          // (add-tint col.urgent     {});
+				focusedInactive = (get-default {})                          // (add-tint col.unfocused  {});
+				unfocused       = (get-default { text = col.gray_bright; }) // (add-tint col.unfocused  {});
+				placeholder     = (get-default { border = col.nil;       }) // (add-tint col.background { indicator = col.nil; });
 			};
 
 
@@ -232,14 +234,40 @@
 				{ class = "Pavucontrol"; }
 			];
 
-			bars = [ (
+			bars = [ {
+				fonts = lib.mkForce (i3-cfg.fonts);
+				statusCommand = "i3status -c /home/\${USER}/.config/i3/i3status.conf";
+				extraConfig = "separator_symbol \"|\"";
+
+				colors =
+				let
+					default-inactive = {
+						inherit (col) background;
+						border = col.background;
+						text = col.gray;
+					};
+				in
 				{
-					fonts = lib.mkForce (i3-cfg.fonts);
-					statusCommand = "i3status -c /home/\${USER}/.config/i3/i3status.conf";
-					extraConfig = "separator_symbol \"|\"";
-				}
-				// config.stylix.targets.i3.exportedBarConfig
-			) ];
+					background = col.nil;
+					statusline = col.text;
+					separator  = col.background;
+
+					focusedWorkspace = {
+						inherit (col) text;
+						background = col.unfocused;
+						border = col.unfocused;
+					};
+					urgentWorkspace = {
+						background = col.urgent_alt;
+						border = col.background;
+						text = col.gray;
+					};
+
+					activeWorkspace = default-inactive;
+					inactiveWorkspace = default-inactive;
+					bindingMode = default-inactive;
+				};
+			} ];
 		};
 	};
 }
