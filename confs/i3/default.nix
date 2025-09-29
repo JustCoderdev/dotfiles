@@ -4,6 +4,7 @@ let
 	stylix-cfg = config.stylix;
 	col = with stylix-cfg.base16Scheme;
 	{
+		black = "#000000";
 		background = base00;
 		alt-background = base01;
 
@@ -49,29 +50,29 @@ in
 			modifier = "Mod4";
 
 			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
-
 			workspaceAutoBackAndForth = true;
-			window = {
-				border = 0;
-				hideEdgeBorders = "both";
-			};
 
-			startup =
-			let
-				add-script = (
-					command: workspace: always: notification:
-					{ inherit command workspace always notification; }
-				);
-				add-app = (
-					command: workspace:
-					(add-script command workspace false false)
-				);
-			in
-			[
-				(add-app "alacritty" "1")
-				(add-app "firefox"   "2")
-				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
-			];
+			# startup =
+			# let
+			# 	add-script = (
+			# 		command: workspace: always: notification:
+			# 		{ inherit command workspace always notification; }
+			# 	);
+			# 	add-app = (
+			# 		command: workspace:
+			# 		(add-script command workspace false false)
+			# 	);
+			# in
+			# [
+			# 	(add-app "alacritty" "1")
+			# 	(add-app "firefox"   "2")
+			# 	# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
+			# ];
+
+			assigns = {
+				"1" = [{ class = "^alacritty$"; }];
+				"2" = [{ class = "^firefox$";   }];
+			};
 
 			keybindings =
 			let
@@ -214,11 +215,11 @@ in
 			in
 			{
 				background = lib.mkForce (col.background);
-				focused         = (get-default {})                        // (add-tint col.focused       {});
-				urgent          = (get-default {})                        // (add-tint col.error         {});
+				focused         = (get-default {})                        // (add-tint col.focused        {});
+				urgent          = (get-default {})                        // (add-tint col.error          {});
 				focusedInactive = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
 				unfocused       = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
-				placeholder     = (get-default {})                        // (add-tint col.background    {});
+				placeholder     = (get-default {})                        // (add-tint col.background     {});
 			};
 
 
@@ -250,25 +251,24 @@ in
 				colors =
 				let
 					default-inactive = {
-						background = col.alt-background;
-						border = col.alt-background;
-						text = col.unfocused;
+						border = col.background;
+						background = col.background;
+						text = col.alt-unfocused;
 					};
 				in
 				{
-					inherit (col) background;
+					background = col.black;
 					statusline = col.text;
-					separator  = col.alt-background;
+					separator  = col.background;
 
 					focusedWorkspace = {
-						background = col.unfocused;
-						border = col.unfocused;
+						border = col.alt-background;
+						background = col.alt-background;
 						inherit (col) text;
 					};
 					urgentWorkspace = {
-						background = col.urgent;
-						border = col.background;
-						text = col.unfocused;
+						border = col.urgent;
+						inherit (default-inactive) background text;
 					};
 
 					activeWorkspace = default-inactive;
