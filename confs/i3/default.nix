@@ -4,7 +4,6 @@ let
 	stylix-cfg = config.stylix;
 	col = with stylix-cfg.base16Scheme;
 	{
-		black = "#000000";
 		background = base00;
 		alt-background = base01;
 
@@ -246,24 +245,24 @@ in
 				colors =
 				let
 					default-inactive = {
-						border = col.background;
-						background = col.background;
-						text = col.alt-unfocused;
+						border = col.alt-background;
+						background = col.alt-background;
+						text = col.unfocused;
 					};
 				in
 				{
-					background = col.black;
+					background = col.background;
 					statusline = col.text;
 					separator  = col.background;
 
 					focusedWorkspace = {
-						border = col.alt-background;
-						background = col.alt-background;
+						border = col.focused;
+						background = col.focused;
 						inherit (col) text;
 					};
 					urgentWorkspace = {
 						border = col.urgent;
-						inherit (default-inactive) background text;
+						inherit (col) background text;
 					};
 
 					activeWorkspace = default-inactive;
