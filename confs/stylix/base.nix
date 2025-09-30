@@ -54,26 +54,27 @@ in
 					white = "#ffffff";
 
 					foreground = white;
-					background = "#262626";
+					# background = "#262626";
+					background = black;
 				};
 			in
 			{
-				base00 = i3-colors.background;   # ----   # default background       # background
+				base00 = i3-colors.background;   # ----   # default background
 				base01 = i3-colors.gray_dark;    # ---    # alternative background
 				base02 = i3-colors.gray;         # --     # selection background
-				base03 = i3-colors.gray_bright;  # -                                 # separator, unfocused
+				base03 = i3-colors.gray_bright;  # -
 
 				base04 = i3-colors.foreground;   # +      # alternate text
-				base05 = i3-colors.foreground;   # ++     # default text             # text
-				base06 = i3-colors.foreground;   # +++     
+				base05 = i3-colors.foreground;   # ++     # default text
+				base06 = i3-colors.foreground;   # +++
 				base07 = i3-colors.foreground;   # ++++
 
-				base08 = i3-colors.red;          # red          # error              # urgent
+				base08 = i3-colors.red;          # red          # error
 				base09 = i3-colors.red_bright;   # orange       # urgent
 				base0A = "#fabd2f";              # yellow       # warning
-				base0B = i3-colors.green;        # green                             # indicator
+				base0B = i3-colors.green;        # green
 				base0C = i3-colors.green_bright; # cyan
-				base0D = i3-colors.cyan;         # blue                              # border, focused
+				base0D = i3-colors.cyan;         # blue         # focused
 				base0E = "#d3869b";              # purple
 				base0F = "#d65d0e";              # brown
 			};

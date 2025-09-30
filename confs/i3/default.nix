@@ -52,33 +52,28 @@ in
 			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
 			workspaceAutoBackAndForth = true;
 
-			# startup =
-			# let
-			# 	add-script = (
-			# 		command: workspace: always: notification:
-			# 		{ inherit command workspace always notification; }
-			# 	);
-			# 	add-app = (
-			# 		command: workspace:
-			# 		(add-script command workspace false false)
-			# 	);
-			# in
-			# [
-			# 	(add-app "alacritty" "1")
-			# 	(add-app "firefox"   "2")
-			# 	# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
-			# ];
-
-			assigns = {
-				"1" = [{ class = "^alacritty$"; }];
-				"2" = [{ class = "^firefox$";   }];
-			};
+			startup =
+			let
+				add-script = (
+					command: workspace: always: notification:
+					{ inherit command workspace always notification; }
+				);
+				add-app = (
+					command: workspace:
+					(add-script command workspace false false)
+				);
+			in
+			[
+				(add-app "alacritty" "1")
+				(add-app "firefox"   "2")
+				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
+			];
 
 			keybindings =
 			let
 				exec = (command: "exec --no-startup-id \"${command}\"");
 				exec-n-reload-bar = (command: (exec "'${command}' && killall -s USR1 -- i3status"));
-				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
+				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
 			in
 			{
 				# Custom keybindings
