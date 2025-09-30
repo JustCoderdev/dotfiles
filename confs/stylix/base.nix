@@ -54,8 +54,7 @@ in
 					white = "#ffffff";
 
 					foreground = white;
-					# background = "#262626";
-					background = black;
+					background = "#262626";
 				};
 			in
 			{
