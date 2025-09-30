@@ -5,7 +5,7 @@ let
 	discord-hooks-errors-path = secrets.discord.hooks.foxburrow.errors.path;
 	mdadm-notify-discord-pkg = pkgs.writeShellScriptBin "mdadm-notify-discord"
 ''
-${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR ''${1}: ''${2}\\\" }" "$(cat ${discord-hooks-errors-path})"
+${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR ''${1}: ''${2}\" }" "$(cat ${discord-hooks-errors-path})"
 '';
 in
 
@@ -29,7 +29,7 @@ in
 		enable = true;
 		mdadmConf = ''
 ARRAY /dev/md0 metadata=1.2 UUID=2789150c:8e613590:21576ee7:a7060788
-PROGRAM ${mdadm-notify-discord-pkg}
+PROGRAM ${mdadm-notify-discord-pkg}/bin/mdadm-notify-discord
 '';
 	};
 
