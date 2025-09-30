@@ -1,5 +1,14 @@
 { config, pkgs, settings, ... }:
 
+let
+	secrets = config.common.core.secrets;
+	discord-hooks-errors-path = secrets.discord.hooks.foxburrow.errors.path;
+	mdadm-notify-discord-pkg = pkgs.writeShellScriptBin "mdadm-notify-discord"
+''
+${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR ''${1}: ''${2}\\\" }" "$(cat ${discord-hooks-errors-path})"
+'';
+in
+
 {
 	#Bootloader
 	boot.loader.grub.enable = true;
@@ -16,15 +25,11 @@
 	# <https://discourse.nixos.org/t/i-want-to-create-a-raid0-for-var-but-im-unable-to-figure-how-to-load-mdamd-on-boot/30381/5>
 	system.nixos.tags = [ "mdadm" ];
 	boot.swraid =
-	let
-		secrets = config.common.core.secrets;
-		mdadmhook-path = secrets.discord-hook.path;
-	in
 	{
 		enable = true;
 		mdadmConf = ''
 ARRAY /dev/md0 metadata=1.2 UUID=2789150c:8e613590:21576ee7:a7060788
-PROGRAM "curl -s -X POST -H 'content-type: application/json' -d \"{ \\\"content\\\": \\\"$(date) ERROR ''${1}: ''${2}\\\" }\" \"$(cat ${mdadmhook-path})\""
+PROGRAM ${mdadm-notify-discord-pkg}
 '';
 	};
 

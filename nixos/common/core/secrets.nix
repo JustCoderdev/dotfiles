@@ -52,7 +52,13 @@ in
 			);
 		};
 
-		discord-hook = mkSecretOptions "discordhook.url" cfg.discord-hook;
+		discord.hooks = mkAttrListOption "Hooks available per server" (
+			server-name:
+			{
+				errors = mkSecretOptions "discord/${server-name}/errors-hook.url" cfg.discord.hooks."${server-name}".errors;
+				rebuilds = mkSecretOptions "discord/${server-name}/rebuilds-hook.url" cfg.discord.hooks."${server-name}".rebuilds;
+			}
+		);
 
 		duckdns = {
 			token = mkSecretOptions "duckdns.token" cfg.duckdns.token;

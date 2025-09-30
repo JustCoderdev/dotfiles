@@ -52,6 +52,7 @@
 					origin-cert.installed = true;
 					api-token.installed = true;
 				};
+				discord.hooks."foxburrow".rebuilds.installed = true;
 				nix-serve.priv-key.installed = true;
 			};
 

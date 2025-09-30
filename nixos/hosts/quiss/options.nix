@@ -21,21 +21,28 @@
 			};
 		};
 		secrets = {
-			nginx.basic_auth."dashboard".file.installed = true;
-			discord-hook.installed = true;
 			cloudflare = {
 				origin-cert.installed = true;
 				tunnel-creds."home".installed = true;
 			};
 
-			nginx.vhosts."quiss.server.lan" = {
-				cert = {
-					installed = true;
-					path = "/etc/nginx-certs/quiss_server_local-cert.crt";
-				};
-				key = {
-					installed = true;
-					path = "/etc/nginx-certs/quiss_server_local-cert.key";
+			discord.hooks."foxburrow" = {
+				rebuilds.installed = true;
+				errors.installed = true;
+			};
+
+			nginx =
+			{
+				basic_auth."dashboard".file.installed = true;
+				vhosts."quiss.server.lan" = {
+					cert = {
+						installed = true;
+						path = "/etc/nginx-certs/quiss_server_local-cert.crt";
+					};
+					key = {
+						installed = true;
+						path = "/etc/nginx-certs/quiss_server_local-cert.key";
+					};
 				};
 			};
 

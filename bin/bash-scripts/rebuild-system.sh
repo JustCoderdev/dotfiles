@@ -27,7 +27,7 @@ publish_on_discord () {
 	message_raw=${message_raw///\\f} # \f (form feed)
 	message=${message_raw///\\b} # \b (backspace)
 
-	discordhook_path="${DOT_FILES}/secrets/discordhook.url"
+	discordhook_path="${DOT_FILES}/secrets/discord/foxburrow/rebuilds-hook.url"
 	if [ -e "${discordhook_path}" ]; then
 		# completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
 		completed_message="## [${HOSTNAME}] ${message}"

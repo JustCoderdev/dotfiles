@@ -50,6 +50,7 @@
 
 			secrets = {
 				cloudflare.origin-cert.installed = true;
+				discord.hooks."foxburrow".rebuilds.installed = true;
 			};
 
 			ssh.cloudflared-proxy = {

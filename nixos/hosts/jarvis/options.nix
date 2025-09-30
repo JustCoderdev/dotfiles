@@ -10,6 +10,7 @@
 				origin-cert.installed = true;
 				tunnel-creds."jarvis-hass".installed = true;
 			};
+			discord.hooks."foxburrow".rebuilds.installed = true;
 			wireless.installed = true;
 		};
 	};
