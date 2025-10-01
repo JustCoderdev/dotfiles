@@ -51,7 +51,7 @@
 			{
 				        quiss = (add-peer "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=" "10.255.250.2");
 				iphone-tp-2_0 = (add-peer "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=" "10.255.250.3");
-				         asus = (add-peer "" "10.255.250.4");
+				         asus = (add-peer "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=" "10.255.250.4");
 			};
 		};
 	};
