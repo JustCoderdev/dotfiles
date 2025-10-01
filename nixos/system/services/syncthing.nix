@@ -22,8 +22,8 @@ in
 			{
 				devices = lib.attrsets.mapAttrs (
 					name: value:
-					{ id = value; }
-				) (cfg.devices-id);
+					{ inherit (value) address id; }
+				) (cfg.devices);
 
 				folders = (
 					builtins.listToAttrs (
@@ -36,9 +36,8 @@ in
 									enable = true;
 									path = "${cfg.dataDir}/${name}";
 									devices = lib.attrsets.mapAttrsToList (
-										name: id: name
-									# 	{ inherit id; }
-									) cfg.devices-id;
+										name: value: name
+									) cfg.devices;
 
 									versioning = {
 										type = "staggered";
@@ -103,10 +102,21 @@ in
 			default = config.users.users."${cfg.username}".group;
 		};
 
-		devices-id = lib.mkOption {
+		devices = lib.mkOption {
 			description = "Attribute set of all devices in the same 'network'";
-			type = lib.types.attrsOf lib.types.str;
 			default = { };
+			type = lib.types.attrsOf (
+				lib.types.submodule (
+					name:
+					{
+						options = {
+							id = mkStrOption "The id of the device";
+							address = mkStrOption "Address or hostname to connect to this device";
+						};
+					}
+				)
+
+			);
 		};
 
 		folders = lib.mkOption {

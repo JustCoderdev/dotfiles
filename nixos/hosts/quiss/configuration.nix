@@ -270,9 +270,16 @@ in
 		inherit (settings) username;
 		dataDir = "/home/${uname}/Documents/synced";
 
-		devices-id = {
-			  "msi" = "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI";
-			"quiss" = "";
+		devices =
+		let
+			add-device = (
+				address: id:
+				{ inherit address id; }
+			);
+		in
+		{
+			  "msi" = (add-device "10.255.250.1" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
+			"quiss" = (add-device "10.255.250.2" "GBMMYZW-5BMWHRK-KWT57VY-HFT2OQZ-VEONSJ2-K7NLEXG-P4HU7CB-3DVFFAQ");
 		};
 
 		folders = [ "obsidian-db" ];
