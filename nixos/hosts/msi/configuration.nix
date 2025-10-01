@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, settings, ... }:
 
 {
 	services.mysql = {
@@ -77,4 +77,28 @@
 		acceptTerms = true;
 		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
 	};
+
+	# Syncthing
+
+	system.services.syncthing = 
+	let
+		uname = settings.username;
+		user-cfg = config.users.users."${uname}";
+	in
+	{
+		enable = true;
+		openFirewall = true;
+
+		inherit (user-cfg) group;
+		inherit (settings) username;
+		dataDir = "/home/${uname}/Documents/synced";
+
+		devices-id = {
+			  "msi" = "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI";
+			"quiss" = "";
+		};
+
+		folders = [ "obsidian-db" ];
+	};
+
 }

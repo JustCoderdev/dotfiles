@@ -13,6 +13,7 @@
 		./rtmp.nix
 		./samba.nix
 		./servarr.nix
+		./syncthing.nix
 		./virtualbox.nix
 		./webserver.nix
 		./wireguard.nix
