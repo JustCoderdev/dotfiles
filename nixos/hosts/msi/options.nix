@@ -161,7 +161,10 @@
 			# 		) hosts;
 			# 	};
 			# };
-
+			samba = {
+				enable = true;
+				shares.user.enable = true;
+			};
 			syncthing = 
 			{
 				enable = true;
