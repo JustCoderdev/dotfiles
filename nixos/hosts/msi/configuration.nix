@@ -59,7 +59,7 @@
 	# Nginx quiss proxy
 
 	# Port 80 opened for acme
-	networking.firewall.allowedTCPPorts = [ 443 80 ];
+	networking.firewall.allowedTCPPorts = [ 443 80 9001 ]; # waylus port
 	services.nginx =
 	{
 		enable = true;
