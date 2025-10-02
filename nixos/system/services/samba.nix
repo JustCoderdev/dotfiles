@@ -14,7 +14,7 @@ in
 	{
 		# Autodiscovery on windows
 		services.samba-wsdd = {
-			enable = false;
+			enable = true;
 			openFirewall = true;
 		};
 
