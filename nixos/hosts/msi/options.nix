@@ -161,6 +161,46 @@
 			# 		) hosts;
 			# 	};
 			# };
+
+			syncthing = 
+			{
+				enable = true;
+				openFirewall = true;
+
+				folders = [ "obsidian-db" ];
+				devices =
+				let
+					add-device = (address: id: { inherit address id; });
+				in
+				{
+					          msi = (add-device "10.255.250.1" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
+					        quiss = (add-device "10.255.250.2" "GBMMYZW-5BMWHRK-KWT57VY-HFT2OQZ-VEONSJ2-K7NLEXG-P4HU7CB-3DVFFAQ");
+					iphone-tp-2_0 = (add-device "10.255.250.3" "3G4X4WY-UUCQG3V-3I6BXWC-BJ5I6OW-YHUJQ4K-77TJU5N-DL62ASO-4DDWRAG");
+					         asus = (add-device "10.255.250.4" "");
+				};
+			};
+			wireguard = {
+				openFirewall = true;
+				server =
+				{
+					enable = true;
+					tunnel-network = "10.255.250.0/24";
+					self-ip = "10.255.250.1/24";
+
+					external-interface = "wlp3s0";
+					internal-interface = "wg-server";
+
+					peers =
+					let
+						add-peer = (ip: publicKey: { inherit ip publicKey ; });
+					in
+					{
+						        quiss = (add-peer "10.255.250.2" "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=");
+						iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
+						         asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
+					};
+				};
+			};
 		};
 	};
 }

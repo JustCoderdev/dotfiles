@@ -234,58 +234,6 @@ in
 		group = serv-group;
 	};
 
-	# WIREGUARD CLIENT
-
-	system.services.wireguard = {
-		openFirewall = true;
-		client =
-		{
-			enable = true;
-			servers.wg-msi = {
-				endpoint = "msi.foxburrow.org:51820";
-				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
-
-				self-ip = "10.255.250.2/24";
-				allowed-ips = [
-					"10.255.250.1/32" # msi
-					"10.255.250.3/32" # iphone-tp-2_0
-					"10.255.250.4/32" # asus
-				];
-			};
-		};
-	};
-
-	# Syncthing
-
-	system.services.syncthing = 
-	let
-		uname = settings.username;
-		user-cfg = config.users.users."${uname}";
-	in
-	{
-		enable = true;
-		openFirewall = true;
-
-		inherit (user-cfg) group;
-		inherit (settings) username;
-		dataDir = "/home/${uname}/Documents/synced";
-
-		devices =
-		let
-			add-device = (
-				address: id:
-				{ inherit address id; }
-			);
-		in
-		{
-			          msi = (add-device "10.255.250.1" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
-			        quiss = (add-device "10.255.250.2" "GBMMYZW-5BMWHRK-KWT57VY-HFT2OQZ-VEONSJ2-K7NLEXG-P4HU7CB-3DVFFAQ");
-			iphone-tp-2_0 = (add-device "10.255.250.3" "3G4X4WY-UUCQG3V-3I6BXWC-BJ5I6OW-YHUJQ4K-77TJU5N-DL62ASO-4DDWRAG");
-		};
-
-		folders = [ "obsidian-db" ];
-	};
-
 	# MINECRAFT SERVERS
 
 	# services.minecraft-servers = {

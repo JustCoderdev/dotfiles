@@ -143,7 +143,32 @@
 				proxy.enable = false;
 			};
 			samba.enable = false;
+			syncthing = 
+			{
+				enable = false;
+				openFirewall = false;
+
+				folders = [ ];
+				devices =
+				let
+					add-device = (address: id: { inherit address id; });
+				in
+				{ };
+			};
 			virtualbox.enable = false;
+			wireguard = {
+				openFirewall = false;
+				client =
+				{
+					enable = true;
+					servers."<name>" = {
+						endpoint = "<hostname>:51820";
+						publicKey = "";
+						self-ip = "";
+						allowed-ips = [ ];
+					};
+				};
+			};
 			webserver.enable = false;
 		};
 	};

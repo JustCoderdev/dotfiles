@@ -107,6 +107,41 @@
 					(gen-builder "msi.host.lan" 6)
 				];
 			};
+			syncthing = 
+			{
+				enable = true;
+				openFirewall = true;
+
+				folders = [ "obsidian-db" ];
+				devices =
+				let
+					add-device = (address: id: { inherit address id; });
+				in
+				{
+					          msi = (add-device "10.255.250.1" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
+					        quiss = (add-device "10.255.250.2" "GBMMYZW-5BMWHRK-KWT57VY-HFT2OQZ-VEONSJ2-K7NLEXG-P4HU7CB-3DVFFAQ");
+					iphone-tp-2_0 = (add-device "10.255.250.3" "3G4X4WY-UUCQG3V-3I6BXWC-BJ5I6OW-YHUJQ4K-77TJU5N-DL62ASO-4DDWRAG");
+					         asus = (add-device "10.255.250.4" "");
+				};
+			};
+			wireguard = {
+				openFirewall = true;
+				client =
+				{
+					enable = true;
+					servers.wg-msi = {
+						endpoint = "msi.foxburrow.org:51820";
+						publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
+
+						self-ip = "10.255.250.4/24";
+						allowed-ips = [
+							"10.255.250.1/32" # msi
+							"10.255.250.2/32" # quiss
+							"10.255.250.3/32" # iphone-tp-2_0
+						];
+					};
+				};
+			};
 		};
 	};
 }
