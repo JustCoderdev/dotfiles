@@ -109,4 +109,13 @@
 		folders = [ "obsidian-db" ];
 	};
 
+
+	# Remote desktop / graphical tablet
+
+	programs.weylus =
+	{
+		enable = true;
+		openFirewall = true;
+		users = [ settings.username ];
+	};
 }
