@@ -11,6 +11,8 @@
 			roboto-mono
 			# iosevka
 
+			courier-unicode
+
 			# JPN fonts
 			ipaexfont
 			kochi-substitute
