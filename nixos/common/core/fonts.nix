@@ -11,7 +11,7 @@
 			roboto-mono
 			# iosevka
 
-			courier-unicode
+			courier-prime
 
 			# JPN fonts
 			ipaexfont
