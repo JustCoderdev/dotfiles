@@ -1,22 +1,19 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	xfce_cfg = config.system.desktop.xfce;
-	i3_cfg = config.system.desktop.i3;
+	dm-cfg = config.services.xserver.displayManager;
+	xfce-cfg = config.system.desktop.xfce;
+	i3-cfg = config.system.desktop.i3;
 	inherit (settings) username dotfiles_store_path;
 in
 
 {
-	config = lib.mkIf (xfce_cfg.enable || i3_cfg.enable)
+	config = lib.mkIf (xfce-cfg.enable || i3-cfg.enable)
 	{
 		environment.systemPackages =
 		[
 			pkgs.gcr # Provides org.gnome.keyring.SystemPrompter
-			(
-				pkgs.writeShellScriptBin "refresh-displays" ''
-${config.services.xserver.displayManager.setupCommands}
-''
-			)
+			(pkgs.writeShellScriptBin "refresh-displays" dm-cfg.setupCommands)
 		];
 
 		systemd.tmpfiles.rules =
@@ -49,10 +46,18 @@ ${config.services.xserver.displayManager.setupCommands}
 					setupCommands = let
 						xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
 						grep = "${pkgs.gnugrep}/bin/grep";
+						concat-displays = (
+							sep: func:
+							builtins.concatStringsSep sep (
+								lib.attrsets.mapAttrsToList  (
+									name: value:
+									(func name value)
+								) config.common.core.hardware.displays
+							)
+						);
 					in
-					builtins.concatStringsSep "\n" (
-						lib.attrsets.mapAttrsToList  (
-							name: value:
+					concat-displays "\n" (
+						name: value:
 ''
 ${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
 if [[ "''${?}" -eq 0 ]]; then
@@ -63,8 +68,39 @@ else
 	${xrandr} --output ${value.identifier} --off
 fi
 ''
-						) config.common.core.hardware.displays
-					);
+					)
+					+
+''
+case $1 in
+	surround)
+
+		case $2 in
+			enable)
+				xrandr --setmonitor surround auto ${concat-displays "," (name: value: "${value.identifier}")}
+			;;
+
+			disable)
+				xrandr --delmonitor surround
+			;;
+			*)
+				if [ -n $1 ];
+				then
+					echo "Unknown option '$2', did you meant to write 'enable' or 'disable'?"
+				else
+					echo "Missing command, available are 'enable' and 'disable'"
+				fi
+			;;
+		esac
+	;;
+
+	*)
+		if [ -n $1 ];
+		then
+			echo "Unknown option '$1', did you meant to write 'surround'?"
+		fi
+	;;
+esac
+''					;
 				};
 			};
 
