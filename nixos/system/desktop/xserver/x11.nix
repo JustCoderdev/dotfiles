@@ -77,9 +77,9 @@ case $1 in
 			enable)
 				if [ -n $1 ];
 				then
-					echo "No display has been found?"
-				else
 					${xrandr} --setmonitor surround auto $AVAILABLE_DISPLAYS
+				else
+					echo "No display has been found?"
 				fi
 			;;
 
