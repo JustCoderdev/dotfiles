@@ -46,37 +46,36 @@ in
 					setupCommands = let
 						xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
 						grep = "${pkgs.gnugrep}/bin/grep";
-						concat-displays = (
-							sep: func:
-							builtins.concatStringsSep sep (
-								lib.attrsets.mapAttrsToList  (
-									name: value:
-									(func name value)
-								) config.common.core.hardware.displays
-							)
-						);
 					in
-					concat-displays "\n" (
-						name: value:
+''
+AVAILABLE_DISPLAYS=""
+''
+					+ (
+						builtins.concatStringsSep "\n" (
+							lib.attrsets.mapAttrsToList  (
+								name: value:
 ''
 ${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
 if [[ "''${?}" -eq 0 ]]; then
 	echo -e "Display ${value.identifier} \033[32mconnected\033[0m"
 	${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal
+	$AVAILABLE_DISPLAYS+=",${value.identifier}"
 else
 	echo -e "Display ${value.identifier} \033[31mdisconnected\033[0m"
 	${xrandr} --output ${value.identifier} --off
 fi
 ''
-					)
-					+
+							) config.common.core.hardware.displays
+						)
+					) +
 ''
+AVAILABLE_DISPLAYS="''${AVAILABLE_DISPLAYS:1}"
 case $1 in
 	surround)
 
 		case $2 in
 			enable)
-				xrandr --setmonitor surround auto ${concat-displays "," (name: value: "${value.identifier}")}
+				xrandr --setmonitor surround auto $AVAILABLE_DISPLAYS
 			;;
 
 			disable)
