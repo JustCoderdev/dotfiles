@@ -71,6 +71,14 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		[
 			nix-tree
 			(callPackage ../../unofficial/pkgs/schemer2.nix { })
+
+			# (
+			# 	python313Packages.callPackage ../../unofficial/pkgs/unmaniac.nix {
+			# 		inherit (pkgs) git;
+			# 		inherit (pkgs.nodePackages) npm;
+			# 		inherit (pkgs.python.pkgs) pip;
+			# 	}
+			# )
 		]
 		++ lib.optionals (is_desk_available && has_desktop)
 		[

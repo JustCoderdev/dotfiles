@@ -87,6 +87,7 @@
 		gaming.enable = true;
 
 		services = {
+			docker.enable = true;
 			nixbuilder = {
 				server = {
 					enable = true;

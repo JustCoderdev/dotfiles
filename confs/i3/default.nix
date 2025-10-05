@@ -71,7 +71,7 @@ in
 			keybindings =
 			let
 				exec = (command: "exec --no-startup-id \"${command}\"");
-				exec-n-reload-bar = (command: (exec "'${command}' && killall -s USR1 -- i3status"));
+				exec-n-reload-bar = (command: (exec "${command} && killall -s USR1 -- i3status"));
 				workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
 			in
 			{
