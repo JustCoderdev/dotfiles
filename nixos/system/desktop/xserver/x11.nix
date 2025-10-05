@@ -98,7 +98,7 @@ case $1 in
 	;;
 
 	*)
-		if [ -n $1 ];
+		if [ -z $1 ];
 		then
 			echo "Unknown option '$1', did you meant to write 'surround'?"
 		fi
