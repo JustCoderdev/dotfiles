@@ -59,7 +59,7 @@ ${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
 if [[ "''${?}" -eq 0 ]]; then
 	echo -e "Display ${value.identifier} \033[32mconnected\033[0m"
 	${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal
-	$AVAILABLE_DISPLAYS+=",${value.identifier}"
+	AVAILABLE_DISPLAYS="''${AVAILABLE_DISPLAYS},${value.identifier}"
 else
 	echo -e "Display ${value.identifier} \033[31mdisconnected\033[0m"
 	${xrandr} --output ${value.identifier} --off
@@ -75,11 +75,16 @@ case $1 in
 
 		case $2 in
 			enable)
-				xrandr --setmonitor surround auto $AVAILABLE_DISPLAYS
+				if [ -n $1 ];
+				then
+					echo "No display has been found?"
+				else
+					${xrandr} --setmonitor surround auto $AVAILABLE_DISPLAYS
+				fi
 			;;
 
 			disable)
-				xrandr --delmonitor surround
+				${xrandr} --delmonitor surround
 			;;
 			*)
 				if [ -n $1 ];
