@@ -121,7 +121,7 @@ in
 				# Revised default controls
 
 				"${mod}+Shift+q" = "kill";       # kill focused window
-				"${mod}+d" = (exec "cat /tmp/dmenu_binaries | dmenu -i -p '> ' |  $${SHELL:-\"/bin/sh\"} &");
+				"${mod}+d" = (exec "cat /tmp/dmenu_binaries | dmenu -i -p '> ' |  \${SHELL:-'/bin/sh'} &");
 
 				# change focus
 				"${mod}+${kl}" = "focus left";
