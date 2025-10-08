@@ -63,8 +63,9 @@ in
 				);
 			in
 			[
-				(add-app "alacritty" "1")
-				(add-app "firefox"   "2")
+				(add-app "alacritty"       "2")
+				(add-app "firefox"         "1")
+				(add-app "dmenu_path > /tmp/dmenu_binaries" null)
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
@@ -120,7 +121,7 @@ in
 				# Revised default controls
 
 				"${mod}+Shift+q" = "kill";       # kill focused window
-				"${mod}+d" = (exec "dmenu_run"); # start program launcher
+				"${mod}+d" = (exec "cat /tmp/dmenu_binaries | dmenu -i -p '> ' |  $${SHELL:-\"/bin/sh\"} &");
 
 				# change focus
 				"${mod}+${kl}" = "focus left";
