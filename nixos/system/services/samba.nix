@@ -106,7 +106,7 @@ iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
 						{
 							"security" = "user";
 
-							"hosts allow" = "192.168., 10.";
+							"hosts allow" = "192.168., 10., 172.";
 							"hosts deny" = "0.0.0.0/0";
 
 							"load printers" = "no";
