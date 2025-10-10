@@ -104,24 +104,21 @@ Included configuration files
 
 ### Fix
 
-- Migrate all hosts to grub
-- Find a way to persist WakeOnLan
+- Fix keyrings not persisting credentials
+- Fix host files manually to use grub
+- Fix WakeOnLan module to make it persistent across reboots
 
-### Edit
+### Improve
 
-- Grub rescue entry
+- Improve grub by adding rescue option -> might not work since boot partition is always full
+- Improve neovim by nuking current settings
+- Improve alacritty by resetting keybindings
 
-### New
+### Add
 
-- Add "host manifest"
-- Fusuma
-- Authelia
-- Auto rebuild pusher
-- ~~Network hostname autodiscovery~~
-
-### Unresolved
-
-- Firefox new (stupid) policies (AI summary, "trending search suggestions")
+- Add host manifest module
+- Add fusuma and integrate it for laptops
+- Add authelia module for homeserver auth
 
 ## Installation guide
 
@@ -211,7 +208,7 @@ There are 3 main directories:
 
 ```
 cd ${DOT_FILES}/secrets/cloudflare
-nix-shell -p cloudflared 
+nix-shell -p cloudflared
 
 cloudflared login
 mv /home/${USER}/.cloudflared/cert.pem .
@@ -374,7 +371,7 @@ nix profile history \
     --profile /nix/var/nix/profiles/system
 
 # Remove profiles older than 14 days
-sudo nix profile wipe-history 
+sudo nix profile wipe-history
     --profile /nix/var/nix/profiles/system \
     --older-than 14d
 
@@ -436,7 +433,7 @@ sudo fdisk /dev/sda
 p      # Find partition number
 d      # Delete partition
     2      # partition number
-n      # Create new partition 
+n      # Create new partition
     p      # primary
     2      # partition number
     CR     # first sector
