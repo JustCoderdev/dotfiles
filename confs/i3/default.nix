@@ -1,4 +1,4 @@
-{ config, lib, settings, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
 	stylix-cfg = config.stylix;
