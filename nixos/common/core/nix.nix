@@ -14,7 +14,7 @@ in
 			optimise.automatic = false;
 			gc = {
 				automatic = false;
-				dates = "17:30";
+				dates = "weekly";
 				options = "--delete-older-than 15d";
 			};
 
@@ -50,7 +50,7 @@ in
 			};
 		};
 
-		services.journald.extraConfig = "SystemMaxUse=1G";
+		services.journald.extraConfig = "SystemMaxUse=500M";
 
 		nixpkgs =
 		{

@@ -1,4 +1,7 @@
-{ config, lib, ... }:
+# To create the rescue option
+# Source <https://github.com/cleverca22/nixos-configs/blob/master/rescue_boot.nix>
+
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.common.core.bootloader;
@@ -9,6 +12,13 @@ let
 		then cfg.display-resolution
 		else "auto"
 	);
+
+	installer-netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
+		modules = [ (pkgs.path + "/nixos/modules/installer/netboot/netboot-minimal.nix") ];
+	};
+
+	netboot-build = installer-netboot.config.system.build;
+	netboot-boot  = installer-netboot.config.boot;
 in
 
 {
@@ -56,7 +66,18 @@ submenu "Power options" {
 		fwsetup
 	}
 }
+''
++ lib.strings.optionalString (cfg.rescue.enable) ''
+menuentry "Rescue Mode" {
+	linux ($drive1)/rescue-kernel init=${netboot-build.toplevel}/init ${toString netboot-boot.kernelParams}
+	initrd ($drive1)/rescue-initrd
+}
 '';
+
+				extraFiles = lib.mkIf (cfg.rescue.enable) {
+					"rescue-kernel" = "${netboot-build.kernel}/bzImage";
+					"rescue-initrd" = "${netboot-build.netbootRamdisk}/initrd";
+				};
 			};
 		};
 	};
@@ -65,6 +86,7 @@ submenu "Power options" {
 
 	options.common.core.bootloader =
 	{
+		rescue.enable = lib.mkEnableOption "Add a rescue entry in grub launch options";
 		support-efi = lib.mkEnableOption "Whether the device has efi support";
 		display-resolution = lib.mkOption {
 			description = "The resolution of the primary display";

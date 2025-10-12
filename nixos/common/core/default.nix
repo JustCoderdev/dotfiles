@@ -1,7 +1,8 @@
-{ pkgs, lib, settings, ... }:
+{ pkgs, lib, modulesPath, settings, ... }:
 
 {
 	imports = [
+		# (modulesPath + "/profiles/perlless.nix")
 		./audio.nix
 		./avahi.nix
 		./bluetooth.nix
@@ -17,7 +18,6 @@
 		./power.nix
 		./plymouth.nix
 		./printer.nix
-		./rescue.nix
 		./secrets.nix
 		./shell.nix
 		./ssh.nix

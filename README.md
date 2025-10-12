@@ -113,12 +113,16 @@ Included configuration files
 - Improve grub by adding rescue option -> might not work since boot partition is always full
 - Improve neovim by nuking current settings
 - Improve alacritty by resetting keybindings
+- Improve `refresh-displays` command by adding the toggle to mirror or extend display
+- Improve samba "global" directory to list all share
 
 ### Add
 
 - Add host manifest module
 - Add fusuma and integrate it for laptops
 - Add authelia module for homeserver auth
+- Add guest samba share
+- Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
 
 ## Installation guide
 
