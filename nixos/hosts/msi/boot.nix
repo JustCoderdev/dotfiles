@@ -29,9 +29,19 @@
 		};
 
 		# -- IMPORTANT -- #
+		# "/nix" =
+		# {
+		# 	device = "/dev/disk/by-uuid/aa7d119a-8bdf-48e0-a3f4-76b3f71a6aac";
+		# 	fsType = "ext4";
+		# 	neededForBoot = true;
+		# 	options = [ "noatime" ];
+		# };
+		# -- IMPORTANT -- #
+
+		# -- IMPORTANT -- #
 		"/nix" =
 		{
-			device = "/dev/disk/by-uuid/aa7d119a-8bdf-48e0-a3f4-76b3f71a6aac";
+			device = "/dev/disk/by-uuid/f144ead9-80e5-4e47-bab0-fd8693e54026";
 			fsType = "ext4";
 			neededForBoot = true;
 			options = [ "noatime" ];
