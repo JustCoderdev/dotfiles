@@ -1,7 +1,7 @@
 # To create the rescue option
 # Source <https://github.com/cleverca22/nixos-configs/blob/master/rescue_boot.nix>
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
 	cfg = config.common.core.bootloader;
@@ -14,6 +14,7 @@ let
 	);
 
 	installer-netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
+		inherit (settings) system;
 		modules = [ (pkgs.path + "/nixos/modules/installer/netboot/netboot-minimal.nix") ];
 	};
 

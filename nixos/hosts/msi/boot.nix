@@ -11,7 +11,6 @@
 
 	boot.loader.grub.enable = true;
 	common.core.bootloader = {
-		# rescue.enable = true;
 		support-efi = true;
 		display-resolution = "1920x1080";
 	};
