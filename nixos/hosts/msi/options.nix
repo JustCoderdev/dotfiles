@@ -36,13 +36,13 @@
 				};
 			};
 
-			network.wakeOn = {
-				wlan.enabledFor = [ "phy0" ];
-				knownDevices = {
-					quiss = "f4:6d:04:99:dc:9a";
-					 acer = "a4:17:31:10:9e:ed";
-				};
-			};
+			# network.wakeOn = {
+				# wlan.enabledFor = [ "phy0" ];
+				# knownDevices = {
+				# 	quiss = "f4:6d:04:99:dc:9a";
+				# 	 acer = "a4:17:31:10:9e:ed";
+				# };
+			# };
 
 			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
@@ -87,7 +87,7 @@
 		gaming.enable = true;
 
 		services = {
-			docker.enable = true;
+			# docker.enable = true;
 			nixbuilder = {
 				server = {
 					enable = true;

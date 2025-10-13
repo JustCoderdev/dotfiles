@@ -42,7 +42,7 @@
 		"/nix" =
 		{
 			device = "/dev/disk/by-uuid/f144ead9-80e5-4e47-bab0-fd8693e54026";
-			fsType = "ext4";
+			fsType = "f2fs";
 			neededForBoot = true;
 			options = [ "noatime" ];
 		};
