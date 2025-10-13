@@ -68,7 +68,7 @@ in
 		description: subtype:
 		mkOption {
 			inherit description;
-			type = types.attrsOf subtype;
+			type = types.listOf subtype;
 			default = [ ];
 		}
 	);

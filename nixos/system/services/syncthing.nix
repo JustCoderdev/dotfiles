@@ -1,4 +1,4 @@
-{ config, lib, settings, jc-bin, ... }:
+{ config, lib, settings, jc-lib, ... }:
 
 let
 	cfg = config.system.services.syncthing;

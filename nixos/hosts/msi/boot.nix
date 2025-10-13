@@ -28,6 +28,7 @@
 			fsType = "ext4";
 		};
 
+
 		# -- IMPORTANT -- #
 		# "/nix" =
 		# {
@@ -38,11 +39,12 @@
 		# };
 		# -- IMPORTANT -- #
 
+
 		# -- IMPORTANT -- #
 		"/nix" =
 		{
-			device = "/dev/disk/by-uuid/f144ead9-80e5-4e47-bab0-fd8693e54026";
-			fsType = "f2fs";
+			device = "/dev/disk/by-uuid/c3cf58c1-1baa-4196-a793-7d8b5ac4d761";
+			fsType = "ext4";
 			neededForBoot = true;
 			options = [ "noatime" ];
 		};
