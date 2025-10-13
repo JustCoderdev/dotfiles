@@ -63,6 +63,7 @@
 		# );
 
 		lib = nixpkgs.lib;
+		jc-lib = import ./jc-lib.nix { inherit lib; };
 
 		getUserModules = (
 			username:
@@ -116,7 +117,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
 				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username);
 			}
 		);
@@ -133,7 +134,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
 				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username)
 				++ [
 					({ modulesPath, ... }: {
@@ -151,7 +152,7 @@
 			in
 			lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
 				modules = (getUserModules username)
 				++ [
 					({ pkgs, modulesPath, ... }: {
@@ -174,7 +175,7 @@
 			in
 			lib.nixosSystem {
 				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
 				modules = 
 				[
 					# (getHostModules host-data.hostname)
@@ -207,7 +208,7 @@
 			in
 			lib.nixosSystem {
 				inherit (settings) system;
-				specialArgs = { inherit inputs pkgs-unstable settings; };
+				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
 				modules = (getUserModules username)
 				++ [
 					({ pkgs, modulesPath, ... }: {

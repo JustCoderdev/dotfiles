@@ -1,7 +1,7 @@
 # Network routing
 # src <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
 
-{ config, lib, ... }:
+{ config, lib, jc-bin, ... }:
 
 let
 	cfg = config.system.services.routing;
@@ -86,19 +86,13 @@ in
 	# ------------------------------------------------------------ #
 
 	options.system.services.routing =
-	let
-		mkStrOption = (
-			description:
-			lib.mkOption { inherit description; type = lib.types.str; }
-		);
-	in
 	{
 		enable = lib.mkEnableOption "Enable the routing service creating a subnetwork";
 
-		outnetwork.interface = mkStrOption "Interface that faces the outside network";
+		outnetwork.interface = jc-bin.mkStrOption "Interface that faces the outside network";
 		subnetwork =
 		{
-			interface = mkStrOption "Interface that faces the inside network"; 
+			interface = jc-bin.mkStrOption "Interface that faces the inside network"; 
 
 			address = lib.mkOption {
 				description = "The network address of the subnetwork";
@@ -134,11 +128,11 @@ in
 					lib.types.submodule (
 						{
 							options = {
-								hostname = mkStrOption "The hostname with the reserved lease";
-								domain = mkStrOption "The domain of the host with the reserved lease";
+								hostname = jc-bin.mkStrOption "The hostname with the reserved lease";
+								domain = jc-bin.mkStrOption "The domain of the host with the reserved lease";
 
-								host-mac = mkStrOption "The mac address of the host with the reserved lease";
-								reserved-ip = mkStrOption "The reserved ip address of the host";
+								host-mac = jc-bin.mkStrOption "The mac address of the host with the reserved lease";
+								reserved-ip = jc-bin.mkStrOption "The reserved ip address of the host";
 							};
 						}
 					)
