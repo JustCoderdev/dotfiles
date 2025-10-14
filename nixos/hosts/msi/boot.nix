@@ -46,7 +46,7 @@
 			device = "/dev/disk/by-uuid/c3cf58c1-1baa-4196-a793-7d8b5ac4d761";
 			fsType = "ext4";
 			neededForBoot = true;
-			options = [ "noatime" ];
+			options = [ "noatime" "x-gvfs-hide" ];
 		};
 		# -- IMPORTANT -- #
 	};
