@@ -23,6 +23,10 @@ in
 						i3status
 						playerctl
 
+						# lock
+						xss-lock
+						lightdm # dm-tool lock
+
 						# Screenshot utilities
 						(
 							callPackage ../../../unofficial/pkgs/hacksaw.nix {

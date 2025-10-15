@@ -19,8 +19,6 @@ let
 		good = base0B;
 
 		focused = base0D;
-
-
 	};
 
 	ifnull = (
@@ -89,7 +87,7 @@ in
 				(add-app "alacritty"       "2")
 				(add-app "firefox"         "1")
 				(add-app "dmenu_path > /tmp/dmenu_binaries" null)
-				(add-app "${pkgs.xss-lock}/bin/xss-lock --transfer-sleep-lock -- ${pkgs.lightdm}/bin/dm-tool lock" null)
+				(add-app "xss-lock --transfer-sleep-lock -- dm-tool lock" null)
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
