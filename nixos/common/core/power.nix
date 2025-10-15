@@ -37,26 +37,32 @@
 
 	# Service template that I copied from gurkan, thanks <3
 	# <https://git.gurkan.in/gurkan/nixos-config/src/branch/master/modules/laptop/services.nix>
-	systemd.services = {
-		# Do not restart these, since it fucks up the current session
-		systemd-logind.restartIfChanged = false;
-		polkit.restartIfChanged = false;
-		display-manager.restartIfChanged = false;
-		NetworkManager.restartIfChanged = false;
-		wpa_supplicant.restartIfChanged = false;
+	# systemd.services = {
+	# 	# Do not restart these, since it fucks up the current session
+	# 	systemd-logind.restartIfChanged = false;
+	# 	polkit.restartIfChanged = false;
+	# 	display-manager.restartIfChanged = false;
+	# 	NetworkManager.restartIfChanged = false;
+	# 	wpa_supplicant.restartIfChanged = false;
 
-		lock-before-sleeping = {
-			restartIfChanged = false;
+	# 	lock-before-sleeping = {
+	# 		restartIfChanged = false;
 
-			unitConfig.Description = "Helper service to bind locker to sleep.target";
-			wantedBy = [ "pre-sleep.service" ];
-			before = [ "pre-sleep.service" ];
-			serviceConfig = {
-				ExecStart = "${pkgs.lightdm}/bin/dm-tool lock";
-				Type = "simple";
-			};
+	# 		unitConfig.Description = "Helper service to bind locker to sleep.target";
+	# 		wantedBy = [ "pre-sleep.service" ];
+	# 		before = [ "pre-sleep.service" ];
+	# 		serviceConfig = {
+	# 			ExecStart = "${pkgs.lightdm}/bin/dm-tool lock";
+	# 			Type = "simple";
+	# 		};
 
-			environment."XDG_SEAT_PATH" = "/org/freedesktop/DisplayManager/Seat0";
-		};
+	# 		environment."XDG_SEAT_PATH" = "/org/freedesktop/DisplayManager/Seat0";
+	# 	};
+	# };
+
+	services.logind = {
+		lidSwitch = "lock";
+		lidSwitchExternalPower = "lock";
+		lidSwitchDocked = "lock";
 	};
 }
