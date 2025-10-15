@@ -41,8 +41,8 @@
 		lidSwitchDocked = "lock";
 	};
 
-	programs.xss-lock = {
-		enable = true;
-		lockerCommand = "${pkgs.lightdm}/bin/dm-tool lock";
-	};
+	# programs.xss-lock = {
+	# 	enable = true;
+	# 	lockerCommand = "${pkgs.lightdm}/bin/dm-tool lock";
+	# };
 }
