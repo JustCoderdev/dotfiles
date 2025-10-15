@@ -50,15 +50,11 @@
 
 			unitConfig.Description = "Helper service to bind locker to sleep.target";
 			serviceConfig = {
-				ExecStart = "${pkgs.lightdm}/bin/dm-tool lock";
+				ExecStart = "${pkgs.lightdm}/bin/dm-tool switch-to-greeter";
 				Type = "simple";
 			};
 			before   = [ "pre-sleep.service" ];
 			wantedBy = [ "pre-sleep.service" ];
-			# environment = {
-			# 	DISPLAY = ":0";
-			# 	XAUTHORITY = "/home/gurkan/.Xauthority";
-			# };
 		};
 	};
 }
