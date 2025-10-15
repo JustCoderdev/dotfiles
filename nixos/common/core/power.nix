@@ -52,7 +52,7 @@
 			wantedBy = [ "pre-sleep.service" ];
 			before = [ "pre-sleep.service" ];
 			serviceConfig = {
-				ExecStart = "${pkgs.lightdm}/bin/dm-tool switch-to-greeter";
+				ExecStart = "${pkgs.lightdm}/bin/dm-tool lock";
 				Type = "simple";
 			};
 
