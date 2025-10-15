@@ -1,44 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	powerManagement = {
 		enable = true;
 		cpuFreqGovernor = "performance";
 		#powertop.enable = true;
-	};
-
-
-	# All options available here
-	# <https://www.mankier.com/5/logind.conf>
-	services.logind =
-	{
-		# "HandlePowerKey"          = "poweroff";
-		# "HandlePowerKeyLongPress" = "ignore";
-
-		# "HandleRebootKey"          = "reboot";
-		# "HandleRebootKeyLongPress" = "poweroff";
-
-		# "HandleSuspendKey"          = "suspend";
-		# "HandleSuspendKeyLongPress" = "hibernate";
-
-		# "HandleHibernateKey"          = "hibernate";
-		# "HandleHibernateKeyLongPress" = "ignore";
-
-		# "HandleLidSwitch"              = "suspend";
-		# "HandleLidSwitchExternalPower" = "suspend";
-		# "HandleLidSwitchDocked"        = "ignore";
-
-		powerKey          = "lock";
-		powerKeyLongPress = "poweroff";
-
-		lidSwitch              = "lock";
-		lidSwitchExternalPower = "lock";
-		lidSwitchDocked        = "lock";
-
-		extraConfig = ''
-IdleAction=lock
-IdleActionSec=120
-'';
 	};
 
 	services =
@@ -66,6 +32,33 @@ IdleActionSec=120
 				CPU_MIN_PERF_ON_AC = 0;
 				CPU_MAX_PERF_ON_AC = 100;
 			};
+		};
+	};
+
+	# Service template that I copied from gurkan, thanks <3
+	# <https://git.gurkan.in/gurkan/nixos-config/src/branch/master/modules/laptop/services.nix>
+	systemd.services = {
+		# Do not restart these, since it fucks up the current session
+		systemd-logind.restartIfChanged = false;
+		polkit.restartIfChanged = false;
+		display-manager.restartIfChanged = false;
+		NetworkManager.restartIfChanged = false;
+		wpa_supplicant.restartIfChanged = false;
+
+		lock-before-sleeping = {
+			restartIfChanged = false;
+
+			unitConfig.Description = "Helper service to bind locker to sleep.target";
+			serviceConfig = {
+				ExecStart = "${pkgs.lightdm}/bin/dm-tool lock";
+				Type = "simple";
+			};
+			before   = [ "pre-sleep.service" ];
+			wantedBy = [ "pre-sleep.service" ];
+			# environment = {
+			# 	DISPLAY = ":0";
+			# 	XAUTHORITY = "/home/gurkan/.Xauthority";
+			# };
 		};
 	};
 }
