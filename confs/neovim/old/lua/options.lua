@@ -1,3 +1,6 @@
+declare_file("options.lua")
+
+
 vim.opt.autoindent = true             -- take indent for new line from previous line
 vim.opt.background = "dark"           -- "dark" or "light", used for highlight colors
 
@@ -55,4 +58,3 @@ vim.cmd("let g:loaded_python3_provider = 0")
 vim.cmd("let g:loaded_ruby_provider = 0")
 vim.cmd("let g:loaded_perl_provider = 0")
 -- vim.cmd("set list")
-

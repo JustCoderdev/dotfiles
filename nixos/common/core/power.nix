@@ -7,6 +7,40 @@
 		#powertop.enable = true;
 	};
 
+
+	# All options available here
+	# <https://www.mankier.com/5/logind.conf>
+	services.logind =
+	{
+		# "HandlePowerKey"          = "poweroff";
+		# "HandlePowerKeyLongPress" = "ignore";
+
+		# "HandleRebootKey"          = "reboot";
+		# "HandleRebootKeyLongPress" = "poweroff";
+
+		# "HandleSuspendKey"          = "suspend";
+		# "HandleSuspendKeyLongPress" = "hibernate";
+
+		# "HandleHibernateKey"          = "hibernate";
+		# "HandleHibernateKeyLongPress" = "ignore";
+
+		# "HandleLidSwitch"              = "suspend";
+		# "HandleLidSwitchExternalPower" = "suspend";
+		# "HandleLidSwitchDocked"        = "ignore";
+
+		powerKey          = "lock";
+		powerKeyLongPress = "poweroff";
+
+		lidSwitch              = "lock";
+		lidSwitchExternalPower = "lock";
+		lidSwitchDocked        = "lock";
+
+		extraConfig = ''
+IdleAction=lock
+IdleActionSec=120
+'';
+	};
+
 	services =
 	{
 		thermald.enable = true;
