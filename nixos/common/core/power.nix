@@ -49,12 +49,14 @@
 			restartIfChanged = false;
 
 			unitConfig.Description = "Helper service to bind locker to sleep.target";
+			wantedBy = [ "pre-sleep.service" ];
+			before = [ "pre-sleep.service" ];
 			serviceConfig = {
 				ExecStart = "${pkgs.lightdm}/bin/dm-tool switch-to-greeter";
 				Type = "simple";
 			};
-			before   = [ "pre-sleep.service" ];
-			wantedBy = [ "pre-sleep.service" ];
+
+			environment."XDG_SEAT_PATH" = "/org/freedesktop/DisplayManager/Seat0";
 		};
 	};
 }
