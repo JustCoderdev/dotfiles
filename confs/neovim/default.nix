@@ -36,9 +36,9 @@
 	];
 
 	home.file = {
-		".config/nvim/init.lua".source = ./init.lua;
+		".config/nvim/init.lua".source = ./old/init.lua;
 		".config/nvim/lua" = {
-			source = ./lua;
+			source = ./old/lua;
 			recursive = true;
 		};
 	};
