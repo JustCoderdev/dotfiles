@@ -5,48 +5,51 @@ let
 in
 
 {
+	# Null or type RO
+	# ---------------------------------------- #
+
 	mkNullOrStrOptionRO = (
-		description:
+		description: default:
 		mkOption {
-			inherit description;
+			inherit description default;
 			type = types.nullOr types.str;
-			readonly = true;
-			default = null;
+			readOnly = true;
 		}
 	);
 
 	mkNullOrEnumOptionRO = (
-		description: enum-items:
+		description: enum-items: default:
 		mkOption {
-			inherit description;
+			inherit description default;
 			type = types.nullOr (types.enum enum-items);
-			readonly = true;
-			default = null;
+			readOnly = true;
 		}
 	);
 
-	# -------------------- #
+
+	# Type RO
+	# ---------------------------------------- #
 
 	mkSubmodOptionRO = (
-		description: submodule:
+		description: submodule: default:
 		mkOption {
-			inherit description;
+			inherit description default;
 			type = types.attrsOf (types.submodule (submodule));
-			readonly = true;
-			default = { };
+			readOnly = true;
 		}
 	);
 
 	mkIntOptionRO = (
-		description:
+		description: default:
 		mkOption {
-			inherit description;
+			inherit description default;
 			type = types.int;
-			readonly = true;
+			readOnly = true;
 		}
 	);
 
-	# -------------------- #
+	# Type
+	# ---------------------------------------- #
 
 	mkStrOption = (
 		description:
@@ -91,7 +94,8 @@ in
 		}
 	);
 
-	# -------------------- #
+	# Null or type
+	# ---------------------------------------- #
 
 	mkNullOrStrOption = (
 		description:
