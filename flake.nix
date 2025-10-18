@@ -52,16 +52,6 @@
 			(add-host "asus"           "x86_64-linux"  "ryuji")
 		];
 
-		# hosts-data = builtins.listToAttrs (
-		# 	builtins.map (
-		# 		host-data:
-		# 		{
-		# 			name = host-data.hostname;
-		# 			value = host-data;
-		# 		}
-		# 	) hosts-list
-		# );
-
 		lib = nixpkgs.lib;
 		jc-lib = import ./jc-lib.nix { inherit lib; };
 
@@ -77,6 +67,7 @@
 		getHostModules = (
 			hostname:
 			[
+				./nixos/hosts
 				./nixos/hosts/${hostname}/hardware-configuration.nix
 				./nixos/hosts/${hostname}/boot.nix
 				./nixos/hosts/${hostname}/options.nix
