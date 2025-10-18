@@ -33,7 +33,7 @@ share with me any feedback or trick you may know :p
 
 > Virtual machine notes
 >
-> - Remember to enable `host.isVM` in `nixos/hosts/HOST/settings.nix`
+> - Remember to enable `host.isVM` in `nixos/hosts/HOST/settings.nix` #TODO: remove in favour of new hardware manifest
 > - Nixos doesn't like default graphics driver, use `VBoxVGA`
 > - Hyrpland may not work in a VM
 
