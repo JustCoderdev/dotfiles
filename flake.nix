@@ -42,7 +42,7 @@
 		# 		(builtins.readDir hosts-dir)
 		# 	)
 		# );
-		hosts-name = [ "msi" ];
+		hosts-name = [ "msi" "asus" ];
 		hosts-manifest = builtins.listToAttrs (
 			builtins.map (
 				host-name:
@@ -69,9 +69,9 @@
 			(add-host "quiss"          "x86_64-linux"  "ryuji")
 			(add-host "jarvis"         "aarch64-linux" "ryuji")
 
-			(add-host "msi"            "x86_64-linux"  "ryuji")
+			# (add-host "msi"            "x86_64-linux"  "ryuji")
 			(add-host "acer"           "x86_64-linux"  "ryuji")
-			(add-host "asus"           "x86_64-linux"  "ryuji")
+			# (add-host "asus"           "x86_64-linux"  "ryuji")
 		];
 
 		lib = nixpkgs.lib;

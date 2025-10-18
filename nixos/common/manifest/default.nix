@@ -16,7 +16,7 @@ let
 	# 	)
 	# );
 
-	hosts-name = [ "msi" ];
+	hosts-name = [ "msi" "asus" ];
 in
 
 {
