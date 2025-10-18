@@ -91,13 +91,13 @@ in
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
-			keycodebindings = 
-			let
-				exec = (command: "exec --no-startup-id \"${command}\"");
-			in
-			{
-				"172" = (exec "playerctl play-pause");  # XF86AudioPlayPause
-			};
+			# keycodebindings = 
+			# let
+			# 	exec = (command: "exec --no-startup-id \"${command}\"");
+			# in
+			# {
+			# 	"172" = (exec "playerctl play-pause");  # XF86AudioPlayPause
+			# };
 
 			keybindings =
 			let
