@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, jc-lib, ... }:
 
 let
 	cfg = config.common.core.hardware;
@@ -28,66 +28,36 @@ in
 	# ------------------------------------------------------------ #
 
 	options.common.core.hardware = 
-	let
-		mkStrOption = (
-			description:
-			lib.mkOption { inherit description; type = lib.types.nullOr lib.types.str; default = null; }
-		);
-		mkEnumOption = (
-			description: enum-items:
-			lib.mkOption { inherit description; type = lib.types.nullOr (lib.types.enum enum-items); default = null; }
-		);
-	in
 	{
 		cpu = {
-			manufacturer = mkEnumOption "CPU manufacturer" [ "intel" "amd" ];
-			architecture = mkStrOption "CPU architecture";
+			manufacturer = jc-lib.mkNullOrEnumOption "CPU manufacturer" [ "intel" "amd" ];
+			architecture = jc-lib.mkNullOrStrOption "CPU architecture";
 			has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
 		};
 
 		gpu = {
-			manufacturer = mkEnumOption "GPU manufacturer" [ "intel" "amd" "nvidia" ];
-			architecture = mkStrOption "GPU architecture";
+			manufacturer = jc-lib.mkNullOrEnumOption "GPU manufacturer" [ "intel" "amd" "nvidia" ];
+			architecture = jc-lib.mkNullOrStrOption "GPU architecture";
 			offload = {
 				enable = lib.mkOption {
 					description = "Whether to enable gpu offload";
 					type = lib.types.bool;
 					default = cfg.cpu.has-iGPU;
 				};
-				intelBusId = mkStrOption "Intel bus id";
-				nvidiaBusId = mkStrOption "Nvidia bus id";
+				intelBusId = jc-lib.mkNullOrStrOption "Intel bus id";
+				nvidiaBusId = jc-lib.mkNullOrStrOption "Nvidia bus id";
 			};
 		};
 
-		displays = lib.mkOption {
-			description = "All displays connected to device";
-			default = { };
-			type = lib.types.attrsOf (
-				lib.types.submodule (
-					{
-						options = {
-							identifier = lib.mkOption {
-								description = "The identifier of the display given by `xrandr -q`";
-								type = lib.types.str;
-								example = "DP-0";
-							};
-
-							resolution = lib.mkOption {
-								description = "The resolution of the display";
-								type = lib.types.str;
-								example = "1920x1080";
-							};
-
-							position = lib.mkOption {
-								description = "The position relative to other displays";
-								type = lib.types.str;
-								example = "1920x0";
-							};
-						};
-					}
-				)
-			);
-		};
+		displays = jc-lib.mkSubmodOption "All displays connected to device" (
+			{
+				options = {
+					identifier = jc-lib.mkStrOptionWexample "The identifier of the display given by `xrandr -q`" "DP-0";
+					resolution = jc-lib.mkStrOptionWexample "The resolution of the display" "1920x1080";
+					position = jc-lib.mkStrOptionWexample "The position relative to other displays" "1920x0";
+				};
+			}
+		);
 	};
 }
 
