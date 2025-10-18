@@ -3,6 +3,7 @@
 {
 	imports = [
 		./common/core
+		./common/manifest
 		./common/users
 
 		./system/desktop

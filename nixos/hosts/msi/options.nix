@@ -8,34 +8,8 @@
 		rebuild-system.enable = true;
 	};
 
-	jcconfs.has_de = true;
-
 	common = {
 		core = {
-			bluetooth.enable = true;
-
-			hardware = {
-				cpu = {
-					manufacturer = "intel";
-					architecture = "coffee-lake";
-				};
-				gpu = {
-					manufacturer = "nvidia";
-					architecture = "pascal";
-				};
-				displays =
-				let
-					add-display = identifier: resolution: position:
-						{ inherit identifier resolution position; };
-				in
-				{
-					a0-digiquest = add-display "HDMI-0" "1920x1080" "0x0";
-					a1-digiquest = add-display "HDMI-1" "1920x1080" "0x0";
-					b0-asus =      add-display "DP-0"   "1920x1080" "1920x0";
-					b1-asus =      add-display "DP-1"   "1920x1080" "1920x0";
-				};
-			};
-
 			# network.wakeOn = {
 				# wlan.enabledFor = [ "phy0" ];
 				# knownDevices = {
@@ -44,7 +18,6 @@
 				# };
 			# };
 
-			audio.pulseaudio.enable = true;
 			plymouth.enable = true;
 
 			secrets = {

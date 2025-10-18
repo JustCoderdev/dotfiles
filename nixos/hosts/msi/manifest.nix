@@ -2,13 +2,17 @@
 	hardware =
 	{
 		system = "x86_64-linux";
+		type = "desktop";
+
+		audio.capable = true;
+		bluetooth.capable = true;
 
 		cpu.intel.architecture = "coffee-lake";
 		gpu.nvidia.architecture = "pascal";
 
 		graphics =
 		{
-			enable = true;
+			capable = true;
 			desktop-environment.enable = true;
 
 			displays =

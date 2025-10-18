@@ -1,6 +1,7 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	self-manifest = config.common.manifest.self;
 	dm-cfg = config.services.xserver.displayManager;
 	xfce-cfg = config.system.desktop.xfce;
 	i3-cfg = config.system.desktop.i3;
@@ -65,7 +66,7 @@ else
 	${xrandr} --output ${value.identifier} --off
 fi
 ''
-							) config.common.core.hardware.displays
+							) self-manifest.hardware.graphics.displays
 						)
 					) +
 ''

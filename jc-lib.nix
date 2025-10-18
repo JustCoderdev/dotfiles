@@ -59,6 +59,14 @@ in
 		}
 	);
 
+	mkBoolOption = (
+		description:
+		mkOption {
+			inherit description;
+			type = types.bool;
+		}
+	);
+
 	mkStrOptionWexample = (
 		description: example:
 		mkOption {
@@ -91,6 +99,14 @@ in
 			inherit description;
 			type = types.attrsOf (types.submodule (submodule));
 			default = { };
+		}
+	);
+
+	mkEnumOption = (
+		description: enum-items:
+		mkOption {
+			inherit description;
+			type = types.enum enum-items;
 		}
 	);
 

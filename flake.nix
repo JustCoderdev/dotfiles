@@ -31,6 +31,28 @@
 	let
 		dotfiles_store_path = ./.;
 
+		hosts-dir = "${dotfiles_store_path}/nixos/hosts";
+		# hosts-name = (
+		# 	lib.attrsets.mapAttrsToList (name: _: name) (
+		# 		lib.attrsets.filterAttrs
+		# 		(
+		# 			name: value:
+		# 			!(lib.strings.hasPrefix "." name) && (value == "directory")
+		# 		)
+		# 		(builtins.readDir hosts-dir)
+		# 	)
+		# );
+		hosts-name = [ "msi" ];
+		hosts-manifest = builtins.listToAttrs (
+			builtins.map (
+				host-name:
+				{
+					name = host-name;
+					value = import "${hosts-dir}/${host-name}/manifest.nix";
+				}
+			) (hosts-name)
+		);
+
 		hosts-list =
 		let
 			add-host = (
@@ -67,7 +89,6 @@
 		getHostModules = (
 			hostname:
 			[
-				./nixos/hosts
 				./nixos/hosts/${hostname}/hardware-configuration.nix
 				./nixos/hosts/${hostname}/boot.nix
 				./nixos/hosts/${hostname}/options.nix
@@ -76,11 +97,11 @@
 		);
 
 		getSettings = (
-			host-data: is-raspi3:
+			hostname: system: username:
 			{
-				inherit (host-data) hostname system;
-				inherit (import ./confs/settings/${host-data.username}.nix) username dotfiles_abs_path special_pkgs;
-				inherit is-raspi3 dotfiles_store_path;
+				hardware-type = hosts-manifest.${hostname}.hardware.type;
+				inherit hostname system dotfiles_store_path;
+				inherit (import ./confs/settings/${username}.nix) username dotfiles_abs_path special_pkgs;
 			}
 		);
 
@@ -205,6 +226,7 @@
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							./nixos/common/core
+							./nixos/common/hardware
 							./nixos/common/users
 							./nixos/system/services/nixbuilder.nix
 						];
@@ -251,17 +273,33 @@
 		# nixos-rebuild switch --flake .#<hostname>
 		nixosConfigurations = { }
 		//
-		# System builders
+		# Manifest
 		# -------------------- #
-		builtins.listToAttrs (
-			builtins.map (
-				host-data:
-				{
-					name = host-data.hostname;
-					value = host-system-builder host-data;
-				}
-			) hosts-list
-		)
+		builtins.mapAttrs (
+			hostname: manifest:
+			let
+				username = "ryuji";
+				settings = getSettings hostname manifest.hardware.system username;
+				pkgs-unstable = getUnstablePackages settings;
+			in
+			lib.nixosSystem {
+				inherit (manifest.hardware) system;
+				specialArgs = { inherit inputs pkgs-unstable jc-lib settings manifest; };
+				modules = (getHostModules hostname) ++ (getUserModules username);
+			}
+		) hosts-manifest
+		# //
+		# # System builders
+		# # -------------------- #
+		# builtins.listToAttrs (
+		# 	builtins.map (
+		# 		host-data:
+		# 		{
+		# 			name = host-data.hostname;
+		# 			value = host-system-builder host-data;
+		# 		}
+		# 	) hosts-list
+		# )
 		//
 		# Iso-cd builders
 		# -------------------- #
@@ -348,16 +386,5 @@
 			# 	)
 			# )
 		# );
-
-		# nix develop
-		devShell = forAllSystems (
-			system: let pkgs = nixpkgsFor.${system}; in
-			{
-				default = pkgs.mkShell {
-					shellHook = '' zsh && exit '';
-					buildInputs = with pkgs; [ git vim zsh ];
-				};
-			}
-		);
 	};
 }

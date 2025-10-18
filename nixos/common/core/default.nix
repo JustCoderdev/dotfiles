@@ -10,7 +10,6 @@
 		./console.nix
 		./dotfiles-backup.nix
 		./fonts.nix
-		./hardware
 		./locale.nix
 		./network.nix
 		./nix.nix

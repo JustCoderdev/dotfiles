@@ -40,7 +40,7 @@
 
 	gpu = 
 	{
-		amd =
+		radeon =
 		let
 			add-arch = (year: { inherit year; });
 		in
