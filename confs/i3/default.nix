@@ -91,6 +91,14 @@ in
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
+			keycodebinding = 
+			let
+				exec = (command: "exec --no-startup-id \"${command}\"");
+			in
+			{
+				"172" = (exec "playerctl play-pause");  # XF86AudioPlayPause
+			};
+
 			keybindings =
 			let
 				exec = (command: "exec --no-startup-id \"${command}\"");
@@ -132,7 +140,7 @@ in
 				"Ctrl+Shift+XF86MonBrightnessDown" = (exec-n-reload-bar "sudo backlight set   0");
 
 				# Media player controls
-				"XF86AudioPlayPause" = (exec "playerctl play-pause");
+				# "XF86AudioPlayPause" = (exec "playerctl play-pause");
 				"XF86AudioPlay"      = (exec "playerctl play-pause"); # playerctl play
 				"XF86AudioPause"     = (exec "playerctl play-pause"); # playerctl pause
 				"XF86AudioStop"      = (exec "playerctl stop");
