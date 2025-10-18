@@ -11,11 +11,16 @@
 	{
 		thermald.enable = true;
 
-		# upower = {
-		# 	enable = true;
-		# 	criticalPowerAction = "Suspend";
-		# 	allowRiskyCriticalPowerAction = true;
-		# };
+		upower = {
+			enable = true;
+
+			criticalPowerAction = "Suspend";
+			allowRiskyCriticalPowerAction = true;
+
+			percentageLow = 30;
+			percentageCritical = 20;
+			percentageAction = 10;
+		};
 
 		tlp = {
 			enable = true;
@@ -33,12 +38,12 @@
 				CPU_MAX_PERF_ON_AC = 100;
 			};
 		};
-	};
 
-	services.logind = {
-		lidSwitch = "lock";
-		lidSwitchExternalPower = "lock";
-		lidSwitchDocked = "lock";
+		logind = {
+			lidSwitch = "lock";
+			lidSwitchExternalPower = "lock";
+			lidSwitchDocked = "lock";
+		};
 	};
 
 	# programs.xss-lock = {
