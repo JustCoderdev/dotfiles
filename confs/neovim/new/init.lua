@@ -1,16 +1,18 @@
 
 -- USER PREFERENCES
 
-FALLBACK_COLORSCHEME = "habamax" -- retrobox
+COLORSCHEME = "habamax"
+FALLBACK_COLORSCHEME = "retrobox" --sorbet
 
 
 -- CONST
 
-ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
+-- ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 
 
 -- FUNCTIONS
 
+function declare_file(file) print(string.format("Loading %s.lua", file)) end
 function require_file(file)
 	local file_ok, err = pcall(require, file)
 	if (not file_ok) then
@@ -25,5 +27,6 @@ end
 require_file("options")
 
 
+-- TMP COLORSCHEME
 
-
+vim.cmd(string.format("colorscheme %s", COLORSCHEME))
