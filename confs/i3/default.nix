@@ -87,11 +87,11 @@ in
 				(add-app "alacritty"       "2")
 				(add-app "firefox"         "1")
 				(add-app "dmenu_path > /tmp/dmenu_binaries" null)
-				# (add-app "xss-lock --transfer-sleep-lock -- dm-tool lock" null)
+				(add-app "${pkgs.lightlocker}/bin/light-locker" null)
 				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
 			];
 
-			keycodebinding = 
+			keycodebindings = 
 			let
 				exec = (command: "exec --no-startup-id \"${command}\"");
 			in
@@ -111,7 +111,7 @@ in
 				"${mod}+Return"  = (exec "alacritty");
 				"${mod}+b"       = (exec "firefox");
 				"${mod}+t"       = (exec "thunar");
-				"${mod}+Ctrl+l"  = (exec "dm-tool lock");
+				"${mod}+Ctrl+l"  = (exec "${pkgs.lightlocker}/bin/light-locker-command -l");
 				"${mod}+o"       = (exec "obsidian");
 
 				"${mod}+Z"       = (exec "boomer");
