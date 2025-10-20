@@ -9,7 +9,7 @@ let
 in
 
 {
-	config = lib.mkIf (self-rgpu.architecture == null)
+	config = lib.mkIf (self-rgpu.architecture != null)
 	{
 		system.nixos.tags = [ "radeon" ];
 
