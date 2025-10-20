@@ -5,18 +5,16 @@ let
 	self-manifest = cfg.self;
 
 	hosts-dir = "${settings.dotfiles_store_path}/nixos/hosts";
-	# hosts-name = (
-	# 	lib.attrsets.mapAttrsToList (name: _: name) (
-	# 		lib.attrsets.filterAttrs
-	# 		(
-	# 			name: value:
-	# 			!(lib.strings.hasPrefix "." name) && (value == "directory")
-	# 		)
-	# 		(builtins.readDir hosts-dir)
-	# 	)
-	# );
-
-	hosts-name = [ "msi" "asus" ];
+	hosts-name = (
+		lib.attrsets.mapAttrsToList (name: _: name) (
+			lib.attrsets.filterAttrs
+			(
+				name: value:
+				!(lib.strings.hasPrefix "." name) && (value == "directory")
+			)
+			(builtins.readDir hosts-dir)
+		)
+	);
 in
 
 {
@@ -88,8 +86,10 @@ in
 		[
 			# (add-assertion (config.hardware.cpu.amd.architecture != null || config.hardware.cpu.intel.architecture != null) "Neither amd nor intel cpu architecture has been set")
 			(add-assertion (self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
-			(add-assertion (self-manifest.hardware.graphics.desktop-environment.enable && self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
-		];
+		]
+		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
+			[ (add-assertion (self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!") ];
+
 	};
 
 	# ------------------------------------------------------------ #

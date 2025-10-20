@@ -32,17 +32,16 @@
 		dotfiles_store_path = ./.;
 
 		hosts-dir = "${dotfiles_store_path}/nixos/hosts";
-		# hosts-name = (
-		# 	lib.attrsets.mapAttrsToList (name: _: name) (
-		# 		lib.attrsets.filterAttrs
-		# 		(
-		# 			name: value:
-		# 			!(lib.strings.hasPrefix "." name) && (value == "directory")
-		# 		)
-		# 		(builtins.readDir hosts-dir)
-		# 	)
-		# );
-		hosts-name = [ "msi" "asus" ];
+		hosts-name = (
+			lib.attrsets.mapAttrsToList (name: _: name) (
+				lib.attrsets.filterAttrs
+				(
+					name: value:
+					!(lib.strings.hasPrefix "." name) && (value == "directory")
+				)
+				(builtins.readDir hosts-dir)
+			)
+		);
 		hosts-manifest = builtins.listToAttrs (
 			builtins.map (
 				host-name:
@@ -66,12 +65,9 @@
 			(add-host "alpha"          "x86_64-linux"  "ryuji")
 			(add-host "beta"           "x86_64-linux"  "ryuji")
 
-			(add-host "quiss"          "x86_64-linux"  "ryuji")
 			(add-host "jarvis"         "aarch64-linux" "ryuji")
 
-			# (add-host "msi"            "x86_64-linux"  "ryuji")
 			(add-host "acer"           "x86_64-linux"  "ryuji")
-			# (add-host "asus"           "x86_64-linux"  "ryuji")
 		];
 
 		lib = nixpkgs.lib;
@@ -353,38 +349,5 @@
 				}
 			)
 		);
-
-		# nix build
-		# packages.${system} = { };
-
-		# nix run
-		# apps = forAllSystems (
-		# 	system:
-		# 	let pkgs = nixpkgsFor.${system}; in
-		# 	{
-				# test-iso-x86_64 = {
-				# 	type = "app";
-				# 	program = "nix-shell -p qemu --command 'qemu-system-x86_64 -enable-kvm -m 256 -cdrom result/iso/nixos-*.iso'";
-				# };
-
-				# build-img-raspi3 = {
-				# 	type = "app";
-				# 	program = "nix build .#nixosConfigurations.img-raspi3.config.system.build.sdImage";
-				# };
-			# }
-			# //
-			# builtins.listToAttrs (
-			# 	listAllSystems (
-			# 		system: let pkgs = nixpkgsFor.${system}; in
-			# 		{
-			# 			name = "build-iso-cd-${system}";
-			# 			value = {
-			# 				type = "app";
-			# 				program = "nix build .\\#nixosConfigurations.iso-cd-${system}.config.system.build.isoImage";
-			# 			};
-			# 		}
-			# 	)
-			# )
-		# );
 	};
 }

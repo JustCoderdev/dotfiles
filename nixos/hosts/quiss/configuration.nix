@@ -234,7 +234,7 @@ in
 		group = serv-group;
 	};
 
-	syncthing = 
+	system.services.syncthing = 
 	{
 		enable = true;
 		openFirewall = true;
