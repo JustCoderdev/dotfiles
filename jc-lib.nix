@@ -17,6 +17,15 @@ in
 		}
 	);
 
+	mkNullOrIntOptionRO = (
+		description: default:
+		mkOption {
+			inherit description default;
+			type = types.nullOr types.int;
+			readOnly = true;
+		}
+	);
+
 	mkNullOrEnumOptionRO = (
 		description: enum-items: default:
 		mkOption {
