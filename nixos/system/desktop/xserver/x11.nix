@@ -35,7 +35,7 @@ in
 		{
 			xserver = {
 				enable = true;
-				videoDrivers = lib.mkIf config.host.isVM [ "wmware" ];
+				videoDrivers = lib.mkIf (settings.hardware-type == "virtual-machine") [ "wmware" ];
 
 				displayManager =
 				{

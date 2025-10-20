@@ -279,8 +279,7 @@ in
 		hosts = jc-lib.mkSubmodOption "The manifest for all known nixos devices" (host-options);
 		self = lib.mkOption {
 			description = "The manifest for all known nixos devices";
-			type = lib.types.attrs;
-			# type = lib.types.submodule host-options;
+			type = lib.types.attrs; # type = lib.types.submodule host-options;
 			default = cfg.hosts.${settings.hostname};
 			readOnly = true;
 		};

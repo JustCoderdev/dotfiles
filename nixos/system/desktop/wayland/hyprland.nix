@@ -2,7 +2,6 @@
 
 let
 	cfg = config.system.desktop.hyprland;
-#	nvidia = config.common.core.nvidia;
 in
 
 {
@@ -37,7 +36,7 @@ in
 				grim
 			];
 
-			sessionVariables = lib.mkIf config.host.isVM {
+			sessionVariables = lib.mkIf (settings.hardware-type == "virtual-machine") {
 				# Enable software rendering for VMs
 				WLR_RENDERER_ALLOW_SOFTWARE = "1";
 				# Enable if cursor is invisible

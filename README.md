@@ -33,7 +33,6 @@ share with me any feedback or trick you may know :p
 
 > Virtual machine notes
 >
-> - Remember to enable `host.isVM` in `nixos/hosts/HOST/settings.nix` #TODO: remove in favour of new hardware manifest
 > - Nixos doesn't like default graphics driver, use `VBoxVGA`
 > - Hyrpland may not work in a VM
 
@@ -86,6 +85,7 @@ Included configuration files
 - Plymouth \[\>v24.004.60\] ([Gitlab](https://gitlab.freedesktop.org/plymouth/plymouth))
 - Waybar \[\>v0.10.3\] ([Github](https://github.com/Alexays/Waybar))
 - Zsh \[\>5.7.1\]
+- and more...
 
 
 ## Special Requirements
@@ -107,9 +107,12 @@ Included configuration files
 - Fix keyrings not persisting credentials
 - Fix host files manually to use grub
 - Fix WakeOnLan module to make it persistent across reboots
+- Fix move `dotfiles_abs_path` from `confs/settings/USER.nix` to new manifest files
 
 ### Improve
 
+- Move all manifest related files to manifest folder
+- Move all hardware manifest files in `nixos/common/hardware/`
 - Improve grub by adding rescue option -> might not work since boot partition is always full
 - Improve neovim by nuking current settings
 - Improve alacritty by resetting keybindings
@@ -118,7 +121,6 @@ Included configuration files
 
 ### Add
 
-- Add host manifest module
 - Add fusuma and integrate it for laptops
 - Add authelia module for homeserver auth
 - Add guest samba share
@@ -156,9 +158,9 @@ nix build ".#${USER}-activation"
 
 - With NixOS
 
-> You will get "relative path error for ./bin..."
-> To fix it remove any mention of jcbin and jcconfs from `flake.lock`
-> and rebuild `./bin/bash-scrips/rebuild-system.sh`
+You will get "relative path error for ./bin..."
+To fix it remove any mention of jcbin and jcconfs from `flake.lock`
+and rebuild `./bin/bash-scrips/rebuild-system.sh`
 
 ```bash
 ./install.sh
@@ -166,32 +168,53 @@ nix build ".#${USER}-activation"
 
 ## Dotfiles structure
 
-There are 3 main directories:
+There are 3 main directories (+1):
 
 - `bin`: various scripts available in a flake
 - `confs`: application configuration files (w home-manager support)
 - `nixos`: nixos system modules
+- `secrets`: local host secrets
+
+### bin
+
+- `bash-scripts`: custom bash scripts that can run even without nixos
+- `...`: packaged programs that can be toggled
 
 ### confs
 
-- `.wallpapers`: wallpapers for sway
-- `settings`: User settings (username and insecure/unfree packages list)
-- `users`: Available users
-- `standalone`: Configurations that exists only in home-manager
+- `.wallpapers`: wallpapers for the desktop
+- `users`: available users
+- `settings`: user settings (username and insecure/unfree packages list)
+- `standalone`: configurations that exists only in home-manager
+- `...`: configurations that haven't been migrated to home-manager yet
 
 ### nixos
 
-- `unofficial`: Home-made nix modules
-- `hosts`: Computer bound configuration (boot, hw and options configuration)
 - `common`:
-    - `core`: Required stuff from all systems (net, font, etc...)
-    - `users`: Per user settings
+    - `core`: required stuff from all systems (locale, font, etc...)
+    - `manifest`: manifest related files
+    - `users`: user settings
+- `hosts`:
+    - `.example`: example configuration files for installation script
+    - `.old`: host configurations files for hosts that haven't yet migrated to manifest sytem
+    - `...`: host configuration
+        - `boot.nix`: boot related options
+        - `configuration.nix`: specific device / services configuration
+        - `hardware-configuration.nix`: nixos generated hw configuration file
+        - `manifest.nix`: manifest file
+        - `options.nix`: [soon to be deprecated] set values for custom options
 - `system`:
-    - `desktop`: Desktop env stuff
-    - `dev`: Dev shit
-    - `gaming`: Gaming stuff
-    - `services`: Daemons and what not
+    - `desktop`: desktop env stuff
+    - `dev`: dev shit
+    - `gaming`: gaming stuff
+    - `services`: daemons and what not
+- `unofficial`:
+    - `pkgs`: custom packaged applications
+    - `modules`: custom modularised packages
 
+### secrets
+
+see `nixos/common/core/secrets.nix`
 
 ## Inspiration
 
@@ -206,7 +229,7 @@ There are 3 main directories:
 
 ## Obtaining Secrets
 
-> All secrets are "indexed" in `nixos/common/core/secrets.nix`
+All secrets are "indexed" in `nixos/common/core/secrets.nix`
 
 ### Cloudflared
 
@@ -350,7 +373,7 @@ sudo mdadm --manage /dev/md0 -a /dev/sdc1
 
 ### Edit Samba credentials
 
-> Login with `smb://<ip>/<share>`
+Login with `smb://<ip>/<share>`
 
 ```
 # Create a user
