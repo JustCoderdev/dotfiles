@@ -2,6 +2,7 @@
 
 let
 	cfg = config.common.manifest;
+	boot-cfg = config.boot;
 	self-manifest = cfg.self;
 
 	hosts-dir = "${settings.dotfiles_store_path}/nixos/hosts";
@@ -96,17 +97,12 @@ in
 
 	options.common.manifest =
 	let
-		get-attr-names = (
-			attr:
-			lib.attrsets.mapAttrsToList (name: _: name) attr
-		);
-		hardware-types =
-		[
-			"desktop"
-			"laptop"
-			"virtual-machine"
-			"raspi3"
-		];
+		get-attr-names = (attr: lib.attrsets.mapAttrsToList (name: _: name) attr);
+		hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
+
+		arch-data = import ./processors-architectures.nix;
+		add-yearRO-opt = jc-lib.mkIntOptionRO "The year the architecture was released";
+
 		host-options = (
 			{ hostname, config, ... }:
 			{
@@ -120,6 +116,8 @@ in
 						audio.capable = jc-lib.mkBoolOption "Whether the host is capable of using audio peripherals";
 						bluetooth.capable = jc-lib.mkBoolOption "Whether the host is capable of bluetooth communication";
 
+						# -------------------- #
+
 						cpu =
 						let
 							has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
@@ -129,21 +127,43 @@ in
 							# 	inherit has-iGPU;
 							# 	architecture = jc-lib.mkNullOrEnumOption "Amd cpu architecture" (get-attr-names cfg.architectures.cpu.amd);
 							# };
-							intel = {
+							intel =
+							let
+								self = config.hardware.cpu.intel;
+								self-arch = self.architecture;
+								self-data = arch-data.cpu.intel.${self-arch};
+							in
+							{
 								inherit has-iGPU;
-								architecture = jc-lib.mkNullOrEnumOption "Intel cpu architecture" (get-attr-names cfg.architectures.cpu.intel);
+								architecture = jc-lib.mkNullOrEnumOption "Intel cpu architecture" (get-attr-names arch-data.cpu.intel);
+								year = (add-yearRO-opt self-data.year);
 							};
 						};
+
+						# -------------------- #
 
 						gpu =
 						{
 							# intel = {};
-							radeon = {
-								architecture = jc-lib.mkNullOrEnumOption "Amd gpu architecture" (get-attr-names cfg.architectures.gpu.radeon);
+							radeon =
+							let
+								self = config.hardware.gpu.radeon;
+								self-arch = self.architecture;
+								self-data = arch-data.gpu.radeon.${self-arch};
+							in
+							{
+								architecture = jc-lib.mkNullOrEnumOption "Amd gpu architecture" (get-attr-names arch-data.gpu.radeon);
+								year = (add-yearRO-opt self-data.year);
 							};
 
-							nvidia = {
-								architecture = jc-lib.mkNullOrEnumOption "Nvidia gpu architecture" (get-attr-names cfg.architectures.gpu.nvidia);
+							nvidia =
+							let
+								self = config.hardware.gpu.nvidia;
+								self-arch = self.architecture;
+								self-data = arch-data.gpu.nvidia.${self-arch};
+							in
+							{
+								architecture = jc-lib.mkNullOrEnumOption "Nvidia gpu architecture" (get-attr-names arch-data.gpu.nvidia);
 								offload = {
 									enable = lib.mkOption {
 										description = "Whether to enable gpu offload";
@@ -153,8 +173,38 @@ in
 									intelBusId = jc-lib.mkNullOrStrOption "Intel bus id";
 									nvidiaBusId = jc-lib.mkNullOrStrOption "Nvidia bus id";
 								};
+
+								# -------------------- #
+
+								year = (add-yearRO-opt self-data.year);
+
+								gt-turing = lib.mkOption {
+									description = "Whether the gpu has the architecture greater turing";
+									type = lib.types.bool;
+									default = arch-data.gpu.nvidia.turing.year > self-data.year;
+									readOnly = true;
+								};
+
+								ge-turing = lib.mkOption {
+									description = "Whether the gpu has the architecture greater or equal to turing";
+									type = lib.types.bool;
+									default = arch-data.gpu.nvidia.turing.year >= self-data.year;
+									readOnly = true;
+								};
+
+								driver = {
+									name = jc-lib.mkNullOrStrOptionRO "The name of the driver package for this gpu" self-data.driver-name;
+									pkg = lib.mkOption {
+										description = "The driver package for this gpu";
+										type = lib.types.nullOr lib.types.package;
+										default = if self.driver.name == null then null else boot-cfg.kernelPackages.nvidiaPackages.${self.driver.name};
+										readOnly = true;
+									};
+								};
 							};
 						};
+
+						# -------------------- #
 
 						graphics =
 						{
@@ -229,95 +279,10 @@ in
 		hosts = jc-lib.mkSubmodOption "The manifest for all known nixos devices" (host-options);
 		self = lib.mkOption {
 			description = "The manifest for all known nixos devices";
-			type = lib.types.submodule host-options;
+			type = lib.types.attrs;
+			# type = lib.types.submodule host-options;
 			default = cfg.hosts.${settings.hostname};
-		};
-
-		architectures =
-		let
-			add-year-opt = jc-lib.mkIntOptionRO "The year the architecture was released";
-			arch-data = import ./architectures.nix;
-			add-empty-submod = (
-				name-list:
-				builtins.listToAttrs (
-					builtins.map (
-						name:
-						{
-							inherit name;
-							value = { };
-						}
-					) name-list
-				)
-			);
-		in
-		{
-			cpu =
-			{
-				# amd = [ "" "" ];
-
-				intel = jc-lib.mkSubmodOptionRO "Intel cpu architecures" (
-					{ name, ... }:
-					{
-						options =
-						{
-							year = (add-year-opt arch-data.cpu.intel.${name}.year);
-						};
-					}
-				) (add-empty-submod (get-attr-names arch-data.cpu.intel));
-			};
-
-			# -------------------- #
-
-			gpu =
-			{
-				radeon = jc-lib.mkSubmodOptionRO "Amd gpu architecures" (
-					{ name, ... }:
-					{
-						options =
-						{
-							year = (add-year-opt arch-data.gpu.radeon.${name}.year);
-						};
-					}
-				) (add-empty-submod (get-attr-names arch-data.gpu.radeon));
-
-				nvidia = jc-lib.mkSubmodOptionRO "Nvidia gpu architecures" (
-					{ name, ... }:
-					let
-						nvidia-archs = arch-data.gpu.nvidia;
-						driver-name = nvidia-archs.${name}.driver-name;
-					in
-					{
-						options =
-						{
-							year = (add-year-opt arch-data.gpu.nvidia.${name}.year);
-
-							gt-turing = lib.mkOption {
-								description = "Whether the gpu has the architecture greater turing";
-								type = lib.types.bool;
-								default = nvidia-archs.turing.year > nvidia-archs.${name}.year;
-								readOnly = true;
-							};
-
-							ge-turing = lib.mkOption {
-								description = "Whether the gpu has the architecture greater or equal to turing";
-								type = lib.types.bool;
-								default = nvidia-archs.turing.year >= nvidia-archs.${name}.year;
-								readOnly = true;
-							};
-
-							driver = {
-								name = jc-lib.mkNullOrStrOptionRO "The name of the driver package for this gpu" driver-name;
-								pkg = lib.mkOption {
-									description = "The driver package for this gpu";
-									type = lib.types.package;
-									default = if driver-name == null then null else config.boot.kernelPackages.nvidiaPackages.${driver-name};
-									readOnly = true;
-								};
-							};
-						};
-					}
-				) (add-empty-submod (get-attr-names arch-data.gpu.nvidia));
-			};
+			readOnly = true;
 		};
 	};
 }
