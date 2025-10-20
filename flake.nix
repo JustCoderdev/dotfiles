@@ -222,7 +222,7 @@
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							./nixos/common/core
-							./nixos/common/hardware
+							./nixos/common/manifest
 							./nixos/common/users
 							./nixos/system/services/nixbuilder.nix
 						];
@@ -348,6 +348,58 @@
 					value = raspi3-img-sd-builder build-platform-system "ryuji";
 				}
 			)
-		);
+		)
+		//
+		# Install ISO
+		# -------------------- #
+		{
+			install-iso =
+			let
+				hostname = "install-iso";
+				username = "ryuji";
+				system = "x86_64-linux";
+				settings = getSettings hostname system username;
+			in
+			lib.nixosSystem
+			{
+				inherit system;
+				specialArgs = { inherit inputs jc-lib settings; };
+				modules = [
+					"${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+					"${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+				]
+				++
+				[
+					({ pkgs, modulesPath, ... }: {
+						imports = [
+							./nixos/common/core
+							./nixos/common/users
+							./nixos/system/services/nixbuilder.nix
+							./nixos/unofficial/modules/cloudflared.nix
+							jcbin.nixosModules.all
+						];
+
+						jcbin.rebuild-system.enable = true;
+
+						services.tlp.enable = lib.mkForce false;
+
+						system.services.nixbuilder.client.builders =
+						let
+							gen-builder = (
+								hostName: maxJobs:
+								{
+									inherit hostName maxJobs;
+									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+								}
+							);
+						in
+						[
+							(gen-builder "192.168.1.5" 6)
+						];
+					})
+				];
+			};
+		};
 	};
 }
