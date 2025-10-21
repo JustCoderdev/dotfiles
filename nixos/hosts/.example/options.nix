@@ -1,8 +1,6 @@
 { ... }:
 
 {
-	host.isVM = false;
-
 	jcbin = {
 		backlight.enable = false;
 		boomer.enable = false;
@@ -13,46 +11,12 @@
 		umount-configs.enable = false;
 	};
 
-	jcconfs.has_de = false;
-
 	common = {
 		core = {
-			bluetooth.enable = false;
-			hardware = {
-				cpu = {
-					manufacturer = null;
-					architecture = null;
-					has-iGPU = false;
-				};
-				gpu = {
-					manufacturer = null;
-					architecture = null;
-					offload = {
-						enable = false;
-						intelBusId = "PCI:0:X:0";
-						nvidiaBusId = "PCI:X:0:0";
-					};
-				};
-				displays =
-				let
-					add-display = identifier: resolution: position:
-						{ inherit identifier resolution position; };
-				in
-				{
-					# Check all displays with xrandr
-					display = add-display "HDMI-0" "1920x1080" "0x0";
-				};
-			};
-
 			network.wakeOn = {
 				lan.enabledFor = [ ];
 				wlan.enabledFor = [ ];
 				knownDevices = { };
-			};
-
-			audio = {
-				pipewire.enable = false;
-				pulseaudio.enable = false;
 			};
 
 			plymouth.enable = false;

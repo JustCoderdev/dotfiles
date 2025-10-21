@@ -18,12 +18,4 @@
 		documentation.nixos.enable = false;
 		system.stateVersion = "23.11"; # Did you read the comment?
 	};
-
-	options.host = {
-		isVM = lib.mkOption {
-			type = lib.types.bool;
-			description = "Is the current host a VM";
-			default = false;
-		};
-	};
 }

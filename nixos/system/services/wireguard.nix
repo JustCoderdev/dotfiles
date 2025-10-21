@@ -17,21 +17,27 @@ in
 			{
 				enable = true;
 				externalInterface = cfg.server.external-interface;
-				internalInterfaces = [ cfg.server.internal-interface ];
+				internalInterfaces = (
+					lib.attrsets.mapAttrsToList
+						(iface-name: _: iface-name)
+						(lib.attrsets.filterAttrs (_: data: data.enable) cfg.server.interfaces)
+				);
 			};
 
 			wireguard = 
 			{
 				enable = true;
 				interfaces = { }
-				// lib.attrsets.optionalAttrs (cfg.server.enable) (
-					{
-						"${cfg.server.internal-interface}" = {
-							ips = [ cfg.server.self-ip ];
+				//
+				(
+					builtins.mapAttrs (
+						iface-name: data:
+						{
+							ips = [ data.self-ip ];
 							listenPort = wg-port;
 
-							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${cfg.server.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
-							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${cfg.server.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
+							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
+							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
 
 							privateKeyFile = "${secrets.defaultPath}/wireguard/self";
 							generatePrivateKeyFile = true;
@@ -43,9 +49,9 @@ in
 									inherit name publicKey;
 									allowedIPs = [ "${ip}/32" ];
 								}
-							) cfg.server.peers;
-						};
-					}
+							) data.peers;
+						}
+					) (lib.attrsets.filterAttrs (_: data: data.enable) cfg.server.interfaces)
 				)
 				// lib.attrsets.optionalAttrs (cfg.client.enable) (
 					lib.attrsets.mapAttrs' (
@@ -106,19 +112,26 @@ in
 		server =
 		{
 			enable = lib.mkEnableOption "Enable wireguard vpn as server";
-
-			tunnel-network = jc-lib.mkStrOption "The IP address and subnet of the network tunnel";
-			self-ip = jc-lib.mkStrOption "The IP address and subnet of the server's end of the tunnel interface";
-
 			external-interface = jc-lib.mkStrOption "The external interface the server routes to";
-			internal-interface = jc-lib.mkStrOption "The name of the wireguard interface of the server";
 
-			peers = jc-lib.mkSubmodOption "All allowed peers" (
+			interfaces = jc-lib.mkSubmodOption "The interfaces of the wireguard server" (
 				{ name, ... }:
 				{
-					options = {
-						publicKey = jc-lib.mkStrOption "The public key of the peer";
-						ip = jc-lib.mkStrOption "The ip of the peer (127.0.0.1)";
+					options =
+					{
+						enable = lib.mkEnableOption "this wireguard server interface";
+
+						tunnel-network = jc-lib.mkStrOption "The IP address and subnet of the network tunnel";
+						self-ip = jc-lib.mkStrOption "The IP address and subnet of the server's end of the tunnel interface";
+						peers = jc-lib.mkSubmodOption "All allowed peers" (
+							{ name, ... }:
+							{
+								options = {
+									ip = jc-lib.mkStrOption "The ip of the peer (127.0.0.1)";
+									publicKey = jc-lib.mkStrOption "The public key of the peer";
+								};
+							}
+						);
 					};
 				}
 			);

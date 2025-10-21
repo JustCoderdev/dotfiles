@@ -21,13 +21,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		# disko = {
-		# 	url = "github:nix-community/disko/v1.11.0";
-		# 	inputs.nixpkgs.follows = "nixpkgs";
-		# };
+		disko = {
+			url = "github:nix-community/disko";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft }@inputs:
+	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, nix-minecraft, disko }@inputs:
 	let
 		dotfiles_store_path = ./.;
 
@@ -281,7 +281,18 @@
 			lib.nixosSystem {
 				inherit (manifest.hardware) system;
 				specialArgs = { inherit inputs pkgs-unstable jc-lib settings manifest; };
-				modules = (getHostModules hostname) ++ (getUserModules username);
+				modules = (getHostModules hostname) ++ (getUserModules username)
+				++
+				(
+					let
+						# TODO: replace with manifest file
+						disko-module = ./nixos/hosts/${hostname}/disko.nix;
+					in
+					lib.optionals (lib.sources.pathIsRegularFile disko-module) [
+						disko.nixosModules.disko
+						disko-module
+					]
+				);
 			}
 		) hosts-manifest
 		# //

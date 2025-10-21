@@ -160,26 +160,51 @@
 			};
 			wireguard = {
 				openFirewall = true;
+
 				server =
 				{
 					enable = true;
-					tunnel-network = "10.255.250.0/24";
-					self-ip = "10.255.250.1/24";
-
 					external-interface = "wlp3s0";
-					internal-interface = "wg-server";
 
-					peers =
-					let
-						add-peer = (ip: publicKey: { inherit ip publicKey ; });
-					in
+					interfaces =
 					{
-						        quiss = (add-peer "10.255.250.2" "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=");
-						iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
-						         asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
+						"wg-server" =
+						{
+							enable = true;
+							tunnel-network = "10.255.250.0/24";
+							self-ip = "10.255.250.1/24";
+
+							peers =
+							let
+								add-peer = (ip: publicKey: { inherit ip publicKey ; });
+							in
+							{
+										quiss = (add-peer "10.255.250.2" "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=");
+								iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
+										 asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
+							};
+						};
+
+						"wg-giugio" =
+						{
+							enable = true;
+							tunnel-network = "10.255.249.0/24";
+							self-ip = "10.255.249.1/24";
+
+							peers =
+							let
+								add-peer = (ip: publicKey: { inherit ip publicKey ; });
+							in
+							{
+								telefono-giugio = (add-peer "10.255.249.2" "4rwmZnvgDpErgGh846y74GJ3EyWo+H/EqP8C4GULJGA=");
+										pc-casa = (add-peer "10.255.249.3" "");
+									  pc-giugio = (add-peer "10.255.249.4" "");
+							};
+						};
 					};
 				};
 			};
+			# -------------------- #
 		};
 	};
 }

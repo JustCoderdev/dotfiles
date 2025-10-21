@@ -1,9 +1,7 @@
 { ... }:
 
 {
-	jcbin = {
-		rebuild-system.enable = true;
-	};
+	jcbin.rebuild-system.enable = true;
 
 	system.services = {
 		nixbuilder.server = {
