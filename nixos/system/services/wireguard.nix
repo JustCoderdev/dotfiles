@@ -3,7 +3,13 @@
 let
 	cfg = config.system.services.wireguard;
 	secrets = config.common.core.secrets;
-	wg-port = 51820;
+	wg-default-port = 51820;
+
+	enabled-interfaces = (
+		lib.attrsets.filterAttrs
+			(_: data: data.enable)
+			cfg.server.interfaces
+	);
 in
 
 {
@@ -11,7 +17,9 @@ in
 	{
 		networking = 
 		{
-			firewall.allowedUDPPorts = lib.mkIf (cfg.openFirewall) [ wg-port ];
+			firewall.allowedUDPPorts = lib.mkIf
+				(cfg.server.enable && cfg.server.openFirewall)
+				(lib.attrsets.mapAttrsToList (_: data: data.port) enabled-interfaces);
 
 			nat = lib.mkIf (cfg.server.enable)
 			{
@@ -19,8 +27,8 @@ in
 				externalInterface = cfg.server.external-interface;
 				internalInterfaces = (
 					lib.attrsets.mapAttrsToList
-						(iface-name: _: iface-name)
-						(lib.attrsets.filterAttrs (_: data: data.enable) cfg.server.interfaces)
+						(iface: _: iface)
+						enabled-interfaces
 				);
 			};
 
@@ -34,7 +42,7 @@ in
 						iface-name: data:
 						{
 							ips = [ data.self-ip ];
-							listenPort = wg-port;
+							listenPort = data.port;
 
 							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
 							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
@@ -51,17 +59,17 @@ in
 								}
 							) data.peers;
 						}
-					) (lib.attrsets.filterAttrs (_: data: data.enable) cfg.server.interfaces)
+					) enabled-interfaces
 				)
 				// lib.attrsets.optionalAttrs (cfg.client.enable) (
 					lib.attrsets.mapAttrs' (
-						name: { endpoint, publicKey, self-ip, allowed-ips }:
+						name: { endpoint, port, publicKey, self-ip, allowed-ips }:
 						{
 							inherit name;
 							value =
 							{
 								ips = [ "${self-ip}" ];
-								listenPort = wg-port;
+								listenPort = port;
 
 								privateKeyFile = "${secrets.defaultPath}/wireguard/self";
 								generatePrivateKeyFile = true;
@@ -83,8 +91,6 @@ in
 
 	options.system.services.wireguard =
 	{
-		openFirewall = lib.mkEnableOption "Open the firewall port for wireguard";
-
 		client =
 		{
 			enable = lib.mkEnableOption "Enable wireguard vpn as client";
@@ -98,10 +104,15 @@ in
 							options =
 							{
 								endpoint = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
+								port = lib.mkoption {
+									type = lib.types.port;
+									description = "port of the interface";
+									default = wg-default-port;
+								};
+						
 								publicKey = jc-lib.mkStrOption "The public key of the peer";
-
-								self-ip = jc-lib.mkStrOption "The IP address and subnet of the client's end of the tunnel interface";
 								allowed-ips = jc-lib.mkListOption "All subnets allowed to be forwarded (0.0.0.0/0)" lib.types.str;
+								self-ip = jc-lib.mkStrOption "The IP address and subnet of the client's end of the tunnel interface";
 							};
 						}
 					)
@@ -112,6 +123,8 @@ in
 		server =
 		{
 			enable = lib.mkEnableOption "Enable wireguard vpn as server";
+
+			openFirewall = lib.mkEnableOption "Open the firewall port for wireguard";
 			external-interface = jc-lib.mkStrOption "The external interface the server routes to";
 
 			interfaces = jc-lib.mkSubmodOption "The interfaces of the wireguard server" (
@@ -120,6 +133,11 @@ in
 					options =
 					{
 						enable = lib.mkEnableOption "this wireguard server interface";
+						port = lib.mkOption {
+							type = lib.types.port;
+							description = "port of the interface";
+							default = wg-default-port;
+						};
 
 						tunnel-network = jc-lib.mkStrOption "The IP address and subnet of the network tunnel";
 						self-ip = jc-lib.mkStrOption "The IP address and subnet of the server's end of the tunnel interface";

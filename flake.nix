@@ -288,7 +288,7 @@
 						# TODO: replace with manifest file
 						disko-module = ./nixos/hosts/${hostname}/disko.nix;
 					in
-					lib.optionals (lib.sources.pathIsRegularFile disko-module) [
+					lib.optionals (lib.filesystem.pathIsRegularFile disko-module) [
 						disko.nixosModules.disko
 						disko-module
 					]

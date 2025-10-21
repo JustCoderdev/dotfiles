@@ -158,53 +158,48 @@
 					         asus = (add-device "10.255.250.4" "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7");
 				};
 			};
-			wireguard = {
+			wireguard.server =
+			let
+				add-peer = (ip: publicKey: { inherit ip publicKey ; });
+			in
+			{
+				enable = true;
 				openFirewall = true;
 
-				server =
+				external-interface = "wlp3s0";
+				interfaces =
 				{
-					enable = true;
-					external-interface = "wlp3s0";
-
-					interfaces =
+					"wg-server" =
 					{
-						"wg-server" =
-						{
-							enable = true;
-							tunnel-network = "10.255.250.0/24";
-							self-ip = "10.255.250.1/24";
+						enable = true;
+						tunnel-network = "10.255.250.0/24";
+						self-ip = "10.255.250.1/24";
 
-							peers =
-							let
-								add-peer = (ip: publicKey: { inherit ip publicKey ; });
-							in
-							{
-										quiss = (add-peer "10.255.250.2" "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=");
-								iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
-										 asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
-							};
+						peers =
+						{
+									quiss = (add-peer "10.255.250.2" "UQYuZhhWWm2kYNXeoIxb+50Dv/XYb9bQDFc8DTSFbT0=");
+							iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
+									 asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
 						};
+					};
 
-						"wg-giugio" =
+					"wg-giugio" =
+					{
+						enable = true;
+						port = 51821;
+
+						tunnel-network = "10.255.249.0/24";
+						self-ip = "10.255.249.1/24";
+
+						peers =
 						{
-							enable = true;
-							tunnel-network = "10.255.249.0/24";
-							self-ip = "10.255.249.1/24";
-
-							peers =
-							let
-								add-peer = (ip: publicKey: { inherit ip publicKey ; });
-							in
-							{
-								telefono-giugio = (add-peer "10.255.249.2" "4rwmZnvgDpErgGh846y74GJ3EyWo+H/EqP8C4GULJGA=");
-										pc-casa = (add-peer "10.255.249.3" "");
-									  pc-giugio = (add-peer "10.255.249.4" "");
-							};
+							telefono-giugio = (add-peer "10.255.249.2" "4rwmZnvgDpErgGh846y74GJ3EyWo+H/EqP8C4GULJGA=");
+									# pc-casa = (add-peer "10.255.249.3" "");
+								  # pc-giugio = (add-peer "10.255.249.4" "");
 						};
 					};
 				};
 			};
-			# -------------------- #
 		};
 	};
 }
