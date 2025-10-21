@@ -10,7 +10,7 @@
 		};
 	};
 
-	outputs = { nixpkgs, disko, nixos-facter-modules, ... }:
+	outputs = { nixpkgs, disko, ... }:
 	{
 		nixosConfigurations = 
 		{

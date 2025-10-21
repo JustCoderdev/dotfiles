@@ -364,23 +364,26 @@
 			{
 				inherit system;
 				specialArgs = { inherit inputs jc-lib settings; };
-				modules = [
-					"${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-					"${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-				]
-				++
+				modules =
 				[
 					({ pkgs, modulesPath, ... }: {
 						imports = [
+							"${modulesPath}/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+							
+							jcbin.nixosModules.rebuild-system
+
 							./nixos/common/core
 							./nixos/common/users
 							./nixos/system/services/nixbuilder.nix
 							./nixos/unofficial/modules/cloudflared.nix
-							jcbin.nixosModules.all
 						];
 
-						jcbin.rebuild-system.enable = true;
+						# ----- avoid kernel panic ----- #
+						boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+						boot.kernel.sysctl."kernel.panic" = 60;
+						# ------------------------------ #
 
+						jcbin.rebuild-system.enable = true;
 						services.tlp.enable = lib.mkForce false;
 
 						system.services.nixbuilder.client.builders =
@@ -396,6 +399,7 @@
 						in
 						[
 							(gen-builder "192.168.1.5" 6)
+							(gen-builder "10.0.0.9" 6)
 						];
 					})
 				];

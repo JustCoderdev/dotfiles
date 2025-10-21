@@ -1,7 +1,7 @@
 {
 	disko.devices.disk.flash=
 	{
-		device = lib.mkDefault "/dev/sda";
+		device = "/dev/mmcblk1";
 		type = "disk";
 		content =
 		{
