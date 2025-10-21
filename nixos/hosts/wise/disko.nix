@@ -5,7 +5,7 @@ let
 			type = "filesystem";
 			inherit format mountpoint;
 		}
-	};
+	);
 in
 {
 	disko.devices.disk.flash =

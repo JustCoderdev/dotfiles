@@ -9,7 +9,7 @@ let
 in
 
 {
-	config =
+	config = lib.mkIf (cfg.enable)
 	{
 		networking.firewall.allowedTCPPorts = (lib.mkIf cfg.openFirewall) (
 			[ rtmp_port ] ++ lib.lists.optionals (cfg.stat-webpage.enable) [ cfg.stat-webpage.port ]
