@@ -81,6 +81,7 @@ Host ${builder.hostName}
 
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOrn6ho3e3IVEKrZWsWP2hkAHt1KT2N0FHG3JnRN+I7F ryuji_buildclient@quiss"
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2jmKDK7lygtwqkNqH6Y5NzYp9BwcNR8KEZzEA0m9/s ryuji_buildclient@jarvis"
+						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4 ryuji_buildclient@wise"
 
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZrsLB5QXClVYmeTYNZfOoiPvsndbiAIYG9wuiIdJUz ryuji_buildclient@msi"
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIINNmsEslUoxDlBlJwsgywTD65lyhMQc4SK+XSUNaEh9 ryuji_buildclient@acer"

@@ -329,6 +329,12 @@ sudo systemctl start ssh
 sudo systemctl status ssh
 ```
 
+### Generate ssh keypair
+
+```bash
+ssh-keygen -t ed25519 -C "USER@HOST"
+```
+
 ### Check battery level
 
 ```bash
