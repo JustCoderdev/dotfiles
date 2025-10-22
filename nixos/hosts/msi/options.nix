@@ -195,7 +195,7 @@
 						{
 							telefono-giugio = (add-peer "10.255.249.2" "4rwmZnvgDpErgGh846y74GJ3EyWo+H/EqP8C4GULJGA=");
 									# pc-casa = (add-peer "10.255.249.3" "");
-								  # pc-giugio = (add-peer "10.255.249.4" "");
+								  pc-giugio = (add-peer "10.255.249.4" "ASVxaCdn8K/5scQOv+oWuJ9VWzQf/1mXxZi5tfwhblk=");
 						};
 					};
 				};
