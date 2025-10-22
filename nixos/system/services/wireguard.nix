@@ -104,7 +104,7 @@ in
 							options =
 							{
 								endpoint = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
-								port = lib.mkoption {
+								port = lib.mkOption {
 									type = lib.types.port;
 									description = "port of the interface";
 									default = wg-default-port;
