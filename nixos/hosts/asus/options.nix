@@ -57,7 +57,10 @@
 		gaming.enable = true;
 
 		services = {
-			samba.enable = true;
+			samba = {
+				enable = true;
+				shares.user.enable = true;
+			};
 			webserver.enable = true;
 			nixbuilder = {
 				client.builders =
