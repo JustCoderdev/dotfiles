@@ -9,7 +9,7 @@
 	# Mouse support
 	services.ratbagd.enable = true;
 	environment.systemPackages = with pkgs; [ piper ]
-	++ [ ciscoPacketTracer8 dbeaver-bin ]; # more packages support
+	++ [ dbeaver-bin ]; # more packages support
 
 	networking.hosts = {
 		"192.168.1.5"   = [  "msi.host.lan" ];
