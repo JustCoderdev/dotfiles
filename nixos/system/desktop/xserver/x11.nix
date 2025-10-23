@@ -131,7 +131,7 @@ esac
 		# 	gnome-keyring
 		# ];
 
-		services.gnome.gnome-keyring.enable = true;
+		# services.gnome.gnome-keyring.enable = true;
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
