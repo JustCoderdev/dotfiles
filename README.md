@@ -104,6 +104,7 @@ Included configuration files
 
 ### Fix
 
+- Fix disko using `/dev/disk/by-id/...` instead one `/dev/...` with `ll /dev/disk/by-id`
 - Fix keyrings not persisting credentials
 - Fix host files manually to use grub
 - Fix WakeOnLan module to make it persistent across reboots
@@ -144,7 +145,9 @@ cd "${DOT_FILES}"
 ./bin/bash-scripts/mount-configs.sh
 ```
 
-- With nix stuff (home-manager)
+- With nix stuff
+
+Home manager
 
 ```bash
 cd confs
@@ -155,6 +158,17 @@ nix build ".#${USER}-activation"
 
 ./result/activate
 ```
+
+Disk partitions
+
+```bash
+# add "--extra-features 'nix-command flakes'" after `nix`
+# and before `run` if using a non-flake env
+sudo nix \
+     run github:nix-community/disko/latest -- \
+     --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix
+```
+
 
 - With NixOS
 

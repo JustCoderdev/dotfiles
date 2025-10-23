@@ -7,7 +7,7 @@
 
 		initContent = ''
 export DOT_NIXOS=1;
-export DOT_FILES="/home/ryuji/.config/dotfiles"
+export DOT_FILES='${settings.dotfiles_abs_path}'
 source "''${DOT_FILES}/confs/zsh/.zshrc"
 '';
 

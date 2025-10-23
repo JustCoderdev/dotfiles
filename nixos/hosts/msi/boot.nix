@@ -1,64 +1,19 @@
 { config, pkgs, settings, ... }:
 
 {
-	#Bootloader
+	# Bootloader
 
-	# -- OLD UEFI -- #
-	# boot.loader.systemd-boot.enable = true;
-	# boot.loader.systemd-boot.configurationLimit = 5;
-	# boot.loader.efi.canTouchEfiVariables = true;
-	# -- OLD UEFI -- #
-
-	boot.loader.grub.enable = true;
 	common.core.bootloader = {
 		support-efi = true;
 		display-resolution = "1920x1080";
 	};
 
+	# Mount
 
-	#Virtualisation
-
-	#Mount
-
-	fileSystems =
+	fileSystems."/home/WDC_WD10" =
 	{
-		"/home/WDC_WD10" =
-		{
-			device = "/dev/disk/by-uuid/87de6ef7-b2ea-43ea-b574-52ca561288df";
-			fsType = "ext4";
-		};
-
-
-		# -- IMPORTANT -- #
-		# "/nix" =
-		# {
-		# 	device = "/dev/disk/by-uuid/aa7d119a-8bdf-48e0-a3f4-76b3f71a6aac";
-		# 	fsType = "ext4";
-		# 	neededForBoot = true;
-		# 	options = [ "noatime" ];
-		# };
-		# -- IMPORTANT -- #
-
-
-		# -- IMPORTANT -- #
-		# "/nix" =
-		# {
-		# 	device = "/dev/disk/by-uuid/c3cf58c1-1baa-4196-a793-7d8b5ac4d761";
-		# 	fsType = "ext4";
-		# 	neededForBoot = true;
-		# 	options = [ "noatime" ];
-		# };
-		# -- IMPORTANT -- #
-
-
-		# -- IMPORTANT -- #
-		"/nix" = {
-			device = "/dev/disk/by-uuid/417a2145-07e0-4c14-a6e5-eb26da26d712";
-			fsType = "ext4";
-			neededForBoot = true;
-			options = [ "noatime" ];
-		};
-		# -- IMPORTANT -- #
+		device = "/dev/disk/by-uuid/87de6ef7-b2ea-43ea-b574-52ca561288df";
+		fsType = "ext4";
 	};
 
 	systemd.tmpfiles.rules = let

@@ -6,6 +6,13 @@ let
 			inherit format mountpoint;
 		}
 	);
+
+	create-pt = (
+		size: type: content:
+		{ inherit size; }
+		// lib.attrs.optional (type != null) { inherit type; }
+		// lib.attrs.optional (content != null) { inherit content; }
+	);
 in
 {
 	disko.devices.disk.flash =
@@ -19,26 +26,10 @@ in
 
 			partitions =
 			{
-				boot = {
-					size = "1M";
-					type = "EF02";
-				};
-
-				ESP = {
-					size = "500M";
-					type = "EF00";
-					content = (create-fs "vfat" "/boot");
-				};
-
-				root = {
-					size = "100%";
-					content = (create-fs "ext4" "/");
-				};
-
-				swap = {	
-					size = "1G";
-					content.type = "swap";
-				};
+				boot = (create-pt   "1M" "EF02" null); # grub mbr
+				 ESP = (create-pt "500M" "EF00" (create-fs "vfat" "/boot"));
+				root = (create-pt "100%"  null  (create-fs "ext4" "/")); 
+				swap = (create-pt   "1G"  null  ({ type = "swap"; }));
 			};
 		};
 	};

@@ -30,11 +30,22 @@
 				inherit inputs;
 				settings = (import ./settings/${username}.nix)
 				// {
-					inherit has_de;
+					inherit username has_de;
 					wallpapers_path = ./.wallpapers;
 					confs_path = ./.;
 				};
 			}
+		);
+
+		getModules = (
+			settings:
+			[
+				inputs.stylix.homeModules.stylix
+				./stylix/base.nix { stylix.module = { inherit (settings) wallpapers_path has_de; }; }
+				./stylix/hm.nix
+
+				./default.nix
+			]
 		);
 
 		homeConfiguration = (
@@ -42,12 +53,10 @@
 			let
 				cfg = config.jcconfs;
 				args = (getArgs { inherit (cfg) username has_de; });
-
 				wallpapers_path = args.settings.wallpapers_path;
 			in
 			{
-				imports =
-				[
+				imports = [
 					inputs.stylix.nixosModules.stylix
 					./stylix/base.nix { stylix.module = { inherit wallpapers_path; inherit (cfg) has_de; }; }
 					./stylix/nixos.nix
@@ -59,13 +68,7 @@
 						home-manager.users.${cfg.username} = (
 							{ ... }:
 							{
-								imports = [
-									inputs.stylix.homeModules.stylix
-									./stylix/base.nix 
-									./stylix/hm.nix
-
-									./users/${cfg.username}.nix
-								];
+								imports = (getModules args.settings);
 
 								stylix.enable = true && cfg.has_de;
 								stylix.module = {
@@ -92,21 +95,14 @@
 		);
 
 		homeBuilder = (
-			{ username, system, has_de }:
+			{ username, has_de, pkgs }:
 			let
 				args = getArgs { inherit username has_de; };
-				wallpapers_path = args.settings.wallpapers_path;
 			in
 			home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
-				pkgs = nixpkgsFor.${system};
-				modules = [
-					inputs.stylix.homeModules.stylix
-					./stylix/base.nix { stylix.module = { inherit wallpapers_path has_de; }; }
-					./stylix/hm.nix
-
-					./users/${username}.nix
-				];
+				modules = (getModules args.settings);
+				inherit pkgs;
 			}
 		);
 
@@ -123,10 +119,15 @@
 		homeConfigurations = { }
 		// forAllSystems (
 			system:
-			let username = "ryuji"; in
+			let
+				pkgs = nixpkgsFor.${system};
+			in
 			{
-				ryuji       = homeBuilder { inherit username system; has_de = true;  };
-				ryuji-no-de = homeBuilder { inherit username system; has_de = false; };
+				ryuji       = homeBuilder { inherit pkgs; username = "ryuji"; has_de = true;  };
+				ryuji-no-de = homeBuilder { inherit pkgs; username = "ryuji"; has_de = false; };
+
+				nixos       = homeBuilder { inherit pkgs; username = "nixos"; has_de = true;  };
+				nixos-no-de = homeBuilder { inherit pkgs; username = "nixos"; has_de = false; };
 			}
 		);
 
@@ -138,6 +139,9 @@
 			{
 				ryuji-activation       = self.homeConfigurations."${system}".ryuji.activationPackage;
 				ryuji-activation-no-de = self.homeConfigurations."${system}".ryuji-no-de.activationPackage;
+
+				nixos-activation       = self.homeConfigurations."${system}".nixos.activationPackage;
+				nixos-activation-no-de = self.homeConfigurations."${system}".nixos-no-de.activationPackage;
 
 				# ryuji-activation       = (homeBuilder "ryuji" system true).activationPackage;
 				# ryuji-no-de-activation = (homeBuilder "ryuji" system false).activationPackage;
