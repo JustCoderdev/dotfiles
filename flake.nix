@@ -90,6 +90,17 @@
 				./nixos/hosts/${hostname}/options.nix
 				./nixos/hosts/${hostname}/configuration.nix
 			]
+			++
+			(
+				let
+					# TODO: replace with manifest file
+					disko-module = ./nixos/hosts/${hostname}/disko.nix;
+				in
+				lib.optionals (lib.filesystem.pathIsRegularFile disko-module) [
+					disko.nixosModules.disko
+					disko-module
+				]
+			)
 		);
 
 		getSettings = (
@@ -281,18 +292,7 @@
 			lib.nixosSystem {
 				inherit (manifest.hardware) system;
 				specialArgs = { inherit inputs pkgs-unstable jc-lib settings manifest; };
-				modules = (getHostModules hostname) ++ (getUserModules username)
-				++
-				(
-					let
-						# TODO: replace with manifest file
-						disko-module = ./nixos/hosts/${hostname}/disko.nix;
-					in
-					lib.optionals (lib.filesystem.pathIsRegularFile disko-module) [
-						disko.nixosModules.disko
-						disko-module
-					]
-				);
+				modules = (getHostModules hostname) ++ (getUserModules username);
 			}
 		) hosts-manifest
 		# //
@@ -389,29 +389,24 @@
 							./nixos/unofficial/modules/cloudflared.nix
 						];
 
-						# ----- avoid kernel panic ----- #
-						boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
-						boot.kernel.sysctl."kernel.panic" = 60;
-						# ------------------------------ #
-
 						jcbin.rebuild-system.enable = true;
-						services.tlp.enable = lib.mkForce false;
+						# services.tlp.enable = lib.mkForce false;
 
-						system.services.nixbuilder.client.builders =
-						let
-							gen-builder = (
-								hostName: maxJobs:
-								{
-									inherit hostName maxJobs;
-									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-								}
-							);
-						in
-						[
-							(gen-builder "192.168.1.5" 6)
-							(gen-builder "10.0.0.9" 6)
-						];
+# 						system.services.nixbuilder.client.builders =
+# 						let
+# 							gen-builder = (
+# 								hostName: maxJobs:
+# 								{
+# 									inherit hostName maxJobs;
+# 									features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+# 									systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+# 								}
+# 							);
+# 						in
+# 						[
+# 							(gen-builder "192.168.1.5" 6)
+# 							(gen-builder "10.0.0.9" 6)
+# 						];
 					})
 				];
 			};

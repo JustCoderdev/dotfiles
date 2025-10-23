@@ -41,12 +41,22 @@
 
 
 		# -- IMPORTANT -- #
-		"/nix" =
-		{
-			device = "/dev/disk/by-uuid/c3cf58c1-1baa-4196-a793-7d8b5ac4d761";
+		# "/nix" =
+		# {
+		# 	device = "/dev/disk/by-uuid/c3cf58c1-1baa-4196-a793-7d8b5ac4d761";
+		# 	fsType = "ext4";
+		# 	neededForBoot = true;
+		# 	options = [ "noatime" ];
+		# };
+		# -- IMPORTANT -- #
+
+
+		# -- IMPORTANT -- #
+		"/nix" = {
+			device = "/dev/disk/by-uuid/417a2145-07e0-4c14-a6e5-eb26da26d712";
 			fsType = "ext4";
 			neededForBoot = true;
-			options = [ "noatime" "x-gvfs-hide" ];
+			options = [ "noatime" ];
 		};
 		# -- IMPORTANT -- #
 	};

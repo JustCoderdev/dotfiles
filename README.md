@@ -491,7 +491,13 @@ sudo mount -o defaults,noatime /dev/disk/by-label/nix /mnt/nix
 2. Copy everything from `/nix` to `/mnt` (Trailing slashes are important)
 
 ```
-sudo rsync --archive --hard-links --acls --one-file-system --verbose /nix/{store,var} /mnt/nix
+sudo rsync \
+    --archive \
+    --hard-links \
+    --acls \
+    --one-file-system \
+    --info=progress2 \
+    /nix/{store,var} /mnt/nix
 ```
 
 3. Mount the new partition as the new `/nix`
