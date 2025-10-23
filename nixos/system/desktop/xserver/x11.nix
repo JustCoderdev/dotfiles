@@ -31,23 +31,21 @@ in
 			"L+  /var/lib/AccountsService/icons/${icon-path} 0640 root ${ldm-grp} -   ${dotfiles_store_path}/confs/users/${icon-path}"
 		];
 
-		services =
-		{
-			xserver = {
-				enable = true;
-				videoDrivers = lib.mkIf (settings.hardware-type == "virtual-machine") [ "wmware" ];
+		services.xserver = {
+			enable = true;
+			videoDrivers = lib.mkIf (settings.hardware-type == "virtual-machine") [ "wmware" ];
 
-				displayManager =
-				{
-					lightdm.greeters.gtk = {
-						extraConfig = ''user-background = false'';
-						indicators = [ "~clock" "~power" ];
-					};
+			displayManager =
+			{
+				lightdm.greeters.gtk = {
+					extraConfig = ''user-background = false'';
+					indicators = [ "~clock" "~power" ];
+				};
 
-					setupCommands = let
-						xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-						grep = "${pkgs.gnugrep}/bin/grep";
-					in
+				setupCommands = let
+					xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+					grep = "${pkgs.gnugrep}/bin/grep";
+				in
 ''
 AVAILABLE_DISPLAYS=""
 ''
@@ -66,9 +64,9 @@ else
 	${xrandr} --output ${value.identifier} --off
 fi
 ''
-							) self-manifest.hardware.graphics.displays
-						)
-					) +
+						) self-manifest.hardware.graphics.displays
+					)
+				) +
 ''
 AVAILABLE_DISPLAYS="''${AVAILABLE_DISPLAYS:1}"
 case $1 in
@@ -106,37 +104,34 @@ case $1 in
 	;;
 esac
 ''					;
-				};
 			};
-
-			libinput = {
-				enable = true;
-
-				mouse.middleEmulation = false;
-				touchpad = {
-					accelProfile = "flat";       # flat, adaptive
-					clickMethod = "buttonareas"; # buttonareas, clickfinger
-
-					# dmesg | grep i8042
-					# dev = "/devices/platform/i8042/serio1/input/input5";
-					middleEmulation = false;
-					scrollMethod = "twofinger";
-
-					tapping = true;
-					tappingDragLock = false;
-					tappingButtonMap = "lrm";
-				};
-			};
-
-			# org.freedesktop.secrets
-			# dbus.packages = with pkgs; [
-			# 	pass-secret-service
-			# 	gnome-keyring
-			# ];
-
-			# passSecretService.enable = true;
-			gnome.gnome-keyring.enable = true;
 		};
+
+		services.libinput = {
+			enable = true;
+
+			mouse.middleEmulation = false;
+			touchpad = {
+				accelProfile = "flat";       # flat, adaptive
+				clickMethod = "buttonareas"; # buttonareas, clickfinger
+
+				# dmesg | grep i8042
+				# dev = "/devices/platform/i8042/serio1/input/input5";
+				middleEmulation = false;
+				scrollMethod = "twofinger";
+
+				tapping = true;
+				tappingDragLock = false;
+				tappingButtonMap = "lrm";
+			};
+		};
+
+		# org.freedesktop.secrets
+		# dbus.packages = with pkgs; [
+		# 	gnome-keyring
+		# ];
+
+		services.gnome.gnome-keyring.enable = true;
 
 		# Remember windows size stuff
 		programs.dconf.enable = true;
@@ -144,7 +139,7 @@ esac
 		security.pam = {
 			# Enable lightdm to use Gnome Keyring
 			services.login.enableGnomeKeyring = true;
-			services.display-manager.enableGnomeKeyring = true;
+			# services.display-manager.enableGnomeKeyring = true;
 			mount.logoutTerm = true;  # Send SIGTERM # Graceful shutdown
 			mount.logoutKill = true;  # Send SIGKILL # Forceful shutdown
 		};
