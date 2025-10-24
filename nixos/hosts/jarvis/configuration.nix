@@ -62,7 +62,6 @@ in
 	# ------------------------------------------------------------ #
 
 	networking.hosts."192.168.1.50" = [ "display.lan" ];
-	# networking.hosts."192.168.7.7" = [ "display.lan" ];
 
 	networking.firewall.allowedTCPPorts = [ 80 ];
 # 	services.nginx =
@@ -78,21 +77,21 @@ in
 # 		};
 # 	};
 
-	# systemd.network = {
-	# 	enable = true;
-	# 	networks."enu1u1" = {
-	# 		matchConfig.Name = "enu1u1";
-	# 		address = [ "192.168.1.1/24" ];
-	# 		linkConfig.RequiredForOnline = "no";
-	# 	};
-	# };
+	systemd.network = {
+		enable = true;
+		networks."enu1u1" = {
+			matchConfig.Name = "enu1u1";
+			address = [ "192.168.1.1/24" ];
+			linkConfig.RequiredForOnline = "no";
+		};
+	};
 
 	networking =
 	{
 		useDHCP = false;
 		networkmanager.enable = lib.mkForce false;
 		interfaces."wlan0".useDHCP = true;
-		interfaces."enu1u1".useDHCP = true;
+		# interfaces."enu1u1".useDHCP = true;
 		
 		wireless = {
 			enable = lib.mkForce true;
