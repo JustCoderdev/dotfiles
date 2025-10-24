@@ -84,12 +84,15 @@ in
 				{ inherit assertion message; }
 			);
 		in
+		[ ]
+		++ lib.lists.optionals (self-manifest.hardware.system == "x86_64-linux")
 		[
-			# (add-assertion (config.hardware.cpu.amd.architecture != null || config.hardware.cpu.intel.architecture != null) "Neither amd nor intel cpu architecture has been set")
-			(add-assertion (self-manifest.hardware.system == "x86_64-linux" && self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
+			(add-assertion (self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
 		]
 		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
-			[ (add-assertion (self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!") ];
+		[
+			(add-assertion (self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
+		];
 
 	};
 

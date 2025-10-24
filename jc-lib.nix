@@ -48,6 +48,15 @@ in
 		}
 	);
 
+	mkStrOptionRO = (
+		description: default:
+		mkOption {
+			inherit description default;
+			type = types.str;
+			readOnly = true;
+		}
+	);
+
 	mkIntOptionRO = (
 		description: default:
 		mkOption {

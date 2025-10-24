@@ -6,16 +6,9 @@
 
 		audio.capable = false;
 		bluetooth.capable = false;
+		graphics.capable = false;
 
 		cpu.intel.architecture = "broadwell";
-
-		graphics =
-		{
-			capable = false;
-			desktop-environment.enable = false;
-
-			displays = { };
-		};
 	};
 
 	# -------------------- #
