@@ -68,7 +68,7 @@
 				# (gen-builder  "beta.server.lan" 6)
 			];
 		};
-		nixcache.enable = true;
+		nixcache.enable = false;
 		# routing =
 		# let
 		# 	get_conf = (hostname: host-mac: reserved-ip: domain: { inherit hostname host-mac reserved-ip domain; });
@@ -104,7 +104,7 @@
 		# };
 		wireguard.client =
 		{
-			enable = true;
+			enable = false;
 			servers.wg-msi = {
 				endpoint = "msi.foxburrow.org:51820";
 				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
