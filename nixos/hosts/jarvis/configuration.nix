@@ -61,8 +61,8 @@ in
 
 	# ------------------------------------------------------------ #
 
-	# networking.hosts."192.168.1.50" = [ "display.lan" ];
-	networking.hosts."192.168.7.7" = [ "display.lan" ];
+	networking.hosts."192.168.1.50" = [ "display.lan" ];
+	# networking.hosts."192.168.7.7" = [ "display.lan" ];
 
 	networking.firewall.allowedTCPPorts = [ 80 ];
 # 	services.nginx =

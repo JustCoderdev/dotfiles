@@ -86,7 +86,7 @@ in
 		in
 		[
 			# (add-assertion (config.hardware.cpu.amd.architecture != null || config.hardware.cpu.intel.architecture != null) "Neither amd nor intel cpu architecture has been set")
-			(add-assertion (self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
+			(add-assertion (self-manifest.hardware.system == "x86_64-linux" && self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
 		]
 		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 			[ (add-assertion (self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!") ];
@@ -104,12 +104,13 @@ in
 		add-yearRO-opt = jc-lib.mkIntOptionRO "The year the architecture was released";
 
 		host-options = (
-			{ hostname, config, ... }:
+			{ name, config, ... }:
 			{
 				options =
 				{
 					hardware =
 					{
+						hostname = jc-lib.mkStrOptionRO "The hostname of this manifest" name;
 						system = jc-lib.mkStrOptionWexample "The platform the host is running on" "x86_64-linux";
 						type = jc-lib.mkEnumOption "What kind of hardware is this host running on" hardware-types;
 

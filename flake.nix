@@ -61,12 +61,8 @@
 		in
 		[
 			(add-host "virtualmachine" "x86_64-linux"  "ryuji")
-
 			(add-host "alpha"          "x86_64-linux"  "ryuji")
 			(add-host "beta"           "x86_64-linux"  "ryuji")
-
-			(add-host "jarvis"         "aarch64-linux" "ryuji")
-
 			(add-host "acer"           "x86_64-linux"  "ryuji")
 		];
 
@@ -110,23 +106,6 @@
 					allowUnfreePredicate = pkg: builtins.elem
 						(nixpkgs.lib.getName pkg) spkgs.unfree;
 				};
-			}
-		);
-
-
-		# System builders
-		# ------------------------------------------------------------ #
-
-		host-system-builder = (
-			host-data:
-			let
-				settings = getSettings host-data false;
-				pkgs-unstable = getUnstablePackages settings;
-			in
-			lib.nixosSystem {
-				inherit (host-data) system;
-				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
-				modules = (getHostModules host-data.hostname) ++ (getUserModules host-data.username);
 			}
 		);
 
@@ -297,18 +276,6 @@
 				);
 			}
 		) hosts-manifest
-		# //
-		# # System builders
-		# # -------------------- #
-		# builtins.listToAttrs (
-		# 	builtins.map (
-		# 		host-data:
-		# 		{
-		# 			name = host-data.hostname;
-		# 			value = host-system-builder host-data;
-		# 		}
-		# 	) hosts-list
-		# )
 		//
 		# Iso-cd builders
 		# -------------------- #

@@ -5,7 +5,7 @@
   #############################
 
 
-{ config, lib, pkgs, modulesPath, settings, manifest, ... }:
+{ config, lib, modulesPath, ... }:
 
 let
 	cfg = config.common.manifest;
@@ -34,14 +34,13 @@ in
 		swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
 		# Other
-		sdImage.compressImage = false;
 		hardware.enableRedistributableFirmware = true;
 
 		# -------------------- #
 
 		assertions = [ {
-			assertion = manifest.hardware.system == "aarch64-linux";
-			message = "Option config.common.manifest.hardware.hosts.${settings.hostname}.type has been set to 'raspi3' but system is not aarch64-linux";
+			assertion = cfg.self.hardware.system == "aarch64-linux";
+			message = "Option `config.common.manifest.hardware.hosts.${cfg.self.hostname}.type` has been set to 'raspi3' but system is not 'aarch64-linux'";
 		} ];
 	};
 }
