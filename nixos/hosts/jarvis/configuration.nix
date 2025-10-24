@@ -102,8 +102,8 @@ in
 
 			secretsFile = config.common.core.secrets.wireless.path;
 			networks = {
-				# "WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
-				"NerioGoPro2".pskRaw = "ext:neriogopro_psk";
+				"WindTower-LTE".pskRaw = "ext:windtower_lte_psk";
+				# "NerioGoPro2".pskRaw = "ext:neriogopro_psk";
 			};
 		};
 
