@@ -179,7 +179,7 @@ in
 	system.services.servarr =
 	{
 		inherit openFirewall proxy;
-		enable = false;
+		enable = true;
 
 		group = serv-group;
 
@@ -203,7 +203,7 @@ in
 	system.services.jellyfin =
 	{
 		inherit openFirewall proxy;
-		enable = false;
+		enable = true;
 
 		config-dir = config-dir + "/jellyfin";
 		group = serv-group;
@@ -214,7 +214,7 @@ in
 	system.services.immich =
 	{
 		inherit openFirewall proxy;
-		enable = false;
+		enable = true;
 
 		config-dir = config-dir + "/immich";
 		group = serv-group;
@@ -222,7 +222,7 @@ in
 
 	system.services.syncthing = 
 	{
-		enable = false;
+		enable = true;
 		openFirewall = true;
 
 		dataDir = "${data-dir}/documents/synced";
