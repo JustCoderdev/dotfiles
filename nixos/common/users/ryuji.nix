@@ -43,7 +43,7 @@ in
 			openssh.authorizedKeys.keys =
 			[
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6h9IvfxHJHhzP4ifsVU3FKiqOOMOdo3xjLVZbvBGRD ryuji@jarvis"
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOyUySEK01xTK0S+s2u79dzVKY+p7ood622WICGhErka ryuji@quiss"
+				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL01mLMcme/rAl5VbJYM+dpaHm4XH3eKYgchzJ3eGsKi ryuji@quiss"
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5ceb2qO05uEyS978K4xIu6Xk+cq+VoshMS8OaxVNVC ryuji@wise"
 
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
