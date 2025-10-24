@@ -177,7 +177,7 @@
 
 						peers =
 						{
-									quiss = (add-peer "10.255.250.2" "8Gujn/eJEzU17GVbViXeDfD7M8Pm6Mlh+a4UICjbfGc=");
+									quiss = (add-peer "10.255.250.2" "g01IZ3avpUFCXGsZwpTavv6AGPHHvRqL80SGfE+SYnI=");
 							iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
 									 asus = (add-peer "10.255.250.4" "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=");
 						};
