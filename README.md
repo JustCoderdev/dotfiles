@@ -127,6 +127,66 @@ Included configuration files
 - Add guest samba share
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
 
+## NEW! Installation guide
+
+1. Clone repository
+
+```bash
+DOT_FILES='/home/<USER>/.config/dotfiles'
+git clone https://github.com/JustCoderdev/dotfiles.git .
+
+cd "${DOT_FILES}"
+git switch nixos-integration
+```
+
+2. Activate home manager
+
+```bash
+nix build ./confs#nixos-activation
+./result/activate
+zsh
+```
+
+3. Create host files
+
+```bash
+cd nixos/hosts
+mkdir <hostname>
+
+cp .example/* <hostname>  # options.nix, manifest.nix, disko.nix
+# TODO: Edit these templates
+
+echo -ne "{ ... }:\n\n{\n\n}\n" > configuration.nix
+
+# TODO: Generate them with `nixos-install`
+# hardware-configuration.nix
+# boot.nix
+
+cd ../..
+```
+
+4. Partition disks
+
+```bash
+sudo nix \
+     run github:nix-community/disko/latest -- \
+     --mode destroy,format,mount nixos/hosts/<hostname>/disko.nix
+```
+
+5. Install system onto `/mnt`
+
+```bash
+sudo nixos-install \
+    --verbose \
+    --flake .#<hostname>
+```
+
+6. Reboot
+
+7. Insert secrets
+
+8. Rebuild
+
 ## Installation guide
 
 1. Clone
