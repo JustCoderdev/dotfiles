@@ -184,7 +184,7 @@
 			lib.nixosSystem {
 				inherit (host-data) system;
 				specialArgs = { inherit inputs pkgs-unstable settings jc-lib; };
-				modules = 
+				modules =
 				[
 					# (getHostModules host-data.hostname)
 					# ./nixos/hosts/${hostname}/hardware-configuration.nix
@@ -366,7 +366,7 @@
 		# Install ISO
 		# -------------------- #
 		{
-			install-iso =
+			install-iso-x86_64-linux =
 			let
 				hostname = "install-iso";
 				username = "ryuji";
@@ -382,7 +382,9 @@
 					({ pkgs, modulesPath, ... }: {
 						imports = [
 							"${modulesPath}/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-							
+							"${modulesPath}/installer/scan/not-detected.nix"
+							"${modulesPath}/profiles/qemu-guest.nix"
+
 							jcbin.nixosModules.rebuild-system
 
 							./nixos/common/core
@@ -391,10 +393,10 @@
 							./nixos/unofficial/modules/cloudflared.nix
 						];
 
-						# ----- avoid kernel panic ----- #
-						boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
-						boot.kernel.sysctl."kernel.panic" = 60;
-						# ------------------------------ #
+						# # ----- avoid kernel panic ----- #
+						# boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+						# boot.kernel.sysctl."kernel.panic" = 60;
+						# # ------------------------------ #
 
 						jcbin.rebuild-system.enable = true;
 						services.tlp.enable = lib.mkForce false;
