@@ -64,10 +64,14 @@ vim.opt.tabstop = 4                    -- number of spaces that <Tab> in file us
 vim.opt.wrap = false                   -- long lines wrap and continue on the next line
 
 
+-- Extra
+
 -- :h c.vim
-vim.cmd("au BufRead,BufNewFile *.h set filetype=c")
-vim.cmd("let g:loaded_python3_provider = 0")
-vim.cmd("let g:loaded_ruby_provider = 0")
-vim.cmd("let g:loaded_perl_provider = 0")
+-- vim.cmd("au BufRead,BufNewFile *.h set filetype=c") -- New .h files as c types
+
+vim.cmd("let g:loaded_python3_provider = 0") -- disable python3
+vim.cmd("let g:loaded_ruby_provider = 0")    -- disable ruby
+vim.cmd("let g:loaded_perl_provider = 0")    -- disable perl
+
 -- vim.cmd("hi SpecialKey guibg=#ff0000 guifg=#000000 gui=NONE")
 -- vim.cmd("hi Whitespace guibg=#ff0000 guifg=#ffffff gui=NONE")
