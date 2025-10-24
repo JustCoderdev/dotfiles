@@ -40,7 +40,7 @@
 
 				(gen-builder "msi.foxburrow.org" 6)
 				(gen-builder  "quiss.server.lan" 4)
-				(gen-builder "192.168.7.34" 6)
+				(gen-builder      "192.168.7.34" 8)
 
 				# (gen-builder "alpha.server.lan" 8)
 				# (gen-builder  "beta.server.lan" 6)
