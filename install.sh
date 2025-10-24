@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/nix/store/ih68ar79msmj0496pgld4r3vqfr7bbin-bash-5.2p37/bin/bash
 
 # Quit on error
 set -e

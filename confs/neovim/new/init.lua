@@ -1,19 +1,16 @@
 
 -- USER PREFERENCES
--- ------------------------------------------------------------
 
 COLORSCHEME = "habamax"
 FALLBACK_COLORSCHEME = "retrobox" --sorbet
 
 
--- Const
--- ------------------------------------------------------------
+-- CONST
 
 -- ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 
 
--- Functions
--- ------------------------------------------------------------
+-- FUNCTIONS
 
 function declare_file(file) print(string.format("Loading %s.lua", file)) end
 function require_file(file)
@@ -25,13 +22,11 @@ function require_file(file)
 end
 
 
--- Init
--- ------------------------------------------------------------
+-- INIT
 
 require_file("options")
 
 
--- Tmp colorscheme
--- ------------------------------------------------------------
+-- TMP COLORSCHEME
 
 vim.cmd(string.format("colorscheme %s", COLORSCHEME))

@@ -10,17 +10,14 @@ ${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"con
 in
 
 {
-	#Bootloader
-	boot.loader.grub.enable = true;
-	boot.loader.grub.device = "/dev/sda";
-	#boot.loader.grub.configurationLimit = 5;
-	boot.loader.grub.useOSProber = false;
+	# Bootloader
 
+	common.core.bootloader = {
+		support-efi = true;
+		display-resolution = "1920x1080";
+	};
 
-	#Virtualisation
-
-
-	# --- Raid --- #
+	# Raid
 
 	# <https://discourse.nixos.org/t/i-want-to-create-a-raid0-for-var-but-im-unable-to-figure-how-to-load-mdamd-on-boot/30381/5>
 	system.nixos.tags = [ "mdadm" ];
