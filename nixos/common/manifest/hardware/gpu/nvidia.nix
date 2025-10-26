@@ -32,7 +32,6 @@ in
 		{
 			modesetting.enable = true;
 			package = config.boot.kernelPackages.nvidiaPackages.${self-ngpu.driver.name};
-				# self-ngpu.driver.pkg;
 			open = false && self-ngpu.ge-turing; # Use open source driver (Turing or newer)
 
 			nvidiaSettings = true;  # Enable the Nvidia settings menu,
@@ -84,7 +83,7 @@ in
 		in
 		(
 			[
-				(add-assertion (self-ngpu.driver.pkg != null) "The gpu specified in the manifest has no supported driver package")
+				(add-assertion (self-ngpu.driver-name != null) "The gpu specified in the manifest has no supported driver package")
 			]
 			++ lib.lists.optionals (self-ngpu.offload.enable)
 			[
