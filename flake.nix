@@ -338,6 +338,7 @@
 				hostname = "install-iso";
 				username = "ryuji";
 				system = "x86_64-linux";
+
 				settings = getSettings hostname system username;
 			in
 			lib.nixosSystem
