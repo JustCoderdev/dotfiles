@@ -19,6 +19,11 @@ let
 in
 
 {
+	imports = [
+		./hardware/default.nix
+		# ./software/default.nix
+		# ./network/default.nix
+	];
 
 	config =
 	{

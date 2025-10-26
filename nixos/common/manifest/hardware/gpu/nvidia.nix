@@ -31,7 +31,7 @@ in
 		hardware.nvidia =
 		{
 			modesetting.enable = true;
-			package = config.boot.kernelPackages.nvidiaPackages.${self-ngpu.driver.name};
+			package = config.boot.kernelPackages.nvidiaPackages.${self-ngpu.driver-name};
 			open = false && self-ngpu.ge-turing; # Use open source driver (Turing or newer)
 
 			nvidiaSettings = true;  # Enable the Nvidia settings menu,
