@@ -79,7 +79,7 @@ Host ${builder.hostName}
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCvXFlkamJe11+AXQiZ0U2LEa8xrozhvAiwhtT//O1S ryuji_buildclient@alpha"
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJgN39OtOvSFiJjOOoeo/Pcr0YghSXIaykX+jX03lqH ryuji_buildclient@beta"
 
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOrn6ho3e3IVEKrZWsWP2hkAHt1KT2N0FHG3JnRN+I7F ryuji_buildclient@quiss"
+						# quiss key - not a client
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2jmKDK7lygtwqkNqH6Y5NzYp9BwcNR8KEZzEA0m9/s ryuji_buildclient@jarvis"
 						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4 ryuji_buildclient@wise"
 

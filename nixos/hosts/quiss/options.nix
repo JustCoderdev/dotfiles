@@ -18,7 +18,6 @@
 
 			nginx =
 			{
-				basic_auth."dashboard".file.installed = true;
 				vhosts."quiss.server.lan" = {
 					cert = {
 						installed = true;
@@ -30,8 +29,6 @@
 					};
 				};
 			};
-
-			nix-serve.priv-key.installed = true;
 		};
 		network.wakeOn = {
 			lan.enabledFor = [ "eno1" "enp8s2" ];

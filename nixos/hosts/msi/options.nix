@@ -26,7 +26,6 @@
 					api-token.installed = true;
 				};
 				discord.hooks."foxburrow".rebuilds.installed = true;
-				nix-serve.priv-key.installed = true;
 			};
 
 			ssh.cloudflared-proxy = {
