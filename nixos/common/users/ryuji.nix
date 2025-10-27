@@ -85,7 +85,8 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		++ lib.optionals (is_desk_available && has_desktop)
 		[
 			google-chrome
-			# firefox
+
+			firefox
 
 			obsidian
 
@@ -94,8 +95,8 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			emulsion
 
 			gnome-disk-utility
-			baobab
 
+			# baobab
 			# rustdesk
 		]
 		++ lib.optionals (cfg.docs-editing)    [ libreoffice ]
