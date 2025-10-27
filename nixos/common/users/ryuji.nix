@@ -86,6 +86,8 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		[
 			google-chrome
 
+			telegram-desktop
+
 			firefox
 
 			obsidian
