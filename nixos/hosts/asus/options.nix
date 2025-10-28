@@ -41,12 +41,8 @@
 		};
 	};
 
-	system = {
-		desktop = {
-			i3.enable = true;
-			thunar.enable = true;
-		};
-
+	system =
+	{
 		dev = {
 			android.enable = true;
 			arduino.enable = true;

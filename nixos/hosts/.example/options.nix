@@ -20,6 +20,7 @@
 			};
 
 			plymouth.enable = false;
+
 			ssh.cloudflared-proxy = {
 				enable = false;
 				hosts = [ ];
@@ -41,14 +42,8 @@
 		};
 	};
 
-	system = {
-		desktop = {
-			hyprland.enable = false;
-			i3.enable = false;
-			thunar.enable = false;
-			xfce.enable = false;
-		};
-
+	system =
+	{
 		dev = {
 			android.enable = false;
 			arduino.enable = false;

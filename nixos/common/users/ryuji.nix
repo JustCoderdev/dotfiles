@@ -89,7 +89,6 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			telegram-desktop
 
 			firefox
-
 			obsidian
 
 			vlc
@@ -97,6 +96,7 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			emulsion
 
 			gnome-disk-utility
+			gpick
 
 			# baobab
 			# rustdesk

@@ -49,6 +49,7 @@ alias gc="git commit"
 
 ## nvim
 alias nold="nvim -S .old_session.vim"
+alias nivm="nvim"
 
 # wifi
 alias wscan="nmcli device wifi rescan && nmcli device wifi list"

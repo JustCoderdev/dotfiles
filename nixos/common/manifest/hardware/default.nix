@@ -2,6 +2,11 @@
 
 let
 	self-manifest = config.common.manifest.self;
+
+	self-hw = self-manifest.hardware;
+	self-bluetooth = self-hw.bluetooth;
+	self-audio = self-hw.audio;
+	self-graphics = self-hw.graphics;
 in
 
 {
@@ -10,29 +15,34 @@ in
 		./gpu/nvidia.nix
 		./gpu/radeon.nix
 	]
-	++ lib.lists.optionals (settings.hardware-type == "raspi3") [ ./other/raspi3.nix ];
+	++ lib.lists.optionals (settings.hardware-type == "raspi3") [ ./special-hardware-type/raspi3.nix ];
 
 	config =
 	{
 		# Bluetooth
 		# -------------------- #
 
-		common.core.bluetooth.enable = self-manifest.hardware.bluetooth.capable;
+		common.core.bluetooth.enable = lib.mkDefault self-bluetooth.capable;
 
 
 		# Audio
 		# -------------------- #
 
-		common.core.audio.pulseaudio.enable = self-manifest.hardware.audio.capable;
+		common.core.audio.pulseaudio.enable = lib.mkDefault self-audio.capable;
 
 
 		# Graphics
 		# -------------------- #
 
-		jcconfs.has_de = self-manifest.hardware.graphics.desktop-environment.enable;
+		jcconfs.has_de = lib.mkDefault self-graphics.desktop-environment.enable;
+		system.desktop = {
+			i3.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+			thunar.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+		};
+
 		hardware.graphics = {
-			enable = self-manifest.hardware.graphics.capable;
-			enable32Bit = self-manifest.hardware.graphics.capable && self-manifest.hardware.system == "x86_64-linux";
+			enable = lib.mkDefault self-graphics.capable;
+			enable32Bit = lib.mkDefault self-graphics.capable && self-hw.system == "x86_64-linux";
 		};
 
 
@@ -40,7 +50,7 @@ in
 		# -------------------- #
 
 		boot.initrd.kernelModules = []
-			++ lib.optionals (self-manifest.hardware.cpu.intel.architecture != null) [ "i915" ];
+			++ lib.optionals (self-hw.cpu.intel.architecture != null) [ "i915" ];
 
 
 		# Assertions
@@ -54,13 +64,13 @@ in
 			);
 		in
 		[ ]
-		++ lib.lists.optionals (self-manifest.hardware.system == "x86_64-linux")
+		++ lib.lists.optionals (self-hw.system == "x86_64-linux")
 		[
-			(add-assertion (self-manifest.hardware.cpu.intel.architecture != null) "You must set the architecture of the processor!")
+			(add-assertion (self-hw.cpu.intel.architecture != null) "You must set the architecture of the processor!")
 		]
-		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
+		++ lib.lists.optionals (self-graphics.desktop-environment.enable)
 		[
-			(add-assertion (self-manifest.hardware.graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
+			(add-assertion (self-graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
 		];
 	};
 }

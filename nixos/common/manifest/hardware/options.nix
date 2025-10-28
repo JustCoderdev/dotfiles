@@ -1,7 +1,6 @@
 { name, lib, config, jc-lib, ... }:
 
 let
-	arch-data = import ./processors-architectures.nix;
 	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
 
 	get-attr-names = (attr: lib.attrsets.mapAttrsToList (name: _: name) attr);
@@ -26,15 +25,17 @@ in
 		# 	inherit has-iGPU;
 		# 	architecture = jc-lib.mkNullOrEnumOption "Amd cpu architecture" (get-attr-names arch-data.cpu.amd);
 		# };
+
 		intel =
 		let
-			self = config.hardware.cpu.intel;
-			self-arch = self.architecture;
-			self-data = arch-data.cpu.intel.${self-arch};
+			self-arch = config.hardware.cpu.intel.architecture;
+			
+			intel-data = import ./architectures/cpu-intel.nix;
+			self-data = intel-data.${self-arch};
 		in
 		{
 			inherit has-iGPU;
-			architecture = jc-lib.mkNullOrEnumOption "Intel cpu architecture" (get-attr-names arch-data.cpu.intel);
+			architecture = jc-lib.mkNullOrEnumOption "Intel cpu architecture" (get-attr-names intel-data);
 			year = (add-yearRO-opt self-data.year);
 		};
 	};
@@ -46,23 +47,25 @@ in
 		# intel = {};
 		radeon =
 		let
-			self = config.hardware.gpu.radeon;
-			self-arch = self.architecture;
-			self-data = arch-data.gpu.radeon.${self-arch};
+			self-arch = config.hardware.gpu.radeon.architecture;
+
+			radeon-data = import ./architectures/gpu-radeon.nix;
+			self-data = radeon-data.${self-arch};
 		in
 		{
-			architecture = jc-lib.mkNullOrEnumOption "Amd gpu architecture" (get-attr-names arch-data.gpu.radeon);
+			architecture = jc-lib.mkNullOrEnumOption "Amd gpu architecture" (get-attr-names radeon-data);
 			year = (add-yearRO-opt self-data.year);
 		};
 
 		nvidia =
 		let
-			self = config.hardware.gpu.nvidia;
-			self-arch = self.architecture;
-			self-data = arch-data.gpu.nvidia.${self-arch};
+			self-arch = config.hardware.gpu.nvidia.architecture;
+
+			nvidia-data = import ./architectures/gpu-nvidia.nix;
+			self-data = nvidia-data.${self-arch};
 		in
 		{
-			architecture = jc-lib.mkNullOrEnumOption "Nvidia gpu architecture" (get-attr-names arch-data.gpu.nvidia);
+			architecture = jc-lib.mkNullOrEnumOption "Nvidia gpu architecture" (get-attr-names nvidia-data);
 			offload = {
 				enable = lib.mkOption {
 					description = "Whether to enable gpu offload";
@@ -80,14 +83,14 @@ in
 			gt-turing = lib.mkOption {
 				description = "Whether the gpu has the architecture greater turing";
 				type = lib.types.bool;
-				default = arch-data.gpu.nvidia.turing.year > self-data.year;
+				default = nvidia-data.turing.year > self-data.year;
 				readOnly = true;
 			};
 
 			ge-turing = lib.mkOption {
 				description = "Whether the gpu has the architecture greater or equal to turing";
 				type = lib.types.bool;
-				default = arch-data.gpu.nvidia.turing.year >= self-data.year;
+				default = nvidia-data.turing.year >= self-data.year;
 				readOnly = true;
 			};
 
