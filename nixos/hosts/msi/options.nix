@@ -99,7 +99,8 @@
 					# (get_conf "quiss"     "f4:6d:04:99:cb:11" "10.0.0.7" "server.lan")
 					# (get_conf "jarvis"    "3a:9c:e1:e5:ca:de" "10.0.0.8" "server.lan")
 					
-					(get_conf "wise" "8c:ec:4b:56:df:66" "10.0.0.9" "server.lan")
+					(get_conf "wise"    "8c:ec:4b:56:df:66" "10.0.0.9"  "server.lan")
+					(get_conf "printer" "f4:a9:97:d5:1b:a1" "10.0.0.10" "server.lan")
 				];
 			in
 			{
@@ -119,17 +120,18 @@
 				};
 				nat = {
 					enable = true;
-					forwarded-ports = builtins.map (
-						{ reserved-ip, ... }:
-						let
-							last-byte = lib.lists.last (lib.strings.splitString "." reserved-ip);
-						in
-						{
-							proto = "tcp";
-							sourcePort = lib.strings.toInt "50${last-byte}22";
-							destination = "${reserved-ip}:22";
-						}
-					) hosts;
+					forwarded-ports = [];
+					# forwarded-ports = builtins.map (
+					# 	{ reserved-ip, ... }:
+					# 	let
+					# 		last-byte = lib.lists.last (lib.strings.splitString "." reserved-ip);
+					# 	in
+					# 	{
+					# 		proto = "tcp";
+					# 		sourcePort = lib.strings.toInt "50${last-byte}22";
+					# 		destination = "${reserved-ip}:22";
+					# 	}
+					# ) hosts;
 				};
 			};
 			samba = {

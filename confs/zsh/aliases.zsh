@@ -12,12 +12,16 @@ alias cls="clear && ls"
 
 alias cl="cls"
 alias sls="ls"
+
 alias l="ls"
 alias scls="cls"
+
+alias sl="ls"
 
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 
 # Push Dir Aliases - Save Directory
