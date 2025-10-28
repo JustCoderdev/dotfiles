@@ -42,7 +42,7 @@ in
 
 		hardware.graphics = {
 			enable = lib.mkDefault self-graphics.capable;
-			enable32Bit = lib.mkDefault self-graphics.capable && self-hw.system == "x86_64-linux";
+			enable32Bit = lib.mkDefault (self-graphics.capable && self-hw.system == "x86_64-linux");
 		};
 
 
