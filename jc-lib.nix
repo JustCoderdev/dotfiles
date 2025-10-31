@@ -2,9 +2,18 @@
 
 let
 	inherit (lib) mkOption types;
+
+	regex = {
+		address = {
+			mac = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$";
+			# ipv4 = "^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$";
+		};
+	};
 in
 
 {
+	inherit regex;
+
 	# Null or type RO
 	# ---------------------------------------- #
 
@@ -77,6 +86,22 @@ in
 		}
 	);
 
+	mkStrRXOption = (
+		description: regex:
+		mkOption {
+			inherit description;
+			type = types.strMatching regex;
+		}
+	);
+
+	mkIntOption = (
+		description:
+		mkOption {
+			inherit description;
+			type = types.int;
+		}
+	);
+
 	mkBoolOption = (
 		description:
 		mkOption {
@@ -135,7 +160,17 @@ in
 		description:
 		mkOption {
 			inherit description;
-			type = types.nullOr types.str; default = null;
+			type = types.nullOr types.str;
+			default = null;
+		}
+	);
+
+	mkNullOrStrRXOption = (
+		description: regex:
+		mkOption {
+			inherit description;
+			type = (types.nullOr (types.strMatching regex));
+			default = null;
 		}
 	);
 

@@ -1,4 +1,4 @@
-{ name, lib, config, jc-lib, ... }:
+{ name, lib, config, jc-lib }:
 
 let
 	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
@@ -30,7 +30,7 @@ in
 		let
 			self-arch = config.hardware.cpu.intel.architecture;
 			
-			intel-data = import ./architectures/cpu-intel.nix;
+			intel-data = import ./architectures-list/cpu-intel.nix;
 			self-data = intel-data.${self-arch};
 		in
 		{
@@ -49,7 +49,7 @@ in
 		let
 			self-arch = config.hardware.gpu.radeon.architecture;
 
-			radeon-data = import ./architectures/gpu-radeon.nix;
+			radeon-data = import ./architectures-list/gpu-radeon.nix;
 			self-data = radeon-data.${self-arch};
 		in
 		{
@@ -61,7 +61,7 @@ in
 		let
 			self-arch = config.hardware.gpu.nvidia.architecture;
 
-			nvidia-data = import ./architectures/gpu-nvidia.nix;
+			nvidia-data = import ./architectures-list/gpu-nvidia.nix;
 			self-data = nvidia-data.${self-arch};
 		in
 		{
@@ -114,6 +114,47 @@ in
 				};
 			}
 		);
+	};
+
+	# -------------------- #
+
+	interfaces =
+	{
+		wireless =  jc-lib.mkSubmodOption "Host wireless interfaces"
+		(
+			{ name, ... }:
+			{
+				options = {
+					mac = jc-lib.mkStrRXOption "The mac address of the interface" jc-lib.regex.address.mac;
+					# self-ip = jc-lib.mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" jc-lib.regex.address.ipv4;
+					self-ip = jc-lib.mkNullOrStrOption "The ip of the interface (leave null to enable dhcp)";
+				};
+			}
+		);
+
+		# ethernet =  jc-lib.mkSubmodOption "Host wired interfaces"
+		# (
+		# 	{ name, ... }:
+		# 	{
+		# 		options = {
+		# 			mac = jc-lib.mkStrRXOption "The mac address of the interface" jc-lib.regex.address.mac;
+		# 			self-ip = jc-lib.mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" jc-lib.regex.address.ipv4;
+		# 			network-name = ;
+		# 		};
+		# 	}
+		# );
+
+		# virtual =
+		# {
+		# 	wireguard = jc-lib.mkSubmodOption "Wireguard virtual interfaces"
+		# 	(
+		# 		{ name, ... }:
+		# 		{
+		# 			self-ip = jc-lib.mkStrRXOption "The ip of the interface (leave null to enable dhcp)";
+		# 			network-name = network-opt;
+		# 		};
+		# 	);
+		# };
 	};
 }
 

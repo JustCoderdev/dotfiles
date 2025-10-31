@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, jc-lib, settings, ... }:
 
 let
 	cfg = config.common.core.network.wakeOn;
@@ -125,7 +125,7 @@ echo "Wake on lan was already enabled"
 			};
 			
 			knownDevices = lib.mkOption {
-				type = lib.types.attrsOf lib.types.str;
+				type = lib.types.attrsOf (lib.types.strMatching jc-lib.regex.address.mac);
 				description = "Devices that have WoL enabled";
 				default = { };
 			};

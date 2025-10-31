@@ -35,6 +35,8 @@
 				b-ex-monitor = add-display "HDMI-1" "1920x1080" "1920x0";
 			};
 		};
+
+		interfaces.wireless."wlo1".mac = "c8:58:c0:37:fe:ce";
 	};
 
 	# -------------------- #

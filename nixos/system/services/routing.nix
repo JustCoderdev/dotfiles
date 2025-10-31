@@ -131,7 +131,7 @@ in
 								hostname = jc-lib.mkStrOption "The hostname with the reserved lease";
 								domain = jc-lib.mkStrOption "The domain of the host with the reserved lease";
 
-								host-mac = jc-lib.mkStrOption "The mac address of the host with the reserved lease";
+								host-mac = jc-lib.mkStrRXOption "The mac address of the host with the reserved lease" jc-lib.regex.address.mac;
 								reserved-ip = jc-lib.mkStrOption "The reserved ip address of the host";
 							};
 						}
