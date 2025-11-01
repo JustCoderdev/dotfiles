@@ -92,8 +92,7 @@ in
 				];
 			in
 			{
-				serverAliases = proxy.aliases;
-
+				serverAliases = cfg.proxy.aliases;
 				locations =
 				{ } //
 				builtins.listToAttrs (

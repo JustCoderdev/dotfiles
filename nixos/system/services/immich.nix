@@ -67,8 +67,7 @@ in
 
 			virtualHosts."${cfg.proxy.host}" =
 			{
-				serverAliases = proxy.aliases;
-
+				serverAliases = cfg.proxy.aliases;
 				locations =
 				{
 					"/" = {
