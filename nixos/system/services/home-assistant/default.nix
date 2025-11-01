@@ -222,6 +222,7 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 			enable = true;
 			virtualHosts."${cfg.proxy.host}" =
 			{
+				serverAliases = cfg.proxy.aliases;
 				locations."/" = {
 					proxyPass = "http://127.0.0.1:${toString hass-port}";
 					extraConfig = ""
@@ -259,6 +260,11 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 			host = lib.mkOption {
 				description = "The virtualHost";
 				type = lib.types.str;
+			};
+			aliases = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The aliases of the host";
+				default = [ ];
 			};
 		};
 

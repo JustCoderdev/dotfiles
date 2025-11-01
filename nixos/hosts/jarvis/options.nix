@@ -21,6 +21,7 @@
 			proxy = {
 				enable = true;
 				host = "jarvis.server.lan";
+				aliases = [ "192.168.7.8" ];
 			};
 		};
 		nixbuilder = {

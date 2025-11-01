@@ -48,13 +48,4 @@
 		acceptTerms = true;
 		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
 	};
-
-	# Remote desktop / graphical tablet
-
-	programs.weylus =
-	{
-		enable = true;
-		openFirewall = true;
-		users = [ settings.username ];
-	};
 }

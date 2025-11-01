@@ -5,6 +5,15 @@
 
 	common.core =
 	{
+
+		network.wakeOn = {
+			lan.enabledFor = [ "eno1" "enp8s2" ];
+			knownDevices = {
+				 msi = "d4:3b:04:51:45:28";
+				acer = "a4:17:31:10:9e:ed";
+			};
+		};
+
 		secrets = {
 			cloudflare = {
 				origin-cert.installed = true;
@@ -30,12 +39,13 @@
 				};
 			};
 		};
-		network.wakeOn = {
-			lan.enabledFor = [ "eno1" "enp8s2" ];
-			knownDevices = {
-				 msi = "d4:3b:04:51:45:28";
-				acer = "a4:17:31:10:9e:ed";
-			};
+
+		ssh.cloudflared-proxy = {
+			enable = true;
+			hosts = [
+				"jarvis-cf.foxburrow.org"
+				"quiss-cf.foxburrow.org"
+			];
 		};
 	};
 
