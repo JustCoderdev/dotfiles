@@ -44,6 +44,7 @@
 	system =
 	{
 		dev = {
+			enable = true;
 			android.enable = true;
 			arduino.enable = true;
 			c.enable = true;

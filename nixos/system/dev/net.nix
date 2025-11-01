@@ -1,11 +1,15 @@
 { config, lib, pkgs, settings, ... }:
 
-let cfg = config.system.dev.net; in
+let
+	dev-cfg = config.system.dev;
+	cfg = dev-cfg.net;
+in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (dev-cfg.enable && cfg.enable)
 	{
-		environment.systemPackages = with pkgs; [
+		environment.systemPackages = with pkgs;
+		[
 			wireshark
 			ethtool
 			nmap

@@ -1,43 +1,31 @@
-{ config, lib, pkgs, settings, pkgs-unstable, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 let
 	cfg = config.common.users.ryuji;
+	self-manifest = config.common.manifest.self;
 
 	titleCase = text: lib.concatStrings [
 		(lib.toUpper (builtins.substring 0 1 text))
 		(builtins.substring 1 (builtins.stringLength text) text)
 	];
 
-	uname = settings.username;
-	uhome = "/home/${uname}";
-
-	is_desk_available = lib.attrsets.hasAttrByPath [ "system" "desktop" ] config;
-	desk_cfg = config.system.desktop;
-	has_desktop = desk_cfg.xfce.enable || desk_cfg.hyprland.enable || desk_cfg.i3.enable;
+	inherit (settings) username;
+	uhome = "/home/${username}";
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
-		# NixOS (Generation 96 Nixos Uakari hyprland-24.05 (Linux 6.6), built on 2024-05-14)
-		system.nixos.tags = [ "${uname}" ];
+		system.nixos.tags = [ "${username}" ];
 
-		systemd.tmpfiles.rules =
-		[
-#			Type Path                        Mode User     Group Age Argument
-			"d   ${uhome}/Developer          0755 ${uname} users"
-			"d   ${uhome}/Developer/Github   0755 ${uname} users"
-			"d   ${uhome}/Developer/Projects 0755 ${uname} users"
-		];
-
-		users.users.${uname} = {
-			name = uname;
-			description = (titleCase uname);
+		users.users.${username} = {
+			name = username;
+			description = (titleCase username);
 
 			isNormalUser = true;
 			createHome = true;
 
-			initialPassword = "${uname}";
+			initialPassword = "${username}";
 			extraGroups = [ "wheel" "dialout" "kvm" ];
 
 			openssh.authorizedKeys.keys =
@@ -55,15 +43,14 @@ in
 
 		system.activationScripts =
 		{
-			correct-ssh-perms.text = ''
+			correct-ssh-dir-perms.text = ''
 # Permission table found here
 # <https://superuser.com/a/215506>
 
-echo "setting correct ssh permissions"
-chown -R ${uname}:users ${uhome}/.ssh
+echo "correct ssh directory permissions for '${uhome}/.ssh'"
 
+chown -R ${username}:users ${uhome}/.ssh
 chmod 700 ${uhome}/.ssh           # Folder
-# chmod 600 ${uhome}/.ssh/*         # All config files
 chmod 600 ${uhome}/.ssh/id_*      # All keys
 chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 '';
@@ -82,7 +69,7 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 			# 	}
 			# )
 		]
-		++ lib.optionals (is_desk_available && has_desktop)
+		++ lib.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 		[
 			google-chrome
 

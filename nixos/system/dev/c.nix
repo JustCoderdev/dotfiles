@@ -1,11 +1,12 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.dev.c;
+	dev-cfg = config.system.dev;
+	cfg = dev-cfg.c;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (dev-cfg.enable && cfg.enable)
 	{
 		documentation = {
 			enable = true;
@@ -17,7 +18,8 @@ in
 			};
 		};
 
-		environment.systemPackages = with pkgs; [
+		environment.systemPackages = with pkgs;
+		[
 			# Docs
 			glibc glibcInfo
 			man-pages man-pages-posix
@@ -30,8 +32,6 @@ in
 
 			# Tools
 			ascii ripgrep
-			jetbrains.clion
-			vscode
 
 			# Debugging
 			gdb valgrind

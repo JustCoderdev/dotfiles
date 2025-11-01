@@ -1,11 +1,12 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	cfg = config.system.dev.android;
+	dev-cfg = config.system.dev;
+	cfg = dev-cfg.android;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (dev-cfg.enable && cfg.enable)
 	{
 		boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
 		services.udev.packages = [ pkgs.android-udev-rules ];
