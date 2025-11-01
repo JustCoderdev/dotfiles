@@ -92,6 +92,8 @@ in
 				];
 			in
 			{
+				serverAliases = proxy.aliases;
+
 				locations =
 				{ } //
 				builtins.listToAttrs (
@@ -150,6 +152,11 @@ in
 			host = lib.mkOption {
 				type = lib.types.str;
 				description = "The virtualHost";
+			};
+			aliases = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The aliases of the host";
+				default = [ ];
 			};
 		};
 

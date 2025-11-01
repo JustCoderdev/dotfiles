@@ -30,6 +30,7 @@ in
 
 			virtualHosts."${cfg.proxy.host}" =
 			{
+				serverAliases = proxy.aliases;
 				locations =
 				{
 					"/jellyfin" = {
@@ -101,16 +102,15 @@ in
 
 		proxy = {
 			enable = lib.mkEnableOption "Add jellyfin to nginx location";
-
-			mode = lib.mkOption {
-				type = lib.types.enum [ "subdomain" "suburl" ];
-				description = "Set the proxying mean";
-				default = "suburl";
-			};
-
 			host = lib.mkOption {
 				type = lib.types.str;
 				description = "The virtualHost";
+			};
+
+			aliases = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The aliases of the host";
+				default = [ ];
 			};
 		};
 	};

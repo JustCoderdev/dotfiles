@@ -13,6 +13,7 @@ let
 	proxy = {
 		enable = true;
 		host = "quiss.server.lan";
+		aliases = [ "192.168.7.7" "10.255.250.2" ];
 	};
 in
 
@@ -88,19 +89,7 @@ in
 				);
 			in
 			{ }
-			// (create-rule "quiss" "ssh"    22 ".*")
-			// (create-rule "home"  "https" 443 "/home.*")
-
-			// (create-rule "jellyfin" "https" 443 "/jellyfin.*")
-			// (create-rule "immich"   "https" 443 ".*")
-
-			// (create-rule "prowlarr" "https" 443 "/prowlarr.*")
-			// (create-rule "bazarr"   "https" 443 "/bazarr.*")
-
-			// (create-rule "lidarr"  "https" 443 "/lidarr.*")
-			// (create-rule "radarr"  "https" 443 "/radarr.*")
-			// (create-rule "readarr" "https" 443 "/readarr.*")
-			// (create-rule "sonarr"  "https" 443 "/sonarr.*")
+			// (create-rule "quiss-cf" "ssh"    22 ".*")
 			// {};
 		};
 	};

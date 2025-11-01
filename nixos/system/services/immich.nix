@@ -67,6 +67,8 @@ in
 
 			virtualHosts."${cfg.proxy.host}" =
 			{
+				serverAliases = proxy.aliases;
+
 				locations =
 				{
 					"/" = {
@@ -113,6 +115,11 @@ in
 			host = lib.mkOption {
 				type = lib.types.str;
 				description = "The virtualHost";
+			};
+			aliases = lib.mkOption {
+				type = lib.types.listOf lib.types.str;
+				description = "The aliases of the host";
+				default = [ ];
 			};
 		};
 	};
