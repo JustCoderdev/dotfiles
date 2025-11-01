@@ -14,13 +14,7 @@
 			url = "github:danth/stylix/release-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-
-#		nixd = {
-#			url = "github:nix-community/nixd";
-#			inputs.nixpkgs.follows = "nixpkgs";
-#		};
 	};
-
 
 	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
 	let

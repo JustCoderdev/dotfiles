@@ -29,7 +29,7 @@
 		# LSPs
 		# lua-language-server
 		# marksman
-		# nixd
+		nixd
 
 		# nodePackages.bash-language-server
 		# vscode-langservers-extracted
