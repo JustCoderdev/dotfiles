@@ -1,5 +1,9 @@
 { config, pkgs, settings, ... }:
 
+let
+	secrets = config.common.core.secrets;
+in
+
 {
 	services.mysql = {
 		enable = true;
@@ -21,7 +25,7 @@
 	services.cloudflare-dyndns =
 	{
 		enable = true;
-		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
+		apiTokenFile = secrets.cloudflare.api-token.path;
 		domains = [
 			"msi.foxburrow.org"
 		];
@@ -48,4 +52,41 @@
 		acceptTerms = true;
 		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
 	};
+
+	# TUNNEL
+
+	# Configure DNS on cloudflare interface
+	# <https://blog.cloudflare.com/argo-tunnels-that-live-forever/>
+	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/>
+	unofficial.services.cloudflared =
+	{
+		enable = true;
+		certificateFile = secrets.cloudflare.origin-cert.path;
+
+		tunnels."msi-cf" =
+		{
+			credentialsFile = secrets.cloudflare.tunnel-creds."msi-cf".path;
+			default = "http_status:404";
+
+			originRequest.noTLSVerify = true;
+
+			ingress =
+			let
+				create-rule = (
+					subdomain: proto: port: path:
+					{
+						"${subdomain}.foxburrow.org" =
+						{
+							inherit path;
+							service = "${proto}://127.0.0.1:${toString port}";
+						};
+					}
+				);
+			in
+			{ }
+			// (create-rule "msi-cf" "ssh"    22 ".*")
+			// {};
+		};
+	};
+
 }

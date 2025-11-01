@@ -24,6 +24,7 @@
 				cloudflare = {
 					origin-cert.installed = true;
 					api-token.installed = true;
+					tunnel-creds."msi-cf".installed = true;
 				};
 				discord.hooks."foxburrow".rebuilds.installed = true;
 			};
@@ -33,6 +34,7 @@
 				hosts = [
 					"jarvis-cf.foxburrow.org"
 					"quiss-cf.foxburrow.org"
+					"msi-cf.foxburrow.org"
 				];
 			};
 		};
