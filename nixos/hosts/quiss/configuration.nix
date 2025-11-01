@@ -1,20 +1,15 @@
-{ config, pkgs-unstable, pkgs, settings, inputs, ... }:
+{ config, pkgs, settings, inputs, ... }:
 
 let
-	inherit (settings) dotfiles_abs_path username;
-	unstable-path = inputs.nixpkgs-unstable.outPath;
 	secrets = config.common.core.secrets;
-
-	cfdomain = "foxburrow.org";
 
 	raid-mount = "/mnt/md0";
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
-	downloads-dir = data-dir + "/downloads";
-	game-dir      = data-dir + "/game";
 
 	openFirewall = false;
 	serv-group = "maid";
+
 	proxy = {
 		enable = true;
 		host = "quiss.server.lan";
@@ -29,17 +24,17 @@ in
 
 	# Create service group
 	users.groups."${serv-group}" = { };
-	users.users.${username}.extraGroups = [ serv-group ];
+	users.users.${settings.username}.extraGroups = [ serv-group ];
 
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
 		"d   ${config-dir}           0775 root ${serv-group}"
 		"d   ${data-dir}             0775 root ${serv-group}"
 
-		"d   ${game-dir}             0775 root ${serv-group}"
-		"d   ${downloads-dir}        0775 root ${serv-group}"
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
 
+		# App dirs
+		"d   ${data-dir}/downloads   0775 root ${serv-group}"
 		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
 		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
 		"d   ${data-dir}/music       0775 root ${serv-group}"
@@ -99,7 +94,6 @@ in
 			// (create-rule "jellyfin" "https" 443 "/jellyfin.*")
 			// (create-rule "immich"   "https" 443 ".*")
 
-			// (create-rule "deluge"   "https" 443 ".*")
 			// (create-rule "prowlarr" "https" 443 "/prowlarr.*")
 			// (create-rule "bazarr"   "https" 443 "/bazarr.*")
 
@@ -124,13 +118,15 @@ in
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 443 80 20000 ];
+	networking.firewall.allowedTCPPorts = [ 443 80 ];
 	services.nginx =
 	{
 		enable = true;
-		virtualHosts."${proxy.host}" = let
+		virtualHosts."${proxy.host}" =
+		let
 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
-		in {
+		in
+		{
 			locations = {
 				"= /home".return = "301 /home/index.html";
 				"^~ /home/" = {
@@ -144,34 +140,6 @@ in
 			sslCertificate = vhost-secrets.cert.path;
 			sslCertificateKey = vhost-secrets.key.path;
 		};
-		streamConfig = ''
-	server {
-		listen 20000;
-		proxy_pass 192.168.1.50:20000;
-
-		allow 192.168.7.8; # jarvis
-		deny  all;
-	}
-'';
-
-	# server {
-	# 	listen 80;
-		
-	# 	location /api {
-	# 		limit_except GET {
-	# 			auth_basic "NGINX Plus API";
-	# 			auth_basic_user_file ${secrets.nginx.basic_auth."dashboard".file.path};
-	# 		}
-		
-	# 		api	write=on;
-	# 	}
-		
-	# 	location = /dashboard.html {
-	# 		root	/usr/share/nginx/html;
-	# 	}
-	# }
-# '';
-
 	};
 
 	# ARR Stack
@@ -184,7 +152,7 @@ in
 		group = serv-group;
 
 		config-root-dir = config-dir;
-		shared-downloads-dir = downloads-dir;
+		shared-downloads-dir = "${data-dir}/downloads";
 
 		apps = {
 			prowlarr.enable = true;
@@ -222,8 +190,8 @@ in
 
 	system.services.syncthing = 
 	{
+		inherit openFirewall;
 		enable = true;
-		openFirewall = true;
 
 		dataDir = "${data-dir}/documents/synced";
 		group = serv-group;
@@ -235,58 +203,13 @@ in
 		in
 		{
 			          msi = (add-device "10.255.250.1" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
-			        quiss = (add-device "10.255.250.2" "OM3LICW-TEP5TOM-O2C4I5L-RE67TTX-CUD7TFZ-H4YHNKX-LOKOUMT-MFLJHAK");
+			        quiss = (add-device "10.255.250.2" "EWT7GNX-TSF5YRE-OTCN2ZH-A4OKVGI-QXCJQF4-OP7RBA2-PARSO2G-MFPKLAX");
 			iphone-tp-2_0 = (add-device "10.255.250.3" "3G4X4WY-UUCQG3V-3I6BXWC-BJ5I6OW-YHUJQ4K-77TJU5N-DL62ASO-4DDWRAG");
 			         asus = (add-device "10.255.250.4" "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7");
 		};
 	};
 
-	# MINECRAFT SERVERS
-
-	# services.minecraft-servers = {
-	# 	enable = false;
-	# 	eula = true;
-
-	# 	dataDir = "${game-dir}/minecraft/";
-
-	# 	servers =
-	# 	let
-	# 		# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
-	# 		default-properties = {
-	# 			allow-flight = true;
-	# 			difficulty = 3; # peaceful, easy, normal, hard
-	# 			enforce-whitelist = false;
-	# 			force-gamemode = false;
-	# 			gamemode = 0; # survival, creative, adventure, spectator
-	# 			online-mode = true;
-	# 			player-idle-timeout = 0;
-	# 			snooper-enabled = false;
-	# 		};
-
-	# 			# <https://mcuuid.net/> <https://namemc.com>
-	# 		default-whitelist = {
-	# 			ryuji_terix = "e2458645-fb10-4065-ac0c-f689aa30adff";
-	# 		};
-	# 	in
-	# 	{
-	# 		test-1-12 = {
-	# 			enable = true;
-	# 			package = pkgs.vanillaServers.vanilla-1_12_2;
-	# 			inherit openFirewall;
-
-	# 			jvmOpts = "-Xms4092M -Xmx6144M";
-
-	# 			serverProperties = default-properties // {
-	# 				level-name = "world";
-	# 				max-players = 5;
-	# 				motd = "Test vanilla 1.12.2";
-
-	# 				server-port = 25565;
-	# 				white-list = false;
-	# 			};
-
-	# 			whitelist = default-whitelist // { };
-	# 		};
-	# 	};
-	# };
+	# MINECRAFT SERVER
+	# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
+	# <https://mcuuid.net/> <https://namemc.com>
 }

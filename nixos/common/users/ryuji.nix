@@ -59,7 +59,7 @@ in
 # Permission table found here
 # <https://superuser.com/a/215506>
 
-echo "Setting correct ssh permissions"
+echo "setting correct ssh permissions"
 chown -R ${uname}:users ${uhome}/.ssh
 
 chmod 700 ${uhome}/.ssh           # Folder
