@@ -1,61 +1,50 @@
 { ... }:
 
 {
-	# DDNS
-
-	services.cloudflare-dyndns =
-	{
-		enable = true;
-		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
-		domains = [ "@.foxburrow.org" ];
-	};
-
-	# Master proxy
-	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
-
-	networking.firewall.allowedTCPPorts = [ 443 80 ];
-	services.nginx =
-	{
-		enable = true;
-		virtualHosts = {
-			"foxburrow.org" =
-			{
-			};
-
-			"www.foxburrow.org" =
-			{
-				locations = {
-					"/".proxyPass = "https://10.255.250.2";
-
-					"^~ /home/" = {
-						root = data-dir + "/homepage";
-						index = "index.html";
-					};
-
-				# addSSL = true;
-				forceSSL = true;
-				sslCertificate = vhost-secrets.cert.path;
-				sslCertificateKey = vhost-secrets.key.path;
-			};
-
-			"foxburrow.org" =
-			let
-				vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
-			in
-			{
-				locations."/".proxyPass = "https://10.255.250.2";
-
-				# forceSSL = true;
-				addSSL = true;
-				sslCertificate = vhost-secrets.cert.path;
-				sslCertificateKey = vhost-secrets.key.path;
-			};
-		};
-	};
-
-	security.acme = {
-		acceptTerms = true;
-		defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
-	};
-
+#	# DDNS
+#
+#	services.cloudflare-dyndns =
+#	{
+#		enable = true;
+#		apiTokenFile = config.common.core.secrets.cloudflare.api-token.path;
+#		domains = [ "@.foxburrow.org" ];
+#	};
+#
+#	# Master proxy
+#	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
+#
+#	networking.firewall.allowedTCPPorts = [ 443 80 ];
+#	services.nginx =
+#	let
+#		default-ssl-config =
+#		{
+#			forceSSL = true;
+#			enableAMCE = true;
+#		};
+#	in
+#	{
+#		enable = true;
+#
+#		recommendedOptimisation = true;
+#		recommendedTlsSettings = true;
+#		recommendedGzipSettings = true;
+#		recommendedProxySettings = true;
+#
+#		virtualHosts =
+#		{
+#			    "foxburrow.org" = (default-ssl-config) // { return = "301 $scheme://www.foxburrow.org$request_uri"; };
+#			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
+#
+#			"sonarr.foxburrow.org".locations =
+#			{
+#				"/" = (default-ssl-config) // { return = "301 /sonarr"; };
+#				"/sonarr".proxyPass = "https://10.255.250.2/sonarr";
+#			};
+#		};
+#	};
+#
+#	security.acme = {
+#		acceptTerms = true;
+#		defaults.email = "contact@foxburrow.org";
+#	};
 }

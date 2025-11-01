@@ -25,17 +25,14 @@
 				errors.installed = true;
 			};
 
-			nginx =
-			{
-				vhosts."quiss.server.lan" = {
-					cert = {
-						installed = true;
-						path = "/etc/nginx-certs/quiss_server_local-cert.crt";
-					};
-					key = {
-						installed = true;
-						path = "/etc/nginx-certs/quiss_server_local-cert.key";
-					};
+			nginx.vhosts."quiss.server.lan" = {
+				cert = {
+					installed = true;
+					path = "/etc/nginx-certs/quiss_server_local-cert.crt";
+				};
+				key = {
+					installed = true;
+					path = "/etc/nginx-certs/quiss_server_local-cert.key";
 				};
 			};
 		};

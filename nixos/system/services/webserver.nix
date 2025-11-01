@@ -2,36 +2,23 @@
 
 let
 	cfg = config.system.services.webserver;
-	hostname = settings.hostname;
+	inherit (settings) hostname username;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
-		networking.firewall.allowedTCPPorts = [ 80 ]; # 443 
+		networking.firewall.allowedTCPPorts = [ 80 ];
 		services.nginx = {
 			enable = true;
-
-			virtualHosts."${hostname}.host.lan" = {
-				root = "/var/www/${hostname}";
-				# enableACME = true;
-				# forceSSL = true;
-			};
+			virtualHosts."_".root = "/var/www/${hostname}";
 		};
 
 		systemd.tmpfiles.rules =
-		let
-			uname = settings.username;
-		in
 		[
 #			Type Path                           Mode User     Group Age Argument
-			"d   /var/www/${hostname}           0755 ${uname} users"
+			"d   /var/www/${hostname}           0755 ${username} users"
 		];
-
-		# security.acme = {
-		# 	acceptTerms = true;
-		# 	defaults.email = "107036402+JustCoderdev@users.noreply.github.com";
-		# };
 	};
 
 	# ------------------------------------------------------------ #
