@@ -1,4 +1,5 @@
 declare_plugin_config("nvim_lspconfig")
+
 -- Open logs:
 -- :lua vim.cmd('e'..vim.lsp.get_log_path())
 
@@ -7,123 +8,90 @@ declare_plugin_config("nvim_lspconfig")
 -- 	  - nvim_cmp
 -- 	  - lsp_signature
 
-local lspconfig = require_plugin("lspconfig")
+-- Migration guide:
+-- <https://xnacly.me/posts/2025/neovim-lsp-changes/#previous-configuration-via-lsp-config>
 
-
--- LANGUAGE SUPPORT --
 local snip_cap = require('cmp_nvim_lsp').default_capabilities()
 snip_cap.textDocument.completion.completionItem.snippetSupport = true
 
+local c_cap = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+c_cap.textDocument.completion.completionItem.snippetSupport = true
+c_cap.textDocument.completion.completionItem.resolveSupport = {
+	properties = { "documentation", "detail", "additionalTextEdits" },
+}
+
+local lsps =
+{
+
 -- Web
--- vim.g.markdown_fenced_languages = { "ts=typescript" } -- for deno
+	-- npm i -g vscode-langservers-extracted
+	{ "html",   { capabilities = snip_cap } },
+	{ "cssls",  { capabilities = snip_cap } },
+	{ "jsonls", { capabilities = snip_cap } },
+	{ "eslint", { capabilities = snip_cap } },
 
--- lspconfig.astro.setup { capabilities = snip_cap } -- npm install -g @astrojs/language-server
--- lspconfig.denols.setup { capabilities = snip_cap }
--- lspconfig.tsserver.setup { capabilities = snip_cap }
-
- -- npm i -g vscode-langservers-extracted
-lspconfig.html.setup { capabilities = snip_cap }
-lspconfig.cssls.setup { capabilities = snip_cap }
-lspconfig.jsonls.setup { capabilities = snip_cap }
-lspconfig.eslint.setup { capabilities = snip_cap }
-
--- npm i -g css-variables-language-server
-lspconfig.css_variables.setup { capabilities = snip_cap }
+	-- npm i -g css-variables-language-server
+	{ "css_variables", { capabilities = snip_cap } },
 
 -- Tools
-lspconfig.nixd.setup { capabilities = snip_cap }
-lspconfig.marksman.setup { capabilities = snip_cap }
-lspconfig.dockerls.setup { capabilities = snip_cap }
-lspconfig.docker_compose_language_service.setup { capabilities = snip_cap }
--- lspconfig.arduino_language_server.setup {} -- go install github.com/arduino/arduino-language-server@latest
-
--- Random
---local c_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
---c_capabilities.textDocument.completion.completionItem.snippetSupport = true
---c_capabilities.textDocument.completion.completionItem.resolveSupport = {
---	properties = { "documentation", "detail", "additionalTextEdits" },
---}
---lspconfig.clangd.setup {
---	on_attach = function(client, bufnr)
---		require("clangd_extensions.inlay_hints").setup_autocmd()
---		require("clangd_extensions.inlay_hints").set_inlay_hints()
---	end,
---	cmd = {
---		-- NixOS Shenanigans
---		"/usr/bin/env",
---		"clangd",
-
---		-- CLANGD args
---		--"/usr/bin/clangd",
---		"-pch-storage=memory",
---		"-pretty",
---		"-j=4",
---		"-header-insertion-decorators",
---		"-completion-style=detailed",
---		-- "-compile-commands-dir=/home/ryuji/.config/clangd"
-
---		-- NOT AVAILABLE IN version 7.0.1-8
---		"--function-arg-placeholders",
---		"--background-index",
---		"--all-scopes-completion",
---		"--header-insertion=never",
---		"--inlay-hints",
-
---		-- CLANG args
---		-- "/usr/bin/clang",
---		-- "-xc",
---		-- "-Wall",
---		-- "-Wextra",
---		-- "-Werror",
---		-- "-Wpedantic",
---		-- "-pedantic",
---		-- "-pedantic-errors",
---		-- "-std=c89",
---		-- "-fcolor-diagnostics"
---	},
---	filetypes = { "c", "cpp" }, --  "objc", "objcpp"
---	root_dir = lspconfig.util.root_pattern("src"),
---	-- init_option = {
---	-- 	fallbackFlags = { "-std=c89" },
---	-- },
---	capabilities = c_capabilities
---}
-
-
-lspconfig.bashls.setup {}
-lspconfig.lua_ls.setup {
-	on_init = function(client)
-		local path = client.workspace_folders[1].name
-		if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-			client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-				Lua = {
-					diagnostics = {
-						globals = { 'vim' }
-					},
-					runtime = {
-						version = 'LuaJIT'
-					},
-					workspace = {
-						library = {
-							[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-							[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+	{ "nixd",     { capabilities = snip_cap } },
+	{ "marksman", { capabilities = snip_cap } },
+	{ "dockerls", { capabilities = snip_cap } },
+	{ "bashls", { capabilities = snip_cap } },
+	{
+		"lua_ls",
+		{
+			on_init = function(client)
+				local path = client.workspace_folders[1].name
+				if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+					client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+						Lua = {
+							diagnostics = { globals = { 'vim' } },
+							runtime = { version = 'LuaJIT' },
+							workspace = { library = {
+								[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+								[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+							} },
 						}
-					},
-				}
-			})
-
-			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-		end
-		return true
-	end,
-	settings = {
-		Lua = {
-			completion = {
-				callSnippet = "Replace"
-			}
+					})
+					client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+				end
+				return true
+			end,
+			settings = { Lua = { completion = { callSnippet = "Replace" } } }
 		}
 	}
+
+-- C
+	{
+		"clangd",
+		{
+			on_attach = function(client, bufnr)
+				require("clangd_extensions.inlay_hints").setup_autocmd()
+				require("clangd_extensions.inlay_hints").set_inlay_hints()
+			end,
+
+			init_options = {
+				capabilities = c_cap,
+				fallbackFlags = {
+					"-std=c89", "-ansi", "-pedantic-errors", "-pedantic",
+					"-Wall", "-Wextra", "-Werror", "-Wshadow", "-Wpointer-arith",
+					"-Wcast-qual", "-Wcast-align", "-Wstrict-prototypes",
+					"-Wmissing-prototypes", "-Wconversion", "-g",
+					"-Wno-unused-variable", "-Wfatal-errors",
+				}
+			},
+		}
+	},
 }
+
+
+for _, lsp in pairs(lsps)
+do
+	local name, config = lsp[1], lsp[2]
+	vim.lsp.enable(name)
+	if config then vim.lsp.config(name, config) end
+end
 
 
 -- KEYMAPS --

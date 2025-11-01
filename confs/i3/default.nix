@@ -72,25 +72,6 @@ in
 			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
 			workspaceAutoBackAndForth = true;
 
-			startup =
-			let
-				add-script = (
-					command: workspace: always: notification:
-					{ inherit command workspace always notification; }
-				);
-				add-app = (
-					command: workspace:
-					(add-script command workspace false false)
-				);
-			in
-			[
-				(add-app "alacritty"       "2")
-				(add-app "firefox"         "1")
-				(add-app "dmenu_path > /tmp/dmenu_binaries" null)
-				(add-app "${pkgs.lightlocker}/bin/light-locker" null)
-				# (add-script "xsetroot -solid 262626" null true false) # set background to solid color
-			];
-
 			# keycodebindings = 
 			# let
 			# 	exec = (command: "exec --no-startup-id \"${command}\"");
@@ -302,5 +283,14 @@ in
 				};
 			} ];
 		};
+
+		extraConfig = ''
+exec --no-startup-id i3-msg 'workspace 2; alacritty'
+exec --no-startup-id i3-msg 'workspace 1; firefox'
+exec --no-startup-id dmenu_path > /tmp/dmenu_binaries
+exec --no-startup-id ${pkgs.lightlocker}/bin/light-locker
+# exec --no-startup-id xsetroot -solid 262626 # set background to solid color
+'';
+
 	};
 }
