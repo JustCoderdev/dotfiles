@@ -29,10 +29,9 @@
 		# LSPs
 		# lua-language-server
 		# marksman
-		nixd
-
 		# nodePackages.bash-language-server
 		# vscode-langservers-extracted
+		nixd
 	];
 
 	home.file = {

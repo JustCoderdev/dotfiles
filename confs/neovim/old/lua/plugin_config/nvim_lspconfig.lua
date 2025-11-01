@@ -25,47 +25,49 @@ local lsps =
 
 -- Web
 	-- npm i -g vscode-langservers-extracted
-	{ "html",   { capabilities = snip_cap } },
-	{ "cssls",  { capabilities = snip_cap } },
-	{ "jsonls", { capabilities = snip_cap } },
-	{ "eslint", { capabilities = snip_cap } },
+	-- { "html",   { capabilities = snip_cap } },
+	-- { "cssls",  { capabilities = snip_cap } },
+	-- { "jsonls", { capabilities = snip_cap } },
+	-- { "eslint", { capabilities = snip_cap } },
 
 	-- npm i -g css-variables-language-server
-	{ "css_variables", { capabilities = snip_cap } },
+	-- { "css_variables", { capabilities = snip_cap } },
 
 -- Tools
-	{ "nixd",     { capabilities = snip_cap } },
-	{ "marksman", { capabilities = snip_cap } },
-	{ "dockerls", { capabilities = snip_cap } },
-	{ "bashls", { capabilities = snip_cap } },
-	{
-		"lua_ls",
-		{
-			on_init = function(client)
-				local path = client.workspace_folders[1].name
-				if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-					client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-						Lua = {
-							diagnostics = { globals = { 'vim' } },
-							runtime = { version = 'LuaJIT' },
-							workspace = { library = {
-								[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-								[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-							} },
-						}
-					})
-					client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-				end
-				return true
-			end,
-			settings = { Lua = { completion = { callSnippet = "Replace" } } }
-		}
-	}
+	{ "nixd",     { cmd = { "/usr/bin/env" "nixd" }, capabilities = snip_cap } },
+	-- { "marksman", { capabilities = snip_cap } },
+	-- { "dockerls", { capabilities = snip_cap } },
+	-- { "bashls", { capabilities = snip_cap } },
+	-- {
+	-- 	"lua_ls",
+	-- 	{
+	-- 		on_init = function(client)
+	-- 			local path = client.workspace_folders[1].name
+	-- 			if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+	-- 				client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+	-- 					Lua = {
+	-- 						diagnostics = { globals = { 'vim' } },
+	-- 						runtime = { version = 'LuaJIT' },
+	-- 						workspace = { library = {
+	-- 							[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+	-- 							[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+	-- 						} },
+	-- 					}
+	-- 				})
+	-- 				client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+	-- 			end
+	-- 			return true
+	-- 		end,
+	-- 		settings = { Lua = { completion = { callSnippet = "Replace" } } }
+	-- 	}
+	-- }
 
 -- C
 	{
 		"clangd",
 		{
+			cmd = { "/usr/bin/env" "clangd" },
+
 			on_attach = function(client, bufnr)
 				require("clangd_extensions.inlay_hints").setup_autocmd()
 				require("clangd_extensions.inlay_hints").set_inlay_hints()
@@ -90,7 +92,6 @@ for _, lsp in pairs(lsps)
 do
 	local name, config = lsp[1], lsp[2]
 	vim.lsp.enable(name)
-	print(name)
 	if config then vim.lsp.config(name, config) end
 end
 
