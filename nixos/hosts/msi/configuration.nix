@@ -40,7 +40,7 @@ in
 		++
 		(
 			builtins.map
-				(name: "${name}.service.foxburrow.org")
+				(name: "${name}.foxburrow.org")
 				(services)
 		);
 	};
@@ -110,7 +110,7 @@ in
 				builtins.map (
 					name:
 					{
-						name = "${name}.service.foxburrow.org";
+						name = "${name}.foxburrow.org";
 						value = (default-ssl-config) // {
 							locations =
 							{
