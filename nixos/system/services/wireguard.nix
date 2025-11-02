@@ -40,32 +40,36 @@ in
 				enable = true;
 				interfaces = { }
 				//
+				lib.attrsets.optionalAttrs (cfg.server.enable)
 				(
-					builtins.mapAttrs (
-						iface-name: data:
-						{
-							ips = [ "${data.self-address}/${data.network.mask}" ];
-							listenPort = data.port;
+					(
+						builtins.mapAttrs (
+							iface-name: data:
+							{
+								ips = [ "${data.self-address}/${toString data.network.mask}" ];
+								listenPort = data.port;
 
-							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.network.id}/${data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
-							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.network.id}/${data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
+								postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.network.id}/${toString data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
+								postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.network.id}/${toString data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
 
-							privateKeyFile = "${secrets.defaultPath}/wireguard/self";
-							generatePrivateKeyFile = true;
+								privateKeyFile = "${secrets.defaultPath}/wireguard/self";
+								generatePrivateKeyFile = true;
 
-							peers = []
-							++ lib.attrsets.mapAttrsToList (
-								name: { publicKey, address }:
-								{
-									inherit name publicKey;
-									allowedIPs = [ "${address}/32" ];
-								}
-							) data.peers;
-						}
-					) enabled-interfaces
+								peers = []
+								++ lib.attrsets.mapAttrsToList (
+									name: { publicKey, address }:
+									{
+										inherit name publicKey;
+										allowedIPs = [ "${address}/32" ];
+									}
+								) data.peers;
+							}
+						) enabled-interfaces
+					)
 				)
 				//
-				lib.attrsets.optionalAttrs (cfg.client.enable) (
+				lib.attrsets.optionalAttrs (cfg.client.enable)
+				(
 					lib.attrsets.mapAttrs' (
 						name: { endpoint, port, publicKey, self-ip, allowed-ips }:
 						{

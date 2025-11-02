@@ -39,7 +39,7 @@
 			[
 				# (gen-builder      "msi.host.lan" 6)
 
-				(gen-builder "msi.foxburrow.org" 6)
+				(gen-builder     "foxburrow.org" 6)
 				(gen-builder  "quiss.server.lan" 4)
 				(gen-builder      "192.168.7.34" 8)
 
