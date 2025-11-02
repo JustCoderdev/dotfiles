@@ -86,8 +86,8 @@ in
 	let
 		default-ssl-config =
 		{
-			# onlySSL = true;
-			forceSSL = true;
+			# forceSSL = true;
+			onlySSL = true;
 			enableACME = true;
 		};
 	in
@@ -101,6 +101,7 @@ in
 
 		virtualHosts =
 		{
+			"_" = { listen = [{ addr = "0.0.0.0"; port = 80; }]; globalRedirect = "www.foxburrow.org"; };
 			"foxburrow.org" = (default-ssl-config) // { globalRedirect = "www.foxburrow.org"; };
 			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
 		}
