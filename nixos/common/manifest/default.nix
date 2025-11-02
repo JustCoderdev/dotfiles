@@ -21,8 +21,8 @@ in
 {
 	imports = [
 		./hardware/default.nix
-		# ./software/default.nix
-		# ./network/default.nix
+		./software/default.nix
+		./networks/default.nix
 	];
 
 	config =
@@ -41,26 +41,6 @@ in
 				) (hosts-name)
 			)
 		);
-
-
-		# Put network hosts in manifest
-		# -------------------- #
-		common.manifest.networks = import ./networks-list.nix;
-
-		# common.manifest.networks = (
-		# 	builtins.listToAttrs (
-		# 		builtins.map (
-		# 			network:
-		# 			{
-		# 				name = network.name;
-		# 				value =
-		# 				{
-		# 					# hosts = ();
-		# 				};
-		# 			}
-		# 		) (common.manifest.networks)
-		# 	)
-		# );
 	};
 
 	# ------------------------------------------------------------ #
@@ -69,44 +49,13 @@ in
 	{
 		networks = jc-lib.mkSubmodOption "The map of all available networks"
 		(
-			{ name, lib, ... }:
+			{ name, config, ... }:
 			{
-				options =
-				{
-					name = jc-lib.mkStrOptionRO "The name of the network" name;
-
-					# netid = jc-lib.mkStrRXOption "The id of the network" jc-lib.regex.address.ipv4;
-					netid = jc-lib.mkStrOption "The id of the network";
-					netmask = jc-lib.mkIntOption "The mask of the network";
-
-					domain-lan = lib.mkOption {
-						description = "The subdomain name of the network (<hostname>.<domain>.lan)";
-						type = lib.types.str;
-						default = name;
-					};
-
-					hosts = jc-lib.mkSubmodOption "The hosts in this network"
-					(
-						{ name, ... }:
-						{
-							config =
-							{
-								# TODO: should assert that `name` is a valid ip in range of the network id w mask
-								# assertions = [ {
-								# 	assertion = (builtins.match jc-lib.regex.address.ipv4 name) != null;
-								# 	message = "The ip of the host is not an ip ('${name}')";
-								# } ];
-							};
-
-							options =
-							{
-								hostname = jc-lib.mkStrOption "The hostname of the device with this ip in this network";
-							};
-						}
-					);
-				};
+				options = (import ./networks/options.nix { inherit name lib config jc-lib; });
 			}
 		);
+
+		services = (import ./software/list-options.nix { inherit lib config jc-lib; });
 
 		hosts = jc-lib.mkSubmodOption "The manifest for all known nixos devices"
 		(
@@ -116,7 +65,7 @@ in
 				{
 					hostname = jc-lib.mkStrOptionRO "The hostname of this manifest" name;
 					hardware = (import ./hardware/options.nix { inherit name lib config jc-lib; });
-					# software = (import ./software/options.nix { inherit name config; });
+					software = (import ./software/manifest-options.nix { inherit name lib config jc-lib; });
 				};
 			}
 		);

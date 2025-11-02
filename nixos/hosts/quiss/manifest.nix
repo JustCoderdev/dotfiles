@@ -21,5 +21,14 @@
 
 	# -------------------- #
 
+	software =
+	{
+		wireguard."wg-server" =
+		{
+			enable = true;
+			publicKey = "g01IZ3avpUFCXGsZwpTavv6AGPHHvRqL80SGfE+SYnI=";
+			self-address = "10.255.250.2";
+		};
+	};
 }
 

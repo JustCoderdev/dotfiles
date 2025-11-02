@@ -15,11 +15,14 @@ in
 {
 	config = lib.mkIf (cfg.client.enable || cfg.server.enable)
 	{
-		networking = 
+		networking =
 		{
-			firewall.allowedUDPPorts = lib.mkIf
-				(cfg.server.enable && cfg.server.openFirewall)
-				(lib.attrsets.mapAttrsToList (_: data: data.port) enabled-interfaces);
+			firewall.allowedUDPPorts = lib.mkIf (cfg.server.enable && cfg.server.openFirewall)
+			(
+				lib.attrsets.mapAttrsToList
+					(_: data: data.port)
+					enabled-interfaces
+			);
 
 			nat = lib.mkIf (cfg.server.enable)
 			{
@@ -41,27 +44,28 @@ in
 					builtins.mapAttrs (
 						iface-name: data:
 						{
-							ips = [ data.self-ip ];
+							ips = [ "${data.self-address}/${data.network.mask}" ];
 							listenPort = data.port;
 
-							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
-							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.tunnel-network} -o ${cfg.server.external-interface} -j MASQUERADE'';
+							postSetup =    ''${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${data.network.id}/${data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
+							postShutdown = ''${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${data.network.id}/${data.network.mask} -o ${cfg.server.external-interface} -j MASQUERADE'';
 
 							privateKeyFile = "${secrets.defaultPath}/wireguard/self";
 							generatePrivateKeyFile = true;
 
 							peers = []
 							++ lib.attrsets.mapAttrsToList (
-								name: { publicKey, ip }:
+								name: { publicKey, address }:
 								{
 									inherit name publicKey;
-									allowedIPs = [ "${ip}/32" ];
+									allowedIPs = [ "${address}/32" ];
 								}
 							) data.peers;
 						}
 					) enabled-interfaces
 				)
-				// lib.attrsets.optionalAttrs (cfg.client.enable) (
+				//
+				lib.attrsets.optionalAttrs (cfg.client.enable) (
 					lib.attrsets.mapAttrs' (
 						name: { endpoint, port, publicKey, self-ip, allowed-ips }:
 						{
@@ -104,15 +108,15 @@ in
 							options =
 							{
 								endpoint = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
+								publicKey = jc-lib.mkStrOption "The public key of the server";
 								port = lib.mkOption {
 									type = lib.types.port;
 									description = "port of the interface";
 									default = wg-default-port;
 								};
 						
-								publicKey = jc-lib.mkStrOption "The public key of the peer";
+								self-ip = jc-lib.mkStrOption "The ip address of the peer's end of the tunnel interface";
 								allowed-ips = jc-lib.mkListOption "All subnets allowed to be forwarded (0.0.0.0/0)" lib.types.str;
-								self-ip = jc-lib.mkStrOption "The IP address and subnet of the client's end of the tunnel interface";
 							};
 						}
 					)
@@ -139,13 +143,17 @@ in
 							default = wg-default-port;
 						};
 
-						tunnel-network = jc-lib.mkStrOption "The IP address and subnet of the network tunnel";
-						self-ip = jc-lib.mkStrOption "The IP address and subnet of the server's end of the tunnel interface";
+						network = {
+							id = jc-lib.mkStrOption "The IP address of the network tunnel";
+							mask = jc-lib.mkIntOption "The netmask of the network tunnel";
+						};
+
+						self-address = jc-lib.mkStrOption "The IP address of the server's end of the tunnel interface";
 						peers = jc-lib.mkSubmodOption "All allowed peers" (
 							{ name, ... }:
 							{
 								options = {
-									ip = jc-lib.mkStrOption "The ip of the peer (127.0.0.1)";
+									address = jc-lib.mkStrOption "The ip address of the peer (127.0.0.1)";
 									publicKey = jc-lib.mkStrOption "The public key of the peer";
 								};
 							}

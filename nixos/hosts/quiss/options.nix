@@ -107,20 +107,5 @@
 		# 		];
 		# 	};
 		# };
-		wireguard.client =
-		{
-			enable = true;
-			servers.wg-msi = {
-				endpoint = "msi.foxburrow.org:51820";
-				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
-
-				self-ip = "10.255.250.2/24";
-				allowed-ips = [
-					"10.255.250.1/32" # msi
-					"10.255.250.3/32" # iphone-tp-2_0
-					"10.255.250.4/32" # asus
-				];
-			};
-		};
 	};
 }
