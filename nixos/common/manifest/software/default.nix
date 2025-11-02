@@ -87,7 +87,7 @@ in
 							in
 							{
 								inherit (get-server-for-iface iface-name) publicKey;
-								inherit (wg-server-data) endpoint;
+								endpoint = "${wg-server-data.endpoint}:${toString wg-server-data.port}";
 
 								self-ip = "${manifest.self-address}/${toString wg-server-data.network.mask}";
 								allowed-ips = 
