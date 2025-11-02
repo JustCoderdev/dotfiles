@@ -6,6 +6,7 @@ let
 	services = [
 		"prowlarr" "bazarr" # "deluge"
 		"lidarr" "radarr" "readarr" "sonarr"
+		"jellyfin" "immich"
 	];
 in
 
@@ -86,8 +87,8 @@ in
 	let
 		default-ssl-config =
 		{
-			# forceSSL = true;
-			onlySSL = true;
+			# onlySSL = true;
+			forceSSL = true;
 			enableACME = true;
 		};
 	in
