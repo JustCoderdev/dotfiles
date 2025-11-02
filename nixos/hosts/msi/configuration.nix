@@ -2,6 +2,11 @@
 
 let
 	secrets = config.common.core.secrets;
+
+	services = [
+		"prowlarr" "bazarr" # "deluge"
+		"lidarr" "radarr" "readarr" "sonarr"
+	];
 in
 
 {
@@ -29,14 +34,27 @@ in
 		enable = true;
 		apiTokenFile = secrets.cloudflare.api-token.path;
 		domains = [
-			"msi.foxburrow.org"
-			"vpn.foxburrow.org"
-
 			"foxburrow.org"
 			"www.foxburrow.org"
-			"sonarr.foxburrow.org"
-		];
+		]
+		++
+		(
+			builtins.map
+				(name: "${name}.service.foxburrow.org")
+				(services)
+		);
 	};
+
+	# UDP   | TCP
+	# ----- | ------
+	# 137   | 22
+	# 138   | 80
+	# 3702  | 139
+	# 5353  | 443
+	# 21027 | 445
+	# 22000 | 5357
+	# 51820 | 22000
+	# 51821 |
 
 #	# Nginx quiss proxy
 
@@ -68,7 +86,7 @@ in
 	let
 		default-ssl-config =
 		{
-			onlySSL = true;
+			# onlySSL = true;
 			forceSSL = true;
 			enableACME = true;
 		};
@@ -83,22 +101,27 @@ in
 
 		virtualHosts =
 		{
-			"foxburrow.org" = (default-ssl-config) //
-			{
-				globalRedirect = "www.foxburrow.org";
-				listen = [{ addr = "0.0.0.0"; port = 433; ssl = true; }];
-			};
+			"foxburrow.org" = (default-ssl-config) // { globalRedirect = "www.foxburrow.org"; };
 			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
-
-			"sonarr.foxburrow.org" = (default-ssl-config) //
-			{
-				locations =
-				{
-					"/".return = "301 /sonarr";
-					"^~ /sonarr".proxyPass = "https://10.255.250.2/sonarr";
-				};
-			};
-		};
+		}
+		//
+		(
+			builtins.listToAttrs (
+				builtins.map (
+					name:
+					{
+						name = "${name}.service.foxburrow.org";
+						value = (default-ssl-config) // {
+							locations =
+							{
+								"/".return = "301 /${name}";
+								"^~ /${name}".proxyPass = "https://10.255.250.2/${name}";
+							};
+						};
+					}
+				) (services)
+			)
+		);
 	};
 
 	security.acme = {
