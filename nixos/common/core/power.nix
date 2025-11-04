@@ -1,10 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, settings, ... }:
+
+let
+	is-laptop = settings.hardware-type == "laptop";
+in
 
 {
 	powerManagement = {
 		enable = true;
-		cpuFreqGovernor = "performance";
-		#powertop.enable = true;
+		cpuFreqGovernor = if is-laptop then "powersave" else "performance";
+		powertop.enable = true;
 	};
 
 	services =
@@ -12,7 +16,7 @@
 		thermald.enable = true;
 
 		upower = {
-			enable = true;
+			enable = is-laptop;
 
 			criticalPowerAction = "Suspend";
 			allowRiskyCriticalPowerAction = true;
@@ -25,14 +29,14 @@
 		tlp = {
 			enable = true;
 			settings = {
-				CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";      #powersave
+				CPU_SCALING_GOVERNOR_ON_BAT = if is-laptop then "powersave" else "schedutil";
 				CPU_SCALING_GOVERNOR_ON_AC = "performance";
 
-				CPU_ENERGY_PERF_POLICY_ON_BAT = "performance";  # power
+				CPU_ENERGY_PERF_POLICY_ON_BAT = if is-laptop then "power" else "schedutil";
 				CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
 
 				CPU_MIN_PERF_ON_BAT = 0;
-				CPU_MAX_PERF_ON_BAT = 100;
+				CPU_MAX_PERF_ON_BAT = if is-laptop then 20 else 100;
 
 				CPU_MIN_PERF_ON_AC = 0;
 				CPU_MAX_PERF_ON_AC = 100;
@@ -45,9 +49,4 @@
 			lidSwitchDocked = "lock";
 		};
 	};
-
-	# programs.xss-lock = {
-	# 	enable = true;
-	# 	lockerCommand = "${pkgs.lightdm}/bin/dm-tool lock";
-	# };
 }
