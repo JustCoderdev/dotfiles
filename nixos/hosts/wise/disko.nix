@@ -1,4 +1,9 @@
 let
+	optionalattrs = (
+		expr: set:
+		if expr then set else { }
+	);
+
 	create-fs = (
 		format: mountpoint:
 		{
@@ -10,20 +15,19 @@ let
 	create-pt = (
 		size: type: content:
 		{ inherit size; }
-		// lib.attrs.optional (type != null) { inherit type; }
-		// lib.attrs.optional (content != null) { inherit content; }
+		// optionalattrs (type != null) { inherit type; }
+		// optionalattrs (content != null) { inherit content; }
 	);
 in
 {
 	disko.devices.disk.flash =
 	{
-		device = "/dev/mmcblk1";
+		device = "/dev/disk/by-id/mmc-DF4016_0x9a10f542";
 		type = "disk";
 
 		content =
 		{
 			type = "gpt";
-
 			partitions =
 			{
 				boot = (create-pt   "1M" "EF02" null); # grub mbr
