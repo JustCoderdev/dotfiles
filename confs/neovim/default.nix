@@ -22,9 +22,11 @@
 		xsel
 		fzf
 
+		git
+
 		# Parsers
 		tree-sitter
-		nodejs
+		# nodejs
 
 		# LSPs
 		# lua-language-server

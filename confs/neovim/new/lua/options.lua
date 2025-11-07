@@ -12,11 +12,11 @@ vim.opt.breakindent = true              -- wrapped line repeats indent
 vim.opt.breakindentopt = "shift:6"      -- settings for 'breakindent'
 
 vim.opt.cindent = true                  -- do C program indenting
-vim.opt.cinoptions = "=1s,t0,#1,P1"     -- how to do indenting when 'cindent' is set
+vim.opt.cinoptions = "=1s,t0,#0,P1"     -- how to do indenting when 'cindent' is set
+vim.opt.cinkeys = "0{,0},0),0],:,0#,!^F,o,O,e"
 
 vim.opt.clipboard = ""                  -- use the clipboard as the unnamed register
 vim.opt.colorcolumn = "80"              -- columns to highlight
-vim.opt.commentstring = "/* %s */"      -- template for comments; used for fold marker
 
 vim.opt.cpoptions = "I"                 -- flags for Vi-compatible behavior
 
@@ -60,9 +60,13 @@ vim.opt.smarttab = true                -- use 'shiftwidth' when inserting <Tab>
 vim.opt.shiftwidth = 0                 -- Number of spaces to use for each step of (auto)indent (0 to use tabstop)
 vim.opt.softtabstop = -1               -- number of spaces that <Tab> uses while editing
 vim.opt.tabstop = 4                    -- number of spaces that <Tab> in file uses
+vim.opt.termguicolors = COLOR_CAPABLE  -- whether the terminal is color capable
 
 vim.opt.wrap = false                   -- long lines wrap and continue on the next line
 
+
+-- Extra options
+-- #----------------------------------------------------------# --
 
 -- :h c.vim
 vim.cmd("au BufRead,BufNewFile *.h set filetype=c")

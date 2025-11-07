@@ -65,6 +65,7 @@ packer.startup({
 		-- IMPORTANT: before lsp
 		use "folke/neodev.nvim"     -- Lua language extension
 		use "p00f/clangd_extensions.nvim" -- C language extension
+		:
 
 --		use {                       -- Display function definition
 --			"ray-x/lsp_signature.nvim",

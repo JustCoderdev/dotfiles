@@ -7,7 +7,7 @@ FALLBACK_COLORSCHEME = "retrobox" --sorbet
 
 -- CONST
 
--- ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
+ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
 
 
 -- FUNCTIONS
@@ -25,7 +25,11 @@ end
 -- INIT
 
 require_file("options")
+require_file("keymaps")
+require_file("lsp")
+require_file("plugins")
 
+print(".") -- sacrificed to the buffer gods
 
 -- TMP COLORSCHEME
 
