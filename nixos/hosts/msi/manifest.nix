@@ -38,7 +38,6 @@
 			"wg-server" =
 			{
 				enable = true;
-				is-server = true;
 				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
 				self-address = "10.255.250.1";
 			};
@@ -46,7 +45,6 @@
 			"wg-giugio" =
 			{
 				enable = true;
-				is-server = true;
 				publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
 				self-address = "10.255.249.1";
 			};

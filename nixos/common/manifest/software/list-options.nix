@@ -12,14 +12,19 @@
 			{
 				enable = lib.mkEnableOption "this wireguard server interface";
 
-				endpoint = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
-				port = lib.mkOption {
-					type = lib.types.port;
-					description = "port of the interface";
-					default = wg-default-port;
+				server-hostname = jc-lib.mkStrOption "The hosts that is running this service";
+				endpoint =
+				{
+					url = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
+					port = lib.mkOption {
+						type = lib.types.port;
+						description = "port of the interface";
+						default = wg-default-port;
+					};
 				};
 
-				network = {
+				network =
+				{
 					id = jc-lib.mkStrOption "The IP address of the network tunnel";
 					mask = jc-lib.mkIntOption "The netmask of the network tunnel";
 				};

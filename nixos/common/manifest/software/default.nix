@@ -2,99 +2,89 @@
 
 let
 	manifest-cfg = config.common.manifest;
-	self-manifest = manifest-cfg.self;
-
-	self-sw = self-manifest.software;
+	self-sw = manifest-cfg.self.software;
 in
 
 {
 	config =
 	{
 		common.manifest.services = import ./services-list.nix;
+
 		system.services =
 		{
 			wireguard =
 			let
 				get-hosts-with-iface = (
 					iface-name:
-					lib.attrsets.filterAttrs
-					(
-						_: manifest:
-						(lib.attrsets.hasAttrByPath [ iface-name ] (manifest.software.wireguard))
-						&& manifest.software.wireguard.${iface-name}.enable
-					)
-					(manifest-cfg.hosts)
+					lib.attrsets.filterAttrs (
+						_: host-manifest:
+						(lib.attrsets.hasAttrByPath [ iface-name ] (host-manifest.software.wireguard))
+						&& host-manifest.software.wireguard.${iface-name}.enable
+					) manifest-cfg.hosts
 				);
 
-				get-server-for-iface = (
-					iface-name:
-					builtins.elemAt
-					(
-						lib.attrsets.mapAttrsToList
-						(
-							hostname: manifest:
-							manifest.software.wireguard.${iface-name}
-						) (
-							lib.attrsets.filterAttrs
-								(_: manifest: manifest.software.wireguard.${iface-name}.is-server)
-								(get-hosts-with-iface iface-name)
-						)
-					) 0
+				self-client-interfaces = (
+					lib.attrsets.filterAttrs (
+						iface-name: iface:
+						iface.enable &&
+						manifest-cfg.self.hostname != manifest-cfg.services.wireguard.${iface-name}.server-hostname
+					) self-sw.wireguard
 				);
-				self-interfaces = (lib.attrsets.filterAttrs (_: value: value.enable && !value.is-server) self-sw.wireguard);
 			in
 			{
 				server.interfaces =
 				(
 					builtins.mapAttrs
 					(
-						iface-name: manifest:
-						lib.attrsets.optionalAttrs (manifest.enable)
+						iface-name: iface:
+						let
+							iface-data = manifest-cfg.services.wireguard.${iface-name};
+						in
 						{
-							inherit (manifest) enable network port;
-							inherit (get-server-for-iface iface-name) self-address;
+							inherit (iface) enable self-address;
+							inherit (iface-data) network;
+							inherit (iface-data.endpoint) port;
 
-							peers = manifest.extraPeers //
+							peers = iface-data.extraPeers //
 							(
 								lib.attrsets.mapAttrs
 								(
 									_: manifest:
+									let
+										iface = manifest.software.wireguard.${iface-name};
+									in
 									{
-										inherit (manifest.software.wireguard.${iface-name}) publicKey;
-										address = manifest.software.wireguard.${iface-name}.self-address;
+										inherit (iface) publicKey;
+										address = iface.self-address;
 									}
 								) (get-hosts-with-iface iface-name)
 							);
 						}
-					) (lib.attrsets.filterAttrs (_: manifest: manifest.enable) manifest-cfg.services.wireguard)
+					) (lib.attrsets.filterAttrs (_: iface: iface.enable) self-sw.wireguard)
 				);
 
 				client =
 				{
-					enable = (lib.lists.length (lib.attrsets.mapAttrsToList (name: _: name) self-interfaces)) > 0;
+					enable = (lib.lists.length (lib.attrsets.mapAttrsToList (n: _: n) self-client-interfaces)) > 0;
 					servers =
 					(
 						builtins.mapAttrs
 						(
-							iface-name: manifest:
+							iface-name: iface:
 							let
-								wg-server-data =
-								(
-									manifest-cfg.services.wireguard.${iface-name}
-									//
-									config.system.services.wireguard.server.interfaces.${iface-name}
-								);
+								iface-data = manifest-cfg.services.wireguard.${iface-name};
+								server-iface = manifest-cfg.hosts.${iface-data.server-hostname}.software.wireguard.${iface-name};
 							in
 							{
-								inherit (get-server-for-iface iface-name) publicKey;
-								endpoint = "${wg-server-data.endpoint}:${toString wg-server-data.port}";
+								inherit (server-iface) publicKey;
+								inherit (iface-data) endpoint;
 
-								self-ip = "${manifest.self-address}/${toString wg-server-data.network.mask}";
-								allowed-ips = 
+								self-ip = "${iface.self-address}/${toString iface-data.network.mask}";
+								allowed-ips =
 								(
 									lib.attrsets.mapAttrsToList
 										(_: manifest: "${manifest.address}/32")
-										(wg-server-data.extraPeers)
+										(iface-data.extraPeers)
 								)
 								++
 								(
@@ -103,7 +93,7 @@ in
 										(get-hosts-with-iface iface-name)
 								);
 							}
-						) (self-interfaces)
+						) (self-client-interfaces)
 					);
 				};
 			};

@@ -8,7 +8,6 @@
 			options = 
 			{
 				enable = lib.mkEnableOption "Wheater to enable wireguard for this host";
-				is-server = lib.mkEnableOption "Wheather this is the server for the interface";
 
 				# TODO: Check that string is a valid cidr
 				self-address = jc-lib.mkStrOption "The ip address of this peer";

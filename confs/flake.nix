@@ -1,8 +1,8 @@
 {
 	description = "JC Home Configuration flake";
 
-	inputs = {
-
+	inputs =
+	{
 		nixpkgs.url = "nixpkgs/nixos-25.05";
 
 		home-manager = {

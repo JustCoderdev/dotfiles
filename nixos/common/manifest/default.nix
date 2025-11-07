@@ -2,20 +2,6 @@
 
 let
 	cfg = config.common.manifest;
-	boot-cfg = config.boot;
-	self-manifest = cfg.self;
-
-	hosts-dir = "${settings.dotfiles_store_path}/nixos/hosts";
-	hosts-name = (
-		lib.attrsets.mapAttrsToList (name: _: name) (
-			lib.attrsets.filterAttrs
-			(
-				name: value:
-				!(lib.strings.hasPrefix "." name) && (value == "directory")
-			)
-			(builtins.readDir hosts-dir)
-		)
-	);
 in
 
 {
@@ -25,23 +11,7 @@ in
 		./networks/default.nix
 	];
 
-	config =
-	{
-		# All manifests
-		# -------------------- #
-
-		common.manifest.hosts = (
-			builtins.listToAttrs (
-				builtins.map (
-					host-name:
-					{
-						name = host-name;
-						value = import "${hosts-dir}/${host-name}/manifest.nix";
-					}
-				) (hosts-name)
-			)
-		);
-	};
+	config = { };
 
 	# ------------------------------------------------------------ #
 

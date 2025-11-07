@@ -71,19 +71,20 @@ in
 				lib.attrsets.optionalAttrs (cfg.client.enable)
 				(
 					lib.attrsets.mapAttrs' (
-						name: { endpoint, port, publicKey, self-ip, allowed-ips }:
+						name: { endpoint, publicKey, self-ip, allowed-ips }:
 						{
 							inherit name;
 							value =
 							{
 								ips = [ "${self-ip}" ];
-								listenPort = port;
+								listenPort = endpoint.port;
 
 								privateKeyFile = "${secrets.defaultPath}/wireguard/self";
 								generatePrivateKeyFile = true;
 
 								peers = [ {
-									inherit publicKey endpoint;
+									inherit publicKey;
+									endpoint = "${endpoint.url}:${toString endpoint.port}";
 									allowedIPs = allowed-ips;
 									persistentKeepalive = 25;
 								} ];
@@ -111,12 +112,14 @@ in
 						{
 							options =
 							{
-								endpoint = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
 								publicKey = jc-lib.mkStrOption "The public key of the server";
-								port = lib.mkOption {
-									type = lib.types.port;
-									description = "port of the interface";
-									default = wg-default-port;
+								endpoint = {
+									url = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
+									port = lib.mkOption {
+										type = lib.types.port;
+										description = "port of the interface";
+										default = wg-default-port;
+									};
 								};
 						
 								self-ip = jc-lib.mkStrOption "The ip address of the peer's end of the tunnel interface";

@@ -7,7 +7,9 @@
 		"wg-server" =
 		{
 			enable = true;
-			endpoint = "foxburrow.org";
+
+			server-hostname = "msi";
+			endpoint.url = "foxburrow.org";
 
 			network = { id = "10.255.250.0"; mask = 24; };
 			extraPeers.iphone-tp-2_0 = (add-peer "10.255.250.3" "WUEqbbv7RGfw9EhKjPDeZqwkuKwsODsdTtvMv7Gt+Vk=");
@@ -16,8 +18,9 @@
 		"wg-giugio" =
 		{
 			enable = true;
-			endpoint = "foxburrow.org";
-			port = 51821;
+
+			server-hostname = "msi";
+			endpoint = { url = "foxburrow.org"; port = 51821; };
 
 			network = { id = "10.255.249.0"; mask = 24; };
 			extraPeers =
