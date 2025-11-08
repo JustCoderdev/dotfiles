@@ -1,39 +1,45 @@
-> `/!\` My dotfiles had an incident
+> [!warning]
+> 
+> My dotfiles had an incident
 >
-> This is why all commits before a certain point report
-> the date of the incident and at least 8 commits got lost (as far as I know)
+> This is why all commits before a certain point report the date of the incident, at least 8 commits got lost (as far as I know)
 
-> `(i)` My dotfiles are divided in 4 branches:
+# Dotfiles
+
+---
+
+These are my dotfiles, feel free to use them and share with me any feedback or trick you may know :p
+
+> [!info] 
+> 
+> There are 4 branches:
 >
 > - `main`: Oldest "stable" version (fully "compatible" with macos)
 > - `nixos-integration`: (CURRENT) Restructuring of nixos w better flakes
 > - `nixos-compliant`: [DEPRECATED] Messy stable version of nixos
 > - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
-
-```plaintext
-* 16d55fd main
-|\
-| * 88e48b9 nixos-compliant (nixpkgs-23.05)
-| |\
-| | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
-| | |
-| |/
-| * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-| |
-| * 0be0f74 nixos-compliant (nixpkgs-24.11)
-' |
-  * 91c5ef1 nixos-integration (nixpkgs-24.11)
-  v
-```
-
-# Dotfiles
-
-These are my dotfiles, feel free to use them and
-share with me any feedback or trick you may know :p
-
-> Virtual machine notes
 >
-> - Nixos doesn't like default graphics driver, use `VBoxVGA`
+> ```plaintext
+> * 16d55fd main
+> |\
+> | * 88e48b9 nixos-compliant (nixpkgs-23.05)
+> | |\
+> | | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+> | | |
+> | |/
+> | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+> | |
+> | * 0be0f74 nixos-compliant (nixpkgs-24.11)
+> ' |
+>   * 91c5ef1 nixos-integration (nixpkgs-24.11)
+>   v
+> ```
+
+> [!tip]
+> 
+> Nixos and virtual machines
+>
+> - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
 > - Hyrpland may not work in a VM
 
 ---
@@ -58,7 +64,7 @@ share with me any feedback or trick you may know :p
 These are all my dotfiles which are compatible with or
 without (or at least that's the goal) nix/NixOS installed
 
-- `Operating System`: NixOS
+- `Operating System`: NixOS (duh)
 - `Terminal`: Alacritty
 - `Editor`: Nvim (trying emacs tho...)
 
@@ -87,7 +93,6 @@ Included configuration files
 - Zsh \[\>5.7.1\]
 - and more...
 
-
 ## Special Requirements
 
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
@@ -104,7 +109,7 @@ Included configuration files
 
 ### Fix
 
-- Fix disko using `/dev/disk/by-id/...` instead one `/dev/...` with `ll /dev/disk/by-id`
+- Fix disko using `/dev/disk/by-id/...` instead one `/dev/...` with `ll`
 - Fix keyrings not persisting credentials
 - Fix host files manually to use grub
 - Fix WakeOnLan module to make it persistent across reboots
@@ -131,7 +136,7 @@ Included configuration files
 
 1. Clone
 
-```bash
+```shell
 DOT_FILES="${HOME}/.config/dotfiles" # or /.dotfiles
 git clone https://github.com/JustCoderdev/dotfiles.git "${DOT_FILES}"
 cd "${DOT_FILES}"
@@ -141,7 +146,7 @@ cd "${DOT_FILES}"
 
 - Without nix
 
-```bash
+```shell
 ./bin/bash-scripts/mount-configs.sh
 ```
 
@@ -149,7 +154,7 @@ cd "${DOT_FILES}"
 
 Home manager
 
-```bash
+```shell
 cd confs
 
 # add "--extra-features 'nix-command flakes'" after `nix`
@@ -161,7 +166,7 @@ nix build ".#${USER}-activation"
 
 Disk partitions
 
-```bash
+```shell
 # add "--extra-features 'nix-command flakes'" after `nix`
 # and before `run` if using a non-flake env
 sudo nix \
@@ -169,14 +174,15 @@ sudo nix \
      --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix
 ```
 
-
 - With NixOS
 
-You will get "relative path error for ./bin..."
-To fix it remove any mention of jcbin and jcconfs from `flake.lock`
-and rebuild `./bin/bash-scrips/rebuild-system.sh`
+> [!caution]
+> 
+> You will get "relative path error for ./bin..."
+> 
+> To fix it remove any mention of `jcbin` and `jcconfs` from `flake.lock` and rebuild
 
-```bash
+```shell
 ./install.sh
 ```
 
@@ -206,8 +212,8 @@ There are 3 main directories (+1):
 
 - `common`:
     - `core`: required stuff from all systems (locale, font, etc...)
-    - `environments`: togglable user "environments" (gaming, development)
-    - `manifest`: manifest related files
+    - `environments`: user "environments" (gaming, development)
+    - `manifest`: [new] settings to create the ecosystem of hosts
     - `users`: system users
 - `hosts`:
     - `.example`: example configuration files for installation script
@@ -246,7 +252,7 @@ All secrets are "indexed" in `nixos/common/core/secrets.nix`
 
 ### Cloudflared
 
-```
+```shell
 cd ${DOT_FILES}/secrets/cloudflare
 nix-shell -p cloudflared
 
@@ -259,7 +265,7 @@ mv *.json tunnel-home.json
 
 ### WPA Supplicant psk
 
-```
+```shell
 cd ${DOT_FILES}/secrets
 token=$(wpa_passphrase WindTower-LTE PSK)
 echo "windtower_lte_psk=${token}" > wireless.conf
@@ -268,7 +274,7 @@ vim wireless.conf
 
 ### Nix Serve
 
-```
+```shell
 cd ${DOT_FILES}/secrets
 sudo nix-store --generate-binary-cache-key DOMAIN \
         nixserve/cache-priv-key.pem nixserve/cache-pub-key.pem
@@ -280,7 +286,7 @@ sudo nix-store --generate-binary-cache-key DOMAIN \
 
 Source <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
 
-```
+```shell
 cd ${DOT_FILES}/secrets/nginx/VHOST
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout VHOST-cert.key -out VHOST-cert.crt
@@ -290,7 +296,7 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 ### Enable flakes in nix system
 
-```bash
+```shell
 cd ~/.config/nix/nix.conf # or /etc/nix/nix.conf
 experimental-features = nix-command flakes
 ```
@@ -299,27 +305,27 @@ experimental-features = nix-command flakes
 
 Get backup path
 
-```bash
+```shell
 nix derivation show -r /run/current-system \
         | grep --color -E '"out": "/nix/store/.*dotfiles-backup"'
 ```
 
 Open backup path (EXPERIMENTAL)
 
-```bash
+```shell
 current-dotfiles
 ```
 
 ### Connect to internet (with wpa_supplicant)
 
-```bash
+```shell
 wpa_passphrase <ESSID> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
 systemctl restart wpa_supplicant
 ```
 
 ### Connect to internet (with nmcli)
 
-```bash
+```shell
 nmcli device wifi rescan
 nmcli device wifi list
 nmcli device wifi connect <SSID> password <password>
@@ -327,7 +333,7 @@ nmcli device wifi connect <SSID> password <password>
 
 ### Connect to bluetooth
 
-```bash
+```shell
 bluetootctl scan on
 bluetootctl list
 bluetootctl connect <ADDRESS>
@@ -335,7 +341,7 @@ bluetootctl connect <ADDRESS>
 
 ### Enable ssh connection
 
-```bash
+```shell
 sudo apt-get install openssh-server
 sudo systemctl enable ssh
 sudo systemctl start ssh
@@ -344,7 +350,7 @@ sudo systemctl status ssh
 
 ### Generate and add new ssh keypair
 
-```bash
+```shell
 ssh-keygen -t ed25519 -C "USER@HOST"
 id_HOST_USER
 
@@ -354,7 +360,7 @@ ssh-add ~/.ssh/id_HOST_USER
 
 ### Check battery level
 
-```bash
+```shell
 cat /sys/class/power_supply/<BAT>/status
 cat /sys/class/power_supply/<BAT>/charge_now
 cat /sys/class/power_supply/<BAT>/charge_full
@@ -367,7 +373,7 @@ Sources
 - <https://www.jeffgeerling.com/blog/2021/htgwa-create-raid-array-linux-mdadm>
 - <https://www.youtube.com/watch?v=CJ0ed38N8-s>
 
-```bash
+```shell
 # Create raid
 sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1
 cat /proc/mdstat  # check creation progress
@@ -386,7 +392,7 @@ blkid # check if md0 shows up
 
 Source <https://www.thomas-krenn.com/en/wiki/Mdadm_recovery_and_resync>
 
-```bash
+```shell
 # hot remove
 sudo mdadm --manage /dev/md0 -r /dev/sdc1
 
@@ -398,7 +404,7 @@ sudo mdadm --manage /dev/md0 -a /dev/sdc1
 
 Login with `smb://<ip>/<share>`
 
-```
+```shell
 # Create a user
 sudo smbpasswd -a <username>
 
@@ -410,7 +416,7 @@ sudo pdbedit -L
 
 Source <https://blog.tiserbox.com/posts/2024-04-15-how-to-fix-boot-volume-running-out-of-disk-space-in-nix-os.html>
 
-```
+```shell
 sudo su
 
 # Check occupied space
@@ -453,7 +459,7 @@ boot.loader.grub.efiInstallAsRemovable = true;
 
 Regenerate boot `BOOTX64.EFI`
 
-```
+```shell
 sudo su
 mkdir -p /home/$USER/Documents/boot
 mv /boot/* /home/$USER/Documents/boot
@@ -466,7 +472,7 @@ Sources
 - Shrink file system <https://access.redhat.com/articles/1196333>
 - Resize partition <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/s2-disk-storage-parted-resize-part>
 
-```
+```shell
 # Check fs integrity
 sudo e2fsck -f /dev/sda1
 
@@ -497,13 +503,13 @@ Source <https://wiki.nixos.org/wiki/Storage_optimization#Moving_the_store>
 
 1. Create a new partition and mount it over `/mnt`
 
-```
+```shell
 sudo mount -o defaults,noatime /dev/disk/by-label/nix /mnt/nix
 ```
 
 2. Copy everything from `/nix` to `/mnt` (Trailing slashes are important)
 
-```
+```shell
 sudo rsync \
     --archive \
     --hard-links \
@@ -515,14 +521,14 @@ sudo rsync \
 
 3. Mount the new partition as the new `/nix`
 
-```
+```shell
 sudo umount /mnt/nix
 sudo mount /dev/disk/by-label/nix /nix
 ```
 
 4. Restart nix-daemon
 
-```
+```shell
 sudo systemctl stop nix-daemon.service
 sudo systemctl restart nix-daemon.socket
 sudo systemctl start nix-daemon.service
@@ -547,13 +553,13 @@ fileSystems."/nix" = {
 
 8. Check that `/nix` is mounted over your partition
 
-```
+```shell
 sudo mount | grep "/nix" && echo "Nix store is on a new partition" || echo "Nix is on the old partition"
 ```
 
 9. Delete the old store
 
-```
+```shell
 sudo mkdir /tmp/old_root
 sudo mount --bind / /tmp/old_root
 sudo rm --recursive /tmp/old_root/nix
