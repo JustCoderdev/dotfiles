@@ -1,85 +1,45 @@
-# To create the rescue option
+# TODO: look into how to create the rescue option (use alpine?)
 # Source <https://github.com/cleverca22/nixos-configs/blob/master/rescue_boot.nix>
 
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, ... }:
 
 let
 	cfg = config.common.core.bootloader;
-	cfg-grub = config.boot.loader.grub;
 
-	display-resolution = (
-		if cfg.display-resolution != null
-		then cfg.display-resolution
-		else "auto"
-	);
-
-	installer-netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
-		inherit (settings) system;
-		modules = [ (pkgs.path + "/nixos/modules/installer/netboot/netboot-minimal.nix") ];
-	};
-
-	netboot-build = installer-netboot.config.system.build;
-	netboot-boot  = installer-netboot.config.boot;
+	grub-power-menu-entry = ''
+submenu "Power options" {
+	menuentry "Poweroff" { halt }
+	menuentry "Reboot" { reboot }
+	menuentry "Reboot to Firmware" { fwsetup }
+}
+'';
 in
 
 {
 	config =
 	{
-		boot.loader = { }
-		//
-		lib.mkIf (!cfg-grub.enable)
+		boot.loader =
 		{
-			# --- UEFI --- #
-
-			efi.canTouchEfiVariables = true;
-			systemd-boot = {
-				enable = true;
-				configurationLimit = 5;
-			};
-		}
-		//
-		lib.mkIf (cfg-grub.enable)
-		{
-			# --- GRUB --- #
-
-			grub =
+			grub = lib.mkIf (cfg.grub.enable)
 			{
+				inherit (cfg.grub) enable;
+				extraEntries = grub-power-menu-entry;
+				useOSProber = false;
+
+				gfxmodeEfi  = cfg.display-resolution;
+				gfxmodeBios = cfg.display-resolution;
+
+				# efi support
 				device = lib.mkIf (cfg.support-efi) "nodev";
 				efiInstallAsRemovable = cfg.support-efi;
 				efiSupport = cfg.support-efi;
-
-				gfxmodeEfi  = display-resolution;
-				gfxmodeBios = display-resolution;
-				useOSProber = false;
-
-				extraEntries = ''
-submenu "Power options" {
-
-	menuentry "Poweroff" {
-		halt
-	}
-
-	menuentry "Reboot" {
-		reboot
-	}
-
-	menuentry "Reboot to Firmware" {
-		fwsetup
-	}
-}
-''
-+ lib.strings.optionalString (cfg.rescue.enable) ''
-menuentry "Rescue Mode" {
-	linux ($drive1)/rescue-kernel init=${netboot-build.toplevel}/init ${toString netboot-boot.kernelParams}
-	initrd ($drive1)/rescue-initrd
-}
-'';
-
-				extraFiles = lib.mkIf (cfg.rescue.enable) {
-					"rescue-kernel" = "${netboot-build.kernel}/bzImage";
-					"rescue-initrd" = "${netboot-build.netbootRamdisk}/initrd";
-				};
 			};
+
+			# --- PURE UEFI / NO GRUB --- #
+			# systemd-boot.enable = true;
+			# systemd-boot.configurationLimit = 5;
+			# efi.canTouchEfiVariables = true;
+			# --- PURE UEFI / NO GRUB --- #
 		};
 	};
 
@@ -87,13 +47,14 @@ menuentry "Rescue Mode" {
 
 	options.common.core.bootloader =
 	{
-		rescue.enable = lib.mkEnableOption "Add a rescue entry in grub launch options";
-		support-efi = lib.mkEnableOption "Whether the device has efi support";
+		grub.enable = lib.mkEnableOption "grub as the bootloader";
+
+		support-efi = lib.mkEnableOption "efi support on the bootloader for this device";
 		display-resolution = lib.mkOption {
 			description = "The resolution of the primary display";
-			type = lib.types.nullOr lib.types.str;
+			type = lib.types.str;
 			example = "1920x1080";
-			default = null;
+			default = "auto";
 		};
 	};
 }

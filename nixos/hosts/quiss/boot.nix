@@ -3,16 +3,15 @@
 let
 	secrets = config.common.core.secrets;
 	discord-hooks-errors-path = secrets.discord.hooks.foxburrow.errors.path;
-	mdadm-notify-discord-pkg = pkgs.writeShellScriptBin "mdadm-notify-discord"
-''
+	mdadm-notify-discord-pkg = pkgs.writeShellScriptBin "mdadm-notify-discord" ''
 ${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR ''${1}: ''${2}\" }" "$(cat ${discord-hooks-errors-path})"
 '';
 in
 
 {
-	# Bootloader
-
-	common.core.bootloader = {
+	common.core.bootloader =
+	{
+		grub.enable = true;
 		support-efi = true;
 		display-resolution = "1920x1080";
 	};

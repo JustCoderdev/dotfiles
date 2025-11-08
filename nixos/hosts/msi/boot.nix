@@ -1,9 +1,9 @@
 { config, pkgs, settings, ... }:
 
 {
-	# Bootloader
-
-	common.core.bootloader = {
+	common.core.bootloader =
+	{
+		grub.enable = true;
 		support-efi = true;
 		display-resolution = "1920x1080";
 	};
@@ -17,11 +17,10 @@
 	};
 
 	systemd.tmpfiles.rules = let
-		uname = settings.username;
-		uhome = "/home/${uname}";
+		uhome = "";
 	in [
-#		Type Path           Mode User     Group Age Argument
-		"d   /home/WDC_WD10 0755 ${uname} users                   "
-		"L+  /home/WDC_WD10 -    -        -     -   ${uhome}/HDisk"
+#		Type Path           Mode User                 Group Age   Argument
+		"d   /home/WDC_WD10 0755 ${settings.username} users"
+		"L+  /home/WDC_WD10 -    -                    -     -     /home/${settings.username}/HDisk"
 	];
 }
