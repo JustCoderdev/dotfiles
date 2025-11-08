@@ -86,7 +86,8 @@ in
 									inherit publicKey;
 									endpoint = "${endpoint.url}:${toString endpoint.port}";
 									allowedIPs = allowed-ips;
-									persistentKeepalive = 25;
+									persistentKeepalive = 30;
+									dynamicEndpointRefreshSeconds = 60;
 								} ];
 							};
 						}

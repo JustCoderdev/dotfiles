@@ -1,10 +1,8 @@
-{ pkgs, lib, modulesPath, settings, ... }:
+{ pkgs, ... }:
 
 {
 	imports = [
-		# (modulesPath + "/profiles/perlless.nix")
 		./audio.nix
-		./avahi.nix
 		./bluetooth.nix
 		./bootloader.nix
 		./console.nix

@@ -5,7 +5,7 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
 		services.displayManager.hiddenUsers = [ "neko-agent" ];
 		users.users."neko-agent" =
@@ -24,11 +24,7 @@ in
 
 	options.common.users.neko-agent =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable remote stat user";
-			default = true;
-		};
+		enable = lib.mkEnableOption "server-cat user agent" // { default = true; };
 	};
 }
 

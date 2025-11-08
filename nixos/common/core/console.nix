@@ -2,14 +2,12 @@
 
 {
 	# Configure console keymap
-	console = {
+	console =
+	{
 		enable = true;
-
-		# Font too big
-		# font = "Roboto Mono";
-		# font = "${pkgs.roboto-mono}/share/fonts/truetype/RobotoMono-Medium.ttf";
-
-		# keyMap = "it2";
 		useXkbConfig = true;
+
+		# Fonts in /etc/static/kbd/consolefonts
+		# font = "${pkgs.kbd}/share/consolefonts/Lat2-Terminus16.psfu.gz";
 	};
 }

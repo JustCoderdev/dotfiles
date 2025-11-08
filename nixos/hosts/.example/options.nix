@@ -1,7 +1,6 @@
-{ ... }:
-
 {
-	jcbin = {
+	jcbin =
+	{
 		backlight.enable = false;
 		boomer.enable = false;
 		eep.enable = false;
@@ -11,50 +10,67 @@
 		umount-configs.enable = false;
 	};
 
-	common = {
-		core = {
-			network.wakeOn = {
+	common =
+	{
+		core =
+		{
+			network.wakeOn =
+			{
 				lan.enabledFor = [ ];
 				wlan.enabledFor = [ ];
 				knownDevices = { };
 			};
 
-			plymouth.enable = false;
+			secrets =
+			{
+				# ...
+			};
 
-			ssh.cloudflared-proxy = {
+			ssh.cloudflared-proxy =
+			{
 				enable = false;
 				hosts = [ ];
 			};
 		};
 
-		users = {
+		environments =
+		{
+			development =
+			{
+				enable = false;
+				tools = {
+					android.enable = false;
+					c.enable = false;
+					game-development.enable = false;
+					network.enable = false;
+				};
+			};
+			gaming.enable = false;
+		};
+
+		users =
+		{
+			hass-agent.enable = false;
+			neko-agent.enable = true;
 			ryuji = {
 				enable = true;
-
-				docs-editing = false;
-				image-editing = false;
-				video-editing = false;
-				game-developing = false;
+				media-manipulation-suite = {
+					documents.enable = false;
+					images.enable = false;
+					videos.enable = false;
+				};
 			};
-
-			neko-agent.enable = true;
-			hass-agent.enable = true;
 		};
 	};
 
 	system =
 	{
-		dev = {
-			android.enable = false;
-			arduino.enable = false;
-			c.enable = false;
-			net.enable = false;
-		};
-
-		gaming.enable = false;
-
-		services = {
+		services =
+		{
+			avahi.enable = false;
 			docker.enable = false;
+			home-assistant.enable = false;
+
 			nixbuilder = {
 				server.enable = false;
 				client.builders =
@@ -69,13 +85,15 @@
 					);
 				in
 				[
-					(gen-builder "msi.host.local" 6)
+					(gen-builder "msi.local" 6)
 				];
 			};
+
 			nixcache = {
 				enable = false;
-				instance-host = "msi.host.local";
+				instance-host = "msi.local";
 			};
+
 			routing =
 			{
 				enable = false;
@@ -88,7 +106,7 @@
 				};
 				dhcp = {
 					enable = false;
-					range = ""; 
+					range = "";
 					reserved-leases = [];
 				};
 				nat = {
@@ -96,13 +114,16 @@
 					forwarded-ports = [];
 				};
 			};
+
 			rtmp = {
 				enable = false;
 				openFirewall = false;
 				proxy.enable = false;
 			};
+
 			samba.enable = false;
-			syncthing = 
+
+			syncthing =
 			{
 				enable = false;
 				openFirewall = false;
@@ -114,7 +135,9 @@
 				in
 				{ };
 			};
+
 			virtualbox.enable = false;
+
 			wireguard = {
 				openFirewall = false;
 				client =
@@ -128,6 +151,7 @@
 					};
 				};
 			};
+
 			webserver.enable = false;
 		};
 	};

@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 {
-	fonts = {
+	fonts =
+	{
 		packages = with pkgs; [
 			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {})
 			helvetica-neue-lt-std
@@ -35,4 +36,6 @@
 			];
 		};
 	};
+
+
 }

@@ -1,7 +1,6 @@
-{ ... }:
-
 {
-	imports = [
+	imports =
+	[
 		./cloudflared.nix
 		./duckdns.nix
 		./fusuma.nix

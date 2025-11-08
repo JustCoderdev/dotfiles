@@ -20,26 +20,21 @@ in
 			];
 		};
 
-		security.sudo = {
-			extraRules = [{
-				users = [ "hass-agent" ];
-				commands = [{
-					command = "${config.system.path}/bin/poweroff";
-					options = [ "NOPASSWD" ];
-				}];
+		security.sudo.extraRules =
+		[{
+			users = [ "hass-agent" ];
+			commands = [{
+				command = "${config.system.path}/bin/poweroff";
+				options = [ "NOPASSWD" ];
 			}];
-		};
+		}];
 	};
 
 	# ------------------------------------------------------------ #
 
 	options.common.users.hass-agent =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable remote control by home-assistant";
-			default = true;
-		};
+		enable = lib.mkEnableOption "home-assistant user agent";
 	};
 }
 

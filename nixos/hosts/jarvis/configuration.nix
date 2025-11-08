@@ -62,20 +62,7 @@ in
 	# ------------------------------------------------------------ #
 
 	networking.hosts."192.168.1.50" = [ "display.lan" ];
-
 	networking.firewall.allowedTCPPorts = [ 80 ];
-# 	services.nginx =
-# 	{
-# 		enable = true;
-# 		virtualHosts."${proxy.host}" = let
-# 			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
-# 		in {
-# 			# forceSSL = true;
-# 			addSSL = true;
-# 			sslCertificate = vhost-secrets.cert.path;
-# 			sslCertificateKey = vhost-secrets.key.path;
-# 		};
-# 	};
 
 	systemd.network = {
 		enable = true;
@@ -105,12 +92,10 @@ in
 				# "NerioGoPro2".pskRaw = "ext:neriogopro_psk";
 			};
 		};
-
 	};
 
-	environment.systemPackages = [] ++ (
-		lib.attrsets.mapAttrsToList (name: pkg: pkg) usb-pkgs
-	);
+	environment.systemPackages = []
+	++ lib.attrsets.mapAttrsToList (name: pkg: pkg) usb-pkgs;
 
 	services.udev.extraRules = ''
 # This is for Linux before 6.0:
@@ -122,6 +107,16 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 	RUN+="/bin/sh -c \"chmod -f 660 $sys$devpath/*port*/disable || true\""
 '';
 
+
 	users.users."hass".extraGroups = [ "dialout" ];
-	system.services.home-assistant.packages.usb = { } // usb-pkgs;
+	system.services.home-assistant = 
+	{
+		openFirewall = false;
+		proxy = {
+			enable = true;
+			host = "jarvis.server.lan";
+			aliases = [ "192.168.7.8" ];
+		};
+		home-assistant.packages.usb = { } // usb-pkgs;
+	};
 }

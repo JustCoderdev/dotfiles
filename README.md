@@ -187,7 +187,7 @@ There are 3 main directories (+1):
 - `bin`: various scripts available in a flake
 - `confs`: application configuration files (w home-manager support)
 - `nixos`: nixos system modules
-- `secrets`: local host secrets
+- `secrets`: local secrets directory
 
 ### bin
 
@@ -196,7 +196,7 @@ There are 3 main directories (+1):
 
 ### confs
 
-- `.wallpapers`: wallpapers for the desktop
+- `.wallpapers`: desktop wallpapers
 - `users`: available users
 - `settings`: user settings (username and insecure/unfree packages list)
 - `standalone`: configurations that exists only in home-manager
@@ -206,8 +206,9 @@ There are 3 main directories (+1):
 
 - `common`:
     - `core`: required stuff from all systems (locale, font, etc...)
+    - `environments`: togglable user "environments" (gaming, development)
     - `manifest`: manifest related files
-    - `users`: user settings
+    - `users`: system users
 - `hosts`:
     - `.example`: example configuration files for installation script
     - `.old`: host configurations files for hosts that haven't yet migrated to manifest sytem
@@ -218,9 +219,7 @@ There are 3 main directories (+1):
         - `manifest.nix`: manifest file
         - `options.nix`: [soon to be deprecated] set values for custom options
 - `system`:
-    - `desktop`: desktop env stuff
-    - `dev`: dev shit
-    - `gaming`: gaming stuff
+    - `desktop`: desktop environment
     - `services`: daemons and what not
 - `unofficial`:
     - `pkgs`: custom packaged applications

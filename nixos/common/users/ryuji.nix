@@ -1,16 +1,10 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username;
+
 	cfg = config.common.users.ryuji;
 	self-manifest = config.common.manifest.self;
-
-	titleCase = text: lib.concatStrings [
-		(lib.toUpper (builtins.substring 0 1 text))
-		(builtins.substring 1 (builtins.stringLength text) text)
-	];
-
-	inherit (settings) username;
-	uhome = "/home/${username}";
 in
 
 {
@@ -18,7 +12,14 @@ in
 	{
 		system.nixos.tags = [ "${username}" ];
 
-		users.users.${username} = {
+		users.users.${username} =
+		let
+			titleCase = text: lib.concatStrings [
+				(lib.toUpper (builtins.substring 0 1 text))
+				(builtins.substring 1 (builtins.stringLength text) text)
+			];
+		in
+		{
 			name = username;
 			description = (titleCase username);
 
@@ -42,6 +43,9 @@ in
 		};
 
 		system.activationScripts =
+		let
+			uhome = "/home/${username}";
+		in
 		{
 			correct-ssh-dir-perms.text = ''
 # Permission table found here
@@ -60,68 +64,32 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 		[
 			nix-tree
 			(callPackage ../../unofficial/pkgs/schemer2.nix { })
-
-			# (
-			# 	python313Packages.callPackage ../../unofficial/pkgs/unmaniac.nix {
-			# 		inherit (pkgs) git;
-			# 		inherit (pkgs.nodePackages) npm;
-			# 		inherit (pkgs.python.pkgs) pip;
-			# 	}
-			# )
 		]
-		++ lib.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
-		[
-			google-chrome
-
-			telegram-desktop
-
-			firefox
-			obsidian
-
-			vlc
-			audacity
-			emulsion
-
-			gnome-disk-utility
-			gpick
-
-			# baobab
-			# rustdesk
-		]
-		++ lib.optionals (cfg.docs-editing)    [ libreoffice ]
-		++ lib.optionals (cfg.image-editing)   [ gimp krita ]
-		++ lib.optionals (cfg.video-editing)   [ davinci-resolve obs-studio ]
-		++ lib.optionals (cfg.game-developing) [ blender godot_4 ];
+		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
+		(
+			[
+				firefox google-chrome
+				telegram-desktop
+				obsidian vlc audacity emulsion
+				gnome-disk-utility gpick
+				# baobab rustdesk
+			]
+			++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
+			++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
+			++ lib.lists.optionals (cfg.media-manipulation-suite.videos.enable)    [ davinci-resolve obs-studio ]
+		);
 	};
 
 	# ------------------------------------------------------------ #
 
 	options.common.users.ryuji =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable personal user";
-			default = true;
-		};
-		docs-editing = lib.mkOption  {
-			type = lib.types.bool;
-			description = "Add docs editing sofware to environment packages";
-			default = false;
-		};
-		image-editing = lib.mkOption  {
-			type = lib.types.bool;
-			description = "Add image editing sofware to environment packages";
-			default = false;
-		};
-		video-editing = lib.mkOption {
-			type = lib.types.bool;
-			description = "Add video editing sofware to environment packages";
-			default = false;
-		};
-		game-developing = lib.mkOption {
-			type = lib.types.bool;
-			description = "Add game developing sofware to environment packages";
-			default = false;
+		enable = lib.mkEnableOption "ryuji personal user" // { default = true; };
+		media-manipulation-suite =
+		{
+			documents.enable = lib.mkEnableOption "document manipulation suite";
+			images.enable = lib.mkEnableOption "image manipulation suite";
+			videos.enable = lib.mkEnableOption "video manipulation suite";
 		};
 	};
 }
