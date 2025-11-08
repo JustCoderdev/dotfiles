@@ -1,4 +1,4 @@
-{ pkgs, config, lib, settings, ... }:
+{ pkgs, config, options, lib, settings, ... }:
 
 let
 	cfg = config.common.core.audio;
@@ -9,7 +9,7 @@ in
 	config = lib.mkMerge
 	[
 		(
-			lib.mkIf (cfg.pipewire.enable)
+			lib.mkIf (cfg.frontend == cfg.available-frontends.pipewire)
 			{
 				services.pulseaudio.enable = false;
 
@@ -25,16 +25,12 @@ in
 					alsa.support32Bit = true;
 					pulse.enable = true;
 					jack.enable = true;
-
-					# use the example session manager (no others are packaged yet so this is enabled by default,
-					# no need to redefine it in your config for now)
-					#media-session.enable = true;
 				};
 			}
 		)
 
 		(
-			lib.mkIf (cfg.pulseaudio.enable)
+			lib.mkIf (cfg.frontend == cfg.available-frontends.pulseaudio)
 			{
 				services.pipewire.enable = false;
 
@@ -52,18 +48,41 @@ in
 		)
 	];
 
+	# ------------------------------------------------------------ #
+
 	options.common.core.audio = 
 	{
-		pipewire.enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable pipewire support";
-			default = false;
+		enable = lib.mkEnableOption "audio support";
+		frontend = lib.mkOption {
+			description = "What underlying 'driver' is used for audio support";
+			type = lib.types.enum cfg.available-frontends-list;
+			default = cfg.available-frontends.pulseaudio;
 		};
 
-		pulseaudio.enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable pulseaudio support";
-			default = false;
+		# -------------------- #
+
+		available-frontends =
+		let
+			add-frontend = (
+				name:
+				lib.mkOption {
+					description = "Fixed name for ${name} frontend";
+					type = lib.types.str;
+					readOnly = true;
+					default = name;
+				}
+			);
+		in
+		{
+			pulseaudio = (add-frontend "pulseaudio");
+			pipewire = (add-frontend "pipewire");
+		};
+
+		available-frontends-list = lib.mkOption {
+			description = "All available audio frontends";
+			type = lib.types.listOf lib.types.str;
+			readOnly = true;
+			default = with cfg.available-frontends; [ pulseaudio pipewire ];
 		};
 	};
 }

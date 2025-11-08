@@ -28,7 +28,7 @@ in
 		# Audio
 		# -------------------- #
 
-		common.core.audio.pulseaudio.enable = lib.mkDefault self-audio.capable;
+		common.core.audio.enable = lib.mkDefault self-audio.capable;
 
 
 		# Graphics
