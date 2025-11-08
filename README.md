@@ -6,11 +6,9 @@
 
 # Dotfiles
 
----
-
 These are my dotfiles, feel free to use them and share with me any feedback or trick you may know :p
 
-> [!info] 
+> [!note] 
 > 
 > There are 4 branches:
 >
@@ -176,11 +174,11 @@ sudo nix \
 
 - With NixOS
 
-> [!caution]
+> [!important]
 > 
 > You will get "relative path error for ./bin..."
 > 
-> To fix it remove any mention of `jcbin` and `jcconfs` from `flake.lock` and rebuild
+> To fix it remove any mention of `jcbin` and `jcconfs` from `flake.lock` and then rebuild
 
 ```shell
 ./install.sh
@@ -447,7 +445,7 @@ rebuild-system
 Source <https://discourse.nixos.org/t/systemd-boot-keeps-starting-even-if-grub-is-installed/23065/8>
 
 ```nix
-grub.nix
+# grub.nix
 
 boot.loader.efi.canTouchEfiVariables = false;
 
