@@ -5,26 +5,15 @@ let
 in
 
 {
-	programs.zsh = {
+	programs.zsh =
+	{
 		enable = true;
 		completionInit = "";
 
 		initContent = ''
 export DOT_NIXOS=1;
 export DOT_FILES='${dotfiles_abs_path}'
-source "''${DOT_FILES}/confs/zsh/.zshrc"
+source "''${DOT_FILES}/confs/modules/zsh/.zshrc"
 '';
-
-# if [ -z "''${DOT_FILES:-}" ]; then
-# 	echo -e "\033[31mUnknown dotfiles path\033[0m"
-# 	echo -e "Set DOT_FILES environmental variable in shell"
-# else
-# fi
-
-	};
-
-	home.file = {
-		# ".zshrc".source = ./.zshrc;
-		# ".config/zsh/ccomp".source = ./.zshrc;
 	};
 }

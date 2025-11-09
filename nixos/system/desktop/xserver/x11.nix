@@ -116,7 +116,7 @@ esac
 			mouse.middleEmulation = false;
 
 			touchpad = {
-				accelProfile = "flat";       # flat, adaptive
+				accelProfile = "adaptive";       # flat, adaptive
 				clickMethod = "buttonareas"; # buttonareas, clickfinger
 
 				# dmesg | grep i8042

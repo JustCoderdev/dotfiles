@@ -25,7 +25,7 @@ fi
 # Completition
 
 ## Pre load completition (?)
-fpath=("${DOT_FILES}/confs/zsh/ccomp" ${fpath})
+fpath=("${DOT_FILES}/confs/modules/zsh/ccomp" ${fpath})
 autoload -U compinit; compinit
 _comp_options+=(globdots)
 zmodload zsh/complist
@@ -47,7 +47,7 @@ zstyle ':completion:*' group-name ''
 
 
 # Source the rest...
-source "${DOT_FILES}/confs/zsh/prompt.zsh"
-source "${DOT_FILES}/confs/zsh/aliases.zsh"
-source "${DOT_FILES}/confs/zsh/pathers.zsh"
+source "${DOT_FILES}/confs/modules/zsh/prompt.zsh"
+source "${DOT_FILES}/confs/modules/zsh/aliases.zsh"
+source "${DOT_FILES}/confs/modules/zsh/pathers.zsh"
 
