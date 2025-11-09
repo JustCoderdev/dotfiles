@@ -51,7 +51,7 @@ in
 # Permission table found here
 # <https://superuser.com/a/215506>
 
-echo "correct ssh directory permissions for '${uhome}/.ssh'"
+echo "correcting ssh directory permissions for '${uhome}/.ssh'"
 
 chown -R ${username}:users ${uhome}/.ssh
 chmod 700 ${uhome}/.ssh           # Folder
