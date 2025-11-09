@@ -18,10 +18,19 @@ in
 			{
 				"3" =
 				{
-					 left.command = "exec i3 focus right";
-					right.command = "exec i3 focus left";
-					   up.command = "exec i3 focus down";
-					 down.command = "exec i3 focus up";
+					 # left.command = "exec i3 focus right";
+					# right.command = "exec i3 focus left";
+					 #   up.command = "exec i3 focus down";
+					 # down.command = "exec i3 focus up";
+
+					# MacOS drag style
+					begin.command = "xdotool mousedown 1";
+					update = {
+						command = "xdotool mousemove_relative -- $move_x, $move_y";
+						interval = 0.01;
+						accel = 2;
+					};
+					end.command = "xdotool mouseup 1";
 				};
 
 				"4" =
