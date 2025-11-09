@@ -1,13 +1,13 @@
 { settings, ... }:
 
 let
-	inherit (settings) has-de;
+	inherit (settings) wallpapers_path has-de;
 in
 
 {
 	wayland.windowManager.hyprland =
 	{
-		enable = true && settings.has-de;
+		enable = true && has-de;
 		systemd.enable = true;
 
 		settings = {
@@ -23,7 +23,7 @@ in
 				scroll_method = "twofinger";
 			};
 			exec-once = "swww-daemon --format xrgb";
-			exec = "swww img ${settings.wallpapers_path}/space_engineers.png";
+			exec = "swww img ${wallpapers_path}/space_engineers.png";
 		};
 
 		extraConfig = (builtins.readFile ./hyprland.conf);

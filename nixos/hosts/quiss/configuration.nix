@@ -1,6 +1,8 @@
 { config, pkgs, settings, inputs, ... }:
 
 let
+	inherit (settings) username;
+
 	secrets = config.common.core.secrets;
 
 	raid-mount = "/mnt/md0";
@@ -25,7 +27,7 @@ in
 
 	# Create service group
 	users.groups."${serv-group}" = { };
-	users.users.${settings.username}.extraGroups = [ serv-group ];
+	users.users.${username}.extraGroups = [ serv-group ];
 
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
@@ -101,7 +103,7 @@ in
 	system.services.samba.shares.custom = let
 		create-share = (name: root: owner: { inherit name root owner; });
 	in [
-		(create-share "data" raid-mount settings.username)
+		(create-share "data" raid-mount username)
 	];
 
 	# Homepage

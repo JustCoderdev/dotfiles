@@ -1,7 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	username = settings.username;
+	inherit (settings) username;
+
 	cfg = config.system.services.docker;
 in
 
@@ -9,15 +10,12 @@ in
 	config = lib.mkIf cfg.enable
 	{
 		environment.systemPackages = [ pkgs.docker-compose ];
-		virtualisation.docker = {
+
+		virtualisation.docker =
+		{
 			enable = true;
-
-			# Disable iptables to use nftables
-			extraOptions  = "--iptables=False";
-
-			daemon.settings = {
-				data-root = "/home/${username}/Developer/.docker/";
-			};
+			daemon.settings.data-root = "/home/${username}/Developer/.docker/";
+			extraOptions  = "--iptables=False"; # Disable iptables to use nftables
 		};
 
 		users.users.${username}.extraGroups = [ "docker" ];
@@ -27,11 +25,7 @@ in
 
 	options.system.services.docker = 
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable docker daemon";
-			default = false;
-		};
+		enable = lib.mkEnableOption "docker daemon";
 	};
 }
 

@@ -1,6 +1,7 @@
 { config, lib, settings, jc-lib, ... }:
 
 let
+	inherit (settings) hostname;
 	cfg = config.system.services.syncthing;
 in
 
@@ -76,7 +77,7 @@ in
 
 	options.system.services.syncthing =
 	{
-		enable = lib.mkEnableOption "Enable syncthing service";
+		enable = lib.mkEnableOption "syncthing daemon";
 		openFirewall = lib.mkEnableOption "Open firewall";
 		dataDir = lib.mkOption {
 			description = "The path where synchronised directories will exist";
@@ -87,7 +88,7 @@ in
 		username = lib.mkOption {
 			description = "User to run syncthing as";
 			type = lib.types.str;
-			default = settings.username;
+			default = username;
 		};
 		group = lib.mkOption {
 			description = "Group to run syncthing as";

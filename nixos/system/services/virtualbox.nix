@@ -1,6 +1,8 @@
 { config, lib, settings, ... }:
 
 let
+	inherit (settings) username;
+
 	cfg = config.system.services.virtualbox;
 in
 
@@ -12,7 +14,7 @@ in
 			enableExtensionPack = true;
 		};
 
-		users.users.${settings.username}.extraGroups = [ "vboxusers" ];
+		users.users.${username}.extraGroups = [ "vboxusers" ];
 	};
 
 	# ------------------------------------------------------------ #

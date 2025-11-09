@@ -1,6 +1,8 @@
 { config, lib, settings, ... }:
 
 let
+	inherit (settings) dotfiles_abs_path;
+
 	cfg = config.common.core.secrets;
 
 	mkAttrListOption = (
@@ -39,7 +41,7 @@ in
 		defaultPath = lib.mkOption {
 			type = lib.types.str;
 			description = "Path to secrets directory";
-			default = "${settings.dotfiles_abs_path}/secrets";
+			default = "${dotfiles_abs_path}/secrets";
 		};
 
 		# -------------------- #

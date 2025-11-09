@@ -1,6 +1,8 @@
 { config, lib, jc-lib, settings, ... }:
 
 let
+	inherit (settings) hostname;
+
 	cfg = config.common.manifest;
 in
 
@@ -43,7 +45,7 @@ in
 		self = lib.mkOption {
 			description = "The manifest for all known nixos devices";
 			type = lib.types.attrs; # type = lib.types.submodule host-options;
-			default = cfg.hosts.${settings.hostname};
+			default = cfg.hosts.${hostname};
 			readOnly = true;
 		};
 	};

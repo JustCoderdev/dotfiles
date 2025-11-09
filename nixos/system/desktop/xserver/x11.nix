@@ -1,11 +1,12 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username hardware-type dotfiles_store_path;
+
 	self-manifest = config.common.manifest.self;
 	dm-cfg = config.services.xserver.displayManager;
 	xfce-cfg = config.system.desktop.xfce;
 	i3-cfg = config.system.desktop.i3;
-	inherit (settings) username dotfiles_store_path;
 in
 
 {
@@ -33,9 +34,10 @@ in
 
 		services =
 		{
-			xserver = {
+			xserver =
+			{
 				enable = true;
-				videoDrivers = lib.mkIf (settings.hardware-type == "virtual-machine") [ "wmware" ];
+				videoDrivers = lib.mkIf (hardware-type == "virtual-machine") [ "wmware" ];
 
 				displayManager =
 				{

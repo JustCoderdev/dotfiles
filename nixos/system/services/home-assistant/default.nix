@@ -1,10 +1,12 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username;
+
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
 	hass-port = 8123;
-	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${settings.hostname}_hass";
+	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${hostname}_hass";
 
 	add-wol-dev  = (name: domain: mac: { inherit name domain mac; command = "sudo poweroff"; });
 	add-wowl-dev = (name: domain: mac: { inherit name domain mac; command = "sudo eep"; });
@@ -31,7 +33,7 @@ in
 		# Generate hass key
 		services.openssh.hostKeys = [ {
 			type = "ed25519";
-			comment = "hass@${settings.hostname}";
+			comment = "hass@${hostname}";
 			path = hass-ssh-key-path;
 		} ];
 

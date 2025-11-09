@@ -1,5 +1,9 @@
 { config, pkgs, settings, ... }:
 
+let
+	inherit (settings) username;
+in
+
 {
 	common.core.bootloader =
 	{
@@ -19,8 +23,8 @@
 	systemd.tmpfiles.rules = let
 		uhome = "";
 	in [
-#		Type Path           Mode User                 Group Age   Argument
-		"d   /home/WDC_WD10 0755 ${settings.username} users"
-		"L+  /home/WDC_WD10 -    -                    -     -     /home/${settings.username}/HDisk"
+#		Type Path           Mode User                 Group Age Argument
+		"d   /home/WDC_WD10 0755 ${username} users"
+		"L+  /home/WDC_WD10 -    -                    -     -   /home/${username}/HDisk"
 	];
 }

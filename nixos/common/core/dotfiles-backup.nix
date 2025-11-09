@@ -1,11 +1,13 @@
 { pkgs, settings, ... }:
 
 let
+	inherit (settings) dotfiles_store_path;
+
 	dotfiles-backup = pkgs.stdenv.mkDerivation {
 		name = "dotfiles-backup";
 
 		version = "1.0";
-		src = settings.dotfiles_store_path;
+		src = dotfiles_store_path;
 
 		installPhase = ''
 			mkdir -p $out/current-dotfiles

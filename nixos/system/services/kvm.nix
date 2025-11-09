@@ -1,6 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username;
+	
 	cfg = config.system.services.kvm;
 in
 
@@ -10,7 +12,7 @@ in
 		environment.systemPackages = with pkgs; [ qemu ];
 
 		programs.virt-manager.enable = true;
-		users.users.${settings.username}.extraGroups = [ "libvirtd" ];
+		users.users.${username}.extraGroups = [ "libvirtd" ];
 
 		virtualisation.libvirtd =
 		{
@@ -35,10 +37,10 @@ in
 
 	options.system.services.kvm =
 	{
-		enable = lib.mkEnableOption "Enable kvm daemon";
+		enable = lib.mkEnableOption "kvm daemon";
 		allowedBridges = lib.mkOption {
 			type = lib.types.listOf lib.types.str;
-			description = "List of bridge devices that can be used by qemu:///session.";
+			description = "List of bridge devices that can be used by qemu:///session";
 			default = [];
 		};
 	};

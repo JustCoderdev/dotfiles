@@ -1,6 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username;
+
 	cfg = config.stylix.module;
 in
 
@@ -26,7 +28,7 @@ in
 			hyprpaper.enable = lib.mkForce false;
 			hyprlock.enable = lib.mkForce false;
 
-			firefox.profileNames = [ "${settings.username}" ];
+			firefox.profileNames = [ "${username}" ];
 		};
 	};
 }

@@ -1,8 +1,10 @@
 { inputs, pkgs, config, lib, settings, ... }:
 
 let
+	inherit (settings) system;
+
 	cfg = config.common.core.plymouth;
-	darnix-plymouth-theme = inputs.jcconfs.packages.${settings.system}.darnix-plymouth-theme;
+	darnix-plymouth-theme = inputs.jcconfs.packages.${system}.darnix-plymouth-theme;
 in
 
 {

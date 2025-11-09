@@ -1,8 +1,9 @@
 { pkgs, config, options, lib, settings, ... }:
 
 let
+	inherit (settings) username;
+
 	cfg = config.common.core.audio;
-	username = settings.username;
 in
 
 {

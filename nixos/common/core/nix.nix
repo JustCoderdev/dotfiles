@@ -1,13 +1,14 @@
 { config, lib, pkgs, settings, darnix-overlay, ... }:
 
 let
+	inherit (settings) username hostname special-pkgs;
 	cfg = config.common.core.nix;
 in
 
 {
 	config =
 	{
-		system.nixos.tags = [ "${settings.hostname}" ];
+		system.nixos.tags = [ "${hostname}" ];
 
 		nix =
 		{
@@ -22,10 +23,10 @@ in
 			# <https://nix.dev/manual/nix/2.24/command-ref/conf-file>
 			settings =
 			{
-				allowed-users = [ "${settings.username}" ];          # These users are allowed to connect to the Nix daemon
+				allowed-users = [ "${username}" ];                   # These users are allowed to connect to the Nix daemon
 
 				auto-optimise-store = true;                          # Nix automatically detects files in the store that have identical contents, and replaces them with hard links to a single copy
-				builders-use-substitutes = true;                      # Nix will instruct remote build machines to use their own substituters if available
+				builders-use-substitutes = true;                     # Nix will instruct remote build machines to use their own substituters if available
 				connect-timeout = 2;                                 # The timeout (in seconds) for establishing connections in the binary cache substituter
 
 				download-attempts = 2;                               # How often Nix will attempt to download a file before giving up
@@ -55,12 +56,12 @@ in
 
 		nixpkgs =
 		{
-			config = let pkgs = settings.special_pkgs; in
+			config =
 			{
-				permittedInsecurePackages = pkgs.insecure;
+				permittedInsecurePackages = special-pkgs.insecure;
 				allowUnfreePredicate = (
 					pkg:
-					builtins.elem (lib.getName pkg) pkgs.unfree
+					builtins.elem (lib.getName pkg) special-pkgs.unfree
 				);
 			};
 		};

@@ -63,7 +63,7 @@
 			hostname: system: hardware-type: username:
 			{
 				inherit hostname system hardware-type username dotfiles_store_path;
-				inherit (import ./confs/settings/${username}.nix) dotfiles_abs_path special_pkgs;
+				inherit (import ./confs/settings/${username}.nix) dotfiles_abs_path special-pkgs;
 			}
 		);
 
@@ -71,7 +71,7 @@
 			settings:
 			import nixpkgs-unstable {
 				inherit (settings) system;
-				config = let spkgs = settings.special_pkgs; in {
+				config = let spkgs = settings.special-pkgs; in {
 					permittedInsecurePackages = spkgs.insecure;
 					allowUnfreePredicate = pkg: builtins.elem
 						(nixpkgs.lib.getName pkg) spkgs.unfree;

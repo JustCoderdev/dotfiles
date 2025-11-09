@@ -1,6 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) hardware-type;
+
 	cfg = config.system.desktop.hyprland;
 in
 
@@ -36,7 +38,8 @@ in
 				grim
 			];
 
-			sessionVariables = lib.mkIf (settings.hardware-type == "virtual-machine") {
+			sessionVariables = lib.mkIf (hardware-type == "virtual-machine")
+			{
 				# Enable software rendering for VMs
 				WLR_RENDERER_ALLOW_SOFTWARE = "1";
 				# Enable if cursor is invisible

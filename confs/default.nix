@@ -1,6 +1,8 @@
 { inputs, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username special-pkgs;
+
 	modules = [
 		"i3"
 		# "hyprland"
@@ -41,16 +43,16 @@ in
 
 
 	# DO NOT TOUCH
-	nixpkgs.config = let pkgs = settings.special_pkgs; in {
-		permittedInsecurePackages = pkgs.insecure;
+	nixpkgs.config = {
+		permittedInsecurePackages = special-pkgs.insecure;
 		allowUnfreePredicate = pkg:
-			builtins.elem (lib.getName pkg) pkgs.unfree;
+			builtins.elem (lib.getName pkg) special-pkgs.unfree;
 	};
 
 	programs.home-manager.enable = true;
 	home = {
-		username = settings.username;
-		homeDirectory = "/home/${settings.username}";
+		inherit username;
+		homeDirectory = "/home/${username}";
 		stateVersion = "23.11";
 	};
 }

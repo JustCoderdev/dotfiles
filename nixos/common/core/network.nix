@@ -1,6 +1,8 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username hostname;
+
 	cfg = config.common.core.network;
 in
 
@@ -12,7 +14,7 @@ in
 		boot.initrd.systemd.network.wait-online.enable = false;
 
 		# Let user manage network
-		users.users.${settings.username}.extraGroups = [ "networkmanager" ];
+		users.users.${username}.extraGroups = [ "networkmanager" ];
 
 		# Tethering
 		# services.usbmuxd.enable = true;
@@ -21,7 +23,7 @@ in
 		# Network settings
 		networking =
 		{
-			hostName = settings.hostname;
+			hostName = hostname;
 			domain = "host.lan";
 
 			firewall = {

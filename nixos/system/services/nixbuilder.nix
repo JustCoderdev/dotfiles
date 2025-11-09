@@ -1,11 +1,9 @@
 { config, lib, pkgs, settings, ... }:
 
 let
+	inherit (settings) username hostname;
 	server_cfg = config.system.services.nixbuilder.server;
 	client_cfg = config.system.services.nixbuilder.client;
-
-	hostname = settings.hostname;
-	username = settings.username;
 
 	sshkey_path = "/home/${username}/.ssh/id_${hostname}_${username}_nixbuilder";
 	buildclient_user = "buildclient";

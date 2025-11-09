@@ -1,12 +1,12 @@
 { lib, config, pkgs, settings, ... }:
 
 let
+	inherit (settings) username hostname;
+
 	cfg = config.common.core.ssh;
 	secrets = config.common.core.secrets;
 
-	hostname = settings.hostname;
-	username = settings.username;
-	homepath = "/home/${username}";
+	uhome = "/home/${username}";
 in
 
 {
@@ -41,13 +41,13 @@ in
 Host github.com
 	HostName github.com
 	IdentitiesOnly yes # Force to use only this identity file
-	IdentityFile "${homepath}/.ssh/id_github_justcode"
+	IdentityFile "${uhome}/.ssh/id_github_justcode"
 
 # Ryuji
 # <https://unix.stackexchange.com/questions/494483/specifying-an-identityfile-with-ssh>
 Host *
 	User ${username}
-	IdentityFile "${homepath}/.ssh/id_${hostname}_${username}"
+	IdentityFile "${uhome}/.ssh/id_${hostname}_${username}"
 	IdentitiesOnly no
 ''
 			+
@@ -149,12 +149,12 @@ You are accessing ${hostname}, one of my devices. DO NOT TOUCH
 				{
 					type = "ed25519";
 					comment = "107036402+JustCoderdev@users.noreply.github.com";
-					path = "${homepath}/.ssh/id_github_justcode";
+					path = "${uhome}/.ssh/id_github_justcode";
 				}
 				{
 					type = "ed25519";
 					comment = "${username}@${hostname}";
-					path = "${homepath}/.ssh/id_${hostname}_${username}";
+					path = "${uhome}/.ssh/id_${hostname}_${username}";
 				}
 			];
 		};
