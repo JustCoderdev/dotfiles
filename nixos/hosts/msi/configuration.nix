@@ -6,7 +6,7 @@ let
 	services = [
 		"prowlarr" "bazarr" # "deluge"
 		"lidarr" "radarr" "readarr" "sonarr"
-		"jellyfin" "immich"
+		"jellyfin"
 	];
 in
 
@@ -37,6 +37,7 @@ in
 		domains = [
 			"foxburrow.org"
 			"www.foxburrow.org"
+			"immich.foxburrow.org"
 		]
 		++
 		(
@@ -106,6 +107,11 @@ in
 			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
 			"10.255.250.1" = { root = "/var/www/homepage"; };
 			# TODO: add 443 redirection to homepage
+
+			"immich.foxburrow.org" = (default-ssl-config)
+			// {
+				locations."^~ /".proxyPass = "https://10.255.250.2/";
+			};
 		}
 		//
 		(
