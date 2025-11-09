@@ -41,9 +41,9 @@ in
 				narinfo-cache-positive-ttl = 0;                      # If a store path is queried from a substituter, the result of the query will be cached in the local disk cache database including some of the NAR metadata
 
 				trusted-users = [ "@wheel" ];
-				trusted-public-keys =
-				[
-					# TODO: Update keys
+
+				# TODO: Update keys for nixserve
+				trusted-public-keys = [
 					# "msi.host.local:jbqDHg/Ky3EjKvI0Wtf2LZyiuxcbuJarlxA26WAAeT4="
 					# "quiss.server.local:58w8SsV1RIHjX+PvvOoWZ6QkGhSUcLjRkfeX/gihOoA="
 				];

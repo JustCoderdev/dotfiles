@@ -31,8 +31,6 @@
 
 	system.services =
 	{
-		avahi.enable = true;
-
 		nixbuilder.client.builders =
 		let
 			gen-builder = (
@@ -45,13 +43,13 @@
 			);
 		in
 		[
-			(gen-builder "192.168.1.5" 6)
-			(gen-builder   "msi.local" 6)
+			(gen-builder  "msi.flat.local" 6)
+			(gen-builder "asus.flat.local" 8)
 		];
 
 		nixcache = {
 			enable = true;
-			instance-host = "msi.local";
+			instance-host = "msi.flat.local";
 		};
 	};
 }

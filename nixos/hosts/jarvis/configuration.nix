@@ -114,7 +114,7 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 		openFirewall = false;
 		proxy = {
 			enable = true;
-			host = "jarvis.server.lan";
+			host = "jarvis.home.lan";
 			aliases = [ "192.168.7.8" ];
 		};
 		home-assistant.packages.usb = { } // usb-pkgs;

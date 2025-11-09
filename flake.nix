@@ -189,9 +189,9 @@
 		# 					);
 		# 				in
 		# 				[
-		# 					(gen-builder "alpha.server.lan" 8)
-		# 					(gen-builder  "beta.server.lan" 6)
-		# 					(gen-builder "quiss.server.lan" 4)
+		# 					(gen-builder "alpha.home.lan" 8)
+		# 					(gen-builder  "beta.home.lan" 6)
+		# 					(gen-builder "quiss.home.lan" 4)
 		# 				];
 
 		# 				# -------------------- #

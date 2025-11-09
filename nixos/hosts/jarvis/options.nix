@@ -27,8 +27,9 @@
 			);
 		in
 		[
-			(gen-builder     "foxburrow.org" 6)
-			(gen-builder  "quiss.server.lan" 4)
+			(gen-builder "quiss.home.lan" 4)
+			(gen-builder  "foxburrow.org" 6)
+			(gen-builder  "asus.home.lan" 8)
 		];
 	};
 }

@@ -29,12 +29,6 @@ in
 
 			substituters = [ ]
 				++ lib.optionals (cfg.instance-host != null) [ instance-url ];
-
-			# trusted-substituters = [ ]
-			# 	++ lib.optional (cfg.instance-host != null) [ instance-url ];
-			# trusted-public-keys = [
-			# 	"nixcache.local:K7HJMUeafG+hmi6ZoLRJ+/sjt8TZyCvmHe0zrRPio5w="
-			# ];
 		};
 
 		environment.variables = { }

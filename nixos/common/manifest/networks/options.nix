@@ -8,7 +8,7 @@
 	netmask = jc-lib.mkIntOption "The mask of the network";
 
 	domain-lan = lib.mkOption {
-		description = "The subdomain name of the network (<hostname>.<domain>.lan)";
+		description = "The subdomain name of the network (<subdomain>.lan)";
 		type = lib.types.str;
 		default = name;
 	};

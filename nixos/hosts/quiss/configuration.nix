@@ -14,7 +14,7 @@ let
 
 	proxy = {
 		enable = true;
-		host = "quiss.server.lan";
+		host = "quiss.home.lan";
 		aliases = [ "192.168.7.7" "10.255.250.2" ];
 	};
 in

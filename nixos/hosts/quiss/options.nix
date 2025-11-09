@@ -23,14 +23,14 @@
 				errors.installed = true;
 			};
 
-			nginx.vhosts."quiss.server.lan" = {
+			nginx.vhosts."quiss.home.lan" = {
 				cert = {
 					installed = true;
-					path = "/etc/nginx-certs/quiss_server_local-cert.crt";
+					path = "/etc/nginx-certs/quiss_home_lan-cert.crt";
 				};
 				key = {
 					installed = true;
-					path = "/etc/nginx-certs/quiss_server_local-cert.key";
+					path = "/etc/nginx-certs/quiss_home_lan-cert.key";
 				};
 			};
 		};
@@ -48,7 +48,7 @@
 
 	system.services =
 	{
-		avahi.enable = true; # TODO: test if it works over vpn
+		avahi.enable = true;
 
 		nixbuilder.server = {
 			enable = true;

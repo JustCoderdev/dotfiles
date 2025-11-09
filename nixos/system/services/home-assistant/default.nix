@@ -11,8 +11,8 @@ let
 	add-wol-dev  = (name: domain: mac: { inherit name domain mac; command = "sudo poweroff"; });
 	add-wowl-dev = (name: domain: mac: { inherit name domain mac; command = "sudo eep"; });
 
-	wol-devices  = [ (add-wol-dev  "quiss" "server.lan" "f4:6d:04:99:dc:9a") ];
-	wowl-devices = [ (add-wowl-dev "msi"   "host.lan"   "d4:3b:04:51:45:28") ];
+	wol-devices  = [ (add-wol-dev  "quiss"      "home.lan" "f4:6d:04:99:dc:9a") ];
+	wowl-devices = [ (add-wowl-dev "msi"   "foxburrow.org" "d4:3b:04:51:45:28") ];
 in
 
 {
@@ -51,7 +51,7 @@ in
 		];
 
 		# Go2RTC debug webpage
-		# <http://home-assistant.service.local:1984>
+		# <http://home-assistant.local:1984>
 		# networking.firewall.allowedTCPPorts = [ 1984 ];
 		services.go2rtc = {
 			enable = true;
