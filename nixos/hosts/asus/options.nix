@@ -70,8 +70,9 @@
 			);
 		in
 		[
+			(gen-builder   "quiss.local" 4)
 			(gen-builder "foxburrow.org" 6)
-			(gen-builder "msi.local" 6)
+			(gen-builder     "msi.local" 6)
 		];
 
 		syncthing = 

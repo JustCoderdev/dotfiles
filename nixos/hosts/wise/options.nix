@@ -46,7 +46,7 @@
 		in
 		[
 			(gen-builder "192.168.1.5" 6)
-			(gen-builder "msi.local" 6)
+			(gen-builder   "msi.local" 6)
 		];
 
 		nixcache = {

@@ -564,3 +564,13 @@ sudo rm --recursive /tmp/old_root/nix
 sudo umount /tmp/old_root
 sudo rmdir /tmp/old_root
 ```
+
+### Build system for host
+
+Build system locally for remote device `<hostname>` available at `<ip>`
+
+```shell
+sudo nixos-rebuild switch \
+         --flake .#<hostname> \
+         --target-host "<user>@<ip>"
+```
