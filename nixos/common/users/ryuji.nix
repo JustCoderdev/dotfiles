@@ -26,8 +26,9 @@ in
 			isNormalUser = true;
 			createHome = true;
 
+			#                root    serial
+			extraGroups = [ "wheel" "dialout" ];
 			initialPassword = "${username}";
-			extraGroups = [ "wheel" "dialout" "kvm" ];
 
 			openssh.authorizedKeys.keys =
 			[

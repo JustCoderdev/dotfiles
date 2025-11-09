@@ -132,6 +132,10 @@ esac
 			};
 		};
 
+		# fusuma
+		users.users.${username}.extraGroups = [ "input" ];
+		users.groups.input = { };
+
 		# Remember windows size stuff
 		programs.dconf.enable = true;
 

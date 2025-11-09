@@ -5,10 +5,11 @@ let
 in
 
 {
+	# Check status with `systemctl status --user fusuma.service`
 	services.fusuma =
 	{
 		enable = has-de && is-laptop;
-		extraPackages = with pkgs; [ i3 xdotool ];
+		extraPackages = with pkgs; [ coreutils-full i3 xdotool ];
 		settings = 
 		{
 			# i3 base settings from
