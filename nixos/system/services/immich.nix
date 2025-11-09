@@ -1,4 +1,4 @@
-{ config, lib, nixpkgs-unstable, ... }:
+{ config, lib, pkgs-unstable, ... }:
 
 let
 	cfg = config.system.services.immich;
@@ -12,7 +12,7 @@ in
 		services.immich =
 		{
 			inherit (cfg) enable openFirewall group;
-			package = nixpkgs-unstable.immich;
+			package = pkgs-unstable.immich;
 
 			mediaLocation = cfg.config-dir;
 			host = "127.0.0.1";
