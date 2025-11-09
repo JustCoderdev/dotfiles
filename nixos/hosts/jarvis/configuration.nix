@@ -117,6 +117,6 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 			host = "jarvis.home.lan";
 			aliases = [ "192.168.7.8" ];
 		};
-		home-assistant.packages.usb = { } // usb-pkgs;
+		packages.usb = usb-pkgs;
 	};
 }
