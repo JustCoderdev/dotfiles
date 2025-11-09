@@ -9,7 +9,7 @@ in
 	{
 		stylix =
 		{
-			enable = true && cfg.has_de;
+			enable = true && cfg.has-de;
 
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
@@ -102,7 +102,7 @@ in
 
 	options.stylix.module =
 	{
-		has_de = lib.mkEnableOption "Specify if a desktop environment is present";
+		has-de = lib.mkEnableOption "Specify if a desktop environment is present";
 		wallpapers_path = lib.mkOption {
 			type = lib.types.path;
 			description = "Specify the wallpapers directory";

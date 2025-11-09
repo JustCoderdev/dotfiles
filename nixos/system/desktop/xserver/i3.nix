@@ -1,33 +1,30 @@
-{ inputs, config, lib, pkgs, pkgs-unstable, settings, ... }:
+{ config, lib, pkgs, pkgs-unstable, settings, inputs, ... }:
 
 let
+	inherit (settings) system hardware-type;
+
 	cfg = config.system.desktop.i3;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
 		system.nixos.tags = [ "i3" ];
 
-		services = {
+		services =
+		{
 			displayManager.defaultSession = "none+i3";
 
-			xserver.windowManager.i3 = {
+			xserver.windowManager.i3 =
+			{
 				enable = true;
-				extraPackages = [ inputs.jcbin.packages."${settings.system}".boomer ]
+				extraPackages = [ inputs.jcbin.packages."${system}".boomer ]
 				++ 
 				(
 					with pkgs;
 					[
-						dmenu
-						i3status
-						playerctl
-
-						# lock
-						xss-lock
-						lightdm # dm-tool lock
-
-						# Screenshot utilities
+						dmenu i3status playerctl lightdm # dm-tool lock
+						shotgun xclip # Screenshot utilities
 						(
 							callPackage ../../../unofficial/pkgs/hacksaw.nix {
 								inherit (pkgs) python3; # pkg-config
@@ -35,8 +32,6 @@ in
 								inherit (pkgs-unstable) libxcb;
 							}
 						)
-						shotgun
-						xclip
 					]
 				);
 			};
@@ -47,10 +42,6 @@ in
 
 	options.system.desktop.i3 =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable i3 software suit and support";
-			default = false;
-		};
+		enable = lib.mkEnableOption "i3 tiling window manager support";
 	};
 }

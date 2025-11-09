@@ -187,11 +187,11 @@
         ]
       },
       "locked": {
-        "path": "./bin",
+        "path": "bin",
         "type": "path"
       },
       "original": {
-        "path": "./bin",
+        "path": "bin",
         "type": "path"
       },
       "parent": []
@@ -205,11 +205,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "path": "./confs",
+        "path": "confs",
         "type": "path"
       },
       "original": {
-        "path": "./confs",
+        "path": "confs",
         "type": "path"
       },
       "parent": []

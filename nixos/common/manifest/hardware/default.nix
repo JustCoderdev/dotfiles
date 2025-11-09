@@ -1,6 +1,8 @@
 { config, lib, jc-lib, settings, ... }:
 
 let
+	inherit (settings) hardware-type;
+
 	self-manifest = config.common.manifest.self;
 
 	self-hw = self-manifest.hardware;
@@ -15,7 +17,7 @@ in
 		./gpu/nvidia.nix
 		./gpu/radeon.nix
 	]
-	++ lib.lists.optionals (settings.hardware-type == "raspi3") [ ./special-hardware-type/raspi3.nix ];
+	++ lib.lists.optionals (hardware-type == "raspi3") [ ./special-hardware-type/raspi3.nix ];
 
 	config =
 	{
@@ -34,8 +36,11 @@ in
 		# Graphics
 		# -------------------- #
 
-		jcconfs.has_de = lib.mkDefault self-graphics.desktop-environment.enable;
+		jcconfs.is-laptop = hardware-type == "laptop";
+		jcconfs.has-de = lib.mkDefault self-graphics.desktop-environment.enable;
+
 		common.core.plymouth.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+
 		system.desktop = {
 			i3.enable = lib.mkDefault self-graphics.desktop-environment.enable;
 			thunar.enable = lib.mkDefault self-graphics.desktop-environment.enable;

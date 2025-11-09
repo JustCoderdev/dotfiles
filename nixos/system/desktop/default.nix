@@ -1,39 +1,24 @@
-{ pkgs, config, lib, settings, ... }:
+{ pkgs, config, lib, ... }:
 
 let
-	i3 = config.system.desktop.xfce;
-	hyprland = config.system.desktop.hyprland;
+	self-manifest = config.common.manifest.self;
+	desktop-environment-enabled = self-manifest.hardware.graphics.desktop-environment.enable;
 in
 
 {
-	imports = [
+	imports =
+	[
 		./xserver
 		./wayland
 	];
 
-	config = lib.mkIf (i3.enable || hyprland.enable) {
-		xdg.portal = {
+	config = lib.mkIf (desktop-environment-enabled)
+	{
+		xdg.portal =
+		{
 			enable = true;
-			extraPortals = with pkgs; [
-				xdg-desktop-portal-kde
-				xdg-desktop-portal-gtk
-			];
+			extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 			config.common.default = [ "gtk" ];
 		};
-
-		unofficial.services.fusuma = let
-			prefix = if i3.enable then "i3"
-				else if hyprland.enable then "hyprland"
-				else abort "Fusuma: no desktop environment enabled";
-		in {
-			enable = true;
-			settings = (builtins.readFile
-				 "${settings.dotfiles_abs_path}/confs/fusuma/${prefix}_config.yml");
-		};
-
-		environment.systemPackages = [
-			(lib.mkIf i3.enable       pkgs.xdotool)
-			(lib.mkIf hyprland.enable pkgs.ydotool)
-		];
 	};
 }

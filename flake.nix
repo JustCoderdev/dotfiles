@@ -7,12 +7,12 @@
 		nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
 		jcbin = {
-			url = "path:./bin";
+			url = "path:bin";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
 		jcconfs = {
-			url = "path:./confs";
+			url = "path:confs";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -22,22 +22,21 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko }@inputs:
+	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, ... }@inputs:
 	let
 		dotfiles_store_path = ./.;
 
 		lib = nixpkgs.lib;
 		jc-lib = import ./jc-lib.nix { inherit lib; };
 
-		hosts-dir = "${dotfiles_store_path}/nixos/hosts";
 		hosts =
 		(
 			lib.attrsets.mapAttrs
-				(host-name: _: import "${hosts-dir}/${host-name}/manifest.nix")
+				(hostname: _: import ./nixos/hosts/${hostname}/manifest.nix)
 				(
 					lib.attrsets.filterAttrs
 						(name: value: !(lib.strings.hasPrefix "." name) && (value == "directory"))
-						(builtins.readDir hosts-dir)
+						(builtins.readDir ./nixos/hosts)
 				)
 		);
 

@@ -18,13 +18,15 @@
 
 	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
 	let
+		users = [ "ryuji" "nixos" ];
+
 		getArgs = (
-			{ username, has_de }:
+			{ username, has-de, is-laptop }@configs:
 			{
 				inherit inputs;
 				settings = (import ./settings/${username}.nix)
+				// (configs)
 				// {
-					inherit username has_de;
 					wallpapers_path = ./.wallpapers;
 					confs_path = ./.;
 				};
@@ -35,7 +37,7 @@
 			settings:
 			[
 				inputs.stylix.homeModules.stylix
-				./stylix/base.nix { stylix.module = { inherit (settings) wallpapers_path has_de; }; }
+				./stylix/base.nix { stylix.module = { inherit (settings) wallpapers_path has-de; }; }
 				./stylix/hm.nix
 
 				./default.nix
@@ -45,30 +47,28 @@
 		homeConfiguration = (
 			{ config, lib, ... }:
 			let
-				cfg = config.jcconfs;
-				args = (getArgs { inherit (cfg) username has_de; });
-				wallpapers_path = args.settings.wallpapers_path;
+				args = (getArgs { inherit (config.jcconfs) username has-de is-laptop; });
+				inherit (args) settings;
+				stylix-module-args = { inherit (args.settings) has-de wallpapers_path; };
 			in
 			{
-				imports = [
+				imports =
+				[
 					inputs.stylix.nixosModules.stylix
-					./stylix/base.nix { stylix.module = { inherit wallpapers_path; inherit (cfg) has_de; }; }
+					./stylix/base.nix { stylix.module = stylix-module-args; }
 					./stylix/nixos.nix
 
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useUserPackages = true;
 						home-manager.extraSpecialArgs = args;
-						home-manager.users.${cfg.username} = (
+						home-manager.users.${settings.username} = (
 							{ ... }:
 							{
-								imports = (getModules args.settings);
+								imports = (getModules settings);
 
-								stylix.enable = true && cfg.has_de;
-								stylix.module = {
-									inherit wallpapers_path;
-									inherit (cfg) has_de;
-								};
+								stylix.enable = true && settings.has-de;
+								stylix.module = stylix-module-args;
 							}
 						);
 					}
@@ -79,25 +79,34 @@
 				options.jcconfs =
 				{
 					username = lib.mkOption {
-						type = lib.types.str;
-						readOnly = true;
 						description = "Name of the primary user";
+						type = lib.types.str;
 					};
-					has_de = lib.mkEnableOption "Whether to enable graphical applications or not";
+					has-de = lib.mkEnableOption "graphical applications or not";
+					is-laptop = lib.mkEnableOption "laptop specific modules";
 				};
 			}
 		);
 
 		homeBuilder = (
-			{ username, has_de, pkgs }:
+			{ username, has-de, is-laptop, pkgs }:
 			let
-				args = getArgs { inherit username has_de; };
+				args = getArgs { inherit username has-de is-laptop; };
 			in
 			home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
 				modules = (getModules args.settings);
 				inherit pkgs;
 			}
+		);
+
+		optionalString = (cond: str: if cond then str else "");
+		get-flags =
+		(
+			{ has-de, is-laptop }:
+			""
+			+ optionalString (has-de)    "-de"
+			+ optionalString (is-laptop) "-lp"
 		);
 
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -114,34 +123,56 @@
 		// forAllSystems (
 			system:
 			let
-				pkgs = nixpkgsFor.${system};
+				map-user =
+				(
+					username: { has-de, is-laptop }@flags:
+					{
+						name = "${username}${get-flags flags}";
+						value = homeBuilder { inherit username has-de is-laptop; pkgs = nixpkgsFor.${system}; };
+					}
+				);
 			in
-			{
-				ryuji       = homeBuilder { inherit pkgs; username = "ryuji"; has_de = true;  };
-				ryuji-no-de = homeBuilder { inherit pkgs; username = "ryuji"; has_de = false; };
-
-				nixos       = homeBuilder { inherit pkgs; username = "nixos"; has_de = true;  };
-				nixos-no-de = homeBuilder { inherit pkgs; username = "nixos"; has_de = false; };
-			}
+			(
+				builtins.listToAttrs
+				(
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
+				)
+			)
 		);
 
 		# nix build
 		packages = forAllSystems
 		(
 			system:
-			let pkgs = nixpkgsFor.${system}; in
 			{
-				ryuji-activation       = self.homeConfigurations."${system}".ryuji.activationPackage;
-				ryuji-activation-no-de = self.homeConfigurations."${system}".ryuji-no-de.activationPackage;
-
-				nixos-activation       = self.homeConfigurations."${system}".nixos.activationPackage;
-				nixos-activation-no-de = self.homeConfigurations."${system}".nixos-no-de.activationPackage;
-
-				# ryuji-activation       = (homeBuilder "ryuji" system true).activationPackage;
-				# ryuji-no-de-activation = (homeBuilder "ryuji" system false).activationPackage;
-
-				darnix-plymouth-theme = pkgs.callPackage ./plymouth/darnix { };
+				darnix-plymouth-theme = nixpkgsFor.${system}.callPackage ./plymouth/darnix { };
 			}
+			//
+			(
+				let
+					map-user =
+					(
+						username: { has-de, is-laptop }@flags:
+						let
+							conf-name = "${username}${get-flags flags}";
+						in
+						{
+							name = "activate-${conf-name}";
+							value = self.homeConfigurations."${system}"."${conf-name}".activationPackage;
+						}
+					);
+				in
+				builtins.listToAttrs
+				(
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
+				)
+			)
 		);
 	};
 }

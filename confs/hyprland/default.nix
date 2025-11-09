@@ -1,9 +1,13 @@
 { settings, ... }:
 
+let
+	inherit (settings) has-de;
+in
+
 {
 	wayland.windowManager.hyprland =
 	{
-		enable = true && settings.has_de;
+		enable = true && settings.has-de;
 		systemd.enable = true;
 
 		settings = {

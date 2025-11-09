@@ -1,7 +1,11 @@
 { settings, ... }:
 
+let
+	inherit (settings) has-de;
+in
+
 {
-	programs.waybar.enable = true && settings.has_de;
+	programs.waybar.enable = true && has-de;
 
 	home.file = {
 		".config/waybar/style.css".source = ./style.css;
