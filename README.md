@@ -193,16 +193,17 @@ There are 3 main directories (+1):
 
 ### bin
 
-- `bash-scripts`: custom bash scripts that can run even without nixos
-- `...`: packaged programs that can be toggled
+- `binaries`: packaged programs that "need" nixos to be built
+- `scripts`: custom bash scripts that can run even without nixos
 
 ### confs
 
 - `.wallpapers`: desktop wallpapers
-- `users`: available users
+- `modules` configurations that haven't been migrated to home-manager yet
 - `settings`: user settings (username and insecure/unfree packages list)
-- `standalone`: configurations that exists only in home-manager
-- `...`: configurations that haven't been migrated to home-manager yet
+- `standalone`: configurations that exist only in home-manager
+- `stylix`: stylix theme and modules
+- `users`: available users
 
 ### nixos
 
@@ -217,6 +218,7 @@ There are 3 main directories (+1):
     - `...`: host configuration
         - `boot.nix`: boot related options
         - `configuration.nix`: specific device / services configuration
+        - `disko.nix`: disk configuration
         - `hardware-configuration.nix`: nixos generated hw configuration file
         - `manifest.nix`: manifest file
         - `options.nix`: [soon to be deprecated] set values for custom options
