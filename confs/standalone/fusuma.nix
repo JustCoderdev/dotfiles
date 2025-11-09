@@ -48,8 +48,8 @@ in
 				 out.command = "xdotool key ctrl+minus";
 			};
 
-			# threshold = { swipe = 0.4; pinch = 0.4; };
-			# interval =  { swipe = 0.8; pinch = 0.1; };
+			threshold = { swipe = 0.4; pinch = 0.4; };
+			interval =  { swipe = 0.8; pinch = 0.1; };
 		};
 	};
 }
