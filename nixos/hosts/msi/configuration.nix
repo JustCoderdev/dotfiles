@@ -104,6 +104,8 @@ in
 		{
 			"foxburrow.org" = (default-ssl-config) // { globalRedirect = "www.foxburrow.org"; };
 			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
+			"10.255.250.1" = { root = "/var/www/homepage"; };
+			# TODO: add 443 redirection to homepage
 		}
 		//
 		(
