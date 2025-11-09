@@ -1,40 +1,33 @@
-{ inputs, pkgs, config, lib, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (settings) system;
-
 	cfg = config.common.core.plymouth;
-	darnix-plymouth-theme = inputs.jcconfs.packages.${system}.darnix-plymouth-theme;
 in
 
 {
 	# Check what VGA graphics driver is installed
 	# lspci -v | grep -A10 VGA | grep driver
 
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
-		boot = {
-			initrd.systemd.enable = true;
-
+		boot =
+		{
 			#"plymouth.debug" # log at /var/log/plymouth-debug.log
 			kernelParams = [ "quiet" ]; # "plymouth.use-simpledrm"
-			plymouth = {
+			initrd.systemd.enable = true;
+			plymouth =
+			{
 				enable = true;
-
-				extraConfig = ''
-DeviceScale=1
-'';
 				theme = "darnix";
-				themePackages = [ darnix-plymouth-theme ];
+				themePackages = [ (pkgs.callPackage ../../unofficial/pkgs/darnix-plymouth-theme { }) ];
 			};
 		};
 	};
 
-	options.common.core.plymouth = {
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable plymouth boot screen";
-			default = false;
-		};
+	# ------------------------------------------------------------ #
+
+	options.common.core.plymouth =
+	{
+		enable = lib.mkEnableOption "plymouth boot graphics";
 	};
 }

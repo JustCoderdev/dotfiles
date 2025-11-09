@@ -65,7 +65,7 @@ in
 
 				client =
 				{
-					enable = (lib.lists.length (lib.attrsets.mapAttrsToList (n: _: n) self-client-interfaces)) > 0;
+					enable = (builtins.length (builtins.attrValues self-client-interfaces)) > 0;
 					servers =
 					(
 						builtins.mapAttrs

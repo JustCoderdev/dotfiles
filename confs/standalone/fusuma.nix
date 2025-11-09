@@ -42,4 +42,4 @@ in
 			# interval =  { swipe = 0.8; pinch = 0.1; };
 		};
 	};
-};
+}

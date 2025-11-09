@@ -3,30 +3,29 @@
 let
 	inherit (settings) username special-pkgs;
 
-	modules = [
-		"i3"
-		# "hyprland"
-		# "waybar"
-
-		"mangohud"
-
-		"neovim"
-		"emacs"
-
+	modules =
+	[
 		"alacritty"
 		"clang"
+		"emacs"
 		"git"
+		# "hyprland"
+		"i3"
+		"mangohud"
+		"neovim"
+		# "waybar"
 		"zsh"
 	];
 
-
-	standalone-modules = [
+	standalone-modules =
+	[
 		"firefox"
-		"tmux"
+		"fusuma"
 		"ssh"
+		"tmux"
 	];
 
-	toPathList = (ms: lib.lists.forEach ms (m: ./${m}/default.nix));
+	toPathList = (ms: lib.lists.forEach ms (m: ./modules/${m}/default.nix));
 	toStandalonePathList = (ms: lib.lists.forEach ms (m: ./standalone/${m}.nix));
 in
 

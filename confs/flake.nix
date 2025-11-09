@@ -115,7 +115,8 @@
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
-		nixosModules = {
+		nixosModules =
+		{
 			home = homeConfiguration;
 		};
 
@@ -147,10 +148,6 @@
 		packages = forAllSystems
 		(
 			system:
-			{
-				darnix-plymouth-theme = nixpkgsFor.${system}.callPackage ./plymouth/darnix { };
-			}
-			//
 			(
 				let
 					map-user =

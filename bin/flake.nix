@@ -4,33 +4,36 @@
 {
 	description = "JC Binary Executables";
 
-	inputs = {
-		nixpkgs.url = "nixpkgs/nixos-25.05";
-	};
-	
-	outputs = { self, nixpkgs, ... }:
+	inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
+
+	outputs = { self, nixpkgs }:
 	let
-		programs = [
+		binaries =
+		[
 			{ name = "boomer"; }
 			{ name = "backlight"; requiresSudo = true; }
 			{ name = "gopro-control";}
 		];
-		bash-scripts = [
+
+		scripts =
+		[
 			{ name = "eep"; requiresSudo = true; }
 			{ name = "mount-configs";  }
 			{ name = "rebuild-system"; }
 			{ name = "umount-configs"; }
 		];
 
-		packageProgram = (name: pkgs: pkgs.callPackage ./${name}/default.nix { });
-		packageShellScript = (
+		packageBinary = (name: pkgs: pkgs.callPackage ./binaries/${name}/default.nix { });
+		packageScript =
+		(
 			name: getInputs: pkgs:
 			pkgs.writeShellApplication {
 				inherit name;
 				runtimeInputs = getInputs pkgs;
-				text = (builtins.readFile ./bash-scripts/${name}.sh);
+				text = (builtins.readFile ./scripts/${name}.sh);
 			}
 		);
+
 		generateModule = (
 			name: requiresSudo: getPackage:
 			{ config, lib, pkgs, ... }:
@@ -39,75 +42,77 @@
 				pkg = getPackage pkgs;
 			in
 			{
-				config = lib.mkIf cfg.enable
+				config = lib.mkIf (cfg.enable)
 				{
 					environment.systemPackages =  [ pkg ];
-					security.sudo = lib.mkIf requiresSudo {
-						extraRules = [{
-							groups = [ "users" ];
-							commands = [{
-								command = "${config.system.path}/bin/${name}";
-								options = [ "NOPASSWD" ];
-							}];
+					security.sudo.extraRules  = lib.mkIf (requiresSudo) [{
+						groups = [ "users" ];
+						commands = [{
+							command = "${config.system.path}/bin/${name}";
+							options = [ "NOPASSWD" ];
 						}];
-					};
+					}];
 				};
 
-				options.jcbin.${name}.enable = lib.mkEnableOption "Add ${name} to PATH";
+				options.jcbin.${name}.enable = lib.mkEnableOption "${name} and add it to 'PATH'";
 			}
 		);
-		generateBashScriptModule = (
+
+		generateScriptModule = (
 			{ name, getInputs ? (pkgs: []), requiresSudo ? false }:
-			generateModule name requiresSudo (pkgs: packageShellScript name getInputs pkgs)
-		);
-		generateProgramModule = (
-			{ name, requiresSudo ? false }:
-			generateModule name requiresSudo (pkgs: packageProgram name pkgs)
+			generateModule name requiresSudo (pkgs: packageScript name getInputs pkgs)
 		);
 
-		lib = nixpkgs.lib;
-		forEach = lib.lists.forEach;
-		genAttrs = lib.attrsets.genAttrs;
-		attrValues = lib.attrsets.attrValues;
-		nameValuePair = lib.attrsets.nameValuePair;
+		generateBinaryModule = (
+			{ name, requiresSudo ? false }:
+			generateModule name requiresSudo (pkgs: packageBinary name pkgs)
+		);
 
 		modules = { }
 		//
-		builtins.listToAttrs (
-			forEach programs (
-				pdata:
-				nameValuePair pdata.name (generateProgramModule pdata)
+		builtins.listToAttrs
+		(
+			(
+				builtins.map
+					(data: { inherit (data) name; value = (generateBinaryModule data); })
+					(binaries)
+			) ++ (
+				builtins.map
+					(data: { inherit (data) name; value = (generateScriptModule data); })
+					(scripts)
 			)
-			++
-			forEach bash-scripts (
-				sdata:
-				nameValuePair sdata.name (generateBashScriptModule sdata)
-			)
-		);
+		)
+		;
 
+		lib = nixpkgs.lib;
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-		forAllSystems = lib.genAttrs supportedSystems;
+		forAllSystems = lib.attrsets.genAttrs supportedSystems;
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
-		nixosModules = (modules) // {
-			all = ( { ... }: { imports = attrValues modules; } );
-		};
+		nixosModules = (modules)
+		// { all = ({ imports = builtins.attrValues modules; }); }
+		;
 
 		packages = forAllSystems (
 			system:
 			let
 				pkgs = nixpkgsFor.${system};
 			in
-			builtins.listToAttrs (
-				forEach bash-scripts (
-					{ name, getInputs ? (pkgs: []), ... }:
-					nameValuePair name (packageShellScript name getInputs pkgs)
+			builtins.listToAttrs
+			(
+				(
+					builtins.map (
+						{ name, getInputs ? (pkgs: []), ... }:
+						{ inherit name; value = (packageScript name getInputs pkgs); }
+					) (scripts)
 				)
 				++
-				forEach programs (
-					{ name, ... }:
-					nameValuePair name (packageProgram name pkgs)
+				(
+					builtins.map (
+						{ name, ... }:
+						{ inherit name; value = (packageBinary name pkgs); }
+					) (binaries)
 				)
 			)
 		);

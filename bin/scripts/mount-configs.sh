@@ -13,8 +13,6 @@ if [ -z "${USER:-}" ]; then
 	exit 1
 fi
 
-homepath="/home/${USER}"
-
 function link {
 	from="$1"; from_filename="${from##/*/}";
 	  to="$2";   to_filename="${3:-$from_filename}";
@@ -44,34 +42,31 @@ function link {
 	fi
 }
 
-echo -n "Creating default folders... "
-mkdir -p "${homepath}/Developer"
-mkdir -p "${homepath}/Developer/Github"
-mkdir -p "${homepath}/Developer/Projects"
-echo "Done! :D"
 
 echo -e "Creating soft links"
-link "${DOT_FILES}/confs/alacritty"      "${homepath}/.config"  # Alacritty
-link "${DOT_FILES}/confs/clang"          "${homepath}/.config"  # Clang
-link "${DOT_FILES}/confs/i3"             "${homepath}/.config"  # i3
-link "${DOT_FILES}/confs/waybar"         "${homepath}/.config"  # Waybar
-link "${DOT_FILES}/confs/mangohud"       "${homepath}/.config/MangoHud"  # MangoHud
 
-link "${DOT_FILES}/confs/clang/.clang-format"    "${homepath}"  # Clang format
-link "${DOT_FILES}/confs/emacs/.emacs"           "${homepath}"  # Emacs
-link "${DOT_FILES}/confs/emacs/.emacs.custom.el" "${homepath}"  # Emacs
-link "${DOT_FILES}/confs/emacs/.emacs.extra"     "${homepath}"  # Emacs
-link "${DOT_FILES}/confs/git/.gitconfig"         "${homepath}"  # Git
-link "${DOT_FILES}/confs/git/.gitignore_global"  "${homepath}"  # Git
-link "${DOT_FILES}/confs/zsh/.zshrc"             "${homepath}"  # Zsh
+uhome="/home/${USER}"
+link "${DOT_FILES}/confs/modules/alacritty"      "${uhome}/.config"  # Alacritty
+link "${DOT_FILES}/confs/modules/clang"          "${uhome}/.config"  # Clang
+link "${DOT_FILES}/confs/modules/i3"             "${uhome}/.config"  # i3
+link "${DOT_FILES}/confs/modules/waybar"         "${uhome}/.config"  # Waybar
+link "${DOT_FILES}/confs/modules/mangohud"       "${uhome}/.config/MangoHud"  # MangoHud
+
+link "${DOT_FILES}/confs/modules/clang/.clang-format"    "${uhome}"  # Clang format
+link "${DOT_FILES}/confs/modules/emacs/.emacs"           "${uhome}"  # Emacs
+link "${DOT_FILES}/confs/modules/emacs/.emacs.custom.el" "${uhome}"  # Emacs
+link "${DOT_FILES}/confs/modules/emacs/.emacs.extra"     "${uhome}"  # Emacs
+link "${DOT_FILES}/confs/modules/git/.gitconfig"         "${uhome}"  # Git
+link "${DOT_FILES}/confs/modules/git/.gitignore_global"  "${uhome}"  # Git
+link "${DOT_FILES}/confs/modules/zsh/.zshrc"             "${uhome}"  # Zsh
 
 if [ -z "${DOT_NIXOS:-}" ]; then
 	echo "TODO: Fix linking on non nixos distro !!"
 	exit 1;
 
-	# link "${DOT_FILES}/confs/hyprland"       "${homepath}/.config/hypr"  # Hyprland
-	# link "${DOT_FILES}/confs/neovim"         "${homepath}/.config/nvim"  # Nvim
-	# link "${DOT_FILES}/confs/plymouth"       "/etc"         # Plymouth
+	# link "${DOT_FILES}/modules/confs/hyprland"       "${uhome}/.config/hypr"  # Hyprland
+	# link "${DOT_FILES}/modules/confs/neovim"         "${uhome}/.config/nvim"  # Nvim
+	# link "${DOT_FILES}/modules/confs/plymouth"       "/etc"         # Plymouth
 fi
 
 echo "Done mounting configs"

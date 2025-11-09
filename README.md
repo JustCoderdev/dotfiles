@@ -1,5 +1,5 @@
 > [!warning]
-> 
+>
 > My dotfiles had an incident
 >
 > This is why all commits before a certain point report the date of the incident, at least 8 commits got lost (as far as I know)
@@ -8,33 +8,31 @@
 
 These are my dotfiles, feel free to use them and share with me any feedback or trick you may know :p
 
-> [!note] 
-> 
-> There are 4 branches:
->
-> - `main`: Oldest "stable" version (fully "compatible" with macos)
-> - `nixos-integration`: (CURRENT) Restructuring of nixos w better flakes
-> - `nixos-compliant`: [DEPRECATED] Messy stable version of nixos
-> - `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
->
-> ```plaintext
-> * 16d55fd main
-> |\
-> | * 88e48b9 nixos-compliant (nixpkgs-23.05)
-> | |\
-> | | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
-> | | |
-> | |/
-> | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-> | |
-> | * 0be0f74 nixos-compliant (nixpkgs-24.11)
-> ' |
->   * 91c5ef1 nixos-integration (nixpkgs-24.11)
->   v
-> ```
+There are 4 branches:
+
+- `main`: Oldest "stable" version (fully "compatible" with macos)
+- `nixos-integration`: (CURRENT) Restructuring of nixos w better flakes
+- `nixos-compliant`: [DEPRECATED] Messy stable version of nixos
+- `nixos-compliant-unstable`: [DEPRECATED] Switched to unstable to configure hyprland
+
+```plaintext
+* 16d55fd main
+|\
+| * 88e48b9 nixos-compliant (nixpkgs-23.05)
+| |\
+| | * cfb1ed0 nixos-compliant-unstable (nixpkgs/unstable)
+| | |
+| |/
+| * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
+| |
+| * 0be0f74 nixos-compliant (nixpkgs-24.11)
+' |
+  * 91c5ef1 nixos-integration (nixpkgs-24.11)
+  v
+```
 
 > [!tip]
-> 
+>
 > Nixos and virtual machines
 >
 > - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
@@ -142,7 +140,7 @@ cd "${DOT_FILES}"
 
 2. Install
 
-- Without nix
+- Without nix [not updated]
 
 ```shell
 ./bin/bash-scripts/mount-configs.sh
@@ -175,9 +173,9 @@ sudo nix \
 - With NixOS
 
 > [!important]
-> 
+>
 > You will get "relative path error for ./bin..."
-> 
+>
 > To fix it remove any mention of `jcbin` and `jcconfs` from `flake.lock` and then rebuild
 
 ```shell
