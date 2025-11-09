@@ -1,7 +1,7 @@
 { config, lib, settings, jc-lib, ... }:
 
 let
-	inherit (settings) hostname;
+	inherit (settings) username;
 	cfg = config.system.services.syncthing;
 in
 

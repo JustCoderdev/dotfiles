@@ -1,7 +1,7 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	inherit (settings) username;
+	inherit (settings) hostname;
 
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
