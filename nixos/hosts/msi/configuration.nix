@@ -95,6 +95,7 @@ in
 	in
 	{
 		enable = true;
+		clientMaxBodySize = "20000M";
 
 		recommendedOptimisation = true;
 		recommendedTlsSettings = true;
@@ -110,7 +111,10 @@ in
 
 			"immich.foxburrow.org" = (default-ssl-config)
 			// {
-				locations."^~ /".proxyPass = "https://10.255.250.2/";
+				locations."^~ /" = {
+					proxyPass = "https://10.255.250.2/";
+					proxyWebsockets = true;
+				};
 			};
 		}
 		//
