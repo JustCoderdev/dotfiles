@@ -26,7 +26,7 @@ in
 		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
 			enable = true;
-			clientMaxBodySize = "20M";
+			clientMaxBodySize = lib.mkDefault "20M";
 
 			virtualHosts."${cfg.proxy.host}" =
 			{

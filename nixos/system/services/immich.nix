@@ -1,4 +1,4 @@
-{ config, lib, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
 	cfg = config.system.services.immich;
@@ -66,7 +66,7 @@ in
 		services.nginx = lib.mkIf (cfg.proxy.enable)
 		{
 			enable = true;
-			clientMaxBodySize = lib.mkOverride 980 "50000M";
+			clientMaxBodySize = "50000M";
 
 			virtualHosts."${cfg.proxy.host}" =
 			{
@@ -97,7 +97,7 @@ in
 
 	options.system.services.immich =
 	{
-		enable = lib.mkEnableOption "Enable immich daemon";
+		enable = lib.mkEnableOption "immich daemon";
 
 		openFirewall = lib.mkEnableOption "Open firewall";
 
@@ -108,12 +108,12 @@ in
 
 		group = lib.mkOption {
 			type = lib.types.str;
-			description = "The group all servarr services will be in";
+			description = "The group all immich services will be in";
 			default = "maid";
 		};
 
 		proxy = {
-			enable = lib.mkEnableOption "Add immich to nginx location";
+			enable = lib.mkEnableOption "nginx proxy location";
 			host = lib.mkOption {
 				type = lib.types.str;
 				description = "The virtualHost";

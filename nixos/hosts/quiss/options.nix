@@ -7,7 +7,7 @@
 	{
 		network.wakeOn =
 		{
-			lan.enabledFor = [ "eno1" "enp8s2" ];
+			# lan.enabledFor = [ "eno1" "enp8s2" ];
 			knownDevices.acer = "a4:17:31:10:9e:ed";
 		};
 

@@ -16,8 +16,8 @@
 		{
 			network.wakeOn =
 			{
-				lan.enabledFor = [ ];
-				wlan.enabledFor = [ ];
+				# lan.enabledFor = [ ];
+				# wlan.enabledFor = [ ];
 				knownDevices = { };
 			};
 
