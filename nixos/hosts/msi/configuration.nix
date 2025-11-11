@@ -1,4 +1,4 @@
-{ config, pkgs, settings, ... }:
+{ config, lib, pkgs, pkgs-unstable, settings, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -95,7 +95,7 @@ in
 	in
 	{
 		enable = true;
-		clientMaxBodySize = "20000M";
+		clientMaxBodySize = "50000M";
 
 		recommendedOptimisation = true;
 		recommendedTlsSettings = true;
@@ -178,5 +178,4 @@ in
 			// {};
 		};
 	};
-
 }

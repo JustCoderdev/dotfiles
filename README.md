@@ -108,14 +108,14 @@ Included configuration files
 - Fix disko using `/dev/disk/by-id/...` instead one `/dev/...` with `ll`
 - Fix keyrings not persisting credentials
 - Fix host files manually to use grub
-- Fix WakeOnLan module to make it persistent across reboots
+- ~~Fix WakeOnLan module to make it persistent across reboots~~
 - Fix move `dotfiles_abs_path` from `confs/settings/USER.nix` to new manifest files
 
 ### Improve
 
 - Move all manifest related files to manifest folder
 - Move all hardware manifest files in `nixos/common/hardware/`
-- Improve grub by adding rescue option -> might not work since boot partition is always full
+- Improve grub by adding rescue option
 - Improve neovim by nuking current settings
 - Improve alacritty by resetting keybindings
 - Improve `refresh-displays` command by adding the toggle to mirror or extend display
@@ -123,7 +123,6 @@ Included configuration files
 
 ### Add
 
-- Add fusuma and integrate it for laptops
 - Add authelia module for homeserver auth
 - Add guest samba share
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
@@ -199,7 +198,7 @@ There are 3 main directories (+1):
 ### confs
 
 - `.wallpapers`: desktop wallpapers
-- `modules` configurations that haven't been migrated to home-manager yet
+- `modules`: configurations that haven't been migrated to home-manager yet
 - `settings`: user settings (username and insecure/unfree packages list)
 - `standalone`: configurations that exist only in home-manager
 - `stylix`: stylix theme and modules
