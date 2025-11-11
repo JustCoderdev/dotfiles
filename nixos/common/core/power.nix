@@ -11,6 +11,8 @@ in
 	{
 		enable = true;
 		cpuFreqGovernor = if is-laptop then "powersave" else "performance";
+
+		# Powertop makes the keyboard and mouse sleep after 5s
 		powertop.enable = true && is-laptop;
 	};
 
