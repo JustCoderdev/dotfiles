@@ -9,11 +9,11 @@ let
 		"clang"
 		"emacs"
 		"git"
-		"hyprland"
+		# "hyprland"
 		"i3"
 		"mangohud"
 		"neovim"
-		"waybar"
+		# "waybar"
 		"zsh"
 	];
 
