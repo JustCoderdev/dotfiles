@@ -9,8 +9,7 @@ in
 	{
 		users.users.immich.extraGroups = [ "video" "render" ];
 
-		services.immich =
-		{
+		services.immich = {
 			inherit (cfg) enable openFirewall group;
 			package = pkgs-unstable.immich;
 
@@ -126,4 +125,3 @@ in
 		};
 	};
 }
-
