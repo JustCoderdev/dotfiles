@@ -210,10 +210,11 @@ There are 3 main directories (+1):
 ### nixos
 
 - `common`:
-    - `core`: required stuff from all systems (locale, font, etc...)
+    - `core`: required stuff for all systems (locale, font, etc...)
     - `environments`: user "environments" (gaming, development)
-    - `manifest`: [new] settings to create the ecosystem of hosts
-    - `users`: system users
+    - `hardware`: manifest activated hardware options
+    - `manifest`: settings to create the ecosystem of hosts
+    - `users`: user preferences
 - `hosts`:
     - `.example`: example configuration files for installation script
     - `.old`: host configurations files for hosts that haven't yet migrated to manifest sytem
@@ -223,7 +224,7 @@ There are 3 main directories (+1):
         - `disko.nix`: disk configuration
         - `hardware-configuration.nix`: nixos generated hw configuration file
         - `manifest.nix`: manifest file
-        - `options.nix`: [soon to be deprecated] set values for custom options
+        - `options.nix`: set values for custom options
 - `system`:
     - `desktop`: desktop environment
     - `services`: daemons and what not

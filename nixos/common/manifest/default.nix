@@ -27,7 +27,6 @@ in
 			}
 		);
 
-
 		hosts = jc-lib.mkSubmodOption "The set with the manifest for registered hosts"
 		(
 			{ name, ... }:
