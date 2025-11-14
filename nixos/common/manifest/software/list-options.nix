@@ -1,4 +1,4 @@
-{ config, lib, jc-lib }:
+{ config, lib, jc-lib, ... }:
 
 {
 	wireguard = jc-lib.mkSubmodOption "Wireguard service manifest"
