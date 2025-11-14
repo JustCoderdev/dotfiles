@@ -5,9 +5,9 @@ let
 in
 
 {
-	wayland.windowManager.hyprland =
+	wayland.windowManager.hyprland = lib.mkIf (has-de)
 	{
-		enable = true && has-de;
+		enable = true;
 		systemd.enable = true;
 
 		settings = {

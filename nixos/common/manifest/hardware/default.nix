@@ -42,7 +42,7 @@ in
 		common.core.plymouth.enable = lib.mkDefault self-graphics.desktop-environment.enable;
 
 		system.desktop = {
-			i3.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+			xserver.enable = lib.mkDefault self-graphics.desktop-environment.enable;
 			thunar.enable = lib.mkDefault self-graphics.desktop-environment.enable;
 		};
 

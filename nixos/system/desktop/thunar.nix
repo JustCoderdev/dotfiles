@@ -2,12 +2,14 @@
 
 let
 	cfg = config.system.desktop.thunar;
+	desktop-cfg = config.system.desktop;
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
-		programs.thunar = {
+		programs.thunar =
+		{
 			enable = true;
 			plugins = with pkgs.xfce; [
 				thunar-archive-plugin     # archives context actions
@@ -16,7 +18,8 @@ in
 			];
 		};
 
-		services = {
+		services =
+		{
 			# Thunar extensions
 			tumbler.enable = true; # img thumbnails
 			gvfs = {
@@ -34,10 +37,6 @@ in
 
 	options.system.desktop.thunar =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable thunar and related support";
-			default = false;
-		};
+		enable = lib.mkEnableOption "thunar and related support";
 	};
 }
