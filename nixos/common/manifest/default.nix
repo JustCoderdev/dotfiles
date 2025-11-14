@@ -36,7 +36,7 @@ in
 				[
 					./hardware-options.nix
 					./software-options.nix
-				]
+				];
 
 				options =
 				{
