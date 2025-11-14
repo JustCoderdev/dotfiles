@@ -37,6 +37,7 @@ in
 		domains = [
 			"foxburrow.org"
 			"www.foxburrow.org"
+			"err.foxburrow.org"
 			"immich.foxburrow.org"
 		]
 		++
@@ -105,9 +106,22 @@ in
 		virtualHosts =
 		{
 			"foxburrow.org" = (default-ssl-config) // { globalRedirect = "www.foxburrow.org"; };
-			"www.foxburrow.org" = (default-ssl-config) // { root = "/var/www/homepage"; };
-			"10.255.250.1" = { root = "/var/www/homepage"; };
-			# TODO: add 443 redirection to homepage
+			"www.foxburrow.org" = (default-ssl-config)
+			// {
+				locations =
+				{
+					"/" = { root = "/var/www/homepage/www"; tryFiles = "$uri.html $uri =404"; };
+					"/assets".root = "/var/www/homepage";
+				};
+			};
+			"err.foxburrow.org" = (default-ssl-config)
+			// {
+				locations =
+				{
+					"/" = { root = "/var/www/homepage/err"; tryFiles = "$uri.html $uri =404"; };
+					"/assets".root = "/var/www/homepage";
+				};
+			};
 
 			"immich.foxburrow.org" = (default-ssl-config)
 			// {
@@ -115,6 +129,19 @@ in
 					proxyPass = "https://10.255.250.2/";
 					proxyWebsockets = true;
 				};
+			};
+
+			"_" =
+			let
+				vhost-secrets = secrets.nginx.vhosts."_";
+			in
+			{
+				addSSL = true;
+				default = true;
+				locations."/".return = "301 https://err.foxburrow.org/404";
+
+				sslCertificate = vhost-secrets.cert.path;
+				sslCertificateKey = vhost-secrets.key.path;
 			};
 		}
 		//

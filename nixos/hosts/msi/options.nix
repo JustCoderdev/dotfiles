@@ -19,6 +19,17 @@
 					tunnel-creds."msi-cf".installed = true;
 				};
 				discord.hooks."foxburrow".rebuilds.installed = true;
+
+				nginx.vhosts."_" = {
+					cert = {
+						installed = true;
+						path = "/etc/nginx-certs/_-cert.crt";
+					};
+					key = {
+						installed = true;
+						path = "/etc/nginx-certs/_-cert.key";
+					};
+				};
 			};
 
 			ssh.cloudflared-proxy =
