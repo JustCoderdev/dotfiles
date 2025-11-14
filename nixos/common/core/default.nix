@@ -6,12 +6,12 @@
 		./bluetooth.nix
 		./bootloader.nix
 		./console.nix
+		./dev-input.nix
 		./dotfiles-backup.nix
 		./fonts.nix
 		./locale.nix
 		./network.nix
 		./nix.nix
-		./keyboard.nix
 		./power.nix
 		./plymouth.nix
 		./printer.nix
