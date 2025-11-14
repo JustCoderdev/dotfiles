@@ -4,7 +4,7 @@ let
 	secrets = config.common.core.secrets;
 
 	services = [
-		"prowlarr" "bazarr" # "deluge"
+		"prowlarr" "bazarr"
 		"lidarr" "radarr" "readarr" "sonarr"
 		"jellyfin"
 	];
@@ -39,6 +39,7 @@ in
 			"www.foxburrow.org"
 			"err.foxburrow.org"
 			"immich.foxburrow.org"
+			"deluge.foxburrow.org"
 		]
 		++
 		(
@@ -103,6 +104,9 @@ in
 		recommendedGzipSettings = true;
 		recommendedProxySettings = true;
 
+		# proxy_set_header X-Real-IP $remote_addr;
+		# proxy_set_header X-Forwarded-For $remote_addr;
+
 		virtualHosts =
 		{
 			"foxburrow.org" = (default-ssl-config) // { globalRedirect = "www.foxburrow.org"; };
@@ -110,7 +114,7 @@ in
 			// {
 				locations =
 				{
-					"/" = { root = "/var/www/homepage/www"; tryFiles = "$uri.html $uri =404"; };
+					"/" = { root = "/var/www/homepage/www"; tryFiles = "$uri.html $uri /index.html"; };
 					"/assets".root = "/var/www/homepage";
 				};
 			};
@@ -118,8 +122,16 @@ in
 			// {
 				locations =
 				{
-					"/" = { root = "/var/www/homepage/err"; tryFiles = "$uri.html $uri =404"; };
+					"/" = { root = "/var/www/homepage/err"; tryFiles = "$uri.html $uri /404"; };
 					"/assets".root = "/var/www/homepage";
+				};
+			};
+
+			"deluge.foxburrow.org" = (default-ssl-config)
+			// {
+				locations."^~ /" = {
+					proxyPass = "http://10.255.250.2:8112/";
+					proxyWebsockets = true;
 				};
 			};
 

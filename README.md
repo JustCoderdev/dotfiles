@@ -110,21 +110,24 @@ Included configuration files
 - Fix host files manually to use grub
 - ~~Fix WakeOnLan module to make it persistent across reboots~~
 - Fix move `dotfiles_abs_path` from `confs/settings/USER.nix` to new manifest files
+- [msi] Fix nginx catchall path using self signed certificate
 
 ### Improve
 
 - Move all manifest related files to manifest folder
 - Move all hardware manifest files in `nixos/common/hardware/`
-- Improve grub by adding rescue option
+- ~~Improve grub by adding rescue option~~
 - Improve neovim by nuking current settings
 - Improve alacritty by resetting keybindings
 - Improve `refresh-displays` command by adding the toggle to mirror or extend display
-- Improve samba "global" directory to list all share
+- Improve samba "global" directory to list all shares
+- [msi] Improve nginx by removing `/<service>` subpath when using subdomain
 
 ### Add
 
 - Add authelia module for homeserver auth
 - Add guest samba share
+- Add dns delegation to master manager
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
 
 ## Installation guide
