@@ -1,4 +1,4 @@
-{ name, lib, config, jc-lib }:
+{ name, lib, config, jc-lib, ... }:
 
 let
 	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
