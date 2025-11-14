@@ -1,7 +1,7 @@
-{ config, lib, jc-lib, pkgs, settings, ... }:
+{ inputs, config, lib, jc-lib, pkgs, settings, ... }:
 
 let
-	inherit (settings) username hardware-type dotfiles_store_path;
+	inherit (settings) username hardware-type system dotfiles_store_path;
 
 	cfg = config.system.desktop.xserver;
 in
@@ -19,15 +19,17 @@ in
 					systemd.tmpfiles.rules =
 					let
 						ldm-grp = config.users.users.lightdm.group;
-						icon-path = "${username}.JPEG";
+						
+						icon-filename = "${username}.JPEG";
+						icon-filepath = "${dotfiles_store_path}/confs/users-icon/${icon-filename}";
 					in
 					[
 						# Fix icon without exposing home folder
 						# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
 
-#			Type Path                                        Mode User Group      Age Argument
-						"f+  /var/lib/AccountsService/users/${username}  0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-path}\\n"
-						"L+  /var/lib/AccountsService/icons/${icon-path} 0640 root ${ldm-grp} -   ${dotfiles_store_path}/confs/users/${icon-path}"
+					#  Type Path                                            Mode User Group      Age Argument
+						"L+ /var/lib/AccountsService/icons/${icon-filename} 0640 root ${ldm-grp} -   ${icon-filepath}"
+						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-filepath}\\n"
 					];
 
 					services.xserver =
@@ -89,19 +91,20 @@ in
 					{
 						enable = true;
 						extraPackages = [ inputs.jcbin.packages."${system}".boomer ]
-						++ 
-						with pkgs;
-						[
-							dmenu i3status playerctl lightdm # dm-tool lock
-							shotgun xclip # Screenshot utilities
-							(
-								callPackage ../../../unofficial/pkgs/hacksaw.nix {
-									inherit (pkgs) python3; # pkg-config
-									inherit (pkgs.xorg) libX11 libXrandr;
-									inherit (pkgs-unstable) libxcb;
-								}
-							)
-						];
+						++ (
+							with pkgs;
+							[
+								dmenu i3status playerctl lightdm # dm-tool lock
+								shotgun xclip # Screenshot utilities
+								(
+									callPackage ../../../unofficial/pkgs/hacksaw.nix {
+										inherit (pkgs) python3; # pkg-config
+										inherit (pkgs.xorg) libX11 libXrandr;
+										inherit (pkgs-unstable) libxcb;
+									}
+								)
+							]
+						);
 					};
 				}
 			)

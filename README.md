@@ -205,7 +205,7 @@ There are 3 main directories (+1):
 - `settings`: user settings (username and insecure/unfree packages list)
 - `standalone`: configurations that exist only in home-manager
 - `stylix`: stylix theme and modules
-- `users`: available users
+- `users-icon`: available users icon
 
 ### nixos
 

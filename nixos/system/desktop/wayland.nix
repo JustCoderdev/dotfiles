@@ -37,16 +37,19 @@ in
 		system.nixos.tags = [ "hyprland" ];
 
 		environment.systemPackages = [ where-is-my-sddm-theme-pkg ]
-		++ with pkgs; [
-			wl-clipboard
-			dunst         # notification daemon
-			libnotify     # dunst dependency
-			waybar        # status bar
-			rofi-wayland  # app launcher
-			swww          # wallpaper daemon
-			playerctl     # media player control
-			slurp grim    # screenshots utility
-		];
+		++ (
+			with pkgs;
+			[
+				wl-clipboard
+				dunst         # notification daemon
+				libnotify     # dunst dependency
+				waybar        # status bar
+				rofi-wayland  # app launcher
+				swww          # wallpaper daemon
+				playerctl     # media player control
+				slurp grim    # screenshots utility
+			]
+		);
 
 		programs.hyprland = {
 			enable = true;
@@ -54,7 +57,7 @@ in
 		};
 
 		# ?
-		programs.services = {
+		services = {
 			devmon.enable = true;
 			udisks2.enable = true;
 		};
