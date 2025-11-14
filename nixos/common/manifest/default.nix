@@ -43,7 +43,7 @@ in
 					hostname = lib.mkOption {
 						description = "The name of the host of this manifest";
 						default = name;
-						type = types.str;
+						type = lib.types.str;
 						readOnly = true;
 					};
 				};
