@@ -7,13 +7,13 @@ let
 in
 
 {
-	imports = [
-		./hardware/default.nix
+	imports =
+	[
+		./software/list-options.nix
+
 		./software/default.nix
 		./networks/default.nix
 	];
-
-	config = { };
 
 	# ------------------------------------------------------------ #
 
@@ -27,23 +27,31 @@ in
 			}
 		);
 
-		services = (import ./software/list-options.nix { inherit lib config jc-lib; });
 
-		hosts = jc-lib.mkSubmodOption "The manifest for all known nixos devices"
+		hosts = jc-lib.mkSubmodOption "The set with the manifest for registered hosts"
 		(
-			{ name, config, ... }:
+			{ name, ... }:
 			{
+				imports =
+				[
+					./hardware-options.nix
+					./software-options.nix
+				]
+
 				options =
 				{
-					hostname = jc-lib.mkStrOptionRO "The hostname of this manifest" name;
-					hardware = (import ./hardware/options.nix { inherit name lib config jc-lib; });
-					software = (import ./software/manifest-options.nix { inherit name lib config jc-lib; });
+					hostname = lib.mkOption {
+						description = "The name of the host of this manifest";
+						default = name;
+						type = types.str;
+						readOnly = true;
+					};
 				};
 			}
 		);
 
 		self = lib.mkOption {
-			description = "The manifest for all known nixos devices";
+			description = "The manifest for this host";
 			type = lib.types.attrs; # type = lib.types.submodule host-options;
 			default = cfg.hosts.${hostname};
 			readOnly = true;

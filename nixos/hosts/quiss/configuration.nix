@@ -1,4 +1,4 @@
-{ config, pkgs, settings, inputs, ... }:
+{ inputs, config, pkgs, settings, ... }:
 
 let
 	inherit (settings) username;

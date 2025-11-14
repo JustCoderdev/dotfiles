@@ -5,6 +5,7 @@
 	[
 		./common/core
 		./common/environments
+		./common/hardware
 		./common/manifest
 		./common/users
 
