@@ -10,7 +10,7 @@ in
 	config = lib.mkMerge
 	[
 		(
-			lib.mkIf (cfg.frontend == cfg.available-frontends.pipewire)
+			lib.mkIf (cfg.backend == cfg.available-backends.pipewire)
 			{
 				services.pulseaudio.enable = false;
 
@@ -31,7 +31,7 @@ in
 		)
 
 		(
-			lib.mkIf (cfg.frontend == cfg.available-frontends.pulseaudio)
+			lib.mkIf (cfg.backend == cfg.available-backends.pulseaudio)
 			{
 				services.pipewire.enable = false;
 
@@ -54,20 +54,20 @@ in
 	options.common.core.audio = 
 	{
 		enable = lib.mkEnableOption "audio support";
-		frontend = lib.mkOption {
-			description = "What underlying 'driver' is used for audio support";
-			type = lib.types.enum cfg.available-frontends-list;
-			default = cfg.available-frontends.pulseaudio;
+		backend = lib.mkOption {
+			description = "What underlying backend is used for audio support";
+			type = lib.types.enum cfg.available-backends-list;
+			default = cfg.available-backends.pulseaudio;
 		};
 
 		# -------------------- #
 
-		available-frontends =
+		available-backends =
 		let
-			add-frontend = (
+			add-backend = (
 				name:
 				lib.mkOption {
-					description = "Fixed name for ${name} frontend";
+					description = "Fixed name for ${name} backend";
 					type = lib.types.str;
 					readOnly = true;
 					default = name;
@@ -75,15 +75,15 @@ in
 			);
 		in
 		{
-			pulseaudio = (add-frontend "pulseaudio");
-			pipewire = (add-frontend "pipewire");
+			pulseaudio = (add-backend "pulseaudio");
+			pipewire = (add-backend "pipewire");
 		};
 
-		available-frontends-list = lib.mkOption {
-			description = "All available audio frontends";
+		available-backends-list = lib.mkOption {
+			description = "All available audio backends";
 			type = lib.types.listOf lib.types.str;
 			readOnly = true;
-			default = with cfg.available-frontends; [ pulseaudio pipewire ];
+			default = with cfg.available-backends; [ pulseaudio pipewire ];
 		};
 	};
 }
