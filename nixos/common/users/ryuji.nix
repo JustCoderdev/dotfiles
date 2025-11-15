@@ -20,7 +20,6 @@ in
 			];
 		in
 		{
-			name = username;
 			description = (titleCase username);
 
 			isNormalUser = true;
@@ -41,9 +40,28 @@ in
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D ryuji@asus"
 				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDshsbcBThxrbEKPzmv5L+S3C6TtD7Yb0KFmK6p98lFFuaWG0ATjUneBPOLa8+bjXcKrQtnfC9S6XpOQLgw3NqHxqeFTHRskgn8kIMEnsTmnTJf3G/+bIQsiBT3othh11tVadyPCUZ0K0/uN5zCqEIYXoFWy0ydHeoeE0f+3ZtWhv9megUZTBxPJWJcaVzyrPuMd1imzZiwdcSTCqtar0TjfU3s9YAJ4F06PZZ/zGNTPI4lUyXwFwHVWJj6j9tK5NVJam2rRpRVOpXY7w4PpmAMT88Uc4lrSBz1QuGCrmzajz57VbzxTxbPvjTwwXvTy/AmVFA2xvYxO4yzVWv+aFiFJsWCUaSCLu1qN/t6Xj3Hkl/jHzBkhnqXvn/xWmoje0IxTjt/WkbuPCuPtwu9vlAhYv+OT4khKopZmwBm0hdTZImFIrmT6QowWGb+7kkCRmicLxHScGDFhFSM4Dgs4qGN6B6yiUU70fTJn/5pKgM2F6KxfdqYeIFU1RnqtcC3vc= mobile@localhost"
 			];
+
+			packages = with pkgs;
+			[
+				nix-tree
+				(callPackage ../../unofficial/pkgs/schemer2.nix { })
+			]
+			++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
+			(
+				[
+					firefox google-chrome
+					telegram-desktop
+					obsidian vlc audacity emulsion
+					gnome-disk-utility gpick
+					# baobab rustdesk
+				]
+				++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
+				++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
+				++ lib.lists.optionals (cfg.media-manipulation-suite.videos.enable)    [ davinci-resolve obs-studio ]
+			);
 		};
 
-		system.activationScripts =
+		system.userActivationScripts =
 		let
 			uhome = "/home/${username}";
 		in
@@ -52,7 +70,7 @@ in
 # Permission table found here
 # <https://superuser.com/a/215506>
 
-echo "correcting ssh directory permissions for '${uhome}/.ssh'"
+echo "correcting permissions for '${uhome}/.ssh'"
 
 chown -R ${username}:users ${uhome}/.ssh
 chmod 700 ${uhome}/.ssh           # Folder
@@ -61,24 +79,12 @@ chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 '';
 		};
 
-		environment.systemPackages = with pkgs;
-		[
-			nix-tree
-			(callPackage ../../unofficial/pkgs/schemer2.nix { })
-		]
-		++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
-		(
-			[
-				firefox google-chrome
-				telegram-desktop
-				obsidian vlc audacity emulsion
-				gnome-disk-utility gpick
-				# baobab rustdesk
-			]
-			++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
-			++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
-			++ lib.lists.optionals (cfg.media-manipulation-suite.videos.enable)    [ davinci-resolve obs-studio ]
-		);
+		# -------------------- #
+
+		assertions = [ {
+			assertion = username == "ryuji";
+			message = "The username must be 'ryuji'!";
+		} ];
 	};
 
 	# ------------------------------------------------------------ #
