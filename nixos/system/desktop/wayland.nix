@@ -3,7 +3,7 @@
 let
 	inherit (settings) hardware-type;
 
-	cfg = config.system.desktop.hyprland;
+	cfg = config.system.desktop.wayland;
 
 	where-is-my-sddm-theme-pkg =
 	(
@@ -96,8 +96,8 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.desktop.hyprland =
+	options.system.desktop.wayland =
 	{
-		enable = lib.mkEnableOption "hyprland support and software";
+		enable = lib.mkEnableOption "wayland support and software";
 	};
 }

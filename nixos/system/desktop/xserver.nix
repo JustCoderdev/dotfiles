@@ -1,4 +1,4 @@
-{ inputs, config, lib, jc-lib, pkgs, settings, ... }:
+{ inputs, config, lib, pkgs, pkgs-unstable, jc-lib, settings, ... }:
 
 let
 	inherit (settings) username hardware-type system dotfiles_store_path;
@@ -64,8 +64,8 @@ in
 					# -------------------- #
 
 					assertions = [ {
-						assertion = !cfg.hyprland.enable;
-						message = "Cannot enable hyprland if xserver is enabled";
+						assertion = !config.system.desktop.wayland.enable;
+						message = "Cannot enable wayland if xserver is enabled";
 					} ];
 				}
 			)
@@ -97,7 +97,7 @@ in
 								dmenu i3status playerctl lightdm # dm-tool lock
 								shotgun xclip # Screenshot utilities
 								(
-									callPackage ../../../unofficial/pkgs/hacksaw.nix {
+									callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
 										inherit (pkgs) python3; # pkg-config
 										inherit (pkgs.xorg) libX11 libXrandr;
 										inherit (pkgs-unstable) libxcb;
