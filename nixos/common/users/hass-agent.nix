@@ -7,14 +7,11 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		services.displayManager.hiddenUsers = [ "hass-agent" ];
 		users.users."hass-agent" =
 		{
-			isNormalUser = true;
-			createHome = false;
+			isSystemUser = true;
+			group = "agent";
 
-			extraGroups = [ "users" ];
-			
 			openssh.authorizedKeys.keys = [
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDhsz69l4TWZ+vbGHNr5Ec5dgEoq40bj90Wkh1wPkESt hass@jarvis"
 			];

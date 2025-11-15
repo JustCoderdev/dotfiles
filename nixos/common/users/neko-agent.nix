@@ -7,13 +7,11 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		services.displayManager.hiddenUsers = [ "neko-agent" ];
 		users.users."neko-agent" =
 		{
-			isNormalUser = true;
-			createHome = false;
-			
-			extraGroups = [ "monitor" ];
+			isSystemUser = true;
+			group = "agent";
+
 			openssh.authorizedKeys.keys = [
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6h5xWAlFFP3J0mcjUGQGaW+fKIi441VXPif3PuzTTT"
 			];
