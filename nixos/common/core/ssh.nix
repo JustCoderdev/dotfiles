@@ -110,7 +110,8 @@ Host ${host}
 
 
 		# Enable the OpenSSH daemon.
-		services.openssh = {
+		services.openssh =
+		{
 			enable = true;
 			openFirewall = true;
 

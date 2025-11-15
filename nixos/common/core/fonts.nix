@@ -14,7 +14,6 @@ in
 		{
 			packages = with pkgs;
 			[
-				# helvetica-neue-lt-std
 				roboto-mono
 				dejavu_fonts
 				kochi-substitute # Kochi Mincho and Kochi Gothic

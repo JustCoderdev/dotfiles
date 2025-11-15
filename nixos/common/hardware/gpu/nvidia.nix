@@ -17,7 +17,11 @@ in
 		system.nixos.tags = [ "nvidia" ];
 
 		/* ls /dev/dri - sudo dmesg | grep drm */
-		boot.kernelParams = [ "nvidia-drm.fbdev=1" ]
+		boot.kernelParams =
+		[
+			"reboot=acpi"
+			"nvidia-drm.fbdev=1"
+		]
 		++ lib.optionals (self-is-icpu) [
 			"nosgx"
 			"snd-intel-dspcfg.dsp_driver=1"
