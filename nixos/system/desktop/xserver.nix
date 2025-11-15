@@ -29,7 +29,7 @@ in
 
 					#  Type Path                                            Mode User Group      Age Argument
 						"L+ /var/lib/AccountsService/icons/${icon-filename} 0640 root ${ldm-grp} -   ${icon-filepath}"
-						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-filepath}\\n"
+						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-filename}\\n"
 					];
 
 					services.xserver =
