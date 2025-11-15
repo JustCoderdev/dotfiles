@@ -122,6 +122,10 @@ Included configuration files
 - Improve `refresh-displays` command by adding the toggle to mirror or extend display
 - Improve samba "global" directory to list all shares
 - [msi] Improve nginx by removing `/<service>` subpath when using subdomain
+- Improve keyboard binds by:
+    - Duplicate "windows" key to the right
+    - Remove special symbols when pressing ALT-GR
+    - Change layout to american keyboard
 
 ### Add
 
