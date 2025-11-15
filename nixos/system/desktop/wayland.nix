@@ -36,6 +36,12 @@ in
 	{
 		system.nixos.tags = [ "hyprland" ];
 
+		programs.hyprland =
+		{
+			enable = true;
+			xwayland.enable = true;
+		};
+
 		environment.systemPackages = [ where-is-my-sddm-theme-pkg ]
 		++ (
 			with pkgs;
@@ -51,10 +57,13 @@ in
 			]
 		);
 
-		programs.hyprland = {
-			enable = true;
-			xwayland.enable = true;
-		};
+		# For waybar
+		fonts.packages = with pkgs;
+		[
+			nerd-fonts.roboto-mono
+			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {})
+		];
+
 
 		# ?
 		services = {

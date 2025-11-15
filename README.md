@@ -57,37 +57,18 @@ There are 4 branches:
 
 ## Overview
 
-These are all my dotfiles which are compatible with or
-without (or at least that's the goal) nix/NixOS installed
+These are my dotfiles, some configurations are also available on non-nix hosts
+such as alacritty, clang, git, hyprland, and more
 
 - `Operating System`: NixOS (duh)
 - `Terminal`: Alacritty
-- `Editor`: Nvim (trying emacs tho...)
+- `Editor`: Neovim (trying emacs tho...)
 
 |                | XServer  | Wayland  |
 | -------------- | -------- | -------- |
 | Window manager | i3       | hyprland |
 | Status bar     | i3status | waybar   |
 | App launcher   | dmenu    | wofi     |
-
-Included configuration files
-
-[standalone] firefox - tmux
-
-- Alacritty \[\>v0.12.2\] ([Github](https://github.com/alacritty))
-- Clang \[\>7.0.1-8\] ([Docs](https://clangd.llvm.org/config.html))
-- Clang-format \[\>7.0.1-8\] ([Docs](https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormatStyleOptions.html))
-- Emacs (WIP)
-- Fusuma (WIP)
-- Git
-- Hyprland (WIP)
-- i3 \[\>4.16.1\] ([Docs](https://i3wm.org/docs/userguide.html), [statDocs](https://i3wm.org/docs/i3status.html))
-- Neovim \[\>v0.9.1\] ([Github](https://github.com/neovim))
-- NixOS \[\>v23.11\]
-- Plymouth \[\>v24.004.60\] ([Gitlab](https://gitlab.freedesktop.org/plymouth/plymouth))
-- Waybar \[\>v0.10.3\] ([Github](https://github.com/Alexays/Waybar))
-- Zsh \[\>5.7.1\]
-- and more...
 
 ## Special Requirements
 
@@ -126,6 +107,7 @@ Included configuration files
     - Duplicate "windows" key to the right
     - Remove special symbols when pressing ALT-GR
     - Change layout to american keyboard
+    - Add CANCEL behaviour on SHIFT+BACKSPACE
 
 ### Add
 

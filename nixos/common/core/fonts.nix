@@ -1,41 +1,38 @@
-{ pkgs, ... }:
+# setting up japanese support
+# <https://functor.tokyo/blog/2018-10-01-japanese-on-nixos>
+
+{ config, lib, pkgs, ... }:
+
+let
+	cfg = config.common.core.fonts;
+in
 
 {
-	fonts =
+	config = lib.mkIf (cfg.enable)
 	{
-		packages = with pkgs; [
-			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {})
-			helvetica-neue-lt-std
-
-			# Mono fonts
-			nerd-fonts.roboto-mono
-			roboto-mono
-			# iosevka
-
-			courier-prime
-
-			# JPN fonts
-			ipaexfont
-			kochi-substitute
-		];
-
-		# setting up japanese support
-		# <https://functor.tokyo/blog/2018-10-01-japanese-on-nixos>
-		fontconfig.defaultFonts = {
-			monospace = [
-				"DejaVu Sans Mono"
-				"IPAGothic"
+		fonts =
+		{
+			packages = with pkgs;
+			[
+				# helvetica-neue-lt-std
+				roboto-mono
+				dejavu_fonts
+				kochi-substitute # Kochi Mincho and Kochi Gothic
 			];
-			sansSerif = [
-				"DejaVu Sans"
-				"IPAPGothic"
-			];
-			serif = [
-				"DejaVu Serif"
-				"IPAPMincho"
-			];
+
+			fontconfig.defaultFonts =
+			{
+				sansSerif = [ "DejaVu Sans"  "Kochi Gothic" ];
+				serif =     [ "DejaVu Serif" "Kochi Gothic" ];
+				monospace = [ "Roboto Mono"  "Kochi Gothic" ];
+			};
 		};
 	};
 
+	# ------------------------------------------------------------ #
 
+	options.common.core.fonts =
+	{
+		enable = lib.mkEnableOption "preferred fonts" // { default = true; };
+	};
 }

@@ -9,6 +9,8 @@ let
 	self-bluetooth = self-hw.bluetooth;
 	self-audio = self-hw.audio;
 	self-graphics = self-hw.graphics;
+
+	has-de = self-graphics.desktop-environment.enable;
 in
 
 {
@@ -36,18 +38,19 @@ in
 		# Graphics
 		# -------------------- #
 
+		jcconfs.has-de    = lib.mkDefault has-de;
 		jcconfs.is-laptop = hardware-type == "laptop";
-		jcconfs.has-de = lib.mkDefault self-graphics.desktop-environment.enable;
 
-		common.core.plymouth.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+		common.core.plymouth.enable = lib.mkDefault has-de;
+		common.core.fonts.enable    = lib.mkDefault has-de;
 
 		system.desktop = {
-			xserver.enable = lib.mkDefault self-graphics.desktop-environment.enable;
-			thunar.enable = lib.mkDefault self-graphics.desktop-environment.enable;
+			xserver.enable = lib.mkDefault has-de;
+			thunar.enable  = lib.mkDefault has-de;
 		};
 
 		hardware.graphics = {
-			enable = lib.mkDefault self-graphics.capable;
+			enable      = lib.mkDefault self-graphics.capable;
 			enable32Bit = lib.mkDefault (self-graphics.capable && self-hw.system == "x86_64-linux");
 		};
 
@@ -74,7 +77,7 @@ in
 		[
 			(add-assertion (self-hw.cpu.intel.architecture != null) "You must set the architecture of the processor!")
 		]
-		++ lib.lists.optionals (self-graphics.desktop-environment.enable)
+		++ lib.lists.optionals (has-de)
 		[
 			(add-assertion (self-graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
 		];
