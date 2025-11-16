@@ -13,8 +13,23 @@
 
 			secrets =
 			{
-				cloudflare.origin-cert.installed = true;
+				cloudflare = {
+					origin-cert.installed = true;
+					api-token.installed = true;
+					tunnel-creds."wise-cf".installed = true;
+				};
 				discord.hooks."foxburrow".rebuilds.installed = true;
+
+				nginx.vhosts."_" = {
+					cert = {
+						installed = true;
+						path = "/etc/nginx-certs/_-cert.crt";
+					};
+					key = {
+						installed = true;
+						path = "/etc/nginx-certs/_-cert.key";
+					};
+				};
 			};
 
 			ssh.cloudflared-proxy =
@@ -43,13 +58,18 @@
 			);
 		in
 		[
-			(gen-builder  "msi.flat.local" 6)
-			(gen-builder "asus.flat.local" 8)
+			(gen-builder  "msi.flat.lan" 6)
+			(gen-builder "asus.flat.lan" 8)
+
+			(gen-builder "quiss.garden.lan" 4)
+			(gen-builder   "msi.garden.lan" 6)
 		];
 
-		nixcache = {
+		wireguard.server =
+		{
 			enable = true;
-			instance-host = "msi.flat.local";
+			openFirewall = true;
+			external-interface = "enp1s0";
 		};
 	};
 }

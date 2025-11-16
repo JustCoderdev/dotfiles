@@ -73,26 +73,9 @@ in
 		tunnels."home" =
 		{
 			credentialsFile = secrets.cloudflare.tunnel-creds."home".path;
-			default = "http_status:404";
-
+			# default = "http_status:404";
 			originRequest.noTLSVerify = true;
-
-			ingress =
-			let
-				create-rule = (
-					subdomain: proto: port: path:
-					{
-						"${subdomain}.foxburrow.org" =
-						{
-							inherit path;
-							service = "${proto}://127.0.0.1:${toString port}";
-						};
-					}
-				);
-			in
-			{ }
-			// (create-rule "quiss-cf" "ssh"    22 ".*")
-			// {};
+			ingress."quiss-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
 		};
 	};
 

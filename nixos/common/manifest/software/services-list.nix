@@ -8,7 +8,7 @@
 		{
 			enable = true;
 
-			server-hostname = "msi";
+			server-hostname = "wise";
 			endpoint.url = "foxburrow.org";
 
 			network = { id = "10.255.250.0"; mask = 24; };
@@ -19,7 +19,7 @@
 		{
 			enable = true;
 
-			server-hostname = "msi";
+			server-hostname = "wise";
 			endpoint = { url = "foxburrow.org"; port = 51821; };
 
 			network = { id = "10.255.249.0"; mask = 24; };

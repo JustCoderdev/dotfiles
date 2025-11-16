@@ -98,12 +98,5 @@
 						 asus = (add-device "10.255.250.4" "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7");
 			};
 		};
-
-		wireguard.server =
-		{
-			enable = true;
-			openFirewall = true;
-			external-interface = "wlp3s0";
-		};
 	};
 }

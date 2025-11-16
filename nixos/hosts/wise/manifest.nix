@@ -12,6 +12,26 @@
 	};
 
 	# -------------------- #
+
+	software =
+	{
+		wireguard =
+		{
+			"wg-server" =
+			{
+				enable = true;
+				publicKey = "F8qzOVcYphb81XE0s/AndbKYf7ZYXR4g1mCNRseSFDI=";
+				self-address = "10.255.250.1";
+			};
+
+			"wg-giugio" =
+			{
+				enable = true;
+				publicKey = "F8qzOVcYphb81XE0s/AndbKYf7ZYXR4g1mCNRseSFDI=";
+				self-address = "10.255.249.1";
+			};
+		};
+	};
 }
 
 

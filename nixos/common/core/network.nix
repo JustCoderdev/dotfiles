@@ -66,16 +66,18 @@ in
 				flat-network =
 				{
 					"192.168.1.1" = [ (get-fqdname "gateway" "flat") ];
+					"192.168.1.2" = [ (get-fqdname    "wise" "flat") ];
 					"192.168.1.5" = [ (get-fqdname     "msi" "flat") ];
 					"192.168.1.9" = [ (get-fqdname    "asus" "flat") ];
 				};
 
 				garden-network =
 				{
-					"10.255.250.1" = [ (get-fqdname       "msi" "garden") ];
+					"10.255.250.1" = [ (get-fqdname      "wise" "garden") ];
 					"10.255.250.2" = [ (get-fqdname     "quiss" "garden") ];
 					"10.255.250.3" = [ (get-fqdname "iphone-tp" "garden") ];
 					"10.255.250.4" = [ (get-fqdname      "asus" "garden") ];
+					"10.255.250.5" = [ (get-fqdname       "msi" "garden") ];
 				};
 			in
 			{}
