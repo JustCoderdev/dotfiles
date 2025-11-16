@@ -41,6 +41,7 @@
 			hosts = [
 				"jarvis-cf.foxburrow.org"
 				"quiss-cf.foxburrow.org"
+				"wise-cf.foxburrow.org"
 				"msi-cf.foxburrow.org"
 			];
 		};
