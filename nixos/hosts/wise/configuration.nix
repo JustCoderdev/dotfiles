@@ -131,4 +131,20 @@ in
 		acceptTerms = true;
 		defaults.email = "contact@foxburrow.org";
 	};
+
+	# TUNNEL
+	
+	unofficial.services.cloudflared =
+	{
+		enable = true;
+		certificateFile = secrets.cloudflare.origin-cert.path;
+
+		tunnels."wise-cf" =
+		{
+			credentialsFile = secrets.cloudflare.tunnel-creds."wise-cf".path;
+			default = "http_status:404";
+			originRequest.noTLSVerify = true;
+			ingress."wise-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
+		};
+	};
 }
