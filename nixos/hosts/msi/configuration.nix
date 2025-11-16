@@ -25,7 +25,7 @@ in
 		tunnels."msi-cf" =
 		{
 			credentialsFile = secrets.cloudflare.tunnel-creds."msi-cf".path;
-			# default = "http_status:404";
+			default = "http_status:404";
 			originRequest.noTLSVerify = true;
 			ingress."msi-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
 		};

@@ -73,7 +73,7 @@ in
 		tunnels."home" =
 		{
 			credentialsFile = secrets.cloudflare.tunnel-creds."home".path;
-			# default = "http_status:404";
+			default = "http_status:404";
 			originRequest.noTLSVerify = true;
 			ingress."quiss-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
 		};
