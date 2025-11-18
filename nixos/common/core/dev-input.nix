@@ -1,21 +1,27 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
 	services.xserver.displayManager.setupCommands = ''
 ${pkgs.numlockx}/bin/numlockx on
 '';
 
+	# `man xkeyboard-config` #page=990
 	services.xserver.xkb =
 	let
-		caps-as-ctrl = "caps:ctrl_modifier";
-		caps-disable = "caps:none";
-		numpad-default = "numpad:pc";
-		numpad-as-keypad = "numpad:mac";
+		options-list =
+		[
+			"caps:ctrl_modifier" # caps as ctrl
+			        "numpad:mac" # numpad as keypad
+			   "mod_led:compose" # use led to indicate modifiers
+			   "altwin:menu_win" # menu as windows
+		];
 	in
 	{
 		layout = "it";
 		variant = "";
-		options = "${caps-as-ctrl},${numpad-as-keypad}";
+		options = (
+			lib.strings.concatStringsSep "," options-list
+		);
 	};
 
 	services.libinput =
