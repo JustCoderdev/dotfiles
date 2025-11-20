@@ -10,6 +10,7 @@ in
 		./hass-agent.nix
 		./neko-agent.nix
 		./ryuji.nix
+		./school.nix
 	];
 
 	config =

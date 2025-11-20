@@ -2,6 +2,7 @@
 
 let
 	cfg = config.common.users.school;
+	self-manifest = config.common.manifest.self;
 in
 
 {
