@@ -30,7 +30,7 @@ in
 						"L+ /var/lib/AccountsService/icons/${username}.jpeg 0640 root ${ldm-grp} -   ${icons-filepath}/${username}.jpeg"
 						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.jpeg\\n"
 
-						"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}"
+						"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}/school.jpeg"
 						"f+ /var/lib/AccountsService/users/school           0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/school.jpeg\\n"
 					];
 

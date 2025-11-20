@@ -18,7 +18,7 @@
 
 	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
 	let
-		users = [ "ryuji" "nixos" ];
+		users = [ "ryuji" "nixos" "school" ];
 
 		getArgs = (
 			{ username, has-de, is-laptop }@configs:

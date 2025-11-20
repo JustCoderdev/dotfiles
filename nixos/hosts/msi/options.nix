@@ -87,6 +87,7 @@
 			enable = true;
 			openFirewall = true;
 
+			dataDir = "/home/WDC_WD10/synced";
 			folders = [ "obsidian-db" ];
 			devices =
 			let
