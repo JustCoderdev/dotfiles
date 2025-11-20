@@ -20,16 +20,18 @@ in
 					let
 						ldm-grp = config.users.users.lightdm.group;
 						
-						icon-filename = "${username}.JPEG";
-						icon-filepath = "${dotfiles_store_path}/confs/users-icon/${icon-filename}";
+						icons-filepath = "${dotfiles_store_path}/confs/users-icon";
 					in
 					[
 						# Fix icon without exposing home folder
 						# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
 
 					#  Type Path                                            Mode User Group      Age Argument
-						"L+ /var/lib/AccountsService/icons/${icon-filename} 0640 root ${ldm-grp} -   ${icon-filepath}"
-						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${icon-filename}\\n"
+						"L+ /var/lib/AccountsService/icons/${username}.jpeg 0640 root ${ldm-grp} -   ${icons-filepath}/${username}.jpeg"
+						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.jpeg\\n"
+
+						"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}"
+						"f+ /var/lib/AccountsService/users/school           0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/school.jpeg\\n"
 					];
 
 					services.xserver =

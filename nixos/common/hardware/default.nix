@@ -44,14 +44,17 @@ in
 		common.core.plymouth.enable = lib.mkDefault has-de;
 		common.core.fonts.enable    = lib.mkDefault has-de;
 
-		system.desktop = {
-			xserver.enable = lib.mkDefault has-de;
-			thunar.enable  = lib.mkDefault has-de;
+		system.desktop = lib.mkIf (has-de)
+		{
+			xserver.enable = lib.mkDefault true;
+			thunar.enable  = lib.mkDefault true;
+			dolphin.enable = lib.mkDefault true;
 		};
 
-		hardware.graphics = {
-			enable      = lib.mkDefault self-graphics.capable;
-			enable32Bit = lib.mkDefault (self-graphics.capable && self-hw.system == "x86_64-linux");
+		hardware.graphics = lib.mkIf (self-graphics.capable)
+		{
+			enable      = lib.mkDefault true;
+			enable32Bit = lib.mkDefault (self-hw.system == "x86_64-linux");
 		};
 
 

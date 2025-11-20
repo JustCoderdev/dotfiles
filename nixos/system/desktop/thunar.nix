@@ -37,6 +37,6 @@ in
 
 	options.system.desktop.thunar =
 	{
-		enable = lib.mkEnableOption "thunar and related support";
+		enable = lib.mkEnableOption "thunar file manager";
 	};
 }
