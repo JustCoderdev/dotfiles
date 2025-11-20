@@ -31,7 +31,7 @@ in
 
 	options.common.users.school =
 	{
-		enable = lib.mkEnableOption "ryuji school user" // { default = true; };
+		enable = lib.mkEnableOption "ryuji school user" // { readonly = true; };
 	};
 }
 
