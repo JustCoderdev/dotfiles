@@ -16,14 +16,13 @@ in
 			[
 				dejavu_fonts roboto-mono
 				kochi-substitute # Kochi Mincho, Kochi Gothic
-				ipaexfont        # Mincho, Gothic
 			];
 
 			fontconfig.defaultFonts =
 			{
-				sansSerif = [ "DejaVu Sans"  "Kochi Gothic" "Gothic" ];
-				serif =     [ "DejaVu Serif" "Kochi Gothic" "Gothic" ];
-				monospace = [ "Roboto Mono"  "Kochi Gothic" "Gothic" ];
+				sansSerif = [ "Kochi Gothic" "DejaVu Sans"  ];
+				serif =     [ "Kochi Gothic" "DejaVu Serif" ];
+				monospace = [ "Kochi Gothic" "Roboto Mono"  ];
 			};
 		};
 	};
