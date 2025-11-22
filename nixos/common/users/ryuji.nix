@@ -5,6 +5,8 @@ let
 
 	cfg = config.common.users.ryuji;
 	self-manifest = config.common.manifest.self;
+
+	uhome = "/home/${username}";
 in
 
 {
@@ -62,9 +64,6 @@ in
 		};
 
 		system.userActivationScripts =
-		let
-			uhome = "/home/${username}";
-		in
 		{
 			correct-ssh-dir-perms.text = ''
 # Permission table found here
@@ -78,6 +77,13 @@ chmod 600 ${uhome}/.ssh/id_*      # All keys
 chmod 644 ${uhome}/.ssh/id_*.pub  # Pub keys
 '';
 		};
+
+		programs.ssh.extraConfig = ''
+Host dip.rxserver.net
+	HostName dip.rxserver.net
+	IdentitiesOnly yes # Force to use only this identity file
+	IdentityFile "${uhome}/.ssh/id_github_justcode"
+'';
 
 		# -------------------- #
 
