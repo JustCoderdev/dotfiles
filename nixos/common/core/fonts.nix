@@ -1,7 +1,7 @@
 # setting up japanese support
 # <https://functor.tokyo/blog/2018-10-01-japanese-on-nixos>
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
 	cfg = config.common.core.fonts;
@@ -12,13 +12,17 @@ in
 	{
 		fonts =
 		{
-			packages = with pkgs;
-			[
-				# dejavu_fonts
-				ttf_bitstream_vera roboto-mono
-				kochi-substitute    # Kochi Mincho, Kochi Gothic
-				twitter-color-emoji # Emoji support
-			];
+			packages = [ pkgs-unstable.font-bitstream-100dpi ]
+			++ (
+				with pkgs;
+				[
+					# dejavu_fonts
+					# ttf_bitstream_vera
+					roboto-mono
+					kochi-substitute    # Kochi Mincho, Kochi Gothic
+					twitter-color-emoji # Emoji support
+				]
+			);
 
 			fontconfig.defaultFonts =
 			{
@@ -26,6 +30,7 @@ in
 				serif     = [ "Kochi Gothic" "Bitstream Vera Serif" ]; # "DejaVu Serif"
 				monospace = [ "Kochi Gothic" "Roboto Mono"  ];
 				emoji     = [ "Twitter Color Emoji" ];
+				# ⚫ 🔴 🔵
 			};
 		};
 	};
