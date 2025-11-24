@@ -1,7 +1,7 @@
 # setting up japanese support
 # <https://functor.tokyo/blog/2018-10-01-japanese-on-nixos>
 
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.common.core.fonts;
@@ -13,18 +13,15 @@ in
 		fonts =
 		{
 			enableDefaultPackages = false;
-			packages = # [ pkgs-unstable.font-bitstream-100dpi ] ++
-			(
-				with pkgs;
-				[
-					# dejavu_fonts
-					ttf_bitstream_vera
-					roboto-mono
-					kochi-substitute    # Kochi Mincho, Kochi Gothic
-					twitter-color-emoji # Emoji support
-				]
-			);
+			packages = with pkgs;
+			[
+				ttf_bitstream_vera
+				roboto-mono
+				kochi-substitute    # Kochi Mincho, Kochi Gothic
+				twitter-color-emoji # Emoji support
+			];
 
+			# Remember to also update `confs/stylix/base.nix`
 			fontconfig.defaultFonts =
 			{
 				sansSerif = [ "Kochi Gothic" "Bitstream Vera Sans"  ]; # "DejaVu Sans" 

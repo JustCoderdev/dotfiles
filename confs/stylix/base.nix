@@ -84,16 +84,17 @@ in
 				size = 18;
 			};
 
-			fonts = {
+			fonts =
+			{
 				sizes = {
 					applications = 12;  terminal = 12;
 					popups = 8;         desktop = 10;
 				};
 
-				monospace = { name = "Roboto Mono Medium"; package = pkgs.roboto-mono;  };
-				sansSerif = { name = "DejaVu Sans";        package = pkgs.dejavu_fonts; };
-				serif     = { name = "DejaVu Serif";       package = pkgs.dejavu_fonts; };
-				emoji     = { name = "IPAGothic";          package = pkgs.ipaexfont;    };
+				sansSerif = { name = "Bitstream Vera Sans";  package = pkgs.ttf_bitstream_vera;  };
+				serif     = { name = "Bitstream Vera Serif"; package = pkgs.ttf_bitstream_vera;  };
+				monospace = { name = "Roboto Mono";          package = pkgs.roboto-mono;         };
+				emoji     = { name = "Twitter Color Emoji";  package = pkgs.twitter-color-emoji; };
 			};
 		};
 	};
