@@ -12,12 +12,13 @@ in
 	{
 		fonts =
 		{
-			packages = [ pkgs-unstable.font-bitstream-100dpi ]
-			++ (
+			enableDefaultPackages = false;
+			packages = # [ pkgs-unstable.font-bitstream-100dpi ] ++
+			(
 				with pkgs;
 				[
 					# dejavu_fonts
-					# ttf_bitstream_vera
+					ttf_bitstream_vera
 					roboto-mono
 					kochi-substitute    # Kochi Mincho, Kochi Gothic
 					twitter-color-emoji # Emoji support
