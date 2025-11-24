@@ -14,15 +14,18 @@ in
 		{
 			packages = with pkgs;
 			[
-				dejavu_fonts roboto-mono
-				kochi-substitute # Kochi Mincho, Kochi Gothic
+				# dejavu_fonts
+				ttf_bitstream_vera roboto-mono
+				kochi-substitute    # Kochi Mincho, Kochi Gothic
+				twitter-color-emoji # Emoji support
 			];
 
 			fontconfig.defaultFonts =
 			{
-				sansSerif = [ "Kochi Gothic" "DejaVu Sans"  ];
-				serif =     [ "Kochi Gothic" "DejaVu Serif" ];
+				sansSerif = [ "Kochi Gothic" "Bitstream Vera Sans"  ]; # "DejaVu Sans" 
+				serif     = [ "Kochi Gothic" "Bitstream Vera Serif" ]; # "DejaVu Serif"
 				monospace = [ "Kochi Gothic" "Roboto Mono"  ];
+				emoji     = [ "Twitter Color Emoji" ];
 			};
 		};
 	};
