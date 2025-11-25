@@ -138,3 +138,14 @@ map("nvx", "/", "<ESC>:noh<CR>:echo\"/\"<CR>/")
 map("vx", "<", "<gv")
 map("vx", ">", ">gv")
 
+
+-- Plugin diagnostics
+-- #----------------------------------------------------------# --
+
+--These diagnostic keymaps are created unconditionally when Nvim starts:
+--     `]d` jumps to the next diagnostic in the buffer
+--     `[d` jumps to the previous diagnostic in the buffer
+--     `]D` jumps to the last diagnostic in the buffer
+--     `[D` jumps to the first diagnostic in the buffer
+-- `<C-w>d` shows diagnostic at cursor in a floating window
+

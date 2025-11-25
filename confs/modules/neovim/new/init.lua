@@ -26,8 +26,12 @@ end
 
 require_file("options")
 require_file("keymaps")
-require_file("lsp")
 require_file("plugins")
+
+require_file("nvim_cmp")
+require_file("lsp")
+
+require_file("gruvbox")
 
 print(".") -- sacrificed to the buffer gods
 

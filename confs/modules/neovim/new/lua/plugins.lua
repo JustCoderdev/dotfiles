@@ -15,7 +15,7 @@ end
 vim.cmd.packadd("paq-nvim")
 local paq = require("paq")
 if not is_installed then
-	vim.notify("Installing plugins... If prompted, hit Enter to continue.")
+	vim.notify("Installing plugins. if prompted, hit Enter to continue.")
 end
 
 
@@ -24,10 +24,36 @@ end
 
 paq {
 	{ "savq/paq-nvim", build = ":PaqSync" },
+	
+	
+	-- lsp extensions
 	-- #------------------# --
-	"p00f/clangd_extensions.nvim" -- C language extension
 
-	-- "neovim/nvim-lspconfig",
+	"p00f/clangd_extensions.nvim", -- C language extension
+
+	
+	-- completition
+	-- #------------------# --
+	
+	-- vsnip
+	"hrsh7th/cmp-vsnip",
+	"hrsh7th/vim-vsnip",
+	"hrsh7th/vim-vsnip-integ",
+
+	-- nvim-cmp
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+	"hrsh7th/nvim-cmp",
+
+	-- #------------------# --
+	
+	"neovim/nvim-lspconfig",
+
+	-- #------------------# --
+	
+	"ellisonleao/gruvbox.nvim",
 }
 
 paq.install()
