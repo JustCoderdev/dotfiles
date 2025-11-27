@@ -24,22 +24,39 @@
 			{ username, has-de, is-laptop }@configs:
 			{
 				inherit inputs;
-				settings = (import ./settings/${username}.nix) // (configs)
+				settings = (import ./settings/${username}.nix) // (configs);
 			}
 		);
 
-		getModules = (
+		getCommonModules =
+		(
 			settings:
 			[
-				./default.nix
-				./stylix/hm.nix
+				./stylix/default.nix
+				./options.nix
 
-				{
-					jcconfs = {
-						inherit (settings) username profiles has-de is-laptop;
-						wallpapers_path = ./.wallpapers;
-					};
-				}
+				{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
+			]
+		);
+
+		getNixosModules = (
+			settings:
+			(getCommonModules settings) ++
+			[
+				inputs.stylix.nixosModules.stylix
+				./stylix/nixos.nix
+			]
+		);
+
+		getHomeManagerModules = (
+			settings:
+			(getCommonModules settings) ++
+			[
+				inputs.stylix.homeModules.stylix
+				./stylix/hm.nix
+				./default.nix
+
+				{ jcconfs = { inherit (settings) username has-de is-laptop; }; }
 			]
 		);
 
@@ -50,8 +67,8 @@
 				inherit (args) settings;
 			in
 			{
-				imports =
-				[
+				imports = (getNixosModules settings) ++
+				[ 
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useUserPackages = true;
@@ -59,7 +76,7 @@
 						home-manager.users.${settings.username} = (
 							{ ... }:
 							{
-								imports = (getModules settings) // [ ./stylix/nixos.nix ];
+								imports = (getHomeManagerModules settings);
 								stylix.enable = true && settings.has-de;
 							}
 						);
@@ -75,7 +92,7 @@
 			in
 			home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
-				modules = (getModules args.settings);
+				modules = (getHomeManagerModules args.settings);
 				inherit pkgs;
 			}
 		);

@@ -1,7 +1,10 @@
 { config, lib, settings, ... }:
 
 let
-	inherit (settings) dotfiles_abs_path;
+	inherit (settings) username;
+
+	# assumed absolute path
+	dotfiles_abs_path = "/home/${username}/.config/dotfiles";
 
 	cfg = config.common.core.secrets;
 

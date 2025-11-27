@@ -95,11 +95,14 @@ in
 						extraPackages =
 						[
 							inputs.jcbin.packages."${system}".boomer
-							pkgs.callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
-								inherit (pkgs) python3; # pkg-config
-								inherit (pkgs.xorg) libX11 libXrandr;
-								inherit (pkgs-unstable) libxcb;
-							};
+
+							(
+								pkgs.callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
+									inherit (pkgs) python3; # pkg-config
+									inherit (pkgs.xorg) libX11 libXrandr;
+									inherit (pkgs-unstable) libxcb;
+								}
+							)
 						];
 					};
 				}

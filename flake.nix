@@ -63,7 +63,7 @@
 			hostname: system: hardware-type: username:
 			{
 				inherit hostname system hardware-type username dotfiles_store_path;
-				inherit (import ./confs/settings/${username}.nix) dotfiles_abs_path special-pkgs;
+				inherit (import ./confs/settings/${username}.nix) special-pkgs;
 			}
 		);
 

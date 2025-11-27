@@ -2,13 +2,14 @@
 
 let
 	cfg-sty = config.stylix;
-	cfg = config.stylix.module;
+	cfg = config.jcconfs;
 in
 
 {
 	stylix =
 	{
-		homeManagerIntegration = {
+		homeManagerIntegration =
+		{
 			autoImport = false;
 			followSystem = false;
 		};

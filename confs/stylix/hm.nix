@@ -17,7 +17,8 @@ in
 
 		autoEnable = true;
 
-		targets = {
+		targets = 
+		{
 			alacritty.enable = false;
 			neovim.enable = false;
 			waybar.enable = false;

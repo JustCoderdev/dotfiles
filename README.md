@@ -90,7 +90,6 @@ such as alacritty, clang, git, hyprland, and more
 - Fix keyrings not persisting credentials
 - Fix host files manually to use grub
 - ~~Fix WakeOnLan module to make it persistent across reboots~~
-- Fix move `dotfiles_abs_path` from `confs/settings/USER.nix` to new manifest files
 - [msi] Fix nginx catchall path using self signed certificate
 
 ### Improve
