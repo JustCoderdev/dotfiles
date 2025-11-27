@@ -45,9 +45,12 @@ in
 		config =
 		{
 			modifier = "Mod4";
-
-			fonts.names = lib.mkForce [ config.stylix.fonts.monospace.name ];
 			workspaceAutoBackAndForth = true;
+
+			fonts = {
+				names = lib.mkForce [ "${config.stylix.fonts.monospace.name}" ];
+				style = "Medium";
+			};
 
 			# keycodebindings = 
 			# let
