@@ -1,16 +1,20 @@
-{ settings, pkgs, ... }:
+{ config, settings, pkgs, ... }:
 
 let
-	inherit (settings) username system has-de;
+	inherit (settings) system;
+	inherit (config.jcconfs) username has-de;
 
-#	addons = inputs.firefox-addons.packages."${system}";
+	available-in-profile = "ryuji";
+
+	profile-enabled = lib.lists.any
+		(profile: profile == available-in-profile)
+		config.jcconfs.profiles;
+
 in
-
-# https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
 
 {
 	# ~/.mozilla about:config
-	programs.firefox =
+	programs.firefox = lib.mkIf (profile-enabled)
 	{
 		enable = true && has-de;
 		package = pkgs.firefox;
@@ -175,5 +179,4 @@ in
 			};
 		};
 	};
-
 }

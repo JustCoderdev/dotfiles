@@ -1,7 +1,16 @@
-{ pkgs, settings, ... }:
+{ config, pkgs, ... }:
+
+let
+	available-in-profile = "develop-environment";
+
+	profile-enabled = lib.lists.any
+		(profile: profile == available-in-profile)
+		config.jcconfs.profiles;
+in
 
 {
-	programs.neovim = {
+	programs.neovim = lib.mkIf (profile-enabled)
+	{
 		enable = true;
 		defaultEditor = true;
 
@@ -9,34 +18,23 @@
 		withPython3 = false;
 	};
 
-#	Requirements:
-#		- Clang
-#		- Lua Language Server
-#		- Marksman
-#		- Astrojs/language-server
-#		- Node
-#		- Fzf
+	home.packages = lib.mkIf (profile-enabled)
+	(
+		with pkgs;
+		[
+			xclip xsel fzf git
 
-	home.packages = with pkgs; [
-		xclip
-		xsel
-		fzf
+			# Parsers
+			tree-sitter
 
-		git
+			# LSPs
+			nixd # lua-language-server
+			# vscode-langservers-extracted
+		]
+	);
 
-		# Parsers
-		tree-sitter
-		# nodejs
-
-		# LSPs
-		# lua-language-server
-		# marksman
-		# nodePackages.bash-language-server
-		# vscode-langservers-extracted
-		nixd
-	];
-
-	home.file = {
+	home.file = lib.mkIf (profile-enabled)
+	{
 		".config/nvim/init.lua".source = ./old/init.lua;
 		".config/nvim/lua" = {
 			source = ./old/lua;

@@ -5,6 +5,8 @@ let
 in
 
 {
+	networking.firewall.allowedTCPPorts = [ 3000 ];
+
 	services.mysql = {
 		enable = true;
 		package = pkgs.mariadb;

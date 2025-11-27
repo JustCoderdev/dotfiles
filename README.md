@@ -187,9 +187,10 @@ There are 3 main directories (+1):
 ### confs
 
 - `.wallpapers`: desktop wallpapers
-- `modules`: configurations that haven't been migrated to home-manager yet
-- `settings`: user settings (username and insecure/unfree packages list)
-- `standalone`: configurations that exist only in home-manager
+- `modules`: applications configurations
+    - `standalone`: configurations that exist only in home-manager
+    - `...`: application related files and configurations
+- `settings`: user settings (profiles and insecure/unfree packages list)
 - `stylix`: stylix theme and modules
 - `users-icon`: available users icon
 

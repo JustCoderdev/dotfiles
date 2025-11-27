@@ -1,18 +1,22 @@
-{ settings, ... }:
+{ config, ... }:
 
 let
-	inherit (settings) dotfiles_abs_path;
+	available-in-profile = "develop-environment";
+
+	profile-enabled = lib.lists.any
+		(profile: profile == available-in-profile)
+		config.jcconfs.profiles;
 in
 
 {
-	programs.zsh =
+	programs.zsh = lib.mkIf (profile-enabled)
 	{
 		enable = true;
 		completionInit = "";
 
 		initContent = ''
 export DOT_NIXOS=1;
-export DOT_FILES='${dotfiles_abs_path}'
+export DOT_FILES="/home/$${USER}/.config/dotfiles"
 source "''${DOT_FILES}/confs/modules/zsh/.zshrc"
 '';
 	};

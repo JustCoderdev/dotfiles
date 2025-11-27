@@ -1,14 +1,19 @@
-{ settings, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
-	inherit (settings) has-de is-laptop;
+	inherit (config.jcconfs) has-de is-laptop;
+
+	available-in-profile = "i3-desktop";
+
+	profile-enabled = lib.lists.any
+		(profile: profile == available-in-profile)
+		config.jcconfs.profiles;
 in
 
 {
-	# Check status with `systemctl status --user fusuma.service`
-	services.fusuma =
+	services.fusuma = lib.mkIf (profile-enabled)
 	{
-		enable = has-de && is-laptop;
+		enable = true && has-de && is-laptop;
 		extraPackages = with pkgs; [ coreutils-full i3 xdotool ];
 		settings = 
 		{

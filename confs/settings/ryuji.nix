@@ -1,5 +1,5 @@
 {
-	dotfiles_abs_path = "/home/ryuji/.config/dotfiles";
+	profiles = [ "i3-desktop" "develop-environment" "game-environment" "ryuji" ];
 	special-pkgs = {
 		insecure = [ "electron-24.8.6" "python-2.7.18.6"  ];
 		unfree = [

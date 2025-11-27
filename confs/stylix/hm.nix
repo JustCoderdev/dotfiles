@@ -1,9 +1,8 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (settings) username;
-
-	cfg = config.stylix.module;
+	inherit (config.jcconfs) username;
+	cfg = config.jcconfs;
 in
 
 {

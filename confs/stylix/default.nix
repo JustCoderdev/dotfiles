@@ -1,7 +1,7 @@
-{ inputs, config, lib, pkgs, settings, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 let
-	cfg = config.stylix.module;
+	cfg = config.jcconfs;
 in
 
 {
@@ -95,29 +95,6 @@ in
 				serif     = { name = "Bitstream Vera Serif"; package = pkgs.ttf_bitstream_vera;  };
 				monospace = { name = "Roboto Mono";          package = pkgs.roboto-mono;         };
 				emoji     = { name = "Twitter Color Emoji";  package = pkgs.twitter-color-emoji; };
-			};
-		};
-	};
-
-	# ------------------------------------------------------------ #
-
-	options.stylix.module =
-	{
-		has-de = lib.mkEnableOption "Specify if a desktop environment is present";
-		wallpapers_path = lib.mkOption {
-			type = lib.types.path;
-			description = "Specify the wallpapers directory";
-		};
-		theme = {
-			name = lib.mkOption {
-				type = lib.types.nullOr lib.types.str;
-				description = "The theme name within the package";
-				default = "Adwaita:dark";
-			};
-			package = lib.mkOption {
-				type = lib.types.package;
-				description = "Package providing the theme";
-				default = pkgs.adwaita-icon-theme;
 			};
 		};
 	};

@@ -1,11 +1,17 @@
-{ settings, ... }:
+{ config, ... }:
 
 let
-	inherit (settings) wallpapers_path has-de;
+	inherit (config.jcconfs) wallpapers_path has-de;
+
+	available-in-profile = "hyprland-desktop";
+
+	profile-enabled = lib.lists.any
+		(profile: profile == available-in-profile)
+		config.jcconfs.profiles;
 in
 
 {
-	wayland.windowManager.hyprland = lib.mkIf (has-de)
+	wayland.windowManager.hyprland = lib.mkIf (has-de && profile-enabled)
 	{
 		enable = true;
 		systemd.enable = true;

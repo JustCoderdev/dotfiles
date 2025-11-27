@@ -92,21 +92,15 @@ in
 					services.xserver.windowManager.i3 =
 					{
 						enable = true;
-						extraPackages = [ inputs.jcbin.packages."${system}".boomer ]
-						++ (
-							with pkgs;
-							[
-								dmenu i3status playerctl lightdm # dm-tool lock
-								shotgun xclip # Screenshot utilities
-								(
-									callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
-										inherit (pkgs) python3; # pkg-config
-										inherit (pkgs.xorg) libX11 libXrandr;
-										inherit (pkgs-unstable) libxcb;
-									}
-								)
-							]
-						);
+						extraPackages =
+						[
+							inputs.jcbin.packages."${system}".boomer
+							pkgs.callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
+								inherit (pkgs) python3; # pkg-config
+								inherit (pkgs.xorg) libX11 libXrandr;
+								inherit (pkgs-unstable) libxcb;
+							};
+						];
 					};
 				}
 			)
