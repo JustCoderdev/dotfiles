@@ -35,7 +35,7 @@
 				./stylix/default.nix
 				./options.nix
 
-				{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
+				{ jcconfs = { inherit (settings) profiles; wallpapers_path = ./.wallpapers; }; }
 			]
 		);
 
@@ -54,6 +54,8 @@
 			[
 				inputs.stylix.homeModules.stylix
 				./stylix/hm.nix
+
+				./modules/default.nix
 				./default.nix
 
 				{ jcconfs = { inherit (settings) username has-de is-laptop; }; }

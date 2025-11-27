@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
 	inherit (config.jcconfs) wallpapers_path has-de;

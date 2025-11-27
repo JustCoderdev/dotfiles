@@ -1,7 +1,7 @@
 # Alacritty config from jdah, thanks man <3
 # source <https://github.com/jdah/dotfiles>
 
-{ config, ... }:
+{ config, lib, ... }:
 
 let
 	inherit (config.jcconfs) has-de;

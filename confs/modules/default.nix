@@ -6,7 +6,6 @@
 		./emacs
 		./git
 		./hyprland
-		./i3
 		./mangohud
 		./neovim
 

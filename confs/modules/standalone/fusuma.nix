@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	inherit (config.jcconfs) has-de is-laptop;

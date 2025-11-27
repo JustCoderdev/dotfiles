@@ -28,7 +28,7 @@ let
 in
 
 {
-	xsession.windowManager.i3 = lib.mkIf (profile-enabled)
+	xsession.windowManager.i3 =
 	let
 		vim-mode = true;
 		kl = if vim-mode then "h" else "Left";
@@ -39,13 +39,14 @@ in
 		i3-cfg = config.xsession.windowManager.i3.config;
 		mod = i3-cfg.modifier;
 	in
+	lib.mkIf (profile-enabled)
 	{
 		enable = true;
 		config =
 		{
 			modifier = "Mod4";
 
-			fonts.names = lib.mkForce [ stylix-cfg.fonts.monospace.name ];
+			fonts.names = lib.mkForce [ config.stylix.fonts.monospace.name ];
 			workspaceAutoBackAndForth = true;
 
 			# keycodebindings = 
@@ -145,10 +146,10 @@ in
 				"${mod}+r" = "mode resize";
 			}
 			//
-			let
-				keyValue = (name: value: { inherit name value; });
-			in
 			(
+				let
+					keyValue = (name: value: { inherit name value; });
+				in
 				builtins.listToAttrs
 				(
 					(
@@ -223,10 +224,10 @@ in
 
 			bars =
 			let
-				is-i3status-configured = xdg.configFile."i3status/config".text != null;
-				i3status-config = writeTextFile {
+				is-i3status-configured = config.xdg.configFile."i3status/config".text != null;
+				i3status-config = pkgs.writeTextFile {
 					name = "i3status-config";
-					inherit (xdg.configFile."i3status/config") text;
+					inherit (config.xdg.configFile."i3status/config") text;
 				};
 			in
 			[ {
