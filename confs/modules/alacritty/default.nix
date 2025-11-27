@@ -6,7 +6,7 @@
 let
 	inherit (config.jcconfs) has-de;
 
-	available-in-profile = "hyprland-desktop";
+	available-in-profile = "develop-environment";
 
 	profile-enabled = lib.lists.any
 		(profile: profile == available-in-profile)

@@ -16,7 +16,7 @@ in
 
 		initContent = ''
 export DOT_NIXOS=1;
-export DOT_FILES="/home/$${USER}/.config/dotfiles"
+export DOT_FILES="/home/''${USER}/.config/dotfiles"
 source "''${DOT_FILES}/confs/modules/zsh/.zshrc"
 '';
 	};
