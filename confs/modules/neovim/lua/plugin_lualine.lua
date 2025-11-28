@@ -1,6 +1,7 @@
-declare_file("lualine")
+declare_file("plugin:lualine")
 
-require("lualine").setup ({
+require("lualine").setup (
+{
 	options = {
 		icons_enabled = false,
 		theme = (ENV_COLOR_CAPABLE and "gruvbox" or "auto"),
@@ -40,7 +41,7 @@ require("lualine").setup ({
 			"GetCurrentDiagnosticString()"
 		},
 
-		lualine_x = { 
+		lualine_x = {
 			{
 				'lsp_status',
 				icon = 'x',

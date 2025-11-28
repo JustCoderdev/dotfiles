@@ -1,4 +1,4 @@
-declare_file("lsp")
+declare_file("plugin:lsp")
 
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -7,7 +7,7 @@ vim.lsp.config('clangd', { capabilities = capabilities })
 
 
 vim.lsp.enable('nixd')
-vim.lsp.enable('clangd')
+-- vim.lsp.enable('clangd') -- Ale
 
 
 -- File type fixes

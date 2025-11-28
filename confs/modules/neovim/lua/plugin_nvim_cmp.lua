@@ -1,48 +1,46 @@
-declare_file("nvim_cmp")
+declare_file("plugin:nvim_cmp")
 
---
 local lspicons =
 {
 	Text = "Tx",
 	Keyword = "kw",
 	Snippet = "/\\",
 	Operator = "+-",
-	
+
 	TypeParameter = "ty",
 	Value = "xy",
 	Variable = "xy",
-	
+
 	Constant = "XY",
-	
+
 	Interface = "  ",
 	Module = "  ",
-	
+
 	Struct = "*{",
 	Class = "&{",
-	
+
 	Field = ".x",
 	Property = ".x",
-	
+
 	Method = "()",
 	Function = "()",
 	Constructor = "()",
-	
+
 	Enum = "E.",
 	EnumMember = ".x",
 	Unit = "  ",
-	
+
 	Color = "  ",
 	File = "  ",
 	Reference = "  ",
 	Folder = "  ",
-	
+
 	Event = "  ",
 }
 
---
-
 local cmp = require('cmp')
-cmp.setup({
+cmp.setup(
+{
 	snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end, },
 	mapping = cmp.mapping.preset.insert({
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),

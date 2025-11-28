@@ -62,24 +62,21 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = vim.g.mapleader
 
 -- save
-map("n", "<Leader>ww", string.format(":wall <CR> :mksession! %s/.old_session.vim <CR> :echo \"Saved all files\" <CR>", vim.fn.getcwd()))
-map("n", "<Leader>qq", string.format(":wall <CR> :mksession! %s/.old_session.vim <CR> :qall <CR>", vim.fn.getcwd()))
-map("n", "<Leader>s",  ":w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-
-map("vx", "<Leader>ww", "<ESC>:wall <CR> :echo \"Saved all files\" <CR>")
-map("vx", "<Leader>qq", "<ESC>:wall <CR> :mksession! .old_session.vim <CR> :qall <CR>")
-map("vx", "<Leader>s",  "<ESC>:w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
-
+map("nvx", "<Leader>ww", string.format("<ESC> :wall <CR> :mksession! %s/.old_session.vim <CR> :echo \"Saved all files\" <CR>", vim.fn.getcwd()))
+map("nvx", "<Leader>qq", string.format("<ESC> :wall <CR> :mksession! %s/.old_session.vim <CR> :qall <CR>", vim.fn.getcwd()))
+map("nvx", "<Leader>s",  "<ESC> :w <CR> :source %<CR> :echo \"Sourced current file\" <CR>")
 
 -- plugins
--- map("a", "<Leader>s", ":StripWhitespace <CR>")          -- from vim-better-whitespace
--- map("a", "<Leader>h", ":FzfLua files resume=true <CR>")  -- from fzf
--- map("a", "<Leader>H", ":FzfLua files <CR>")              -- from fzf
--- map("a", "<Leader>g", ":FzfLua grep resume=true <CR>")  -- from fzf
--- map("a", "<Leader>G", ":FzfLua grep <CR>")              -- from fzf
--- map("a", "<Leader>d", ":FzfLua git_status resume=true <CR>")  -- from fzf
--- map("a", "<Leader>D", ":FzfLua git_status <CR>")              -- from fzf
+map("nvx", "<Leader>s", "<ESC> :StripWhitespace <CR>")        -- strip whitespaces -- vim-better-whitespace
+-- vx, gl<delimiter>                                  -- align left  -- vim-lion
+-- vx, gL<delimiter>                                  -- align right -- vim-lion
 
+map("nvx", "<Leader>h", "<ESC> :FzfLua files resume=true <CR>")      -- from fzf
+map("nvx", "<Leader>H", "<ESC> :FzfLua files <CR>")                  -- from fzf
+map("nvx", "<Leader>g", "<ESC> :FzfLua grep resume=true <CR>")       -- from fzf
+map("nvx", "<Leader>G", "<ESC> :FzfLua grep <CR>")                   -- from fzf
+map("nvx", "<Leader>d", "<ESC> :FzfLua git_status resume=true <CR>") -- from fzf
+map("nvx", "<Leader>D", "<ESC> :FzfLua git_status <CR>")             -- from fzf
 
 -- clipboard
 map("n", "<Leader>yy", "\"+yy :echo \"Yanked to system clipboard\" <CR>")
@@ -87,12 +84,9 @@ map("vx", "<Leader>y", "\"+y  :echo \"Yanked to system clipboard\" <CR>")
 map("n",  "<Leader>p", "\"+p  :echo \"Pasted from system clipboard\" <CR>")
 
 -- windows
--- map("n", "<Leader>c", ":lopen <CR>")
-map("n", "<Leader>e", ":Lexplore 20 <CR>")
-map("v", "<Leader>e", "<ESC>:Lexplore 20 <CR>")
-
-map("n", "<Leader>f",  ":Ex <CR>")
-map("v", "<Leader>f",  "<ESC> :Ex <CR>")
+map("nv", "<Leader>l", "<ESC> :lopen <CR>")       -- open errors window
+map("nv", "<Leader>e", "<ESC> :Lexplore 20 <CR>") -- open file explorer side
+map("nv", "<Leader>f", "<ESC> :Ex <CR>")          -- open file explorer full screen
 
 
 -- Set normal keybindings

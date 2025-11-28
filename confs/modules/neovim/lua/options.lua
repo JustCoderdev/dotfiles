@@ -1,6 +1,6 @@
 declare_file("options")
 
--- All options available on 
+-- All options available on
 -- Fullref <https://neovim.io/doc/user/options.html>
 -- Quickref <https://neovim.io/doc/user/quickref.html>
 
@@ -73,8 +73,11 @@ vim.cmd("au BufRead,BufNewFile *.h set filetype=c")
 vim.cmd("let g:loaded_python3_provider = 0")
 vim.cmd("let g:loaded_ruby_provider = 0")
 vim.cmd("let g:loaded_perl_provider = 0")
+
+vim.cmd("hi ExtraWhitespace ctermbg=red") -- vim-better-whitespace
+vim.cmd("let g:lion_squeeze_spaces = 1")  -- vim-lion
+
 -- vim.cmd("hi SpecialKey guibg=#ff0000 guifg=#000000 gui=NONE")
 -- vim.cmd("hi Whitespace guibg=#ff0000 guifg=#ffffff gui=NONE")
--- vim.cmd("hi ExtraWhitespace ctermbg=red")     
 
 
