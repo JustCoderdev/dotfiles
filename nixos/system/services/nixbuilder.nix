@@ -126,26 +126,28 @@ Host ${builder.hostName}
 					{
 						options = {
 							hostName = lib.mkOption {
-								type = lib.types.str;
 								description = "How to reach the builder";
+								type = lib.types.str;
 							};
 							maxJobs = lib.mkOption {
-								type = lib.types.int;
 								description = "The number of concurrent jobs the builder supports";
+								type = lib.types.int;
 								default = 1;
 							};
 							priority = lib.mkOption {
-								type = lib.types.int;
 								description = "The computational priority of this builder";
+								type = lib.types.int;
 								default = 1;
 							};
 							features = lib.mkOption {
-								type = lib.types.listOf lib.types.str;
 								description = "The features of the builder";
+								type = lib.types.listOf lib.types.str;
+								default = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 							};
 							systems = lib.mkOption {
-								type = lib.types.listOf lib.types.str;
 								description = "The systems supported by the builder";
+								type = lib.types.listOf lib.types.str;
+								systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 							};
 						};
 					}

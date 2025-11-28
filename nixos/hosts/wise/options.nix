@@ -50,20 +50,16 @@
 		nixbuilder.client.builders =
 		let
 			gen-builder = (
-				hostName: maxJobs:
-				{
-					inherit hostName maxJobs;
-					features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-					systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
-				}
+				hostName: maxJobs: priority:
+				{ inherit hostName maxJobs priority; }
 			);
 		in
 		[
-			(gen-builder  "msi.flat.lan" 6)
-			(gen-builder "asus.flat.lan" 8)
+			(gen-builder  "msi.flat.lan" 6 2)
+			(gen-builder "asus.flat.lan" 8 2)
 
-			(gen-builder "quiss.garden.lan" 4)
-			(gen-builder   "msi.garden.lan" 6)
+			(gen-builder "quiss.garden.lan" 4 1)
+			(gen-builder   "msi.garden.lan" 6 1)
 		];
 
 		wireguard.server =
