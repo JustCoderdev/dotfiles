@@ -14,10 +14,10 @@ if not is_installed then
 end
 vim.cmd.packadd("paq-nvim")
 local paq = require("paq")
+
 if not is_installed then
 	vim.notify("Installing plugins. if prompted, hit Enter to continue.")
 end
-
 
 -- Package declaration
 -- #----------------------------------------------------------# --
@@ -36,7 +36,7 @@ paq {
 	-- #------------------# --
 	
 	-- vsnip
-	"hrsh7th/cmp-vsnip",
+	"hrsh7th/cmp-vsnip", -- Autocompletition engine
 	"hrsh7th/vim-vsnip",
 	"hrsh7th/vim-vsnip-integ",
 
@@ -49,11 +49,31 @@ paq {
 
 	-- #------------------# --
 	
-	"neovim/nvim-lspconfig",
+	"neovim/nvim-lspconfig", -- Language server
 
 	-- #------------------# --
 	
 	"ellisonleao/gruvbox.nvim",
+	"nvim-lualine/lualine.nvim", -- Better status bar
+
+	-- "nvim-treesitter/nvim-treesitter", -- Display syntax highlighting
+	-- "ntpeters/vim-better-whitespace"   -- Check for trailing whitespaces
+	-- "tommcdo/vim-lion"                 -- Provide indentation for code blocks
+	-- "dense-analysis/ale"               -- Static code analisys
+	
+	-- "junegunn/fzf", run = ":call fzf#install()" },
+	-- "ibhagwan/fzf-lua", -- Fuzzy finder
+
+	-- "norcalli/nvim-colorizer.lua", run = ":lua require'colorizer'.setup({ '!*'; })" }
+
+
 }
 
 paq.install()
+
+if is_installed then
+	require_file("plugin_nvim_cmp")
+	require_file("plugin_lsp")
+	require_file("plugin_gruvbox")
+	require_file("plugin_lualine")
+end

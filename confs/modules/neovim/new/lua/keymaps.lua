@@ -87,9 +87,12 @@ map("vx", "<Leader>y", "\"+y  :echo \"Yanked to system clipboard\" <CR>")
 map("n",  "<Leader>p", "\"+p  :echo \"Pasted from system clipboard\" <CR>")
 
 -- windows
-map("n", "<Leader>c", ":lopen <CR>")
+-- map("n", "<Leader>c", ":lopen <CR>")
 map("n", "<Leader>e", ":Lexplore 20 <CR>")
 map("v", "<Leader>e", "<ESC>:Lexplore 20 <CR>")
+
+map("n", "<Leader>f",  ":Ex <CR>")
+map("v", "<Leader>f",  "<ESC> :Ex <CR>")
 
 
 -- Set normal keybindings
