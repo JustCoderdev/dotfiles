@@ -6,6 +6,9 @@ require('fzf-lua').setup(
 		path_shorten = false,
 		cwd = vim.fn.getcwd(),
 	},
+	grep = {
+		cwd = vim.fn.getcwd(),
+	},
 	winopts =
 	{
 		border = "single",

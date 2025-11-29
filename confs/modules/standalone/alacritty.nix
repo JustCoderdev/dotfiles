@@ -6,6 +6,7 @@
 let
 	inherit (config.jcconfs) has-de;
 
+	stylix-cfg = config.stylix;
 	cfg = config.jcconfs.module.alacritty;
 in
 
@@ -58,8 +59,12 @@ in
 				};
 
 				font = {
-					normal.style = "Medium";
 					italic.style = "Medium Italic";
+					size = stylix-cfg.fonts.sizes.terminal;
+					normal = {
+						family = stylix-cfg.fonts.monospace.name;
+						style = "Medium";
+					};
 				};
 
 				keyboard.bindings =
@@ -74,8 +79,8 @@ in
 					);
 				in
 				[
-					(add-char-bind "\\u001BF" "Right" "Alt")
-					(add-char-bind "\\u001BB" "Left"  "Alt")
+					# (add-char-bind "\\u001BF" "Right" "Alt")
+					# (add-char-bind "\\u001BB" "Left"  "Alt")
 
 					(add-action-bind "Copy"  "Y" "Shift|Alt")
 					(add-action-bind "Paste" "P" "Shift|Alt")

@@ -14,16 +14,19 @@ in
 
 			withRuby = false;
 			withPython3 = false;
+
+			extraPackages = with pkgs;
+			[
+				xclip xsel fzf git gcc
+				tree-sitter # Parser
+
+				# LSPs
+				nixd # lua-language-server
+				# vscode-langservers-extracted
+			];
+
 		};
 
-		home.packages = with pkgs; [
-			xclip xsel fzf git
-			tree-sitter # Parser
-
-			# LSPs
-			nixd # lua-language-server
-			# vscode-langservers-extracted
-		];
 
 		home.file =
 		{
