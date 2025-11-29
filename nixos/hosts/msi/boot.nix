@@ -22,7 +22,7 @@ in
 
 	systemd.tmpfiles.rules = [
 #		Type Path           Mode User                 Group Age Argument
-		"d   /home/WDC_WD10 0750 ${username}          users"
+		"d   /home/WDC_WD10 0770 ${username}          users"
 		"L+  /home/WDC_WD10 -    -                    -     -   /home/${username}/HDisk"
 	];
 }
