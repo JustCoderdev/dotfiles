@@ -13,6 +13,7 @@ require('fzf-lua').setup(
 		{
 			default = "builtin", -- override default previewer
 			border = "border",  -- border|noborder
+
 			title = false,
 			scrollbar = "border",  -- `false` or 'float|border'
 			delay = 250,       -- delay(ms) displaying the preview

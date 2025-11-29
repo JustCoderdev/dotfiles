@@ -6,10 +6,10 @@ require("nvim-treesitter.configs").setup(
 	{
 		-- languages
 		"c", "make",
-		"html", "css", "javascript", "typescript"
+		"html", "css", "javascript", "typescript",
 
 		-- data format
-		"toml", "json", "jsonc", "yaml", "ini"
+		"toml", "json", "jsonc", "yaml", "ini",
 
 		-- other
 		"bash", "lua", "nix",
