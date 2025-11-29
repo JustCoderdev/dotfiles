@@ -31,39 +31,35 @@
 				)
 		);
 
-		common-modules = [
+		nixos-modules = [
 			./stylix/default.nix
-			./options.nix
 
-			{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
+			stylix.nixosModules.stylix
+			./stylix/nixos.nix
+
+			./options/external.nix
 		];
 
-		nixos-modules = (
-			common-modules ++ [ stylix.nixosModules.stylix ./stylix/nixos.nix ]
-		);
+		home-manager-modules = [
+			./stylix/default.nix
 
-		home-manager-modules = (
-			common-modules ++ [ stylix.homeModules.stylix ./stylix/hm.nix ./modules/default.nix ]
-		);
+			stylix.homeModules.stylix
+			./stylix/hm.nix
+
+			./options/internal.nix
+			./modules/default.nix
+		];
 
 		getUserModules = (
 			username:
 			[
-				{
-					home.username = username;
-					jcconfs.users.${username} =
-					{
-						inherit (import ./settings/${username}.nix) profiles special-pkgs;
-					};
-				}
+				{ home.username = username; }
+				{ jcconfs.user = { inherit (import ./settings/${username}.nix) profiles special-pkgs; }; }
 			]
 		);
 
 		homeConfiguration = (
-			{ config, lib, ... }:
-			let
-				inherit (config.jcconfs) host users;
-			in
+			{ config, ... }:
 			{
 				imports = nixos-modules
 				++ [
@@ -79,40 +75,16 @@
 								username:
 								keyValue username (
 									{ ... }:
+									let
+										inherit (config.jcconfs) host;
+									in
 									{
-										imports = [
-											./stylix/default.nix
-											./options.nix
-
-											{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
-											stylix.homeModules.stylix ./stylix/hm.nix ./modules/default.nix
-										];
-
-										home.username = username;
-										# imports = home-manager-modules ++ (getUserModules username);
-										stylix.enable = true && config.jcconfs.host.has-de;
-										jcconfs = {
-											inherit host;
-											users =
-											(
-												lib.attrsets.mapAttrs'
-												(
-													username: _:
-													{
-														name = username;
-														value = { inherit (import ./settings/${username}.nix) profiles special-pkgs; };
-													}
-												)
-												users
-											);
-										};
+										imports = home-manager-modules ++ (getUserModules username);
+										stylix.enable = true && host.has-de;
+										jcconfs = { inherit host; };
 									}
 								)
-							) (
-								lib.attrsets.mapAttrsToList
-									(name: _: name)
-									config.jcconfs.users
-							)
+							) config.jcconfs.users
 						);
 					}
 				];
@@ -122,9 +94,12 @@
 		homeBuilder = (
 			username: { has-de, is-laptop }: pkgs:
 			home-manager.lib.homeManagerConfiguration {
-				modules = home-manager-modules ++ (getUserModules username)
-					++ [ { jcconfs.host = { inherit has-de is-laptop; }; } ];
 				inherit pkgs;
+				modules = [ ]
+				++ home-manager-modules
+				++ (getUserModules username)
+				++ [ { jcconfs.host = { inherit has-de is-laptop; }; } ]
+				;
 			}
 		);
 

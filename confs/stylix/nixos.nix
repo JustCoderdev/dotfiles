@@ -1,7 +1,6 @@
 { config, ... }:
 
 let
-	cfg-stylix = config.stylix;
 	cfg = config.jcconfs;
 in
 

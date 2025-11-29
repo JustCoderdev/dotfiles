@@ -46,7 +46,7 @@
 				jcbin.nixosModules.all
 
 				jcconfs.nixosModules.home
-				{ jcconfs.users = { "${username}" = { }; school = { }; }; }
+				{ jcconfs.users = [ "${username}" "school" ]; }
 
 				./nixos
 			]

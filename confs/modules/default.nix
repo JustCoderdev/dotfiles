@@ -1,8 +1,7 @@
 { config, lib, ... }:
 
 let
-	inherit (config.home) username;
-	inherit (config.jcconfs.users."${username}") special-pkgs profiles;
+	inherit (config.jcconfs.user) special-pkgs profiles;
 
 	profile =
 	{

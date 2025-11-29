@@ -1,18 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
-	inherit (config.jcconfs.host) has-de;
-
 	cfg = config.jcconfs;
 in
 
 {
 	config =
 	{
-		stylix = lib.mkIf (has-de)
+		stylix =
 		{
-			enable = true;
-
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
 
