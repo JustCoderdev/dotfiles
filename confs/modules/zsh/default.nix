@@ -1,23 +1,29 @@
 { config, lib, ... }:
 
 let
-	available-in-profile = "develop-environment";
-
-	profile-enabled = lib.lists.any
-		(profile: profile == available-in-profile)
-		config.jcconfs.profiles;
+	cfg = config.jcconfs.module.zsh;
 in
 
 {
-	programs.zsh = lib.mkIf (profile-enabled)
+	config = lib.mkIf (cfg.enable)
 	{
-		enable = true;
-		completionInit = "";
+		programs.zsh =
+		{
+			enable = true;
+			completionInit = "";
 
-		initContent = ''
+			initContent = ''
 export DOT_NIXOS=1;
 export DOT_FILES="/home/''${USER}/.config/dotfiles"
 source "''${DOT_FILES}/confs/modules/zsh/.zshrc"
 '';
+		};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.jcconfs.module.zsh =
+	{
+		enable = lib.mkEnableOption "zsh shell custom configuration";
 	};
 }

@@ -216,9 +216,7 @@ else
 
 	grep -C 3 --color -F 'error' .nixos-switch.log
 	grep -C 3 --color -F 'fail' .nixos-switch.log
-	# if $had_changes; then
-	# 	git restore --staged .
-	# fi
+	tail -n 10 .nixos-switch.log
 
 	echo -ne "\n"
 

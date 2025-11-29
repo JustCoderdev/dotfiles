@@ -10,4 +10,11 @@ in
 
 {
 	programs.tmux.enable = true && profile-enabled;
+
+	# ------------------------------------------------------------ #
+
+	options.jcconfs.module.tmux =
+	{
+		enable = lib.mkEnableOption "waybar wayland navbar custom configuration";
+	};
 }

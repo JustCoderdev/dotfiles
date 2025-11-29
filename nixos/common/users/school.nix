@@ -8,12 +8,13 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
+		nix.settings.allowed-users = [ "school" ];
+
 		users.users.school =
 		{
 			description = "School";
-
 			isNormalUser = true;
-			createHome = true;
+
 			initialPassword = "school";
 
 			packages = with pkgs; []
@@ -31,7 +32,7 @@ in
 
 	options.common.users.school =
 	{
-		enable = lib.mkEnableOption "ryuji school user" // { readonly = true; };
+		enable = lib.mkEnableOption "school user";
 	};
 }
 

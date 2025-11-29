@@ -7,9 +7,9 @@ in
 {
 	config =
 	{
-		stylix =
+		stylix = lib.mkIf (cfg.has-de)
 		{
-			enable = true && cfg.has-de;
+			enable = true;
 
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
@@ -71,12 +71,12 @@ in
 
 				base08 = i3-colors.red;          # red          # error
 				base09 = i3-colors.red_bright;   # orange       # urgent
-				base0A = "#fabd2f";              # yellow       # warning
+				base0A = gruvbox-darker.base0A;              # yellow       # warning
 				base0B = i3-colors.green;        # green
 				base0C = i3-colors.green_bright; # cyan
 				base0D = i3-colors.cyan;         # blue         # focused
-				base0E = "#d3869b";              # purple
-				base0F = "#d65d0e";              # brown
+				base0E = gruvbox-darker.base0E;  # purple
+				base0F = gruvbox-darker.base0F;  # brown
 			};
 
 			cursor = {

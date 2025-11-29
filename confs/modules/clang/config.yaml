@@ -1,3 +1,0 @@
-CompileFlags:
-	Add: [-xc, -std=c89, -Wall, -Wextra, -Werror, -Wno-unused, -Wpedantic, -pedantic, -pedantic-errors, -lm]
-	Compiler: clang

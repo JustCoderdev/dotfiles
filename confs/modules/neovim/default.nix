@@ -1,44 +1,44 @@
 { config, lib, pkgs, ... }:
 
 let
-	available-in-profile = "develop-environment";
-
-	profile-enabled = lib.lists.any
-		(profile: profile == available-in-profile)
-		config.jcconfs.profiles;
+	cfg = config.jcconfs.module.neovim;
 in
 
 {
-	programs.neovim = lib.mkIf (profile-enabled)
+	config = lib.mkIf (cfg.enable)
 	{
-		enable = true;
-		defaultEditor = true;
+		programs.neovim =
+		{
+			enable = true;
+			defaultEditor = true;
 
-		withRuby = false;
-		withPython3 = false;
-	};
+			withRuby = false;
+			withPython3 = false;
+		};
 
-	home.packages = lib.mkIf (profile-enabled)
-	(
-		with pkgs;
-		[
+		home.packages = with pkgs; [
 			xclip xsel fzf git
-
-			# Parsers
-			tree-sitter
+			tree-sitter # Parser
 
 			# LSPs
 			nixd # lua-language-server
 			# vscode-langservers-extracted
-		]
-	);
+		];
 
-	home.file = lib.mkIf (profile-enabled)
-	{
-		".config/nvim/init.lua".source = ./init.lua;
-		".config/nvim/lua" = {
-			source = ./lua;
-			recursive = true;
+		home.file =
+		{
+			".config/nvim/init.lua".source = ./init.lua;
+			".config/nvim/lua" = {
+				source = ./lua;
+				recursive = true;
+			};
 		};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.jcconfs.module.neovim =
+	{
+		enable = lib.mkEnableOption "neovim text editor custom configuration";
 	};
 }

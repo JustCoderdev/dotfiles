@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-	inherit (config.jcconfs) username;
 	cfg = config.jcconfs;
 in
 
@@ -21,14 +20,14 @@ in
 		{
 			alacritty.enable = false;
 			neovim.enable = false;
-			waybar.enable = false;
 			emacs.enable = false;
 
-			hyprland.enable = lib.mkForce false;
-			hyprpaper.enable = lib.mkForce false;
-			hyprlock.enable = lib.mkForce false;
+			mangohud.enable = false;
 
-			firefox.profileNames = [ "${username}" ];
+			hyprland.enable = false;
+			waybar.enable = false;
+
+			firefox.profileNames = [ "${cfg.username}" ];
 		};
 	};
 }

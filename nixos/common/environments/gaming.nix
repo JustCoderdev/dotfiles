@@ -17,7 +17,7 @@ in
 		[
 			discord     # Run with --disable-gpu
 			libstrangle # lock fps
-			mangohud    # Overlay (edit with goverlay)
+			# mangohud    # Overlay (edit with goverlay) # enabled with home assistant
 			prismlauncher  # Minecraft launcher
 			lutris
 		];

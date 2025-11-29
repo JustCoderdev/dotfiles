@@ -4,7 +4,8 @@ require("lualine").setup (
 {
 	options = {
 		icons_enabled = false,
-		theme = (ENV_COLOR_CAPABLE and "gruvbox" or "auto"),
+		-- theme = (ENV_COLOR_CAPABLE and "gruvbox" or "auto"),
+		theme = "auto",
 
 		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' },

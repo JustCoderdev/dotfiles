@@ -3,18 +3,21 @@ declare_file("plugin:fzf")
 require('fzf-lua').setup(
 {
 	files = {
-		path_shorten = 0,
+		path_shorten = false,
 		cwd = vim.fn.getcwd(),
 	},
-	winopts = {
+	winopts =
+	{
 		border = "single",
-		preview = {
-			default   = "builtin", -- override default previewer
-			border    = "border",  -- border|noborder
-			title_pos = "left",    -- left|center|right, title alignment
+		preview =
+		{
+			default = "builtin", -- override default previewer
+			border = "border",  -- border|noborder
+			title = false,
 			scrollbar = "border",  -- `false` or 'float|border'
-			delay     = 250,       -- delay(ms) displaying the preview
-			winopts   = {
+			delay = 250,       -- delay(ms) displaying the preview
+
+			winopts = {
 				number         = true,
 				relativenumber = false,
 				cursorline     = true,

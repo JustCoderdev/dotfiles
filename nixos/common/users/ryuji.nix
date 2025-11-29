@@ -23,9 +23,7 @@ in
 		in
 		{
 			description = (titleCase username);
-
 			isNormalUser = true;
-			createHome = true;
 
 			#                root    serial
 			extraGroups = [ "wheel" "dialout" ];

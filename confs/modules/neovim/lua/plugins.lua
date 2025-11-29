@@ -81,10 +81,14 @@ if is_installed then
 	require_file("plugin_treesitter")
 	require_file("plugin_fzf")
 
+	-- vim-better-whitespace
+	vim.cmd("hi ExtraWhitespace ctermbg=red ctermfg=gray")
+
 	-- ale
 	vim.cmd("let g:ale_c_cc_options = '-std=c89 -ansi -pedantic-errors -pedantic -Wall -Wextra -Werror -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wconversion -g -Wno-unused-variable -Wfatal-errors'")
 
-	-- colorizer #ffffff rgb(25, 25, 25)
+	-- colorizer rgb(80, 32, 32) #205020
 	require("colorizer").setup({'*';}, { rgb_fn = true; hsl_fn = true; })
+
 end
 

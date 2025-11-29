@@ -1,17 +1,23 @@
 { config, lib, ... }:
 
 let
-	available-in-profile = "develop-environment";
-
-	profile-enabled = lib.lists.any
-		(profile: profile == available-in-profile)
-		config.jcconfs.profiles;
+	cfg = config.jcconfs.module.ssh;
 in
 
 {
-	programs.ssh = lib.mkIf (profile-enabled)
+	config = lib.mkIf (cfg.enable)
 	{
-		enable = true;
-		addKeysToAgent = "yes";
+		programs.ssh =
+		{
+			enable = true;
+			addKeysToAgent = "yes";
+		};
+	};
+
+	# ------------------------------------------------------------ #
+
+	options.jcconfs.module.ssh =
+	{
+		enable = lib.mkEnableOption "ssh secure shell client custom configuration";
 	};
 }

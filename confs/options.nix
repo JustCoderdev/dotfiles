@@ -6,10 +6,10 @@ let
 		      "i3-desktop" # i3, i3status, fusuma
 		"hyprland-desktop" # hyprland, waybar
 
-		 "develop-environment" # alacritty, clang, emacs, git, neovim, zsh, ssh, tmux
+		 "develop-environment" # alacritty, emacs, git, neovim, zsh, ssh
 		    "game-environment" # mangohud
 
-		"ryuji" # firefox
+		"ryuji-user" # firefox
 	];
 in
 

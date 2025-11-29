@@ -18,13 +18,17 @@
 
 	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
 	let
-		users = [ "ryuji" "nixos" "school" ];
+		nx-users = [ "ryuji" "school" ];
+		hm-users = [ "nixos" ] ++ nx-users;
 
 		getArgs = (
 			{ username, has-de, is-laptop }@configs:
 			{
 				inherit inputs;
-				settings = (import ./settings/${username}.nix) // (configs);
+				settings = { }
+				// (import ./settings/${username}.nix)
+				// ({ inherit has-de is-laptop; })
+				;
 			}
 		);
 
@@ -56,9 +60,16 @@
 				./stylix/hm.nix
 
 				./modules/default.nix
-				./default.nix
 
-				{ jcconfs = { inherit (settings) username has-de is-laptop; }; }
+				{ jcconfs = { inherit (settings) has-de is-laptop; }; }
+			]
+		);
+
+		getUserModules = (
+			username:
+			[
+				{ home.username = username; }
+				{ jcconfs.username = username; }
 			]
 		);
 
@@ -69,18 +80,32 @@
 				inherit (args) settings;
 			in
 			{
-				imports = (getNixosModules settings) ++
-				[ 
+				imports = [ ]
+				++ (getNixosModules settings)
+				++ [ 
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useUserPackages = true;
 						home-manager.extraSpecialArgs = args;
-						home-manager.users.${settings.username} = (
-							{ ... }:
-							{
-								imports = (getHomeManagerModules settings);
-								stylix.enable = true && settings.has-de;
-							}
+						home-manager.users = builtins.listToAttrs
+						(
+							let
+								keyValue = (name: value: { inherit name value; });
+							in
+							builtins.map (
+								username:
+								keyValue username (
+									{ ... }:
+									{
+										imports = [ ]
+										++ (getHomeManagerModules settings)
+										++ (getUserModules username)
+										;
+
+										stylix.enable = true && settings.has-de;
+									}
+								)
+							) nx-users
 						);
 					}
 				];
@@ -94,8 +119,12 @@
 			in
 			home-manager.lib.homeManagerConfiguration {
 				extraSpecialArgs = args;
-				modules = (getHomeManagerModules args.settings);
 				inherit pkgs;
+
+				modules = [ ]
+				++ (getHomeManagerModules args.settings)
+				++ (getUserModules username)
+				;
 			}
 		);
 
@@ -135,10 +164,10 @@
 			(
 				builtins.listToAttrs
 				(
-					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
-					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) hm-users)
 				)
 			)
 		);
@@ -163,10 +192,10 @@
 				in
 				builtins.listToAttrs
 				(
-					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
-					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) hm-users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) hm-users)
 				)
 			)
 		);
