@@ -64,7 +64,7 @@ paq {
 	"junegunn/fzf",                    -- Fuzzy finder
 	"ibhagwan/fzf-lua",
 
-	"norcalli/nvim-colorizer.lua"      -- Color colorcodes #604010
+	"norcalli/nvim-colorizer.lua",     -- Color colorcodes #604010
 	"RRethy/vim-illuminate.git"        -- Higlight hovered symbol
 }
 
