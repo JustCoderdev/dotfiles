@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.jcconfs;
@@ -7,8 +7,9 @@ in
 {
 	config =
 	{
-		stylix =
+		stylix = lib.mkIf (cfg.host.has-de)
 		{
+			enable = true;
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
 
@@ -69,7 +70,7 @@ in
 
 				base08 = i3-colors.red;          # red          # error
 				base09 = i3-colors.red_bright;   # orange       # urgent
-				base0A = gruvbox-darker.base0A;              # yellow       # warning
+				base0A = gruvbox-darker.base0A;  # yellow       # warning
 				base0B = i3-colors.green;        # green
 				base0C = i3-colors.green_bright; # cyan
 				base0D = i3-colors.cyan;         # blue         # focused
