@@ -204,10 +204,10 @@
 
 		# ------------------------------------------------------------ #
 
-		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-		forAllSystems = lib.genAttrs supportedSystems;
-		listAllSystems = lib.lists.forEach supportedSystems;
-		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+		# supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+		# forAllSystems = lib.genAttrs supportedSystems;
+		# listAllSystems = lib.lists.forEach supportedSystems;
+		# nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 
 	{
@@ -228,11 +228,9 @@
 				specialArgs = { inherit inputs pkgs-unstable jc-lib settings; };
 				modules = (getHostModules hostname) ++ (getUserModules username)
 				++
-				(
-					[
-						({ ... }: { common.manifest.hosts = hosts; })
-					]
-				)
+				[
+					({ ... }: { common.manifest.hosts = hosts; })
+				]
 				++
 				(
 					let
@@ -240,7 +238,7 @@
 					in
 					lib.optionals (lib.filesystem.pathIsRegularFile disko-module)
 					[
-						({ system.nixos.tags = [ "disko" ]; })
+						{ system.nixos.tags = [ "disko" ]; }
 						disko.nixosModules.disko
 						disko-module
 					]

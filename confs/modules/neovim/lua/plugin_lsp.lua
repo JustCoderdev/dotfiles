@@ -6,8 +6,8 @@ vim.lsp.config('nixd', { capabilities = capabilities })
 vim.lsp.config('clangd', { capabilities = capabilities })
 
 
--- vim.lsp.enable('nixd')   -- Ale
--- vim.lsp.enable('clangd') -- Ale
+vim.lsp.enable('nixd')
+vim.lsp.enable('clangd')
 
 
 -- File type fixes

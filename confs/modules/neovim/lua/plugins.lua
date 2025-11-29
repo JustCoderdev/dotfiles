@@ -65,7 +65,7 @@ paq {
 	"ibhagwan/fzf-lua",
 
 	"norcalli/nvim-colorizer.lua",     -- Color colorcodes #604010
-	"RRethy/vim-illuminate.git"        -- Higlight hovered symbol
+	"RRethy/vim-illuminate"            -- Higlight hovered symbol
 }
 
 paq.install()
@@ -92,8 +92,9 @@ if is_installed then
 	require("colorizer").setup({'*';}, { rgb_fn = true; hsl_fn = true; })
 
 	-- vim-illuminate onedark-darker-bg1
-	vim.cmd("hi IlluminatedWordText  guibg=#30363f gui=NONE")
-	vim.cmd("hi IlluminatedWordRead  guibg=#30363f gui=NONE")
-	vim.cmd("hi IlluminatedWordWrite guibg=#30363f gui=NONE")
+	require('illuminate').configure({ providers = { 'lsp', 'treesitter', 'regex' }})
+	vim.cmd("hi IlluminatedWordText  guibg=#746343 gui=NONE") -- #40463f
+	vim.cmd("hi IlluminatedWordRead  guibg=#746343 gui=NONE") -- #40463f
+	vim.cmd("hi IlluminatedWordWrite guibg=#746343 gui=NONE") -- #40463f
 end
 
