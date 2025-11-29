@@ -64,7 +64,8 @@ paq {
 	"junegunn/fzf",                    -- Fuzzy finder
 	"ibhagwan/fzf-lua",
 
-	"norcalli/nvim-colorizer.lua"      -- Color colorcodes #fffff
+	"norcalli/nvim-colorizer.lua"      -- Color colorcodes #604010
+	"RRethy/vim-illuminate.git"        -- Higlight hovered symbol
 }
 
 paq.install()
@@ -90,5 +91,9 @@ if is_installed then
 	-- colorizer rgb(80, 32, 32) #205020
 	require("colorizer").setup({'*';}, { rgb_fn = true; hsl_fn = true; })
 
+	-- vim-illuminate onedark-darker-bg1
+	vim.cmd("hi IlluminatedWordText  guibg=#30363f gui=NONE")
+	vim.cmd("hi IlluminatedWordRead  guibg=#30363f gui=NONE")
+	vim.cmd("hi IlluminatedWordWrite guibg=#30363f gui=NONE")
 end
 
