@@ -1,8 +1,8 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (settings) system;
-	inherit (config.jcconfs) username has-de;
+	inherit (config.jcconfs.host) has-de;
+	inherit (config.home) username;
 
 	cfg = config.jcconfs.module.firefox;
 in
@@ -16,7 +16,7 @@ in
 			enable = true;
 			package = pkgs.firefox;
 
-			profiles.${username} =
+			profiles."${username}" =
 			{
 				settings =
 				{
@@ -59,7 +59,6 @@ in
 			policies =
 			{
 				AutofillCreditCardEnabled = false;
-				DefaultDownloadDirectory = "/home/${username}/Downloads";
 
 				DisableFeedbackCommands = true;
 				DisableFirefoxScreenshots = true;
@@ -72,7 +71,7 @@ in
 				DisplayMenuBar = "never";
 
 				DontCheckDefaultBrowser = true;
-				
+
 				EnableTrackingProtection = {
 					Value = true;
 					Cryptomining = true;
@@ -84,7 +83,7 @@ in
 				ExtensionSettings =
 				let
 					gen-extension-data = (
-						addon-name: 
+						addon-name:
 						{
 							install_url = "https://addons.mozilla.org/firefox/downloads/latest/${addon-name}/latest.xpi";
 							installation_mode = "force_installed";
@@ -104,8 +103,8 @@ in
 					"myallychou@gmail.com"                          = gen-extension-data "youtube-recommended-videos";
 					"{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}"        = gen-extension-data "youtube-nonstop";
 					"default-compact-dark-theme@glitchii.github.io" = gen-extension-data "default-compact-dark-theme";
-					# "{57015cac-9cb6-43b3-975a-b305fd4012c9}"        = gen-extension-data "two-finger-history-jump";
-					# "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}"        = gen-extension-data "user-agent-string-switcher";
+					"{57015cac-9cb6-43b3-975a-b305fd4012c9}"        = gen-extension-data "two-finger-history-jump";
+					"{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}"        = gen-extension-data "user-agent-string-switcher";
 				};
 
 				FirefoxHome = {
@@ -150,14 +149,7 @@ in
 				SearchBar = "unified";
 				SearchEngines = {
 					Default = "DuckDuckGo";
-					Remove = [ "Bing" "Ecosia" "Qwant" "Wikipedia" ];
-					# Add = [ {
-					# 	Name = "DuckDuckGo*";
-					# 	URLTemplate = "https://duckduckgo.com/{searchTerms}&kah=uk-en&k1=-1&k5=2&kak=-1&kao=-1&kap=-1&kaq=-1&kau=-1&kax=-1&kbe=0&kbg=-1&kl=wt-wt&kp=-2&kpsb=-1&kz=-1&kaj=m";
-					# 	Method = "GET";
-					# 	IconURL = "https://duckduckgo.com/favicon.ico";
-					# 	Alias = "@ddg";
-					# } ];
+					Remove = [ "Perplexity" "Google" "Bing" "Ecosia" "Qwant" "Wikipedia" ];
 				};
 				SearchSuggestEnabled = true;
 

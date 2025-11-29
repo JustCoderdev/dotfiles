@@ -1,7 +1,7 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (config.jcconfs) has-de;
+	inherit (config.jcconfs.host) has-de;
 
 	cfg = config.jcconfs.module.i3;
 

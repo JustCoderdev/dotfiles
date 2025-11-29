@@ -1,9 +1,8 @@
-{ config, lib, settings, ... }:
+{ config, lib, ... }:
 
 let
-	inherit (settings) special-pkgs;
-
-	cfg = config.jcconfs;
+	inherit (config.home) username;
+	inherit (config.jcconfs.users."${username}") special-pkgs profiles;
 
 	profile =
 	{
@@ -65,23 +64,23 @@ in
 
 		jcconfs.module =
 		{
-			fusuma.enable    = (lib.mkDefault (contains cfg.profiles profile.desktop.i3));
-			i3.enable        = (lib.mkDefault (contains cfg.profiles profile.desktop.i3));
-			i3status.enable  = (lib.mkDefault (contains cfg.profiles profile.desktop.i3));
+			fusuma.enable    = (lib.mkDefault (contains profiles profile.desktop.i3));
+			i3.enable        = (lib.mkDefault (contains profiles profile.desktop.i3));
+			i3status.enable  = (lib.mkDefault (contains profiles profile.desktop.i3));
 
-			hyprland.enable  = (lib.mkDefault (contains cfg.profiles profile.desktop.hyprland));
-			waybar.enable    = (lib.mkDefault (contains cfg.profiles profile.desktop.hyprland));
+			hyprland.enable  = (lib.mkDefault (contains profiles profile.desktop.hyprland));
+			waybar.enable    = (lib.mkDefault (contains profiles profile.desktop.hyprland));
 
-			alacritty.enable = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
-			emacs.enable     = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
-			git.enable       = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
-			neovim.enable    = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
-			ssh.enable       = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
-			zsh.enable       = (lib.mkDefault (contains cfg.profiles profile.environment.develop));
+			alacritty.enable = (lib.mkDefault (contains profiles profile.environment.develop));
+			emacs.enable     = (lib.mkDefault (contains profiles profile.environment.develop));
+			git.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
+			neovim.enable    = (lib.mkDefault (contains profiles profile.environment.develop));
+			ssh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
+			zsh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
 
-			mangohud.enable  = (lib.mkDefault (contains cfg.profiles profile.environment.game));
+			mangohud.enable  = (lib.mkDefault (contains profiles profile.environment.game));
 
-			firefox.enable   = (lib.mkDefault (contains cfg.profiles profile.user.ryuji));
+			firefox.enable   = (lib.mkDefault (contains profiles profile.user.ryuji));
 		};
 	};
 }

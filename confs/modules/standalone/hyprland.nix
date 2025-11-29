@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-	inherit (config.jcconfs) wallpapers_path has-de;
+	inherit (config.jcconfs) wallpapers_path;
+	inherit (config.jcconfs.host) has-de;
 
 	cfg = config.jcconfs.module.hyprland;
 in

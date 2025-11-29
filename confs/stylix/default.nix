@@ -1,13 +1,15 @@
-{ inputs, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
+	inherit (config.jcconfs.host) has-de;
+
 	cfg = config.jcconfs;
 in
 
 {
 	config =
 	{
-		stylix = lib.mkIf (cfg.has-de)
+		stylix = lib.mkIf (has-de)
 		{
 			enable = true;
 
@@ -80,7 +82,7 @@ in
 			};
 
 			cursor = {
-				inherit (cfg.theme) package name;
+				inherit (cfg.icon-theme) package name;
 				size = 18;
 			};
 

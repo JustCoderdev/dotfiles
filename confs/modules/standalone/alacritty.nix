@@ -4,7 +4,7 @@
 { config, lib, ... }:
 
 let
-	inherit (config.jcconfs) has-de;
+	inherit (config.jcconfs.host) has-de;
 
 	stylix-cfg = config.stylix;
 	cfg = config.jcconfs.module.alacritty;

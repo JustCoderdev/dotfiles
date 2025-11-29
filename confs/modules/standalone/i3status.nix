@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-	inherit (config.jcconfs) has-de;
+	inherit (config.jcconfs.host) has-de;
 
 	cfg = config.jcconfs.module.i3status;
 

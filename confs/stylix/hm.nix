@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 
 let
+	inherit (config.home) username;
 	cfg = config.jcconfs;
 in
 
@@ -9,9 +10,9 @@ in
 	{
 		icons = {
 			enable = true;
-			inherit (cfg.theme) package;
-			light = cfg.theme.name;
-			dark = cfg.theme.name;
+			inherit (cfg.icon-theme) package;
+			light = cfg.icon-theme.name;
+			dark = cfg.icon-theme.name;
 		};
 
 		autoEnable = true;
@@ -27,7 +28,7 @@ in
 			hyprland.enable = false;
 			waybar.enable = false;
 
-			firefox.profileNames = [ "${cfg.username}" ];
+			firefox.profileNames = [ "${username}" ];
 		};
 	};
 }

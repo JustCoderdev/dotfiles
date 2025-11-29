@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	inherit (config.jcconfs) has-de is-laptop;
+	inherit (config.jcconfs.host) has-de is-laptop;
 
 	cfg = config.jcconfs.module.fusuma;
 in

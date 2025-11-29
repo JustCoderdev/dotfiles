@@ -1,7 +1,7 @@
 { config, ... }:
 
 let
-	cfg-sty = config.stylix;
+	cfg-stylix = config.stylix;
 	cfg = config.jcconfs;
 in
 
@@ -33,8 +33,8 @@ in
 
 	services.xserver.displayManager.lightdm.greeters.gtk =
 	{
-		inherit (cfg) theme;
-		cursorTheme = cfg-sty.cursor;
-		iconTheme = { inherit (cfg.theme) package name; };
+		theme.name = cfg.icon-theme.name;
+		iconTheme = cfg.icon-theme;
+		cursorTheme = cfg.icon-theme;
 	};
 }

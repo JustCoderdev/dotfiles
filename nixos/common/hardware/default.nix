@@ -38,8 +38,8 @@ in
 		# Graphics
 		# -------------------- #
 
-		jcconfs.has-de    = lib.mkDefault has-de;
-		jcconfs.is-laptop = hardware-type == "laptop";
+		jcconfs.host.has-de    = lib.mkDefault has-de;
+		jcconfs.host.is-laptop = hardware-type == "laptop";
 
 		common.core.plymouth.enable = lib.mkDefault has-de;
 		common.core.fonts.enable    = lib.mkDefault has-de;

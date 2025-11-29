@@ -16,77 +16,60 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, stylix }@inputs:
+	outputs = { self, nixpkgs, home-manager, stylix }:
 	let
-		nx-users = [ "ryuji" "school" ];
-		hm-users = [ "nixos" ] ++ nx-users;
+		lib = nixpkgs.lib;
 
-		getArgs = (
-			{ username, has-de, is-laptop }@configs:
-			{
-				inherit inputs;
-				settings = { }
-				// (import ./settings/${username}.nix)
-				// ({ inherit has-de is-laptop; })
-				;
-			}
-		);
-
-		getCommonModules =
+		users =
 		(
-			settings:
-			[
-				./stylix/default.nix
-				./options.nix
-
-				{ jcconfs = { inherit (settings) profiles; wallpapers_path = ./.wallpapers; }; }
-			]
+			lib.attrsets.mapAttrs
+				(username: _: username)
+				(
+					lib.attrsets.filterAttrs
+						(name: value: !(lib.strings.hasPrefix "." name) && (value == "regular"))
+						(builtins.readDir ./settings)
+				)
 		);
 
-		getNixosModules = (
-			settings:
-			(getCommonModules settings) ++
-			[
-				inputs.stylix.nixosModules.stylix
-				./stylix/nixos.nix
-			]
+		common-modules = [
+			./stylix/default.nix
+			./options.nix
+
+			{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
+		];
+
+		nixos-modules = (
+			common-modules ++ [ stylix.nixosModules.stylix ./stylix/nixos.nix ]
 		);
 
-		getHomeManagerModules = (
-			settings:
-			(getCommonModules settings) ++
-			[
-				inputs.stylix.homeModules.stylix
-				./stylix/hm.nix
-
-				./modules/default.nix
-
-				{ jcconfs = { inherit (settings) has-de is-laptop; }; }
-			]
+		home-manager-modules = (
+			common-modules ++ [ stylix.homeModules.stylix ./stylix/hm.nix ./modules/default.nix ]
 		);
 
 		getUserModules = (
 			username:
 			[
-				{ home.username = username; }
-				{ jcconfs.username = username; }
+				{
+					home.username = username;
+					jcconfs.users.${username} =
+					{
+						inherit (import ./settings/${username}.nix) profiles special-pkgs;
+					};
+				}
 			]
 		);
 
 		homeConfiguration = (
 			{ config, lib, ... }:
 			let
-				args = (getArgs { inherit (config.jcconfs) username has-de is-laptop; });
-				inherit (args) settings;
+				inherit (config.jcconfs) host users;
 			in
 			{
-				imports = [ ]
-				++ (getNixosModules settings)
-				++ [ 
+				imports = nixos-modules
+				++ [
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useUserPackages = true;
-						home-manager.extraSpecialArgs = args;
 						home-manager.users = builtins.listToAttrs
 						(
 							let
@@ -97,15 +80,39 @@
 								keyValue username (
 									{ ... }:
 									{
-										imports = [ ]
-										++ (getHomeManagerModules settings)
-										++ (getUserModules username)
-										;
+										imports = [
+											./stylix/default.nix
+											./options.nix
 
-										stylix.enable = true && settings.has-de;
+											{ jcconfs = { wallpapers_path = ./.wallpapers; }; }
+											stylix.homeModules.stylix ./stylix/hm.nix ./modules/default.nix
+										];
+
+										home.username = username;
+										# imports = home-manager-modules ++ (getUserModules username);
+										stylix.enable = true && config.jcconfs.host.has-de;
+										jcconfs = {
+											inherit host;
+											users =
+											(
+												lib.attrsets.mapAttrs'
+												(
+													username: _:
+													{
+														name = username;
+														value = { inherit (import ./settings/${username}.nix) profiles special-pkgs; };
+													}
+												)
+												users
+											);
+										};
 									}
 								)
-							) nx-users
+							) (
+								lib.attrsets.mapAttrsToList
+									(name: _: name)
+									config.jcconfs.users
+							)
 						);
 					}
 				];
@@ -113,18 +120,11 @@
 		);
 
 		homeBuilder = (
-			{ username, has-de, is-laptop, pkgs }:
-			let
-				args = getArgs { inherit username has-de is-laptop; };
-			in
+			username: { has-de, is-laptop }: pkgs:
 			home-manager.lib.homeManagerConfiguration {
-				extraSpecialArgs = args;
+				modules = home-manager-modules ++ (getUserModules username)
+					++ [ { jcconfs.host = { inherit has-de is-laptop; }; } ];
 				inherit pkgs;
-
-				modules = [ ]
-				++ (getHomeManagerModules args.settings)
-				++ (getUserModules username)
-				;
 			}
 		);
 
@@ -133,13 +133,13 @@
 		(
 			{ has-de, is-laptop }:
 			""
-			+ optionalString (has-de)    "-de"
-			+ optionalString (is-laptop) "-lp"
+			+ optionalString has-de    "-de"
+			+ optionalString is-laptop "-lp"
 		);
 
 		supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
 		forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-		listAllSystems = nixpkgs.lib.lists.forEach supportedSystems;
+		# listAllSystems = nixpkgs.lib.lists.forEach supportedSystems;
 		nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 	in
 	{
@@ -157,17 +157,17 @@
 					username: { has-de, is-laptop }@flags:
 					{
 						name = "${username}${get-flags flags}";
-						value = homeBuilder { inherit username has-de is-laptop; pkgs = nixpkgsFor.${system}; };
+						value = homeBuilder username flags nixpkgsFor.${system};
 					}
 				);
 			in
 			(
 				builtins.listToAttrs
 				(
-					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) hm-users)
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
 				)
 			)
 		);
@@ -192,10 +192,10 @@
 				in
 				builtins.listToAttrs
 				(
-					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) hm-users)
-					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) hm-users)
+					(builtins.map    (username: map-user username { has-de = false; is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = false; }) users)
+					++ (builtins.map (username: map-user username { has-de = false; is-laptop = true;  }) users)
+					++ (builtins.map (username: map-user username { has-de = true;  is-laptop = true;  }) users)
 				)
 			)
 		);
