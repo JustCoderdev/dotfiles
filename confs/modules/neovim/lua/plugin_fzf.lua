@@ -2,6 +2,10 @@ declare_file("plugin:fzf")
 
 require('fzf-lua').setup(
 {
+	files = {
+		path_shorten = 0,
+		cwd = vim.fn.getcwd(),
+	},
 	winopts = {
 		border = "single",
 		preview = {
