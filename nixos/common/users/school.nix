@@ -9,6 +9,7 @@ in
 	config = lib.mkIf (cfg.enable)
 	{
 		nix.settings.allowed-users = [ "school" ];
+		jcconfs.users = [ "school" ];
 
 		users.users.school =
 		{

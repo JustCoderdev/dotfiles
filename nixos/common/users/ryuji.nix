@@ -13,6 +13,7 @@ in
 	config = lib.mkIf (cfg.enable)
 	{
 		system.nixos.tags = [ "${username}" ];
+		jcconfs.users = [ "${username}"  ];
 
 		users.users.${username} =
 		let

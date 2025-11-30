@@ -147,7 +147,7 @@ Host ${builder.hostName}
 							systems = lib.mkOption {
 								description = "The systems supported by the builder";
 								type = lib.types.listOf lib.types.str;
-								systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
+								default = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 							};
 						};
 					}

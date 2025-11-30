@@ -44,10 +44,7 @@
 			username:
 			[
 				jcbin.nixosModules.all
-
 				jcconfs.nixosModules.home
-				{ jcconfs.users = [ "${username}" "school" ]; }
-
 				./nixos
 			]
 		);
