@@ -21,7 +21,7 @@ fi
 if [[ "${PROMPT}" == '%n@%m:%~/ > ' || "${PROMPT}" == '%m%# ' ]];
 then
 	# ' ~ $ ' cyan tinted
-	PROMPT=$'%F{8} %~ %B%F{4}$%f%b '
+	PROMPT=$'%F{8} %~ %B%F{6}$%f%b '
 
 	# Show subshell lvl
 	if [[ "${SHLVL}" > 1 ]]; then

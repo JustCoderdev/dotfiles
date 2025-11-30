@@ -19,7 +19,7 @@ in
 
 		targets =
 		{
-			alacritty.enable = false;
+			# alacritty.enable = false;
 			neovim.enable = false;
 			emacs.enable = false;
 

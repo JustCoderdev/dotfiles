@@ -7,21 +7,14 @@ let
 
 	col = with config.stylix.base16Scheme;
 	{
-		background = base00;
-		alt-background = base01;
+		background     = base00; # ----
+		alt-background = base01; # ---
+		unfocused      = base02; # --
 
-		unfocused = base02;
-		alt-unfocused = base03;
+		text           = base05; # ++
 
-		alt-text = base04;
-		text = base05;
-
-		error = base08;
-		urgent = base09;
-		warning = base0A;
-		good = base0B;
-
-		focused = base0D;
+		error          = base08; # red
+		focused        = base0D; # cyan
 	};
 in
 
@@ -50,14 +43,6 @@ in
 					names = lib.mkForce [ "${config.stylix.fonts.monospace.name}" ];
 					style = "Medium";
 				};
-
-				# keycodebindings = 
-				# let
-				# 	exec = (command: "exec --no-startup-id \"${command}\"");
-				# in
-				# {
-				# 	"172" = (exec "playerctl play-pause");  # XF86AudioPlayPause
-				# };
 
 				keybindings =
 				let
@@ -172,35 +157,30 @@ in
 
 				colors =
 				let
-					ifnull = (
-						var: substitute:
-						if var == null then substitute else var
-					);
-
 					get-default = (
-						{ border ? null, text ? null, ... }:
+						text:
 						{
-							border = lib.mkForce (ifnull border col.background);
-							text   = lib.mkForce (ifnull text   col.text);
+							border = lib.mkForce col.background;
+							text   = lib.mkForce (if text != null then text else col.text);
 						}
 					);
 
 					add-tint = (
-						color: { background ? null, indicator ? null, childBorder ? null, ... }:
+						color:
 						{
-							background  = lib.mkForce (ifnull background  color);
-							indicator   = lib.mkForce (ifnull indicator   color);
-							childBorder = lib.mkForce (ifnull childBorder color);
+							background  = lib.mkForce color;
+							indicator   = lib.mkForce color;
+							childBorder = lib.mkForce color;
 						}
 					);
 				in
 				{
 					background = lib.mkForce (col.background);
-					focused         = (get-default {})                        // (add-tint col.focused        {});
-					urgent          = (get-default {})                        // (add-tint col.error          {});
-					focusedInactive = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
-					unfocused       = (get-default { text = col.unfocused; }) // (add-tint col.alt-background {});
-					placeholder     = (get-default {})                        // (add-tint col.background     {});
+					focused         = (get-default null)          // (add-tint col.focused);
+					urgent          = (get-default null)          // (add-tint col.error);
+					focusedInactive = (get-default col.unfocused) // (add-tint col.alt-background);
+					unfocused       = (get-default col.unfocused) // (add-tint col.alt-background);
+					placeholder     = (get-default null)          // (add-tint col.background);
 				};
 
 
@@ -256,23 +236,25 @@ in
 							inherit (col) text;
 						};
 						urgentWorkspace = {
-							border = col.urgent;
+							border = col.error;
 							inherit (col) background text;
 						};
 
-						activeWorkspace = default-inactive;
+						activeWorkspace   = default-inactive;
 						inactiveWorkspace = default-inactive;
-						bindingMode = default-inactive;
+						bindingMode       = default-inactive;
 					};
 				} ];
 			};
 
 			extraConfig = ''
-exec --no-startup-id i3-msg 'workspace 2; alacritty'
-exec --no-startup-id i3-msg 'workspace 1; firefox'
 exec --no-startup-id ${pkgs.lightlocker}/bin/light-locker
 # exec --no-startup-id xsetroot -solid 262626 # set background to solid color
-	'';
+
+popup_during_fullscreen all
+default_border pixel 2
+default_floating_border pixel 2
+'';
 		};
 	};
 

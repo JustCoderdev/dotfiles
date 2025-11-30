@@ -86,26 +86,21 @@ such as alacritty, clang, git, hyprland, and more
 
 ### Fix
 
-- Fix disko using `/dev/disk/by-id/...` instead one `/dev/...` with `ll`
-- Fix keyrings not persisting credentials
-- Fix host files manually to use grub
+- Migrate all hosts to disko using `/dev/disk/by-id/<id>`
 - ~~Fix WakeOnLan module to make it persistent across reboots~~
-- [msi] Fix nginx catchall path using self signed certificate
+- jcconfs:neovim: Return should not accept suggestion
+- jcconfs:neovim: Colors are too flashy
 
 ### Improve
 
-- Move all manifest related files to manifest folder
-- Move all hardware manifest files in `nixos/common/hardware/`
 - ~~Improve grub by adding rescue option~~
-- Improve neovim by nuking current settings
 - Improve alacritty by resetting keybindings
 - Improve `refresh-displays` command by adding the toggle to mirror or extend display
 - Improve samba "global" directory to list all shares
-- [msi] Improve nginx by removing `/<service>` subpath when using subdomain
+- [wise] Improve nginx by removing `/<service>` subpath when using subdomain
 - Improve keyboard binds by:
-    - Duplicate "windows" key to the right
     - Remove special symbols when pressing ALT-GR
-    - Change layout to american keyboard
+    - Create custom layout for italian keyboard with american keys
     - Add CANCEL behaviour on SHIFT+BACKSPACE
 
 ### Add

@@ -6,7 +6,6 @@
 let
 	inherit (config.jcconfs.host) has-de;
 
-	stylix-cfg = config.stylix;
 	cfg = config.jcconfs.module.alacritty;
 in
 
@@ -20,51 +19,38 @@ in
 			{
 				general.live_config_reload = false;
 
-				# jdah color palette
 				colors =
 				{
 					draw_bold_text_with_bright_colors = false;
 
-					primary = {
-						background = "0x1d2021";
-						foreground = "0xd5c4a1";
-					};
-
-					normal = {
-						black = "0x1d2021";
-						blue = "0x83a598";
-						cyan = "0x8ec07c";
-						green = "0xb8bb26";
-						magenta = "0xd3869b";
-						red = "0xfb4934";
-						white = "0xd5c4a1";
-						yellow = "0xfabd2f";
-					};
-
-					bright = {
-						black = "0x665c54";
-						blue = "0xbdae93";
-						cyan = "0xd65d0e";
-						green = "0x3c3836";
-						magenta = "0xebdbb2";
-						red = "0xfe8019";
-						white = "0xfbf1c7";
-						yellow = "0x504945";
-					};
-
-					cursor = {
-						cursor = "0xd5c4a1";
-						text = "0x1d2021";
-					};
+					# primary = {
+					# 	background = normal.black;
+					# 	foreground = normal.white;
+					# };
+					#
+					# cursor = {
+					# 	cursor = normal.white;
+					# 	text = normal.black;
+					# };
+					#
+					# normal = {
+					# 	red = "#fb4934";
+					# 	# orange
+					# 	yellow = "#fabd2f";
+					# 	green = "#b8bb26";
+					# 	cyan = "#8ec07c";
+					# 	blue = "#83a598";
+					# 	magenta = "#d3869b";
+					# 	# brown
+					#
+					# 	black = "#1d2021";
+					# 	white = "#d5c4a1";
+					# };
 				};
 
 				font = {
 					italic.style = "Medium Italic";
-					size = stylix-cfg.fonts.sizes.terminal;
-					normal = {
-						family = stylix-cfg.fonts.monospace.name;
-						style = "Medium";
-					};
+					normal.style = lib.mkForce "Medium";
 				};
 
 				keyboard.bindings =

@@ -7,9 +7,10 @@ let
 
 	col = with config.stylix.base16Scheme;
 	{
-		error   = base08;
-		warning = base0A;
-		good    = base0B;
+		fg-pri  = base05; # #ffffff
+		error   = base08; # red
+		warning = base09; # orange
+		good    = base0B; # green
 	};
 in
 
@@ -69,7 +70,7 @@ in
 
 					separator = false;
 					separator_block_width = 0;
-					color_good = "#ffffff";
+					color_good = col.fg-pri;
 
 				};
 
@@ -78,7 +79,7 @@ in
 					format_bad = "";
 					path = "/sys/class/backlight/intel_backlight/max_brightness";
 
-					color_good = "#ffffff";
+					color_good = col.fg-pri;
 				};
 
 				mod-battery = {

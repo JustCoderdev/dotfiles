@@ -110,10 +110,12 @@ Host ${builder.hostName}
 			features = lib.mkOption {
 				type = lib.types.listOf lib.types.str;
 				description = "The features of the builder";
+				default = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 			};
 			systems = lib.mkOption {
 				type = lib.types.listOf lib.types.str;
 				description = "The systems supported by the builder";
+				default = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 			};
 		};
 
@@ -122,7 +124,7 @@ Host ${builder.hostName}
 			description = "Known builders that the client can offload the work to";
 			type = lib.types.listOf (
 				lib.types.submodule (
-					{ config, ... }:
+					{ ... }:
 					{
 						options = {
 							hostName = lib.mkOption {
