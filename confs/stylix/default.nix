@@ -153,7 +153,7 @@ in
 				base09 = gbox-cols.orange;  # orange   # urgent
 				base0A = gbox-cols.yellow;  # yellow   # warning
 				base0B = i3-tint.green;     # green    # good
-				base0C = gbox-cols.cyan;    # cyan
+				base0C = gbox-cols.blue;    # cyan
 				base0D = i3-tint.cyan;      # blue # focused
 				base0E = gbox-cols.purple;  # purple
 				base0F = gbox-cols.brown;   # brown
