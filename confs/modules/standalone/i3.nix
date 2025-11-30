@@ -8,9 +8,9 @@ let
 	col = with config.stylix.base16Scheme;
 	{
 		background     = base00; # ----
-		alt-background = base01; # ---
-		unfocused      = base02; # --
+		alt-background = base02; # ---
 
+		unfocused      = base04; # +
 		text           = base05; # ++
 
 		error          = base08; # red

@@ -142,10 +142,10 @@ in
 			in
 			{
 				base00 = jdah-tint.black;   # ----
-				base01 = i3-tint.gray-dim;  # ---
-				base02 = i3-tint.gray;      # --
+				base01 = gbox-cols.bg-sec;  # ---
+				base02 = i3-tint.gray-dim;  # --
 				base03 = gbox-cols.bg-hig;  # -
-				base04 = gbox-cols.fg-sec;  # +
+				base04 = i3-tint.gray;      # +
 				base05 = gbox-cols.fg-pri;  # ++
 				base06 = gbox-cols.fg-bri;  # +++
 				base07 = gbox-cols.bg-bri;  # ++++
