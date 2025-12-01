@@ -28,6 +28,7 @@ in
 
 				gfxmodeEfi  = cfg.display-resolution;
 				gfxmodeBios = cfg.display-resolution;
+				configurationLimit = 16;
 
 				# efi support
 				device = lib.mkIf (cfg.support-efi) "nodev";
