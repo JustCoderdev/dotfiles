@@ -1,4 +1,4 @@
-{ pkgs, config, options, lib, settings, ... }:
+{ pkgs, config, lib, settings, ... }:
 
 let
 	inherit (settings) username;
@@ -7,51 +7,54 @@ let
 in
 
 {
-	config = lib.mkMerge
-	[
-		(
-			lib.mkIf (cfg.backend == cfg.available-backends.pipewire)
-			{
-				services.pulseaudio.enable = false;
+	config = lib.mkIf (cfg.enable)
+	(
+		lib.mkMerge
+		[
+			(
+				lib.mkIf (cfg.backend == cfg.available-backends.pipewire)
+				{
+					services.pulseaudio.enable = false;
 
-				# Install control script
-				environment.systemPackages = with pkgs; [ pamixer ];
+					# Install control script
+					environment.systemPackages = with pkgs; [ pamixer ];
 
-				# Enable sound with pipewire.
-				security.rtkit.enable = true;
-				services.pipewire = {
-					enable = true;
+					# Enable sound with pipewire.
+					security.rtkit.enable = true;
+					services.pipewire = {
+						enable = true;
 
-					alsa.enable = true;
-					alsa.support32Bit = true;
-					pulse.enable = true;
-					jack.enable = true;
-				};
-			}
-		)
+						alsa.enable = true;
+						alsa.support32Bit = true;
+						pulse.enable = true;
+						jack.enable = true;
+					};
+				}
+			)
 
-		(
-			lib.mkIf (cfg.backend == cfg.available-backends.pulseaudio)
-			{
-				services.pipewire.enable = false;
+			(
+				lib.mkIf (cfg.backend == cfg.available-backends.pulseaudio)
+				{
+					services.pipewire.enable = false;
 
-				# Install control script
-				environment.systemPackages = with pkgs; [ pavucontrol alsa-utils ];
+					# Install control script
+					environment.systemPackages = with pkgs; [ pavucontrol alsa-utils ];
 
-				# Enable sound with pulseaudio.
-				services.pulseaudio = {
-					enable = true;
-					support32Bit = true;
-				};
+					# Enable sound with pulseaudio.
+					services.pulseaudio = {
+						enable = true;
+						support32Bit = true;
+					};
 
-				users.users.${username}.extraGroups = [ "audio" ];
-			}
-		)
-	];
+					users.users.${username}.extraGroups = [ "audio" ];
+				}
+			)
+		]
+	);
 
 	# ------------------------------------------------------------ #
 
-	options.common.core.audio = 
+	options.common.core.audio =
 	{
 		enable = lib.mkEnableOption "audio support";
 		backend = lib.mkOption {
