@@ -10,7 +10,7 @@ in
 		programs.git =
 		{
 			enable = true;
-			ignores = [ "*~" ".*.swp" ".old_session.vim" ".DS_Store" ];
+			ignores = [ "*~" ".*.swp" ".old_session.vim" ".emacs.elc" ".DS_Store" ];
 
 			# TODO: rename settings when new version comes out
 			iniContent =
