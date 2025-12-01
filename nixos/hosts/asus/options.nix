@@ -10,6 +10,8 @@
 	{
 		core =
 		{
+			printing.enable = true;
+
 			network.wakeOn.knownDevices =
 			{
 				quiss = "f4:6d:04:99:dc:9a";
