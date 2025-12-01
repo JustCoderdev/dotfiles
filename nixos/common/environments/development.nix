@@ -20,7 +20,7 @@ in
 			"d   ${uhome}/Developer/Projects 0755 ${username} users"
 		];
 
-		environment.systemPackages = with pkgs; [ ]
+		environment.systemPackages = with pkgs; [ screen ]
 		++ lib.lists.optionals (cfg.tools.android.enable) [ scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap ]
 		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 ]

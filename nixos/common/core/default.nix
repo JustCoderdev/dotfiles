@@ -29,10 +29,11 @@ DefaultTimeoutStopSec=10s
 
 	# Core packages
 	environment.systemPackages = with pkgs; [
-		unzip zip wget killall
-		rsync smartmontools pciutils dust
-		htop btop screen
+		rsync unzip zip wget killall
+		smartmontools pciutils htop
 		ntfs3g # ntfs driver
 		vim git
 	];
+
+	programs.nano.enable = false;
 }
