@@ -1,4 +1,4 @@
-{ config, lib, jc-lib, settings, ... }:
+{ config, lib, settings, ... }:
 
 let
 	inherit (settings) hardware-type;
@@ -48,7 +48,6 @@ in
 		{
 			xserver.enable = lib.mkDefault true;
 			thunar.enable  = lib.mkDefault true;
-			dolphin.enable = lib.mkDefault true;
 		};
 
 		hardware.graphics = lib.mkIf (self-graphics.capable)
