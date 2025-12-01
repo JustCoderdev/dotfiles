@@ -19,7 +19,7 @@ in
 					systemd.tmpfiles.rules =
 					let
 						ldm-grp = config.users.users.lightdm.group;
-						
+
 						icons-filepath = "${dotfiles_store_path}/confs/users-icon";
 					in
 					[
@@ -89,6 +89,8 @@ in
 				{
 					system.nixos.tags = [ "i3" ];
 					services.displayManager.defaultSession = "none+i3";
+					programs.i3lock.enable = false;
+
 					services.xserver.windowManager.i3 =
 					{
 						enable = true;

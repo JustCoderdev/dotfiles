@@ -7,7 +7,6 @@ in
 {
 	imports =
 	[
-		./dolphin.nix
 		./thunar.nix
 		./wayland.nix
 		./xserver.nix
