@@ -1,21 +1,17 @@
-{ config, lib, pkgs, settings, darnix-overlay, ... }:
+{ lib, settings, ... }:
 
 let
-	inherit (settings) username hostname special-pkgs;
-	cfg = config.common.core.nix;
+	inherit (settings) special-pkgs;
 in
 
 {
 	config =
 	{
-		system.nixos.tags = [ "${hostname}" ];
-
 		nix =
 		{
-			optimise.automatic = false;
+			optimise.automatic = true;
 			gc = {
-				automatic = false;
-				dates = "weekly";
+				automatic = true;
 				options = "--delete-older-than 15d";
 			};
 
@@ -23,7 +19,7 @@ in
 			# <https://nix.dev/manual/nix/2.24/command-ref/conf-file>
 			settings =
 			{
-				allowed-users = [ "${username}" ];                   # These users are allowed to connect to the Nix daemon
+				allowed-users = [ "@users" ];                        # These users are allowed to connect to the Nix daemon
 
 				auto-optimise-store = true;                          # Nix automatically detects files in the store that have identical contents, and replaces them with hard links to a single copy
 				builders-use-substitutes = true;                     # Nix will instruct remote build machines to use their own substituters if available
@@ -39,8 +35,6 @@ in
 
 				narinfo-cache-negative-ttl = 2;                      # If a store path is queried from a substituter but was not found, there will be a negative lookup cached in the local disk cache database for the specified duration
 				narinfo-cache-positive-ttl = 0;                      # If a store path is queried from a substituter, the result of the query will be cached in the local disk cache database including some of the NAR metadata
-
-				trusted-users = [ "@wheel" ];
 
 				# TODO: Update keys for nixserve
 				trusted-public-keys = [
@@ -61,7 +55,9 @@ in
 				permittedInsecurePackages = special-pkgs.insecure;
 				allowUnfreePredicate = (
 					pkg:
-					builtins.elem (lib.getName pkg) special-pkgs.unfree
+					builtins.elem
+						(lib.getName pkg)
+						special-pkgs.unfree
 				);
 			};
 		};

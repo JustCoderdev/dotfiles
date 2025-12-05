@@ -36,6 +36,10 @@ in
 				efiSupport = cfg.support-efi;
 			};
 
+			# ALSO CHANGE MOUNTPOINT FROM /boot TO /boot/efi
+			# efiSysMountPoint = "/boot/efi";
+			# efi.canTouchEfiVariables = true;
+
 			# --- PURE UEFI / NO GRUB --- #
 			# systemd-boot.enable = true;
 			# systemd-boot.configurationLimit = 5;

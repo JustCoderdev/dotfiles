@@ -54,7 +54,15 @@
 					}];
 				};
 
-				options.jcbin.${name}.enable = lib.mkEnableOption "${name} and add it to 'PATH'";
+				options.jcbin.${name} = {
+					enable = lib.mkEnableOption "${name}";
+					package = lib.mkOption {
+						description = "${name} package";
+						type = lib.types.package;
+						readOnly = true;
+						default = pkg;
+					};
+				};
 			}
 		);
 

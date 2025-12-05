@@ -1,22 +1,48 @@
 { config, lib, ... }:
 
 let
-	jc-lib = import ../../../jc-lib.nix { inherit lib; };
-
 	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
 
+	mkReadOnly = (
+		default:
+		{ inherit default; readOnly = true; }
+	);
+
+	mkSubmodOption = (
+		description: submodule:
+		lib.mkOption {
+			inherit description;
+			type = lib.types.attrsOf (lib.types.submodule (submodule));
+			default = { };
+		}
+	);
+
 	get-attr-names = (attr: lib.attrsets.mapAttrsToList (name: _: name) attr);
-	add-yearRO-opt = jc-lib.mkIntOptionRO "The year the architecture was released";
+	add-yearRO-opt = (
+		year:
+		(lib.mkOption {
+			description = "The year the architecture was released";
+			type = lib.types.int;
+		}) // (mkReadOnly year)
+	);
 in
 
 {
 	options.hardware =
 	{
-		system = jc-lib.mkStrOptionWexample "The platform the host is running on" "x86_64-linux";
-		type = jc-lib.mkEnumOption "What kind of hardware is this host running on" hardware-types;
+		system = lib.mkOption {
+			description = "The platform the host is running on";
+			type = lib.types.str;
+			example = "x86_64-linux";
+		};
 
-		audio.capable = jc-lib.mkBoolOption "Whether the host is capable of using audio peripherals";
-		bluetooth.capable = jc-lib.mkBoolOption "Whether the host is capable of bluetooth communication";
+		type = lib.mkOption {
+			description = "What kind of hardware is this host running on";
+			type = lib.types.enum hardware-types;
+		};
+
+		audio.capable = lib.mkEnableOption "software support for audio";
+		bluetooth.capable = lib.mkEnableOption "software support for bluetooth";
 
 		# -------------------- #
 
@@ -27,20 +53,24 @@ in
 		{
 			# amd = {
 			# 	inherit has-iGPU;
-			# 	architecture = jc-lib.mkNullOrEnumOption "Amd cpu architecture" (get-attr-names arch-data.cpu.amd);
+			# 	architecture = mkNullOrEnumOption "Amd cpu architecture" (get-attr-names arch-data.cpu.amd);
 			# };
 
 			intel =
 			let
 				self-arch = config.hardware.cpu.intel.architecture;
-				
+
 				intel-data = import ./architectures-list/cpu-intel.nix;
 				self-data = intel-data.${self-arch};
 			in
 			{
 				inherit has-iGPU;
-				architecture = jc-lib.mkNullOrEnumOption "Intel cpu architecture" (get-attr-names intel-data);
 				year = (add-yearRO-opt self-data.year);
+				architecture = lib.mkOption {
+					description = "Intel cpu architecture";
+					type = lib.types.nullOr (lib.types.enum (get-attr-names intel-data));
+					default = null;
+				};
 			};
 		};
 
@@ -57,8 +87,12 @@ in
 				self-data = radeon-data.${self-arch};
 			in
 			{
-				architecture = jc-lib.mkNullOrEnumOption "Amd gpu architecture" (get-attr-names radeon-data);
 				year = (add-yearRO-opt self-data.year);
+				architecture = lib.mkOption {
+					description = "Amd gpu architecture";
+					type = lib.types.nullOr (lib.types.enum (get-attr-names radeon-data));
+					default = null;
+				};
 			};
 
 			nvidia =
@@ -69,15 +103,28 @@ in
 				self-data = nvidia-data.${self-arch};
 			in
 			{
-				architecture = jc-lib.mkNullOrEnumOption "Nvidia gpu architecture" (get-attr-names nvidia-data);
+				architecture = lib.mkOption {
+					description = "Nvidia gpu architecture";
+					type = lib.types.nullOr (lib.types.enum (get-attr-names nvidia-data));
+					default = null;
+				};
+
 				offload = {
 					enable = lib.mkOption {
 						description = "Whether to enable gpu offload";
 						type = lib.types.bool;
 						default = config.hardware.cpu.intel.has-iGPU;
 					};
-					intelBusId = jc-lib.mkNullOrStrOption "Intel bus id";
-					nvidiaBusId = jc-lib.mkNullOrStrOption "Nvidia bus id";
+					intelBusId = lib.mkOption {
+						description = "Intel bus id";
+						type = lib.types.nullOr lib.types.str;
+						default = null;
+					};
+					nvidiaBusId = lib.mkOption {
+						description = "Nvidia bus id";
+						type = lib.types.nullOr lib.types.str;
+						default = null;
+					};
 				};
 
 				# -------------------- #
@@ -87,18 +134,17 @@ in
 				gt-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater turing";
 					type = lib.types.bool;
-					default = nvidia-data.turing.year > self-data.year;
-					readOnly = true;
-				};
+				} // (mkReadOnly (nvidia-data.turing.year > self-data.year));
 
 				ge-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater or equal to turing";
 					type = lib.types.bool;
-					default = nvidia-data.turing.year >= self-data.year;
-					readOnly = true;
-				};
+				} // (mkReadOnly (nvidia-data.turing.year >= self-data.year));
 
-				driver-name = jc-lib.mkNullOrStrOptionRO "The name of the driver package for this gpu" self-data.driver-name;
+				driver-name = lib.mkOption {
+					description = "The name of the driver package for this gpu";
+					type = lib.types.nullOr lib.types.str;
+				} // (mkReadOnly self-data.driver-name);
 			};
 		};
 
@@ -106,15 +152,30 @@ in
 
 		graphics =
 		{
-			capable = jc-lib.mkBoolOption "Whether the host is capable of graphics processing";
+			capable = lib.mkEnableOption "graphics for this host";
 
-			desktop-environment.enable = lib.mkEnableOption "xserver suite";
-			displays = jc-lib.mkSubmodOption "All displays connected to device" (
+			desktop-environment.enable = lib.mkEnableOption "desktop environmnet software suite";
+			displays = mkSubmodOption "All displays connected to device" (
 				{
-					options = {
-						identifier = jc-lib.mkStrOptionWexample "The identifier of the display given by `xrandr -q`" "DP-0";
-						resolution = jc-lib.mkStrOptionWexample "The resolution of the display" "1920x1080";
-						position = jc-lib.mkStrOptionWexample "The position relative to other displays" "1920x0";
+					options =
+					{
+						identifier = lib.mkOption {
+							description = "The identifier of the display given by `xrandr -q`";
+							type = lib.types.str;
+							example = "DP-0";
+						};
+
+						resolution = lib.mkOption {
+							description = "The resolution of the display";
+							type = lib.types.str;
+							example = "1920x1080";
+						};
+
+						position = lib.mkOption {
+							description = "The position relative to other displays";
+							type = lib.types.str;
+							example = "1920x0";
+						};
 					};
 				}
 			);
@@ -124,25 +185,37 @@ in
 
 		interfaces =
 		{
-			wireless =  jc-lib.mkSubmodOption "Host wireless interfaces"
+			wireless = mkSubmodOption "Host wireless interfaces"
 			(
 				{ name, ... }:
 				{
-					options = {
-						mac = jc-lib.mkStrRXOption "The mac address of the interface" jc-lib.regex.address.mac;
-						# self-ip = jc-lib.mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" jc-lib.regex.address.ipv4;
-						self-ip = jc-lib.mkNullOrStrOption "The ip of the interface (leave null to enable dhcp)";
+					# TODO: Check
+					options =
+					let
+						regex = { address.mac = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"; };
+					in
+					{
+						mac = lib.mkOption {
+							description = "The mac address of the interface";
+							type = lib.types.strMatching regex.address.mac;
+						};
+
+						self-ip = lib.mkOption {
+							description = "The ip of the interface (leave null to enable dhcp)";
+							type = lib.types.nullOr lib.types.str;
+							default = null;
+						};
 					};
 				}
 			);
 
-			# ethernet =  jc-lib.mkSubmodOption "Host wired interfaces"
+			# ethernet =  mkSubmodOption "Host wired interfaces"
 			# (
 			# 	{ name, ... }:
 			# 	{
 			# 		options = {
-			# 			mac = jc-lib.mkStrRXOption "The mac address of the interface" jc-lib.regex.address.mac;
-			# 			self-ip = jc-lib.mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" jc-lib.regex.address.ipv4;
+			# 			mac = mkStrRXOption "The mac address of the interface" regex.address.mac;
+			# 			self-ip = mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" regex.address.ipv4;
 			# 			network-name = ;
 			# 		};
 			# 	}
@@ -150,11 +223,11 @@ in
 
 			# virtual =
 			# {
-			# 	wireguard = jc-lib.mkSubmodOption "Wireguard virtual interfaces"
+			# 	wireguard = mkSubmodOption "Wireguard virtual interfaces"
 			# 	(
 			# 		{ name, ... }:
 			# 		{
-			# 			self-ip = jc-lib.mkStrRXOption "The ip of the interface (leave null to enable dhcp)";
+			# 			self-ip = mkStrRXOption "The ip of the interface (leave null to enable dhcp)";
 			# 			network-name = network-opt;
 			# 		};
 			# 	);

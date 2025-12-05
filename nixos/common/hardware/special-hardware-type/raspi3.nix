@@ -33,6 +33,10 @@ in
 		boot.tmp.cleanOnBoot = true;
 		swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
+		# Tell the Nix evaluator to garbage collect more aggressively
+		environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
+
+
 		# Other
 		hardware.enableRedistributableFirmware = true;
 

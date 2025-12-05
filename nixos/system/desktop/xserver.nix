@@ -1,7 +1,7 @@
-{ inputs, config, lib, pkgs, pkgs-unstable, jc-lib, settings, ... }:
+{ config, lib, pkgs, pkgs-unstable, settings, ... }:
 
 let
-	inherit (settings) username hardware-type system dotfiles_store_path;
+	inherit (settings) username hardware-type dotfiles_store_path;
 
 	cfg = config.system.desktop.xserver;
 in
@@ -90,14 +90,14 @@ in
 					system.nixos.tags = [ "i3" ];
 					services.displayManager.defaultSession = "none+i3";
 					programs.i3lock.enable = false;
+					jcbin.boomer.enable = true;
 
 					services.xserver.windowManager.i3 =
 					{
 						enable = true;
 						extraPackages =
 						[
-							inputs.jcbin.packages."${system}".boomer
-
+							config.jcbin.boomer.package
 							(
 								pkgs.callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
 									inherit (pkgs) python3; # pkg-config

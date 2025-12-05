@@ -1,4 +1,4 @@
-{ config, lib, pkgs, jc-lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.system.services.wireguard;
@@ -35,7 +35,7 @@ in
 				);
 			};
 
-			wireguard = 
+			wireguard =
 			{
 				enable = true;
 				interfaces = { }
@@ -100,6 +100,15 @@ in
 	# ------------------------------------------------------------ #
 
 	options.system.services.wireguard =
+	let
+		mkStrOption = (
+			description:
+			lib.mkOption {
+				inherit description;
+				type = lib.types.str;
+			}
+		);
+	in
 	{
 		client =
 		{
@@ -109,22 +118,26 @@ in
 				default = { };
 				type = lib.types.attrsOf (
 					lib.types.submodule (
-						{ name, ... }:
+						{ ... }:
 						{
 							options =
 							{
-								publicKey = jc-lib.mkStrOption "The public key of the server";
+								publicKey = mkStrOption "The public key of the server";
 								endpoint = {
-									url = jc-lib.mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
+									url = mkStrOption "The hostname or ip of the server (wireguard.example.com:51820)";
 									port = lib.mkOption {
 										type = lib.types.port;
 										description = "port of the interface";
 										default = wg-default-port;
 									};
 								};
-						
-								self-ip = jc-lib.mkStrOption "The ip address of the peer's end of the tunnel interface";
-								allowed-ips = jc-lib.mkListOption "All subnets allowed to be forwarded (0.0.0.0/0)" lib.types.str;
+
+								self-ip = mkStrOption "The ip address of the peer's end of the tunnel interface";
+								allowed-ips = lib.mkOption {
+									description = "All subnets allowed to be forwarded (0.0.0.0/0)";
+									type = lib.types.listOf lib.types.str;
+									default = [];
+								};
 							};
 						}
 					)
@@ -133,13 +146,26 @@ in
 		};
 
 		server =
+		let
+			mkSubmodOption = (
+				description: submodule:
+				lib.mkOption {
+					inherit description;
+					type = lib.types.attrsOf (lib.types.submodule (submodule));
+					default = { };
+				}
+			);
+		in
 		{
 			enable = lib.mkEnableOption "Enable wireguard vpn as server";
 
 			openFirewall = lib.mkEnableOption "Open the firewall port for wireguard";
-			external-interface = jc-lib.mkStrOption "The external interface the server routes to";
+			external-interface = lib.mkOption {
+				description = "The external interface the server routes to";
+				type = lib.types.str;
+			};
 
-			interfaces = jc-lib.mkSubmodOption "The interfaces of the wireguard server" (
+			interfaces = mkSubmodOption "The interfaces of the wireguard server" (
 				{ name, ... }:
 				{
 					options =
@@ -151,18 +177,37 @@ in
 							default = wg-default-port;
 						};
 
+						# TODO: Add checks
 						network = {
-							id = jc-lib.mkStrOption "The IP address of the network tunnel";
-							mask = jc-lib.mkIntOption "The netmask of the network tunnel";
+							id = lib.mkOption {
+								description = "The IP address of the network tunnel";
+								type = lib.types.str;
+							};
+
+							mask = lib.mkOption {
+								description = "The netmask of the network tunnel";
+								type = lib.types.int;
+							};
 						};
 
-						self-address = jc-lib.mkStrOption "The IP address of the server's end of the tunnel interface";
-						peers = jc-lib.mkSubmodOption "All allowed peers" (
+						self-address = lib.mkOption {
+							description = "The IP address of the server's end of the tunnel interface";
+							type = lib.types.str;
+						};
+						peers = mkSubmodOption "All allowed peers" (
 							{ name, ... }:
 							{
-								options = {
-									address = jc-lib.mkStrOption "The ip address of the peer (127.0.0.1)";
-									publicKey = jc-lib.mkStrOption "The public key of the peer";
+								options =
+								{
+									address = lib.mkOption {
+										description = "The ip address of the peer (127.0.0.1)";
+										type = lib.types.str;
+									};
+
+									publicKey = lib.mkOption {
+										description = "The public key of the peer";
+										type = lib.types.str;
+									};
 								};
 							}
 						);

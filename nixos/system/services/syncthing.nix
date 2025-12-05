@@ -1,4 +1,4 @@
-{ config, lib, settings, jc-lib, ... }:
+{ config, lib, settings, ... }:
 
 let
 	inherit (settings) username;
@@ -76,6 +76,16 @@ in
 	# ------------------------------------------------------------ #
 
 	options.system.services.syncthing =
+	let
+		mkSubmodOption = (
+			description: submodule:
+			lib.mkOption {
+				inherit description;
+				type = lib.types.attrsOf (lib.types.submodule (submodule));
+				default = { };
+			}
+		);
+	in
 	{
 		enable = lib.mkEnableOption "syncthing daemon";
 		openFirewall = lib.mkEnableOption "Open firewall";
@@ -96,13 +106,27 @@ in
 			default = config.users.users."${cfg.username}".group;
 		};
 
-		folders = jc-lib.mkListOption "List of all folders on the 'network'" lib.types.str;
-		devices = jc-lib.mkSubmodOption "Attribute set of all devices in the same 'network'" (
+		folders = lib.mkOption {
+			description = "List of all folders on the 'network'";
+			type = lib.types.listOf lib.types.str;
+			default = [];
+		};
+
+		devices = mkSubmodOption "Attribute set of all devices in the same 'network'" (
 			name:
 			{
 				options = {
-					id = jc-lib.mkNullOrStrOption "The id of the device";
-					address = jc-lib.mkNullOrStrOption "Address or hostname to connect to this device";
+					id = lib.mkOption {
+						description = "The id of the device";
+						type = lib.types.nullOr lib.types.str;
+						default = null;
+					};
+
+					address = lib.mkOption {
+						description = "Address or hostname to connect to this device";
+						type = lib.types.nullOr lib.types.str;
+						default = null;
+					};
 				};
 			}
 		);

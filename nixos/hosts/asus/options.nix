@@ -36,18 +36,14 @@
 			};
 		};
 
-		environments =
+		environments.development =
 		{
-			development =
-			{
-				enable = true;
-				tools = {
-					android.enable = true;
-					c.enable = true;
-					network.enable = true;
-				};
+			enable = true;
+			tools = {
+				android.enable = true;
+				c.enable = true;
+				network.enable = true;
 			};
-			gaming.enable = true;
 		};
 
 		users.ryuji.media-manipulation-suite =

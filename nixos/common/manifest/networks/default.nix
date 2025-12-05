@@ -1,4 +1,4 @@
-{ config, lib, jc-lib, settings, ... }:
+{ config, lib, settings, ... }:
 
 let
 	self-manifest = config.common.manifest.self;

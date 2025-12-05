@@ -1,25 +1,38 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
-	jc-lib = import ../../../jc-lib.nix { inherit lib; };
+	mkStrOption = (
+		description:
+		lib.mkOption {
+			inherit description;
+			type = lib.types.str;
+		}
+	);
 in
 
 {
 	options.software =
 	{
-		wireguard = jc-lib.mkSubmodOption "Wireguard service manifest"
-		(
-			{ name, ... }:
-			{
-				options = 
-				{
-					enable = lib.mkEnableOption "Wheater to enable wireguard for this host";
+		wireguard = lib.mkOption {
+			description = "Wireguard service manifest";
+			default = { };
+			type = lib.types.attrsOf
+			(
+				lib.types.submodule
+				(
+					{ ... }:
+					{
+						options =
+						{
+							enable = lib.mkEnableOption "wireguard for this host";
 
-					# TODO: Check that string is a valid cidr
-					self-address = jc-lib.mkStrOption "The ip address of this peer";
-					publicKey = jc-lib.mkStrOption "The public key of the peer";
-				};
-			}
-		);
+							# TODO: Check that string is a valid cidr
+							self-address = mkStrOption "The ip address of this peer";
+							publicKey = mkStrOption "The public key of the peer";
+						};
+					}
+				)
+			);
+		};
 	};
 }

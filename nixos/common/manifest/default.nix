@@ -1,4 +1,4 @@
-{ config, lib, jc-lib, settings, ... }:
+{ config, lib, settings, ... }:
 
 let
 	inherit (settings) hostname;
@@ -18,16 +18,26 @@ in
 	# ------------------------------------------------------------ #
 
 	options.common.manifest =
+	let
+		mkSubmodOption = (
+			description: submodule:
+			lib.mkOption {
+				inherit description;
+				type = lib.types.attrsOf (lib.types.submodule (submodule));
+				default = { };
+			}
+		);
+	in
 	{
-		networks = jc-lib.mkSubmodOption "The map of all available networks"
+		networks = mkSubmodOption "The map of all available networks"
 		(
 			{ name, config, ... }:
 			{
-				options = (import ./networks/options.nix { inherit name lib config jc-lib; });
+				options = (import ./networks/options.nix { inherit name lib config; });
 			}
 		);
 
-		hosts = jc-lib.mkSubmodOption "The set with the manifest for registered hosts"
+		hosts = mkSubmodOption "The set with the manifest for registered hosts"
 		(
 			{ name, ... }:
 			{

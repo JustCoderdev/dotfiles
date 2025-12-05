@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+let
+	self-manifest = config.common.manifest.self;
+	has-de = self-manifest.hardware.graphics.desktop-environment.enable;
+in
 
 {
 	imports = [
@@ -22,7 +27,6 @@
 		./wakeonlan.nix
 	];
 
-	boot.tmp.cleanOnBoot = true;
 	systemd.extraConfig = ''
 DefaultTimeoutStopSec=10s
 '';
@@ -35,5 +39,24 @@ DefaultTimeoutStopSec=10s
 		vim git
 	];
 
-	programs.nano.enable = false;
+
+	# Reduce size consumption
+	# ------------------------------------------------------------ #
+
+	boot.tmp.cleanOnBoot = lib.mkDefault true;
+	programs.nano.enable = lib.mkDefault false;
+	documentation.enable = lib.mkDefault false;
+
+	xdg = lib.mkIf (has-de) {
+		autostart.enable = lib.mkDefault false;
+		icons.enable     = lib.mkDefault false;
+		mime.enable      = lib.mkDefault false;
+		sounds.enable    = lib.mkDefault false;
+	};
+
+	# Random perl remnants
+	# <https://github.com/NixOS/nixpkgs/blob/nixos-25.05/nixos/modules/profiles/perlless.nix>
+	system.tools.nixos-generate-config.enable = lib.mkDefault false;
+	programs.command-not-found.enable = lib.mkDefault false;
+	programs.less.lessopen = lib.mkDefault null;
 }

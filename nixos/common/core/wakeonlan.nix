@@ -1,4 +1,4 @@
-{ config, lib, pkgs, jc-lib, ... }:
+{ config, lib, pkgs, ... }:
 
 # [ DISABLED MODULE ]
 
@@ -76,6 +76,9 @@ in
 	# ------------------------------------------------------------ #
 
 	options.common.core.network =
+	let
+		regex = {  address.mac = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"; };
+	in
 	{
 		wakeOn =
 		{
@@ -92,7 +95,7 @@ in
 			};
 
 			knownDevices = lib.mkOption {
-				type = lib.types.attrsOf (lib.types.strMatching jc-lib.regex.address.mac);
+				type = lib.types.attrsOf (lib.types.strMatching regex.address.mac);
 				description = "Devices that have WoL enabled";
 				default = { };
 			};

@@ -1,7 +1,7 @@
 # Network routing
 # src <https://www.reddit.com/r/NixOS/comments/1i89lh2/comment/m8s1g8t/?context=3>
 
-{ config, lib, jc-lib, ... }:
+{ config, lib, ... }:
 
 let
 	cfg = config.system.services.routing;
@@ -86,13 +86,24 @@ in
 	# ------------------------------------------------------------ #
 
 	options.system.services.routing =
+	let
+		mkStrOption = (
+			description:
+			lib.mkOption {
+				inherit description;
+				type = lib.types.str;
+			}
+		);
+
+		regex = {  address.mac = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"; };
+	in
 	{
 		enable = lib.mkEnableOption "Enable the routing service creating a subnetwork";
 
-		outnetwork.interface = jc-lib.mkStrOption "Interface that faces the outside network";
+		outnetwork.interface = mkStrOption "Interface that faces the outside network";
 		subnetwork =
 		{
-			interface = jc-lib.mkStrOption "Interface that faces the inside network"; 
+			interface = mkStrOption "Interface that faces the inside network"; 
 
 			address = lib.mkOption {
 				description = "The network address of the subnetwork";
@@ -128,11 +139,11 @@ in
 					lib.types.submodule (
 						{
 							options = {
-								hostname = jc-lib.mkStrOption "The hostname with the reserved lease";
-								domain = jc-lib.mkStrOption "The domain of the host with the reserved lease";
+								hostname = mkStrOption "The hostname with the reserved lease";
+								domain = mkStrOption "The domain of the host with the reserved lease";
 
-								host-mac = jc-lib.mkStrRXOption "The mac address of the host with the reserved lease" jc-lib.regex.address.mac;
-								reserved-ip = jc-lib.mkStrOption "The reserved ip address of the host";
+								host-mac = mkStrOption "The mac address of the host with the reserved lease" // { type = lib.types.strMatching regex.address.mac; };
+								reserved-ip = mkStrOption "The reserved ip address of the host";
 							};
 						}
 					)
