@@ -110,6 +110,10 @@ such as alacritty, clang, git, hyprland, and more
 - Add dns delegation to master manager
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
 
+### Ideas
+
+- [sixos](https://media.ccc.de/v/38c3-sixos-a-nix-os-without-systemd)
+
 ## Installation guide
 
 1. Clone
