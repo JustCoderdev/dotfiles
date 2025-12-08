@@ -18,23 +18,9 @@ in
 	{
 		inherit (import ./common.nix { inherit lib pkgs; }) host icon-theme wallpapers_path;
 
-		user = {
-			profiles = lib.mkOption {
-				description = "List of profiles to enable";
-				type = lib.types.listOf (lib.types.enum profiles-list);
-			};
-
-			special-pkgs =
-			{
-				insecure = lib.mkOption {
-					description = "List of allowed insecure packages";
-					type = lib.types.listOf lib.types.str;
-				};
-				unfree = lib.mkOption {
-					description = "List of allowed unfree packages";
-					type = lib.types.listOf lib.types.str;
-				};
-			};
+		user.profiles = lib.mkOption {
+			description = "List of profiles to enable";
+			type = lib.types.listOf (lib.types.enum profiles-list);
 		};
 	};
 }

@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-	inherit (config.jcconfs.user) special-pkgs profiles;
+	inherit (config.jcconfs.user) profiles;
 
 	profile =
 	{
@@ -48,11 +48,6 @@ in
 		# DO NOT TOUCH
 		home.stateVersion = "23.11";
 		programs.home-manager.enable = true;
-		nixpkgs.config = {
-			permittedInsecurePackages = special-pkgs.insecure;
-			allowUnfreePredicate = pkg:
-				builtins.elem (lib.getName pkg) special-pkgs.unfree;
-		};
 		# DO NOT TOUCH
 
 

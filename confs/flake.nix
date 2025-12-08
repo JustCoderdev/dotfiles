@@ -5,15 +5,11 @@
 	{
 		nixpkgs.url = "nixpkgs/nixos-25.05";
 
-		home-manager = {
-			url = "github:nix-community/home-manager/release-25.05";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		home-manager.url = "github:nix-community/home-manager/release-25.05";
+		home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-		stylix = {
-			url = "github:danth/stylix/release-25.05";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		stylix.url = "github:danth/stylix/release-25.05";
+		stylix.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
 	outputs = { self, nixpkgs, home-manager, stylix }:
@@ -52,9 +48,19 @@
 
 		getUserModules = (
 			username:
+			let
+				user-settings = import ./settings/${username}.nix;
+			in
 			[
 				{ home.username = username; }
-				{ jcconfs.user = { inherit (import ./settings/${username}.nix) profiles special-pkgs; }; }
+				{ jcconfs.user = { inherit (user-settings) profiles; }; }
+				{
+					nixpkgs.config = {
+						permittedInsecurePackages = user-settings.special-pkgs.insecure;
+						allowUnfreePredicate = pkg: builtins.elem
+							(lib.getName pkg) user-settings.special-pkgs.unfree;
+					};
+				}
 			]
 		);
 

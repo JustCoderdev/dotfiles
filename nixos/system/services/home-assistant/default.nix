@@ -1,10 +1,11 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (settings) hostname;
-
 	cfg = config.system.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
+
+	hostname = config.networking.hostName;
+
 	hass-port = 8123;
 	hass-ssh-key-path = "${cfg-hass.configDir}/.ssh/id_${hostname}_hass";
 

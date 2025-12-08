@@ -1,7 +1,10 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, settings, ... }:
 
 let
-	inherit (settings) username hostname;
+	inherit (settings) username;
+
+	hostname = config.networking.hostName;
+
 	server_cfg = config.system.services.nixbuilder.server;
 	client_cfg = config.system.services.nixbuilder.client;
 

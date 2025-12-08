@@ -1,9 +1,8 @@
-{ config, lib, settings, ... }:
+{ config, lib, ... }:
 
 let
-	inherit (settings) hostname;
-
 	cfg = config.common.manifest;
+	hostname = config.networking.hostName;
 in
 
 {
@@ -54,6 +53,12 @@ in
 						default = name;
 						type = lib.types.str;
 						readOnly = true;
+					};
+
+					users = lib.mkOption {
+						description = "User preferences";
+						type = lib.types.listOf lib.types.str;
+						default = [ "ryuji" ];
 					};
 				};
 			}

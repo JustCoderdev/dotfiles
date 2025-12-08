@@ -1,14 +1,12 @@
-{ config, lib, settings, ... }:
+{ config, lib, ... }:
 
 let
-	inherit (settings) hardware-type;
-
 	self-manifest = config.common.manifest.self;
 
-	self-hw = self-manifest.hardware;
+	self-hw        = self-manifest.hardware;
 	self-bluetooth = self-hw.bluetooth;
-	self-audio = self-hw.audio;
-	self-graphics = self-hw.graphics;
+	self-audio     = self-hw.audio;
+	self-graphics  = self-hw.graphics;
 
 	has-de = self-graphics.desktop-environment.enable;
 in
@@ -18,8 +16,7 @@ in
 	[
 		./gpu/nvidia.nix
 		./gpu/radeon.nix
-	]
-	++ lib.lists.optionals (hardware-type == "raspi3") [ ./special-hardware-type/raspi3.nix ];
+	];
 
 	config =
 	{
@@ -39,7 +36,7 @@ in
 		# -------------------- #
 
 		jcconfs.host.has-de    = lib.mkDefault has-de;
-		jcconfs.host.is-laptop = hardware-type == "laptop";
+		jcconfs.host.is-laptop = self-hw.type == "laptop";
 
 		common.core.plymouth.enable = lib.mkDefault has-de;
 		common.core.fonts.enable    = lib.mkDefault has-de;

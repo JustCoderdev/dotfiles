@@ -26,13 +26,13 @@ in
 			{
 				server = config.networking.nameservers;
 				inherit (cfg.subnetwork) interface;
-	
+
 				domain-needed = true;
 				bogus-priv = true;
 				no-resolv = true;
 				cache-size = 1000;
 				no-hosts = true;
-	
+
 				# dhcp
 				dhcp-option = lib.mkIf (cfg.nat.enable) "option:router,${cfg.subnetwork.self-ip}";
 				dhcp-range = [ "br-lan,${cfg.dhcp.range},1h" ];
@@ -48,7 +48,7 @@ in
 			nftables.enable = true;
 			firewall.trustedInterfaces = [ cfg.subnetwork.interface ];
 			networkmanager.unmanaged = [ "interface-name:${cfg.subnetwork.interface}" ];
-	
+
 			# Add dns record
 			hosts = { }
 			// builtins.listToAttrs (
@@ -60,7 +60,7 @@ in
 					}
 				) cfg.dhcp.reserved-leases
 			);
-	
+
 			nat = lib.mkIf (cfg.nat.enable) {
 				enable = true;
 
@@ -70,7 +70,7 @@ in
 				forwardPorts = cfg.nat.forwarded-ports;
 				externalInterface = cfg.outnetwork.interface;
 			};
-	
+
 			interfaces.${cfg.subnetwork.interface} = {
 				useDHCP = false;
 				ipv4.addresses = [
@@ -103,7 +103,7 @@ in
 		outnetwork.interface = mkStrOption "Interface that faces the outside network";
 		subnetwork =
 		{
-			interface = mkStrOption "Interface that faces the inside network"; 
+			interface = mkStrOption "Interface that faces the inside network";
 
 			address = lib.mkOption {
 				description = "The network address of the subnetwork";

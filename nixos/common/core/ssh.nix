@@ -1,12 +1,13 @@
 { lib, config, pkgs, settings, ... }:
 
 let
-	inherit (settings) username hostname;
+	inherit (settings) username;
 
 	cfg = config.common.core.ssh;
 	secrets = config.common.core.secrets;
 
 	uhome = "/home/${username}";
+	hostname = config.networking.hostName;
 in
 
 {

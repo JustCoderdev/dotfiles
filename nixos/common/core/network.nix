@@ -1,7 +1,7 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, settings, ... }:
 
 let
-	inherit (settings) username hostname;
+	inherit (settings) username;
 in
 
 {
@@ -21,7 +21,6 @@ in
 
 		networking =
 		{
-			hostName = hostname;
 			domain = "lan";
 
 			firewall = {
@@ -68,7 +67,7 @@ in
 					"192.168.1.1" = [ (get-fqdname "gateway" "flat") ];
 					"192.168.1.2" = [ (get-fqdname    "wise" "flat") ];
 					"192.168.1.5" = [ (get-fqdname     "msi" "flat") ];
-					"192.168.1.9" = [ (get-fqdname    "asus" "flat") ];
+					"192.168.1.8" = [ (get-fqdname    "asus" "flat") ];
 				};
 
 				garden-network =

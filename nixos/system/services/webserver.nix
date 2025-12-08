@@ -2,7 +2,9 @@
 
 let
 	cfg = config.system.services.webserver;
-	inherit (settings) hostname username;
+	inherit (settings) username;
+
+	hostname = config.networking.hostName;
 in
 
 {

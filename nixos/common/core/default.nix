@@ -47,6 +47,8 @@ DefaultTimeoutStopSec=10s
 	programs.nano.enable = lib.mkDefault false;
 	documentation.enable = lib.mkDefault false;
 
+	services.journald.extraConfig = "SystemMaxUse=500M";
+
 	xdg = lib.mkIf (has-de) {
 		autostart.enable = lib.mkDefault false;
 		icons.enable     = lib.mkDefault false;

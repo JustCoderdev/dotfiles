@@ -1,8 +1,4 @@
-{ lib, settings, ... }:
-
-let
-	inherit (settings) special-pkgs;
-in
+{ ... }:
 
 {
 	config =
@@ -43,22 +39,6 @@ in
 				];
 
 				warn-dirty = false;                                  # Whether to warn about dirty Git/Mercurial tree
-			};
-		};
-
-		services.journald.extraConfig = "SystemMaxUse=500M";
-
-		nixpkgs =
-		{
-			config =
-			{
-				permittedInsecurePackages = special-pkgs.insecure;
-				allowUnfreePredicate = (
-					pkg:
-					builtins.elem
-						(lib.getName pkg)
-						special-pkgs.unfree
-				);
 			};
 		};
 	};

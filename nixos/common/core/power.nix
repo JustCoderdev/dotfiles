@@ -1,9 +1,7 @@
-{ pkgs, lib, settings, ... }:
+{ config, lib, ... }:
 
 let
-	inherit (settings) hardware-type;
-
-	is-laptop = hardware-type == "laptop";
+	is-laptop = config.common.manifest.self.hardware.type == "laptop";
 in
 
 {
@@ -13,10 +11,10 @@ in
 		cpuFreqGovernor = if is-laptop then "powersave" else "performance";
 
 		# Powertop makes the keyboard and mouse sleep after 5s
-		powertop.enable = true && is-laptop;
+		powertop.enable = lib.mkDefault (true && is-laptop);
 	};
 
-	services.thermald.enable = true;
+	services.thermald.enable = lib.mkDefault true;
 	services.logind =
 	{
 		lidSwitch = "lock";
@@ -24,11 +22,11 @@ in
 		lidSwitchDocked = "lock";
 	};
 
-	# -------------------- # 
+	# -------------------- #
 
 	services.upower = lib.mkIf (is-laptop)
 	{
-		enable = true;
+		enable = lib.mkDefault true;
 
 		criticalPowerAction = "Suspend";
 		allowRiskyCriticalPowerAction = true;
@@ -40,7 +38,7 @@ in
 
 	services.tlp = lib.mkIf (is-laptop)
 	{
-		enable = true;
+		enable = lib.mkDefault true;
 		settings =
 		{
 			CPU_SCALING_GOVERNOR_ON_BAT = "powersave"; # "schedutil"

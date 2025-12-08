@@ -1,10 +1,11 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	inherit (settings) username hostname;
+	inherit (settings) username;
 
 	cfg = config.system.services.samba;
 
+	hostname = config.networking.hostName;
 	share-root = "/home/${username}";
 in
 

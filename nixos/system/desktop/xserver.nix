@@ -1,9 +1,11 @@
 { config, lib, pkgs, pkgs-unstable, settings, ... }:
 
 let
-	inherit (settings) username hardware-type dotfiles_store_path;
+	inherit (settings) username dotfiles_store_path;
 
 	cfg = config.system.desktop.xserver;
+
+	hardware-type = config.common.manifest.self.hardware.type;
 in
 
 {
@@ -99,7 +101,7 @@ in
 						[
 							config.jcbin.boomer.package
 							(
-								pkgs.callPackage "${dotfiles_store_path}/nixos/unofficial/pkgs/hacksaw.nix" {
+								pkgs.callPackage ../../unofficial/pkgs/hacksaw.nix {
 									inherit (pkgs) python3; # pkg-config
 									inherit (pkgs.xorg) libX11 libXrandr;
 									inherit (pkgs-unstable) libxcb;

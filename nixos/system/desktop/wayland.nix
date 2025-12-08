@@ -1,10 +1,9 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-	inherit (settings) hardware-type;
-
 	cfg = config.system.desktop.wayland;
 
+	hardware-type = config.common.manifest.self.hardware.type;
 	where-is-my-sddm-theme-pkg =
 	(
 		pkgs.callPackage  ../../../unofficial/pkgs/where-is-my-sddm-theme.nix {
