@@ -15,7 +15,7 @@ in
 
 			inherit (cfg) group dataDir;
 			user = cfg.username;
-			
+
 			overrideDevices = true;
 			overrideFolders = true;
 

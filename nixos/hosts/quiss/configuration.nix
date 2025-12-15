@@ -154,7 +154,7 @@ in
 		group = serv-group;
 	};
 
-	system.services.syncthing = 
+	system.services.syncthing =
 	{
 		inherit openFirewall;
 		enable = true;
@@ -172,6 +172,7 @@ in
 			iphone-tp-2_0 = (add-device "10.255.250.3" "MBQSGMY-3EBNA67-XQLOXDU-UT3QL7Y-4MQO633-YOOEA5U-LT5RFVC-JYGAXQH");
 			         asus = (add-device "10.255.250.4" "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7");
 			          msi = (add-device "10.255.250.5" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
+			  ipad-tp-2_0 = (add-device "dynamic"      "WNA7TTR-2GZ7QRH-4HXPAJT-QAI7VVM-MCX3ZFC-WPXG3UB-CGMPF4C-YKTCSA7");
 		};
 	};
 
