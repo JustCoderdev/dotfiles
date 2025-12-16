@@ -21,10 +21,20 @@ in
 
 			settings =
 			{
-				devices = lib.attrsets.mapAttrs (
-					name: value:
-					{ inherit (value) address id; }
-				) (cfg.devices);
+				devices =
+				(
+					lib.attrsets.mapAttrs
+					(
+						name: value:
+						{
+							inherit (value) id;
+							addresses = [ "dynamic" ]
+							++ (lib.lists.optional (value.address != null) value.address)
+							;
+						}
+					)
+					(cfg.devices)
+				);
 
 				folders = (
 					builtins.listToAttrs (
