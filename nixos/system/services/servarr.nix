@@ -16,8 +16,11 @@ in
 			}
 		);
 	in
-	lib.mkIf cfg.enable
+	lib.mkIf (cfg.enable)
 	{
+		# hack until deluge baseurl bug gets fixed
+		networking.firewall.allowedTCPPorts = [ 8112 ]; # deluge
+
 		users.groups."${cfg.group}" = { };
 
 		# Torrent Tracker and Indexer
@@ -30,7 +33,7 @@ in
 			radarr  = (get-service-options "radarr") // { package = pkgs-unstable.radarr; }; # Movies
 			readarr = get-service-options "readarr"; # Books
 			sonarr  = get-service-options "sonarr";  # Serie
-	
+
 			# Management
 			bazarr = {
 				inherit (cfg) openFirewall group;
