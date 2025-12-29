@@ -4,9 +4,9 @@ let
 	secrets = config.common.core.secrets;
 
 	services = [
-		"prowlarr" "bazarr"
-		"lidarr" "radarr" "readarr" "sonarr"
-		"jellyfin"
+		# "prowlarr" "bazarr"
+		# "lidarr" "radarr" "readarr" "sonarr"
+		# "jellyfin"
 	];
 in
 
@@ -21,8 +21,8 @@ in
 			"foxburrow.org"
 			"www.foxburrow.org"
 			"err.foxburrow.org"
-			"immich.foxburrow.org"
-			"deluge.foxburrow.org"
+			# "immich.foxburrow.org"
+			# "deluge.foxburrow.org"
 		]
 		++
 		(
@@ -78,21 +78,21 @@ in
 				};
 			};
 
-			"deluge.foxburrow.org" = (default-ssl-config)
-			// {
-				locations."^~ /" = {
-					proxyPass = "http://10.255.250.2:8112/";
-					proxyWebsockets = true;
-				};
-			};
-
-			"immich.foxburrow.org" = (default-ssl-config)
-			// {
-				locations."^~ /" = {
-					proxyPass = "https://10.255.250.2/";
-					proxyWebsockets = true;
-				};
-			};
+			# "deluge.foxburrow.org" = (default-ssl-config)
+			# // {
+			# 	locations."^~ /" = {
+			# 		proxyPass = "http://10.255.250.2:8112/";
+			# 		proxyWebsockets = true;
+			# 	};
+			# };
+			#
+			# "immich.foxburrow.org" = (default-ssl-config)
+			# // {
+			# 	locations."^~ /" = {
+			# 		proxyPass = "https://10.255.250.2/";
+			# 		proxyWebsockets = true;
+			# 	};
+			# };
 
 			"_" =
 			let
@@ -133,7 +133,7 @@ in
 	};
 
 	# TUNNEL
-	
+
 	unofficial.services.cloudflared =
 	{
 		enable = true;
