@@ -5,7 +5,8 @@ let
 in
 
 {
-	networking.firewall.allowedTCPPorts = [ 3000 ];
+	networking.firewall.allowedTCPPorts = [ 3000 ] ++ [ 7000 7100 ];
+	networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
 
 	services.mysql = {
 		enable = true;
@@ -15,10 +16,10 @@ in
 	# Mouse support
 	services.ratbagd.enable = true;
 	environment.systemPackages = with pkgs; [ piper ]
-	++ [ dbeaver-bin ]; # more packages support
+	++ [ dbeaver-bin uxplay ]; # more packages support
 
 	# TUNNEL
-	
+
 	unofficial.services.cloudflared =
 	{
 		enable = true;
