@@ -1,10 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nix-minecraft, ... }:
 
 let
 	secrets = config.common.core.secrets;
 in
 
 {
+	nixpkgs.overlays = [ nix-minecraft.overlay ];
+	imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+
 	networking.firewall.allowedTCPPorts = [ 3000 ] ++ [ 7000 7100 ];
 	networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
 
@@ -31,6 +34,54 @@ in
 			default = "http_status:404";
 			originRequest.noTLSVerify = true;
 			ingress."msi-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
+		};
+	};
+
+	# MINECRAFT SERVERS
+
+	users.groups.minecraft = {};
+	services.minecraft-servers =
+	{
+		enable = true;
+		openFirewall = true;
+		group = "users";
+
+		eula = true;
+		dataDir = "/home/WDC_WD10/minecraft-servers";
+
+		servers =
+		let
+			# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
+			default-properties = {
+				allow-flight = true;
+				difficulty = 3; # peaceful, easy, normal, hard
+				enforce-whitelist = false;
+				force-gamemode = false;
+				gamemode = 0; # survival, creative, adventure, spectator
+				online-mode = false;
+				player-idle-timeout = 0;
+				snooper-enabled = false;
+			};
+				# <https://mcuuid.net/> <https://namemc.com>
+			default-whitelist = {
+				ryuji_terix = "e2458645-fb10-4065-ac0c-f689aa30adff";
+			};
+		in
+		{
+			CnT-1_21_11 = {
+				enable = true;
+				package = pkgs.vanillaServers.vanilla-1_21_11;
+				openFirewall = true;
+				jvmOpts = "-Xms4092M -Xmx6144M";
+				serverProperties = default-properties // {
+					level-name = "world";
+					max-players = 5;
+					motd = "Test vanilla 1.21.1";
+					server-port = 25565;
+					white-list = false;
+				};
+				whitelist = default-whitelist // { };
+			};
 		};
 	};
 }

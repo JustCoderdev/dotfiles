@@ -14,9 +14,12 @@
 
 		disko.url = "github:nix-community/disko";
 		disko.inputs.nixpkgs.follows = "nixpkgs";
+
+		nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+		nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
-	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, ... }:
+	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, ... }:
 	let
 		hosts =
 		(
@@ -102,7 +105,7 @@
 			in
 			nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit pkgs-unstable settings; };
+				specialArgs = { inherit pkgs-unstable settings nix-minecraft; };
 				modules = [ ]
 				++ (getHostModules hostname)
 				++ (getUserModules username)
