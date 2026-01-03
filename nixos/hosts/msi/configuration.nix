@@ -5,8 +5,8 @@ let
 in
 
 {
-	nixpkgs.overlays = [ nix-minecraft.overlay ];
 	imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+	nixpkgs.overlays = [ nix-minecraft.overlay ];
 
 	networking.firewall.allowedTCPPorts = [ 3000 ] ++ [ 7000 7100 ];
 	networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
@@ -39,15 +39,13 @@ in
 
 	# MINECRAFT SERVERS
 
-	users.groups.minecraft = {};
 	services.minecraft-servers =
 	{
 		enable = true;
 		openFirewall = true;
-		group = "users";
-
 		eula = true;
-		dataDir = "/home/WDC_WD10/minecraft-servers";
+
+		# dataDir = "/home/WDC_WD10/minecraft-servers";
 
 		servers =
 		let
@@ -62,7 +60,8 @@ in
 				player-idle-timeout = 0;
 				snooper-enabled = false;
 			};
-				# <https://mcuuid.net/> <https://namemc.com>
+
+			# <https://mcuuid.net/> <https://namemc.com>
 			default-whitelist = {
 				ryuji_terix = "e2458645-fb10-4065-ac0c-f689aa30adff";
 			};
