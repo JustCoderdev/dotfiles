@@ -56,7 +56,7 @@ in
 				enforce-whitelist = false;
 				force-gamemode = false;
 				gamemode = 0; # survival, creative, adventure, spectator
-				online-mode = false;
+				online-mode = true;
 				player-idle-timeout = 0;
 				snooper-enabled = false;
 			};
@@ -67,11 +67,16 @@ in
 			};
 		in
 		{
-			CnT-1_21_11 = {
+			CnT-1_21_11 =
+			{
 				enable = true;
 				package = pkgs.vanillaServers.vanilla-1_21_11;
+
 				openFirewall = true;
+
+				autoStart = false;
 				jvmOpts = "-Xms4092M -Xmx6144M";
+
 				serverProperties = default-properties // {
 					level-name = "world";
 					max-players = 5;
