@@ -58,6 +58,7 @@ in
 					"${mod}+t"       = (exec "thunar");
 					"${mod}+Ctrl+l"  = (exec "${pkgs.lightlocker}/bin/light-locker-command -l");
 					"${mod}+o"       = (exec "obsidian");
+					"${mod}+p"       = (exec "pavucontrol");
 
 					"${mod}+Z"       = (exec "boomer");
 					"${mod}+F4"      = "exec \"i3-nagbar -m 'Click here if you want to shutdown the system' -B 'Shut now' 'shutdown now' -B 'Reboot' 'shutdown -r now' -B 'Cancel' 'shutdown -c'\"";
