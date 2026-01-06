@@ -59,6 +59,8 @@ in
 				online-mode = true;
 				player-idle-timeout = 0;
 				snooper-enabled = false;
+				use-native-transport = true;
+				view-distance = 20;
 			};
 
 			# <https://mcuuid.net/> <https://namemc.com>
