@@ -27,7 +27,7 @@ in
 					hostname: domains: publicKey:
 					{
 						inherit publicKey;
-						hostNames = (builtins.map (domain: "${hostname}.${domain}.lan") domains);
+						extraHostNames = (builtins.map (domain: "${hostname}.${domain}.lan") domains);
 					}
 				);
 			in
