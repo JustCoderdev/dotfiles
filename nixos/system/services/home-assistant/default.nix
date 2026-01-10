@@ -54,22 +54,22 @@ in
 		# Go2RTC debug webpage
 		# <http://home-assistant.local:1984>
 		# networking.firewall.allowedTCPPorts = [ 1984 ];
-		services.go2rtc = {
-			enable = true;
-			settings.streams = {
-				gopro-direct = ''
-exec:${pkgs.ffmpeg}/bin/ffmpeg
--loglevel verbose
--re -i http://10.5.5.9:8080/live/amba.m3u8
--c copy -c:a aac
--strict experimental
--b:a 96k -ac 2
--ar 44100
--rtsp_transport tcp -f rtsp {output}
-'';
-# -f flv "rtmp:127.0.0.1/gopro live=1";
-			};
-		};
+# 		services.go2rtc = {
+# 			enable = true;
+# 			settings.streams = {
+# 				gopro-direct = ''
+# exec:${pkgs.ffmpeg}/bin/ffmpeg
+# -loglevel verbose
+# -re -i http://10.5.5.9:8080/live/amba.m3u8
+# -c copy -c:a aac
+# -strict experimental
+# -b:a 96k -ac 2
+# -ar 44100
+# -rtsp_transport tcp -f rtsp {output}
+# '';
+# # -f flv "rtmp:127.0.0.1/gopro live=1";
+# 			};
+# 		};
 
 		# Enable hass service
 		services.home-assistant =
@@ -125,8 +125,8 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 
 				# Camera
 
-				go2rtc.url = "http://127.0.0.1:1984";
-				stream = {};
+#				go2rtc.url = "http://127.0.0.1:1984";
+#				stream = {};
 
 
 				# Wake on LAN
@@ -173,7 +173,7 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 
 			customComponents =
 			[
-				(pkgs.callPackage ../../../unofficial/pkgs/WebRTC.nix { })
+#				(pkgs.callPackage ../../../unofficial/pkgs/WebRTC.nix { })
 				(pkgs.callPackage ../../../unofficial/pkgs/myhome.nix {
 					OWNd-pkg = (pkgs.python313Packages.callPackage ../../../unofficial/pkgs/OWNd.nix {});
 				})
@@ -206,7 +206,7 @@ exec:${pkgs.ffmpeg}/bin/ffmpeg
 				# "conversation"         # Converse with Voice Assistant
 				# "dhcp"                 # Discover devices through DHCP
 				# "energy"               # Energy features
-				"go2rtc"                 # Camera streaming proxy
+				# "go2rtc"                # Camera streaming proxy
 				"history"
 				"recorder"
 				# "homeassistant_alerts"

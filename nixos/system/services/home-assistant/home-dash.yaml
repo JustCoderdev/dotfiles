@@ -295,6 +295,58 @@ views:
         show_entity_picture: false
   - type: sections
     max_columns: 2
+    icon: mdi:cctv
+    path: ''
+    visible:
+      - user: d35ec065e1c14502924b0822b389c5c3
+      - user: 4898280d2dd44ed0b6bd985df431577e
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            icon: mdi:camera
+            heading: GoPro
+          - type: tile
+            entity: sensor.system_monitor_ipv4_address_wlan0
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 12
+              rows: 1
+            name: wlan0
+            hide_state: false
+            show_entity_picture: false
+          - type: custom:webrtc-camera
+            title: NerioGoPro2
+            url: gopro-direct
+            muted: true
+            ui: true
+        column_span: 1
+    header:
+      card:
+        type: markdown
+        content: '# Cameras'
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.display_local
+        name: Display
+        show_entity_picture: false
+        state_content:
+          - state
+          - last_changed
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.uptime
+        show_entity_picture: false
+    cards: []
+  - type: sections
+    max_columns: 2
     icon: mdi:gauge
     path: ''
     visible:
@@ -325,9 +377,19 @@ views:
             features_position: bottom
             vertical: false
             grid_options:
-              columns: 12
+              columns: 6
               rows: 1
             name: enu1u1
+            hide_state: false
+            show_entity_picture: false
+          - type: tile
+            entity: sensor.system_monitor_ipv4_address_wlan0
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+              rows: 1
+            name: wlan0
             hide_state: false
             show_entity_picture: false
         column_span: 1
@@ -341,7 +403,6 @@ views:
             period: 5minute
             type: statistics-graph
             entities:
-              - sensor.system_monitor_load_1_min
               - sensor.system_monitor_processor_use
             stat_types:
               - mean
@@ -349,20 +410,20 @@ views:
               - min
             title: CPU Load
             logarithmic_scale: false
-            hide_legend: false
+            hide_legend: true
             days_to_show: 1
           - graph: line
             type: sensor
             entity: sensor.system_monitor_processor_temperature
             detail: 2
             name: CPU Temperature
-            grid_options:
-              columns: 12
-              rows: 2
             hours_to_show: 24
             limits:
               min: 35
               max: 100
+            grid_options:
+              columns: 12
+              rows: 2
       - type: grid
         cards:
           - type: heading
@@ -475,7 +536,7 @@ views:
             heading: Cameras
           - type: custom:webrtc-camera
             title: NerioGoPro2
-            url: gopro
+            url: gopro-direct
             muted: true
             ui: true
     header:
