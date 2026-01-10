@@ -90,4 +90,33 @@ in
 			};
 		};
 	};
+
+	# services.deluge =
+	# {
+	# 	enable = true;
+	# 	openFirewall = true;
+	# 	group = "users";
+	#
+	# 	declarative = true;
+	# 	authFile = "/var/lib/deluge/auth";
+	# 	config = {
+	# 		"new_release_check" = false;
+	#
+	# 		"enabled_plugins" = [ "Label" "Stats" ];
+	#
+	# 		"max_active_seeding" = 0;
+	# 		"max_active_downloading" = 20;
+	# 		"max_active_limit" = 30;
+	# 		"max_connections_global" = 100;
+	# 	};
+	#
+	# 	web = {
+	# 		enable = true;
+	# 		port = 8112;
+	#
+	# 		# hack until baseurl bug gets fixed
+	# 		openFirewall = true;
+	# 		# inherit (cfg) openFirewall;
+	# 	};
+	# };
 }
