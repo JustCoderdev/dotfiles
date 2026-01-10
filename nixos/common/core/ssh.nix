@@ -21,6 +21,27 @@ in
 
 			# TODO: Check why it doesn't work
 			# knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+			knownHosts =
+			let
+				get-known-host = (
+					hostname: domains: publicKey:
+					{
+						inherit publicKey;
+						hostNames = (builtins.map (domain: "${hostname}.${domain}.lan") domains);
+					}
+				);
+			in
+			{
+				jarvis = (get-known-host "jarvis" [ "home"                 ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6h9IvfxHJHhzP4ifsVU3FKiqOOMOdo3xjLVZbvBGRD");
+				quiss  = (get-known-host "quiss"  [ "home"        "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL01mLMcme/rAl5VbJYM+dpaHm4XH3eKYgchzJ3eGsKi");
+				wise   = (get-known-host "wise"   [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5ceb2qO05uEyS978K4xIu6Xk+cq+VoshMS8OaxVNVC");
+
+				msi    = (get-known-host "msi"    [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7");
+				acer   = (get-known-host "acer"   [ "home"                 ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhRn86zFXUmXsC7isRVu6WBa5t+eOvK+J7/niCZ/Wq/");
+				asus   = (get-known-host "asus"   [ "home" "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D");
+
+				iphone-tp-2_0 = (get-known-host "iphone-tp-2_0" [ ] "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDshsbcBThxrbEKPzmv5L+S3C6TtD7Yb0KFmK6p98lFFuaWG0ATjUneBPOLa8+bjXcKrQtnfC9S6XpOQLgw3NqHxqeFTHRskgn8kIMEnsTmnTJf3G/+bIQsiBT3othh11tVadyPCUZ0K0/uN5zCqEIYXoFWy0ydHeoeE0f+3ZtWhv9megUZTBxPJWJcaVzyrPuMd1imzZiwdcSTCqtar0TjfU3s9YAJ4F06PZZ/zGNTPI4lUyXwFwHVWJj6j9tK5NVJam2rRpRVOpXY7w4PpmAMT88Uc4lrSBz1QuGCrmzajz57VbzxTxbPvjTwwXvTy/AmVFA2xvYxO4yzVWv+aFiFJsWCUaSCLu1qN/t6Xj3Hkl/jHzBkhnqXvn/xWmoje0IxTjt/WkbuPCuPtwu9vlAhYv+OT4khKopZmwBm0hdTZImFIrmT6QowWGb+7kkCRmicLxHScGDFhFSM4Dgs4qGN6B6yiUU70fTJn/5pKgM2F6KxfdqYeIFU1RnqtcC3vc=");
+			};
 
 			# Set default keys
 			extraConfig = ''
@@ -57,7 +78,7 @@ Host ${host}
 			# 	`man ssh_config`
 
 			# Available `ssh -Q key`
-			hostKeyAlgorithms = 
+			hostKeyAlgorithms =
 			[
 				# sshd defaults as of 2025-04-13
 				"ssh-ed25519-cert-v01@openssh.com"

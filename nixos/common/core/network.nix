@@ -43,6 +43,8 @@ in
 			hosts =
 			let
 				get-fqdname = (name: network: "${name}.${network}.${config.networking.domain}");
+
+				# TODO: move network names to manifest
 				home-network =
 				{
 					# NETWORK

@@ -30,6 +30,7 @@ in
 			extraGroups = [ "wheel" "dialout" ];
 			initialPassword = "${username}";
 
+			# TODO: move to manifest
 			openssh.authorizedKeys.keys =
 			[
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6h9IvfxHJHhzP4ifsVU3FKiqOOMOdo3xjLVZbvBGRD ryuji@jarvis"
