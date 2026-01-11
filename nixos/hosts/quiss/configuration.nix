@@ -9,16 +9,16 @@ let
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
 
-	openFirewall = false;
+	openFirewall = true;
+	forwardedServicesFirewall = false && openFirewall;
 	serv-group = "maid";
 
 	proxy = {
 		enable = true;
 		host = "quiss.home.lan";
-		aliases = [ "192.168.7.7" "10.255.250.2" ];
+		aliases = [ "192.168.7.7" "10.255.250.2" "quiss.garden.lan" ];
 	};
 in
-
 {
 	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 	# inputs.nix-minecraft.nixosModules.minecraft-servers
@@ -112,8 +112,10 @@ in
 
 	system.services.servarr =
 	{
-		inherit openFirewall proxy;
+		inherit proxy;
+
 		enable = true;
+		openFirewall = forwardedServicesFirewall;
 
 		group = serv-group;
 
@@ -136,8 +138,10 @@ in
 
 	system.services.jellyfin =
 	{
-		inherit openFirewall proxy;
+		inherit proxy;
+
 		enable = true;
+		openFirewall = forwardedServicesFirewall;
 
 		config-dir = config-dir + "/jellyfin";
 		group = serv-group;
@@ -147,14 +151,14 @@ in
 
 	system.services.immich =
 	{
-		inherit openFirewall proxy;
+		inherit proxy;
+
 		enable = true;
+		openFirewall = forwardedServicesFirewall;
 
 		config-dir = config-dir + "/immich";
 		group = serv-group;
 	};
-
-	# 
 
 	system.services.syncthing =
 	{

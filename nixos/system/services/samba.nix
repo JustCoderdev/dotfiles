@@ -10,11 +10,11 @@ let
 in
 
 {
-	config = lib.mkIf cfg.enable
+	config = lib.mkIf (cfg.enable)
 	{
 		# Autodiscovery on windows
 		services.samba-wsdd = {
-			enable = true;
+			enable = false;
 			openFirewall = true;
 		};
 
@@ -58,7 +58,7 @@ iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
 				"d   ${share.root}/${share.name} 0755 ${share.owner} users"
 			) cfg.shares.custom
 		);
-		
+
 
 		services.samba =
 		let
