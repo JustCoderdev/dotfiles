@@ -12,7 +12,7 @@
 			has-iGPU = true;
 		};
 		gpu.nvidia = {
-			architecture = "maxwell";
+			architecture = "maxwell"; # GM108M - GeForce MX130
 			offload = {
 				enable = true;
 				intelBusId = "PCI:0:2:0";

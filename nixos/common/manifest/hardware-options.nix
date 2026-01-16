@@ -65,12 +65,20 @@ in
 			in
 			{
 				inherit has-iGPU;
-				year = (add-yearRO-opt self-data.year);
 				architecture = lib.mkOption {
 					description = "Intel cpu architecture";
 					type = lib.types.nullOr (lib.types.enum (get-attr-names intel-data));
 					default = null;
 				};
+
+				# -------------------- #
+
+				year = (add-yearRO-opt self-data.year);
+
+				ge-coffee-lake = lib.mkOption {
+					description = "Whether the cpu has the architecture greater coffee lake";
+					type = lib.types.bool;
+				} // (mkReadOnly (intel-data.coffee-lake.year <= self-data.year));
 			};
 		};
 
@@ -134,12 +142,17 @@ in
 				gt-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater turing";
 					type = lib.types.bool;
-				} // (mkReadOnly (nvidia-data.turing.year > self-data.year));
+				} // (mkReadOnly (nvidia-data.turing.year < self-data.year));
 
 				ge-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater or equal to turing";
 					type = lib.types.bool;
-				} // (mkReadOnly (nvidia-data.turing.year >= self-data.year));
+				} // (mkReadOnly (nvidia-data.turing.year <= self-data.year));
+
+				ge-ampere = lib.mkOption {
+					description = "Whether the gpu has the architecture greater or equal to ampere";
+					type = lib.types.bool;
+				} // (mkReadOnly (nvidia-data.ampere.year <= self-data.year));
 
 				driver-name = lib.mkOption {
 					description = "The name of the driver package for this gpu";

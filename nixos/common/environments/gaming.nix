@@ -20,6 +20,8 @@ in
 			# mangohud    # Overlay (edit with goverlay) # enabled with home assistant
 			prismlauncher  # Minecraft launcher
 			lutris
+
+			wineWowPackages.stable
 		];
 
 		# programs.lutris.enable = true; # TODO: on next release cycle
