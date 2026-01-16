@@ -41,6 +41,7 @@ in
 		./standalone/i3status.nix
 		./standalone/mangohud.nix
 		./standalone/ssh.nix
+		./standalone/tmux.nix
 	];
 
 	config =
@@ -71,6 +72,7 @@ in
 			neovim.enable    = (lib.mkDefault (contains profiles profile.environment.develop));
 			ssh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
 			zsh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
+			tmux.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
 
 			mangohud.enable  = (lib.mkDefault (contains profiles profile.environment.game));
 

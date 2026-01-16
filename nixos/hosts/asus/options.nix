@@ -36,13 +36,17 @@
 			};
 		};
 
-		environments.development =
+		environments =
 		{
-			enable = true;
-			tools = {
-				android.enable = true;
-				c.enable = true;
-				network.enable = true;
+			gaming.enable = true;
+			development =
+			{
+				enable = true;
+				tools = {
+					android.enable = true;
+					c.enable = true;
+					network.enable = true;
+				};
 			};
 		};
 

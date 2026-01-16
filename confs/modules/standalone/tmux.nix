@@ -1,20 +1,19 @@
 { config, lib, ... }:
 
 let
-	available-in-profile = "develop-environment";
-
-	profile-enabled = lib.lists.any
-		(profile: profile == available-in-profile)
-		config.jcconfs.profiles;
+	cfg = config.jcconfs.module.tmux;
 in
 
 {
-	programs.tmux.enable = true && profile-enabled;
+	config = lib.mkIf (cfg.enable)
+	{
+		programs.tmux.enable = true;
+	};
 
 	# ------------------------------------------------------------ #
 
 	options.jcconfs.module.tmux =
 	{
-		enable = lib.mkEnableOption "waybar wayland navbar custom configuration";
+		enable = lib.mkEnableOption "tmux";
 	};
 }

@@ -24,7 +24,6 @@ in
 
 		# programs.lutris.enable = true; # TODO: on next release cycle
 
-
 		# Steam
 		programs.steam =
 		{
