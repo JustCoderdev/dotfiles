@@ -15,9 +15,10 @@ in
 		{
 			enable = lib.mkDefault true;
 			postStart = ''
-# [asus] Disable auto-sleep for mouse and keyboard
-echo 'on' > '/sys/bus/usb/devices/usb1/power/control';
-echo 'on' > '/sys/bus/usb/devices/usb2/power/control';
+# [asus] Disable auto-sleep for external mouse and keyboard
+echo 'on' > '/sys/bus/usb/devices/1-1/power/control';
+echo 'on' > '/sys/bus/usb/devices/1-6/power/control';
+echo 'on' > '/sys/bus/usb/devices/1-10/power/control';
 '';
 		};
 	};
