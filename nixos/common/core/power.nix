@@ -11,7 +11,15 @@ in
 		cpuFreqGovernor = if is-laptop then "powersave" else "performance";
 
 		# Powertop makes the keyboard and mouse sleep after 5s
-		powertop.enable = lib.mkDefault (true && is-laptop);
+		powertop = lib.mkIf (is-laptop)
+		{
+			enable = lib.mkDefault true;
+			postStart = ''
+# [asus] Disable auto-sleep for mouse and keyboard
+echo 'on' > '/sys/bus/usb/devices/usb1/power/control';
+echo 'on' > '/sys/bus/usb/devices/usb2/power/control';
+'';
+		};
 	};
 
 	services.thermald.enable = lib.mkDefault true;
