@@ -8,7 +8,7 @@
 		bluetooth.capable = true;
 
 		cpu.intel.architecture = "coffee-lake";
-		gpu.nvidia.architecture = "pascal";
+		gpu.nvidia.architecture = "pascal"; # GTX 1050-Ti
 
 		graphics =
 		{

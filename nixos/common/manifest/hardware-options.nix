@@ -142,17 +142,17 @@ in
 				gt-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater turing";
 					type = lib.types.bool;
-				} // (mkReadOnly (nvidia-data.turing.year < self-data.year));
+				} // (mkReadOnly (self-data.year > nvidia-data.turing.year));
 
 				ge-turing = lib.mkOption {
 					description = "Whether the gpu has the architecture greater or equal to turing";
 					type = lib.types.bool;
-				} // (mkReadOnly (nvidia-data.turing.year <= self-data.year));
+				} // (mkReadOnly (self-data.year >= nvidia-data.turing.year));
 
 				ge-ampere = lib.mkOption {
 					description = "Whether the gpu has the architecture greater or equal to ampere";
 					type = lib.types.bool;
-				} // (mkReadOnly (nvidia-data.ampere.year <= self-data.year));
+				} // (mkReadOnly (self-data.year >= nvidia-data.ampere.year));
 
 				driver-name = lib.mkOption {
 					description = "The name of the driver package for this gpu";

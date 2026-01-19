@@ -21,13 +21,12 @@ in
 		system.nixos.tags = [ "nvidia" ];
 
 		/* ls /dev/dri - sudo dmesg | grep drm */
-		boot.kernelParams = [ "nvidia-drm.fbdev=1" ]
-		++ lib.optionals (self-is-icpu)
-		(
-			[ "nosgx" "snd-intel-dspcfg.dsp_driver=1" ]
+		# boot.kernelParams =
+		# ++ lib.optionals (self-is-icpu)
+		# (
+			# [ "nosgx" "snd-intel-dspcfg.dsp_driver=1" ]
 			# ++ lib.optionals (self-has-icpu-igpu) [ "module_blacklist=i915" ]
-		)
-		;
+		# );
 
 		services.xserver.videoDrivers =
 		(
@@ -65,7 +64,7 @@ in
 			};
 
 			powerManagement = {
-				enable = false;  # saves gpu state to /tmp
+				enable = true; # EXPERIMENTAL: enable if issues with sleep/suspend
 				finegrained = false && self-ngpu.ge-turing;  # gpu off when idle (Turing or newer)
 			};
 		};
@@ -75,7 +74,8 @@ in
 		# 	sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
 			systemPackages = with pkgs; [ nvitop nvtopPackages.nvidia ]
-				++ lib.optionals (!self-has-icpu-igpu) [ pkgs.libva-utils ];
+			++ lib.optionals (!self-has-icpu-igpu) [ pkgs.libva-utils ]
+			;
 
 		# 	# VAAPI
 		# 	variables = lib.mkIf (!self-has-icpu-igpu) {
