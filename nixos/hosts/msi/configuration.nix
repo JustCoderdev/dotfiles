@@ -50,23 +50,25 @@ in
 		servers =
 		let
 			# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
-			default-properties = {
+			default-properties =
+			{
 				allow-flight = true;
-				difficulty = 3; # peaceful, easy, normal, hard
-				enforce-whitelist = false;
 				force-gamemode = false;
-				gamemode = 0; # survival, creative, adventure, spectator
-				online-mode = true;
 				player-idle-timeout = 0;
+
 				snooper-enabled = false;
+				online-mode = false;
 				use-native-transport = true;
-				view-distance = 20;
+				verify-names = false;
+
+				white-list = false;
+				enforce-whitelist = false;
 			};
 
 			# <https://mcuuid.net/> <https://namemc.com>
-			default-whitelist = {
-				ryuji_terix = "e2458645-fb10-4065-ac0c-f689aa30adff";
-			};
+			ryuji-uuid = "e2458645-fb10-4065-ac0c-f689aa30adff";
+			default-whitelist = { Ryuji_terix = ryuji-uuid; };
+			default-operators = { Ryuji_terix = ryuji-uuid; };
 		in
 		{
 			CnT-1_21_11 =
@@ -79,14 +81,23 @@ in
 				autoStart = false;
 				jvmOpts = "-Xms4092M -Xmx6144M";
 
-				serverProperties = default-properties // {
-					level-name = "world";
-					max-players = 5;
-					motd = "Test vanilla 1.21.1";
-					server-port = 25565;
-					white-list = false;
-				};
+				operators = default-operators // { };
 				whitelist = default-whitelist // { };
+
+				serverProperties = default-properties
+				// {
+					server-port = 25565;
+					motd = "Vanilla w the boyz";
+
+					level-name = "world";
+					difficulty = 3; # peaceful, easy, normal, hard
+					gamemode = 0; # survival, creative, adventure, spectator
+
+					view-distance = 20;
+					max-players = 5;
+				};
+
+				symlinks."server-icon.png" = ./server-icon.png;
 			};
 		};
 	};
