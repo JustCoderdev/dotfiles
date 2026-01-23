@@ -6,7 +6,7 @@ let
 	services = [
 		# "prowlarr" "bazarr"
 		# "lidarr" "radarr" "readarr" "sonarr"
-		# "jellyfin"
+		"jellyfin"
 	];
 in
 

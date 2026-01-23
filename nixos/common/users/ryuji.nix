@@ -15,6 +15,8 @@ in
 		system.nixos.tags = [ "${username}" ];
 		jcconfs.users = [ "${username}"  ];
 
+		nix.settings.trusted-users = [ "${username}" ];
+
 		users.users.${username} =
 		let
 			titleCase = text: lib.concatStrings [
