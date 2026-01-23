@@ -22,6 +22,7 @@ in
 			lutris
 
 			wineWowPackages.stable
+			protonup
 		];
 
 		# programs.lutris.enable = true; # TODO: on next release cycle

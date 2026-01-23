@@ -37,7 +37,6 @@ in
 			config =
 			{
 				modifier = "Mod4";
-				workspaceAutoBackAndForth = true;
 
 				fonts = {
 					names = lib.mkForce [ "${config.stylix.fonts.monospace.name}" ];
