@@ -176,4 +176,6 @@ in
 			  ipad-tp-2_0 = (add-device               null "WNA7TTR-2GZ7QRH-4HXPAJT-QAI7VVM-MCX3ZFC-WPXG3UB-CGMPF4C-YKTCSA7");
 		};
 	};
+
+	services.grafana.enable = true;
 }
