@@ -20,11 +20,6 @@ let
 	};
 in
 {
-	# nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
-	# inputs.nix-minecraft.nixosModules.minecraft-servers
-
-	# ------------------------------------------------------------ #
-
 	# Create service group
 	users.groups."${serv-group}" = { };
 	users.users.${username}.extraGroups = [ serv-group ];
@@ -181,8 +176,4 @@ in
 			  ipad-tp-2_0 = (add-device               null "WNA7TTR-2GZ7QRH-4HXPAJT-QAI7VVM-MCX3ZFC-WPXG3UB-CGMPF4C-YKTCSA7");
 		};
 	};
-
-	# MINECRAFT SERVER
-	# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
-	# <https://mcuuid.net/> <https://namemc.com>
 }
