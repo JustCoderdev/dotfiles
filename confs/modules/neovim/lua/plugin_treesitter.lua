@@ -1,7 +1,7 @@
 declare_file("plugin:treesitter")
 
 require('nvim-treesitter.install').compilers = { "gcc" }
-require("nvim-treesitter.configs").setup(
+require("nvim-treesitter.config").setup(
 {
 	ensure_installed =
 	{

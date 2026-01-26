@@ -4,10 +4,12 @@ declare_file("plugin:lsp")
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.lsp.config('nixd', { capabilities = capabilities })
 vim.lsp.config('clangd', { capabilities = capabilities })
+vim.lsp.config('rust_analyzer', { capabilities = capabilities })
 
 
 vim.lsp.enable('nixd')
 vim.lsp.enable('clangd')
+vim.lsp.enable('rust_analyzer')
 
 
 -- File type fixes

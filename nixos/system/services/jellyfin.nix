@@ -32,43 +32,31 @@ in
 			{
 				serverAliases = cfg.proxy.aliases;
 				locations =
+				let
+					reverse_proxy_headers = ""
+						+ "proxy_set_header Host $host;\n"
+						+ "proxy_set_header X-Real-IP $remote_addr;\n"
+						+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+						+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+					;
+				in
 				{
 					"/jellyfin" = {
 						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = ""
-							+ "proxy_set_header Host $host;\n"
-							+ "proxy_set_header X-Real-IP $remote_addr;\n"
-							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-							+ "proxy_buffering off;\n"
-							+ "";
+						extraConfig = reverse_proxy_headers;
 					};
 
 					"~ ^/jellyfin/web/$" = {
 						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = ""
-							+ "proxy_set_header Host $host;\n"
-							+ "proxy_set_header X-Real-IP $remote_addr;\n"
-							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-							+ "";
+						extraConfig = reverse_proxy_headers;
 					};
 
 					"/jellyfin/socket" = {
 						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = ""
-							+ "proxy_http_version 1.1;\n"
-							+ "proxy_set_header Upgrade $http_upgrade;\n"
-							+ "proxy_set_header Connection \"upgrade\";\n"
-							+ "proxy_set_header Host $host;\n"
-							+ "proxy_set_header X-Real-IP $remote_addr;\n"
-							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-							+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
-							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-							+ "";
+						proxyWebsockets = true;
+						extraConfig = reverse_proxy_headers;
 					};
 				};
 

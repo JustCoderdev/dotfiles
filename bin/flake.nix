@@ -6,7 +6,7 @@
 
 	inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
 
-	outputs = { self, nixpkgs }:
+	outputs = { nixpkgs, ... }:
 	let
 		binaries =
 		[

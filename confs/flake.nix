@@ -130,12 +130,13 @@
 		};
 
 		homeConfigurations = { }
-		// forAllSystems (
+		// forAllSystems
+		(
 			system:
 			let
 				map-user =
 				(
-					username: { has-de, is-laptop }@flags:
+					username: flags:
 					{
 						name = "${username}${get-flags flags}";
 						value = homeBuilder username flags nixpkgsFor.${system};
@@ -161,7 +162,7 @@
 				let
 					map-user =
 					(
-						username: { has-de, is-laptop }@flags:
+						username: flags:
 						let
 							conf-name = "${username}${get-flags flags}";
 						in

@@ -1,18 +1,17 @@
 {
 	description = "Wise server remote installer";
 
-	inputs = {
+	inputs =
+	{
 		nixpkgs.url = "nixpkgs/nixos-25.05";
 
-		disko = {
-			url = "github:nix-community/disko";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		disko.url = "github:nix-community/disko";
+		disko.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
 	outputs = { nixpkgs, disko, ... }:
 	{
-		nixosConfigurations = 
+		nixosConfigurations =
 		{
 			wise = nixpkgs.lib.nixosSystem {
 				system = "x86_64-linux";

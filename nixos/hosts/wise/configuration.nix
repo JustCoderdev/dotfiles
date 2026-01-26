@@ -6,7 +6,6 @@ let
 	services = [
 		# "prowlarr" "bazarr"
 		# "lidarr" "radarr" "readarr" "sonarr"
-		"jellyfin"
 	];
 in
 
@@ -17,12 +16,15 @@ in
 	{
 		enable = true;
 		apiTokenFile = secrets.cloudflare.api-token.path;
-		domains = [
+		domains =
+		[
 			"foxburrow.org"
 			"www.foxburrow.org"
 			"err.foxburrow.org"
+
 			# "immich.foxburrow.org"
 			# "deluge.foxburrow.org"
+			"jellyfin.foxburrow.org"
 		]
 		++
 		(
@@ -93,6 +95,44 @@ in
 			# 		proxyWebsockets = true;
 			# 	};
 			# };
+
+			"jellyfin.foxburrow.org" = (default-ssl-config)
+			// {
+				locations =
+				let
+					reverse_proxy_headers = ""
+						+ "proxy_set_header Host $host;\n"
+						+ "proxy_set_header X-Real-IP $remote_addr;\n"
+						+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+						+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
+						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+					;
+				in
+				{
+					"/jellyfin" = {
+						proxyPass = "http://127.0.0.1:8096";
+						extraConfig = reverse_proxy_headers;
+					};
+
+					"~ ^/jellyfin/web/$" = {
+						proxyPass = "http://127.0.0.1:8096";
+						extraConfig = reverse_proxy_headers;
+					};
+
+					"/jellyfin/socket" = {
+						proxyPass = "http://127.0.0.1:8096";
+						proxyWebsockets = true;
+						extraConfig = reverse_proxy_headers;
+					};
+				};
+
+				extraConfig = ""
+					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
+					+ "add_header X-XSS-Protection \"1; mode=block\";\n"
+					+ "add_header X-Content-Type-Options \"nosniff\";\n"
+					+ "";
+			};
 
 			"_" =
 			let
