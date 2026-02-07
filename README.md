@@ -1,5 +1,4 @@
 > [!warning]
->
 > My dotfiles had an incident
 >
 > This is why all commits before a certain point report the date of the incident, at least 8 commits got lost (as far as I know)
@@ -110,6 +109,7 @@ such as alacritty, clang, git, hyprland, and more
 - Add guest samba share
 - Add dns delegation to master manager
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
+- Add screen brightness keybinding (`xrandr --output DP-1 --brightness 0.6`)
 
 ### Ideas
 

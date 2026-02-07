@@ -100,31 +100,24 @@ in
 			// {
 				locations =
 				let
-					reverse_proxy_headers = ""
-						+ "proxy_set_header Host $host;\n"
-						+ "proxy_set_header X-Real-IP $remote_addr;\n"
-						+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-						+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-						+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
-						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-					;
+					location-cfg =
+					{
+						proxyPass = "https://10.255.250.2/jellyfin";
+						extraConfig  = ""
+							+ "proxy_set_header Host $host;\n"
+							+ "proxy_set_header X-Real-IP $remote_addr;\n"
+							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+							+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
+							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+						;
+					};
 				in
 				{
-					"/jellyfin" = {
-						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = reverse_proxy_headers;
-					};
-
-					"~ ^/jellyfin/web/$" = {
-						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = reverse_proxy_headers;
-					};
-
-					"/jellyfin/socket" = {
-						proxyPass = "http://127.0.0.1:8096";
-						proxyWebsockets = true;
-						extraConfig = reverse_proxy_headers;
-					};
+					"/".return = "301 /jellyfin";
+					   "/jellyfin"        = location-cfg;
+					"~ ^/jellyfin/web/$"  = location-cfg;
+					   "/jellyfin/socket" = (location-cfg) // { proxyWebsockets = true; };
 				};
 
 				extraConfig = ""
