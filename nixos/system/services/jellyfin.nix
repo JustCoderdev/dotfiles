@@ -46,15 +46,6 @@ in
 					extraConfig = ""
 						+ reverse_proxy_headers
 						+ "proxy_buffering off;\n"
-						+ "log_format stripsecrets '$remote_addr $host - $remote_user [$time_local] '\n"
-						+ "'\"$secretfilter\" $status $body_bytes_sent '\n"
-						+ "'$request_length $request_time $upstream_response_time '\n"
-						+ "'\"$http_referer\" \"$http_user_agent\"';\n"
-						+ "map $request $secretfilter {\n"
-						+     "~*^(?<prefix1>.*[\\?&]api_key=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
-						+     "~*^(?<prefix1>.*[\\?&]ApiKey=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
-						+     "default                                               $request;\n"
-						+ "}\n"
 					;
 				in
 				{
@@ -75,6 +66,18 @@ in
 					+ "access_log /var/log/nginx/access.log stripsecrets;\n"
 				;
 			};
+
+			commonHttpConfig = ""
+				+ "log_format stripsecrets '$remote_addr $host - $remote_user [$time_local] '\n"
+				+ "'\"$secretfilter\" $status $body_bytes_sent '\n"
+				+ "'$request_length $request_time $upstream_response_time '\n"
+				+ "'\"$http_referer\" \"$http_user_agent\"';\n"
+				+ "map $request $secretfilter {\n"
+				+     "~*^(?<prefix1>.*[\\?&]api_key=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
+				+     "~*^(?<prefix1>.*[\\?&]ApiKey=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
+				+     "default                                               $request;\n"
+				+ "}\n"
+			;
 		};
 	};
 
