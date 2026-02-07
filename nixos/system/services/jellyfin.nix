@@ -41,30 +41,39 @@ in
 						+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
 						+ "proxy_set_header X-Forwarded-Host $http_host;\n"
 					;
+
+					proxyPass = "http://127.0.0.1:8096";
+					extraConfig = ""
+						+ reverse_proxy_headers
+						+ "proxy_buffering off;\n"
+						+ "log_format stripsecrets '$remote_addr $host - $remote_user [$time_local] '\n"
+						+ "'\"$secretfilter\" $status $body_bytes_sent '\n"
+						+ "'$request_length $request_time $upstream_response_time '\n"
+						+ "'\"$http_referer\" \"$http_user_agent\"';\n"
+						+ "map $request $secretfilter {\n"
+						+     "~*^(?<prefix1>.*[\\?&]api_key=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
+						+     "~*^(?<prefix1>.*[\\?&]ApiKey=)([^&]*)(?<suffix1>.*)$  \"\${prefix1}***$suffix1\";\n"
+						+     "default                                               $request;\n"
+						+ "}\n"
+					;
 				in
 				{
-					"/jellyfin" = {
-						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = reverse_proxy_headers;
-					};
-
-					"~ ^/jellyfin/web/$" = {
-						proxyPass = "http://127.0.0.1:8096";
-						extraConfig = reverse_proxy_headers;
-					};
-
+					"/jellyfin" = { inherit proxyPass extraConfig; };
+					"~ ^/jellyfin/web/$" = { inherit proxyPass extraConfig; };
 					"/jellyfin/socket" = {
-						proxyPass = "http://127.0.0.1:8096";
-						proxyWebsockets = true;
+						inherit proxyPass;
 						extraConfig = reverse_proxy_headers;
+						proxyWebsockets = true;
 					};
 				};
+
 
 				extraConfig = ""
 					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
 					+ "add_header X-XSS-Protection \"1; mode=block\";\n"
 					+ "add_header X-Content-Type-Options \"nosniff\";\n"
-					+ "";
+					+ "access_log /var/log/nginx/access.log stripsecrets;\n"
+				;
 			};
 		};
 	};
