@@ -110,20 +110,24 @@ in
 							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
 							+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
 							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+							+ "proxy_headers_hash_max_size 512;\n"
+							+ "proxy_headers_hash_bucket_size 128;\n"
 						;
 					};
 				in
 				{
 					"/".return = "301 /jellyfin";
-					   "/jellyfin"        = location-cfg;
-					"~ ^/jellyfin/web/$"  = location-cfg;
-					   "/jellyfin/socket" = (location-cfg) // { proxyWebsockets = true; };
+					"^~ /jellyfin" = location-cfg;
+					"/jellyfin/socket" = (location-cfg) // { proxyWebsockets = true; };
 				};
 
 				extraConfig = ""
 					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
 					+ "add_header X-XSS-Protection \"1; mode=block\";\n"
 					+ "add_header X-Content-Type-Options \"nosniff\";\n"
+					+ "proxy_ssl_verify off;\n"
+					+ "proxy_ssl_session_reuse off;\n"
+					+ "proxy_ssl_server_name on;\n"
 					+ "";
 			};
 
@@ -138,6 +142,8 @@ in
 
 				sslCertificate = vhost-secrets.cert.path;
 				sslCertificateKey = vhost-secrets.key.path;
+
+				extraConfig = "ssl_stapling off;\n";
 			};
 		}
 		//
