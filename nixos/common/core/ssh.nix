@@ -52,6 +52,11 @@ Host github.com
 	IdentitiesOnly yes # Force to use only this identity file
 	IdentityFile "${uhome}/.ssh/id_github_justcode"
 
+Host tangled.org
+	HostName tangled.org
+	IdentitiesOnly yes # Force to use only this identity file
+	IdentityFile "${uhome}/.ssh/id_github_justcode"
+
 # Ryuji
 # <https://unix.stackexchange.com/questions/494483/specifying-an-identityfile-with-ssh>
 Host *
