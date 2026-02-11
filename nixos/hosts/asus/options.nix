@@ -69,13 +69,13 @@
 			);
 		in
 		[
-			(gen-builder "quiss.home.local" 4 2)
-
-			(gen-builder   "msi.home.local" 6 2)
-			(gen-builder   "msi.flat.local" 6 2)
-
-			(gen-builder "quiss.garden.lan" 4 1)
-			(gen-builder   "msi.garden.lan" 6 1)
+			# (gen-builder "quiss.home.local" 4 2)
+			#
+			# (gen-builder   "msi.home.local" 6 2)
+			# (gen-builder   "msi.flat.local" 6 2)
+			#
+			# (gen-builder "quiss.garden.lan" 4 1)
+			# (gen-builder   "msi.garden.lan" 6 1)
 		];
 
 		syncthing =

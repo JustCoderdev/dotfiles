@@ -15,7 +15,7 @@ in
 			enableDefaultPackages = false;
 			packages = with pkgs;
 			[
-				ttf_bitstream_vera
+				dejavu_fonts  # ttf_bitstream_vera
 				roboto-mono
 				kochi-substitute    # Kochi Mincho, Kochi Gothic
 				twitter-color-emoji # Emoji support
@@ -24,8 +24,8 @@ in
 			# Remember to also update `confs/stylix/base.nix`
 			fontconfig.defaultFonts =
 			{
-				sansSerif = [ "Kochi Gothic" "Bitstream Vera Sans"  ]; # "DejaVu Sans" 
-				serif     = [ "Kochi Gothic" "Bitstream Vera Serif" ]; # "DejaVu Serif"
+				sansSerif = [ "Kochi Gothic" "DejaVu Sans"  ]; # "Bitstream Vera Sans"
+				serif     = [ "Kochi Gothic" "DejaVu Serif" ]; # "Bitstream Vera Serif"
 				monospace = [ "Kochi Gothic" "Roboto Mono"  ];
 				emoji     = [ "Twitter Color Emoji" ];
 				# ⚫ 🔴 🔵
