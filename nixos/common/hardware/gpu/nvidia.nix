@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.common.manifest;
@@ -64,7 +64,7 @@ in
 			};
 
 			powerManagement = {
-				enable = true; # EXPERIMENTAL: enable if issues with sleep/suspend
+				enable = false; # EXPERIMENTAL: enable if issues with sleep/suspend
 				finegrained = false && self-ngpu.ge-turing;  # gpu off when idle (Turing or newer)
 			};
 		};

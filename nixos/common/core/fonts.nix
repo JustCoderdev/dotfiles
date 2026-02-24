@@ -21,7 +21,10 @@ in
 				twitter-color-emoji # Emoji support
 			];
 
-			# Remember to also update `confs/stylix/base.nix`
+			###########################################################
+			# /!\ REMEMBER TO ALSO UPDATE `confs/stylix/base.nix` /!\ #
+			###########################################################
+
 			fontconfig.defaultFonts =
 			{
 				sansSerif = [ "Kochi Gothic" "DejaVu Sans"  ]; # "Bitstream Vera Sans"
