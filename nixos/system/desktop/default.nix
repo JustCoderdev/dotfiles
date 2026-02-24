@@ -83,13 +83,6 @@ in
 			;;
 		esac
 	;;
-
-	*)
-		if [ -n $1 ];
-		then
-			echo "Unknown option '$2', did you meant to write 'enable' or 'disable'?"
-		fi
-	;;
 esac
 ''
 		;

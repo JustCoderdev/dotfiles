@@ -1,4 +1,4 @@
-{ config, pkgs, nix-minecraft, ... }:
+{ config, lib, pkgs, nix-minecraft, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -73,7 +73,7 @@ in
 		{
 			CnT-1_21_11 =
 			{
-				enable = true;
+				enable = false;
 				package = pkgs.vanillaServers.vanilla-1_21_11;
 
 				openFirewall = true;
@@ -98,6 +98,48 @@ in
 				};
 
 				symlinks."server-icon.png" = ./server-icon.png;
+			};
+
+			parkour-pyramid =
+			let
+				world-files = pkgs.fetchzip
+				{
+					url = "https://hielkemaps.com/downloads/Parkour%20Pyramid.zip";
+					hash = "sha256-hPFTv2H7TJ9FWny2tUOsT2f6k+NfMeCLTyOmefiZK6I=";
+				};
+			in
+			{
+				enable = false;
+				package = pkgs.vanillaServers.vanilla-1_21_11;
+
+				openFirewall = true;
+
+				autoStart = false;
+				jvmOpts = "-Xms4092M -Xmx6144M";
+
+				operators = default-operators // { };
+				whitelist = default-whitelist // { };
+
+				serverProperties = default-properties
+				// {
+					server-port = 25565;
+					motd = "Parkour piramid mentre Cri che fà programmazione";
+
+					level-name = "world";
+					difficulty = 3; # peaceful, easy, normal, hard
+					gamemode = 0; # survival, creative, adventure, spectator
+
+					view-distance = 20;
+					max-players = 5;
+				};
+
+				symlinks."server-icon.png" = world-files + ./icon.png;
+				files =
+				(
+					lib.attrsets.mapAttrs'
+						(name: lib.attrsets.nameValuePair "world/${name}")
+						(nix-minecraft.lib.collectFiles world-files)
+				);
 			};
 		};
 	};
