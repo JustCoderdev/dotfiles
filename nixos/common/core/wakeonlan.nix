@@ -1,61 +1,36 @@
 { config, lib, pkgs, ... }:
 
-# [ DISABLED MODULE ]
+# `sudo ethtool -s enp4s0 wol g`
+# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
+
+# `sudo iw phy0 wowlan enable magic-packet disconnect`
+# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
 
 let
 	cfg = config.common.core.network.wakeOn;
-in
 
+	has-enabled-ifaces = (builtins.length cfg.lan.enabledFor) > 0;
+	has-enabled-phys = (builtins.length cfg.wlan.enabledFor) > 0;
+in
 {
 	config =
-	let
-		create-oneshot-service = (
-			name: { description, command, ... }:
-			{
-				inherit name;
-				value = {
-					inherit description;
-					after = [ "network-online.target" ];
-					wantedBy = [ "network-online.target" ];
-					wants = [ "network-online.target" ];
-					serviceConfig = {
-						Type = "oneshot";
-						ExecStart = command;
-						StandardError = "journal";
-						StandardOutput = "journal";
-					};
-				};
-			}
-		);
-	in
-	lib.mkIf (false)
 	{
-		systemd.services = {}
-		//
-		builtins.listToAttrs (
-			lib.lists.forEach cfg.lan.enabledFor (
-				interface:
-				# `sudo ethtool -s enp4s0 wol g`
-				# <https://blog.yucas.net/2018/02/03/add-systemd-service-to-start-wake-on-lan/>
-				# Systemd service: <https://photostructure.com/coding/wake-on-lan/>
-				create-oneshot-service "wakeonlan-${interface}" {
-					description = "Enable WakeOnLan for interface ${interface}";
-					command = "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g";
-				}
-			)
-		)
-		//
-		builtins.listToAttrs (
-			lib.lists.forEach cfg.wlan.enabledFor (
-				phy:
-				# `sudo iw phy0 wowlan enable magic-packet disconnect`
-				# <https://www.cyberciti.biz/faq/configure-wireless-wake-on-lan-for-linux-wifi-wowlan-card/>
-				create-oneshot-service "wakeonwlan-${phy}" {
-					description = "Enable WakeOnWLAN for interface ${phy}";
-					command = "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect";
-				}
-			)
-		);
+		services.cron = lib.mkIf (has-enabled-ifaces || has-enabled-phys)
+		{
+			enable = true;
+			systemCronJobs = builtins.map (command: "@reboot root ${command}")
+			(
+				(
+					builtins.map (interface: "${pkgs.ethtool}/bin/ethtool -s ${interface} wol g")
+						cfg.lan.enabledFor
+				)
+				++
+				(
+					builtins.map (phy: "${pkgs.iw}/bin/iw ${phy} wowlan enable magic-packet disconnect")
+						cfg.wlan.enabledFor
+				)
+			);
+		};
 
 		# -------------------- #
 
@@ -67,9 +42,9 @@ in
 			) cfg.knownDevices;
 		in
 		[ ]
-		++ lib.lists.optionals ((builtins.length wake-device-pkgs)    > 0) [ pkgs.wakeonlan ] ++ wake-device-pkgs
-		# ++ lib.lists.optionals ((builtins.length cfg.lan.enabledFor)  > 0) [ pkgs.ethtool ]
-		# ++ lib.lists.optionals ((builtins.length cfg.wlan.enabledFor) > 0) [ pkgs.iw ]
+		++ lib.lists.optionals ((builtins.length wake-device-pkgs) > 0) [ pkgs.wakeonlan ] ++ wake-device-pkgs
+		++ lib.lists.optionals (has-enabled-ifaces) [ pkgs.ethtool ]
+		++ lib.lists.optionals (has-enabled-phys)   [ pkgs.iw ]
 		;
 	};
 

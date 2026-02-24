@@ -7,7 +7,7 @@
 		{
 			network.wakeOn =
 			{
-				# lan.enabledFor = [ "enp1s0" ];
+				lan.enabledFor = [ "enp1s0" ];
 				knownDevices.msi = "d4:3b:04:51:45:28";
 			};
 

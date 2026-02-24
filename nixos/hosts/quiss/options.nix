@@ -7,11 +7,10 @@
 	{
 		network.wakeOn =
 		{
-			# lan.enabledFor = [ "eno1" "enp8s2" ];
 			knownDevices.acer = "a4:17:31:10:9e:ed";
 		};
 
-		secrets = 
+		secrets =
 		{
 			cloudflare = {
 				origin-cert.installed = true;

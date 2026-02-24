@@ -9,6 +9,7 @@
 		graphics.capable = false;
 
 		cpu.intel.architecture = "broadwell";
+		interfaces.wireless."wlo1".mac = "c8:58:c0:37:fe:ce";
 	};
 
 	# -------------------- #

@@ -9,6 +9,13 @@
 	{
 		core =
 		{
+			network.wakeOn =
+			{
+				lan.enabledFor = [ "eno1" "enp8s2" ];
+				wlan.enabledFor = [ "phy0" ];
+				knownDevices.wise = "8c:ec:4b:56:df:66";
+			};
+
 			printing.enable = true;
 
 			secrets =
