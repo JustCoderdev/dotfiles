@@ -41,7 +41,7 @@
 		users.ryuji.media-manipulation-suite.images.enable = true;
 	};
 
-	system.services.nixbuilder.client.builders =
+	modules.services.nixbuilder.client.builders =
 	let
 		gen-builder = (
 			hostName: maxJobs:

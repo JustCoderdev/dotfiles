@@ -9,8 +9,8 @@
 		./common/manifest
 		./common/users
 
-		./system/desktop
-		./system/services
+		./modules/desktop
+		./modules/services
 
 		./unofficial/modules
 	];

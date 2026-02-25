@@ -1,7 +1,7 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	cfg = config.system.services.nixcache;
+	cfg = config.modules.services.nixcache;
 	secrets = config.common.core.secrets;
 	instance-url =  "http://${cfg.instance-host}:${toString cfg.instance-port}?priority=30";
 in
@@ -41,7 +41,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.nixcache =
+	options.modules.services.nixcache =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;

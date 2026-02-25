@@ -2,8 +2,8 @@
 
 let
 	inherit (settings) username;
-	
-	cfg = config.system.services.kvm;
+
+	cfg = config.modules.services.kvm;
 in
 
 {
@@ -35,7 +35,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.kvm =
+	options.modules.services.kvm =
 	{
 		enable = lib.mkEnableOption "kvm daemon";
 		allowedBridges = lib.mkOption {

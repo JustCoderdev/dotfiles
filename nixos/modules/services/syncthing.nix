@@ -2,7 +2,7 @@
 
 let
 	inherit (settings) username;
-	cfg = config.system.services.syncthing;
+	cfg = config.modules.services.syncthing;
 in
 
 {
@@ -85,7 +85,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.syncthing =
+	options.modules.services.syncthing =
 	let
 		mkSubmodOption = (
 			description: submodule:

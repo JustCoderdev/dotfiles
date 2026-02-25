@@ -4,7 +4,7 @@
 { config, lib, ... }:
 
 let
-	cfg = config.system.services.routing;
+	cfg = config.modules.services.routing;
 in
 
 {
@@ -85,7 +85,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.routing =
+	options.modules.services.routing =
 	let
 		mkStrOption = (
 			description:

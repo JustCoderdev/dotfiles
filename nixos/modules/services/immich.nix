@@ -1,7 +1,7 @@
 { config, lib, pkgs, pkgs-unstable, ... }:
 
 let
-	cfg = config.system.services.immich;
+	cfg = config.modules.services.immich;
 in
 
 {
@@ -94,7 +94,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.immich =
+	options.modules.services.immich =
 	{
 		enable = lib.mkEnableOption "immich daemon";
 

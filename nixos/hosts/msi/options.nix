@@ -60,6 +60,7 @@
 				tools = {
 					android.enable = true;
 					c.enable = true;
+					java.enable = true;
 					network.enable = true;
 				};
 			};
@@ -80,7 +81,7 @@
 		};
 	};
 
-	system.services =
+	modules.services =
 	{
 		avahi.enable = true;
 

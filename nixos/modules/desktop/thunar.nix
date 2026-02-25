@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.desktop.thunar;
-	desktop-cfg = config.system.desktop;
+	cfg = config.modules.desktop.thunar;
 in
 
 {
@@ -35,7 +34,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.desktop.thunar =
+	options.modules.desktop.thunar =
 	{
 		enable = lib.mkEnableOption "thunar file manager";
 	};

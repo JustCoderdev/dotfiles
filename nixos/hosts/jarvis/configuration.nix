@@ -79,7 +79,7 @@ in
 		networkmanager.enable = lib.mkForce false;
 		interfaces."wlan0".useDHCP = true;
 		# interfaces."enu1u1".useDHCP = true;
-		
+
 		wireless = {
 			enable = lib.mkForce true;
 
@@ -109,7 +109,7 @@ SUBSYSTEM=="usb", DRIVER=="hub|usb", \
 
 
 	users.users."hass".extraGroups = [ "dialout" ];
-	system.services.home-assistant = 
+	modules.services.home-assistant =
 	{
 		openFirewall = false;
 		proxy = {

@@ -3,7 +3,7 @@
 let
 	inherit (settings) username;
 
-	cfg = config.system.services.virtualbox;
+	cfg = config.modules.services.virtualbox;
 in
 
 {
@@ -19,7 +19,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.virtualbox =
+	options.modules.services.virtualbox =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;

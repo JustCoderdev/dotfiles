@@ -17,7 +17,7 @@
 			"cuda_cuxxfilt"
 			"cuda_nvml_dev"
 			"cuda_nvrtc"
-			"cuda_nvtx" 
+			"cuda_nvtx"
 			"cuda_profiler_api"
 			"cuda_sanitizer_api"
 			"libcublas"
@@ -40,6 +40,7 @@
 
 			"clion"
 			"vscode"
+			"idea-ultimate"
 
 			"davinci-resolve"
 			"minecraft-server"

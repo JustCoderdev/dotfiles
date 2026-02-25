@@ -11,7 +11,7 @@
 		wireless.installed = true;
 	};
 
-	system.services =
+	modules.services =
 	{
 		home-assistant.enable = true;
 

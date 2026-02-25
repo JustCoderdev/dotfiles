@@ -1,7 +1,7 @@
 { config, lib, pkgs-unstable, ... }:
 
 let
-	cfg = config.system.services.servarr;
+	cfg = config.modules.services.servarr;
 in
 
 {
@@ -143,7 +143,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.servarr =
+	options.modules.services.servarr =
 	{
 		enable = lib.mkEnableOption "Enable servarr suite";
 

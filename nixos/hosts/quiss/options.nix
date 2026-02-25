@@ -46,7 +46,7 @@
 		};
 	};
 
-	system.services =
+	modules.services =
 	{
 		avahi.enable = true;
 

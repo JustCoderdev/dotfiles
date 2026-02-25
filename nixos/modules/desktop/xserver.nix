@@ -3,7 +3,7 @@
 let
 	inherit (settings) username dotfiles_store_path;
 
-	cfg = config.system.desktop.xserver;
+	cfg = config.modules.desktop.xserver;
 
 	hardware-type = config.common.manifest.self.hardware.type;
 in
@@ -68,7 +68,7 @@ in
 					# -------------------- #
 
 					assertions = [ {
-						assertion = !config.system.desktop.wayland.enable;
+						assertion = !config.modules.desktop.wayland.enable;
 						message = "Cannot enable wayland if xserver is enabled";
 					} ];
 				}
@@ -116,7 +116,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.desktop.xserver =
+	options.modules.desktop.xserver =
 	{
 		enable = lib.mkEnableOption "xserver support";
 		frontend = lib.mkOption {

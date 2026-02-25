@@ -43,8 +43,13 @@ in
 			gdb valgrind
 			gf file
 		]
+		++ lib.lists.optionals (cfg.tools.java.enable)
+		[
+			jetbrains.idea-ultimate
+			javaPackages.compiler.openjdk23
+			javaPackages.openjfx23
+		]
 		;
-
 
 		users.users.${username}.extraGroups = []
 		++ lib.lists.optionals (cfg.tools.network.enable) [ "wireshark" "pcap" ]
@@ -88,6 +93,7 @@ in
 			android.enable = lib.mkEnableOption "android tools";
 			c.enable = lib.mkEnableOption "c tools";
 			game-development.enable = lib.mkEnableOption "game development tools";
+			java.enable = lib.mkEnableOption "java ide";
 			network.enable = lib.mkEnableOption "network tools";
 		};
 	};

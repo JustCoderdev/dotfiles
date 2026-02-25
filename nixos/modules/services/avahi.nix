@@ -1,11 +1,11 @@
 { config, lib, ... }:
 
 let
-	cfg = config.system.services.avahi;
+	cfg = config.modules.services.avahi;
 in
 
 {
-	config = 
+	config =
 	{
 		services.avahi = lib.mkIf (cfg.enable)
 		{
@@ -31,7 +31,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.avahi =
+	options.modules.services.avahi =
 	{
 		enable = lib.mkEnableOption "avahi service";
 	};

@@ -3,7 +3,7 @@
 let
 	inherit (settings) username;
 
-	cfg = config.system.services.docker;
+	cfg = config.modules.services.docker;
 in
 
 {
@@ -23,7 +23,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.docker = 
+	options.modules.services.docker =
 	{
 		enable = lib.mkEnableOption "docker daemon";
 	};

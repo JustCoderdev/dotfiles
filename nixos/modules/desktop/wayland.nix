@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.desktop.wayland;
+	cfg = config.modules.desktop.wayland;
 
 	hardware-type = config.common.manifest.self.hardware.type;
 	where-is-my-sddm-theme-pkg =
@@ -97,14 +97,14 @@ in
 		# -------------------- #
 
 		assertions = [ {
-			assertion = !config.system.desktop.xserver.enable;
+			assertion = !config.modules.desktop.xserver.enable;
 			message = "Cannot enable hyprland if xserver is enabled";
 		} ];
 	};
 
 	# ------------------------------------------------------------ #
 
-	options.system.desktop.wayland =
+	options.modules.desktop.wayland =
 	{
 		enable = lib.mkEnableOption "wayland support and software";
 	};

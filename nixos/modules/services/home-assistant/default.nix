@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.services.home-assistant;
+	cfg = config.modules.services.home-assistant;
 	cfg-hass = config.services.home-assistant;
 
 	hostname = config.networking.hostName;
@@ -247,14 +247,14 @@ in
 		assertions = [
 			{
 				message = "Cannot enable home-assistant and immich under proxy because they both use the same base url path (/)";
-				assertion = !config.system.services.immich.enable;
+				assertion = !config.modules.services.immich.enable;
 			}
 		];
 	};
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.home-assistant =
+	options.modules.services.home-assistant =
 	{
 		enable = lib.mkEnableOption "Enable customised home assistant options";
 		openFirewall = lib.mkEnableOption "Open firewall for home assistant";

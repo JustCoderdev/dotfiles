@@ -1,7 +1,7 @@
 { config, lib, pkgs, settings, ... }:
 
 let
-	cfg = config.system.services.jellyfin;
+	cfg = config.modules.services.jellyfin;
 in
 
 {
@@ -83,7 +83,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.jellyfin =
+	options.modules.services.jellyfin =
 	{
 		enable = lib.mkEnableOption "Enable jellyfin daemon";
 

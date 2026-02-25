@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.services.wireguard;
+	cfg = config.modules.services.wireguard;
 	secrets = config.common.core.secrets;
 	wg-default-port = 51820;
 
@@ -99,7 +99,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.wireguard =
+	options.modules.services.wireguard =
 	let
 		mkStrOption = (
 			description:

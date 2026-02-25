@@ -45,7 +45,7 @@
 		};
 	};
 
-	system.services =
+	modules.services =
 	{
 		nixbuilder.client.builders =
 		let

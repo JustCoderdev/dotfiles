@@ -4,7 +4,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	cfg = config.system.services.rtmp;
+	cfg = config.modules.services.rtmp;
 	rtmp_port = 1935;
 in
 
@@ -99,7 +99,7 @@ rtmp {
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.rtmp =
+	options.modules.services.rtmp =
 	{
 		enable = lib.mkEnableOption "Enable rtmp support";
 		openFirewall = lib.mkEnableOption "Open firewall for all services";

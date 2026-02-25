@@ -3,7 +3,7 @@
 let
 	inherit (settings) username;
 
-	cfg = config.system.services.samba;
+	cfg = config.modules.services.samba;
 
 	hostname = config.networking.hostName;
 	share-root = "/home/${username}";
@@ -147,7 +147,7 @@ iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.samba =
+	options.modules.services.samba =
 	{
 		enable = lib.mkEnableOption "Enable samba daemon";
 		shares = {

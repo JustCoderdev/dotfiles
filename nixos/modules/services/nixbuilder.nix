@@ -5,8 +5,8 @@ let
 
 	hostname = config.networking.hostName;
 
-	server_cfg = config.system.services.nixbuilder.server;
-	client_cfg = config.system.services.nixbuilder.client;
+	server_cfg = config.modules.services.nixbuilder.server;
+	client_cfg = config.modules.services.nixbuilder.client;
 
 	sshkey_path = "/home/${username}/.ssh/id_${hostname}_${username}_nixbuilder";
 	buildclient_user = "buildclient";
@@ -46,6 +46,27 @@ in
 					comment = "${username}_${buildclient_user}@${hostname}";
 					path = sshkey_path;
 				} ];
+
+
+				# programs.ssh.matchBlocks =
+				# (
+				# 	builtins.listToAttrs
+				# 	(
+				# 		lib.lists.forEach client_cfg.Builders
+				# 		(
+				# 			builder:
+				# 			{
+				# 				name = builder.hostName;
+				# 				value =
+				# 				{
+				# 					user = buildclient_user ;
+				# 					identitiesOnly = true;
+				# 					identityFile = sshkey_path;
+				# 				};
+				# 			}
+				# 		)
+				# 	)
+				# );
 
 				programs.ssh.extraConfig = lib.strings.concatStrings (
 					lib.lists.forEach client_cfg.builders (
@@ -97,7 +118,7 @@ Host ${builder.hostName}
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.nixbuilder =
+	options.modules.services.nixbuilder =
 	{
 		server = {
 			enable = lib.mkOption {

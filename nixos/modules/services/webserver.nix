@@ -1,7 +1,7 @@
 { config, lib, settings, ... }:
 
 let
-	cfg = config.system.services.webserver;
+	cfg = config.modules.services.webserver;
 	inherit (settings) username;
 
 	hostname = config.networking.hostName;
@@ -25,7 +25,7 @@ in
 
 	# ------------------------------------------------------------ #
 
-	options.system.services.webserver =
+	options.modules.services.webserver =
 	{
 		enable = lib.mkOption {
 			type = lib.types.bool;

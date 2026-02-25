@@ -41,7 +41,7 @@ in
 		common.core.plymouth.enable = lib.mkDefault has-de;
 		common.core.fonts.enable    = lib.mkDefault has-de;
 
-		system.desktop = lib.mkIf (has-de)
+		modules.desktop = lib.mkIf (has-de)
 		{
 			xserver.enable = lib.mkDefault true;
 			thunar.enable  = lib.mkDefault true;

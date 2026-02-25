@@ -10,7 +10,7 @@ in
 	{
 		common.manifest.services = import ./services-list.nix;
 
-		system.services =
+		modules.services =
 		{
 			wireguard =
 			let

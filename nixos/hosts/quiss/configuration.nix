@@ -78,7 +78,7 @@ in
 
 	# SAMBA
 
-	system.services.samba.shares.custom = let
+	modules.services.samba.shares.custom = let
 		create-share = (name: root: owner: { inherit name root owner; });
 	in [
 		(create-share "data" raid-mount username)
@@ -105,7 +105,7 @@ in
 
 	# ARR Stack
 
-	system.services.servarr =
+	modules.services.servarr =
 	{
 		inherit proxy;
 
@@ -131,7 +131,7 @@ in
 
 	# MEDIA PLAYER
 
-	system.services.jellyfin =
+	modules.services.jellyfin =
 	{
 		inherit proxy;
 
@@ -144,7 +144,7 @@ in
 
 	# Gallery Backup
 
-	system.services.immich =
+	modules.services.immich =
 	{
 		inherit proxy;
 
@@ -155,7 +155,7 @@ in
 		group = serv-group;
 	};
 
-	system.services.syncthing =
+	modules.services.syncthing =
 	{
 		inherit openFirewall;
 		enable = true;

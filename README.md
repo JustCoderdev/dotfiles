@@ -211,7 +211,7 @@ There are 3 main directories (+1):
         - `hardware-configuration.nix`: nixos generated hw configuration file
         - `manifest.nix`: manifest file
         - `options.nix`: set values for custom options
-- `system`:
+- `modules`:
     - `desktop`: desktop environment
     - `services`: daemons and what not
 - `unofficial`:
