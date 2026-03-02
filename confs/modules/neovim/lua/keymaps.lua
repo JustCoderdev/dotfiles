@@ -134,7 +134,7 @@ map("t", "<M-l>", "<C-\\><C-N> <C-w>l")
 
 map("x", "p", "\"_dP")
 map("nx", "/", "<ESC>:noh<CR>:echo\"/\"<CR>/")
-map("v", "/", '"vy/<C-r>v')
+map("v", "/", '"vy/<C-r>v<CR>')
 
 -- indent
 map("vx", "<", "<gv")
