@@ -83,8 +83,12 @@ map("n", "<Leader>yy", "\"+yy :echo \"Yanked to system clipboard\" <CR>")
 map("vx", "<Leader>y", "\"+y  :echo \"Yanked to system clipboard\" <CR>")
 map("n",  "<Leader>p", "\"+p  :echo \"Pasted from system clipboard\" <CR>")
 
+-- error pane
+map("nv", "<Leader>p", "<ESC> :lprev <CR>")
+map("nv", "<Leader>l", "<ESC> :lopen <CR>")
+map("nv", "<Leader>n", "<ESC> :lnext <CR>")
+
 -- windows
-map("nv", "<Leader>l", "<ESC> :lopen <CR>")       -- open errors window
 map("nv", "<Leader>e", "<ESC> :Lexplore 20 <CR>") -- open file explorer side
 map("nv", "<Leader>f", "<ESC> :Ex <CR>")          -- open file explorer full screen
 
