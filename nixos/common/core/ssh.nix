@@ -21,8 +21,7 @@ in
 		{
 			startAgent = false;
 
-			# TODO: Check why it doesn't work
-			# knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+			# TODO: Add missing keys with `ssh-keyscan`
 			knownHosts =
 			let
 				get-known-host = (

@@ -26,9 +26,15 @@ echo 'on' > '/sys/bus/usb/devices/1-10/power/control';
 	services.thermald.enable = lib.mkDefault true;
 	services.logind =
 	{
-		lidSwitch = "lock";
-		lidSwitchExternalPower = "lock";
-		lidSwitchDocked = "lock";
+		lidSwitch              = "sleep";  # lid closed, monitor unavailable
+		lidSwitchDocked        = "ignore"; # lid closed, monitor available
+		lidSwitchExternalPower = "ignore"; # lid closed, monitor available, plugged in
+
+		# TODO: lock or sleep?
+		extraConfig = ""
+		+ "IdleAction=sleep"                 # sleep on idle
+		+ "IdleActionSec=${toString (60 * 5)}" # execute idle action after 5 minutes
+		;
 	};
 
 	# -------------------- #
