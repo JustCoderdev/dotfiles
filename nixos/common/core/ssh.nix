@@ -13,13 +13,13 @@ in
 {
 	config =
 	{
-		# services.gnome.gcr-ssh-agent.enable = true; # this or sshAgent
+		# services.gnome.gcr-ssh-agent.enable = false; # this or sshAgent
 
 		# Prompt for passphrase
 		programs.gnupg.agent.enable = false;
 		programs.ssh =
 		{
-			startAgent = false;
+			startAgent = true;
 
 			# TODO: Add missing keys with `ssh-keyscan`
 			knownHosts =
