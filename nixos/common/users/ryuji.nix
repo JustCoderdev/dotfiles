@@ -57,7 +57,7 @@ in
 				]
 				++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
 				++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
-				++ lib.lists.optionals (cfg.media-manipulation-suite.videos.enable)    [ davinci-resolve shotcut obs-studio ]
+				++ lib.lists.optionals (cfg.media-manipulation-suite.videos.enable)    [ shotcut obs-studio ] # davinci-resolve
 			);
 		};
 
