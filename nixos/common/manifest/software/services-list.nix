@@ -27,7 +27,7 @@
 			{
 				telefono-giugio = (add-peer "10.255.249.2" "4rwmZnvgDpErgGh846y74GJ3EyWo+H/EqP8C4GULJGA=");
 				        pc-casa = (add-peer "10.255.249.3" "1LuDZtSSOh7YMlt3yq6pLZyOiLPisxbmn29RWvx2phY=");
-				      pc-giugio = (add-peer "10.255.249.4" "ASVxaCdn8K/5scQOv+oWuJ9VWzQf/1mXxZi5tfwhblk=");
+				      pc-giugio = (add-peer "10.255.249.4" "87T8KdLt74snpEBOvaCkajZRXgaPtcs6LcS1uE8WO3g=");
 				  tablet-giugio = (add-peer "10.255.249.5" "zMWG2vN7tS3LChoerE1Sn2iVYNSau6hGefVYi2ZQdUw=");
 			};
 		};
