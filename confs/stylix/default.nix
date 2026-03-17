@@ -12,6 +12,7 @@ in
 			enable = true;
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
+			overlays.enable = false;
 
 			cursor = {
 				inherit (cfg.icon-theme) package name;

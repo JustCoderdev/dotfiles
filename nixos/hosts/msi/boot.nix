@@ -1,10 +1,12 @@
-{ config, pkgs, settings, ... }:
+{ settings, ... }:
 
 let
 	inherit (settings) username;
 in
 
 {
+	boot.kernelParams = [ "nosgx" ];
+
 	common.core.bootloader =
 	{
 		grub.enable = true;
