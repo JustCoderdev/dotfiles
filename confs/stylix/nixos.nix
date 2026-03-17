@@ -17,6 +17,8 @@ in
 
 		targets =
 		{
+			gnome.enable = false; # issue with gnome-shell
+
 			plymouth.enable = false;
 
 			lightdm = {

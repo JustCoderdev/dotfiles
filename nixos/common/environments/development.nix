@@ -45,9 +45,9 @@ in
 		]
 		++ lib.lists.optionals (cfg.tools.java.enable)
 		[
-			jetbrains.idea-ultimate
-			javaPackages.compiler.openjdk23
-			javaPackages.openjfx23
+			jetbrains.idea
+			javaPackages.compiler.openjdk25
+			javaPackages.openjfx25
 		]
 		;
 

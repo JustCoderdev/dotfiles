@@ -19,6 +19,8 @@ in
 
 		targets =
 		{
+			gnome.enable = false; # issue with gnome-shell
+
 			# alacritty.enable = false;
 			neovim.enable = false;
 			emacs.enable = false;

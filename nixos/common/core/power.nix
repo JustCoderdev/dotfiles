@@ -24,17 +24,16 @@ echo 'on' > '/sys/bus/usb/devices/1-10/power/control';
 	};
 
 	services.thermald.enable = lib.mkDefault true;
-	services.logind =
+
+	services.logind.settings.Login =
 	{
-		lidSwitch              = "lock";   # lid closed, monitor unavailable
-		lidSwitchDocked        = "ignore"; # lid closed, monitor available
-		lidSwitchExternalPower = "ignore"; # lid closed, monitor available, plugged in
+		HandleLidSwitch              = "lock";   # lid closed, monitor unavailable
+		HandleLidSwitchDocked        = "ignore"; # lid closed, monitor available
+		HandleLidSwitchExternalPower = "ignore"; # lid closed, monitor available, plugged in
 
 		# TODO: lock or sleep?
-		extraConfig = ""
-		+ "IdleAction=lock"                    # sleep on idle
-		+ "IdleActionSec=${toString (60 * 5)}" # execute idle action after 5 minutes
-		;
+		IdleAction = "lock";                    # sleep on idle
+		IdleActionSec = "${toString (60 * 5)}"; # execute idle action after 5 minutes
 	};
 
 	# -------------------- #

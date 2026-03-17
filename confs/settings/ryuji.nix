@@ -41,6 +41,7 @@
 			"clion"
 			"vscode"
 			"idea-ultimate"
+			"idea"
 
 			"davinci-resolve"
 			"minecraft-server"

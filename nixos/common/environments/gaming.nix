@@ -15,14 +15,14 @@ in
 	{
 		environment.systemPackages = with pkgs;
 		[
-			discord     # Run with --disable-gpu
-			libstrangle # lock fps
-			# mangohud    # Overlay (edit with goverlay) # enabled with home assistant
+			discord        # Run with --disable-gpu
+			libstrangle    # lock fps
+			# mangohud     # Overlay (edit with goverlay) # enabled with home assistant
 			prismlauncher  # Minecraft launcher
 			lutris
 
 			wineWowPackages.stable
-			protonup
+			protonup-ng
 		];
 
 		# programs.lutris.enable = true; # TODO: on next release cycle

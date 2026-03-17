@@ -27,10 +27,6 @@ in
 		./wakeonlan.nix
 	];
 
-	systemd.extraConfig = ''
-DefaultTimeoutStopSec=10s
-'';
-
 	# Core packages
 	environment.systemPackages = with pkgs; [
 		rsync unzip zip wget killall
