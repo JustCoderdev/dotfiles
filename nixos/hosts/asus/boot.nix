@@ -1,4 +1,6 @@
 {
+	boot.kernelParams = [ "nosgx" ];
+
 	common.core.bootloader =
 	{
 		grub.enable = true;
