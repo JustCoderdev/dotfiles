@@ -251,7 +251,7 @@ in
 exec --no-startup-id ${pkgs.lightlocker}/bin/light-locker
 # exec --no-startup-id xsetroot -solid 262626 # set background to solid color
 
-popup_during_fullscreen all
+# popup_during_fullscreen all
 default_border pixel 2
 default_floating_border pixel 2
 '';

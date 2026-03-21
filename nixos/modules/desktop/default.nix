@@ -19,11 +19,38 @@ in
 			(pkgs.writeShellScriptBin "refresh-displays" config.services.xserver.displayManager.setupCommands)
 		];
 
-		xdg.portal =
+		xdg =
+		# TODO: Add desktop files
+		# let
+		# 	create-desktop-item = (
+		# 		name:
+		# 		pkgs.makeDesktopItem {
+		# 			name = "${name}-desktop";
+		# 			desktopName = name;
+		# 			exec = "${pkgs.${name}}/bin/${name}";
+		# 			terminal = false;
+		# 		}
+		# 	);
+		# 	desktop-files =
+		# 	{
+		# 		alacritty = (create-desktop-item "alacritty");
+		# 		emulsion = (create-desktop-item "alacritty");
+		# 	};
+		# in
 		{
-			enable = true;
-			extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-			config.common.default = [ "gtk" ];
+			# terminal-exec.settings = { default = };
+			# mime.defaultApplications =
+			# {
+			# 	"image/*" = [
+			# 	];
+			# };
+
+			portal =
+			{
+				enable = true;
+				extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+				config.common.default = [ "gtk" ];
+			};
 		};
 
 		services.xserver.displayManager.setupCommands =
