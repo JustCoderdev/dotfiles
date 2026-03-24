@@ -21,7 +21,6 @@ in
 					systemd.tmpfiles.rules =
 					let
 						ldm-grp = config.users.users.lightdm.group;
-
 						icons-filepath = "${dotfiles_store_path}/confs/users-icon";
 					in
 					[
@@ -41,9 +40,13 @@ in
 						enable = true;
 						videoDrivers = lib.mkIf (hardware-type == "virtual-machine") [ "wmware" ];
 
-						displayManager.lightdm.greeters.gtk = {
-							extraConfig = ''user-background = false'';
-							indicators = [ "~clock" "~power" ];
+						displayManager.lightdm =
+						{
+							enable = true;
+							greeters.gtk = {
+								extraConfig = ''user-background = false'';
+								# indicators = [ "~clock" "~power" ];
+							};
 						};
 					};
 
@@ -67,10 +70,10 @@ in
 
 					# -------------------- #
 
-					assertions = [ {
-						assertion = !config.modules.desktop.wayland.enable;
-						message = "Cannot enable wayland if xserver is enabled";
-					} ];
+					# assertions = [ {
+					# 	assertion = !config.modules.desktop.wayland.enable;
+					# 	message = "Cannot enable wayland if xserver is enabled";
+					# } ];
 				}
 			)
 

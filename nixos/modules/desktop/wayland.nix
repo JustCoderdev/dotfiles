@@ -6,7 +6,7 @@ let
 	hardware-type = config.common.manifest.self.hardware.type;
 	where-is-my-sddm-theme-pkg =
 	(
-		pkgs.callPackage  ../../../unofficial/pkgs/where-is-my-sddm-theme.nix {
+		pkgs.callPackage  ../../unofficial/pkgs/where-is-my-sddm-theme.nix {
 			variants = [ "qt5" ];
 			themeConfig.General = {
 				passwordInputWidth = "0.3";
@@ -49,7 +49,7 @@ in
 				dunst         # notification daemon
 				libnotify     # dunst dependency
 				waybar        # status bar
-				rofi-wayland  # app launcher
+				rofi          # app launcher
 				swww          # wallpaper daemon
 				playerctl     # media player control
 				slurp grim    # screenshots utility
@@ -85,7 +85,7 @@ in
 
 		services.displayManager.sddm =
 		{
-			enable = true;
+			# enable = true;
 
 			wayland.enable = true;
 			enableHidpi = true;
@@ -96,10 +96,10 @@ in
 
 		# -------------------- #
 
-		assertions = [ {
-			assertion = !config.modules.desktop.xserver.enable;
-			message = "Cannot enable hyprland if xserver is enabled";
-		} ];
+		# assertions = [ {
+		# 	assertion = !config.modules.desktop.xserver.enable;
+		# 	message = "Cannot enable hyprland if xserver is enabled";
+		# } ];
 	};
 
 	# ------------------------------------------------------------ #
