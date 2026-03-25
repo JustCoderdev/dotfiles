@@ -19,8 +19,10 @@ in
 			{
 				# TODO: Get monitor data from manifest?
 				# monitors (`hyperctl monitor all`)
-				# monitor=HDMI-A-1,1920x1080@60,0x0,1    # DIGIQuest 
+				# monitor=HDMI-A-1,1920x1080@60,0x0,1    # DIGIQuest
 				# monitor=desc:ASUSTek COMPUTER INC ASUS VA24E L7LMTF289885,1920x1080@60,1920x0,1 # ASUS
+
+				monitor = ", preferred, auto, 1";
 
 				exec-once = [
 					"waybar"
@@ -30,10 +32,10 @@ in
 				];
 
 				env = "XCURSOR_SIZE,24";
-
 				exec = "swww img ${wallpapers_path}/space_engineers.png";
 
-				general = {
+				general =
+				{
 					border_size = 1;
 
 					gaps_in = 2;
@@ -45,22 +47,26 @@ in
 					layout = "dwindle";
 				};
 
-				decoration = {
+				decoration =
+				{
 					rounding = 5;
 
-					drop_shadow = true;
-					shadow_render_power = 3;
-					shadow_range = 4;
-					shadow_ignore_window = true;
-
-					"col.shadow" = "rgba(1a1a1aee)";
-
-					blur = {
+					blur =
+					{
 						enabled = false;
 						size = 8;
 						passes = 1;
 
 						new_optimizations = true;
+					};
+
+					shadow =
+					{
+						enabled = true;
+						range = 4;
+						render_power = 3;
+						ignore_window = true;
+						color = "rgba(1a1a1aee)";
 					};
 				};
 
@@ -82,18 +88,25 @@ in
 					scroll_method = "twofinger";
 				};
 
-				gestures.workspace_swipe = true;
+				gesture = "3, horizontal, workspace";
 
 				misc = {
 					disable_hyprland_logo = true;
 					force_default_wallpaper = 2;
+					middle_click_paste = false;
 				};
 
 				dwindle.preserve_split = true;
 
 				master = {
 					allow_small_split = true;
-					new_is_master = true;
+					new_status = "master";
+				};
+
+				ecosystem =
+				{
+					no_update_news = true;
+					no_donation_nag = true;
 				};
 
 
@@ -106,7 +119,7 @@ in
 					"$mod,       Return, exec,               alacritty"
 					"$mod,       O,      exec,               obsidian"
 					"$mod,       B,      exec,               firefox"
-					"$mod,       F11,    fakefullscreen"
+					"$mod,       F11,    fullscreenstate"
 					"$mod SHIFT, Space,  togglefloating"
 					"$mod SHIFT, R,      forcerendererreload"
 					"$mod SHIFT, Q,      killactive"
@@ -194,7 +207,7 @@ in
 					", XF86AudioPrev,  exec, ${pkgs.playerctl}/bin/playerctl previous"
 					", XF86AudioNext,  exec, ${pkgs.playerctl}/bin/playerctl next"
 				];
-				
+
 				bindm =
 				[
 					# Move/resize windows with mod + LMB/RMB and dragging

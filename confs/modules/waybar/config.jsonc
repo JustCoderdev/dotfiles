@@ -8,7 +8,6 @@
 	"reload_style_on_change": true,
 	/// Modules Order
 	"modules-left": [
-		"image",
 		"hyprland/workspaces",
 		"bluetooth",
 		"pulseaudio",
@@ -46,16 +45,16 @@
 		"format": "{icon} {capacity}%",
 		"format-charging": "󱐋{icon} {capacity}%",
 		"format-icons": [
-			"󰁺",
-			"󰁻",
-			"󰁼",
-			"󰁽",
-			"󰁾",
-			"󰁿",
-			"󰂀",
-			"󰂁",
-			"󰂂",
-			"󰁹"
+			"󰁺 ",
+			"󰁻 ",
+			"󰁼 ",
+			"󰁽 ",
+			"󰁾 ",
+			"󰁿 ",
+			"󰂀 ",
+			"󰂁 ",
+			"󰂂 ",
+			"󰁹 "
 		],
 		"signal": 1,
 		"on-click": "pkill -RTMIN+1 waybar"
@@ -64,11 +63,9 @@
 		"format": "", //󰂯
 		"format-off": "", //󰂲
 		"format-disabled": "", //󰂲
-		"format-connected": " {device_alias}",
-		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
-		"format-device-preference": [
-			"WH-CH510"
-		],
+		"format-connected": "  {device_alias}",
+		"format-connected-battery": "  {device_alias} {device_battery_percentage}%",
+		"format-device-preference": [ "WH-CH510" ],
 		"tooltip": false,
 		"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
 		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
@@ -91,7 +88,7 @@
 	// 	"on-click": "pkill -RTMIN+3 waybar"
 	// },
 	"clock": {
-		"format": "󰥔  {:%H:%M}",
+		"format": "󰥔   {:%H:%M}",
 		// "timezone": "America/New_York",
 		"tooltip": true,
 		"tooltip-format": "{:%Y.%m.%d - %a %b (%Ez %Z)}"
@@ -153,13 +150,6 @@
 	"hyprland/workspaces": {
 		"active-only": false
 	},
-	"image": {
-		"interval": 0,
-		"size": 24,
-		/* TODO: Not configured in NixOS config */
-		"path": "/.dotfiles/waybar/nixos_icon.png",
-		"tooltip": false
-	},
 	"mpris": {
 		"format": "AA",
 		"format-playing": "{status_icon} {title}",
@@ -169,15 +159,15 @@
 		"title-len": 15,
 		"ellipsis": "…",
 		"status-icons": {
-			"playing": " ",
-			"paused": " ",
-			"stopped": " "
+			"playing": "  ",
+			"paused": "  ",
+			"stopped": "  "
 		},
 		"on-click-middle": "",
 		"on-click-right": ""
 	},
 	"memory": { //{percentage}%
-		"format": "   {used:0.1f}/{total:0.1f}GB",
+		"format": "    {used:0.1f}/{total:0.1f}GB",
 		"states": {
 			"critical": 100,
 			"warning": 90,
@@ -191,9 +181,9 @@
 	"network": {
 		// "interface": "wlp2*",
 		"format": "?",
-		"format-wifi": "   {essid} {signalStrength}%",
-		"format-ethernet": "󰈀  {bandwidthTotalBytes}Bps",
-		"format-disconnected": "󰚦  Disconnected", //
+		"format-wifi": "    {essid} {signalStrength}%",
+		"format-ethernet": "󰈀   {bandwidthTotalBytes}Bps",
+		"format-disconnected": "󰚦   Disconnected", //
 		"on-click": "nmcli device wifi rescan",
 		"tooltip": true,
 		"tooltip-format": "",
@@ -201,12 +191,12 @@
 		"tooltip-format-ethernet": "{ifname}: {ipaddr}"
 	},
 	"pulseaudio": {
-		"format": "   {volume}%",
-		"format-bluetooth": "   {volume}%",
-		"format-muted": "   {volume}%",
-		"format-bluetooth-muted": "   {volume}%",
-		"format-source": "   {volume}%",
-		"format-source-muted": "󰍭   {volume}%",
+		"format": "    {volume}%",
+		"format-bluetooth": "    {volume}%",
+		"format-muted": "    {volume}%",
+		"format-bluetooth-muted": "    {volume}%",
+		"format-source": "    {volume}%",
+		"format-source-muted": "󰍭    {volume}%",
 		"tooltip": false
 	},
 	// "temperature": {
