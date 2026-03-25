@@ -18,8 +18,8 @@
 
 		users =
 		(
-			lib.attrsets.mapAttrs
-				(username: _: username)
+			lib.attrsets.mapAttrsToList
+				(username: _: builtins.replaceStrings [ ".nix" ] [ "" ] username)
 				(
 					lib.attrsets.filterAttrs
 						(name: value: !(lib.strings.hasPrefix "." name) && (value == "regular"))
@@ -52,7 +52,7 @@
 				user-settings = import ./settings/${username}.nix;
 			in
 			[
-				{ home.username = username; }
+				{ home = { inherit username; homeDirectory = "/home/${username}"; }; }
 				{ jcconfs.user = { inherit (user-settings) profiles; }; }
 				{
 					nixpkgs.config = {

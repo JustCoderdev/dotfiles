@@ -41,7 +41,7 @@ in
 			xwayland.enable = true;
 		};
 
-		environment.systemPackages = [ where-is-my-sddm-theme-pkg ]
+		environment.systemPackages = (lib.optionals (cfg.own-display-manager.enable) [ where-is-my-sddm-theme-pkg ])
 		++ (
 			with pkgs;
 			[
@@ -60,9 +60,8 @@ in
 		fonts.packages = with pkgs;
 		[
 			nerd-fonts.roboto-mono
-			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {})
+			(callPackage  ../../unofficial/pkgs/apple-fonts.nix {}).sf-pro
 		];
-
 
 		# ?
 		services = {
@@ -70,22 +69,23 @@ in
 			udisks2.enable = true;
 		};
 
-		# Required for thunar to retain preferences
-		programs.xfconf.enable = true;
-
 		environment.sessionVariables = lib.mkIf (hardware-type == "virtual-machine")
 		{
-			# Enable software rendering for VMs
-			WLR_RENDERER_ALLOW_SOFTWARE = "1";
-			# Enable if cursor is invisible
-			WLR_NO_HARDWARE_CURSORS = "1";
-			# Enable Chromium and Electron apps
-			NIXOS_OZONE_WL = "1";
+			WLR_RENDERER_ALLOW_SOFTWARE = "1"; # Enable software rendering for VMs
+			WLR_NO_HARDWARE_CURSORS = "1";     # Enable if cursor is invisible
+			NIXOS_OZONE_WL = "1";              # Enable Chromium and Electron apps
 		};
 
-		services.displayManager.sddm =
+		# Display managers
+		services.xserver.displayManager.lightdm =
 		{
-			# enable = true;
+			enable = !cfg.own-display-manager.enable;
+			greeters.gtk.indicators = lib.mkIf (!cfg.own-display-manager.enable) [ "~session" ];
+		};
+
+		services.displayManager.sddm = lib.mkIf (cfg.own-display-manager.enable)
+		{
+			enable = true;
 
 			wayland.enable = true;
 			enableHidpi = true;
@@ -93,13 +93,6 @@ in
 			autoNumlock = true;
 			theme = "where_is_my_sddm_theme_qt5";
 		};
-
-		# -------------------- #
-
-		# assertions = [ {
-		# 	assertion = !config.modules.desktop.xserver.enable;
-		# 	message = "Cannot enable hyprland if xserver is enabled";
-		# } ];
 	};
 
 	# ------------------------------------------------------------ #
@@ -107,5 +100,6 @@ in
 	options.modules.desktop.wayland =
 	{
 		enable = lib.mkEnableOption "wayland support and software";
+		own-display-manager.enable = lib.mkEnableOption "wayland's own display manager";
 	};
 }

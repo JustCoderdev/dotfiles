@@ -1,5 +1,5 @@
 {
-	profiles = [ "i3-desktop" "develop-environment" "game-environment" "ryuji-user" ];
+	profiles = [ "i3-desktop" "hyprland-desktop" "develop-environment" "game-environment" "ryuji-user" ];
 	special-pkgs = {
 		insecure = [ "electron-24.8.6" "python-2.7.18.6"  ];
 		unfree = [
@@ -30,7 +30,7 @@
 
 			"helvetica-neue-lt-std"
 			"cloudflare-warp"
-			"apple-fonts"
+			"apple-font-sf-pro"
 
 			"steam"
 			"steam-unwrapped"

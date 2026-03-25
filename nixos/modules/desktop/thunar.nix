@@ -7,14 +7,20 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		programs.thunar =
+		programs =
 		{
-			enable = true;
-			plugins = with pkgs.xfce; [
-				thunar-archive-plugin     # archives context actions
-				thunar-media-tags-plugin  # media tags?
-				thunar-volman             # drive mounting etc...
-			];
+			thunar =
+			{
+				enable = true;
+				plugins = with pkgs.xfce; [
+					thunar-archive-plugin     # archives context actions
+					thunar-media-tags-plugin  # media tags?
+					thunar-volman             # drive mounting etc...
+				];
+			};
+
+			# Required for thunar to retain preferences
+			xfconf.enable = true;
 		};
 
 		services =

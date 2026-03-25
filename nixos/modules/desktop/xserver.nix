@@ -4,6 +4,7 @@ let
 	inherit (settings) username dotfiles_store_path;
 
 	cfg = config.modules.desktop.xserver;
+	lightdm-cfg = config.services.xserver.displayManager.lightdm;
 
 	hardware-type = config.common.manifest.self.hardware.type;
 in
@@ -18,22 +19,24 @@ in
 					# Provides org.gnome.keyring.SystemPrompter
 					environment.systemPackages = [ pkgs.gcr ];
 
-					systemd.tmpfiles.rules =
-					let
-						ldm-grp = config.users.users.lightdm.group;
-						icons-filepath = "${dotfiles_store_path}/confs/users-icon";
-					in
-					[
-						# Fix icon without exposing home folder
-						# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
+					systemd.tmpfiles.rules = lib.mkIf (lightdm-cfg.enable)
+					(
+						let
+							ldm-grp = config.users.users.lightdm.group;
+							icons-filepath = "${dotfiles_store_path}/confs/users-icon";
+						in
+						[
+							# Fix icon without exposing home folder
+							# Source <https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/10>
 
-					#  Type Path                                            Mode User Group      Age Argument
-						"L+ /var/lib/AccountsService/icons/${username}.jpeg 0640 root ${ldm-grp} -   ${icons-filepath}/${username}.jpeg"
-						"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.jpeg\\n"
+						#  Type Path                                            Mode User Group      Age Argument
+							"L+ /var/lib/AccountsService/icons/${username}.jpeg 0640 root ${ldm-grp} -   ${icons-filepath}/${username}.jpeg"
+							"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.jpeg\\n"
 
-						"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}/school.jpeg"
-						"f+ /var/lib/AccountsService/users/school           0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/school.jpeg\\n"
-					];
+							"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}/school.jpeg"
+							"f+ /var/lib/AccountsService/users/school           0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/school.jpeg\\n"
+						]
+					);
 
 					services.xserver =
 					{
@@ -42,10 +45,10 @@ in
 
 						displayManager.lightdm =
 						{
-							enable = true;
+							# enable = true;
 							greeters.gtk = {
 								extraConfig = ''user-background = false'';
-								# indicators = [ "~clock" "~power" ];
+								indicators = [ "~clock" "~power" ];
 							};
 						};
 					};
