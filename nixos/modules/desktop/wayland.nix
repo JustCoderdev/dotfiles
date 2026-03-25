@@ -79,8 +79,8 @@ in
 		# Display managers
 		services.xserver.displayManager.lightdm =
 		{
-			enable = !cfg.own-display-manager.enable;
-			greeters.gtk.indicators = lib.mkIf (!cfg.own-display-manager.enable) [ "~session" ];
+			enable = lib.mkForce (!cfg.own-display-manager.enable);
+			greeters.gtk.indicators = lib.mkIf (!cfg.own-display-manager.enable) (lib.mkBefore [ "~session" ]);
 		};
 
 		services.displayManager.sddm = lib.mkIf (cfg.own-display-manager.enable)
