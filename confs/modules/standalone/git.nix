@@ -10,6 +10,8 @@ in
 		programs.git =
 		{
 			enable = true;
+			lfs.enable = true;
+
 			ignores = [ "*~" ".*.swp" ".old_session.vim" ".emacs.elc" ".DS_Store" ];
 
 			# TODO: rename settings when new version comes out
