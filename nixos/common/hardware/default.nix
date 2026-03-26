@@ -43,7 +43,6 @@ in
 
 		modules.desktop = lib.mkIf (has-de)
 		{
-			wayland.enable = true;
 			xserver.enable = lib.mkDefault true;
 			thunar.enable  = lib.mkDefault true;
 		};
