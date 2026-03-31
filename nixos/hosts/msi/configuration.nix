@@ -9,7 +9,7 @@ in
 	nixpkgs.overlays = [ nix-minecraft.overlay ];
 
 	networking.firewall.allowedTCPPorts = [ 3000 ] ++ [ 7000 7100 ];
-	networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
+	# networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
 
 	services.mysql = {
 		enable = true;

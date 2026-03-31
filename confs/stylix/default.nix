@@ -26,8 +26,8 @@ in
 					popups = 8;         desktop = 10;
 				};
 
-				sansSerif = { name = "DejaVu Sans";          package = pkgs.dejavu_fonts;  };
-				serif     = { name = "DejaVu Serif";         package = pkgs.dejavu_fonts;  };
+				sansSerif = { name = "Bitstream Vera Sans";  package = pkgs.ttf_bitstream_vera;  };
+				serif     = { name = "Bitstream Vera Serif"; package = pkgs.ttf_bitstream_vera;  };
 				monospace = { name = "Roboto Mono";          package = pkgs.roboto-mono;         };
 				emoji     = { name = "Twitter Color Emoji";  package = pkgs.twitter-color-emoji; };
 			};
