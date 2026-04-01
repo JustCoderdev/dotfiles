@@ -5,21 +5,9 @@ let
 in
 
 {
-	imports = [ nix-minecraft.nixosModules.minecraft-servers ];
-	nixpkgs.overlays = [ nix-minecraft.overlay ];
-
-	networking.firewall.allowedTCPPorts = [ 3000 ] ++ [ 7000 7100 ];
-	# networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
-
-	services.mysql = {
-		enable = true;
-		package = pkgs.mariadb;
-	};
-
 	# Mouse support
 	services.ratbagd.enable = true;
-	environment.systemPackages = with pkgs; [ piper ]
-	++ [ dbeaver-bin uxplay ]; # more packages support
+	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin ];
 
 	# TUNNEL
 
@@ -37,11 +25,23 @@ in
 		};
 	};
 
+
+	# Temporary services
+	# ------------------------------------------------------------ #
+
+	# services.mysql = {
+	# 	enable = true;
+	# 	package = pkgs.mariadb;
+	# };
+
 	# MINECRAFT SERVERS
+
+	imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+	nixpkgs.overlays = [ nix-minecraft.overlay ];
 
 	services.minecraft-servers =
 	{
-		enable = true;
+		enable = false;
 		openFirewall = true;
 		eula = true;
 

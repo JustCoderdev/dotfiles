@@ -51,8 +51,9 @@ in
 				[
 					firefox google-chrome
 					telegram-desktop
-					obsidian vlc audacity emulsion
+					obsidian vlc audacity emulsion imagemagick
 					gnome-disk-utility gpick
+					unixtools.netstat
 					# baobab rustdesk
 				]
 				++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]

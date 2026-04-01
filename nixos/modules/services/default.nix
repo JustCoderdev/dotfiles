@@ -14,6 +14,7 @@
 		./samba.nix
 		./servarr.nix
 		./syncthing.nix
+		./uxplay.nix
 		./virtualbox.nix
 		./webserver.nix
 		./wireguard.nix
