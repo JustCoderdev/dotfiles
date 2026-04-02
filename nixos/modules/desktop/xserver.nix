@@ -16,9 +16,6 @@ in
 		[
 			(
 				{
-					# Provides org.gnome.keyring.SystemPrompter
-					environment.systemPackages = [ pkgs.gcr ];
-
 					systemd.tmpfiles.rules = lib.mkIf (lightdm-cfg.enable)
 					(
 						let
@@ -43,12 +40,20 @@ in
 						enable = true;
 						videoDrivers = lib.mkIf (hardware-type == "virtual-machine") [ "wmware" ];
 
-						displayManager.lightdm =
+						displayManager =
 						{
-							# enable = true;
-							greeters.gtk = {
-								extraConfig = ''user-background = false'';
-								indicators = [ "~clock" "~power" ];
+							sessionCommands = ''
+eval $(gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
+export SSH_AUTH_SOCK
+'';
+
+							lightdm =
+							{
+								# enable = true;
+								greeters.gtk = {
+									extraConfig = ''user-background = false'';
+									indicators = [ "~clock" "~power" ];
+								};
 							};
 						};
 					};
@@ -96,24 +101,27 @@ in
 				lib.mkIf (cfg.frontend == cfg.available-frontends.i3)
 				{
 					system.nixos.tags = [ "i3" ];
-					services.displayManager.defaultSession = "none+i3";
+
 					programs.i3lock.enable = false;
 					jcbin.boomer.enable = true;
 
-					services.xserver.windowManager.i3 =
-					{
-						enable = true;
-						extraPackages =
-						[
-							config.jcbin.boomer.package
-							(
-								pkgs.callPackage ../../unofficial/pkgs/hacksaw.nix {
-									inherit (pkgs) python3; # pkg-config
-									inherit (pkgs.xorg) libX11 libXrandr;
-									inherit (pkgs-unstable) libxcb;
-								}
-							)
-						];
+					services = {
+						displayManager.defaultSession = "none+i3";
+						xserver.windowManager.i3 =
+						{
+							enable = true;
+							extraPackages =
+							[
+								config.jcbin.boomer.package
+								(
+									pkgs.callPackage ../../unofficial/pkgs/hacksaw.nix {
+										inherit (pkgs) python3; # pkg-config
+										inherit (pkgs.xorg) libX11 libXrandr;
+										inherit (pkgs-unstable) libxcb;
+									}
+								)
+							];
+						};
 					};
 				}
 			)
