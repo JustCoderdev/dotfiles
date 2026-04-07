@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	cfg = config.modules.services.jellyfin;
@@ -17,7 +17,7 @@ in
 		# Check if it works `nix-shell -p libva-utils --run vainfo`
 		users.users.jellyfin.extraGroups = [ "render" "video" ];
 		hardware.graphics.extraPackages = with pkgs; [
-			vaapiVdpau
+			libva-vdpau-driver
 			libvdpau-va-gl
 		];
 

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
 	cfg = config.jcconfs;
@@ -7,9 +7,9 @@ in
 {
 	config =
 	{
-		stylix = lib.mkIf (cfg.host.has-de)
+		stylix =
 		{
-			enable = true;
+			enable = true && cfg.host.has-de;
 			polarity = "dark";
 			image = "${cfg.wallpapers_path}/space_engineers.png";
 			overlays.enable = false;

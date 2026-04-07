@@ -30,13 +30,11 @@ in
 		#	"L+  /opt/rocm/hip -    -    -     -   ${pkgs.rocmPackages.clr}"
 		#];
 
-		environment.systemPackages = with pkgs; [ radeontop clinfo ]; 
+		environment.systemPackages = with pkgs; [ radeontop clinfo ];
 
-		hardware.graphics = {
-			extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
-			extraPackages = with pkgs; [ amdvlk ]
-				++ lib.optionals (self-rgpu.architecture == "gcn1") [ mesa.opencl ]
-				++ lib.optionals (self-rgpu.architecture != "gcn1") [ rocmPackages.clr.icd ];
-		};
+		hardware.graphics.extraPackages = with pkgs; [ ]
+			++ lib.optionals (self-rgpu.architecture == "gcn1") [ mesa.opencl ]
+			++ lib.optionals (self-rgpu.architecture != "gcn1") [ rocmPackages.clr.icd ]
+			;
 	};
 }
