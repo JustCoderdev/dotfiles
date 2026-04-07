@@ -155,6 +155,7 @@ in
 		group = serv-group;
 	};
 
+	# services.syncthing.guiAddress = "10.255.250.2:8384";
 	modules.services.syncthing =
 	{
 		inherit openFirewall;
