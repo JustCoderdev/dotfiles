@@ -30,7 +30,6 @@ in
 		./emacs
 		./neovim
 		./waybar
-		./zsh
 
 		./standalone/alacritty.nix
 		./standalone/firefox.nix
@@ -42,6 +41,7 @@ in
 		./standalone/mangohud.nix
 		./standalone/ssh.nix
 		./standalone/tmux.nix
+		./standalone/zsh.nix
 	];
 
 	config =

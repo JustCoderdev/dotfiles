@@ -67,8 +67,7 @@
 		homeConfiguration = (
 			{ config, ... }:
 			{
-				imports = nixos-modules
-				++ [
+				imports = nixos-modules ++ [
 					home-manager.nixosModules.home-manager
 					{
 						home-manager.useUserPackages = true;
