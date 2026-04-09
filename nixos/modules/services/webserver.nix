@@ -27,10 +27,6 @@ in
 
 	options.modules.services.webserver =
 	{
-		enable = lib.mkOption {
-			type = lib.types.bool;
-			description = "Enable webserver to serve files at /var/www/HOSTNAME";
-			default = false;
-		};
+		enable = lib.mkEnableOption "webserver and serve files in /var/www/HOSTNAME";
 	};
 }
