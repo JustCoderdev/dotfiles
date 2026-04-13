@@ -224,14 +224,15 @@ see `nixos/common/core/secrets.nix`
 
 ## Inspiration
 
-- Jdah dotfiles ([Github](https://github.com/jdah/dotfiles))
-- Librephoenix dotfiles ([Gitlab](https://gitlab.com/librephoenix/nixos-config))
-- EmergentMind nixos configuration ([Github](https://github.com/EmergentMind/nix-config))
-- erictossel nixos configuration ([Github](https://github.com/erictossell/nixflakes))
-- mrkux nixos configuration ([Github](https://github.com/mrkuz/nixos))
-- Sane1090x Waybar style ([Github](https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/config))
-- Ruixi-rebirth waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
-- XeIaso doublas-adams-quotes for making me discover the power of flakes ([Github](https://github.com/Xe/douglas-adams-quotes/blob/main/flake.nix)[XeIasoBlog](https://xeiaso.net/))
+- Jdah, dotfiles ([Github](https://github.com/jdah/dotfiles))
+- Librephoenix, dotfiles ([Gitlab](https://gitlab.com/librephoenix/nixos-config))
+- EmergentMind, nixos configuration ([Github](https://github.com/EmergentMind/nix-config))
+- Vimjoyer, Ultimate Nixos guide ([Youtube](https://youtu.be/a67Sv4Mbxmc?si=EHkOkYlCO7QL5FOF))
+- erictossel, nixos configuration ([Github](https://github.com/erictossell/nixflakes))
+- mrkux, nixos configuration ([Github](https://github.com/mrkuz/nixos))
+- Sane1090x, Waybar style ([Github](https://github.com/sane1090x/dotfiles/blob/everforest/.config/waybar/config))
+- Ruixi-rebirth, waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
+- XeIaso, doublas-adams-quotes for making me discover the power of flakes ([Github](https://github.com/Xe/douglas-adams-quotes/blob/main/flake.nix)[XeIasoBlog](https://xeiaso.net/))
 
 ## Obtaining Secrets
 
