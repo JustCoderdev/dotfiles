@@ -12,7 +12,7 @@
 		jcconfs.url = "path:confs";
 		jcconfs.inputs.nixpkgs.follows = "nixpkgs";
 
-		disko.url = "github:nix-community/disko";
+		disko.url = "github:nix-community/disko/v1.13.0";
 		disko.inputs.nixpkgs.follows = "nixpkgs";
 
 		nix-minecraft.url = "github:Infinidoge/nix-minecraft";
