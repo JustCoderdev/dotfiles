@@ -17,9 +17,11 @@
 
 		nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 		nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
+
+		nix-net-lib.url = "github:0xCCF4/nix-net-lib";
 	};
 
-	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, ... }:
+	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, nix-net-lib, ... }:
 	let
 		hosts =
 		(
@@ -105,7 +107,7 @@
 			in
 			nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit pkgs-unstable settings nix-minecraft; };
+				specialArgs = { inherit pkgs-unstable settings nix-minecraft nix-net-lib; };
 				modules = [ ]
 				++ (getHostModules hostname)
 				++ (getUserModules username)

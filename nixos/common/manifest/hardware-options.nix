@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, nix-net-lib, ... }:
 
 let
 	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
@@ -201,50 +201,102 @@ in
 			wireless = mkSubmodOption "Host wireless interfaces"
 			(
 				{ name, ... }:
+				let
+					iface-name = name;
+					mac-regex = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$";
+				in
 				{
-					# TODO: Check
 					options =
-					let
-						regex = { address.mac = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"; };
-					in
 					{
-						mac = lib.mkOption {
+						mac-addr = lib.mkOption {
 							description = "The mac address of the interface";
-							type = lib.types.strMatching regex.address.mac;
+							type = lib.types.strMatching mac-regex;
 						};
 
-						self-ip = lib.mkOption {
-							description = "The ip of the interface (leave null to enable dhcp)";
-							type = lib.types.nullOr lib.types.str;
-							default = null;
+						wakeOnWlan.enabled = lib.mkEnableOption "wake on wlan";
+						dhcp.enabled = lib.mkEnableOption "dhcp on this interface";
+
+						network =
+						{
+							# TODO: Use lib.types.oneof
+							name = lib.mkOption {
+								description = "The name of the network connected to this interface";
+								type = lib.types.nullOr lib.types.str;
+								default = null;
+							};
+
+							# TODO: Use network id to control validity
+							ipv4 = lib.mkOption {
+								description = "The ip of the interface";
+								type = lib.types.nullOr nix-net-lib.lib.types.ip4NoMask;
+								default = null;
+							};
 						};
 					};
 				}
 			);
 
-			# ethernet =  mkSubmodOption "Host wired interfaces"
-			# (
-			# 	{ name, ... }:
-			# 	{
-			# 		options = {
-			# 			mac = mkStrRXOption "The mac address of the interface" regex.address.mac;
-			# 			self-ip = mkNullOrStrRXOption "The ip of the interface (leave null to enable dhcp)" regex.address.ipv4;
-			# 			network-name = ;
-			# 		};
-			# 	}
-			# );
+			wired = mkSubmodOption "Host wired interfaces"
+			(
+				{ name, ... }:
+				let
+					iface-name = name;
+					mac-regex = "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$";
+				in
+				{
+					options =
+					{
+						mac-addr = lib.mkOption {
+							description = "The mac address of the interface";
+							type = lib.types.strMatching mac-regex;
+						};
 
-			# virtual =
-			# {
-			# 	wireguard = mkSubmodOption "Wireguard virtual interfaces"
-			# 	(
-			# 		{ name, ... }:
-			# 		{
-			# 			self-ip = mkStrRXOption "The ip of the interface (leave null to enable dhcp)";
-			# 			network-name = network-opt;
-			# 		};
-			# 	);
-			# };
+						wakeOnLan.enabled = lib.mkEnableOption "wake on wlan";
+						dhcp.enabled = lib.mkEnableOption "dhcp on this interface";
+
+						network =
+						{
+							# TODO: Use lib.types.oneof
+							name = lib.mkOption {
+								description = "The name of the network connected to this interface";
+								type = lib.types.nullOr lib.types.str;
+								default = null;
+							};
+
+							# TODO: Use network id to control validity
+							ipv4 = lib.mkOption {
+								description = "The ip of the interface";
+								type = lib.types.nullOr nix-net-lib.lib.types.ip4NoMask;
+								default = null;
+							};
+						};
+					};
+				}
+			);
+
+			virtual =
+			{
+				wireguard = mkSubmodOption "Wireguard virtual interfaces"
+				(
+					{ name, ... }:
+					{
+						# TODO: Use lib.types.oneof
+						name = lib.mkOption {
+							description = "The name of the network connected to this interface";
+							type = lib.types.nullOr lib.types.str;
+							default = null;
+						};
+						publicKey = lib.mkOption {
+							description = "The public key of the host";
+							type = lib.types.str;
+						};
+						ipv4 = lib.mkOption {
+							description = "The ip of the interface";
+							type = nix-net-lib.lib.types.ip4NoMask;
+						};
+					}
+				);
+			};
 		};
 	};
 }
