@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 	services.xserver.displayManager.setupCommands = ''
@@ -45,6 +45,19 @@ ${pkgs.numlockx}/bin/numlockx on
 			tappingDragLock = false;
 			tappingButtonMap = "lrm";
 		};
+	};
+
+	# mod-tap caps lock
+	# Source: <https://youtu.be/XuQVbZ0wENE?si=fBWCwpAL_fQCzI9k>
+	# If it doesn't work, it might need a reboot
+	services.kanata =
+	{
+		enable = true;
+		keyboards."base".config = ''
+(defsrc caps)
+(deflayermap (default-layer)
+	caps (tap-hold 100 100 esc lctl))
+'';
 	};
 }
 
