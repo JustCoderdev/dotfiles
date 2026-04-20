@@ -34,7 +34,7 @@
 				)
 		);
 
-		getNixpkgsConfig = (
+	getNixpkgsConfig = (
 			spkgs:
 			{
 				permittedInsecurePackages = spkgs.insecure;

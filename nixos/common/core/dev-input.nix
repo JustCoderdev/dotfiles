@@ -54,9 +54,17 @@ ${pkgs.numlockx}/bin/numlockx on
 	{
 		enable = true;
 		keyboards."base".config = ''
-(defsrc caps)
-(deflayermap (default-layer)
-	caps (tap-hold 100 100 esc lctl))
+(defsrc
+	caps
+)
+
+(defalias
+	escctrl (tap-hold 300 200 esc lctrl)
+)
+
+(deflayer base
+	@escctrl
+)
 '';
 	};
 }
