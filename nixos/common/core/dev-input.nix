@@ -53,22 +53,17 @@ ${pkgs.numlockx}/bin/numlockx on
 	services.kanata =
 	{
 		enable = true;
-		keyboards."base".config = ''
-(defsrc
-	caps
-	bspc
-)
-
-(defalias
-	escctrl (tap-hold 300 200 esc lctrl)
-	bckndel (fork bspc del (lshft rshft))
-)
-
-(deflayer base
-	@escctrl
-	@bckndel
+		keyboards."base" =
+		{
+			extraDefCfg = "process-unmapped-keys yes";
+			config = ''
+(defsrc)
+(deflayermap base
+	caps   (tap-hold 300 200 esc lctrl)
+	bspc   (fork bspc del (lalt ralt))
 )
 '';
+		};
 	};
 }
 

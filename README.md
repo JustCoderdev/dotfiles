@@ -100,7 +100,6 @@ such as alacritty, clang, git, hyprland, and more
 - Improve keyboard binds by:
     - Remove special symbols when pressing ALT-GR
     - Create custom layout for italian keyboard with american keys
-    - Add CANCEL behaviour on SHIFT+BACKSPACE
 - Move ssh keys to manifest file
 
 ### Add
