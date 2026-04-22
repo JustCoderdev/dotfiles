@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
 	services.xserver.displayManager.setupCommands = ''
@@ -56,14 +56,17 @@ ${pkgs.numlockx}/bin/numlockx on
 		keyboards."base".config = ''
 (defsrc
 	caps
+	bspc
 )
 
 (defalias
 	escctrl (tap-hold 300 200 esc lctrl)
+	bckndel (fork bspc del (lshft rshft))
 )
 
 (deflayer base
 	@escctrl
+	@bckndel
 )
 '';
 	};
