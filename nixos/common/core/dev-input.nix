@@ -60,7 +60,7 @@ ${pkgs.numlockx}/bin/numlockx on
 (defsrc)
 (deflayermap base
 	caps   (tap-hold 300 200 esc lctrl)
-	bspc   (fork bspc del (lsft rsft))
+	spc    (tap-hold 300 200 spc lmet)
 )
 '';
 		};

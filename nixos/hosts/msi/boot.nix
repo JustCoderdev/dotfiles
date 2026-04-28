@@ -15,6 +15,12 @@ in
 		display-resolution = "1920x1080";
 	};
 
+	boot.loader.grub.extraEntries = ''
+menuentry "Windows" {
+	chainloader (hd0,1)+1
+}
+'';
+
 	# Mount
 
 	fileSystems."/home/WDC_WD10" =
