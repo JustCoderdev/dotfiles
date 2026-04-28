@@ -17,7 +17,9 @@ in
 
 	boot.loader.grub.extraEntries = ''
 menuentry "Windows" {
-	chainloader (hd0,1)+1
+	insmod part_gpt
+	set root=(hd0,gpt2)
+	chainloader +1
 }
 '';
 
