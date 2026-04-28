@@ -18,8 +18,9 @@ in
 	boot.loader.grub.extraEntries = ''
 menuentry "Windows" {
 	insmod part_gpt
-	set root=(hd0,gpt2)
-	chainloader +1
+	insmod fat
+	set root=(hd1,gpt2)
+	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 '';
 
