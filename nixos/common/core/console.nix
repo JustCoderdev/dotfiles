@@ -30,31 +30,31 @@ terminal_output serial
 '';
 
 	# Disable the upstream getty module's automatic configuration for serial-getty@
-	# systemd.services."serial-getty@".enable = false;
+	systemd.services."serial-getty@".enable = false;
 
 	# Configure our own serial-getty@ttyS0 service
-	# systemd.services."serial-getty@ttyUSB0" =
-	# {
-	# 	enable = true;
-	# 	wantedBy = [ "getty.target" ];
-	# 	after = [ "systemd-user-sessions.service" ];
-	# 	wants = [ "systemd-user-sessions.service" ];
-	# 	serviceConfig =
-	# 	{
-	# 		Type = "idle";
-	# 		Restart = "always";
-	# 		ExecStart = "${pkgs.util-linux}/bin/agetty --login-program ${pkgs.shadow}/bin/login --noclear --keep-baud ttyUSB0 115200,57600,38400,9600 vt220";
-	# 		UtmpIdentifier = "ttyUSB0";
-	# 		StandardInput = "tty";
-	# 		StandardOutput = "tty";
-	# 		TTYPath = "/dev/ttyUSB0";
-	# 		TTYReset = "yes";
-	# 		TTYVHangup = "yes";
-	# 		IgnoreSIGPIPE = "no";
-	# 		SendSIGHUP = "yes";
-	# 	};
-	# 	environment.TERM = "xterm-256color";
-	# };
+	systemd.services."serial-getty@ttyUSB0" =
+	{
+		enable = true;
+		wantedBy = [ "getty.target" ];
+		after = [ "systemd-user-sessions.service" ];
+		wants = [ "systemd-user-sessions.service" ];
+		serviceConfig =
+		{
+			Type = "idle";
+			Restart = "always";
+			ExecStart = "${pkgs.util-linux}/bin/agetty --login-program ${pkgs.shadow}/bin/login --noclear --keep-baud ttyUSB0 115200,57600,38400,9600 vt220";
+			UtmpIdentifier = "ttyUSB0";
+			StandardInput = "tty";
+			StandardOutput = "tty";
+			TTYPath = "/dev/ttyUSB0";
+			TTYReset = "yes";
+			TTYVHangup = "yes";
+			IgnoreSIGPIPE = "no";
+			SendSIGHUP = "yes";
+		};
+		# environment.TERM = "xterm-256color";
+	};
 
 	# Serial
 	# Source: <https://github.com/nix-community/srvos/blob/main/nixos/common/serial.nix>
