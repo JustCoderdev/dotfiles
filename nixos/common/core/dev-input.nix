@@ -63,6 +63,7 @@ ${pkgs.numlockx}/bin/numlockx on
 	spc    (tap-hold 300 200 spc lmet)
 )
 '';
+			# lmeta (tap-hold 300 200 spc lmeta)
 		};
 	};
 }
