@@ -30,11 +30,11 @@ in
 	boot.initrd.verbose = true;  # Show initrd messages
 
 	# Tell grub about serial
-	boot.loader.grub.extraConfig = ''
-serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
-terminal_input serial
-terminal_output serial
-'';
+# 	boot.loader.grub.extraConfig = ''
+# serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
+# terminal_input serial
+# terminal_output serial
+# '';
 
 	# Disable the upstream getty module's automatic configuration for serial-getty@
 	# systemd.services."serial-getty@".enable = false;
