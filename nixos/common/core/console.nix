@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 let
-	serial-devices = [ "ttyUSB0" "ttyUSB1" ];
+	# serial-devices = [ "ttyUSB0" "ttyUSB1" ];
+	serial-devices = [ ];
 in
 
 {
