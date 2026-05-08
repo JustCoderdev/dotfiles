@@ -60,7 +60,7 @@ ${pkgs.numlockx}/bin/numlockx on
 (defsrc)
 (deflayermap base
 	caps   (tap-hold 300 200 esc lctrl)
-	spc    (tap-hold 300 200 spc lmet)
+	lalt   (tap-hold 300 200 spc lalt)
 )
 '';
 			# lmeta (tap-hold 300 200 spc lmeta)

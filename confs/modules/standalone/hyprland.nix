@@ -26,13 +26,12 @@ in
 
 				exec-once = [
 					"waybar"
-					"swww-daemon --format xrgb"
 					"[workspace 1 silent] firefox"
 					"[workspace 2] alacritty"
 				];
 
 				env = "XCURSOR_SIZE,24";
-				exec = "swww img ${wallpapers_path}/space_engineers.png";
+				exec = "${pkgs.swww}/bin/swww img ${wallpapers_path}/space_engineers.png";
 
 				general =
 				{
