@@ -1,9 +1,6 @@
 { ... }:
 
 {
-	common.core.bootloader =
-	{
-		grub.enable = true;
-		support-efi = true;
-	};
+	common.core.bootloader.grub.enable = true;
+	boot.loader.grub.device = "/dev/sda";
 }
