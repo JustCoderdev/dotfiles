@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nix-minecraft, ... }:
+{ config, lib, pkgs, nix-minecraft, pkgs-unstable, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -29,6 +29,7 @@ in
 	{
 		enable = true;
 		openFirewall = true;
+		package = pkgs-unstable.weylus;
 
 		users = [ "ryuji" ];
 	};
