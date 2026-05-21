@@ -25,6 +25,14 @@ in
 		};
 	};
 
+	programs.weylus =
+	{
+		enable = true;
+		openFirewall = true;
+
+		users = [ "ryuji" ];
+	};
+
 
 	# Temporary services
 	# ------------------------------------------------------------ #

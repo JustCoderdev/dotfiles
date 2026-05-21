@@ -59,10 +59,10 @@ ${pkgs.numlockx}/bin/numlockx on
 			config = ''
 (defsrc)
 (deflayermap base
-	caps   (tap-hold 300 200 esc lctrl)
-	lalt   (tap-hold 300 200 spc lalt)
+	caps   (tap-hold 200 200 esc lctrl)
 )
 '';
+			# lalt   (tap-hold 200 200 spc lalt)
 			# lmeta (tap-hold 300 200 spc lmeta)
 		};
 	};
