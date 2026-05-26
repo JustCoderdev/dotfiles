@@ -8,6 +8,7 @@ in
 	# Mouse support
 	services.ratbagd.enable = true;
 	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin ];
+	programs.nix-ld.enable = true;
 
 	# TUNNEL
 
