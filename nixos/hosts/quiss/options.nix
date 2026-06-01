@@ -57,6 +57,10 @@
 			systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" "armv6l-linux" ];
 		};
 
-		samba.enable = true;
+		samba =
+		{
+			enable = true;
+			share.user.enable = true;
+		};
 	};
 }

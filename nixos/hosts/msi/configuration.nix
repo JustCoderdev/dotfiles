@@ -8,7 +8,12 @@ in
 	# Mouse support
 	services.ratbagd.enable = true;
 	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin ];
-	programs.nix-ld.enable = true;
+
+	programs.nix-ld =
+	{
+		enable = true;
+		libraries = [ pkgs.stdenv.cc.cc.lib ];
+	};
 
 	# TUNNEL
 
@@ -26,13 +31,11 @@ in
 		};
 	};
 
-	programs.weylus =
+	services.sunshine =
 	{
 		enable = true;
 		openFirewall = true;
-		package = pkgs-unstable.weylus;
-
-		users = [ "ryuji" ];
+		# capSysAdmin = true;
 	};
 
 
