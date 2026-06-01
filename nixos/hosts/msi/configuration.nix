@@ -31,11 +31,12 @@ in
 		};
 	};
 
+	networking.firewall.allowedTCPPorts = [ 47990 ];
 	services.sunshine =
 	{
 		enable = true;
 		openFirewall = true;
-		# capSysAdmin = true;
+		capSysAdmin = true;
 	};
 
 
