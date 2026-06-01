@@ -31,13 +31,13 @@ in
 		};
 	};
 
-	networking.firewall.allowedTCPPorts = [ 47990 ];
-	services.sunshine =
-	{
-		enable = true;
-		openFirewall = true;
-		capSysAdmin = true;
-	};
+	# networking.firewall.allowedTCPPorts = [ 47990 ];
+	# services.sunshine =
+	# {
+	# 	enable = true;
+	# 	openFirewall = true;
+	# 	capSysAdmin = true;
+	# };
 
 
 	# Temporary services
