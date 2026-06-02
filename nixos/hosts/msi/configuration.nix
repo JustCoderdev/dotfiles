@@ -31,7 +31,17 @@ in
 		};
 	};
 
-	# networking.firewall.allowedTCPPorts = [ 47990 ];
+	networking.firewall.allowedTCPPorts = [ 20 21 ];
+	users.users.ryuji.extraGroups = [ "ftp" ];
+
+	services.vsftpd =
+	{
+		enable = true;
+		chrootlocalUser = true;
+		anonymousUser = true;
+		anonymousUserNoPassword = true;
+	};
+
 	# services.sunshine =
 	# {
 	# 	enable = true;
