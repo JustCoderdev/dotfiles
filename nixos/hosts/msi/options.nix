@@ -111,6 +111,9 @@
 			};
 		};
 
-		samba.enable = true;
+		samba = {
+			enable = true;
+			shares.user.enable = true;
+		};
 	};
 }
