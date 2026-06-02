@@ -38,8 +38,12 @@ in
 	{
 		enable = true;
 		chrootlocalUser = true;
+		writeEnable = true;
+
 		anonymousUser = true;
 		anonymousUserNoPassword = true;
+		anonymousMkdirEnable = true;
+		anonymousUploadEnable = true;
 	};
 
 	# services.sunshine =
