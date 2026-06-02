@@ -113,7 +113,7 @@
 
 		samba = {
 			enable = true;
-			shares.user.enable = true;
+			# shares.user.enable = true;
 		};
 	};
 }
