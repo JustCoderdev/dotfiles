@@ -32,18 +32,31 @@ in
 	};
 
 	networking.firewall.allowedTCPPorts = [ 20 21 ];
+	networking.firewall.allowedTCPPortRanges = [ { from = 40000; to = 40003; } ];
 	users.users.ryuji.extraGroups = [ "ftp" ];
 
 	services.vsftpd =
 	{
 		enable = true;
-		chrootlocalUser = true;
 		writeEnable = true;
 
 		anonymousUser = true;
 		anonymousUserNoPassword = true;
 		anonymousMkdirEnable = true;
 		anonymousUploadEnable = true;
+
+		extraConfig = ''
+anon_other_write_enable=YES
+
+pasv_enable=YES
+pasv_min_port=40000
+pasv_max_port=40003
+pasv_addr_resolve=YES
+pasv_address=foxburrow.org
+
+xferlog_enable=YES
+xferlog_file=/var/log/vsftpd.log
+'';
 	};
 
 	# services.sunshine =
