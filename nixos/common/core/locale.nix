@@ -18,15 +18,15 @@
 			LC_TIME = "it_IT.UTF-8";
 		};
 
-		inputMethod = {
-			enable = true;
-			type = "fcitx5";
-			fcitx5.addons = with pkgs; [
-				fcitx5-mozc
-				fcitx5-gtk
-			];
-		};
+		# inputMethod = {
+		# 	enable = true;
+		# 	type = "fcitx5";
+		# 	fcitx5.addons = with pkgs; [
+		# 		fcitx5-mozc
+		# 		fcitx5-gtk
+		# 	];
+		# };
 	};
 
-	environment.defaultPackages = [ pkgs.kdePackages.fcitx5-configtool ];
+	# environment.defaultPackages = [ pkgs.kdePackages.fcitx5-configtool ];
 }
