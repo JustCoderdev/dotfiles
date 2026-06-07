@@ -26,10 +26,15 @@ in
 					popups = 8;         desktop = 10;
 				};
 
-				sansSerif = { name = "Bitstream Vera Sans";  package = pkgs.ttf_bitstream_vera;  };
-				serif     = { name = "Bitstream Vera Serif"; package = pkgs.ttf_bitstream_vera;  };
-				monospace = { name = "Roboto Mono";          package = pkgs.roboto-mono;         };
-				emoji     = { name = "Twitter Color Emoji";  package = pkgs.twitter-color-emoji; };
+				# sansSerif = { name = "Bitstream Vera Sans";  package = pkgs.ttf_bitstream_vera;                };
+				# serif     = { name = "Bitstream Vera Serif"; package = pkgs.ttf_bitstream_vera;                };
+				# monospace = { name = "Roboto Mono";          package = pkgs.roboto-mono;                       };
+
+				sansSerif = { name = "M PLUS 1";             package = pkgs.mplus-outline-fonts.githubRelease; };
+				serif     = { name = "M PLUS 2";             package = pkgs.mplus-outline-fonts.githubRelease; };
+				monospace = { name = "Mplus Code 60 Medium"; package = pkgs.mplus-outline-fonts.githubRelease; };
+
+				emoji     = { name = "Twitter Color Emoji";  package = pkgs.twitter-color-emoji;               };
 			};
 
 			# base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";

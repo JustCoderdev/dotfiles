@@ -17,23 +17,23 @@ in
 			enableDefaultPackages = false;
 			packages = with pkgs;
 			[
-				ttf_bitstream_vera
-				roboto-mono         # Monospace
-
-				noto-fonts-cjk-sans # Chinese, Japanese, and Korean support
-				twitter-color-emoji # Emoji support
+				# ttf_bitstream_vera
+				# roboto-mono                     # Monospace
+				mplus-outline-fonts.githubRelease # Japanese font
+				# noto-fonts-cjk-sans               # Chinese, Japanese, and Korean support
+				twitter-color-emoji               # Emoji support
 			];
 
-			###########################################################
+			##############################################################
 			# /!\ REMEMBER TO ALSO UPDATE `confs/stylix/default.nix` /!\ #
-			###########################################################
+			##############################################################
 
 			fontconfig.defaultFonts =
 			{
-				sansSerif = [ "Bitstream Vera Sans"  "Noto Sans CJK JP"  ];
-				serif     = [ "Bitstream Vera Serif" "Noto Serif CJK JP" ];
-				monospace = [ "Roboto Mono"          "Noto Mono CJK JP"  ];
-				emoji     = [ "Twitter Color Emoji" ];
+				sansSerif = [ "M PLUS 1"             ]; # "Bitstream Vera Sans"  "Noto Sans CJK JP"
+				serif     = [ "M PLUS 2"             ]; # "Bitstream Vera Serif" "Noto Serif CJK JP"
+				monospace = [ "Mplus Code 60 Medium" ]; # "Roboto Mono"          "Noto Mono CJK JP"
+				emoji     = [ "Twitter Color Emoji"  ];
 				# ⚫ 🔴 🔵
 			};
 		};
