@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	# Set your time zone.
@@ -17,5 +17,16 @@
 			LC_TELEPHONE = "it_IT.UTF-8";
 			LC_TIME = "it_IT.UTF-8";
 		};
+
+		inputMethod = {
+			enable = true;
+			type = "fcitx5";
+			fcitx5.addons = with pkgs; [
+				fcitx5-mozc
+				fcitx5-gtk
+			];
+		};
 	};
+
+	environment.defaultPackages = [ pkgs.kdePackages.fcitx5-configtool ];
 }
