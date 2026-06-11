@@ -20,8 +20,10 @@ in
 				# ttf_bitstream_vera
 				# roboto-mono                     # Monospace
 				mplus-outline-fonts.githubRelease # Japanese font
-				noto-fonts-cjk-sans               # Chinese, Japanese, and Korean support
 				twitter-color-emoji               # Emoji support
+
+				# noto-fonts-cjk-sans               # Chinese, Japanese, and Korean support
+				noto-fonts                        # Unicode
 			];
 
 			##############################################################
