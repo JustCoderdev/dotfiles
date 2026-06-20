@@ -1,6 +1,9 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+	environment.systemPackages = with pkgs; [ geteduroam ];
+	programs.nm-applet.enable = true;
+
 	# Gnome
 	# -------------------- #
 	# services.xserver.displayManager.lightdm.greeters.gtk.indicators = lib.mkForce null;
