@@ -96,6 +96,8 @@ in
 						installation_mode = "allow";
 						private_browsing = true;
 					};
+
+					# TODO: add <https://addons.mozilla.org/en-US/firefox/addon/source-identifier-sanitizer/>
 					"addon@darkreader.org"                          = gen-extension-data "darkreader";
 					"{5327e982-d0be-4b85-b661-dba2ef210ab8}"        = gen-extension-data "link-redirect-trace-addon";
 					"sponsorBlocker@ajay.app"                       = gen-extension-data "sponsorblock";
