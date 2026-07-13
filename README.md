@@ -563,3 +563,10 @@ sudo nixos-rebuild switch \
          --flake .#<hostname> \
          --target-host "<user>@<ip>"
 ```
+
+### Repair store
+
+```shell
+nix-store --verify --check-contents --repair
+```
+
