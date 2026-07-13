@@ -43,8 +43,8 @@ in
 
 			shellAliases =
 			{
-				ez ="echo 'Updating zsh'; exec zsh";
-				rm ="rm -vI";
+				ez = "echo 'Updating zsh'; exec zsh";
+				rm = "rm -vI";
 
 				ls   = "ls --color -F";
 				la   = "ls -Fa";
@@ -75,7 +75,6 @@ in
 				"gd"  = "git diff";
 				"gdc" = "git diff --cached";
 				"gf"  = "git fetch";
-				"gp"  = "git push";
 				"ga"  = "git add";
 				"gc"  = "git commit";
 
@@ -89,6 +88,13 @@ in
 				dotfiles = "\${DOT_FILES}";
 				projects = "/home/\${USER}/Developer/Projects";
 				github   = "/home/\${USER}/Developer/Github";
+			};
+
+			siteFunctions =
+			{
+				_dotfiles = '' local line ''\n _arguments -C "1:: :_path_files -W $(dotfiles)" '';
+				_projects = '' local line ''\n _arguments -C "1:: :_path_files -W $(projects)" '';
+				_github   = '' local line ''\n _arguments -C "1:: :_path_files -W $(github)"   '';
 			};
 
 			syntaxHighlighting =
@@ -121,6 +127,12 @@ in
 			};
 
 			initContent = ''
+#compdef _dotfiles dotfiles
+#compdef _projects projects
+#compdef _github   github
+''
++
+''
 ## Options
 zstyle ':completion:*' cache-path "/home/''${USER}/.cache/zcompcache"
 zstyle ':completion:*' completer _extensions _complete _approximate
