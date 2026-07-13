@@ -83,18 +83,20 @@ in
 				"nivm" = "nvim";
 			};
 
-			shellGlobalAliases =
-			{
-				dotfiles = "\${DOT_FILES}";
-				projects = "/home/\${USER}/Developer/Projects";
-				github   = "/home/\${USER}/Developer/Github";
-			};
-
 			siteFunctions =
+			let
+				dotfiles_path = "\${DOT_FILES}";
+				projects_path = "/home/\${USER}/Developer/Projects";
+				github_path   = "/home/\${USER}/Developer/Github";
+			in
 			{
-				_dotfiles = '' local line ''\n _arguments -C "1:: :_path_files -W $(dotfiles)" '';
-				_projects = '' local line ''\n _arguments -C "1:: :_path_files -W $(projects)" '';
-				_github   = '' local line ''\n _arguments -C "1:: :_path_files -W $(github)"   '';
+				_dotfiles = '' local line ''\n _arguments -C "1:: :_path_files -W ${dotfiles_path}" '';
+				_projects = '' local line ''\n _arguments -C "1:: :_path_files -W ${projects_path}" '';
+				_github   = '' local line ''\n _arguments -C "1:: :_path_files -W ${github_path}"   '';
+
+				dotfiles = '' if [ -t 1 ]; then cd "${dotfiles_path}/$1"; else echo "${dotfiles_path}/$1"; fi '';
+				projects = '' if [ -t 1 ]; then cd "${projects_path}/$1"; else echo "${projects_path}/$1"; fi '';
+				github   = '' if [ -t 1 ]; then cd "${github_path}/$1";   else echo "${github_path}/$1";   fi '';
 			};
 
 			syntaxHighlighting =
@@ -126,13 +128,9 @@ in
 				);
 			};
 
-			initContent = ''
-#compdef _dotfiles dotfiles
-#compdef _projects projects
-#compdef _github   github
-''
-+
-''
+			initContent =
+			let
+				comp_style = ''
 ## Options
 zstyle ':completion:*' cache-path "/home/''${USER}/.cache/zcompcache"
 zstyle ':completion:*' completer _extensions _complete _approximate
@@ -147,9 +145,9 @@ zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 zstyle ':completion:*' group-name '''
-''
-+
-''
+'';
+
+				prompt = ''
 # Enable truecolor for alacritty
 # if [[ "''${TERM}" == "alacritty" ]]; then
 	COLORTERM="truecolor"
@@ -180,9 +178,9 @@ then
 		PROMPT="%F{8} %~ %B%F{5}\$''${SHLVL}%f%b "
 	fi
 fi
-''
-+
-''
+'';
+
+					vi_mode = ''
 # Enable block cursor in normal mode
 # This snippet comes from https://thevaluable.dev/zsh-install-configure-mouseless/
 # that comes from this other page https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
@@ -209,6 +207,22 @@ zle-line-init() {
 zle -N zle-keymap-select
 zle -N zle-line-init
 '';
+
+				comp_funcs = ''
+#compdef _dotfiles dotfiles
+#compdef _projects projects
+#compdef _github   github
+'';
+			in
+			lib.mkMerge
+			[
+				(lib.mkOrder 1000 prompt)
+				(lib.mkOrder 1000 vi_mode)
+				(lib.mkOrder 1000 comp_style)
+				# 1100: aliases
+				(lib.mkOrder 1200 comp_funcs)
+				# 1200: highlighting
+			];
 		};
 	};
 
