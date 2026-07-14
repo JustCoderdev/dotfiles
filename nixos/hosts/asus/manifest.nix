@@ -32,7 +32,7 @@
 			in
 			{
 				a-ig-monitor = add-display "eDP-1"  "1920x1080" "0x0";
-				b-ex-monitor = add-display "HDMI-1" "1920x1080" "1920x0";
+				b-ex-monitor = add-display "HDMI-1" "1920x1080" "-1920x0";
 			};
 		};
 
