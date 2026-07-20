@@ -1,4 +1,4 @@
-{ config, pkgs, settings, ... }:
+{ config, lib, pkgs, settings, nix-minecraft, ... }:
 
 let
 	inherit (settings) username;
@@ -30,6 +30,7 @@ in
 		"d   ${data-dir}             0775 root ${serv-group}"
 
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
+		"d   ${data-dir}/games       0775 root ${serv-group}"
 
 		# App dirs
 		"d   ${data-dir}/downloads   0775 root ${serv-group}"
@@ -120,7 +121,7 @@ in
 		apps = {
 			prowlarr.enable = true;
 			deluge.enable = true;
-			bazarr.enable = true;
+			bazarr.enable = false;
 
 			lidarr.enable = true;
 			radarr.enable = true;
@@ -148,7 +149,7 @@ in
 	{
 		inherit proxy;
 
-		enable = true;
+		enable = false;
 		openFirewall = forwardedServicesFirewall;
 
 		config-dir = config-dir + "/immich";
@@ -179,4 +180,84 @@ in
 	};
 
 	services.grafana.enable = true;
+
+
+	# Temporary services
+	# ------------------------------------------------------------ #
+
+	# MINECRAFT SERVERS
+
+	# imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+	# nixpkgs.overlays = [ nix-minecraft.overlay ];
+
+	# services.minecraft-servers =
+	# {
+	# 	enable = false;
+	# 	openFirewall = true;
+	# 	eula = true;
+
+	# 	dataDir = data-dir + "/games/minecraft";
+
+	# 	servers =
+	# 	let
+	# 		# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
+	# 		default-properties =
+	# 		{
+	# 			allow-flight = true;
+	# 			force-gamemode = false;
+	# 			player-idle-timeout = 0;
+
+	# 			snooper-enabled = false;
+	# 			online-mode = false;
+	# 			use-native-transport = true;
+	# 			verify-names = false;
+
+	# 			white-list = false;
+	# 			enforce-whitelist = false;
+	# 		};
+
+	# 		# <https://mcuuid.net/> <https://namemc.com>
+	# 		ryuji-uuid = "e2458645-fb10-4065-ac0c-f689aa30adff";
+	# 		default-whitelist = { Ryuji_terix = ryuji-uuid; };
+	# 		default-operators = { Ryuji_terix = ryuji-uuid; };
+	# 	in
+	# 	{
+	# 		project-genesis =
+	# 		let
+	# 			modpack = pkgs.fetchPackwizModpack { src = ./project-genesis; };
+
+	# 			mcVersion = modpack.manifest.versions.minecraft;
+	# 			forgeVersion = modpack.manifest.versions.forge;
+	# 			serverVersion = lib.replaceStrings [ "." ] [ "_" ] "forge-${mcVersion}";
+	# 		in
+	# 		{
+	# 			enable = false;
+	# 			package = pkgs.forgeServers.${serverVersion}.override { loaderVersion = forgeVersion; };
+
+	# 			openFirewall = true;
+
+	# 			autoStart = false;
+	# 			jvmOpts = "-Xms4092M -Xmx6144M";
+
+	# 			operators = default-operators // { };
+	# 			whitelist = default-whitelist // { };
+
+	# 			serverProperties = default-properties
+	# 			// {
+	# 				server-port = 25565;
+	# 				motd = "PJ Genesis";
+
+	# 				level-name = "world";
+	# 				difficulty = 3; # peaceful, easy, normal, hard
+	# 				gamemode = 0; # survival, creative, adventure, spectator
+
+	# 				view-distance = 20;
+	# 				max-players = 5;
+	# 			};
+
+	# 			symlinks."mods" = "${modpack}/mods";
+	# 			files = nix-minecraft.lib.collectFilesAt modpack "config";
+	# 		};
+	# 	};
+	# };
 }

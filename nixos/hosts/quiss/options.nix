@@ -60,7 +60,7 @@
 		samba =
 		{
 			enable = true;
-			share.user.enable = true;
+			shares.user.enable = true;
 		};
 	};
 }
