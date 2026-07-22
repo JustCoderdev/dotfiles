@@ -289,11 +289,19 @@
         "systems": "systems_2"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1788494954,
         "narHash": "sha256-SRWINWPWk2ezK387AxdliOQ+h3T93EGUIV6Fm4WVFd0=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
         "rev": "62e95390de025f9bd99220b9e2059d429bb94125",
+=======
+        "lastModified": 1784690860,
+        "narHash": "sha256-S0Y47eNLJ7lALoZG+UyZPwYeCE5NKKDJvNLOoSthYhQ=",
+        "owner": "Infinidoge",
+        "repo": "nix-minecraft",
+        "rev": "1a27d0ced3ba850505766464b8ccfcc069ec3338",
+>>>>>>> 7cf6de5 (NixOS build quiss#30: [quiss] Added vanilla plus stuff)
         "type": "github"
       },
       "original": {

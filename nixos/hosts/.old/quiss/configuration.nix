@@ -22,7 +22,7 @@ in
 {
 	# Create service group
 	users.groups."${serv-group}" = { };
-	users.users.${username}.extraGroups = [ serv-group ];
+	users.users.${username}.extraGroups = [ serv-group "minecraft" ];
 
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
@@ -30,7 +30,7 @@ in
 		"d   ${data-dir}             0775 root ${serv-group}"
 
 		"d   ${data-dir}/documents   0775 root ${serv-group}"
-		"d   ${data-dir}/games       0775 root ${serv-group}"
+		"d   ${data-dir}/games       0775 root minecraft"
 
 		# App dirs
 		"d   ${data-dir}/downloads   0775 root ${serv-group}"
@@ -88,7 +88,7 @@ in
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 443 80 ];
+	networking.firewall.allowedTCPPorts = [ 443 80 25565 ];
 	services.nginx =
 	{
 		enable = true;
@@ -164,7 +164,7 @@ in
 		group = serv-group;
 	};
 
-	services.grafana.enable = true;
+	services.grafana.enable = false;
 
 
 	# Temporary services
@@ -172,77 +172,86 @@ in
 
 	# MINECRAFT SERVERS
 
-	# imports = [ nix-minecraft.nixosModules.minecraft-servers ];
-	# nixpkgs.overlays = [ nix-minecraft.overlay ];
+	imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+	nixpkgs.overlays = [ nix-minecraft.overlay ];
 
-	# services.minecraft-servers =
-	# {
-	# 	enable = false;
-	# 	openFirewall = true;
-	# 	eula = true;
+	services.minecraft-servers =
+	{
+		enable = true;
+		openFirewall = true;
+		eula = true;
 
-	# 	dataDir = data-dir + "/games/minecraft";
+		dataDir = data-dir + "/games/minecraft";
 
-	# 	servers =
-	# 	let
-	# 		# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
-	# 		default-properties =
-	# 		{
-	# 			allow-flight = true;
-	# 			force-gamemode = false;
-	# 			player-idle-timeout = 0;
+		servers =
+		let
+			# <https://minecraft.fandom.com/wiki/Server.properties#Java_Edition_3>
+			default-properties =
+			{
+				allow-flight = true;
+				force-gamemode = false;
+				player-idle-timeout = 0;
 
-	# 			snooper-enabled = false;
-	# 			online-mode = false;
-	# 			use-native-transport = true;
-	# 			verify-names = false;
+				snooper-enabled = false;
+				online-mode = false;
+				use-native-transport = true;
+				verify-names = false;
 
-	# 			white-list = false;
-	# 			enforce-whitelist = false;
-	# 		};
+				white-list = false;
+				enforce-whitelist = false;
+			};
 
-	# 		# <https://mcuuid.net/> <https://namemc.com>
-	# 		ryuji-uuid = "e2458645-fb10-4065-ac0c-f689aa30adff";
-	# 		default-whitelist = { Ryuji_terix = ryuji-uuid; };
-	# 		default-operators = { Ryuji_terix = ryuji-uuid; };
-	# 	in
-	# 	{
-	# 		project-genesis =
-	# 		let
-	# 			modpack = pkgs.fetchPackwizModpack { src = ./project-genesis; };
+			# <https://mcuuid.net/> <https://namemc.com>
+			ryuji-uuid = "e2458645-fb10-4065-ac0c-f689aa30adff";
+			default-whitelist = { Ryuji_terix = ryuji-uuid; };
+			default-operators = { Ryuji_terix = ryuji-uuid; };
+		in
+		{
+			vanilla-plus =
+			let
+				modpack = pkgs.fetchModrinthModpack {
+					url = "https://cdn.modrinth.com/data/1ocGzRHv/versions/zCNpmrT6/Vanilla%20Perfected%201.0.3%2B26.1.2.mrpack";
+					packHash = "sha256-fZBGgw4CWP8Sth6GVORHOStMz9yOnFT6CxxopgQanM0=";
+				};
 
-	# 			mcVersion = modpack.manifest.versions.minecraft;
-	# 			forgeVersion = modpack.manifest.versions.forge;
-	# 			serverVersion = lib.replaceStrings [ "." ] [ "_" ] "forge-${mcVersion}";
-	# 		in
-	# 		{
-	# 			enable = false;
-	# 			package = pkgs.forgeServers.${serverVersion}.override { loaderVersion = forgeVersion; };
+				inherit (nix-minecraft.lib) collectFilesAt;
+				mcVersion = "26.1.2";
+				fabricVersion = "0.19.2";
+				serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
+			in
+			{
+				enable = true;
+				package = pkgs.fabricServers.${serverVersion}.override { loaderVersion = fabricVersion; };
 
-	# 			openFirewall = true;
+				openFirewall = true;
 
-	# 			autoStart = false;
-	# 			jvmOpts = "-Xms4092M -Xmx6144M";
+				autoStart = false;
+				jvmOpts = "-Xms4092M -Xmx6144M";
 
-	# 			operators = default-operators // { };
-	# 			whitelist = default-whitelist // { };
+				operators = default-operators // { };
+				whitelist = default-whitelist // { };
 
-	# 			serverProperties = default-properties
-	# 			// {
-	# 				server-port = 25565;
-	# 				motd = "PJ Genesis";
+				serverProperties = default-properties
+				// {
+					server-port = 25565;
+					motd = "Vanilla spuzzolosa";
 
-	# 				level-name = "world";
-	# 				difficulty = 3; # peaceful, easy, normal, hard
-	# 				gamemode = 0; # survival, creative, adventure, spectator
+					level-name = "world";
+					difficulty = 3; # peaceful, easy, normal, hard
+					gamemode = 0; # survival, creative, adventure, spectator
 
-	# 				view-distance = 20;
-	# 				max-players = 5;
-	# 			};
+					view-distance = 20;
+					max-players = 5;
+				};
 
-	# 			symlinks."mods" = "${modpack}/mods";
-	# 			files = nix-minecraft.lib.collectFilesAt modpack "config";
-	# 		};
-	# 	};
-	# };
+				symlinks = collectFilesAt modpack "mods"; # // { "server-icon.jpeg" = ./server-icon.jpeg; };
+				files = { }
+					// (collectFilesAt modpack "config")
+					// (collectFilesAt modpack "datapacks")
+					// (collectFilesAt modpack "resourcepacks")
+					// (collectFilesAt modpack "shaderpacks")
+				;
+			};
+		};
+	};
 }
