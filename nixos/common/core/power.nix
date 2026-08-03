@@ -55,10 +55,6 @@ echo 'on' > '/sys/bus/usb/devices/1-10/power/control';
 		enable = lib.mkDefault true;
 		settings =
 		{
-			# peformance, powersave
-			CPU_SCALING_GOVERNOR_ON_BAT = "peformance";
-			CPU_SCALING_GOVERNOR_ON_AC =  "performance";
-
 			# performance, balance_performance, default, balance_power, power
 			CPU_ENERGY_PERF_POLICY_ON_BAT = "performance";
 			CPU_ENERGY_PERF_POLICY_ON_AC  = "performance";
@@ -67,11 +63,11 @@ echo 'on' > '/sys/bus/usb/devices/1-10/power/control';
 			# CPU_MAX_PERF_ON_BAT = 20;
 			CPU_MAX_PERF_ON_BAT = 100;
 
-			CPU_BOOST_ON_AC = 1;
-			CPU_BOOST_ON_BAT = 1;
-
 			CPU_MIN_PERF_ON_AC = 0;
 			CPU_MAX_PERF_ON_AC = 100;
+
+			CPU_BOOST_ON_AC = 1;
+			CPU_BOOST_ON_BAT = 1;
 
 			START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
 			STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
