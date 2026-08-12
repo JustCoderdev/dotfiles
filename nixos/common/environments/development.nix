@@ -23,7 +23,7 @@ in
 		environment.systemPackages = with pkgs; [ screen ]
 		++ lib.lists.optionals (cfg.tools.android.enable) [ scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap unixtools.arp ]
-		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 ]
+		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 unityhub ]
 		++ lib.lists.optionals (cfg.tools.c.enable)
 		[
 			# Docs

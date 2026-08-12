@@ -59,9 +59,9 @@
 				enable = true;
 				tools = {
 					android.enable = true;
-					c.enable = true;
-					java.enable = true;
 					network.enable = true;
+					game-development.enable = true;
+					c.enable = true;
 				};
 			};
 		};
