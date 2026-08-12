@@ -42,10 +42,10 @@ in
 	# Temporary services
 	# ------------------------------------------------------------ #
 
-	# services.mysql = {
-	# 	enable = true;
-	# 	package = pkgs.mariadb;
-	# };
+	services.mysql = {
+		enable = true;
+		package = pkgs.mariadb;
+	};
 
 	# MINECRAFT SERVERS
 
