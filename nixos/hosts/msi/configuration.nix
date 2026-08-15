@@ -45,6 +45,7 @@ in
 	services.mysql = {
 		enable = true;
 		package = pkgs.mariadb;
+		settings.mysqld.innodb_buffer_pool_size = "64MB";
 	};
 
 	# MINECRAFT SERVERS
