@@ -45,7 +45,7 @@ in
 	services.mysql = {
 		enable = true;
 		package = pkgs.mariadb;
-		settings.mysqld.innodb_buffer_pool_size = "1GB";
+		# settings.mysqld.innodb_buffer_pool_size = "1GB";
 	};
 
 	# MINECRAFT SERVERS
@@ -119,12 +119,12 @@ in
 				world-files = pkgs.fetchzip
 				{
 					url = "https://hielkemaps.com/downloads/Parkour%20Pyramid.zip";
-					hash = "sha256-hPFTv2H7TJ9FWny2tUOsT2f6k+NfMeCLTyOmefiZK6I=";
+					hash = "sha256-vk30bUgdt/bhw9CH/4iCaCsKKjqP8Zxi0teygh6c9Sw=";
 				};
 			in
 			{
 				enable = false;
-				package = pkgs.vanillaServers.vanilla-1_21_11;
+				package = pkgs.vanillaServers.vanilla-1_26_2;
 
 				openFirewall = true;
 
