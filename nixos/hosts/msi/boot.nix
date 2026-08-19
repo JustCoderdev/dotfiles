@@ -6,7 +6,7 @@ in
 
 {
 	boot.kernelParams = [ "nosgx" ];
-	boot.kernelPackages = pkgs.linuxPackages_zen;
+	# boot.kernelPackages = pkgs.linuxPackages_zen;
 
 	common.core.bootloader =
 	{
