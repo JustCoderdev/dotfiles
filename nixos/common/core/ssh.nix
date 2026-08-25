@@ -22,7 +22,24 @@ in
 			startAgent = true;
 
 			# TODO: Add missing keys with `ssh-keyscan`
-			# knownHosts -> moved to home-manager
+			knownHosts =
+			let
+				get-known-host = (
+					hostname: domains: publicKey:
+					rec {
+						inherit publicKey;
+						extraHostNames = (builtins.map (domain: "${hostname}.${domain}.lan") domains);
+					}
+				);
+			in
+			{
+				# jarvis = (get-known-host "jarvis" [ "home"                 ] "");
+				quiss  = (get-known-host "quiss"  [ "home"        "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQXf/BHJdFdd5JFEfrP4IdUcQPKryN8hFySvxZFwK/K");
+				wise   = (get-known-host "wise"   [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4");
+				msi    = (get-known-host "msi"    [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPUEbijsahIeiJKnYE/X25k8YjbBSmPSz2j31kOCNczd");
+				# acer   = (get-known-host "acer"   [ "home"                 ] "");
+				asus   = (get-known-host "asus"   [ "home" "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6iFgCu/HH1IaHszu1lFvPPLGCJ+FmApHEBc3QawV1r");
+			};
 
 			# Set default keys
 			extraConfig = ''
