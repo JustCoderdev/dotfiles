@@ -30,18 +30,21 @@ let
 
 	knownHostsFile = builtins.toFile "user_known_hosts"
 	(
-		lib.concatMapStringsSep "\n"
 		(
-			val:
-			let
-				cauth = lib.optionalString val.certAuthority "@cert-authority";
-				names = builtins.concatStringsSep "," val.hostNames;
-				pbkey = if val.publicKey != null then val.publicKey else builtins.readFile val.publicKeyFile;
-			in
-			"${cauth} ${names} ${pbkey}"
+			lib.concatMapStringsSep "\n"
+			(
+				val:
+				let
+					cauth = lib.optionalString val.certAuthority "@cert-authority";
+					names = builtins.concatStringsSep "," val.hostNames;
+					pbkey = if val.publicKey != null then val.publicKey else builtins.readFile val.publicKeyFile;
+				in
+				"${cauth} ${names} ${pbkey}"
+			)
+			(builtins.attrValues knownHosts)
 		)
-		(builtins.attrValues knownHosts)
-	) + "\n";
+		+ "\n"
+	);
 in
 
 {
