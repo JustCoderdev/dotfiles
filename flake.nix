@@ -19,9 +19,10 @@
 		nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 
 		nix-net-lib.url = "github:0xCCF4/nix-net-lib";
+		nixpkgs-xr.url  = "github:nix-community/nixpkgs-xr";
 	};
 
-	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, nix-net-lib, ... }:
+	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, nix-net-lib, nixpkgs-xr, ... }:
 	let
 		hosts =
 		(
@@ -107,7 +108,7 @@
 			in
 			nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit pkgs-unstable settings nix-minecraft nix-net-lib; };
+				specialArgs = { inherit pkgs-unstable settings nix-minecraft nix-net-lib nixpkgs-xr; };
 				modules = [ ]
 				++ (getHostModules hostname)
 				++ (getUserModules username)

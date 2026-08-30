@@ -11,8 +11,12 @@ let
 in
 
 {
+	imports = [ ../../unofficial/modules/wivrn.nix ];
+
 	config = lib.mkIf (cfg.enable)
 	{
+		wivrn.enable = true;
+
 		environment.systemPackages = with pkgs;
 		[
 			discord        # Run with --disable-gpu
