@@ -42,6 +42,8 @@ in
 	# Temporary services
 	# ------------------------------------------------------------ #
 
+
+	networking.firewall.allowedTCPPorts = [ 25565 ];
 	services.mysql = {
 		enable = true;
 		package = pkgs.mariadb;
