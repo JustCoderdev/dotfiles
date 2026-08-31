@@ -53,7 +53,12 @@
 
 		environments =
 		{
-			gaming.enable = true;
+			gaming =
+			{
+				enable = true;
+				vr.enable = true;
+			};
+
 			development =
 			{
 				enable = true;
