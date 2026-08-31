@@ -71,14 +71,17 @@ in
 		# VR
 		# -------------------- #
 
-		unofficial.services.wivrn = lib.mkIf (cfg.vr.enable)
+		# Needed for xrizer to translate OpenGL into OpenXR
+		services.xserver.displayManager.xserverArgs = [ "-core +iglx" ];
+
+		services.wivrn = lib.mkIf (cfg.vr.enable)
 		{
 			enable = true;
 			package = nixpkgs-xr.packages.${system}.wivrn;
 			openFirewall = true;
 			autoStart = true;
 
-			highPriority = false;
+			highPriority = true;
 			steam.importOXRRuntimes = true;
 		};
 	};
