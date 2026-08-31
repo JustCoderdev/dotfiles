@@ -74,8 +74,12 @@ in
 		services.wivrn = lib.mkIf (cfg.vr.enable)
 		{
 			enable = true;
-			openFirewall = true;
 			package = nixpkgs-xr.packages.${system}.wivrn;
+
+			openFirewall = true;
+			highPriority = true;
+			# importOXRRuntimes = true;
+			autoStart = true;
 		};
 	};
 
