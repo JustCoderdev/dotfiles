@@ -13,6 +13,7 @@ let
 		environment = {
 			develop = "develop-environment"; # alacritty, emacs, git, neovim, zsh, ssh
 			game    = "game-environment";    # mangohud
+			vr      = "vr";                  # vr
 		};
 
 		user.ryuji = "ryuji-user"; # firefox
@@ -41,6 +42,7 @@ in
 		./standalone/mangohud.nix
 		./standalone/ssh.nix
 		./standalone/tmux.nix
+		./standalone/vr.nix
 		./standalone/zsh.nix
 	];
 
