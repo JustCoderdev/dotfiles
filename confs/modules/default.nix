@@ -13,7 +13,7 @@ let
 		environment = {
 			develop = "develop-environment"; # alacritty, emacs, git, neovim, zsh, ssh
 			game    = "game-environment";    # mangohud
-			vr      = "vr";                  # vr
+			vr      = "vr-environment";      # vr
 		};
 
 		user.ryuji = "ryuji-user"; # firefox
