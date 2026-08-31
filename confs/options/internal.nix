@@ -8,7 +8,6 @@ let
 
 		 "develop-environment" # alacritty, emacs, git, neovim, zsh, ssh
 		    "game-environment" # mangohud
-		      "vr-environment" # vr
 
 		"ryuji-user" # firefox
 	];

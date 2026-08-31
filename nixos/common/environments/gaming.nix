@@ -78,7 +78,7 @@ in
 			openFirewall = true;
 			autoStart = true;
 
-			highPriority = true;
+			highPriority = false;
 			steam.importOXRRuntimes = true;
 		};
 	};

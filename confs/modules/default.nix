@@ -13,7 +13,6 @@ let
 		environment = {
 			develop = "develop-environment"; # alacritty, emacs, git, neovim, zsh, ssh
 			game    = "game-environment";    # mangohud
-			vr      = "vr-environment";      # vr
 		};
 
 		user.ryuji = "ryuji-user"; # firefox
@@ -42,7 +41,6 @@ in
 		./standalone/mangohud.nix
 		./standalone/ssh.nix
 		./standalone/tmux.nix
-		./standalone/vr.nix
 		./standalone/zsh.nix
 	];
 
@@ -77,8 +75,6 @@ in
 			tmux.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
 
 			mangohud.enable  = (lib.mkDefault (contains profiles profile.environment.game));
-
-			vr.enable        = (lib.mkDefault (contains profiles profile.environment.vr));
 
 			firefox.enable   = (lib.mkDefault (contains profiles profile.user.ryuji));
 		};
