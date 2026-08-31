@@ -71,15 +71,15 @@ in
 		# VR
 		# -------------------- #
 
-		services.wivrn = lib.mkIf (cfg.vr.enable)
+		unofficial.services.wivrn = lib.mkIf (cfg.vr.enable)
 		{
 			enable = true;
 			package = nixpkgs-xr.packages.${system}.wivrn;
-
 			openFirewall = true;
-			highPriority = true;
-			# importOXRRuntimes = true;
 			autoStart = true;
+
+			highPriority = true;
+			steam.importOXRRuntimes = true;
 		};
 	};
 
