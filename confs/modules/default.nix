@@ -78,6 +78,8 @@ in
 
 			mangohud.enable  = (lib.mkDefault (contains profiles profile.environment.game));
 
+			vr.enable        = (lib.mkDefault (contains profiles profile.environment.vr));
+
 			firefox.enable   = (lib.mkDefault (contains profiles profile.user.ryuji));
 		};
 	};
