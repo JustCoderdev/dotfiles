@@ -1,14 +1,16 @@
+{ type, cpu, gpu, ... }:
+
 {
 	hardware =
 	{
 		system = "x86_64-linux";
-		type = "desktop";
+		type = type.desktop;
 
 		audio.capable = false;
 		bluetooth.capable = false;
 
-		cpu.intel.architecture = "ivy-bridge";
-		gpu.radeon.architecture = "gcn-1"; # Radeon HD 6750
+		cpu.intel  = "ivy-bridge";
+		gpu.radeon = "gcn-1"; # Radeon HD 6750
 
 		graphics =
 		{

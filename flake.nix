@@ -12,6 +12,8 @@
 		jcconfs.url = "path:confs";
 		jcconfs.inputs.nixpkgs.follows = "nixpkgs";
 
+		jchw.url = "path:hardware";
+
 		disko.url = "github:nix-community/disko/v1.13.0";
 		disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -22,12 +24,20 @@
 		nixpkgs-xr.url  = "github:nix-community/nixpkgs-xr";
 	};
 
-	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, disko, nix-minecraft, nix-net-lib, nixpkgs-xr, ... }:
+	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, jchw, disko, nix-minecraft, nix-net-lib, nixpkgs-xr, ... }:
 	let
 		hosts =
 		(
 			nixpkgs.lib.attrsets.mapAttrs
-				(hostname: _: import ./nixos/hosts/${hostname}/manifest.nix)
+				(
+					hostname: _:
+					let
+						manifest = import ./nixos/hosts/${hostname}/manifest.nix jchw.database;
+					in
+					assert manifest ? "system";
+					assert manifest ? "type";
+					manifest
+				)
 				(
 					nixpkgs.lib.attrsets.filterAttrs
 						(name: value: !(nixpkgs.lib.strings.hasPrefix "." name) && (value == "directory"))
@@ -35,7 +45,8 @@
 				)
 		);
 
-	getNixpkgsConfig = (
+		getNixpkgsConfig =
+		(
 			spkgs:
 			{
 				permittedInsecurePackages = spkgs.insecure;
@@ -62,11 +73,35 @@
 			hostname:
 			[
 				{ networking.hostName = nixpkgs.lib.mkForce hostname; }
-				./nixos/hosts/${hostname}/hardware-configuration.nix
 				./nixos/hosts/${hostname}/boot.nix
-				./nixos/hosts/${hostname}/options.nix
 				./nixos/hosts/${hostname}/configuration.nix
+				./nixos/hosts/${hostname}/options.nix
+				./nixos/hosts/${hostname}/hardware-configuration.nix
 			]
+		);
+
+		getManifestModules = (
+			manifest:
+			let
+				inherit (manifest) hardware;
+				opt = expr: val: if expr then [ val ] else [ ];
+			in
+			[ ]
+			++ opt (hardware.type == jchw.type.raspi3) jchw.nixosModules.special.raspi3
+			++ opt (hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
+				(
+					jchw.nixosModules.gpu.nvidia
+					{
+						cpu = { inherit (hardware.cpu) manufacturer arch; };
+						board = hardware.gpu;
+
+						desktop_environment_available = hardware.graphics.desktop-environment.enable;
+
+						offload_enable      = hardware.gpu_offload;
+						offload_intelBusId  = hardware.gpu_offload.intelBusId;
+						offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
+					}
+				)
 		);
 
 		getSettings = (
@@ -106,14 +141,20 @@
 					if expr then list else []
 				);
 			in
-			nixpkgs.lib.nixosSystem {
+			nixpkgs.lib.nixosSystem
+			{
 				inherit system;
-				specialArgs = { inherit pkgs-unstable settings nix-minecraft nix-net-lib nixpkgs-xr; };
+				specialArgs =
+				{
+					inherit pkgs-unstable settings nix-minecraft nix-net-lib nixpkgs-xr;
+					jchw = jchw.database;
+				};
+
 				modules = [ ]
 				++ (getHostModules hostname)
 				++ (getUserModules username)
+				++ (getManifestModules manifest)
 				++ [ { common.manifest.hosts = hosts; } ]
-				++ (optionals (type == "raspi3") [ ./nixos/common/hardware/special/raspi3.nix ])
 				++ (
 					let
 						disko-module = ./nixos/hosts/${hostname}/disko.nix;

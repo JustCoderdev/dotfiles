@@ -1,13 +1,6 @@
-{ config, lib, nix-net-lib, ... }:
+{ config, lib, jchw, nix-net-lib, ... }:
 
 let
-	hardware-types = [ "desktop" "laptop" "virtual-machine" "raspi3" ];
-
-	mkReadOnly = (
-		default:
-		{ inherit default; readOnly = true; }
-	);
-
 	mkSubmodOption = (
 		description: submodule:
 		lib.mkOption {
@@ -17,148 +10,103 @@ let
 		}
 	);
 
-	get-attr-names = (attr: lib.attrsets.mapAttrsToList (name: _: name) attr);
-	add-yearRO-opt = (
-		year:
-		(lib.mkOption {
-			description = "The year the architecture was released";
+	int-opt = (
+		description:
+			lib.mkOption {
+			inherit description;
 			type = lib.types.int;
-		}) // (mkReadOnly year)
+		}
 	);
+
+	str-opt = (
+		description:
+			lib.mkOption {
+			inherit description;
+			type = lib.types.str;
+		}
+	);
+
+	nullable-attrs-opt = (
+		type:
+		lib.mkOption {
+			type = lib.types.nullOr (lib.types.attrsOf type);
+			default = null;
+		}
+	);
+
+	bool-opt = (
+		description:
+		lib.mkOption {
+			description = "Whether ${description}";
+			type = lib.types.bool;
+			example = false;
+		}
+	);
+
+	enum-opt = (
+		description: list:
+		lib.mkOption {
+			description = "The kind of ${description}";
+			type = lib.types.enum list;
+			example = builtins.elemAt 0 list;
+		}
+	);
+
+	nullable-str-opt = (
+		description:
+		lib.mkOption {
+			inherit description;
+			type = lib.types.nullOr lib.types.str;
+			default = null;
+		}
+	);
+
+	# Composite options
+	# -------------------- #
+
+	arch-opts =
+	{
+		name = str-opt "The name of the architecture";
+		year = int-opt "The year the architecture was released";
+	};
 in
 
 {
 	options.hardware =
 	{
-		system = lib.mkOption {
-			description = "The platform the host is running on";
-			type = lib.types.str;
-			example = "x86_64-linux";
-		};
+		system = enum-opt "platform the host is running on" jchw.system.all;
+		type   = enum-opt "hardware is this host running on" jchw.type.all;
 
-		type = lib.mkOption {
-			description = "What kind of hardware is this host running on";
-			type = lib.types.enum hardware-types;
-		};
-
-		audio.capable = lib.mkEnableOption "software support for audio";
-		bluetooth.capable = lib.mkEnableOption "software support for bluetooth";
+		audio.capable     = bool-opt "the hardware is audio capable";
+		bluetooth.capable = bool-opt "the hardware is bluetooth capable";
 
 		# -------------------- #
 
-		cpu =
-		let
-			has-iGPU = lib.mkEnableOption "Has integrated gpu (for laptops)";
-		in
+		cpu = nullable-attrs-opt
 		{
-			# amd = {
-			# 	inherit has-iGPU;
-			# 	architecture = mkNullOrEnumOption "Amd cpu architecture" (get-attr-names arch-data.cpu.amd);
-			# };
-
-			intel =
-			let
-				self-arch = config.hardware.cpu.intel.architecture;
-
-				intel-data = import ./architectures-list/cpu-intel.nix;
-				self-data = intel-data.${self-arch};
-			in
-			{
-				inherit has-iGPU;
-				architecture = lib.mkOption {
-					description = "Intel cpu architecture";
-					type = lib.types.nullOr (lib.types.enum (get-attr-names intel-data));
-					default = null;
-				};
-
-				# -------------------- #
-
-				year = (add-yearRO-opt self-data.year);
-
-				ge-coffee-lake = lib.mkOption {
-					description = "Whether the cpu has the architecture greater coffee lake";
-					type = lib.types.bool;
-				} // (mkReadOnly (intel-data.coffee-lake.year <= self-data.year));
-			};
+			name     = str-opt "The name of the processor";
+			cores    = int-opt "The core count of the processor";
+			year     = int-opt "The year the processor was released";
+			has-igpu = bool-opt "the processor has an integrated gpu";
+			arch     = arch-opts;
 		};
 
 		# -------------------- #
 
-		gpu =
+		gpu = nullable-attrs-opt
 		{
-			# intel = {};
-			radeon =
-			let
-				self-arch = config.hardware.gpu.radeon.architecture;
+			name   = str-opt "The name of the board";
+			year   = int-opt "The year the board was released";
+			driver = str-opt "The name of the driver package for this board";
+			arch   = arch-opts;
+		};
 
-				radeon-data = import ./architectures-list/gpu-radeon.nix;
-				self-data = radeon-data.${self-arch};
-			in
-			{
-				year = (add-yearRO-opt self-data.year);
-				architecture = lib.mkOption {
-					description = "Amd gpu architecture";
-					type = lib.types.nullOr (lib.types.enum (get-attr-names radeon-data));
-					default = null;
-				};
-			};
-
-			nvidia =
-			let
-				self-arch = config.hardware.gpu.nvidia.architecture;
-
-				nvidia-data = import ./architectures-list/gpu-nvidia.nix;
-				self-data = nvidia-data.${self-arch};
-			in
-			{
-				architecture = lib.mkOption {
-					description = "Nvidia gpu architecture";
-					type = lib.types.nullOr (lib.types.enum (get-attr-names nvidia-data));
-					default = null;
-				};
-
-				offload = {
-					enable = lib.mkOption {
-						description = "Whether to enable gpu offload";
-						type = lib.types.bool;
-						default = config.hardware.cpu.intel.has-iGPU;
-					};
-					intelBusId = lib.mkOption {
-						description = "Intel bus id";
-						type = lib.types.nullOr lib.types.str;
-						default = null;
-					};
-					nvidiaBusId = lib.mkOption {
-						description = "Nvidia bus id";
-						type = lib.types.nullOr lib.types.str;
-						default = null;
-					};
-				};
-
-				# -------------------- #
-
-				year = (add-yearRO-opt self-data.year);
-
-				gt-turing = lib.mkOption {
-					description = "Whether the gpu has the architecture greater turing";
-					type = lib.types.bool;
-				} // (mkReadOnly (self-data.year > nvidia-data.turing.year));
-
-				ge-turing = lib.mkOption {
-					description = "Whether the gpu has the architecture greater or equal to turing";
-					type = lib.types.bool;
-				} // (mkReadOnly (self-data.year >= nvidia-data.turing.year));
-
-				ge-ampere = lib.mkOption {
-					description = "Whether the gpu has the architecture greater or equal to ampere";
-					type = lib.types.bool;
-				} // (mkReadOnly (self-data.year >= nvidia-data.ampere.year));
-
-				driver-name = lib.mkOption {
-					description = "The name of the driver package for this gpu";
-					type = lib.types.nullOr lib.types.str;
-				} // (mkReadOnly self-data.driver-name);
-			};
+		gpu_offload =
+		{
+			# add checks to see if it can offload at all
+			enable      = lib.mkEnableOption "to enable gpu offload";
+			intelBusId  = nullable-str-opt "Intel bus id";
+			nvidiaBusId = nullable-str-opt "Nvidia bus id";
 		};
 
 		# -------------------- #

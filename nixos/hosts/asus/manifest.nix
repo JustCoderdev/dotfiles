@@ -1,23 +1,21 @@
+{ system, type, cpu, gpu, ... }:
+
 {
 	hardware =
 	{
-		system = "x86_64-linux";
-		type = "laptop";
+		system = system.x86_64-linux;
+		type = type.laptop;
 
 		audio.capable = true;
 		bluetooth.capable = true;
 
-		cpu.intel = {
-			architecture = "ice-lake";
-			has-iGPU = true;
-		};
-		gpu.nvidia = {
-			architecture = "maxwell"; # GM108M - GeForce MX130
-			offload = {
-				enable = true;
-				intelBusId = "PCI:0:2:0";
-				nvidiaBusId = "PCI:2:0:0";
-			};
+		cpu = cpu.intel.core_i5-1035G1;
+		gpu = gpu.nvidia.geforce-mx130;
+		gpu_offload =
+		{
+			enable = true;
+			intelBusId = "PCI:0:2:0";
+			nvidiaBusId = "PCI:2:0:0";
 		};
 
 		graphics =

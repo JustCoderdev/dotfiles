@@ -1,8 +1,11 @@
+{ type, cpu, gpu, ... }:
+
 {
+	# <https://www.parkytowers.me.uk/thin/wyse/3040/>
 	hardware =
 	{
 		system = "x86_64-linux";
-		type = "desktop";
+		type = type.desktop;
 
 		audio.capable = false;
 		bluetooth.capable = false;

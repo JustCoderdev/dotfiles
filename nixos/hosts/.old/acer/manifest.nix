@@ -1,8 +1,10 @@
+{ system, type, cpu, gpu, ... }:
+
 {
 	hardware =
 	{
-		system = "x86_64-linux";
-		type = "laptop";
+		system = system.x86_64-linux;
+		type   = type.laptop;
 
 		audio.capable = true;
 		bluetooth.capable = true;

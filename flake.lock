@@ -138,7 +138,6 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "jcconfs",
           "stylix",
           "nixpkgs"
         ]
@@ -216,7 +215,6 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "jcconfs",
           "nixpkgs"
         ]
       },
@@ -234,40 +232,6 @@
         "repo": "home-manager",
         "type": "github"
       }
-    },
-    "jcbin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "bin",
-        "type": "path"
-      },
-      "original": {
-        "path": "bin",
-        "type": "path"
-      },
-      "parent": []
-    },
-    "jcconfs": {
-      "inputs": {
-        "home-manager": "home-manager",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "stylix": "stylix"
-      },
-      "locked": {
-        "path": "confs",
-        "type": "path"
-      },
-      "original": {
-        "path": "confs",
-        "type": "path"
-      },
-      "parent": []
     },
     "nix-minecraft": {
       "inputs": {
@@ -396,12 +360,10 @@
     "nur": {
       "inputs": {
         "flake-parts": [
-          "jcconfs",
           "stylix",
           "flake-parts"
         ],
         "nixpkgs": [
-          "jcconfs",
           "stylix",
           "nixpkgs"
         ],
@@ -454,8 +416,6 @@
     "root": {
       "inputs": {
         "disko": "disko",
-        "jcbin": "jcbin",
-        "jcconfs": "jcconfs",
         "nix-minecraft": "nix-minecraft",
         "nix-net-lib": "nix-net-lib",
         "nixpkgs": "nixpkgs_2",
@@ -473,7 +433,6 @@
         "flake-parts": "flake-parts",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
-          "jcconfs",
           "nixpkgs"
         ],
         "nur": "nur",
@@ -628,7 +587,6 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "jcconfs",
           "stylix",
           "nur",
           "nixpkgs"

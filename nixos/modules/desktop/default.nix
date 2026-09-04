@@ -57,26 +57,30 @@ in
 		let
 			xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
 			grep = "${pkgs.gnugrep}/bin/grep";
+
+			displays = lib.attrsets.mapAttrsToList
+				(_: value: value)
+				(self-manifest.hardware.graphics.displays);
 		in
 ''
 AVAILABLE_DISPLAYS=""
 
 ${
 builtins.concatStringsSep "\n" (
-	lib.attrsets.mapAttrsToList  (
-		name: value:
+	builtins.map  (
+		{ identifier, resolution, position }:
 		''
-${xrandr} | ${grep} '${value.identifier} connected' > /dev/null
+${xrandr} | ${grep} '${identifier} connected' > /dev/null
 if [[ "''${?}" -eq 0 ]]; then
-	echo -e "Display ${value.identifier} \033[32mconnected\033[0m"
-	${xrandr} --output ${value.identifier} --mode ${value.resolution} --pos ${value.position} --rotate normal
-	AVAILABLE_DISPLAYS="''${AVAILABLE_DISPLAYS},${value.identifier}"
+	echo -e "Display ${identifier} \033[32mconnected\033[0m"
+	${xrandr} --output ${identifier} --mode ${resolution} --pos ${position} --rotate normal
+	AVAILABLE_DISPLAYS="''${AVAILABLE_DISPLAYS},${identifier}"
 else
-	echo -e "Display ${value.identifier} \033[31mdisconnected\033[0m"
-	${xrandr} --output ${value.identifier} --off
+	echo -e "Display ${identifier} \033[31mdisconnected\033[0m"
+	${xrandr} --output ${identifier} --off
 fi
 ''
-	) self-manifest.hardware.graphics.displays
+	) displays
 )
 }
 
@@ -93,6 +97,7 @@ in
 					${xrandr} --setmonitor surround auto $AVAILABLE_DISPLAYS
 				else
 					echo "No display has been found?"
+					exit 1
 				fi
 			;;
 
@@ -104,11 +109,22 @@ in
 				if [ -n $2 ];
 				then
 					echo "Unknown option '$2', did you meant to write 'enable' or 'disable'?"
+					exit 1
 				else
 					echo "Missing command, available are 'enable' and 'disable'"
 				fi
 			;;
 		esac
+	;;
+
+	mirror)
+		if [ ${builtins.count displays} -ne 2];
+		then
+			echo "Number of displays is not 2"
+			exit 1
+		else
+			${xrandr} --output ${(builtins.elemAt displays 0).identifier} --same-as ${(builtins.elemAt displays 1).identifier}
+		fi
 	;;
 esac
 ''

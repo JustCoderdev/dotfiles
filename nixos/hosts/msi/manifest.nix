@@ -1,14 +1,16 @@
+{ system, type, cpu, gpu, ... }:
+
 {
 	hardware =
 	{
-		system = "x86_64-linux";
-		type = "desktop";
+		system = system.x86_64-linux;
+		type = type.desktop;
 
 		audio.capable = true;
 		bluetooth.capable = true;
 
-		cpu.intel.architecture = "coffee-lake";
-		gpu.nvidia.architecture = "pascal"; # GTX 1050-Ti
+		cpu = cpu.intel.core_i5-8400;
+		gpu = gpu.nvidia.gtx-1050-ti;
 
 		graphics =
 		{

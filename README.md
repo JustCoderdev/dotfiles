@@ -162,7 +162,7 @@ sudo nix \
 >
 > You will get "relative path error for ./bin..."
 >
-> To fix it remove any mention of `jcbin` and `jcconfs` from `flake.lock` and then rebuild
+> To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
 
 ```shell
 ./install.sh
@@ -172,8 +172,9 @@ sudo nix \
 
 There are 3 main directories (+1):
 
-- `bin`: various scripts available in a flake
-- `confs`: application configuration files (w home-manager support)
+- `bin`: various scripts and binaries
+- `confs`: user configuration files (w home-manager support)
+- `hardware`: common hardware settings and data
 - `nixos`: nixos system modules
 - `secrets`: local secrets directory
 
@@ -187,29 +188,34 @@ There are 3 main directories (+1):
 - `.wallpapers`: desktop wallpapers
 - `modules`: applications configurations
     - `standalone`: configurations that exist only in home-manager
-    - `...`: application related files and configurations
+    - `<application>`: application related files and configurations
 - `settings`: user settings (profiles and insecure/unfree packages list)
 - `stylix`: stylix theme and modules
 - `users-icon`: available users icon
+
+### hardware
+
+- `cpu`: information on processors divided by manufacturer
+- `gpu`: information on boards divided by manufacturer
 
 ### nixos
 
 - `common`:
     - `core`: required stuff for all systems (locale, font, etc...)
     - `environments`: user "environments" (gaming, development)
-    - `hardware`: manifest activated hardware options
+    - ~~`hardware`: manifest activated hardware options~~ TODO: move to jchw flake
     - `manifest`: settings to create the ecosystem of hosts
-    - `users`: user preferences
+    - `users`: users preferences
 - `hosts`:
     - `.example`: example configuration files for installation script
     - `.old`: host configurations files for hosts that haven't yet migrated to manifest sytem
-    - `...`: host configuration
+    - `<hostname>`: host configuration
         - `boot.nix`: boot related options
         - `configuration.nix`: specific device / services configuration
-        - `disko.nix`: disk configuration
+        - `disko.nix`: disk configuration (opt)
         - `hardware-configuration.nix`: nixos generated hw configuration file
         - `manifest.nix`: manifest file
-        - `options.nix`: set values for custom options
+        - `options.nix`: options from handmade modules 
 - `modules`:
     - `desktop`: desktop environment
     - `services`: daemons and what not

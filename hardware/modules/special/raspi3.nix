@@ -4,11 +4,9 @@
   # IMPORT ONLY ON RASPBERRY3 #
   #############################
 
-
-{ config, lib, modulesPath, ... }:
+{ lib, modulesPath, ... }:
 
 let
-	cfg = config.common.manifest;
 	nixos-hardware = fetchTarball {
 		url = "https://github.com/NixOS/nixos-hardware/tarball/0ed819e708af17bfc4bbc63ee080ef308a24aa42";
 		sha256 = "0n83riy6j6vlsjcsjp1w704ag5db8gyd3qap0ir4gl8ffanm4kr3";
@@ -36,15 +34,7 @@ in
 		# Tell the Nix evaluator to garbage collect more aggressively
 		environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
 
-
 		# Other
 		hardware.enableRedistributableFirmware = true;
-
-		# -------------------- #
-
-		assertions = [ {
-			assertion = cfg.self.hardware.system == "aarch64-linux";
-			message = "Option `config.common.manifest.hardware.hosts.${cfg.self.hostname}.type` has been set to 'raspi3' but system is not 'aarch64-linux'";
-		} ];
 	};
 }
