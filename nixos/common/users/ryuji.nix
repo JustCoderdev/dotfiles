@@ -45,16 +45,18 @@ in
 				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDshsbcBThxrbEKPzmv5L+S3C6TtD7Yb0KFmK6p98lFFuaWG0ATjUneBPOLa8+bjXcKrQtnfC9S6XpOQLgw3NqHxqeFTHRskgn8kIMEnsTmnTJf3G/+bIQsiBT3othh11tVadyPCUZ0K0/uN5zCqEIYXoFWy0ydHeoeE0f+3ZtWhv9megUZTBxPJWJcaVzyrPuMd1imzZiwdcSTCqtar0TjfU3s9YAJ4F06PZZ/zGNTPI4lUyXwFwHVWJj6j9tK5NVJam2rRpRVOpXY7w4PpmAMT88Uc4lrSBz1QuGCrmzajz57VbzxTxbPvjTwwXvTy/AmVFA2xvYxO4yzVWv+aFiFJsWCUaSCLu1qN/t6Xj3Hkl/jHzBkhnqXvn/xWmoje0IxTjt/WkbuPCuPtwu9vlAhYv+OT4khKopZmwBm0hdTZImFIrmT6QowWGb+7kkCRmicLxHScGDFhFSM4Dgs4qGN6B6yiUU70fTJn/5pKgM2F6KxfdqYeIFU1RnqtcC3vc= mobile@localhost"
 			];
 
-			packages = with pkgs; [ nix-tree btop ] # dust
+			packages = with pkgs;
+			[
+				nix-tree btop unixtools.netstat
+				imagemagick # dust
+			]
 			++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 			(
 				[
 					firefox google-chrome
-					telegram-desktop
-					obsidian vlc audacity emulsion imagemagick
+					obsidian vlc audacity emulsion
 					gnome-disk-utility gpick
-					unixtools.netstat
-					# baobab rustdesk
+					baobab # rustdesk
 				]
 				++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
 				++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]

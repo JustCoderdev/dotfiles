@@ -31,7 +31,7 @@ in
 
 		home.file =
 		{
-			".config/nvim/init.lua".text = ./init.lua;
+			".config/nvim/init.lua".source = ./init.lua;
 			".config/nvim/lua" = {
 				source = ./lua;
 				recursive = true;

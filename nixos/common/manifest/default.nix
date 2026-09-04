@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, jchw, ... }:
 
 let
 	cfg = config.common.manifest;
@@ -46,7 +46,7 @@ in
 		# -------------------- #
 
 		jcconfs.host.has-de    = lib.mkDefault has-de;
-		jcconfs.host.is-laptop = self-hw.type == "laptop";
+		jcconfs.host.is-laptop = self-hw.type == jchw.type.laptop;
 
 		common.core.plymouth.enable = lib.mkDefault has-de;
 		common.core.fonts.enable    = lib.mkDefault has-de;
@@ -60,13 +60,14 @@ in
 		hardware.graphics = lib.mkIf (self-graphics.capable)
 		{
 			enable      = lib.mkDefault true;
-			enable32Bit = lib.mkDefault (self-hw.system == "x86_64-linux");
+			enable32Bit = lib.mkDefault (self-hw.system == jchw.system.x86_64-linux);
 		};
 
 
 		# Cpu intel
 		# -------------------- #
 
+		# TEST: trying to see if modesettings fixes xorg from crashing
 		boot.initrd.kernelModules = [ "i915" ];
 			# if (self-hw.cpu.manufacturer == jchw.architectures.cpu.manufacturer.intel) then  else [];
 	};

@@ -32,7 +32,7 @@ in
 				];
 
 				env = "XCURSOR_SIZE,24";
-				exec = "${pkgs.awww}/bin/awww img ${wallpapers_path}/space_engineers.png";
+				exec = "${pkgs.swww}/bin/swww img ${wallpapers_path}/space_engineers.png";
 
 				general =
 				{

@@ -87,16 +87,21 @@
 			++ opt (hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
 				(
 					jchw.nixosModules.gpu.nvidia
-					{
-						cpu = { inherit (hardware.cpu) manufacturer arch; };
-						board = hardware.gpu;
+					(
+						{
+							cpu = { inherit (hardware.cpu) manufacturer arch; };
+							board = hardware.gpu;
 
-						desktop_environment_available = hardware.graphics.desktop-environment.enable;
-
-						offload_enable      = hardware.gpu_offload.enable;
-						offload_intelBusId  = hardware.gpu_offload.intelBusId;
-						offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
-					}
+							desktop_environment_available = hardware.graphics.desktop-environment.enable;
+						} // (
+							if ! (hardware ? "gpu_offload") then { } else
+							{
+								offload_enable      = hardware.gpu_offload.enable;
+								offload_intelBusId  = hardware.gpu_offload.intelBusId;
+								offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
+							}
+						)
+					)
 				)
 		);
 

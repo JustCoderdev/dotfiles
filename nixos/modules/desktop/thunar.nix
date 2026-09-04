@@ -12,7 +12,7 @@ in
 			thunar =
 			{
 				enable = true;
-				plugins = with pkgs; [
+				plugins = with pkgs.xfce; [
 					thunar-archive-plugin     # archives context actions
 					thunar-media-tags-plugin  # media tags?
 					thunar-volman             # drive mounting etc...

@@ -36,21 +36,10 @@ let
 	ge-turing = board.year >= architecture.gpu.nvidia.turing.year;
 	ge-coffee-lake = cpu_is_intel -> (cpu.arch.year >= architecture.cpu.intel.coffee-lake.year);
 
-	offload_available = ge-turing && ge-coffee-lake;
 
-	mkDriver = (args:
-		let generic = import (builtins.fetchurl "https://github.com/NixOS/nixpkgs/raw/2b921c4a8074949ff0669ab5e85a6c1c77eda170/pkgs/os-specific/linux/nvidia-x11/generic.nix") args; in
-		pkgs.callPackage generic { lib32 = (pkgs.pkgsi686Linux.callPackage generic { libsOnly = true; }).out; }
-	);
-
-	legacy_580 = mkDriver {
-		version = "580.178.04";
-		sha256_64bit = "sha256-WXWobuRb/8tib1GuM9EWmxCBhqLqR61lHnLxP6S21vk=";
-		sha256_aarch64 = "sha256-71nsXSSFDhLW91UOwffPhNtTqEzpxj6zulXvXtDE8Ek=";
-		openSha256 = "sha256-7eXEROG2rQK9+Ag26nG4jFPrnKeveVUQ0ugIAshJZPQ=";
-		settingsSha256 = "sha256-KcrGHoR+ZMdsFyI4myU8/eVls2f8GkNSX/j2JnZndyM=";
-		persistencedSha256 = "sha256-3Omj160wtWdKAZDzWt/m/cbUTQ9DMJ1rSxMrnIrKXiw=";
-	};
+	# NOTE: DOESN?T WORK, THIS IS THE SECOND TIME I AM DOING THIS AAAAAAAAAAAAAAAAAAAAAA
+	# ge-turing && ge-coffee-lake;
+	offload_available = true;
 in
 
 {
@@ -69,8 +58,8 @@ in
 		{
 			modesetting.enable = true;
 			package = (
-				if board.driver-name == "legacy_580" then legacy_580
-				else config.boot.kernelPackages.nvidiaPackages.${board.driver-name}
+				let name = if board.driver-name == "legacy_580" then "stable" else board.driver-name; in
+				config.boot.kernelPackages.nvidiaPackages.${name}
 			);
 
 			open = ge-turing;  # Use open source driver (Turing or newer)
