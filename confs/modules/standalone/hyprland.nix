@@ -14,7 +14,7 @@ in
 		{
 			enable = true;
 			systemd.enable = true;
-			# configType = "hyprlang";
+			configType = "hyprlang";
 
 			settings =
 			{
