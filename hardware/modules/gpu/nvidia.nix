@@ -38,7 +38,11 @@ let
 
 	offload_available = ge-turing && ge-coffee-lake;
 
-	mkDriver = import (builtins.fetchurl "https://github.com/NixOS/nixpkgs/raw/2b921c4a8074949ff0669ab5e85a6c1c77eda170/pkgs/os-specific/linux/nvidia-x11/generic.nix");
+	mkDriver = (args:
+		let generic = import (builtins.fetchurl "https://github.com/NixOS/nixpkgs/raw/2b921c4a8074949ff0669ab5e85a6c1c77eda170/pkgs/os-specific/linux/nvidia-x11/generic.nix") args; in
+		pkgs.callPackage generic { lib32 = (pkgs.pkgsi686Linux.callPackage generic { libsOnly = true; }).out; }
+	);
+
 	legacy_580 = mkDriver {
 		version = "580.178.04";
 		sha256_64bit = "sha256-WXWobuRb/8tib1GuM9EWmxCBhqLqR61lHnLxP6S21vk=";
