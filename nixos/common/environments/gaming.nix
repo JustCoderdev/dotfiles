@@ -18,12 +18,8 @@ let
 in
 
 {
-	# imports = [ ../../unofficial/modules/wivrn.nix ];
-
 	config = lib.mkIf (cfg.enable)
 	{
-		# programs.lutris.enable = true; # TODO: on next release cycle
-
 		# Steam
 		programs.steam =
 		{
@@ -45,13 +41,13 @@ in
 			prismlauncher  # Minecraft launcher
 			lutris         # Game launcher
 
-			wineWowPackages.stable
+			wineWow64Packages.stable
 			protonup-ng
 		]
 		++ lib.lists.optionals (cfg.vr.enable)
 		(
 			[
-				android-tools  # Used for meta quest?
+				android-tools  # adb utility
 			]
 			++
 			(with nixpkgs-xr.packages.${system}; [

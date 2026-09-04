@@ -28,7 +28,7 @@ in
 				allowPing = true;
 			};
 
-			wireless.enable = false;      # disable wpa_supplicant.
+			# wireless.enable = false;      # disable wpa_supplicant.
 			networkmanager.enable = true;
 			# dhcpcd.enable = false;
 

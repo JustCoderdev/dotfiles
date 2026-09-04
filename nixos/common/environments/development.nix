@@ -21,7 +21,7 @@ in
 		];
 
 		environment.systemPackages = with pkgs; [ screen ]
-		++ lib.lists.optionals (cfg.tools.android.enable) [ scrcpy ]
+		++ lib.lists.optionals (cfg.tools.android.enable) [ android-tools scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap unixtools.arp ]
 		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 unityhub ]
 		++ lib.lists.optionals (cfg.tools.c.enable)
@@ -58,9 +58,7 @@ in
 
 		# -------------------- #
 
-
 		# Android
-		programs.adb.enable = cfg.tools.android.enable;
 		# boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
 		# services.udev.packages = [ pkgs.android-udev-rules ];
 

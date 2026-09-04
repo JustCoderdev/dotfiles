@@ -1,4 +1,19 @@
-{ config, lib, jchw, nix-net-lib, ... }:
+{ config, lib, nix-net-lib, ... }:
+
+let
+	# TODO: Understand WTF is wrong with jchw as specialArgs
+	get-attrs =
+	(
+		list:
+		builtins.listToAttrs (builtins.map (val: { name = val; value = val; }) list)
+		// { all = list; }
+	);
+
+	jchw = {
+		system = get-attrs [ "x86_64-linux" ];
+		type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" ];
+	};
+in
 
 let
 	mkSubmodOption = (
@@ -74,7 +89,7 @@ in
 {
 	options.hardware =
 	{
-		system = enum-opt "platform the host is running on" jchw.system.all;
+		system = enum-opt "platform the host is running on"  jchw.system.all;
 		type   = enum-opt "hardware is this host running on" jchw.type.all;
 
 		audio.capable     = bool-opt "the hardware is audio capable";

@@ -4,7 +4,7 @@
 {
 	description = "JC Binary Executables";
 
-	inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
+	inputs.nixpkgs.url = "nixpkgs/nixos-26.05";
 
 	outputs = { nixpkgs, ... }:
 	let

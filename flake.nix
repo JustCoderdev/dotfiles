@@ -3,7 +3,7 @@
 
 	inputs =
 	{
-		nixpkgs.url = "nixpkgs/nixos-25.11";
+		nixpkgs.url = "nixpkgs/nixos-26.05";
 		nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
 		jcbin.url = "path:bin";
@@ -31,12 +31,8 @@
 			nixpkgs.lib.attrsets.mapAttrs
 				(
 					hostname: _:
-					let
-						manifest = import ./nixos/hosts/${hostname}/manifest.nix jchw.database;
-					in
-					assert manifest ? "system";
-					assert manifest ? "type";
-					manifest
+					# TODO: perform type checking
+					import ./nixos/hosts/${hostname}/manifest.nix jchw.database
 				)
 				(
 					nixpkgs.lib.attrsets.filterAttrs
@@ -87,7 +83,7 @@
 				opt = expr: val: if expr then [ val ] else [ ];
 			in
 			[ ]
-			++ opt (hardware.type == jchw.type.raspi3) jchw.nixosModules.special.raspi3
+			++ opt (hardware.type == jchw.database.type.raspi3) jchw.nixosModules.special.raspi3
 			++ opt (hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
 				(
 					jchw.nixosModules.gpu.nvidia
@@ -97,7 +93,7 @@
 
 						desktop_environment_available = hardware.graphics.desktop-environment.enable;
 
-						offload_enable      = hardware.gpu_offload;
+						offload_enable      = hardware.gpu_offload.enable;
 						offload_intelBusId  = hardware.gpu_offload.intelBusId;
 						offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
 					}

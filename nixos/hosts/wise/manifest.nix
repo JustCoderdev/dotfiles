@@ -1,17 +1,18 @@
-{ type, cpu, gpu, ... }:
+{ system, type, cpu, gpu, ... }:
 
 {
 	# <https://www.parkytowers.me.uk/thin/wyse/3040/>
 	hardware =
 	{
-		system = "x86_64-linux";
+		system = system.x86_64-linux;
 		type = type.desktop;
 
 		audio.capable = false;
 		bluetooth.capable = false;
 		graphics.capable = false;
 
-		cpu.intel.architecture = "broadwell";
+		cpu = cpu.intel.atom_x5-Z8350;
+
 		interfaces.wireless."wlo1".mac = "c8:58:c0:37:fe:ce";
 	};
 

@@ -55,7 +55,7 @@ in
 
 		services.xserver.displayManager.setupCommands =
 		let
-			xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+			xrandr = "${pkgs.xrandr}/bin/xrandr";
 			grep = "${pkgs.gnugrep}/bin/grep";
 
 			displays = lib.attrsets.mapAttrsToList
@@ -118,7 +118,7 @@ in
 	;;
 
 	mirror)
-		if [ ${builtins.count displays} -ne 2];
+		if [ ${toString (builtins.length displays)} -ne 2];
 		then
 			echo "Number of displays is not 2"
 			exit 1

@@ -3,8 +3,8 @@ let
 	(
 		list:
 		builtins.listToAttrs (builtins.map (val:
-			if builtins.isAttrs then { inherit (val) name; value = val; }
-			else if builtins.isStr then { name = val; value = val; }
+			if builtins.isAttrs val then { inherit (val) name; value = val; }
+			else if builtins.isString val then { name = val; value = val; }
 			else abort "cannot get attrs")
 		list)
 		// { all = list; }

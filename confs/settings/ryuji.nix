@@ -5,6 +5,7 @@
 		unfree = [
 			"nvidia-x11"
 			"nvidia-settings"
+			"nvidia-kernel-modules"
 			"cuda-merged"
 			"cuda_cuobjdump"
 			"cuda_gdb"

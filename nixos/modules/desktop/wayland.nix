@@ -50,7 +50,7 @@ in
 				libnotify     # dunst dependency
 				waybar        # status bar
 				rofi          # app launcher
-				swww          # wallpaper daemon
+				awww          # wallpaper daemon
 				playerctl     # media player control
 				slurp grim    # screenshots utility
 			]

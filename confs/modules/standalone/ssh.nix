@@ -12,7 +12,7 @@ in
 			enable = true;
 
 			enableDefaultConfig = false;
-			matchBlocks."*" =
+			settings."*" =
 			{
 				forwardAgent = false;
 				addKeysToAgent = "no";

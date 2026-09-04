@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, jchw, ... }:
 
 let
 	cfg = config.common.manifest;
@@ -13,6 +13,9 @@ let
 
 	has-de = self-graphics.desktop-environment.enable;
 in
+
+# assert self-hw.cpu != null;              #  "You must set the type of the processor!"
+# assert has-de -> self-graphics.capable;  # "You can't enable the desktop environment if the device is not capable of graphics!"
 
 {
 	imports =
@@ -64,29 +67,8 @@ in
 		# Cpu intel
 		# -------------------- #
 
-		boot.initrd.kernelModules = []
-			++ lib.optionals (self-hw.cpu.intel.architecture != null) [ "i915" ];
-
-
-		# Assertions
-		# -------------------- #
-
-		assertions =
-		let
-			add-assertion = (
-				assertion: message:
-				{ inherit assertion message; }
-			);
-		in
-		[ ]
-		++ lib.lists.optionals (self-hw.system == "x86_64-linux")
-		[
-			(add-assertion (self-hw.cpu.intel.architecture != null) "You must set the architecture of the processor!")
-		]
-		++ lib.lists.optionals (has-de)
-		[
-			(add-assertion (self-graphics.capable) "You can't enable the desktop environment if the device is not capable of graphics!")
-		];
+		# boot.initrd.kernelModules = []
+		# 	++ lib.optionals (self-hw.cpu.manufacturer == jchw.architectures.cpu.manufacturer.intel) [ "i915" ];
 	};
 
 	# ------------------------------------------------------------ #
@@ -114,6 +96,7 @@ in
 		hosts = mkSubmodOption "The set with the manifest for registered hosts"
 		(
 			{ name, ... }:
+
 			{
 				imports =
 				[

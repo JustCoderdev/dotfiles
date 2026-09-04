@@ -140,13 +140,10 @@ Host ${host}
 			enable = true;
 			openFirewall = true;
 
-			banner = ''
-You are accessing ${hostname}, one of my devices. DO NOT TOUCH
-'';
-
 			settings =
 			{
 				PermitRootLogin = "no";
+				Banner = builtins.toFile "sshd-banner" "You are accessing ${hostname}, one of my devices. DO NOT TOUCH";
 
 				UsePAM = true;
 				X11Forwarding = true;

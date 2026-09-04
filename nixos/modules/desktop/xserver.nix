@@ -115,8 +115,7 @@ export SSH_AUTH_SOCK
 								config.jcbin.boomer.package
 								(
 									pkgs.callPackage ../../unofficial/pkgs/hacksaw.nix {
-										inherit (pkgs) python3; # pkg-config
-										inherit (pkgs.xorg) libX11 libXrandr;
+										inherit (pkgs) libX11 libXrandr python3; # pkg-config
 										inherit (pkgs-unstable) libxcb;
 									}
 								)
