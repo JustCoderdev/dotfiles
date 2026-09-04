@@ -10,13 +10,12 @@ in
 	(add-proc "core_i5-8400"     6   2017  false   architecture.core.coffee-lake)  # <https://www.intel.com/content/www/us/en/products/sku/126687/intel-core-i58400-processor-9m-cache-up-to-4-00-ghz/specifications.html>
 	(add-proc "core_i5-1035G1"   4   2019  true    architecture.core.ice-lake)
 
-	# [x] wise   : atom_x5-Z8350
-	# [x] msi    : core_i5-8400
-	# [x] asus   : core_i5-1035G1
 	# [ ] acer
 	# [ ] alpha
 	# [ ] beta
+	# [x] asus
 	# [ ] jarvis
+	# [x] msi
 	# [ ] quiss
+	# [x] wise
 ]
-

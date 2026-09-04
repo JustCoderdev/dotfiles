@@ -68,7 +68,7 @@ in
 		# -------------------- #
 
 		# Needed for xrizer to translate OpenGL into OpenXR
-		# services.xserver.displayManager.xserverArgs = [ "-core +iglx" ];
+		services.xserver.displayManager.xserverArgs = [ "-core +iglx" ];
 
 		services.wivrn = lib.mkIf (cfg.vr.enable)
 		{
