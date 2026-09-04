@@ -1,4 +1,4 @@
-{ config, lib, jchw, ... }:
+{ config, lib, ... }:
 
 let
 	cfg = config.common.manifest;
@@ -67,8 +67,8 @@ in
 		# Cpu intel
 		# -------------------- #
 
-		# boot.initrd.kernelModules = []
-		# 	++ lib.optionals (self-hw.cpu.manufacturer == jchw.architectures.cpu.manufacturer.intel) [ "i915" ];
+		boot.initrd.kernelModules = [ "i915" ];
+			# if (self-hw.cpu.manufacturer == jchw.architectures.cpu.manufacturer.intel) then  else [];
 	};
 
 	# ------------------------------------------------------------ #

@@ -11,7 +11,7 @@ in
 		{
 			enable = true;
 			defaultEditor = true;
-			initLua = builtins.readFile ./init.lua;
+			# initLua = builtins.readFile ./init.lua;
 
 			withRuby = false;
 			withPython3 = false;
@@ -29,9 +29,13 @@ in
 		};
 
 
-		home.file.".config/nvim/lua" = {
-			source = ./lua;
-			recursive = true;
+		home.file =
+		{
+			".config/nvim/init.lua".text = ./init.lua;
+			".config/nvim/lua" = {
+				source = ./lua;
+				recursive = true;
+			};
 		};
 	};
 
