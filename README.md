@@ -126,13 +126,13 @@ cd "${DOT_FILES}"
 
 2. Install
 
-- Without nix [not updated]
+- Without nix [outdated, won't work]
 
 ```shell
 ./bin/bash-scripts/mount-configs.sh
 ```
 
-- With nix stuff
+- With nix
 
 Home manager
 
@@ -197,6 +197,7 @@ There are 3 main directories (+1):
 
 - `cpu`: information on processors divided by manufacturer
 - `gpu`: information on boards divided by manufacturer
+- `modules`: nixos preconfigured modules for specific hardware
 
 ### nixos
 

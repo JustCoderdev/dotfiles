@@ -124,7 +124,48 @@
 
 	{
 		# nixos-rebuild switch --flake .#<hostname>
-		nixosConfigurations = { }
+		nixosConfigurations =
+		{
+			nix6OS =
+			let
+				system = "x86_64-linux";
+			in
+			nixpkgs.lib.nixosSystem
+			{
+				inherit system;
+				modules = [
+					(
+						{ config, pkgs, ... }:
+						let
+							nix6OS = import ./_experiments/nix6OS.nix { inherit pkgs; };
+
+							kernel-filename = "n6os-linux-6.12.93-bzImage";
+							kernel-args = builtins.concatStringsSep " " config.boot.kernelParams;
+							initrd-filename = "n6ox-initrd-0";
+						in
+						{
+							config.boot.loader.grub =
+							{
+								extraEntires = ''
+menuentry "nix6OS" {
+search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
+  linux ($drive1)//${kernel-filename} init=/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init ${kernel-args}
+  initrd ($drive1)//${initrd-filename}
+}
+'';
+
+								extraFiles =
+								{
+									"${kernel-filename}" = ./${nix6OS.kernel}/bzImage;
+									"${initrd-filename}" = nix6OS.initrd;
+								};
+							};
+						}
+					)
+				];
+
+			};
+		}
 		//
 		# Manifest
 		# -------------------- #

@@ -2,6 +2,7 @@ let
 	# ------------------------------------------------------------ #
 	# -------------------START OF TEST---------------------------- #
 	# ------------------------------------------------------------ #
+
 	test-type =
 	rec {
 		# Utils
@@ -17,15 +18,15 @@ let
 			__jc_isAtomicType = bool;
 			__jc_isOptional   = bool;
 
-		# 	__jc_subtype     = opt TYPE-OF-TYPE;
-		# 	__jc_setdef      = opt list set { name = str; value = TYPE-OF-TYPE; };
-		# 	__jc_valid_vals  = opt list __jc_subtype;
+			# __jc_subtype     = opt TYPE-OF-TYPE;
+			# __jc_setdef      = opt list set { name = str; value = TYPE-OF-TYPE; };
+			# __jc_valid_vals  = opt list __jc_subtype;
 		};
 
 		opt = type: type // { __jc_isOptional = true; };
 
 		# Types
-		ANY  = new-type "ANY"      (_: true)        false;
+		free = new-type "free"     (_: true)        false;
 
 		str  = new-type "string"   builtins.isStr   true;
 		int  = new-type "integer"  builtins.isInt   true;
@@ -34,7 +35,7 @@ let
 		pth  = new-type "path"     builtins.isPath  true;
 		func = new-type "func"     builtins.isFunc  true;
 
-		set  = def: new-set-type "set"  builtins.isAttrs def;
+		set  = def: (new-type "set"  builtins.isAttrs false)  // { __jc_sdef;
 
 		list = subtype:              new-list-type "list" builtins.isList            subtype;
 		enum = subtype: valid-vals: (new-list-type "enum" subtype.__jc_baseMatchFunc subtype) // { __jc_valid_values = valid-vals; };
