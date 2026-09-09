@@ -29,16 +29,15 @@
 		hosts =
 		(
 			nixpkgs.lib.attrsets.mapAttrs
-				(
-					hostname: _:
-					# TODO: perform type checking
-					import ./nixos/hosts/${hostname}/manifest.nix jchw.database
-				)
-				(
-					nixpkgs.lib.attrsets.filterAttrs
-						(name: value: !(nixpkgs.lib.strings.hasPrefix "." name) && (value == "directory"))
-						(builtins.readDir ./nixos/hosts)
-				)
+			(
+				hostname: _: # TODO: perform type checking
+				import ./nixos/hosts/${hostname}/manifest.nix jchw.database
+			)
+			(
+				nixpkgs.lib.attrsets.filterAttrs
+					(name: value: !(nixpkgs.lib.strings.hasPrefix "." name) && (value == "directory"))
+					(builtins.readDir ./nixos/hosts)
+			)
 		);
 
 		getNixpkgsConfig =
@@ -84,7 +83,7 @@
 			in
 			[ ]
 			++ opt (hardware.type == jchw.database.type.raspi3) jchw.nixosModules.special.raspi3
-			++ opt (hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
+			++ opt (hardware ? "gpu" && hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
 				(
 					jchw.nixosModules.gpu.nvidia
 					(
