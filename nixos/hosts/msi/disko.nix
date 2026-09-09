@@ -34,7 +34,7 @@ in
 				{
 					boot = (create-pt   "1M" "EF02" null); # grub mbr
 					 ESP = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
-					root = (create-pt "100%"  null  (create-fs "ext4" "/")); 
+					root = (create-pt "100%"  null  (create-fs "ext4" "/"));
 				};
 			};
 		};

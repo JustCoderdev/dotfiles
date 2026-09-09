@@ -34,7 +34,7 @@ let
 	# cpu_is_amd = cpu.manufacturer == architecture.cpu.manufacturer.amd;
 
 	ge-turing = board.year >= architecture.gpu.nvidia.turing.year;
-	ge-coffee-lake = cpu_is_intel -> (cpu.arch.year >= architecture.cpu.intel.coffee-lake.year);
+	# ge-coffee-lake = cpu_is_intel -> (cpu.arch.year >= architecture.cpu.intel.coffee-lake.year);
 
 
 	# NOTE: DOESN?T WORK, THIS IS THE SECOND TIME I AM DOING THIS AAAAAAAAAAAAAAAAAAAAAA

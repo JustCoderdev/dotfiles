@@ -32,11 +32,7 @@ rec {
 		cpu =
 		{
 			manufacturer = get-attrs [ "intel" ];
-			intel = let arch = (import ./cpu/intel/architecture.nix); in
-			{
-				atom = get-attrs arch.atom;
-				core = get-attrs arch.core;
-			};
+			intel = get-attrs (import ./cpu/intel/architecture.nix);
 		};
 
 		gpu =
