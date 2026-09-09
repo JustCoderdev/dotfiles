@@ -17,7 +17,7 @@ in
 	# stage-2 = "/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init"
 
 	kernel = kernel-drv;
-	kernel-args = [ ];
+	kernel-args = [ "root=fstab" ];
 }
 
 # Used to generate menuentry
