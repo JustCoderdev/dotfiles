@@ -6,9 +6,8 @@ let
 	kernel-filename = "n6os-linux-6.12.93-bzImage";
 	kernel-args = builtins.concatStringsSep " " nix6OS.kernel-args; # config.boot.kernelParams
 
-
-	stage-1 = config.system.build.bootStage1;
-	# stage-2 = "/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init"
+	stage-1 = if nix6OS.stage-1 != null then nix6OS.stage-1 else config.system.build.bootStage1;
+	inherit (nix6OS) stage-2;
 in
 {
 	config.boot.loader.grub =
@@ -16,12 +15,8 @@ in
 		extraEntries = ''
 menuentry "nix6OS" {
 search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
-linux ($drive1)//${kernel-filename} init=${nix6OS.stage-2} ${kernel-args}
-''
-+
-lib.strings.optionalString (nix6OS.stage-1 != null) "initrd ($drive1)//${initrd-filename}"
-+
-''
+  linux ($drive1)//${kernel-filename} init=${stage-2} ${kernel-args}
+  initrd ($drive1)//${initrd-filename}
 }
 '';
 
