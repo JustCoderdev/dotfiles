@@ -9,8 +9,10 @@ let
 	initrd-drv = null;
 in
 
+# Could not mount root fs on ""
+
 {
-	initrd = initrd-drv;
+	stage-1 = initrd-drv; # initrd
 	stage-2 = pkgs.bash;
 
 	kernel = kernel-drv;
