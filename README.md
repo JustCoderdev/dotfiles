@@ -585,3 +585,9 @@ sudo nixos-rebuild switch \
 nix-store --verify --check-contents --repair
 ```
 
+### Remove efi boot entry
+
+```shell
+efibootmgr               # list current boot entry
+efibootmgr -b <xxxx> -B  # remove entry number <xxxx>
+```
