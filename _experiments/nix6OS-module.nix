@@ -1,5 +1,6 @@
 { lib, pkgs, config, ... }:
 let
+	cfg = config._experimental.nix6OS;
 	nix6OS = import ./nix6OS.nix { inherit pkgs; };
 
 	initrd-filename = "n6ox-initrd-0";
@@ -10,7 +11,7 @@ let
 	inherit (nix6OS) stage-2;
 in
 {
-	config.boot.loader.grub =
+	config.boot.loader.grub = lib.mkIf (cfg.enable)
 	{
 		extraEntries = ''
 menuentry "nix6OS" {
@@ -27,6 +28,13 @@ search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
 		}
 		# // lib.attrsets.optionalAttrs (nix6OS.initrd != null) { "${initrd-filename}" = nix6OS.initrd; }
 		;
+	};
+
+	# ------------------------------------------------------------ #
+
+	options._experimental.nix6OS =
+	{
+		enable = lib.mkEnableOption "nix6OS experimental module";
 	};
 }
 

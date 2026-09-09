@@ -5,7 +5,8 @@
 	time.timeZone = "Europe/Rome";
 
 	# Select internationalisation properties.
-	i18n = {
+	i18n =
+	rec {
 		defaultLocale = "en_US.UTF-8";
 		extraLocaleSettings =
 		{
@@ -15,7 +16,7 @@
 			LC_PAPER          = "it_IT.UTF-8";
 			LC_TELEPHONE      = "it_IT.UTF-8";
 
-			LC_COLLATE        = "C.UTF-8";
+			# LC_COLLATE        = "C.UTF-8"; # sorts string based on ASCII value
 			LC_MEASUREMENT    = "C.UTF-8";
 
 			LC_TIME           = "en_DK.UTF-8";
