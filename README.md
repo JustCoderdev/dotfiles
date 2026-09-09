@@ -139,7 +139,7 @@ Home manager
 ```shell
 cd confs
 
-# add "--extra-features 'nix-command flakes'" after `nix`
+# add "--extra-experimental-features 'nix-command flakes'" after `nix`
 # and before `build` if using a non-flake env
 nix build ".#${USER}-activation"
 
@@ -149,14 +149,14 @@ nix build ".#${USER}-activation"
 Disk partitions
 
 ```shell
-# add "--extra-features 'nix-command flakes'" after `nix`
+# add "--extra-experimental-features 'nix-command flakes'" after `nix`
 # and before `run` if using a non-flake env
 sudo nix \
      run github:nix-community/disko/latest -- \
      --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix
 ```
 
-- With NixOS
+- With NixOS 
 
 > [!important]
 >
@@ -164,9 +164,17 @@ sudo nix \
 >
 > To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
 
+Method A [outdated]
+
 ```shell
 ./install.sh
 ```
+
+Method B
+
+- Create required files in `nixos/host/${HOST}`
+- Generate hardware config with `nixos-generate-config --show-hardware-config`
+
 
 ## Dotfiles structure
 

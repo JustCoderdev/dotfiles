@@ -15,11 +15,6 @@
 				  msi = "d4:3b:04:51:45:28";
 			};
 
-			secrets =
-			{
-				cloudflare.origin-cert.installed = true;
-			};
-
 			ssh.cloudflared-proxy =
 			{
 				enable = true;
@@ -53,6 +48,6 @@
 		);
 	in
 	[
-		(gen-builder  "quiss.home.lan" 4)
+		(gen-builder  "msi.flat.lan" 6)
 	];
 }

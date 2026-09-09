@@ -9,10 +9,7 @@
 		audio.capable = true;
 		bluetooth.capable = true;
 
-		cpu.intel = {
-			architecture = "sandy-bridge";
-			has-iGPU = true;
-		};
+		cpu = cpu.intel.celeron_887;
 
 		graphics =
 		{
