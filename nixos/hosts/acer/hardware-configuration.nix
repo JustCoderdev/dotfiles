@@ -13,20 +13,22 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-#  fileSystems."/" =
-#    { device = "/dev/disk/by-uuid/242d3222-f0ad-4076-b259-769044e44d31";
-#      fsType = "ext4";
-#    };
-#
-#  fileSystems."/boot" =
-#    { device = "/dev/disk/by-uuid/EF07-9D32";
-#      fsType = "vfat";
-#      options = [ "fmask=0077" "dmask=0077" ];
-#    };
-#
-#  swapDevices =
-#    [ { device = "/dev/disk/by-uuid/545b37e6-1473-43b3-bc88-8e92e4a5f68c"; }
-#    ];
+  # TODO: FIX WORKAROUND 'lib.mkForce' caused by disko
+
+  fileSystems."/" =
+    { device = lib.mkForce "/dev/disk/by-uuid/242d3222-f0ad-4076-b259-769044e44d31";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = lib.mkForce "/dev/disk/by-uuid/EF07-9D32";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices =
+    [ { device = lib.mkForce "/dev/disk/by-uuid/545b37e6-1473-43b3-bc88-8e92e4a5f68c"; }
+    ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

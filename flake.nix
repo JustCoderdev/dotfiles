@@ -125,7 +125,10 @@
 
 	{
 		# nixos-rebuild switch --flake .#<hostname>
-		nixosConfigurations = { }
+		nixosConfigurations =
+		{
+			nixos = abort "dumbass";
+		}
 		//
 		# Manifest
 		# -------------------- #

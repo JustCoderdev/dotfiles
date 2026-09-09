@@ -12,8 +12,9 @@ vim.cmd(string.format("colorscheme %s", COLORSCHEME))
 
 -- CONST
 
-ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
-print(string.format(" ::: TRUECOLOR %s", ENV_COLOR_CAPABLE))
+ENV_COLOR_CAPABLE = true
+-- ENV_COLOR_CAPABLE = os.getenv("COLORTERM") == "truecolor"
+-- print(string.format(" ::: TRUECOLOR %s", ENV_COLOR_CAPABLE))
 
 
 -- FUNCTIONS
