@@ -117,15 +117,13 @@ in
 		esac
 	;;
 
+${
+	if builtins.length displays != 2 then "" else ''
 	mirror)
-		if [ ${toString (builtins.length displays)} -ne 2];
-		then
-			echo "Number of displays is not 2"
-			exit 1
-		else
-			${xrandr} --output ${(builtins.elemAt displays 0).identifier} --same-as ${(builtins.elemAt displays 1).identifier}
-		fi
+		${xrandr} --output ${(builtins.elemAt displays 0).identifier} --same-as ${(builtins.elemAt displays 1).identifier}
 	;;
+''
+}
 esac
 ''
 		;

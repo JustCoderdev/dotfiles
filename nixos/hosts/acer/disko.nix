@@ -22,7 +22,7 @@ in
 {
 	disko.devices.disk.hdd =
 	{
-		device = "/dev/disk/by-id/"; # TODO: Add this back
+		device = "/dev/disk/by-id/ata-Hitachi_HTS545050A7E380_TEA51A3RJUY16R";
 		type = "disk";
 
 		content =

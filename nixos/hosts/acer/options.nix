@@ -17,7 +17,7 @@
 
 			ssh.cloudflared-proxy =
 			{
-				enable = true;
+				enable = false;
 				hosts = [
 					"jarvis-cf.foxburrow.org"
 					"quiss-cf.foxburrow.org"
