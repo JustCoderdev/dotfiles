@@ -120,52 +120,47 @@
 				config = getNixpkgsConfig special-pkgs;
 			}
 		);
+
+		nix6OS-module =
+		(
+			{ lib, pkgs, ... }:
+			let
+				nix6OS = import ./_experiments/nix6OS.nix { inherit pkgs; };
+
+				initrd-filename = "n6ox-initrd-0";
+				kernel-filename = "n6os-linux-6.12.93-bzImage";
+				kernel-args = builtins.concatStringsSep " " nix6OS.kernel-args; # config.boot.kernelParams
+				# stage-2 = "/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init"
+			in
+			{
+				config.boot.loader.grub =
+				{
+					extraEntries = ''
+menuentry "nix6OS" {
+search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
+	linux ($drive1)//${kernel-filename} init=${nix6OS.stage-2} ${kernel-args}
+''
++
+lib.strings.optionalString (nix6OS.initrd != null) "initrd ($drive1)//${initrd-filename}"
++
+''
+}
+'';
+
+					extraFiles =
+					{
+						"${kernel-filename}" = "${nix6OS.kernel}/bzImage";
+					}
+					// lib.attrsets.optionalAttrs (nix6OS.initrd != null) { "${initrd-filename}" = nix6OS.initrd; }
+					;
+				};
+			}
+		);
 	in
 
 	{
 		# nixos-rebuild switch --flake .#<hostname>
-		nixosConfigurations =
-		{
-			nix6OS =
-			let
-				system = "x86_64-linux";
-			in
-			nixpkgs.lib.nixosSystem
-			{
-				inherit system;
-				modules = [
-					(
-						{ config, pkgs, ... }:
-						let
-							nix6OS = import ./_experiments/nix6OS.nix { inherit pkgs; };
-
-							kernel-filename = "n6os-linux-6.12.93-bzImage";
-							kernel-args = builtins.concatStringsSep " " config.boot.kernelParams;
-							initrd-filename = "n6ox-initrd-0";
-						in
-						{
-							config.boot.loader.grub =
-							{
-								extraEntires = ''
-menuentry "nix6OS" {
-search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
-  linux ($drive1)//${kernel-filename} init=/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init ${kernel-args}
-  initrd ($drive1)//${initrd-filename}
-}
-'';
-
-								extraFiles =
-								{
-									"${kernel-filename}" = ./${nix6OS.kernel}/bzImage;
-									"${initrd-filename}" = nix6OS.initrd;
-								};
-							};
-						}
-					)
-				];
-
-			};
-		}
+		nixosConfigurations = { }
 		//
 		# Manifest
 		# -------------------- #
@@ -178,10 +173,7 @@ search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
 				settings = (getSettings username);
 				pkgs-unstable = (getUnstablePackages system settings.special-pkgs);
 
-				optionals = (
-					expr: list:
-					if expr then list else []
-				);
+				optionals = (expr: list: if expr then list else []);
 			in
 			nixpkgs.lib.nixosSystem
 			{
@@ -196,7 +188,7 @@ search --set=drive1 --fs-uuid F4AE-D825 # valid only on MSI!!
 				++ (getHostModules hostname)
 				++ (getUserModules username)
 				++ (getManifestModules manifest)
-				++ [ { common.manifest.hosts = hosts; } ]
+				++ [ { common.manifest.hosts = hosts; } nix6OS-module ]
 				++ (
 					let
 						disko-module = ./nixos/hosts/${hostname}/disko.nix;

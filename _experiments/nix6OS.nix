@@ -3,15 +3,18 @@
 }:
 
 let
+	# stage-1-drv = pkgs.writeShellScript "stage-1" '' '';
+	# stage-2-drv = pkgs.writeShellScript "stage-2" '' '';
 	kernel-drv = pkgs.linuxPackages.kernel;
-	initrd-drv = abort "AAAAA";
+	initrd-drv = null;
 in
 
 {
-	# stage-1-script = ;
-	# stage-2-script = ;
-	kernel = kernel-drv;
 	initrd = initrd-drv;
+	stage-2 = pkgs.bash;
+
+	kernel = kernel-drv;
+	kernel-args = [ ];
 }
 
 # Used to generate menuentry
