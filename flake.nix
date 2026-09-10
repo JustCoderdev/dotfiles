@@ -40,42 +40,7 @@
 			)
 		);
 
-		getNixpkgsConfig =
-		(
-			spkgs:
-			{
-				permittedInsecurePackages = spkgs.insecure;
-				allowUnfreePredicate = pkg: builtins.elem
-						(nixpkgs.lib.getName pkg) spkgs.unfree;
-			}
-		);
-
-		getUserModules = (
-			username:
-			let
-				spkgs = (import ./confs/settings/${username}.nix).special-pkgs;
-			in
-			[
-				jcbin.nixosModules.all
-				jcconfs.nixosModules.home
-				./nixos
-
-				{ nixpkgs.config = getNixpkgsConfig spkgs; }
-			]
-		);
-
-		getHostModules = (
-			hostname:
-			[
-				{ networking.hostName = nixpkgs.lib.mkForce hostname; }
-				./nixos/hosts/${hostname}/boot.nix
-				./nixos/hosts/${hostname}/configuration.nix
-				./nixos/hosts/${hostname}/options.nix
-				./nixos/hosts/${hostname}/hardware-configuration.nix
-			]
-		);
-
-		getManifestModules = (
+		getHardwareModules = (
 			manifest:
 			let
 				inherit (manifest) hardware;
@@ -104,23 +69,44 @@
 				)
 		);
 
-		getSettings = (
-			username:
-			{
-				inherit username;
-				dotfiles_store_path = ./.;
+		getDiskoModules =
+		(
+			hostname:
+			let
+				disko-module = ./nixos/hosts/${hostname}/disko.nix;
+				optionals = (expr: list: if expr then list else []);
+			in
+			(
+				optionals (nixpkgs.lib.filesystem.pathIsRegularFile disko-module)
+				[
+					{ system.nixos.tags = [ "disko" ]; }
+					disko.nixosModules.disko
+					disko-module
+				]
+			)
+		);
+
+		getUserPreferences =
+		(
+			system: username:
+			let
+				inherit (import ./confs/settings/${username}.nix) special-pkgs;
+			in
+			rec {
+				pkgs-cfg = {
+					permittedInsecurePackages = special-pkgs.insecure;
+					allowUnfreePredicate = pkg: builtins.elem
+						(nixpkgs.lib.getName pkg) special-pkgs.unfree;
+				};
+				pkgs-unstable = (import nixpkgs-unstable { inherit system; config = pkgs-cfg; });
+				settings = {
+					inherit username;
+					dotfiles_store_path = ./.;
+				};
 			}
 		);
 
-		getUnstablePackages = (
-			system: special-pkgs:
-			import nixpkgs-unstable {
-				inherit system;
-				config = getNixpkgsConfig special-pkgs;
-			}
-		);
-
-		nix6OS-module = import ./_experiments/nix6OS-module.nix;
+		_experimental.nix6OS-module = import ./_experiments/nix6OS-module.nix;
 	in
 
 	{
@@ -136,41 +122,43 @@
 			hostname: manifest:
 			let
 				username = "ryuji";
-				inherit (manifest.hardware) system type;
-
-				settings = (getSettings username);
-				pkgs-unstable = (getUnstablePackages system settings.special-pkgs);
-
-				optionals = (expr: list: if expr then list else []);
+				inherit (manifest.hardware) system;
+				user-preferences = getUserPreferences system username;
 			in
 			nixpkgs.lib.nixosSystem
 			{
 				inherit system;
 				specialArgs =
 				{
-					inherit pkgs-unstable settings nix-minecraft nix-net-lib nixpkgs-xr;
+					inherit (user-preferences) pkgs-unstable settings;
+					inherit nix-minecraft nix-net-lib nixpkgs-xr;
 					jchw = jchw.database;
 				};
 
-				modules = [ ]
-				++ (getHostModules hostname)
-				++ (getUserModules username)
-				++ (getManifestModules manifest)
-				++ [ { common.manifest.hosts = hosts; } nix6OS-module ]
-				++ (
-					let
-						disko-module = ./nixos/hosts/${hostname}/disko.nix;
-					in
-					(
-						optionals (nixpkgs.lib.filesystem.pathIsRegularFile disko-module)
-						[
-							{ system.nixos.tags = [ "disko" ]; }
-							disko.nixosModules.disko
-							disko-module
-						]
-					)
-				)
-				;
+				modules = nixpkgs.lib.lists.flatten
+				[
+					jcbin.nixosModules.all
+					jcconfs.nixosModules.home
+					./nixos
+
+					# Manifest modules
+					{ common.manifest.hosts = hosts; }
+					(getHardwareModules manifest)
+
+					# Host modules
+					{ networking.hostName = nixpkgs.lib.mkForce hostname; }
+					./nixos/hosts/${hostname}/boot.nix
+					./nixos/hosts/${hostname}/configuration.nix
+					./nixos/hosts/${hostname}/options.nix
+					./nixos/hosts/${hostname}/hardware-configuration.nix
+					(getDiskoModules hostname)
+
+					# User modules
+					{ nixpkgs.config = user-preferences.pkgs-cfg; }
+
+					# _experimental modules
+					_experimental.nix6OS-module
+				];
 			}
 		) hosts;
 	};
