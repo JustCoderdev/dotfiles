@@ -31,7 +31,7 @@ in
 				configurationLimit = 16;
 
 				# Setted by disko # TODO: Check each boot.nix to see if it setted
-				# device = lib.mkIf (cfg.support-efi) "nodev"; # LIE, needs to be installed 
+				# device = lib.mkIf (cfg.support-efi) "nodev"; # LIE, needs to be installed
 
 				# efi support
 				efiInstallAsRemovable = cfg.support-efi;

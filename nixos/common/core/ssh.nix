@@ -34,11 +34,11 @@ in
 			in
 			{
 				# jarvis = (get-known-host "jarvis" [ "home"                 ] "");
-				quiss  = (get-known-host "quiss"  [ "home"        "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQXf/BHJdFdd5JFEfrP4IdUcQPKryN8hFySvxZFwK/K");
-				wise   = (get-known-host "wise"   [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4");
-				msi    = (get-known-host "msi"    [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7");
-				acer   = (get-known-host "acer"   [ "home"                 ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc8lcEWeCeMtk7I3fHQVSC7o0wILv+UU93kNjOvnXh6");
-				asus   = (get-known-host "asus"   [ "home" "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6iFgCu/HH1IaHszu1lFvPPLGCJ+FmApHEBc3QawV1r");
+				# quiss  = (get-known-host "quiss"  [ "home"        "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQXf/BHJdFdd5JFEfrP4IdUcQPKryN8hFySvxZFwK/K");
+				# wise   = (get-known-host "wise"   [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4");
+				# msi    = (get-known-host "msi"    [        "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7");
+				# acer   = (get-known-host "acer"   [ "home"                 ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc8lcEWeCeMtk7I3fHQVSC7o0wILv+UU93kNjOvnXh6");
+				# asus   = (get-known-host "asus"   [ "home" "flat" "garden" ] "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6iFgCu/HH1IaHszu1lFvPPLGCJ+FmApHEBc3QawV1r");
 			};
 
 			# Set default keys

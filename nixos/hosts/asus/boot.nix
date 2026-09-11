@@ -1,5 +1,10 @@
+{ lib, ... }:
+
 {
 	boot.kernelParams = [ "nosgx" ];
+
+	# TODO: Add disko configuration
+	boot.loader.grub.device = "nodev"; # ??
 
 	common.core.bootloader =
 	{

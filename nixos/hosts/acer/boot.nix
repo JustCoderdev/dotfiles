@@ -1,4 +1,3 @@
-
 {
 	common.core.bootloader =
 	{
