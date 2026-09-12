@@ -7,7 +7,7 @@ in
 {
 	# Mouse support
 	services.ratbagd.enable = true;
-	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin ];
+	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin kicad ];
 
 	programs.nix-ld =
 	{
