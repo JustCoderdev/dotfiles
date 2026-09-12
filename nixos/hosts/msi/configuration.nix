@@ -7,7 +7,7 @@ in
 {
 	# Mouse support
 	services.ratbagd.enable = true;
-	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin kicad ];
+	environment.systemPackages = with pkgs; [ piper ] ++ [ dbeaver-bin kicad gsmartcontrol ];
 
 	programs.nix-ld =
 	{
