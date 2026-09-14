@@ -1,23 +1,18 @@
 {
-	pkgs ? import <nixpkgs> { }
+	pkgs        ? import <nixpkgs> { },
+	stage-1,                 # pkgs.writeShellScript "stage-1" '' '';
+	stage-2     ? pkgs.bash, # pkgs.writeShellScript "stage-2" '' '';
+	kernel      ? pkgs.linuxPackages.kernel,
+	kernel-args ? [ "init=${stage-2}/bin/bash" "root=fstab" ]
 }:
 
 let
-	# stage-1-drv = pkgs.writeShellScript "stage-1" '' '';
-	# stage-2-drv = pkgs.writeShellScript "stage-2" '' '';
-	kernel-drv = pkgs.linuxPackages.kernel;
-	initrd-drv = null;
+	kernel-args-formatted = builtins.concatStringsSep " " kernel-args;
 in
 
-# Could not mount root fs on ""
-
 {
-	stage-1 = initrd-drv; # initrd
-	stage-2 = pkgs.bash;
-	# stage-2 = "/nix/store/in0...-nixos-system-msi-disko-i3-nvidia-ryuji-25.11.20260630.b6018f8/init"
-
-	kernel = kernel-drv;
-	kernel-args = [ "root=fstab" ];
+	#       initrd  init
+	inherit stage-1 stage-2 kernel kernel-args kernel-args-formatted;
 }
 
 # Used to generate menuentry

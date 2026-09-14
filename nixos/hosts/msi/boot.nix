@@ -25,15 +25,20 @@ menuentry "Windows" {
 
 	# Mount
 
-	fileSystems."/home/WDC_WD10" =
+	fileSystems =
+	let
+		add-fs = id: { device = "/dev/disk/by-id/${id}"; fsType = "ext4"; };
+	in
 	{
-		device = "/dev/disk/by-uuid/87de6ef7-b2ea-43ea-b574-52ca561288df";
-		fsType = "ext4";
+		"/home/WDC_WD10" = (add-fs "ata-WDC_WD10EZEX-22MFCA0_WD-WCC6Y6VYJ99E-part1");
+		"/home/KNG_SKC6" = (add-fs "ata-KINGSTON_SKC600256G_50026B7784C99483");
 	};
 
 	systemd.tmpfiles.rules = [
 #		Type Path           Mode User                 Group Age Argument
-		"d   /home/WDC_WD10 0770 ${username}          users"
+		"d   /home/WDC_WD10 0755 ${username}          users"
 		"L+  /home/WDC_WD10 -    -                    -     -   /home/${username}/HDisk"
+		"d   /home/KNG_SKC6 0755 ${username}          users"
+		"L+  /home/KNG_SKC6 -    -                    -     -   /home/${username}/SSDisk"
 	];
 }
