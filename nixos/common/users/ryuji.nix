@@ -54,7 +54,7 @@ in
 				with pkgs;
 				[
 					nix-tree btop unixtools.netstat
-					imagemagick # dust
+					appimage-run imagemagick # dust
 				]
 				++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 				(

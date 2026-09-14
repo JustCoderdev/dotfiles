@@ -16,9 +16,10 @@ in
 
 	boot.loader.grub.extraEntries = ''
 menuentry "Windows" {
+	search --set=drive1 --fs-uuid DAF847A9F84782AD # EE42ABB242AB7DC9
 	insmod part_gpt
 	insmod fat
-	set root=(hd1,gpt2)
+	set root=($drive1) # hd1,gpt2
 	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 '';
