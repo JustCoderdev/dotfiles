@@ -62,7 +62,7 @@ in
 						firefox google-chrome
 						vlc audacity emulsion
 						gnome-disk-utility gpick
-						baobab # rustdesk
+						qemu baobab # rustdesk
 					]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
