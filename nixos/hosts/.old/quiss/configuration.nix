@@ -176,6 +176,7 @@ in
 			         asus = (add-device  "asus.garden.lan" "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7");
 			          msi = (add-device   "msi.garden.lan" "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI");
 			  ipad-tp-2_0 = (add-device               null "WNA7TTR-2GZ7QRH-4HXPAJT-QAI7VVM-MCX3ZFC-WPXG3UB-CGMPF4C-YKTCSA7");
+			         acer = (add-device  "acer.garden.lan" "VOXIJHC-LVWDIBD-N2IYZNL-FNBIN2S-NZLKIRD-F7QXVI7-HKWPGKQ-RQZOBAR");
 		};
 	};
 
