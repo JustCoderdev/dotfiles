@@ -1,4 +1,4 @@
-{ system, type, cpu, gpu, ... }:
+{ system, type, cpu, ... }:
 
 {
 	hardware =
