@@ -34,5 +34,17 @@ in
 				)
 			);
 		};
+
+		syncthing =
+		{
+			enable = lib.mkEnableOption "syncthing for this host";
+
+			identification = mkStrOption "The identification string of this peer";
+			data-dir = lib.mkOption {
+				description = "absolute path to the data directory";
+				type = lib.types.nullOr lib.types.str;
+				default = null;
+			};
+		};
 	};
 }

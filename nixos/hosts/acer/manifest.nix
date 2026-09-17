@@ -37,5 +37,11 @@
 			publicKey = "ulvrJVLPHQGFiAs5g6PRravcyxutnL1XP5Ne4+Egrn0=";
 			self-address = "10.255.250.6";
 		};
+
+		syncthing =
+		{
+			enable = true;
+			identification = "VOXIJHC-LVWDIBD-N2IYZNL-FNBIN2S-NZLKIRD-F7QXVI7-HKWPGKQ-RQZOBAR";
+		};
 	};
 }

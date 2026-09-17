@@ -67,5 +67,12 @@
 			publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
 			self-address = "10.255.250.5";
 		};
+
+		syncthing =
+		{
+			enable = true;
+			data-dir = "/home/WDC_WD10/synced";
+			identification = "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI";
+		};
 	};
 }

@@ -67,6 +67,17 @@ in
 				};
 			}
 		);
+
+		syncthing.extraPeers = mkSubmodOption "Extra peers to add that are not declared in other manifests"
+		(
+			{ name, ... }:
+			{
+				options =
+				{
+					identification = mkStrOption "The identification string of this peer";
+				};
+			}
+		);
 	};
 }
 

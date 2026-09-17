@@ -50,5 +50,11 @@
 				self-address = "10.255.250.4";
 			};
 		};
+
+		syncthing =
+		{
+			enable = true;
+			identification = "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7";
+		};
 	};
 }

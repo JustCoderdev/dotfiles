@@ -97,6 +97,36 @@ in
 					);
 				};
 			};
+
+			syncthing = lib.mkIf (self-sw.syncthing.enable)
+			{
+				enable = true;
+				openFirewall = true;
+
+				dataDir = lib.mkIf (self-sw.syncthing.data-dir != null) self-sw.syncthing.data-dir;
+				folders = [ "obsidian-db" ];
+				devices =
+				let
+					add-device = (address: id: { inherit id; address = if address == null then null else "tcp://${address}"; });
+				in
+				{
+				}
+				//
+				(
+					lib.attrsets.mapAttrs (
+						hostname: host-manifest:
+						(add-device "${hostname}.garden.lan" host-manifest.software.syncthing.identification)
+					)
+					(lib.attrsets.filterAttrs (_: host-manifest: host-manifest.software.syncthing.enable) manifest-cfg.hosts)
+				)
+				//
+				(
+					lib.attrsets.mapAttrs
+						(_: { identification }: (add-device null identification) )
+						(manifest-cfg.services.syncthing.extraPeers)
+				)
+				;
+			};
 		};
 	};
 }
