@@ -4,6 +4,12 @@
 	environment.systemPackages = with pkgs; [ geteduroam dbeaver-bin ];
 	programs.nm-applet.enable = true;
 
+	_experimental.nix6OS =
+	{
+		enable = true;
+		fs-uuid = "1A0D-5553";
+	};
+
 	# Gnome
 	# -------------------- #
 	# services.xserver.displayManager.lightdm.greeters.gtk.indicators = lib.mkForce null;

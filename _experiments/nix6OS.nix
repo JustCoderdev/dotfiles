@@ -1,9 +1,9 @@
 {
 	pkgs        ? import <nixpkgs> { },
-	stage-1,                 # pkgs.writeShellScript "stage-1" '' '';
-	stage-2     ? pkgs.bash, # pkgs.writeShellScript "stage-2" '' '';
+	stage-1,    # pkgs.writeShellScript "stage-1" '' '';
+	stage-2,    # pkgs.writeShellScript "stage-2" '' '';
 	kernel      ? pkgs.linuxPackages.kernel,
-	kernel-args ? [ "init=${stage-2}/bin/bash" "root=fstab" ]
+	kernel-args ? [ "root=fstab" ] # "init=${stage-2}/bin/bash" 
 }:
 
 let
