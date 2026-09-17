@@ -58,10 +58,6 @@ in
 					"192.168.7.6" = [ (get-fqdname  "ilo-beta" "home") ];
 					"192.168.7.7" = [ (get-fqdname     "quiss" "home") ];
 					"192.168.7.8" = [ (get-fqdname    "jarvis" "home") ];
-
-					# HOSTS
-					"192.168.7.33" = [ (get-fqdname "acer" "home") ];
-					"192.168.7.34" = [ (get-fqdname "asus" "home") ];
 				};
 
 				flat-network =
@@ -69,7 +65,6 @@ in
 					"192.168.1.1" = [ (get-fqdname "gateway" "flat") ];
 					"192.168.1.2" = [ (get-fqdname    "wise" "flat") ];
 					"192.168.1.5" = [ (get-fqdname     "msi" "flat") ];
-					"192.168.1.8" = [ (get-fqdname    "asus" "flat") ];
 				};
 
 				garden-network =
@@ -79,6 +74,7 @@ in
 					"10.255.250.3" = [ (get-fqdname "iphone-tp" "garden") ];
 					"10.255.250.4" = [ (get-fqdname      "asus" "garden") ];
 					"10.255.250.5" = [ (get-fqdname       "msi" "garden") ];
+					"10.255.250.6" = [ (get-fqdname      "acer" "garden") ];
 				};
 			in
 			{}

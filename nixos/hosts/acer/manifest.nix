@@ -26,4 +26,16 @@
 			};
 		};
 	};
+
+	# -------------------- #
+
+	software =
+	{
+		wireguard."wg-server" =
+		{
+			enable = true;
+			publicKey = "";
+			self-address = "10.255.250.6";
+		};
+	};
 }
