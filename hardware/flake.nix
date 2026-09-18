@@ -14,7 +14,8 @@
 
 			special =
 			{
-				raspi3 = import ./modules/special/raspi3.nix;
+				raspi3       = import ./modules/special/raspi3.nix;
+				install-disk = import ./modules/special/install-disk.nix;
 			};
 		};
 	};

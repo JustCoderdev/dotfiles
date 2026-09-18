@@ -70,6 +70,17 @@ in
 		# TEST: trying to see if modesettings fixes xorg from crashing
 		boot.initrd.kernelModules = [ "i915" ];
 			# if (self-hw.cpu.manufacturer == jchw.architectures.cpu.manufacturer.intel) then  else [];
+
+
+		# Reduce size consumption
+		# ---------------------------------------- #
+
+		xdg = lib.mkIf (has-de) {
+			autostart.enable = lib.mkDefault false;
+			icons.enable     = lib.mkDefault false;
+			mime.enable      = lib.mkDefault false;
+			sounds.enable    = lib.mkDefault false;
+		};
 	};
 
 	# ------------------------------------------------------------ #

@@ -116,6 +116,8 @@ such as alacritty, clang, git, hyprland, and more
 
 ## Installation guide
 
+0. Connect to the internet (see [[#Connect to internet]] below) 
+
 1. Clone
 
 ```shell
@@ -124,7 +126,7 @@ git clone https://github.com/JustCoderdev/dotfiles.git "${DOT_FILES}"
 cd "${DOT_FILES}"
 ```
 
-2. Install
+2. Install configs
 
 - Without nix [outdated, won't work]
 
@@ -141,12 +143,14 @@ cd confs
 
 # add "--extra-experimental-features 'nix-command flakes'" after `nix`
 # and before `build` if using a non-flake env
-nix build ".#${USER}-activation"
+nix build ".#activate-${USER}"
 
 ./result/activate
 ```
 
-Disk partitions
+3. Partition disks 
+
+- With disko
 
 ```shell
 # add "--extra-experimental-features 'nix-command flakes'" after `nix`
@@ -156,7 +160,39 @@ sudo nix \
      --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix
 ```
 
-- With NixOS 
+- With fdisk
+
+desired table
+
+| name   | size |  type  |   fs   |  note   |
+|:------:|:----:|:------:|:------:|:-------:|
+| `MBR`  |  1M  | `EF02` |        |         |
+| `ESP`  |  1G  | `EF00` | `vfat` | `/boot` |
+| `root` | 100% |        | `ext4` |   `/`   |
+| `swap` | -8G  |        |        |  swap   |
+
+and mount
+
+```shell
+sudo mount /dev/disk/<root> /mnt
+sudo mkdir -p /mnt/boot
+sudo mount /dev/disk/<boot> /mnt/boot
+```
+
+4. Generate nixos config
+
+- Create required files in `nixos/host/${HOST}`
+- Generate hardware config with `nixos-generate-config --show-hardware-config` (?)
+
+> [!tip]
+> 
+> Use install script! [outdated]
+> 
+> ```shell
+> ./install.sh
+> ```
+
+5. Install
 
 > [!important]
 >
@@ -164,17 +200,9 @@ sudo nix \
 >
 > To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
 
-Method A [outdated]
-
 ```shell
-./install.sh
+sudo nixos-install --flake .#<host>
 ```
-
-Method B
-
-- Create required files in `nixos/host/${HOST}`
-- Generate hardware config with `nixos-generate-config --show-hardware-config`
-
 
 ## Dotfiles structure
 

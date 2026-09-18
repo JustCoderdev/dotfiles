@@ -12,7 +12,7 @@ let
 in
 rec {
 	system = get-attrs [ "x86_64-linux" ];
-	type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" ];
+	type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" "install-disk" ];
 
 	cpu =
 	let arch = architecture.cpu; in

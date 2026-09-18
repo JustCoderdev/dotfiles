@@ -1,9 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-let
-	self-manifest = config.common.manifest.self;
-	has-de = self-manifest.hardware.graphics.desktop-environment.enable;
-in
+{ lib, pkgs, ... }:
 
 {
 	imports = [
@@ -44,13 +39,6 @@ in
 	documentation.enable = lib.mkDefault false;
 
 	services.journald.extraConfig = "SystemMaxUse=500M";
-
-	xdg = lib.mkIf (has-de) {
-		autostart.enable = lib.mkDefault false;
-		icons.enable     = lib.mkDefault false;
-		mime.enable      = lib.mkDefault false;
-		sounds.enable    = lib.mkDefault false;
-	};
 
 	# Random perl remnants
 	# <https://github.com/NixOS/nixpkgs/blob/nixos-25.05/nixos/modules/profiles/perlless.nix>

@@ -11,7 +11,7 @@ let
 
 	jchw = {
 		system = get-attrs [ "x86_64-linux" ];
-		type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" ];
+		type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" "install-disk" ];
 	};
 in
 
@@ -57,6 +57,7 @@ let
 			example = false;
 		}
 	);
+	bool-opt-def = (description: (bool-opt description) // { default = false; });
 
 	enum-opt = (
 		description: list:
@@ -92,8 +93,8 @@ in
 		system = enum-opt "platform the host is running on"  jchw.system.all;
 		type   = enum-opt "hardware is this host running on" jchw.type.all;
 
-		audio.capable     = bool-opt "the hardware is audio capable";
-		bluetooth.capable = bool-opt "the hardware is bluetooth capable";
+		audio.capable     = bool-opt-def "the hardware is audio capable";
+		bluetooth.capable = bool-opt-def "the hardware is bluetooth capable";
 
 		# -------------------- #
 
@@ -119,7 +120,7 @@ in
 		gpu_offload =
 		{
 			# add checks to see if it can offload at all
-			enable      = lib.mkEnableOption "to enable gpu offload";
+			enable      = bool-opt-def "to enable gpu offload";
 			intelBusId  = nullable-str-opt "Intel bus id";
 			nvidiaBusId = nullable-str-opt "Nvidia bus id";
 		};
@@ -128,9 +129,9 @@ in
 
 		graphics =
 		{
-			capable = lib.mkEnableOption "graphics for this host";
+			capable = bool-opt-def "graphics for this host";
 
-			desktop-environment.enable = lib.mkEnableOption "desktop environmnet software suite";
+			desktop-environment.enable = bool-opt-def "desktop environmnet software suite";
 			displays = mkSubmodOption "All displays connected to device" (
 				{
 					options =
@@ -176,8 +177,8 @@ in
 							type = lib.types.strMatching mac-regex;
 						};
 
-						wakeOnWlan.enabled = lib.mkEnableOption "wake on wlan";
-						dhcp.enabled = lib.mkEnableOption "dhcp on this interface";
+						wakeOnWlan.enabled = bool-opt-def "wake on wlan";
+						dhcp.enabled = bool-opt-def "dhcp on this interface";
 
 						network =
 						{
@@ -214,8 +215,8 @@ in
 							type = lib.types.strMatching mac-regex;
 						};
 
-						wakeOnLan.enabled = lib.mkEnableOption "wake on wlan";
-						dhcp.enabled = lib.mkEnableOption "dhcp on this interface";
+						wakeOnLan.enabled = bool-opt-def "wake on wlan";
+						dhcp.enabled = bool-opt-def "dhcp on this interface";
 
 						network =
 						{

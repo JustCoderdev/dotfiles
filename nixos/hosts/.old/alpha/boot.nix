@@ -1,5 +1,13 @@
 { ... }:
 
+abort
+
+''
+Brand servers may require extra kernel modules be included into initrd
+(boot.initrd.extraKernelModules in configuration.nix) For example HP Proliant
+needs "hpsa" module to see the disk drive.
+''
+
 {
 	common.core.bootloader.grub.enable = true;
 	boot.loader.grub.device = "/dev/sda";

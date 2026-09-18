@@ -22,7 +22,7 @@
 					{ inherit identifier resolution position; };
 			in
 			{
-				laptop-monitor = add-display "VGA-1" "1920x1080" "0x0";
+				laptop-monitor = add-display "VGA-1" "1366x768" "0x0";
 			};
 		};
 	};

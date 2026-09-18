@@ -26,6 +26,8 @@
 
 	outputs = { nixpkgs, nixpkgs-unstable, jcbin, jcconfs, jchw, disko, nix-minecraft, nix-net-lib, nixpkgs-xr, ... }:
 	let
+		username = "ryuji";
+
 		hosts =
 		(
 			nixpkgs.lib.attrsets.mapAttrs
@@ -40,14 +42,16 @@
 			)
 		);
 
+		opt = expr: val: if expr then [ val ] else [ ];
+
 		getHardwareModules = (
 			manifest:
 			let
 				inherit (manifest) hardware;
-				opt = expr: val: if expr then [ val ] else [ ];
 			in
 			[ ]
-			++ opt (hardware.type == jchw.database.type.raspi3) jchw.nixosModules.special.raspi3
+			++ opt (hardware.type == jchw.database.type.raspi3)       jchw.nixosModules.special.raspi3
+			++ opt (hardware.type == jchw.database.type.install-disk) jchw.nixosModules.special.install-disk
 			++ opt (hardware ? "gpu" && hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
 				(
 					jchw.nixosModules.gpu.nvidia
@@ -113,53 +117,60 @@
 		# nixos-rebuild switch --flake .#<hostname>
 		nixosConfigurations =
 		{
-			nixos = abort "dumbass";
+			# `nix build .#nixosConfigurations.<name>.config.system.build.isoImage`
+			# nixos = abort "dumbass";
 		}
 		//
-		# Manifest
-		# -------------------- #
-		builtins.mapAttrs (
-			hostname: manifest:
-			let
-				username = "ryuji";
-				inherit (manifest.hardware) system;
-				user-preferences = getUserPreferences system username;
-			in
-			nixpkgs.lib.nixosSystem
-			{
-				inherit system;
-				specialArgs =
+		(
+			# Manifest
+			# -------------------- #
+			builtins.mapAttrs (
+				hostname: manifest:
+				let
+					inherit (manifest.hardware) system type;
+					user-preferences = getUserPreferences system username;
+				in
+				nixpkgs.lib.nixosSystem
 				{
-					inherit (user-preferences) pkgs-unstable settings;
-					inherit nix-minecraft nix-net-lib nixpkgs-xr;
-					jchw = jchw.database;
-				};
+					inherit system;
+					specialArgs =
+					{
+						inherit (user-preferences) pkgs-unstable settings;
+						inherit nix-minecraft nix-net-lib nixpkgs-xr;
+						jchw = jchw.database;
+					};
 
-				modules = nixpkgs.lib.lists.flatten
-				[
-					jcbin.nixosModules.all
-					jcconfs.nixosModules.home
-					./nixos
+					modules = nixpkgs.lib.lists.flatten
+					(
+						[
+							jcbin.nixosModules.all
+							jcconfs.nixosModules.home
+							./nixos
 
-					# Manifest modules
-					{ common.manifest.hosts = hosts; }
-					(getHardwareModules manifest)
+							# Manifest modules
+							{ common.manifest.hosts = hosts; }
+							(getHardwareModules manifest)
 
-					# Host modules
-					{ networking.hostName = nixpkgs.lib.mkForce hostname; }
-					./nixos/hosts/${hostname}/boot.nix
-					./nixos/hosts/${hostname}/configuration.nix
-					./nixos/hosts/${hostname}/options.nix
-					./nixos/hosts/${hostname}/hardware-configuration.nix
-					(getDiskoModules hostname)
+							# Host modules
+							{ networking.hostName = nixpkgs.lib.mkForce hostname; }
+							(getDiskoModules hostname)
 
-					# User modules
-					{ nixpkgs.config = user-preferences.pkgs-cfg; }
+							# User modules
+							{ nixpkgs.config = user-preferences.pkgs-cfg; }
 
-					# _experimental modules
-					_experimental.nix6OS-module
-				];
-			}
-		) hosts;
+							# _experimental modules
+							_experimental.nix6OS-module
+						]
+						++ opt (type != jchw.database.type.install-disk)
+						[
+							./nixos/hosts/${hostname}/boot.nix
+							./nixos/hosts/${hostname}/configuration.nix
+							./nixos/hosts/${hostname}/options.nix
+							./nixos/hosts/${hostname}/hardware-configuration.nix
+						]
+					);
+				}
+			) hosts
+		);
 	};
 }

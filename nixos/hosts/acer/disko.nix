@@ -14,7 +14,13 @@ let
 
 	create-pt = (
 		size: type: content:
-		{ inherit size; }
+		# let from-end = (builtins.substring 0 1 size) == "-"; in
+		# (
+		# 	if from-end
+		# 		then { end = size; }
+		# 		else
+			{ inherit size; }
+		# )
 		// optionalattrs (type != null) { inherit type; }
 		// optionalattrs (content != null) { inherit content; }
 	);
@@ -33,7 +39,7 @@ in
 				boot = (create-pt   "1M" "EF02" null); # grub mbr
 				 ESP = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
 				root = (create-pt "100%"  null  (create-fs "ext4" "/"));
-				swap = (create-pt   "8G"  null  ({ type = "swap"; }));
+				swap = (create-pt  "-8G"  null  ({ type = "swap"; }));
 			};
 		};
 	};
