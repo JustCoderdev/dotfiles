@@ -5,7 +5,17 @@
 
 # Dotfiles
 
-These are my dotfiles, feel free to use them and share with me any feedback or trick you may know :p
+These are my dotfiles, some configurations are also available on non-nix hosts
+such as alacritty, clang, git, and hyprland
+
+![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
+> Plymouth darnix theme (semi custom)
+
+![Hyprland desktop](./.screenshots/hyprland_desktop.png)
+> "Hyprland", waybar
+
+![Xfce desktop](./.screenshots/xfce-i3-desktop.png)
+> "Xfce", i3, i3status, nvim, and zsh
 
 There are 4 branches:
 
@@ -23,58 +33,17 @@ There are 4 branches:
 | | |
 | |/
 | * 2c6a8c9 nixos-compliant (nixpkgs-24.05)
-| |
-| * 0be0f74 nixos-compliant (nixpkgs-24.11)
 ' |
   * 91c5ef1 nixos-integration (nixpkgs-24.11)
   v
 ```
 
-> [!tip]
->
-> Nixos and virtual machines
->
-> - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
-> - Hyrpland may not work in a VM
-
----
-
-![Xfce desktop](./.screenshots/xfce-i3-desktop.png)
-> "Xfce", i3, i3status, nvim and zsh showcase
-
----
-
-![Hyprland desktop](./.screenshots/hyprland_desktop.png)
-> "Hyprland", waybar, wallpaper showcase
-
----
-
-![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
-> Plymouth darnix theme (custom)
-
----
-
-## Overview
-
-These are my dotfiles, some configurations are also available on non-nix hosts
-such as alacritty, clang, git, hyprland, and more
-
-- `Operating System`: NixOS (duh)
-- `Terminal`: Alacritty
-- `Editor`: Neovim (trying emacs tho...)
-
-|                | XServer  | Wayland  |
-| -------------- | -------- | -------- |
-| Window manager | i3       | hyprland |
-| Status bar     | i3status | waybar   |
-| App launcher   | dmenu    | wofi     |
-
-## Special Requirements
+## Special requirements
 
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 - Font: `SF Pro Text` [Link](https://developer.apple.com/fonts) (For Waybar)
 
-## Special Global Variables
+## Special global variables
 
 - `DOT_NIXOS`: `1` if the system is using the nixos configuration otherwise unset
 - `DOT_FILES`: The absolute path to the dotfiles folder (currently hardcoded in zsh.nix)
@@ -94,7 +63,6 @@ such as alacritty, clang, git, hyprland, and more
 
 - ~~Improve grub by adding rescue option~~
 - Improve alacritty by resetting keybindings
-- Improve `refresh-displays` command by adding the toggle to mirror or extend display
 - Improve samba "global" directory to list all shares
 - [wise] Improve nginx by removing `/<service>` subpath when using subdomain
 - Improve keyboard binds by:
@@ -114,96 +82,6 @@ such as alacritty, clang, git, hyprland, and more
 
 - [sixos](https://media.ccc.de/v/38c3-sixos-a-nix-os-without-systemd)
 
-## Installation guide
-
-0. Connect to the internet (see [[#Connect to internet]] below) 
-
-1. Clone
-
-```shell
-DOT_FILES="${HOME}/.config/dotfiles" # or /.dotfiles
-git clone https://github.com/JustCoderdev/dotfiles.git "${DOT_FILES}"
-cd "${DOT_FILES}"
-```
-
-2. Install configs
-
-- Without nix [outdated, won't work]
-
-```shell
-./bin/bash-scripts/mount-configs.sh
-```
-
-- With nix
-
-Home manager
-
-```shell
-cd confs
-
-# add "--extra-experimental-features 'nix-command flakes'" after `nix`
-# and before `build` if using a non-flake env
-nix build ".#activate-${USER}"
-
-./result/activate
-```
-
-3. Partition disks 
-
-- With disko
-
-```shell
-# add "--extra-experimental-features 'nix-command flakes'" after `nix`
-# and before `run` if using a non-flake env
-sudo nix \
-     run github:nix-community/disko/latest -- \
-     --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix
-```
-
-- With fdisk
-
-desired table
-
-| name   | size |  type  |   fs   |  note   |
-|:------:|:----:|:------:|:------:|:-------:|
-| `MBR`  |  1M  | `EF02` |        |         |
-| `ESP`  |  1G  | `EF00` | `vfat` | `/boot` |
-| `root` | 100% |        | `ext4` |   `/`   |
-| `swap` | -8G  |        |        |  swap   |
-
-and mount
-
-```shell
-sudo mount /dev/disk/<root> /mnt
-sudo mkdir -p /mnt/boot
-sudo mount /dev/disk/<boot> /mnt/boot
-```
-
-4. Generate nixos config
-
-- Create required files in `nixos/host/${HOST}`
-- Generate hardware config with `nixos-generate-config --show-hardware-config` (?)
-
-> [!tip]
-> 
-> Use install script! [outdated]
-> 
-> ```shell
-> ./install.sh
-> ```
-
-5. Install
-
-> [!important]
->
-> You will get "relative path error for ./bin..."
->
-> To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
-
-```shell
-sudo nixos-install --flake .#<host>
-```
-
 ## Dotfiles structure
 
 There are 3 main directories (+1):
@@ -212,7 +90,7 @@ There are 3 main directories (+1):
 - `confs`: user configuration files (w home-manager support)
 - `hardware`: common hardware settings and data
 - `nixos`: nixos system modules
-- `secrets`: local secrets directory
+- `secrets`: local secrets directory (see [[#Obtaining Secrets]])
 
 ### bin
 
@@ -252,17 +130,13 @@ There are 3 main directories (+1):
         - `disko.nix`: disk configuration (opt)
         - `hardware-configuration.nix`: nixos generated hw configuration file
         - `manifest.nix`: manifest file
-        - `options.nix`: options from handmade modules 
+        - `options.nix`: options from handmade modules
 - `modules`:
     - `desktop`: desktop environment
     - `services`: daemons and what not
 - `unofficial`:
     - `pkgs`: custom packaged applications
     - `modules`: custom modularised packages
-
-### secrets
-
-see `nixos/common/core/secrets.nix`
 
 ## Inspiration
 
@@ -321,6 +195,52 @@ cd ${DOT_FILES}/secrets/nginx/VHOST
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout VHOST-cert.key -out VHOST-cert.crt
 ```
+
+## Installation "tips" (WIP)
+
+> [!tip]
+>
+> Nixos and virtual machines
+>
+> - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
+> - Hyrpland may not work in a VM
+
+0. Connect to the internet (see [[#Connect to internet]] below)
+1. Clone from github (`git clone https://github.com/JustCoderdev/dotfiles.git /home/<user>/.config/dotfiles`)
+2. Install user configs
+    - With nix (`nix build ".#activate-${USER}" && ./result/activate`)
+    - Without [outdated, won't work] (`./bin/bash-scripts/mount-configs.sh`)
+
+> [!note]
+>
+> To enable not always present experimental features,
+> add `--extra-experimental-features 'nix-command flakes'`
+
+3. Partition disks
+
+- With disko (`sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix`)
+- Without
+
+| name   | size |  type  |   fs   |  note   |
+|:------:|:----:|:------:|:------:|:-------:|
+| `MBR`  |  1M  | `EF02` |        |         |
+| `ESP`  |  1G  | `EF00` | `vfat` | `/boot` |
+| `root` | 100% |        | `ext4` |   `/`   |
+| `swap` | -8G  |        |        |  swap   |
+
+4. Generate nixos config
+
+- Create required files in `nixos/host/${HOST}`
+- Generate hardware config with `nixos-generate-config --show-hardware-config` (?)
+
+5. Install(?)
+
+> [!important]
+>
+> You will get "relative path error for ./bin..."
+>
+> To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
+
 
 ## Emergency wiki
 
