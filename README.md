@@ -8,13 +8,13 @@
 These are my dotfiles, some configurations are also available on non-nix hosts
 such as alacritty, clang, git, and hyprland
 
-![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
+> ![Plymouth theme](./.screenshots/plymouth-darnix-theme.png)
 > Plymouth darnix theme (semi custom)
 
-![Hyprland desktop](./.screenshots/hyprland_desktop.png)
+> ![Hyprland desktop](./.screenshots/hyprland_desktop.png)
 > "Hyprland", waybar
 
-![Xfce desktop](./.screenshots/xfce-i3-desktop.png)
+> ![Xfce desktop](./.screenshots/xfce-i3-desktop.png)
 > "Xfce", i3, i3status, nvim, and zsh
 
 There are 4 branches:
