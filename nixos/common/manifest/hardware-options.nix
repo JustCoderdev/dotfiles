@@ -11,7 +11,7 @@ let
 
 	jchw = {
 		system = get-attrs [ "x86_64-linux" ];
-		type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" "install-disk" ];
+		type   = get-attrs [ "desktop" "laptop" "virtual-machine" "raspi3" ];
 	};
 in
 

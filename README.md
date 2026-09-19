@@ -241,6 +241,10 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 >
 > To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
 
+```shell
+disko-install ?
+nixos-install ?
+```
 
 ## Emergency wiki
 

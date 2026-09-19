@@ -14,21 +14,15 @@ let
 
 	create-pt = (
 		size: type: content:
-		# let from-end = (builtins.substring 0 1 size) == "-"; in
-		# (
-		# 	if from-end
-		# 		then { end = size; }
-		# 		else
-			{ inherit size; }
-		# )
+		{ inherit size; }
 		// optionalattrs (type != null) { inherit type; }
 		// optionalattrs (content != null) { inherit content; }
 	);
 in
 {
-	disko.devices.disk.hdd =
+	disko.devices.disk.ssd =
 	{
-		device = "/dev/disk/by-id/ata-Hitachi_HTS545050A7E380_TEA51A3RJUY16R";
+		device = "/dev/disk/by-id/TODO";
 		type = "disk";
 
 		content =
@@ -37,9 +31,9 @@ in
 			partitions =
 			{
 				boot = (create-pt   "1M" "EF02" null); # grub mbr
-				 ESP = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
+				 esp = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
+				swap = (create-pt   "8G"  null  ({ type = "swap"; }));
 				root = (create-pt "100%"  null  (create-fs "ext4" "/"));
-				swap = (create-pt  "-8G"  null  ({ type = "swap"; }));
 			};
 		};
 	};
