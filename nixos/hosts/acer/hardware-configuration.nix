@@ -15,10 +15,10 @@
 
   # TODO: FIX WORKAROUND 'lib.mkForce' caused by disko
 
-  # fileSystems."/" =
-  #   { device = lib.mkForce "/dev/disk/by-uuid/242d3222-f0ad-4076-b259-769044e44d31";
-  #     fsType = "ext4";
-  #   };
+  fileSystems."/" =
+    { device = lib.mkForce "/dev/disk/by-uuid/8f98bf5d-d124-41b5-bc81-005c403596cc";
+      fsType = "ext4";
+    };
   #
   # fileSystems."/boot" =
   #   { device = lib.mkForce "/dev/disk/by-uuid/EF07-9D32";

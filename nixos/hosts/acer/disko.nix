@@ -22,7 +22,7 @@ in
 {
 	disko.devices.disk.ssd =
 	{
-		device = "/dev/disk/by-id/TODO";
+		device = "/dev/disk/by-id/ata-KINGSTON_SKC600256G_50026B7784ED9F1D";
 		type = "disk";
 
 		content =
