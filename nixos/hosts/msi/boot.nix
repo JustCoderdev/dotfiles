@@ -14,15 +14,15 @@ in
 		display-resolution = "1920x1080";
 	};
 
-# 	boot.loader.grub.extraEntries = ''
-# menuentry "Windows" {
-# search --set=drive1 --fs-uuid <uuid>
-# 	insmod part_gpt
-# 	insmod fat
-# 	set root=($drive)
-# 	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-# }
-# '';
+	boot.loader.grub.extraEntries = ''
+menuentry "Windows" {
+search --set=drive1 --fs-uuid F4AE-D825
+	insmod part_gpt
+	insmod fat
+	set root=($drive)
+	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+'';
 
 	# Mount
 
