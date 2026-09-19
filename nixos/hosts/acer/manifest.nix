@@ -31,17 +31,23 @@
 
 	software =
 	{
-		wireguard."wg-server" =
+		ssh.pubkey =
 		{
-			enable = true;
-			publicKey = "ulvrJVLPHQGFiAs5g6PRravcyxutnL1XP5Ne4+Egrn0=";
-			self-address = "10.255.250.6";
+			"ryuji"               = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGw3APe4BXlKHZ2Bdqlp+neA3GdU47Os77Ez1RA2UUa";
+			"ryuji_builderclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtdYGCqkhftam2/wiUb0j4jUCE4f9xb4qmIxXZmc2p3";
 		};
 
 		syncthing =
 		{
 			enable = true;
 			identification = "VOXIJHC-LVWDIBD-N2IYZNL-FNBIN2S-NZLKIRD-F7QXVI7-HKWPGKQ-RQZOBAR";
+		};
+
+		wireguard."wg-server" =
+		{
+			enable = true;
+			publicKey = "ulvrJVLPHQGFiAs5g6PRravcyxutnL1XP5Ne4+Egrn0=";
+			self-address = "10.255.250.6";
 		};
 	};
 }

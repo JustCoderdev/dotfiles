@@ -97,19 +97,29 @@ Host ${builder.hostName}
 
 					group = buildclient_group;
 
-					openssh.authorizedKeys.keys = [
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCvXFlkamJe11+AXQiZ0U2LEa8xrozhvAiwhtT//O1S ryuji_buildclient@alpha"
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJgN39OtOvSFiJjOOoeo/Pcr0YghSXIaykX+jX03lqH ryuji_buildclient@beta"
-
-						# quiss key - not a client
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2jmKDK7lygtwqkNqH6Y5NzYp9BwcNR8KEZzEA0m9/s ryuji_buildclient@jarvis"
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4 ryuji_buildclient@wise"
-
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZrsLB5QXClVYmeTYNZfOoiPvsndbiAIYG9wuiIdJUz ryuji_buildclient@msi"
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtdYGCqkhftam2/wiUb0j4jUCE4f9xb4qmIxXZmc2p3 ryuji_buildclient@acer"
-
-						"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILdgiQXUALwdkdhB4gfcIABtB09Bk/Ukpt5x8LiD0D5M ryuji_buildclient@asus"
-					];
+					openssh.authorizedKeys.keys =
+					let
+						inherit (config.common.manifest) hosts;
+						get-pubkey-or-null = (
+							keyname: hostname:
+							let
+								inherit (hosts.${hostname}.software.ssh) pubkey;
+								has-pubkey = builtins.hasAttr keyname pubkey;
+							in
+							if has-pubkey
+								then pubkey.${keyname} + " ${keyname}@${hostname}"
+								else null
+						);
+					in
+					[ ]
+					++
+					builtins.filter (key: key != null)
+					(
+						builtins.map
+							(hostname: get-pubkey-or-null "ryuji_buildclient" hostname)
+							(builtins.attrNames hosts)
+					)
+					;
 				};
 			}
 		)

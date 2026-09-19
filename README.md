@@ -68,7 +68,6 @@ There are 4 branches:
 - Improve keyboard binds by:
     - Remove special symbols when pressing ALT-GR
     - Create custom layout for italian keyboard with american keys
-- Move ssh keys to manifest file
 
 ### Add
 

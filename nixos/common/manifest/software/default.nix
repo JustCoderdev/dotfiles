@@ -130,31 +130,3 @@ in
 		};
 	};
 }
-
-# pubkeys
-#	ryuji
-#		ssh
-#		wireguard
-#		nixcache
-
-# running services
-#	nix builder
-#	nix cache
-
-
-
-# {
-# 	software =
-# 	{
-# 		keys = {
-# 			"buildclient" = {
-# 				nixbuilder = "";
-# 				nixcache = "";
-# 			};
-# 			"ryuji" = {
-# 				wireguard.server."wg-server" = "";
-# 				ssh = "";
-# 			};
-# 		};
-# 	};
-# }

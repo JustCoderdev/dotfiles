@@ -41,6 +41,18 @@
 
 	software =
 	{
+		ssh.pubkey =
+		{
+			"ryuji"               = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D";
+			"ryuji_builderclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILdgiQXUALwdkdhB4gfcIABtB09Bk/Ukpt5x8LiD0D5M";
+		};
+
+		syncthing =
+		{
+			enable = true;
+			identification = "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7";
+		};
+
 		wireguard =
 		{
 			"wg-server" =
@@ -49,12 +61,6 @@
 				publicKey = "2KrNqM7coD0YRs9ggk+s2PmEwrH/6tuS5BwP+GS4T2w=";
 				self-address = "10.255.250.4";
 			};
-		};
-
-		syncthing =
-		{
-			enable = true;
-			identification = "KTEN4FK-LK6SURY-N46K2Z6-5HTCGVR-24OPTRW-QFQBIVI-HFLYW2L-NE6W6Q7";
 		};
 	};
 }

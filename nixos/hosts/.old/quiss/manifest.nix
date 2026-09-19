@@ -25,18 +25,18 @@
 
 	software =
 	{
-		wireguard."wg-server" =
-		{
-			enable = true;
-			publicKey = "g01IZ3avpUFCXGsZwpTavv6AGPHHvRqL80SGfE+SYnI=";
-			self-address = "10.255.250.2";
-		};
-
 		syncthing =
 		{
 			enable = true;
 			data-dir = "/mnt/md0/data/documents/synced";
 			identification = "OM3LICW-TEP5TOM-O2C4I5L-RE67TTX-CUD7TFZ-H4YHNKX-LOKOUMT-MFLJHAK";
+		};
+
+		wireguard."wg-server" =
+		{
+			enable = true;
+			publicKey = "g01IZ3avpUFCXGsZwpTavv6AGPHHvRqL80SGfE+SYnI=";
+			self-address = "10.255.250.2";
 		};
 	};
 }

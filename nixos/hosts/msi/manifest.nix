@@ -61,11 +61,10 @@
 
 	software =
 	{
-		wireguard."wg-server" =
+		ssh.pubkey =
 		{
-			enable = true;
-			publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
-			self-address = "10.255.250.5";
+			"ryuji"               = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7";
+			"ryuji_builderclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZrsLB5QXClVYmeTYNZfOoiPvsndbiAIYG9wuiIdJUz";
 		};
 
 		syncthing =
@@ -73,6 +72,13 @@
 			enable = true;
 			data-dir = "/home/WDC_WD10/synced";
 			identification = "LGPPAMZ-TLOK2XH-JKCAXZQ-WLXTAAN-3SFRHCV-7AL7FBZ-B4EHV3E-MSRBHAI";
+		};
+
+		wireguard."wg-server" =
+		{
+			enable = true;
+			publicKey = "FHDRB/hzK85kTPMDJH6IZTRakcy3tl8Qy9vLG7/JujQ=";
+			self-address = "10.255.250.5";
 		};
 	};
 }

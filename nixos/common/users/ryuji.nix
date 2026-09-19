@@ -32,19 +32,29 @@ in
 			extraGroups = [ "wheel" "dialout" ];
 			initialPassword = "${username}";
 
-			# TODO: move to manifest
 			openssh.authorizedKeys.keys =
-			[
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6h9IvfxHJHhzP4ifsVU3FKiqOOMOdo3xjLVZbvBGRD ryuji@jarvis"
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL01mLMcme/rAl5VbJYM+dpaHm4XH3eKYgchzJ3eGsKi ryuji@quiss"
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5ceb2qO05uEyS978K4xIu6Xk+cq+VoshMS8OaxVNVC ryuji@wise"
-
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDY+uqI9B48MnbNJzXlgvGSxHTuWdGy3bxMOD7UW0Dt7 ryuji@msi"
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGw3APe4BXlKHZ2Bdqlp+neA3GdU47Os77Ez1RA2UUa ryuji@acer"
-
-				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D ryuji@asus"
-				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDshsbcBThxrbEKPzmv5L+S3C6TtD7Yb0KFmK6p98lFFuaWG0ATjUneBPOLa8+bjXcKrQtnfC9S6XpOQLgw3NqHxqeFTHRskgn8kIMEnsTmnTJf3G/+bIQsiBT3othh11tVadyPCUZ0K0/uN5zCqEIYXoFWy0ydHeoeE0f+3ZtWhv9megUZTBxPJWJcaVzyrPuMd1imzZiwdcSTCqtar0TjfU3s9YAJ4F06PZZ/zGNTPI4lUyXwFwHVWJj6j9tK5NVJam2rRpRVOpXY7w4PpmAMT88Uc4lrSBz1QuGCrmzajz57VbzxTxbPvjTwwXvTy/AmVFA2xvYxO4yzVWv+aFiFJsWCUaSCLu1qN/t6Xj3Hkl/jHzBkhnqXvn/xWmoje0IxTjt/WkbuPCuPtwu9vlAhYv+OT4khKopZmwBm0hdTZImFIrmT6QowWGb+7kkCRmicLxHScGDFhFSM4Dgs4qGN6B6yiUU70fTJn/5pKgM2F6KxfdqYeIFU1RnqtcC3vc= mobile@localhost"
-			];
+			let
+				inherit (config.common.manifest) hosts;
+				get-pubkey-or-null = (
+					keyname: hostname:
+					let
+						inherit (hosts.${hostname}.software.ssh) pubkey;
+						has-pubkey = builtins.hasAttr keyname pubkey;
+					in
+					if has-pubkey
+						then pubkey.${keyname} + " ${keyname}@${hostname}"
+						else null
+				);
+			in
+			[ ]
+			++
+			builtins.filter (key: key != null)
+			(
+				builtins.map
+					(hostname: get-pubkey-or-null "ryuji" hostname)
+					(builtins.attrNames hosts)
+			)
+			;
 
 			packages = [ ]
 			++ lib.lists.optionals

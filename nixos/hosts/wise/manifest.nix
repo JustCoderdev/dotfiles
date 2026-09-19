@@ -20,6 +20,12 @@
 
 	software =
 	{
+		ssh.pubkey =
+		{
+			"ryuji"               = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5ceb2qO05uEyS978K4xIu6Xk+cq+VoshMS8OaxVNVC";
+			"ryuji_builderclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4";
+		};
+
 		wireguard =
 		{
 			"wg-server" =

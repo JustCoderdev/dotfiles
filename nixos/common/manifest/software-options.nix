@@ -13,6 +13,13 @@ in
 {
 	options.software =
 	{
+		ssh.pubkey = lib.mkOption
+		{
+			description = "ssh public keys installed on the device";
+			default = { };
+			type = lib.types.attrsOf lib.types.str;
+		};
+
 		wireguard = lib.mkOption {
 			description = "Wireguard service manifest";
 			default = { };
