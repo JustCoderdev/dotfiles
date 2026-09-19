@@ -31,7 +31,7 @@ in
 			partitions =
 			{
 				boot = (create-pt   "1M" "EF02" null); # grub mbr
-				 esp = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
+				 ESP = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot"));
 				swap = (create-pt   "8G"  null  ({ type = "swap"; }));
 				root = (create-pt "100%"  null  (create-fs "ext4" "/"));
 			};
