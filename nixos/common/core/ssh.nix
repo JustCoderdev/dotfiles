@@ -143,7 +143,7 @@ Host ${host}
 			settings =
 			{
 				PermitRootLogin = "no";
-				Banner = builtins.toFile "sshd-banner" "You are accessing ${hostname}, one of my devices. DO NOT TOUCH";
+				Banner = builtins.toFile "sshd-banner" "You are accessing ${hostname}, one of my devices. DO NOT TOUCH\n";
 
 				UsePAM = true;
 				X11Forwarding = true;
