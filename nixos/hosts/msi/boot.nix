@@ -19,7 +19,7 @@ menuentry "Windows" {
 search --set=drive1 --fs-uuid F4AE-D825
 	insmod part_gpt
 	insmod fat
-	set root=($drive)
+	set root=($drive1)
 	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 '';
