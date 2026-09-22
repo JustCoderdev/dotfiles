@@ -9,6 +9,7 @@
 		./dev-input.nix
 		./dotfiles-backup.nix
 		./fonts.nix
+		./hibernation.nix
 		./locale.nix
 		./network.nix
 		./nix.nix
