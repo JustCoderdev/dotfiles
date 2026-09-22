@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 
 let
 	secrets = config.common.core.secrets;
@@ -11,6 +11,9 @@ let
 in
 
 {
+	# Not needed
+	services.kanata.enable = lib.mkForce false;
+
 	# DDNS
 
 	services.cloudflare-dyndns =
