@@ -161,14 +161,19 @@ There are 3 main directories (+1):
 > - Hyrpland may not work in a VM
 
 ```shell
-# 0. Connect to the internet (see section below)
+# 0.0 Connect to the internet (see sections of the same name below)
+
+# 0.1 Change keyboard layout
+loadkeys it
 
 # 1. Clone dotfiles
 git clone https://github.com/JustCoderdev/dotfiles
+git switch nixos-integration
 cd dotfiles
 
 # 2. Generate hardware configuration
-nixos-generate-config --show-hardware-config --no-filesystem > nixos/hosts/<HOST>/hardware-configuration.nix
+nixos-generate-config --show-hardware-config --no-filesystems \
+        > nixos/hosts/<HOST>/hardware-configuration.nix
 
 # 3. Install with disko
 sudo nix --extra-experimental-features 'nix-command flakes' \
