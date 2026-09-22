@@ -5,10 +5,10 @@ let
 	);
 
 	create-fs = (
-		format: mountpoint: mountOptions:
+		format: mountpoint:
 		{
 			type = "filesystem";
-			inherit format mountpoint mountOptions;
+			inherit format mountpoint;
 		}
 	);
 
@@ -20,37 +20,20 @@ let
 	);
 in
 {
-	disko.devices.disk =
+	disko.devices.disk.flash =
 	{
-		flash =
+		device = "/dev/disk/by-id/mmc-DF4016_0x9a10f542";
+		type = "disk";
+
+		content =
 		{
-			device = "/dev/disk/by-id/mmc-DF4016_0x9a10f542";
-			type = "disk";
-
-			content =
+			type = "gpt";
+			partitions =
 			{
-				type = "gpt";
-				partitions =
-				{
-					boot     = (create-pt   "1M" "EF02" null); # grub mbr
-					 ESP     = (create-pt   "1G" "EF00" (create-fs "vfat" "/boot" [ ]));
-					recovery = (create-pt "100%"  null  null);
-				};
-			};
-		};
-
-		usb-drive =
-		{
-			device = "usb-USB_SanDisk_3.2Gen1_03021919050425053140-0:0";
-			type = "disk";
-
-			content =
-			{
-				type = "gpt";
-				partitions =
-				{
-					root = (create-pt "100%" null (create-fs "f2fs" "/" [ "noatime" ]));
-				};
+				boot = (create-pt   "1M" "EF02" null); # grub mbr
+				 ESP = (create-pt "500M" "EF00" (create-fs "vfat" "/boot"));
+				root = (create-pt "100%"  null  (create-fs "ext4" "/"));
+				swap = (create-pt   "1G"  null  { type = "swap"; });
 			};
 		};
 	};
