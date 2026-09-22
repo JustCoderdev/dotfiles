@@ -44,7 +44,7 @@
 		ssh.pubkey =
 		{
 			"ryuji"               = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILN9Ijk0y+p2Ewngw3ZIV8v0YuGkLTLA7jJXX6aYiC7D";
-			"ryuji_builderclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILdgiQXUALwdkdhB4gfcIABtB09Bk/Ukpt5x8LiD0D5M";
+			"ryuji_buildclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILdgiQXUALwdkdhB4gfcIABtB09Bk/Ukpt5x8LiD0D5M";
 		};
 
 		syncthing =
