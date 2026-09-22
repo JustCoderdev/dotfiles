@@ -2,7 +2,6 @@
 
 {
 	environment.systemPackages = with pkgs; [ geteduroam dbeaver-bin ];
-	programs.nm-applet.enable = true;
 
 	_experimental.nix6OS =
 	{
