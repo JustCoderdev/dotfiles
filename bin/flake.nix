@@ -26,10 +26,9 @@
 		packageBinary = (name: pkgs: pkgs.callPackage ./binaries/${name}/default.nix { });
 		packageScript =
 		(
-			name: getInputs: pkgs:
+			name: pkgs:
 			pkgs.writeShellApplication {
 				inherit name;
-				runtimeInputs = getInputs pkgs;
 				text = (builtins.readFile ./scripts/${name}.sh);
 			}
 		);
@@ -67,8 +66,8 @@
 		);
 
 		generateScriptModule = (
-			{ name, getInputs ? (pkgs: []), requiresSudo ? false }:
-			generateModule name requiresSudo (pkgs: packageScript name getInputs pkgs)
+			{ name, requiresSudo ? false }:
+			generateModule name requiresSudo (pkgs: packageScript name pkgs)
 		);
 
 		generateBinaryModule = (
@@ -111,8 +110,8 @@
 			(
 				(
 					builtins.map (
-						{ name, getInputs ? (pkgs: []), ... }:
-						{ inherit name; value = (packageScript name getInputs pkgs); }
+						{ name, ... }:
+						{ inherit name; value = (packageScript name pkgs); }
 					) (scripts)
 				)
 				++
