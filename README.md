@@ -149,6 +149,55 @@ There are 3 main directories (+1):
 - Ruixi-rebirth, waybar idea ([Github](https://github.com/Ruixi-rebirth/flakes/blob/main/home/programs/waybar/hyprland_waybar.nix))
 - XeIaso, doublas-adams-quotes for making me discover the power of flakes ([Github](https://github.com/Xe/douglas-adams-quotes/blob/main/flake.nix)[XeIasoBlog](https://xeiaso.net/))
 
+## Installation
+
+### Fresh installation of known host
+
+> [!tip]
+>
+> Nixos and virtual machines
+>
+> - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
+> - Hyrpland may not work in a VM
+
+```shell
+# 0. Connect to the internet (see section below)
+
+# 1. Clone dotfiles
+git clone https://github.com/JustCoderdev/dotfiles
+cd dotfiles
+
+# 2. Generate hardware configuration
+nixos-generate-config --show-hardware-config --no-filesystem > nixos/hosts/<HOST>/hardware-configuration.nix
+
+# 3. Install with disko
+sudo nix --extra-experimental-features 'nix-command flakes' \
+         run 'github:nix-community/disko/latest#disko-install' .#<HOST>
+```
+
+### User dotfiles activation
+
+- With nix
+
+```shell
+sudo nix --extra-experimental-features 'nix-command flakes' \
+        build .#activate-<USER>
+./result/activate
+```
+
+- Without [outdated, won't work]
+
+```shell
+./bin/bash-scripts/mount-configs.sh
+```
+
+### Partition disks
+
+```shell
+sudo nix --extra-experimental-features 'nix-command flakes' \
+        run github:nix-community/disko/latest -- --mode destroy,format,mount nixos/hosts/<HOST>/disko.nix
+```
+
 ## Obtaining Secrets
 
 All secrets are "indexed" in `nixos/common/core/secrets.nix`
@@ -193,56 +242,6 @@ Source <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-si
 cd ${DOT_FILES}/secrets/nginx/VHOST
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout VHOST-cert.key -out VHOST-cert.crt
-```
-
-## Installation "tips" (WIP)
-
-> [!tip]
->
-> Nixos and virtual machines
->
-> - Nixos doesn't like virtual box's default graphics driver, use `VBoxVGA`
-> - Hyrpland may not work in a VM
-
-0. Connect to the internet (see [[#Connect to internet]] below)
-1. Clone from github (`git clone https://github.com/JustCoderdev/dotfiles.git /home/<user>/.config/dotfiles`)
-2. Install user configs
-    - With nix (`nix build ".#activate-${USER}" && ./result/activate`)
-    - Without [outdated, won't work] (`./bin/bash-scripts/mount-configs.sh`)
-
-> [!note]
->
-> To enable not always present experimental features,
-> add `--extra-experimental-features 'nix-command flakes'`
-
-3. Partition disks
-
-- With disko (`sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount nixos/hosts/${HOST}/disko.nix`)
-- Without
-
-| name   | size |  type  |   fs   |  note   |
-|:------:|:----:|:------:|:------:|:-------:|
-| `MBR`  |  1M  | `EF02` |        |         |
-| `ESP`  |  1G  | `EF00` | `vfat` | `/boot` |
-| `root` | 100% |        | `ext4` |   `/`   |
-| `swap` | -8G  |        |        |  swap   |
-
-4. Generate nixos config
-
-- Create required files in `nixos/host/${HOST}`
-- Generate hardware config with `nixos-generate-config --show-hardware-config` (?)
-
-5. Install(?)
-
-> [!important]
->
-> You will get "relative path error for ./bin..."
->
-> To fix it remove any mention of `jcbin`, `jcconfs`, and `jchw` from `flake.lock` and then rebuild
-
-```shell
-disko-install ?
-nixos-install ?
 ```
 
 ## Emergency wiki

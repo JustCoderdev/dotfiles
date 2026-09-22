@@ -28,6 +28,7 @@ in
 		};
 
 		services.logind.settings.Login =
+		# Sleep: "suspend-then-hibernate" - "hybrid-sleep" - "suspend" - "hibernate"
 		rec {
 			HandleSuspendKey          = "sleep";
 			HandleSuspendKeyLongPress = HandleSuspendKey;
@@ -41,10 +42,6 @@ in
 		}
 		// lib.attrsets.optionalAttrs (cfg.enable)
 		{
-			# - "suspend-then-hibernate"
-			# - "hybrid-sleep"
-			# - "suspend"
-			# - "hibernate"
 			HandlePowerKey          = "hibernate";
 			HandlePowerKeyLongPress = "poweroff";
 		};
