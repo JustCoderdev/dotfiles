@@ -40,7 +40,7 @@
 		syncthing =
 		{
 			enable = true;
-			identification = "VOXIJHC-LVWDIBD-N2IYZNL-FNBIN2S-NZLKIRD-F7QXVI7-HKWPGKQ-RQZOBAR";
+			identification = "JBEJG7J-YZY5ZTT-ZC34UJZ-3QKCP32-7DTHH5P-PYD26IO-KBZSJSR-E647CQF";
 		};
 
 		wireguard."wg-server" =
