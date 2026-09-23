@@ -33,9 +33,6 @@ in
 			HandleSuspendKey          = "sleep";
 			HandleSuspendKeyLongPress = HandleSuspendKey;
 
-			IdleAction    = HandleSuspendKey;        # sleep on idle
-			IdleActionSec = "${toString (60 * 5)}";  # execute idle action after 5 minutes
-
 			HandleLidSwitch              = HandleSuspendKey;  # lid closed, monitor unavailable
 			HandleLidSwitchDocked        = "ignore";          # lid closed, monitor available
 			HandleLidSwitchExternalPower = "ignore";          # lid closed, monitor available, plugged in
@@ -44,7 +41,13 @@ in
 		{
 			HandlePowerKey          = "hibernate";
 			HandlePowerKeyLongPress = "poweroff";
-		};
+		}
+		// lib.attrsets.optionalAttrs (is-laptop)
+		{
+			IdleAction    = "sleep";                 # sleep on idle
+			IdleActionSec = "${toString (60 * 5)}";  # execute idle action after 5 minutes
+		}
+		;
 
 		# tweak to don't overheat cpu
 		services.thermald.enable = lib.mkDefault true; # intel cpu only
