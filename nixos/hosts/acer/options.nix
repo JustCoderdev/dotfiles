@@ -27,10 +27,15 @@
 			};
 		};
 
-		environments.development =
+
+		environments =
 		{
-			enable = true;
-			tools.c.enable = true;
+			gaming.enable = true;
+			development =
+			{
+				enable = true;
+				tools.c.enable = true;
+			};
 		};
 
 		users.ryuji.media-manipulation-suite.images.enable = true;
