@@ -58,7 +58,7 @@ fi
 
 # Check differences
 echo -ne "\nAnalysing changes... "
-if git diff --quiet -- .; then  # -- ./**/*.nix
+if git diff --cached --quiet -- .; then  # -- ./**/*.nix
 	echo -e "\033[31mNot found\033[0m"
 	had_changes=0
 else
