@@ -1,7 +1,7 @@
 { ... }:
 
 {
-	jcbin.rebuild-system.enable = true;
+	jcbin.update-system.enable = true;
 
 	common.core =
 	{
