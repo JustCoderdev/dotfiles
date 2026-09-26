@@ -120,15 +120,17 @@ in
 		config-root-dir = config-dir;
 		shared-downloads-dir = "${data-dir}/downloads";
 
-		apps = {
+		apps =
+		{
 			prowlarr.enable = true;
 			deluge.enable = true;
-			bazarr.enable = false;
 
 			lidarr.enable = true;
 			radarr.enable = true;
-			readarr.enable = true;
 			sonarr.enable = true;
+
+			bazarr.enable = false;
+			readarr.enable = false;
 		};
 	};
 
