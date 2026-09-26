@@ -1,11 +1,12 @@
-{ config, pkgs, settings, ... }:
+{ config, pkgs, ... }:
 
 let
 	secrets = config.common.core.secrets;
 	discord-hooks-errors-path = secrets.discord.hooks.foxburrow.errors.path;
 	mdadm-notify-discord-pkg = pkgs.writeShellScriptBin "mdadm-notify-discord" ''
-${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(date) ERROR ''${1}: ''${2}\" }" "$(cat ${discord-hooks-errors-path})"
+${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"$(${pkgs.coreutils-full}/bin/date) ERROR ''${1}: ''${2}\" }" "$(${pkgs.coreutils-full}/bin/cat ${discord-hooks-errors-path})"
 '';
+
 in
 
 {

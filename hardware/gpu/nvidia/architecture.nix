@@ -1,6 +1,7 @@
 let
 	add-arch = (name: year: { inherit name year; });
 in
+
 [
 	# <https://en.wikipedia.org/wiki/List_of_eponyms_of_Nvidia_GPU_microarchitectures>
 	(add-arch   "fahrenheit" 1998)

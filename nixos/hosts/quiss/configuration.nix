@@ -1,4 +1,4 @@
-{ config, lib, pkgs, settings, nix-minecraft, ... }:
+{ config, lib, settings, ... }:
 
 let
 	inherit (settings) username;
@@ -8,6 +8,8 @@ let
 	raid-mount = "/mnt/md0";
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
+
+	enable-services-touching-raid = false;
 
 	openFirewall = true;
 	forwardedServicesFirewall = false && openFirewall;
@@ -42,17 +44,17 @@ in
 
 
 	# Spindown after 10 minutes
-	systemd.services.hd-idle = let
-		time_m = 10;
-		time_s = toString (time_m * 60);
-	in {
-		enable = true;
-		wantedBy = [ "multi-user.target" ];
-		serviceConfig = {
-			type = "forking";
-			ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i ${time_s} -a sdc -i ${time_s}";
-		};
-	};
+	# systemd.services.hd-idle = let
+	# 	time_m = 10;
+	# 	time_s = toString (time_m * 60);
+	# in {
+	# 	enable = true;
+	# 	wantedBy = [ "multi-user.target" ];
+	# 	serviceConfig = {
+	# 		type = "forking";
+	# 		ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i ${time_s} -a sdc -i ${time_s}";
+	# 	};
+	# };
 
 	# ------------------------------------------------------------ #
 
@@ -110,7 +112,7 @@ in
 	{
 		inherit proxy;
 
-		enable = true;
+		enable = true && enable-services-touching-raid;
 		openFirewall = forwardedServicesFirewall;
 
 		group = serv-group;
@@ -136,7 +138,7 @@ in
 	{
 		inherit proxy;
 
-		enable = true;
+		enable = true && enable-services-touching-raid;
 		openFirewall = forwardedServicesFirewall;
 
 		config-dir = config-dir + "/jellyfin";
@@ -149,7 +151,7 @@ in
 	{
 		inherit proxy;
 
-		enable = false;
+		enable = false && enable-services-touching-raid;
 		openFirewall = forwardedServicesFirewall;
 
 		config-dir = config-dir + "/immich";
@@ -159,8 +161,8 @@ in
 	# services.syncthing.guiAddress = "10.255.250.2:8384";
 	modules.services.syncthing =
 	{
+		enable = lib.mkForce true && enable-services-touching-raid;
 		inherit openFirewall;
-		dataDir = "${data-dir}/documents/synced";
 		group = serv-group;
 	};
 

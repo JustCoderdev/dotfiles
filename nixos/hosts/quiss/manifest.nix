@@ -1,16 +1,16 @@
-{ type, cpu, gpu, ... }:
+{ system, type, cpu, gpu, ... }:
 
 {
 	hardware =
 	{
-		system = "x86_64-linux";
-		type = type.desktop;
+		system = system.x86_64-linux;
+		type   = type.desktop;
 
 		audio.capable = false;
 		bluetooth.capable = false;
 
-		cpu.intel  = "ivy-bridge";
-		gpu.radeon = "gcn-1"; # Radeon HD 6750
+		cpu = cpu.intel.core_i5-3470;
+		gpu.radeon = gpu.radeon.hd-6750;
 
 		graphics =
 		{
@@ -25,6 +25,8 @@
 
 	software =
 	{
+		ssh.pubkey."ryuji" = "";
+
 		syncthing =
 		{
 			enable = true;

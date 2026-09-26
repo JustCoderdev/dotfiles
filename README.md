@@ -359,6 +359,9 @@ sudo mdadm --manage /dev/md0 -r /dev/sdc1
 
 # add
 sudo mdadm --manage /dev/md0 -a /dev/sdc1
+
+# See details
+sudo mdadm -D
 ```
 
 ### Edit Samba credentials
