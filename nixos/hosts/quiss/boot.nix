@@ -10,6 +10,7 @@ ${pkgs.curl}/bin/curl -s -X POST -H 'content-type: application/json' -d "{ \"con
 in
 
 {
+	boot.loader.grub.device = "/dev/disk/by-id/ata-WDC_WD2500AAKX-08U6AA0_WD-WCC2EVL67736";
 	common.core.bootloader =
 	{
 		grub.enable = true;
