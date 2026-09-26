@@ -121,7 +121,7 @@ There are 3 main directories (+1):
     - `manifest`: settings to create the ecosystem of hosts
     - `users`: users preferences
 - `hosts`:
-    - `.example`: example configuration files for installation script
+    - `.template`: template files for new host installation
     - `.old`: host configurations files for hosts that haven't yet migrated to manifest sytem
     - `<hostname>`: host configuration
         - `boot.nix`: boot related options

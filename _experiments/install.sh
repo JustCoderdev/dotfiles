@@ -30,7 +30,7 @@ fi
 
 
 HOST_PATH="${HOSTS_PATH}/${HOSTNAME}"
-TEMP_PATH="${HOSTS_PATH}/.example"
+TEMP_PATH="${HOSTS_PATH}/.template"
 echo -e "Installing as \033[32m\"${HOSTNAME}\"\033[0m\n"
 
 generate_files=1
