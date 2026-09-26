@@ -1,13 +1,13 @@
 { pkgs, ... }:
 
 {
-	environment.systemPackages = with pkgs; [ geteduroam dbeaver-bin ];
+	environment.systemPackages = with pkgs; [ geteduroam ];
 
-	_experimental.nix6OS =
-	{
-		enable = true;
-		fs-uuid = "1A0D-5553";
-	};
+	# _experimental.nix6OS =
+	# {
+	# 	enable = true;
+	# 	fs-uuid = "1A0D-5553";
+	# };
 
 	# Gnome
 	# -------------------- #
@@ -19,13 +19,4 @@
 	# common.core.audio.backend = "pipewire";
 	# services.tlp.enable = false;
 	# -------------------- #
-
-
-	# Temporary services
-	# ------------------------------------------------------------ #
-
-	services.mysql = {
-		enable = true;
-		package = pkgs.mariadb;
-	};
 }

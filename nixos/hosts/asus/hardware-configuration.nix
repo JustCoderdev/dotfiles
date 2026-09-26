@@ -13,26 +13,22 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # TODO: WHY DOESN'T DISKO WORK?!?!
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/74b2e90f-a577-4379-ad19-37fba72632d1";
+    { device = lib.mkForce "/dev/disk/by-uuid/5cf16008-8c3b-4920-8c7b-6487318c8571";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1A0D-5553";
+    { device = lib.mkForce "/dev/disk/by-uuid/14F2-6C0B";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/92768ffd-2ca2-4bf3-8bb5-ef864be11231"; }
+    [ { device = lib.mkForce "/dev/disk/by-uuid/043afb9a-e8f7-44b6-8bc1-5802deb60af7"; }
     ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
