@@ -168,16 +168,27 @@ loadkeys it
 
 # 1. Clone dotfiles
 git clone https://github.com/JustCoderdev/dotfiles
-git switch nixos-integration
 cd dotfiles
+git switch nixos-integration
 
 # 2. Generate hardware configuration
 nixos-generate-config --show-hardware-config --no-filesystems \
         > nixos/hosts/<HOST>/hardware-configuration.nix
 
-# 3. Install with disko
+# 3. ~~Install with disko~~ [disko doesn't work]
+# sudo nix --extra-experimental-features 'nix-command flakes' \
+#          run 'github:nix-community/disko/latest#disko-install' \
+#          -- --flake .\#<HOST>
+
+# 3. Partition and mount disks
+
 sudo nix --extra-experimental-features 'nix-command flakes' \
-         run 'github:nix-community/disko/latest#disko-install' .#<HOST>
+        run github:nix-community/disko/latest -- --mode destroy,format,mount \
+        nixos/hosts/<HOST>/disko.nix
+
+# 4. Install with nixos-install
+
+nixos-install --flake .\#<HOST>
 ```
 
 ### User dotfiles activation
@@ -194,13 +205,6 @@ sudo nix --extra-experimental-features 'nix-command flakes' \
 
 ```shell
 ./bin/bash-scripts/mount-configs.sh
-```
-
-### Partition disks
-
-```shell
-sudo nix --extra-experimental-features 'nix-command flakes' \
-        run github:nix-community/disko/latest -- --mode destroy,format,mount nixos/hosts/<HOST>/disko.nix
 ```
 
 ## Obtaining Secrets
