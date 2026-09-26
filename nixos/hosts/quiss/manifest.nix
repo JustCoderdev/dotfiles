@@ -25,7 +25,7 @@
 
 	software =
 	{
-		ssh.pubkey."ryuji" = "";
+		ssh.pubkey."ryuji" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL01mLMcme/rAl5VbJYM+dpaHm4XH3eKYgchzJ3eGsKi";
 
 		syncthing =
 		{
