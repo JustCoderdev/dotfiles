@@ -161,7 +161,7 @@ in
 	# services.syncthing.guiAddress = "10.255.250.2:8384";
 	modules.services.syncthing =
 	{
-		enable = lib.mkForce true && enable-services-touching-raid;
+		enable = lib.mkForce (true && enable-services-touching-raid);
 		inherit openFirewall;
 		group = serv-group;
 	};
