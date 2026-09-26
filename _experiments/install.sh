@@ -76,7 +76,7 @@ if [[ "${editoptions_confirm}" != [nN] ]] && [[ "${editoptions_confirm}" != [nN]
 fi
 
 # Rebuild system
-./bin/bash-scripts/rebuild-system.sh ${HOSTNAME}
+./bin/bash-scripts/update-system.sh --switch ${HOSTNAME}
 
 # sudo mkdir -p /mnt
 # echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"

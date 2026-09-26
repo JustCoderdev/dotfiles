@@ -400,7 +400,7 @@ mkdir -p /home/$USER/Documents/kernels
 sudo mv /boot/kernels/* /home/$USER/Documents/kernels
 
 # Rebuild
-rebuild-system
+update-system --switch
 ```
 
 ### GRUB doesn't start because of EFI

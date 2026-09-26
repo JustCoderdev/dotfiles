@@ -19,7 +19,7 @@
 		[
 			{ name = "eep"; requiresSudo = true; }
 			{ name = "mount-configs";  }
-			{ name = "rebuild-system"; }
+			{ name = "update-system"; }
 			{ name = "umount-configs"; }
 		];
 
