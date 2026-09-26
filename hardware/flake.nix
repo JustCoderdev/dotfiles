@@ -10,6 +10,7 @@
 			gpu =
 			{
 				nvidia = import ./modules/gpu/nvidia.nix database;
+				radeon = import ./modules/gpu/radeon.nix database;
 			};
 
 			special =

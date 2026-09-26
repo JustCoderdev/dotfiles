@@ -1,40 +1,66 @@
-{ config, lib, pkgs, settings, ... }:
+database:
+
+{
+	board # { name, year, arch = { name, year } }
+}:
+
+# TODO: Assert types
+
+assert (
+	board ? "name"
+		&& board.name != null
+	&& board ? "year"
+	&& board ? "arch"
+		&& board.arch ? "name"
+		&& board.arch ? "year"
+);
+
+{ pkgs, ... }:
 
 let
-	cfg = config.common.manifest;
-	self-manifest = cfg.self;
+	inherit (database.architecture.gpu.radeon) gcn-1 gcn-2;
 
-	radeon-archs = cfg.architectures.gpu.radeon;
-	self-rgpu = self-manifest.hardware.gpu.radeon;
+	gt-gcn-2 = board.year > gcn-2.year;
+	is-gcn-1 = board == gcn-1;
 in
 
 {
-	config = lib.mkIf (self-rgpu.architecture != null)
+	config =
 	{
 		system.nixos.tags = [ "radeon" ];
 
-		boot.initrd.kernelModules = [ "amdgpu" ];
-		boot.kernelParams = []
-		++ lib.optionals (self-rgpu.architecture == "gcn1")
-			[ "radeon.si_support=0" "amdgpu.si_support=1" ]
-		++ lib.optionals (self-rgpu.architecture == "gcn2")
-			[ "radeon.cik_support=0" "amdgpu.cik_support=1" ];
+		hardware =
+		{
+			graphics =
+			{
+				enable = true;
+				extraPackages = with pkgs; [
+					(if is-gcn-1
+						then mesa.opencl
+						else rocmPackages.clr.icd)
+				];
+			};
 
-		services.xserver.videoDrivers = [ ]
-		++ lib.optionals (self-manifest.hardware.graphics.capable) [ "amdgpu" ];
+			amdgpu = {
+				legacySupport.enable = !gt-gcn-2;
+				opencl.enable = true;
+				initrd.enable = true; # boot.initrd.kernelModules = ["amdgpu"];
+			};
+		};
 
-		# gcn > 3
-		# Source <https://nixos.wiki/wiki/AMD_GPU>
-		#systemd.tmpfiles.rules = [
-##			Type Path          Mode User Group Age Argument
-		#	"L+  /opt/rocm/hip -    -    -     -   ${pkgs.rocmPackages.clr}"
-		#];
+		nixpkgs.config.rocmSupport = true;
+		systemd.tmpfiles.rules =
+		let
+			rocmEnv = pkgs.symlinkJoin {
+				name = "rocm-combined";
+				paths = with pkgs.rocmPackages; [ rocblas hipblas clr ];
+			};
+		in [
+#			Type Path                               Mode User Group Age Argument
+			"L+ /opt/rocm                           -    -    -     -   ${rocmEnv}"
+			"L+ /opt/amdgpu/share/libdrm/amdgpu.ids -    -    -     -   ${pkgs.libdrm}/share/libdrm/amdgpu.ids"
+		];
 
 		environment.systemPackages = with pkgs; [ radeontop clinfo ];
-
-		hardware.graphics.extraPackages = with pkgs; [ ]
-			++ lib.optionals (self-rgpu.architecture == "gcn1") [ mesa.opencl ]
-			++ lib.optionals (self-rgpu.architecture != "gcn1") [ rocmPackages.clr.icd ]
-			;
 	};
 }

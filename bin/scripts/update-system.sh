@@ -73,9 +73,9 @@ else
 	read -rp 'Do you want to commit? (y/N): ' commit_confirm
 	if [[ "${commit_confirm}" == [yY] ]] || [[ "${commit_confirm}" == [yY][eE][sS] ]];
 	then
-		prefix="NixOS build ${HOSTNAME}"
-		read -rp "${prefix}: " commit_msg
-		message="${message}: ${commit_msg}"
+		prefix="NixOS build ${HOSTNAME}: "
+		read -rp "${prefix}" commit_msg
+		message="${prefix}${commit_msg}"
 
 		git commit -m "${message}"
 		echo -e "\n\n\033[32mCommitted as ${message}\033[0m"

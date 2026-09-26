@@ -10,7 +10,7 @@
 		bluetooth.capable = false;
 
 		cpu = cpu.intel.core_i5-3470;
-		gpu.radeon = gpu.radeon.hd-6750;
+		gpu = gpu.radeon.hd-6750;
 
 		graphics =
 		{

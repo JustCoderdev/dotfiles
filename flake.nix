@@ -48,28 +48,34 @@
 			manifest:
 			let
 				inherit (manifest) hardware;
+				inherit (jchw.database) type;
+				inherit (jchw.database.architecture.gpu) manufacturer;
+
+				has-gpu = hardware ? "gpu";
+				gpu-manufacturer = hardware.gpu.manufacturer;
 			in
 			[ ]
-			++ opt (hardware.type == jchw.database.type.raspi3) jchw.nixosModules.special.raspi3
-			++ opt (hardware ? "gpu" && hardware.gpu.manufacturer == jchw.database.architecture.gpu.manufacturer.nvidia)
+			++ opt (hardware.type == type.raspi3) jchw.nixosModules.special.raspi3
+			++ opt (has-gpu && gpu-manufacturer == manufacturer.radeon) (jchw.nixosModules.gpu.radeon { board = hardware.gpu; })
+			++ opt (has-gpu && gpu-manufacturer == manufacturer.nvidia)
+			(
+				jchw.nixosModules.gpu.nvidia
 				(
-					jchw.nixosModules.gpu.nvidia
-					(
-						{
-							cpu = { inherit (hardware.cpu) manufacturer arch; };
-							board = hardware.gpu;
+					{
+						cpu = { inherit (hardware.cpu) manufacturer arch; };
+						board = hardware.gpu;
 
-							desktop_environment_available = hardware.graphics.desktop-environment.enable;
-						} // (
-							if ! (hardware ? "gpu_offload") then { } else
-							{
-								offload_enable      = hardware.gpu_offload.enable;
-								offload_intelBusId  = hardware.gpu_offload.intelBusId;
-								offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
-							}
-						)
+						desktop_environment_available = hardware.graphics.desktop-environment.enable;
+					} // (
+						if ! (hardware ? "gpu_offload") then { } else
+						{
+							offload_enable      = hardware.gpu_offload.enable;
+							offload_intelBusId  = hardware.gpu_offload.intelBusId;
+							offload_nvidiaBusId = hardware.gpu_offload.nvidiaBusId;
+						}
 					)
 				)
+			)
 		);
 
 		getDiskoModules =

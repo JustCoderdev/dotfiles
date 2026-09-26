@@ -11,8 +11,6 @@ database:
 	offload_nvidiaBusId ? null,
 }:
 
-{ config, lib, pkgs, ... }:
-
 # TODO: Assert types
 
 assert offload_enable -> (offload_intelBusId != null && offload_nvidiaBusId != null);
@@ -26,6 +24,9 @@ assert (
 		&& board.arch ? "year"
 	&& board ? "driver-name"
 );
+
+
+{ config, lib, pkgs, ... }:
 
 let
 	inherit (database) architecture;
