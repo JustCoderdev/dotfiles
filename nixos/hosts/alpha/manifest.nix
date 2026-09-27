@@ -29,6 +29,9 @@
 
 	# -------------------- #
 
-	software = { };
+	software =
+	{
+		ssh.pubkey."ryuji" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINAr/IUoqeskTARnRlhH0vGfvBVq0auLoF46sZHZV6rd";
+	};
 }
 
