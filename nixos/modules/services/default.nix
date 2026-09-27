@@ -8,7 +8,7 @@
 		./jellyfin.nix
 		./kvm.nix
 		./nixbuilder.nix
-		./nixcache.nix
+		# ./nixcache.nix (old)
 		./routing.nix
 		./rtmp.nix
 		./samba.nix
