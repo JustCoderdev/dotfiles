@@ -36,7 +36,7 @@
 		wireguard."wg-server" =
 		{
 			enable = true;
-			publicKey = "";
+			publicKey = "kqE1ydN54oum12jd2T8GALlqc/+5DbSDE5TOPY1+1lU=";
 			self-address = "10.255.250.7";
 		};
 	};
