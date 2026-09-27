@@ -20,7 +20,7 @@ let
 	);
 in
 {
-	disko.devices.disk.ssd =
+	disko.devices.disk.ata-a107 =
 	{
 		device = "/dev/disk/by-id/";
 		type = "disk";
