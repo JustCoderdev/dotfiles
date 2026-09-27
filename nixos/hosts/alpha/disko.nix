@@ -22,7 +22,7 @@ in
 {
 	disko.devices.disk.ata-a107 =
 	{
-		device = "/dev/disk/by-id/";
+		device = "/dev/disk/by-id/ata-KINGSTON_SKC600256G_50026B7784EDA107";
 		type = "disk";
 
 		content =

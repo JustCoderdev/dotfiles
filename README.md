@@ -164,31 +164,43 @@ There are 3 main directories (+1):
 # 0.0 Connect to the internet (see sections of the same name below)
 
 # 0.1 Change keyboard layout
-loadkeys it
+sudo loadkeys it
 
 # 1. Clone dotfiles
 git clone https://github.com/JustCoderdev/dotfiles
 cd dotfiles
 git switch nixos-integration
 
-# 2. Generate hardware configuration
-nixos-generate-config --show-hardware-config --no-filesystems \
-        > nixos/hosts/<HOST>/hardware-configuration.nix
-
-# 3. ~~Install with disko~~ [disko doesn't work]
+# 2. ~~Install with disko~~ [disko doesn't work]
 # sudo nix --extra-experimental-features 'nix-command flakes' \
 #          run 'github:nix-community/disko/latest#disko-install' \
 #          -- --flake .\#<HOST>
 
-# 3. Partition and mount disks
+# 2. Partition and mount disks
 
+vim /nixos/host/<HOST>/disko.nix
 sudo nix --extra-experimental-features 'nix-command flakes' \
         run github:nix-community/disko/latest -- --mode destroy,format,mount \
         nixos/hosts/<HOST>/disko.nix
 
-# 4. Install with nixos-install
+# 3. Install with nixos-install
 
-nixos-install --flake .\#<HOST>
+sudo nixos-install --flake .\#<HOST>
+
+## reboot and remove install disk ##
+
+# 4.0 Clone dotfiles
+mkdir .config
+git clone https://github.com/JustCoderdev/dotfiles .config/dotfiles
+cd .config/dotfiles
+git switch nixos-integration
+
+# 4.1 Update hardware configuration
+nixos-generate-config --show-hardware-config --no-filesystems \
+        > nixos/hosts/<HOST>/hardware-configuration.nix
+
+# 4.2 Update disko disk id
+vim /nixos/host/<HOST>/disko.nix
 ```
 
 ### User dotfiles activation

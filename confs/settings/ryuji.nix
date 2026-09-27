@@ -57,6 +57,7 @@
 
 			"google-chrome"
 			"ciscoPacketTracer8"
+			"hpssacli"
 		];
 	};
 }
