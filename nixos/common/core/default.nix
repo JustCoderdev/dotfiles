@@ -16,7 +16,6 @@
 		./plymouth.nix
 		./printer.nix
 		./secrets.nix
-		./shell.nix
 		./ssh.nix
 		./sudo.nix
 		./wakeonlan.nix

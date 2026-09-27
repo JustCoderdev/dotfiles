@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, ... }:
 
 let
 	cfg = config.common.users.neko-agent;
@@ -12,7 +12,7 @@ in
 			isSystemUser = true;
 			group = "agent";
 
-			shell = pkgs.bashInteractive;
+			useDefaultShell = true;
 
 			openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6h5xWAlFFP3J0mcjUGQGaW+fKIi441VXPif3PuzTTT" ];
 		};

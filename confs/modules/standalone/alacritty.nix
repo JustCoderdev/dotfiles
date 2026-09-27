@@ -74,11 +74,6 @@ in
 
 				scrolling.history = 100000;
 
-				terminal.shell = {
-					program = "/usr/bin/env";
-					args = ["zsh"];
-				};
-
 				window =
 				{
 					dynamic_title = false;

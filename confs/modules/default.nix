@@ -11,7 +11,7 @@ let
 		};
 
 		environment = {
-			develop = "develop-environment"; # alacritty, emacs, git, neovim, zsh, ssh
+			develop = "develop-environment"; # alacritty, bash, emacs, git, neovim, zsh, ssh
 			game    = "game-environment";    # mangohud
 		};
 
@@ -39,9 +39,9 @@ in
 		./standalone/i3.nix
 		./standalone/i3status.nix
 		./standalone/mangohud.nix
+		./standalone/shell.nix
 		./standalone/ssh.nix
 		./standalone/tmux.nix
-		./standalone/zsh.nix
 	];
 
 	config =
@@ -51,11 +51,9 @@ in
 		programs.home-manager.enable = true;
 		# DO NOT TOUCH
 
-
 		# enable when 23.05 => 23.11
 		manual.html.enable = false;
 		manual.manpages.enable = false;
-
 
 		jcconfs.module =
 		{
@@ -67,6 +65,7 @@ in
 			waybar.enable    = (lib.mkDefault (contains profiles profile.desktop.hyprland));
 
 			alacritty.enable = (lib.mkDefault (contains profiles profile.environment.develop));
+			bash.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
 			emacs.enable     = (lib.mkDefault (contains profiles profile.environment.develop));
 			git.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
 			neovim.enable    = (lib.mkDefault (contains profiles profile.environment.develop));
