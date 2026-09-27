@@ -5,13 +5,13 @@
 echo -ne "\033[?1049l"
 
 # Check filepath
-if [ -z "${DOT_FILES:-}" ]; then
+if [ -z "${DOTFILES:-}" ]; then
 	echo -e "\033[31mUnknown dotfiles path\033[0m"
-	echo -e "Set DOT_FILES environmental variable in shell"
-	exit 1
+	echo -e "Attempting to use '/home/<user>/.config/dotfiles"
+	DOTFILES="/home/$USER/.config/dotfiles"
 fi
 
-pushd "${DOT_FILES}/" > /dev/null || exit
+pushd "${DOTFILES}/" > /dev/null || exit
 shopt -s globstar
 
 publish_on_discord () {
@@ -27,9 +27,8 @@ publish_on_discord () {
 	message_raw=${message_raw///\\f} # \f (form feed)
 	message=${message_raw///\\b} # \b (backspace)
 
-	discordhook_path="${DOT_FILES}/secrets/discord/foxburrow/rebuilds-hook.url"
+	discordhook_path="${DOTFILES}/secrets/discord/foxburrow/rebuilds-hook.url"
 	if [ -e "${discordhook_path}" ]; then
-		# completed_message="\`\`\`ansi\n\u001b[35m[${USER}@${HOSTNAME}]\u001b[0m ${message}\n\`\`\`"
 		completed_message="## [${HOSTNAME}] ${message}"
 		curl -s -X POST -H 'content-type: application/json' -d "{ \"content\": \"${completed_message}\" }" "$(cat "${discordhook_path}")"
 	else

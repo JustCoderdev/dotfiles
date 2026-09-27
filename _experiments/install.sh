@@ -12,8 +12,8 @@ else echo -e "Git not found, quitting..."; exit 1 fi
 if hash vim >/dev/null 2>&1; then echo -e "- Vim is installed"; EDITOR='vim'
 else echo -e "Vim not found, quitting..."; exit 1 fi
 
-DOT_FILES="$(pwd)"
-NIXOS_PATH="${DOT_FILES}/nixos"
+DOTFILES="$(pwd)"
+NIXOS_PATH="${DOTFILES}/nixos"
 HOSTS_PATH="${NIXOS_PATH}/hosts"
 
 
@@ -80,4 +80,4 @@ fi
 
 # sudo mkdir -p /mnt
 # echo -e "Installing system for \033[32m\"${HOSTNAME}\"\033[0m"
-# sudo nixos-install --show-trace --flake "${DOT_FILES}#${HOSTNAME}" --option substituters "${substituters}"
+# sudo nixos-install --show-trace --flake "${DOTFILES}#${HOSTNAME}" --option substituters "${substituters}"

@@ -43,13 +43,6 @@ There are 4 branches:
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 - Font: `SF Pro Text` [Link](https://developer.apple.com/fonts) (For Waybar)
 
-## Special global variables
-
-- `DOT_NIXOS`: `1` if the system is using the nixos configuration otherwise unset
-- `DOT_FILES`: The absolute path to the dotfiles folder (currently hardcoded in zsh.nix)
-- `DOT_NIX_SUB_URL`: The url to a nix substituter
-- `DOT_NIX_SUB_PORT`: The port of the nix subsituter
-
 ## TODO
 
 ### Fix
@@ -226,7 +219,7 @@ All secrets are "indexed" in `nixos/common/core/secrets.nix`
 ### Cloudflared
 
 ```shell
-cd ${DOT_FILES}/secrets/cloudflare
+cd ${DOTFILES}/secrets/cloudflare
 nix-shell -p cloudflared
 
 cloudflared login
@@ -239,7 +232,7 @@ mv *.json tunnel-home.json
 ### WPA Supplicant psk
 
 ```shell
-cd ${DOT_FILES}/secrets
+cd ${DOTFILES}/secrets
 token=$(wpa_passphrase WindTower-LTE PSK)
 echo "windtower_lte_psk=${token}" > wireless.conf
 vim wireless.conf
@@ -248,7 +241,7 @@ vim wireless.conf
 ### Nix Serve
 
 ```shell
-cd ${DOT_FILES}/secrets
+cd ${DOTFILES}/secrets
 sudo nix-store --generate-binary-cache-key DOMAIN \
         nixserve/cache-priv-key.pem nixserve/cache-pub-key.pem
 
@@ -260,7 +253,7 @@ sudo nix-store --generate-binary-cache-key DOMAIN \
 Source <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
 
 ```shell
-cd ${DOT_FILES}/secrets/nginx/VHOST
+cd ${DOTFILES}/secrets/nginx/VHOST
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout VHOST-cert.key -out VHOST-cert.crt
 ```

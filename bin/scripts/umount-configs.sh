@@ -1,9 +1,9 @@
 set -e
 
 # Check variables
-if [ -z "${DOT_FILES:-}" ]; then
+if [ -z "${DOTFILES:-}" ]; then
 	echo -e "\033[31mUnknown dotfiles path\033[0m"
-	echo -e "Set the DOT_FILES environmental variable in the shell first, exiting..."
+	echo -e "Set the DOTFILES environmental variable in the shell first, exiting..."
 	exit 1
 fi
 
@@ -48,13 +48,8 @@ ulink "${homepath}/.gitconfig"         # Git
 ulink "${homepath}/.gitignore_global"  # Git
 ulink "${homepath}/.zshrc"             # Zsh
 
-if [ -z "${DOT_NIXOS:-}" ]; then
-	echo "TODO: Fix unlinking on non nixos distro !!"
-	exit 1;
-
-	# link "${DOT_FILES}/confs/hyprland"       "${homepath}/.config/hypr"  # Hyprland
-	# link "${DOT_FILES}/confs/neovim"         "${homepath}/.config/nvim"  # Nvim
-	# link "${DOT_FILES}/confs/plymouth"       "/etc"         # Plymouth
-fi
+# link "${DOTFILES}/confs/hyprland"       "${homepath}/.config/hypr"  # Hyprland
+# link "${DOTFILES}/confs/neovim"         "${homepath}/.config/nvim"  # Nvim
+# link "${DOTFILES}/confs/plymouth"       "/etc"         # Plymouth
 
 echo "Done mounting configs"

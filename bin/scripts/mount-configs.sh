@@ -1,16 +1,16 @@
 set -e
 
 # Check variables
-if [ -z "${DOT_FILES:-}" ]; then
-	echo -e "\033[31mUnknown dotfiles path\033[0m"
-	echo -e "Set the DOT_FILES environmental variable in the shell first, exiting..."
-	exit 1
-fi
-
 if [ -z "${USER:-}" ]; then
 	echo -e "\033[31mUnknown USER variable\033[0m"
 	echo -e "Set the USER environmental variable in the shell first, exiting..."
 	exit 1
+fi
+
+if [ -z "${DOTFILES:-}" ]; then
+	echo -e "\033[31mUnknown dotfiles path\033[0m"
+	echo -e "Attempting to use '/home/<user>/.config/dotfiles"
+	DOTFILES="/home/$USER/.config/dotfiles"
 fi
 
 function link {
@@ -46,27 +46,22 @@ function link {
 echo -e "Creating soft links"
 
 uhome="/home/${USER}"
-link "${DOT_FILES}/confs/modules/alacritty"      "${uhome}/.config"  # Alacritty
-link "${DOT_FILES}/confs/modules/clang"          "${uhome}/.config"  # Clang
-link "${DOT_FILES}/confs/modules/i3"             "${uhome}/.config"  # i3
-link "${DOT_FILES}/confs/modules/waybar"         "${uhome}/.config"  # Waybar
-link "${DOT_FILES}/confs/modules/mangohud"       "${uhome}/.config/MangoHud"  # MangoHud
+link "${DOTFILES}/confs/modules/alacritty"      "${uhome}/.config"  # Alacritty
+link "${DOTFILES}/confs/modules/clang"          "${uhome}/.config"  # Clang
+link "${DOTFILES}/confs/modules/i3"             "${uhome}/.config"  # i3
+link "${DOTFILES}/confs/modules/waybar"         "${uhome}/.config"  # Waybar
+link "${DOTFILES}/confs/modules/mangohud"       "${uhome}/.config/MangoHud"  # MangoHud
 
-link "${DOT_FILES}/confs/modules/clang/.clang-format"    "${uhome}"  # Clang format
-link "${DOT_FILES}/confs/modules/emacs/.emacs"           "${uhome}"  # Emacs
-link "${DOT_FILES}/confs/modules/emacs/.emacs.custom.el" "${uhome}"  # Emacs
-link "${DOT_FILES}/confs/modules/emacs/.emacs.extra"     "${uhome}"  # Emacs
-link "${DOT_FILES}/confs/modules/git/.gitconfig"         "${uhome}"  # Git
-link "${DOT_FILES}/confs/modules/git/.gitignore_global"  "${uhome}"  # Git
-link "${DOT_FILES}/confs/modules/zsh/.zshrc"             "${uhome}"  # Zsh
+link "${DOTFILES}/confs/modules/clang/.clang-format"    "${uhome}"  # Clang format
+link "${DOTFILES}/confs/modules/emacs/.emacs"           "${uhome}"  # Emacs
+link "${DOTFILES}/confs/modules/emacs/.emacs.custom.el" "${uhome}"  # Emacs
+link "${DOTFILES}/confs/modules/emacs/.emacs.extra"     "${uhome}"  # Emacs
+link "${DOTFILES}/confs/modules/git/.gitconfig"         "${uhome}"  # Git
+link "${DOTFILES}/confs/modules/git/.gitignore_global"  "${uhome}"  # Git
+link "${DOTFILES}/confs/modules/zsh/.zshrc"             "${uhome}"  # Zsh
 
-if [ -z "${DOT_NIXOS:-}" ]; then
-	echo "TODO: Fix linking on non nixos distro !!"
-	exit 1;
-
-	# link "${DOT_FILES}/modules/confs/hyprland"       "${uhome}/.config/hypr"  # Hyprland
-	# link "${DOT_FILES}/modules/confs/neovim"         "${uhome}/.config/nvim"  # Nvim
-	# link "${DOT_FILES}/modules/confs/plymouth"       "/etc"         # Plymouth
-fi
+# link "${DOTFILES}/modules/confs/hyprland"       "${uhome}/.config/hypr"  # Hyprland
+# link "${DOTFILES}/modules/confs/neovim"         "${uhome}/.config/nvim"  # Nvim
+# link "${DOTFILES}/modules/confs/plymouth"       "/etc"         # Plymouth
 
 echo "Done mounting configs"
