@@ -3,6 +3,11 @@
 let
 	inherit (settings) username;
 
+	# PtP 10.255.255.252/30
+	alpha-ip = "10.255.255.253";
+	 beta-ip = "10.255.255.254";
+	beta-port-to-alpha = "enp7s2";
+
 	secrets = config.common.core.secrets;
 
 	raid-mount = "/mnt/md0";
@@ -22,6 +27,17 @@ let
 	};
 in
 {
+	systemd.network = {
+		enable = true;
+		networks."${beta-port-to-alpha}" = {
+			matchConfig.Name = beta-port-to-alpha;
+			address = [ "${beta-ip}/30" ];
+			linkConfig.RequiredForOnline = "no";
+		};
+	};
+
+	# ---------------------------------------- #
+
 	# Create service group
 	users.groups."${serv-group}" = { };
 	users.users.${username}.extraGroups = [ serv-group "minecraft" ];
