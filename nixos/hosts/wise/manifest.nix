@@ -7,11 +7,11 @@
 		system = system.x86_64-linux;
 		type = type.desktop;
 
+		cpu = cpu.intel.atom_x5-Z8350;
+
 		audio.capable = false;
 		bluetooth.capable = false;
 		graphics.capable = false;
-
-		cpu = cpu.intel.atom_x5-Z8350;
 
 		interfaces.wireless."wlo1".mac = "c8:58:c0:37:fe:ce";
 	};

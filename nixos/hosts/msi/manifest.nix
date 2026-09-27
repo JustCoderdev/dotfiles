@@ -6,12 +6,11 @@
 		system = system.x86_64-linux;
 		type = type.desktop;
 
-		audio.capable = true;
-		bluetooth.capable = true;
-
 		cpu = cpu.intel.core_i5-8400;
 		gpu = gpu.nvidia.gtx-1050-ti;
 
+		audio.capable = true;
+		bluetooth.capable = true;
 		graphics =
 		{
 			capable = true;

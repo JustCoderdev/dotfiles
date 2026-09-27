@@ -74,8 +74,6 @@
 
 		users =
 		{
-			hass-agent.enable = true;
-
 			school.enable = true;
 
 			ryuji.media-manipulation-suite =

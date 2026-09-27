@@ -1,8 +1,12 @@
+{ system, type, cpu, ... }:
+
 {
 	hardware =
 	{
-		system = "aarch64-linux";
-		type = "raspi3";
+		system = system.aarch64-linux;
+		type = type.raspi3;
+
+		# cpu = ???;
 
 		audio.capable = false;
 		bluetooth.capable = false;

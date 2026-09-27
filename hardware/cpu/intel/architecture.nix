@@ -3,6 +3,7 @@ let
 in
 
 [
+	(add-arch      "nehalem" 2008)
 	(add-arch "sandy-bridge" 2011)
 	(add-arch   "ivy-bridge" 2012)
 	(add-arch "cherry-trail" 2015)

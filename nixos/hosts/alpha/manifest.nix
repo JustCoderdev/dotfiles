@@ -1,10 +1,16 @@
+{ system, type, cpu, ... }:
+
 {
 	hardware =
 	{
-		system = "x86_64-linux";
-		type = "desktop";
+		system = system.x86_64-linux;
+		type = type.desktop;
 
-		cpu.intel.architecture = "westmere";
+		cpu = cpu.intel.xeon_e5530;
+
+		audio.capable = false;
+		bluetooth.capable = false;
+		graphics.capable = false;
 
 		interfaces =
 		let

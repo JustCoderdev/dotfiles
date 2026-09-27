@@ -4,14 +4,13 @@
 	hardware =
 	{
 		system = system.x86_64-linux;
-		type   = type.desktop;
-
-		audio.capable = false;
-		bluetooth.capable = false;
+		type = type.desktop;
 
 		cpu = cpu.intel.core_i5-3470;
 		gpu = gpu.radeon.hd-6750;
 
+		audio.capable = false;
+		bluetooth.capable = false;
 		graphics =
 		{
 			capable = true;

@@ -4,7 +4,7 @@
 	hardware =
 	{
 		system = system.x86_64-linux;
-		type   = type.laptop;
+		type = type.laptop;
 
 		audio.capable = true;
 		bluetooth.capable = true;

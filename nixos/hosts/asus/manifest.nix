@@ -6,9 +6,6 @@
 		system = system.x86_64-linux;
 		type = type.laptop;
 
-		audio.capable = true;
-		bluetooth.capable = true;
-
 		cpu = cpu.intel.core_i5-1035G1;
 		gpu = gpu.nvidia.geforce-mx130;
 		gpu_offload =
@@ -18,6 +15,8 @@
 			nvidiaBusId = "PCI:2:0:0";
 		};
 
+		audio.capable = true;
+		bluetooth.capable = true;
 		graphics =
 		{
 			capable = true;
