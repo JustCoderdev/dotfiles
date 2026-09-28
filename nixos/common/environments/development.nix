@@ -9,17 +9,6 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		systemd.tmpfiles.rules =
-		let
-			uhome = "/home/${username}";
-		in
-		[
-#			Type Path                        Mode User     Group Age Argument
-			"d   ${uhome}/Developer          0755 ${username} users"
-			"d   ${uhome}/Developer/Github   0755 ${username} users"
-			"d   ${uhome}/Developer/Projects 0755 ${username} users"
-		];
-
 		environment.systemPackages = with pkgs; [ screen ]
 		++ lib.lists.optionals (cfg.tools.android.enable) [ android-tools scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap unixtools.arp ]
