@@ -1,18 +1,16 @@
 {
-	pkgs        ? import <nixpkgs> { },
-	stage-1,    # pkgs.writeShellScript "stage-1" '' '';
-	stage-2,    # pkgs.writeShellScript "stage-2" '' '';
-	kernel      ? pkgs.linuxPackages.kernel,
-	kernel-args ? [ "root=fstab" ] # "init=${stage-2}/bin/bash" 
+	pkgs          ? import <nixpkgs> { }
+	, kernel      ? pkgs.linuxPackages.kernel
+	, kernel-args ? [ ] # [ "root=fstab" ] # "init=${stage-2}/bin/bash"
+	, stage-1     ? null # pkgs.writeShellScript "stage-1" '' '';
+	, stage-2     ? null # pkgs.writeShellScript "stage-2" '' '';
 }:
 
-let
-	kernel-args-formatted = builtins.concatStringsSep " " kernel-args;
-in
-
 {
-	#       initrd  init
-	inherit stage-1 stage-2 kernel kernel-args kernel-args-formatted;
+	inherit kernel kernel-args stage-1 stage-2;
+
+	kernel-args-formatted = builtins.concatStringsSep " " kernel-args;
+	kernel-bzimage = "${kernel}/bzImage";
 }
 
 # Used to generate menuentry
