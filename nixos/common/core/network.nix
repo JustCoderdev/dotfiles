@@ -75,6 +75,7 @@ in
 					"10.255.250.4" = [ (get-fqdname      "asus" "garden") ];
 					"10.255.250.5" = [ (get-fqdname       "msi" "garden") ];
 					"10.255.250.6" = [ (get-fqdname      "acer" "garden") ];
+					"10.255.250.7" = [ (get-fqdname     "alpha" "garden") ];
 				};
 			in
 			{}
