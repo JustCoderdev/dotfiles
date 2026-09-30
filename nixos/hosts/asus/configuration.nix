@@ -3,12 +3,6 @@
 {
 	environment.systemPackages = with pkgs; [ geteduroam ];
 
-	# _experimental.nix6OS =
-	# {
-	# 	enable = true;
-	# 	fs-uuid = "1A0D-5553";
-	# };
-
 	# Gnome
 	# -------------------- #
 	# services.xserver.displayManager.lightdm.greeters.gtk.indicators = lib.mkForce null;

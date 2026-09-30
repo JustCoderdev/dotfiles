@@ -115,7 +115,7 @@
 			}
 		);
 
-		_experimental.nix6OS-module = import ./_experiments/nix6OS-module.nix;
+		# _experimental.nix6OS-module = import ./_experiments/nix6OS-module.nix;
 	in
 
 	{
@@ -169,7 +169,7 @@
 							{ nixpkgs.config = user-preferences.pkgs-cfg; }
 
 							# _experimental modules
-							_experimental.nix6OS-module
+							# _experimental.nix6OS-module
 						]
 					);
 				}
