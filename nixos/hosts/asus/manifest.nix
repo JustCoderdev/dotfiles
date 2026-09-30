@@ -53,7 +53,7 @@
 			"wg-server" =
 			{
 				enable = true;
-				publicKey = "GCm9kPIr3bJzlyACmWRMiUkk362+zfi2ujh/xgNIX3U=";
+				publicKey = "1CVji0RTwSomKI86GP5JvzpoXL6strYRwuKQz03Sc3U=";
 				self-address = "10.255.250.4";
 			};
 		};
