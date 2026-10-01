@@ -1,4 +1,8 @@
-{ ... }:
+{ settings, ... }:
+
+let
+	inherit (settings) username;
+in
 
 {
 	config =
@@ -15,7 +19,7 @@
 			# <https://nix.dev/manual/nix/2.24/command-ref/conf-file>
 			settings =
 			{
-				# allowed-users = [ "@users" ];                        # These users are allowed to connect to the Nix daemon
+				allowed-users = [ "${username}" ];                        # These users are allowed to connect to the Nix daemon
 
 				auto-optimise-store = true;                          # Nix automatically detects files in the store that have identical contents, and replaces them with hard links to a single copy
 				builders-use-substitutes = true;                     # Nix will instruct remote build machines to use their own substituters if available
