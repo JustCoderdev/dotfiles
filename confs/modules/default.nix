@@ -65,12 +65,12 @@ in
 			waybar.enable    = (lib.mkDefault (contains profiles profile.desktop.hyprland));
 
 			alacritty.enable = (lib.mkDefault (contains profiles profile.environment.develop));
-			bash.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
+			# bash.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
 			emacs.enable     = (lib.mkDefault (contains profiles profile.environment.develop));
 			git.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
 			neovim.enable    = (lib.mkDefault (contains profiles profile.environment.develop));
 			ssh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
-			zsh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
+			# zsh.enable       = (lib.mkDefault (contains profiles profile.environment.develop));
 			tmux.enable      = (lib.mkDefault (contains profiles profile.environment.develop));
 
 			mangohud.enable  = (lib.mkDefault (contains profiles profile.environment.game));
