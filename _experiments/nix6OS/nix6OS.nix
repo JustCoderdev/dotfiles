@@ -1,16 +1,52 @@
 {
-	pkgs          ? import <nixpkgs> { }
-	, kernel      ? pkgs.linuxPackages.kernel
-	, kernel-args ? [ ] # [ "root=fstab" ] # "init=${stage-2}/bin/bash"
-	, stage-1     ? null # pkgs.writeShellScript "stage-1" '' '';
-	, stage-2     ? null # pkgs.writeShellScript "stage-2" '' '';
+	pkgs            ? import <nixpkgs> { }
+	, kernel        ? pkgs.linuxPackages.kernel
+	, kernel-args   ? [ ] # [ "root=fstab" ] # "init=${stage-2}/bin/bash"
+	, stage-1-files ? { }
+	# , stage-1       ? null # pkgs.writeShellScript "stage-1" '' '';
+	, stage-2       ? null # pkgs.writeShellScript "stage-2" '' '';
 }:
 
 {
-	inherit kernel kernel-args stage-1 stage-2;
+	inherit kernel kernel-args stage-1-files stage-2;
 
 	kernel-args-formatted = builtins.concatStringsSep " " kernel-args;
 	kernel-bzimage = "${kernel}/bzImage";
+
+	initrd =
+	(
+		pkgs.stdenv.mkDerivation
+		{
+			name = "initrd";
+
+			srcs = builtins.attrValues stage-1-files;
+
+			nativeBuildInputs = [ pkgs.cpio pkgs.coreutils ];
+
+			passAsFile = [ "files" ];
+			files = builtins.concatStringsSep "\n" (builtins.attrNames stage-1-files);
+
+			buildPhase = ''
+runHook preBuild
+
+touch files-file
+cat $files >> files-file
+find ${pkgs.coreutils}/bin >> files-file
+cat $files-file | cpio -H newc -o > init.cpio
+
+runHook postBuild
+'';
+
+			installPhase = ''
+runHook preInstall
+
+mkdir -p $out/bin
+cp init.cpio $out/bin
+
+runHook postInstall
+'';
+		}
+	);
 }
 
 # Used to generate menuentry
