@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
 	zsh-cfg = config.jcconfs.module.zsh;
@@ -6,20 +6,19 @@ let
 
 	dotfiles_path = "/home/\${USER}/.config/dotfiles";
 	shellAliases =
-	{
-		ez  = "echo 'Updating zsh'; exec zsh";
+	rec {
 		rm  = "rm -vI";
 		mkd = "mkdir -p";
 
 		ls   = "ls --color -F";
+		sls  = ls;
+		l    = ls;
+		sl   = ls;
 		la   = "ls -Fa";
 		ll   = "ls -Flah";
 		cls  = "clear && ls";
-		cl   = "cls";
-		sls  = "ls";
-		l    = "ls";
-		scls = "cls";
-		sl   = "ls";
+		cl   = cls;
+		scls = cls;
 
 		".."    = "cd ..";
 		"..."   = "cd ../..";
@@ -136,6 +135,14 @@ export -f dotfiles
 '';
 
 
+	writeBashScript =
+		name: text:
+		pkgs.writeTextFile {
+			inherit name text;
+			checkPhase = ''
+${pkgs.stdenv.shellDryRun} "$target"
+'';
+	};
 in
 
 {
@@ -155,7 +162,11 @@ in
 				"progcomp_alias"
 			];
 
-			profileExtra = "source ~/.bashrc";
+			profileExtra = ''
+# include .bashrc if it exists
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+'';
+
 			initExtra = ""
 				+ write-shortcuts-script
 				+ (make-prompt-script "bash")
@@ -165,6 +176,13 @@ in
 			sessionVariables = (sessionVariables) // { POSIXLY_CORRECT = ""; };
 		};
 
+		home.file.".profile".source = writeBashScript "profile" ''
+. "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
+
+${config.lib.shell.exportAll config.programs.bash.sessionVariables}
+
+${config.programs.bash.profileExtra}
+'';
 		# ---------------------------------------- #
 
 		programs.zsh = lib.mkIf (zsh-cfg.enable)

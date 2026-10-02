@@ -82,6 +82,102 @@ in
 			);
 		};
 
+		programs.bash =
+		{
+			enable = true;
+			completion.enable = true;
+
+			shellAliases =
+			let
+				dotfiles_path = "/home/\${USER}/.config/dotfiles";
+			in
+			rec {
+				rm  = "rm -vI";
+				mkd = "mkdir -p";
+
+				ls   = "ls --color -F";
+				sls  = ls;
+				l    = ls;
+				sl   = ls;
+				la   = "ls -Fa";
+				ll   = "ls -Flah";
+				cls  = "clear && ls";
+				cl   = cls;
+				scls = cls;
+
+				".."    = "cd ..";
+				"..."   = "cd ../..";
+				"...."  = "cd ../../..";
+				"....." = "cd ../../../..";
+
+				# Save Directory
+				sd  = "echo $(pwd) > \"/home/$USER/.sd\" && cat \"/home/$USER/.sd\"";
+				sdl = "cd $(cat \"/home/$USER/.sd\")";
+
+				# Debug
+				fgdeb = "echo -e \" \\033[30m[0:BLK] \\033[31m[1:RED] \\033[32m[2:GRN] \\033[33m[3:YLW] \\033[34m[4:BLU] \\033[35m[5:MAG] \\033[36m[6:CYN] \\033[37m[7:WHT]\"";
+				bgdeb = "echo -e \" \\033[90m[0:GRY] \\033[91m[1:RED] \\033[92m[2:GRN] \\033[93m[3:YLW] \\033[94m[4:BLU] \\033[95m[5:MAG] \\033[96m[6:CYN] \\033[97m[7:WHT]\"";
+
+				## git
+				gs  = "git status";
+				gl  = "git log --all --color --decorate --oneline --graph";
+				gd  = "git diff";
+				gdc = "git diff --cached";
+				ga  = "git add";
+				gc  = "git commit";
+
+				# neovim
+				nold = "nvim -S .old_session.vim";
+				nivm = "nvim";
+
+				# shortcuts
+				dotfiles = '' if [ -t 1 ]; then cd "${dotfiles_path}/$1"; else echo "${dotfiles_path}/$1"; fi '';
+			};
+
+			promptInit = ''
+function set-prompt() {
+	local name='\u'
+	local host='\h'
+	local path='\w'
+	local symb='\$'
+
+	local clr=$'\[\e[0m\]'
+	local gry=$'\[\e[90m\]'
+	local red=$'\[\e[31m\]'
+	local mag=$'\[\e[35m\]'
+	local cyn=$'\[\e[36m\]'
+
+	local c1=$mag # nested shell color
+	local c2=$gry
+
+	PS1='''
+
+	# TODO: why is tty not found?
+	# Check if we're in an ssh tty
+	if [[ $SSH_TTY == "$(tty)" ]];
+	then
+		# check if outside of nested shell
+		if [[ $SHLVL == 1 ]]; then c1=$red; fi
+
+		PS1+=$c1$name
+		PS1+=$c2'@'
+		PS1+=$c1$host
+	fi
+
+	# check if outside of nested shell
+	if [[ $SHLVL == 1 ]]; then c1=$cyn; fi
+
+	PS1+=$c2' '$path' '
+	PS1+=$c1$symb
+	if [[ $SHLVL > 1 ]]; then PS1+=$SHLVL; fi
+
+	PS1+=$clr' '
+}
+set-prompt
+'';
+
+		};
+
 		system.userActivationScripts =
 		{
 			correct-ssh-dir-perms.text = ''

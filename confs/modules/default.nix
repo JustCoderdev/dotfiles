@@ -39,7 +39,7 @@ in
 		./standalone/i3.nix
 		./standalone/i3status.nix
 		./standalone/mangohud.nix
-		./standalone/shell.nix
+		# ./standalone/shell.nix
 		./standalone/ssh.nix
 		./standalone/tmux.nix
 	];

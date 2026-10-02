@@ -7,8 +7,8 @@ echo -ne "\033[?1049l"
 # Check filepath
 if [ -z "${DOTFILES:-}" ]; then
 	echo -e "\033[31mUnknown dotfiles path\033[0m"
-	echo -e "Attempting to use '/home/<user>/.config/dotfiles"
-	DOTFILES="/home/$USER/.config/dotfiles"
+	DOTFILES="/home/${USER}/.config/dotfiles"
+	echo -e "Attempting to use '${DOTFILES}'"
 fi
 
 pushd "${DOTFILES}/" > /dev/null || exit
