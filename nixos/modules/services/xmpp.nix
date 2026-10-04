@@ -61,7 +61,7 @@ in
 
 			muc = [ {
 				domain = mucDomain;
-				name = "Yooo";
+				name = "lounge";
 				restrictRoomCreation = false;
 			} ];
 
