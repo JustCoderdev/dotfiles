@@ -18,7 +18,7 @@ in
 			80 443 # http / https
 			5281   # prosody http upload port
 			5222   # xmpp client connection
-			5269   # xmpp server federation (maybe 5259 ?)
+			5259   # xmpp server federation (maybe 5269 ?)
 		];
 
 		users.groups.${certsGroup}.members = [ "prosody" "nginx" ];
