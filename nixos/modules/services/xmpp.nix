@@ -65,7 +65,7 @@ in
 			} ];
 
 			virtualHosts.${cfg.domain} = {
-				enable = true;
+				enabled = true;
 
 				inherit ssl;
 				inherit (cfg) domain;
