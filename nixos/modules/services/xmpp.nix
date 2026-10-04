@@ -55,6 +55,7 @@ in
 			httpFileShare = {
 				domain = uploadDomain;
 				uploadFileSizeLimit = 100 * 1024 * 1024; # 100 MB
+				expires_after = "1 week";
 			};
 
 			muc = [ {
@@ -72,17 +73,14 @@ in
 
 			modules =
 			{
-				roaster = true;
+				groups = true;
 				saslauth = true;
-				tls = true;
-				dialback = true;
-				disco = true;
-				carbons = true;
-				pep = true;
-				mam = true;
-				ping = true;
-				admin_adhoc = true;
 				http_files = true;
+				ping = true;
+				pep = true;
+				register = false;
+				roster = true;
+				vcard = true;
 			};
 
 			allowRegistration = false;
