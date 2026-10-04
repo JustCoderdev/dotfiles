@@ -83,14 +83,6 @@ in
 				roster = true;
 			};
 
-			extraConfig = ''
-Component "${cfg.domain}" "proxy65"
-	proxy65_address = "${cfg.domain}"
-	modules_disabled = {
-		"s2s";
-	}
-'';
-
 			allowRegistration = false;
 		};
 	};
