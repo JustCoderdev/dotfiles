@@ -108,10 +108,10 @@ ${
 		PS1+=$c1$name
 		PS1+=$c2'@'
 		PS1+=$c1$host
+	else
+		# check if outside of nested shell
+		if [[ $SHLVL == 1 ]]; then c1=$cyn; fi
 	fi
-
-	# check if outside of nested shell
-	if [[ $SHLVL == 1 ]]; then c1=$cyn; fi
 
 	PS1+=$c2' '$path' '
 	PS1+=$c1$symb
