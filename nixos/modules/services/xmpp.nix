@@ -14,11 +14,12 @@ in
 
 	config = lib.mkIf (cfg.enable)
 	{
+		# <https://prosody.im/doc/ports>
 		networking.firewall.allowedTCPPorts = [
 			80 443 # http / https
 			5281   # prosody http upload port
 			5222   # xmpp client connection
-			5259   # xmpp server federation (maybe 5269 ?)
+			5269   # xmpp server federation
 		];
 
 		users.groups.${certsGroup}.members = [ "prosody" "nginx" ];
@@ -50,7 +51,7 @@ in
 			inherit ssl;
 
 			enable = true;
-			admins = [ "admin@${cfg.domain}" ];
+			admins = [ "ryuji@${cfg.domain}" ];
 
 			httpFileShare = {
 				domain = uploadDomain;
@@ -80,7 +81,6 @@ in
 				pep = true;
 				register = false;
 				roster = true;
-				vcard = true;
 			};
 
 			allowRegistration = false;
