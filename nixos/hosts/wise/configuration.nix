@@ -26,6 +26,9 @@ in
 			"www.foxburrow.org"
 			"err.foxburrow.org"
 
+			"conference.foxburrow.org"
+			"upload.foxburrow.org"
+
 			# "immich.foxburrow.org"
 			# "deluge.foxburrow.org"
 			# "jellyfin.foxburrow.org"

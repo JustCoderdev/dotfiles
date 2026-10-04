@@ -66,6 +66,7 @@ in
 				[
 					nix-tree btop unixtools.netstat
 					appimage-run imagemagick # dust
+					profanity
 				]
 				++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 				(
@@ -74,6 +75,7 @@ in
 						vlc audacity emulsion
 						gnome-disk-utility gpick
 						qemu baobab # rustdesk
+						gajim
 					]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]

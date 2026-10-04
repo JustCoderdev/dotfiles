@@ -68,5 +68,11 @@
 			openFirewall = true;
 			external-interface = "enp1s0";
 		};
+
+		xmpp =
+		{
+			enable = true;
+			domain = "foxburrow.org";
+		};
 	};
 }

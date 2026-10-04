@@ -18,5 +18,6 @@
 		./virtualbox.nix
 		./webserver.nix
 		./wireguard.nix
+		./xmpp.nix
 	];
 }
