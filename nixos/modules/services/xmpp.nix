@@ -55,6 +55,7 @@ in
 
 			httpFileShare = {
 				domain = uploadDomain;
+				http_external_url = uploadDomain;
 				uploadFileSizeLimit = 100 * 1024 * 1024; # 100 MB
 				expires_after = "1 week";
 			};
