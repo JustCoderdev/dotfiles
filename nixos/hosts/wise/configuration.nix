@@ -46,7 +46,7 @@ in
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
 	networking.firewall.allowedTCPPorts = [ 443 80 ];
-	services.nginx = lib.mkForce (false)
+	services.nginx =
 	let
 		default-ssl-config =
 		{
