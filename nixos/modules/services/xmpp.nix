@@ -22,20 +22,22 @@ in
 			5269   # xmpp server federation
 		];
 
-		users.groups.${certsGroup}.members = [ "prosody" "nginx" ];
-		security.acme.certs.${cfg.domain} = {
-			group = certsGroup;
-			webroot = "/var/lib/acme/acme-challenge";
-			postRun = "systemctl reload prosody.service";
-			extraDomainNames = [ mucDomain uploadDomain ];
-		};
+		# users.groups.${certsGroup}.members = [ "prosody" "nginx" ];
+		# security.acme.certs.${cfg.domain} = {
+		# 	group = certsGroup;
+		# 	webroot = "/var/lib/acme/acme-challenge";
+		# 	postRun = "systemctl reload prosody.service";
+		# 	extraDomainNames = [ mucDomain uploadDomain ];
+		# };
 
 		services.nginx =
 		{
 			enable = true;
-			virtualHosts.${cfg.domain} =
+			virtualHosts.${cfg.domain}.locations =
 			{
-				locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
+				"/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
+				# "${uploadDomain}".enableACME = true;
+				# "${mucDomain}".enableACME = true;
 				# locations."/".return = "404";
 			};
 		};
@@ -66,11 +68,15 @@ in
 				restrictRoomCreation = false;
 			} ];
 
-			virtualHosts.${cfg.domain} = {
-				enabled = true;
+			virtualHosts =
+			{
+				${cfg.domain} =
+				{
+					enabled = true;
 
-				inherit ssl;
-				inherit (cfg) domain;
+					inherit ssl;
+					inherit (cfg) domain;
+				}
 			};
 
 			modules =

@@ -71,7 +71,7 @@
 
 		xmpp =
 		{
-			enable = true;
+			enable = false;
 			domain = "foxburrow.org";
 		};
 	};
