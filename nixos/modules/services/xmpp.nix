@@ -36,7 +36,7 @@ in
 			virtualHosts.${cfg.domain} =
 			{
 				locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
-				locations."/".return = "404";
+				# locations."/".return = "404";
 			};
 		};
 
@@ -82,6 +82,14 @@ in
 				register = false;
 				roster = true;
 			};
+
+			extraConfig = ''
+Component "proxy.${cfg.domain}" "proxy65"
+	proxy65_address = "${cfg.domain}"
+	modules_disabled = {
+		"s2s";
+	}
+'';
 
 			allowRegistration = false;
 		};
