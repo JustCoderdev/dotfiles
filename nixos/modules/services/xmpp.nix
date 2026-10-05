@@ -76,7 +76,7 @@ in
 
 					inherit ssl;
 					inherit (cfg) domain;
-				}
+				};
 			};
 
 			modules =
