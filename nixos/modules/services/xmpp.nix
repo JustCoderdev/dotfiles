@@ -83,20 +83,6 @@ in
 				roster = true;
 			};
 
-			extraConfig = ''
-Component "${mucDomain}" "proxy65"
-	proxy65_address = "${mucDomain}"
-	modules_disabled = {
-		"s2s";
-	}
-
-Component "${uploadDomain}" "proxy65"
-	proxy65_address = "${uploadDomain}"
-	modules_disabled = {
-		"s2s";
-	}
-'';
-
 			allowRegistration = false;
 		};
 	};
