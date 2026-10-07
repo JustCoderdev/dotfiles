@@ -45,34 +45,18 @@ There are 4 branches:
 
 ## TODO
 
-### Fix
-
-- Migrate all hosts to disko using `/dev/disk/by-id/<id>`
-- ~~Fix WakeOnLan module to make it persistent across reboots~~
-- jcconfs:neovim: Return should not accept suggestion
-- jcconfs:neovim: Colors are too flashy
-
 ### Improve
 
-- ~~Improve grub by adding rescue option~~
 - Improve alacritty by resetting keybindings
 - Improve samba "global" directory to list all shares
 - [wise] Improve nginx by removing `/<service>` subpath when using subdomain
-- Improve keyboard binds by:
-    - Remove special symbols when pressing ALT-GR
-    - Create custom layout for italian keyboard with american keys
 
 ### Add
 
 - Add authelia module for homeserver auth
-- Add guest samba share
 - Add dns delegation to master manager
 - Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
 - Add screen brightness keybinding (`xrandr --output DP-1 --brightness 0.6`)
-
-### Ideas
-
-- [sixos](https://media.ccc.de/v/38c3-sixos-a-nix-os-without-systemd)
 
 ## Dotfiles structure
 
