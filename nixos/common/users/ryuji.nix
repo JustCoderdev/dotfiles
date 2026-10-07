@@ -66,7 +66,7 @@ in
 				[
 					nix-tree btop unixtools.netstat
 					appimage-run imagemagick # dust
-					profanity
+					# profanity
 				]
 				++ lib.lists.optionals (self-manifest.hardware.graphics.desktop-environment.enable)
 				(
@@ -74,8 +74,8 @@ in
 						firefox google-chrome
 						vlc audacity emulsion
 						gnome-disk-utility gpick
-						qemu baobab # rustdesk
-						gajim
+						qemu baobab # rustdesk gajim
+						thunderbird
 					]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.documents.enable) [ libreoffice ]
 					++ lib.lists.optionals (cfg.media-manipulation-suite.images.enable)    [ gimp krita ]
