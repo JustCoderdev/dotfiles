@@ -3,60 +3,44 @@
 let
 	inherit (settings) username;
 
-	# PtP 10.255.255.252/30
-	alpha-ip = "10.255.255.253";
-	 beta-ip = "10.255.255.254";
-	beta-port-to-alpha = "enp7s2";
-
 	secrets = config.common.core.secrets;
 
-	raid-mount = "/mnt/md0";
-	config-dir = raid-mount + "/.config";
-	data-dir   = raid-mount + "/data";
-
-	enable-services-touching-raid = false;
-
-	openFirewall = true;
-	forwardedServicesFirewall = false && openFirewall;
-	serv-group = "maid";
-
-	proxy = {
-		enable = true;
-		host = "quiss.home.lan";
-		aliases = [ "192.168.7.7" "10.255.250.2" "quiss.garden.lan" ];
-	};
+#	# raid-mount = "/mnt/md0";
+#	# config-dir = raid-mount + "/.config";
+#	# data-dir   = raid-mount + "/data";
+#
+#	enable-services-touching-raid = false;
+#
+#	openFirewall = true;
+#	forwardedServicesFirewall = false && openFirewall;
+#	serv-group = "maid";
+#
+#	proxy = {
+#		enable = true;
+#		host = "quiss.home.lan";
+#		aliases = [ "192.168.7.7" "10.255.250.2" "quiss.garden.lan" ];
+#	};
 in
 {
-	systemd.network = {
-		enable = true;
-		networks."${beta-port-to-alpha}" = {
-			matchConfig.Name = beta-port-to-alpha;
-			address = [ "${beta-ip}/30" ];
-			linkConfig.RequiredForOnline = "no";
-		};
-	};
-
-	# ---------------------------------------- #
-
 	# Create service group
-	users.groups."${serv-group}" = { };
-	users.users.${username}.extraGroups = [ serv-group "minecraft" ];
+#	users.groups."${serv-group}" = { };
+#	users.users.${username}.extraGroups = [ serv-group "minecraft" ];
 
-	systemd.tmpfiles.rules = [
-#		Type Path                    Mode User Group
-		"d   ${config-dir}           0775 root ${serv-group}"
-		"d   ${data-dir}             0775 root ${serv-group}"
-
-		"d   ${data-dir}/documents   0775 root ${serv-group}"
-		"d   ${data-dir}/games       0775 root minecraft"
-
-		# App dirs
-		"d   ${data-dir}/downloads   0775 root ${serv-group}"
-		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
-		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
-		"d   ${data-dir}/music       0775 root ${serv-group}"
-		"d   ${data-dir}/books       0775 root ${serv-group}"
-	];
+#	systemd.tmpfiles.rules = [
+##		Type Path                    Mode User Group
+#		"d   ${config-dir}           0775 root ${serv-group}"
+#		"d   ${data-dir}             0775 root ${serv-group}"
+#
+#		"d   ${data-dir}/documents   0775 root ${serv-group}"
+#		"d   ${data-dir}/games       0775 root minecraft"
+#
+#		# App dirs
+#		"d   ${data-dir}/downloads   0775 root ${serv-group}"
+#		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
+#		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
+#		"d   ${data-dir}/music       0775 root ${serv-group}"
+#		"d   ${data-dir}/books       0775 root ${serv-group}"
+#	];
 
 
 	# Spindown after 10 minutes
@@ -97,92 +81,90 @@ in
 
 	# SAMBA
 
-	modules.services.samba.shares.custom = let
-		create-share = (name: root: owner: { inherit name root owner; });
-	in [
-		(create-share "data" raid-mount username)
-	];
+#	modules.services.samba.shares.custom = let
+#		create-share = (name: root: owner: { inherit name root owner; });
+#	in [
+#		(create-share "data" raid-mount username)
+#	];
 
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
 
-	networking.firewall.allowedTCPPorts = [ 443 80 25565 ];
-	services.nginx =
-	{
-		enable = true;
-		virtualHosts."${proxy.host}" =
-		let
-			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
-		in
-		{
-			# forceSSL = true;
-			addSSL = true;
-			sslCertificate = vhost-secrets.cert.path;
-			sslCertificateKey = vhost-secrets.key.path;
-		};
-	};
+#	networking.firewall.allowedTCPPorts = [ 443 80 25565 ];
+#	services.nginx =
+#	{
+#		enable = true;
+#		virtualHosts."${proxy.host}" =
+#		let
+#			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
+#		in
+#		{
+#			# forceSSL = true;
+#			addSSL = true;
+#			sslCertificate = vhost-secrets.cert.path;
+#			sslCertificateKey = vhost-secrets.key.path;
+#		};
+#	};
 
 	# ARR Stack
 
-	modules.services.servarr =
-	{
-		inherit proxy;
-
-		enable = true && enable-services-touching-raid;
-		openFirewall = forwardedServicesFirewall;
-
-		group = serv-group;
-
-		config-root-dir = config-dir;
-		shared-downloads-dir = "${data-dir}/downloads";
-
-		apps =
-		{
-			prowlarr.enable = true;
-			deluge.enable = true;
-
-			lidarr.enable = true;
-			radarr.enable = true;
-			sonarr.enable = true;
-
-			bazarr.enable = false;
-			readarr.enable = false;
-		};
-	};
+#	modules.services.servarr =
+#	{
+#		inherit proxy;
+#
+#		enable = true && enable-services-touching-raid;
+#		openFirewall = forwardedServicesFirewall;
+#
+#		group = serv-group;
+#
+#		config-root-dir = config-dir;
+#		shared-downloads-dir = "${data-dir}/downloads";
+#
+#		apps =
+#		{
+#			prowlarr.enable = true;
+#			deluge.enable = true;
+#
+#			lidarr.enable = true;
+#			radarr.enable = true;
+#			sonarr.enable = true;
+#
+#			bazarr.enable = false;
+#			readarr.enable = false;
+#		};
+#	};
 
 	# MEDIA PLAYER
 
-	modules.services.jellyfin =
-	{
-		inherit proxy;
-
-		enable = true && enable-services-touching-raid;
-		openFirewall = forwardedServicesFirewall;
-
-		config-dir = config-dir + "/jellyfin";
-		group = serv-group;
-	};
+#	modules.services.jellyfin =
+#	{
+#		inherit proxy;
+#
+#		enable = true && enable-services-touching-raid;
+#		openFirewall = forwardedServicesFirewall;
+#
+#		config-dir = config-dir + "/jellyfin";
+#		group = serv-group;
+#	};
 
 	# Gallery Backup
 
-	modules.services.immich =
-	{
-		inherit proxy;
-
-		enable = false && enable-services-touching-raid;
-		openFirewall = forwardedServicesFirewall;
-
-		config-dir = config-dir + "/immich";
-		group = serv-group;
-	};
+#	modules.services.immich =
+#	{
+#		inherit proxy;
+#
+#		enable = false && enable-services-touching-raid;
+#		openFirewall = forwardedServicesFirewall;
+#
+#		config-dir = config-dir + "/immich";
+#		group = serv-group;
+#	};
 
 	# services.syncthing.guiAddress = "10.255.250.2:8384";
-	modules.services.syncthing =
-	{
-		enable = lib.mkForce (true && enable-services-touching-raid);
-		inherit openFirewall;
-		group = serv-group;
-	};
-
-	services.grafana.enable = false;
+#	modules.services.syncthing =
+#	{
+#		enable = lib.mkForce (true && enable-services-touching-raid);
+#		inherit openFirewall;
+#		group = serv-group;
+#	};
 }
