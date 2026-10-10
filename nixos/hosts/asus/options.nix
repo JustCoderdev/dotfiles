@@ -54,6 +54,7 @@
 
 	modules.services =
 	{
+		samba.enable = true;
 		uxplay = {
 			enable = true;
 			openFirewall = true;
