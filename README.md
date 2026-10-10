@@ -43,21 +43,6 @@ There are 4 branches:
 - Font: `Roboto Mono` [Link](https://github.com/googlefonts/RobotoMono.git) (For Alacritty)
 - Font: `SF Pro Text` [Link](https://developer.apple.com/fonts) (For Waybar)
 
-## TODO
-
-### Improve
-
-- Improve alacritty by resetting keybindings
-- Improve samba "global" directory to list all shares
-- [wise] Improve nginx by removing `/<service>` subpath when using subdomain
-
-### Add
-
-- Add authelia module for homeserver auth
-- Add dns delegation to master manager
-- Add Eve-ng (<https://github.com/SmartFinn/eve-ng-integration/issues/68>)
-- Add screen brightness keybinding (`xrandr --output DP-1 --brightness 0.6`)
-
 ## Dotfiles structure
 
 There are 3 main directories (+1):

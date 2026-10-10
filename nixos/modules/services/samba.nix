@@ -1,5 +1,16 @@
 { config, lib, pkgs, settings, ... }:
 
+# Samba for macOS
+# 1. <https://gist.github.com/fschiettecatte/02d61e3d36c5f8d36bd45586fc5d0dc7>
+# 2. <https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X>
+# 3. <https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html>
+
+# Minimal working configuration
+# <https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6>
+
+# Settings reference
+# <https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html>
+
 let
 	inherit (settings) username;
 
