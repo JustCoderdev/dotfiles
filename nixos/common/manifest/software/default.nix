@@ -103,7 +103,7 @@ in
 				enable = true;
 				openFirewall = true;
 
-				dataDir = lib.mkIf (self-sw.syncthing.data-dir != null) self-sw.syncthing.data-dir;
+				data-dir = lib.mkIf (self-sw.syncthing.data-dir != null) self-sw.syncthing.data-dir;
 				folders = [ "obsidian-db" ];
 				devices =
 				let

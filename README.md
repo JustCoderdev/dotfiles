@@ -208,7 +208,7 @@ sudo nix-store --generate-binary-cache-key DOMAIN \
 Source <https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1>
 
 ```shell
-cd ${DOTFILES}/secrets/nginx/VHOST
+cd ${DOTFILES}/secrets/nginx
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout VHOST-cert.key -out VHOST-cert.crt
 ```

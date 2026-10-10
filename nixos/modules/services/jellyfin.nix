@@ -58,7 +58,6 @@ in
 					};
 				};
 
-
 				extraConfig = ""
 					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
 					+ "add_header X-XSS-Protection \"1; mode=block\";\n"

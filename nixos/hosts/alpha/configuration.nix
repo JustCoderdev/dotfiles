@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, settings, ... }:
 
 # TODO: Package hpasm
 # - [package](https://support.hpe.com/connect/s/softwaredetails?language=en_US&softwareId=MTX_cc8c40268b5540778b86b957f2&tab=Installation+Instructions)
@@ -9,16 +9,16 @@
 # - <http://wikistatic.jasonantman.com/index.php/Hpasm/>
 
 let
+	inherit (settings) username;
+	secrets = config.common.core.secrets;
+
 	raid-mount = "/mnt/array-aad";
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
 
-	enable-services-touching-raid = false;
-
+	enable = true;
 	openFirewall = true;
-	forwardedServicesFirewall = false && openFirewall;
-	serv-group = "maid";
-
+	group = "maid";
 	proxy = {
 		enable = true;
 		host = "alpha.home.lan";
@@ -46,24 +46,54 @@ in
 	# ------------------------------------------------------------ #
 
 	# Create service group
-	users.groups."${serv-group}" = { };
+	users.groups."${group}" = { };
+	users.users.${username}.extraGroups = [ group ];
+
+	networking.firewall.allowedTCPPorts = [ 443 80 ];
 	modules.services.samba.shares."data" = raid-mount;
 
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
-		"d   ${config-dir}           0775 root ${serv-group}"
-		"d   ${data-dir}             0775 root ${serv-group}"
+		"d   ${config-dir}           0775 root ${group}"
+		"d   ${data-dir}             0775 root ${group}"
 
-		"d   ${data-dir}/documents   0775 root ${serv-group}"
-		"d   ${data-dir}/games       0775 root minecraft"
+		"d   ${data-dir}/documents   0775 root ${group}"
+		# "d   ${data-dir}/games       0775 root minecraft"
 
 		# App dirs
-		"d   ${data-dir}/downloads   0775 root ${serv-group}"
-		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
-		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
-		"d   ${data-dir}/music       0775 root ${serv-group}"
-		"d   ${data-dir}/books       0775 root ${serv-group}"
+		"d   ${data-dir}/downloads   0775 root ${group}"
+		"d   ${data-dir}/media/movie 0775 root ${group}"
+		"d   ${data-dir}/media/serie 0775 root ${group}"
+		"d   ${data-dir}/music       0775 root ${group}"
+		"d   ${data-dir}/books       0775 root ${group}"
 	];
 
+	services.nginx =
+	{
+		enable = true;
+		virtualHosts."${proxy.host}" =
+		let
+			vhost-secrets = secrets.nginx.vhosts."${proxy.host}";
+		in
+		{
+			# forceSSL = true;
+			addSSL = true;
+			sslCertificate = vhost-secrets.cert.path;
+			sslCertificateKey = vhost-secrets.key.path;
+		};
+	};
+
 	# ------------------------------------------------------------ #
+
+	modules.services.jellyfin =
+	{
+		inherit enable openFirewall group proxy;
+		config-dir = config-dir + "/jellyfin";
+	};
+
+	modules.services.syncthing =
+	{
+		inherit enable openFirewall group;
+		data-dir = lib.mkForce "${data-dir}/documents/synced";
+	};
 }

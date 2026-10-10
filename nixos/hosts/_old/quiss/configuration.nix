@@ -22,48 +22,6 @@ let
 #	};
 in
 {
-	# Create service group
-#	users.groups."${serv-group}" = { };
-#	users.users.${username}.extraGroups = [ serv-group "minecraft" ];
-
-#	systemd.tmpfiles.rules = [
-##		Type Path                    Mode User Group
-#		"d   ${config-dir}           0775 root ${serv-group}"
-#		"d   ${data-dir}             0775 root ${serv-group}"
-#
-#		"d   ${data-dir}/documents   0775 root ${serv-group}"
-#		"d   ${data-dir}/games       0775 root minecraft"
-#
-#		# App dirs
-#		"d   ${data-dir}/downloads   0775 root ${serv-group}"
-#		"d   ${data-dir}/media/movie 0775 root ${serv-group}"
-#		"d   ${data-dir}/media/serie 0775 root ${serv-group}"
-#		"d   ${data-dir}/music       0775 root ${serv-group}"
-#		"d   ${data-dir}/books       0775 root ${serv-group}"
-#	];
-
-
-	# Spindown after 10 minutes
-	# systemd.services.hd-idle = let
-	# 	time_m = 10;
-	# 	time_s = toString (time_m * 60);
-	# in {
-	# 	enable = true;
-	# 	wantedBy = [ "multi-user.target" ];
-	# 	serviceConfig = {
-	# 		type = "forking";
-	# 		ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i ${time_s} -a sdc -i ${time_s}";
-	# 	};
-	# };
-
-	# ------------------------------------------------------------ #
-
-	# SAMBA
-	# modules.services.samba.shares."data" = raid-mount;
-
-	# Homepage
-	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>
-
 #	networking.firewall.allowedTCPPorts = [ 443 80 25565 ];
 #	services.nginx =
 #	{
@@ -108,19 +66,6 @@ in
 #		};
 #	};
 
-	# MEDIA PLAYER
-
-#	modules.services.jellyfin =
-#	{
-#		inherit proxy;
-#
-#		enable = true && enable-services-touching-raid;
-#		openFirewall = forwardedServicesFirewall;
-#
-#		config-dir = config-dir + "/jellyfin";
-#		group = serv-group;
-#	};
-
 	# Gallery Backup
 
 #	modules.services.immich =
@@ -131,14 +76,6 @@ in
 #		openFirewall = forwardedServicesFirewall;
 #
 #		config-dir = config-dir + "/immich";
-#		group = serv-group;
-#	};
-
-	# services.syncthing.guiAddress = "10.255.250.2:8384";
-#	modules.services.syncthing =
-#	{
-#		enable = lib.mkForce (true && enable-services-touching-raid);
-#		inherit openFirewall;
 #		group = serv-group;
 #	};
 }

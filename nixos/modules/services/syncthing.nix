@@ -13,7 +13,8 @@ in
 			enable = true;
 			openDefaultPorts = cfg.openFirewall;
 
-			inherit (cfg) group dataDir;
+			inherit (cfg) group;
+			dataDir = cfg.data-dir;
 			user = cfg.username;
 
 			overrideDevices = true;
@@ -45,7 +46,7 @@ in
 								value =
 								{
 									enable = true;
-									path = "${cfg.dataDir}/${name}";
+									path = "${cfg.data-dir}/${name}";
 									devices = lib.attrsets.mapAttrsToList (
 										name: value: name
 									) cfg.devices;
@@ -99,7 +100,7 @@ in
 	{
 		enable = lib.mkEnableOption "syncthing daemon";
 		openFirewall = lib.mkEnableOption "Open firewall";
-		dataDir = lib.mkOption {
+		data-dir = lib.mkOption {
 			description = "The path where synchronised directories will exist";
 			type = lib.types.path;
 			default = "/home/${cfg.username}/Documents/synced";

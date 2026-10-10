@@ -33,6 +33,12 @@
 	{
 		ssh.pubkey."ryuji" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINAr/IUoqeskTARnRlhH0vGfvBVq0auLoF46sZHZV6rd";
 
+		syncthing =
+		{
+			enable = true;
+			identification = "EVKQHPZ-LRN5AAK-4ZKEHAT-TCMDQTN-S5X6UMQ-OPB27GX-B3RA4GK-BTJJMA5";
+		};
+
 		wireguard."wg-server" =
 		{
 			enable = true;
