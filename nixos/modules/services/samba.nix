@@ -16,8 +16,8 @@ in
 		systemd.tmpfiles.rules =
 		let inherit (config.services.samba.settings.public) path; in
 		[
-#			Type Path    Mode User  Group
-			"d   ${path} 0755 samba samba"
+#			Type Path    Mode User Group
+			"d   ${path} 0775 root samba"
 		];
 
 		# Autodiscovery on windows
