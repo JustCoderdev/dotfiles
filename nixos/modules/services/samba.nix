@@ -4,7 +4,7 @@ let
 	inherit (settings) username;
 
 	cfg = config.modules.services.samba;
-	samba-root = "/srv/shares";
+	# samba-root = "/srv/shares";
 in
 
 {
@@ -13,12 +13,12 @@ in
 		users.users.${username}.extraGroups = [ "samba" ];
 		environment.systemPackages = with pkgs; [ cifs-utils ];
 
-		systemd.tmpfiles.rules =
-		let inherit (config.services.samba.settings.public) path; in
-		[
-#			Type Path    Mode User Group
-			"d   ${path} 0775 root samba"
-		];
+# 		systemd.tmpfiles.rules =
+# 		let inherit (config.services.samba.settings.public) path; in
+# 		[
+# #			Type Path    Mode User   Group
+# 			"d   ${path} 0777 nobody nogroup"
+# 		];
 
 		# Autodiscovery on windows
 		services.samba-wsdd = {
@@ -59,14 +59,23 @@ in
 
 				homes."browseable" = "no";
 
-				public =
-				{
-					comment = "Public samba share";
-					path = "${samba-root}/public";
-
-					"read only" = "yes";
-					"guest ok" = "yes";
-				};
+				# public share never works
+				# cannot login with any device
+				# public =
+				# {
+				# 	comment = "Public samba share";
+				# 	path = "${samba-root}/public";
+				#
+				# 	"read only" = "yes";
+				# 	"guest only" = "yes";
+				# 	"guest ok" = "yes";
+				#
+				# 	"force user" = "nobody";
+				# 	"force group" = "nogroup";
+				#
+				# 	"create mask" = "0664";
+				# 	"directory mask" = "0775";
+				# };
 
 				# testshare = {
 				# 	"path" = "/home/<USER>/Public";
