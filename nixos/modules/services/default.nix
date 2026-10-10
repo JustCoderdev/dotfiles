@@ -8,8 +8,8 @@
 		./kvm.nix
 		./nixbuilder.nix
 		# ./nixcache.nix (old)
-		./routing.nix
-		./rtmp.nix
+		# ./routing.nix  (old)
+		# ./rtmp.nix     (old)
 		./samba.nix
 		./servarr.nix
 		./syncthing.nix

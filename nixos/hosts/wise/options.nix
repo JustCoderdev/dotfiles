@@ -5,19 +5,9 @@
 	{
 		core =
 		{
-			network.wakeOn =
-			{
-				lan.enabledFor = [ "enp1s0" ];
-				knownDevices.msi = "d4:3b:04:51:45:28";
-			};
-
 			secrets =
 			{
-				cloudflare = {
-					origin-cert.installed = true;
-					api-token.installed = true;
-					tunnel-creds."wise-cf".installed = true;
-				};
+				cloudflare.api-token.installed = true;
 				discord.hooks."foxburrow".rebuilds.installed = true;
 
 				nginx.vhosts."_" = {
@@ -30,17 +20,6 @@
 						path = "/etc/nginx-certs/_-cert.key";
 					};
 				};
-			};
-
-			ssh.cloudflared-proxy =
-			{
-				enable = true;
-				hosts = [
-					"jarvis-cf.foxburrow.org"
-					"quiss-cf.foxburrow.org"
-					"wise-cf.foxburrow.org"
-					"msi-cf.foxburrow.org"
-				];
 			};
 		};
 	};

@@ -7,11 +7,6 @@
 	{
 		secrets =
 		{
-			cloudflare = {
-				origin-cert.installed = true;
-				tunnel-creds."home".installed = true;
-			};
-
 			discord.hooks."foxburrow" = {
 				rebuilds.installed = true;
 				errors.installed = true;
@@ -27,17 +22,6 @@
 # 					path = "/etc/nginx-certs/quiss_home_lan-cert.key";
 # 				};
 # 			};
-		};
-
-		ssh.cloudflared-proxy =
-		{
-			enable = true;
-			hosts = [
-				"jarvis-cf.foxburrow.org"
-				"quiss-cf.foxburrow.org"
-				"wise-cf.foxburrow.org"
-				"msi-cf.foxburrow.org"
-			];
 		};
 	};
 

@@ -11,23 +11,7 @@
 		core =
 		{
 			printing.enable = true;
-
-			secrets =
-			{
-				# cloudflare.origin-cert.installed = true;
-				discord.hooks."foxburrow".rebuilds.installed = true;
-			};
-
-			# ssh.cloudflared-proxy =
-			# {
-			# 	enable = true;
-			# 	hosts = [
-			# 		"jarvis-cf.foxburrow.org"
-			# 		"quiss-cf.foxburrow.org"
-			# 		"wise-cf.foxburrow.org"
-			# 		"msi-cf.foxburrow.org"
-			# 	];
-			# };
+			secrets.discord.hooks."foxburrow".rebuilds.installed = true;
 		};
 
 		environments =

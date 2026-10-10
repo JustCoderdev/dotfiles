@@ -27,12 +27,6 @@
 			{
 				# ...
 			};
-
-			ssh.cloudflared-proxy =
-			{
-				enable = false;
-				hosts = [ ];
-			};
 		};
 
 		environments =

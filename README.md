@@ -200,19 +200,6 @@ sudo nix --extra-experimental-features 'nix-command flakes' \
 
 All secrets are "indexed" in `nixos/common/core/secrets.nix`
 
-### Cloudflared
-
-```shell
-cd ${DOTFILES}/secrets/cloudflare
-nix-shell -p cloudflared
-
-cloudflared login
-mv /home/${USER}/.cloudflared/cert.pem .
-
-cloudflared tunnel --origincert "$(pwd)/cert.pem" create home
-mv *.json tunnel-home.json
-```
-
 ### WPA Supplicant psk
 
 ```shell

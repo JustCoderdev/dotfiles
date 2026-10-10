@@ -8,26 +8,6 @@
 
 	common =
 	{
-		core =
-		{
-			network.wakeOn.knownDevices = {
-				quiss = "f4:6d:04:99:dc:9a";
-				  msi = "d4:3b:04:51:45:28";
-			};
-
-			ssh.cloudflared-proxy =
-			{
-				enable = false;
-				hosts = [
-					"jarvis-cf.foxburrow.org"
-					"quiss-cf.foxburrow.org"
-					"wise-cf.foxburrow.org"
-					"msi-cf.foxburrow.org"
-				];
-			};
-		};
-
-
 		environments.development =
 		{
 			enable = true;

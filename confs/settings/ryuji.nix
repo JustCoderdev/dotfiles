@@ -33,7 +33,6 @@
 			"corefonts"
 
 			"helvetica-neue-lt-std"
-			"cloudflare-warp"
 			"apple-font-sf-pro"
 
 			"steam"

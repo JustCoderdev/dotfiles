@@ -58,27 +58,6 @@ in
 
 	# ------------------------------------------------------------ #
 
-	# TUNNEL
-
-	# Configure DNS on cloudflare interface
-	# <https://blog.cloudflare.com/argo-tunnels-that-live-forever/>
-	# <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/>
-	unofficial.services.cloudflared =
-	{
-		enable = true;
-		certificateFile = secrets.cloudflare.origin-cert.path;
-
-		tunnels."home" =
-		{
-			credentialsFile = secrets.cloudflare.tunnel-creds."home".path;
-			default = "http_status:404";
-			originRequest.noTLSVerify = true;
-			ingress."quiss-cf.foxburrow.org".service = "ssh://127.0.0.1:22";
-		};
-	};
-
-	# ------------------------------------------------------------ #
-
 	# SAMBA
 	# modules.services.samba.shares."data" = raid-mount;
 
