@@ -54,8 +54,6 @@
 
 	modules.services =
 	{
-		avahi.enable = true;
-
 		uxplay = {
 			enable = true;
 			openFirewall = true;

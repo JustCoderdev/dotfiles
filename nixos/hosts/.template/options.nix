@@ -69,7 +69,6 @@
 	{
 		services =
 		{
-			avahi.enable = false;
 			docker.enable = false;
 			home-assistant.enable = false;
 

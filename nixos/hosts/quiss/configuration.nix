@@ -80,12 +80,7 @@ in
 	# ------------------------------------------------------------ #
 
 	# SAMBA
-
-#	modules.services.samba.shares.custom = let
-#		create-share = (name: root: owner: { inherit name root owner; });
-#	in [
-#		(create-share "data" raid-mount username)
-#	];
+	# modules.services.samba.shares."data" = raid-mount;
 
 	# Homepage
 	# <https://nixos.org/manual/nixos/stable/#module-security-acme-nginx>

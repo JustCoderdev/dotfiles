@@ -1,7 +1,6 @@
 {
 	imports =
 	[
-		./avahi.nix
 		./docker.nix
 		./home-assistant
 		./immich.nix

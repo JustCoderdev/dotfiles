@@ -87,17 +87,11 @@
 
 	modules.services =
 	{
-		avahi.enable = true;
-
+		samba.enable = true;
 		nixbuilder.server =
 		{
 			enable = true;
 			maxJobs = 6;
-		};
-
-		samba = {
-			enable = true;
-			# shares.user.enable = true;
 		};
 	};
 }

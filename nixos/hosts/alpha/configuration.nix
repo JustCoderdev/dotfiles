@@ -1,13 +1,6 @@
-{ settings, ... }:
+{ ... }:
 
 let
-	inherit (settings) username;
-
-	# PtP 10.255.255.252/30
-	alpha-ip = "10.255.255.253";
-	 beta-ip = "10.255.255.254";
-	alpha-port-to-beta = "enp3s4f1";
-
 	raid-mount = "/mnt/array-aad";
 	config-dir = raid-mount + "/.config";
 	data-dir   = raid-mount + "/data";
@@ -20,13 +13,20 @@ let
 
 	proxy = {
 		enable = true;
-		host = "quiss.home.lan";
-		aliases = [ "192.168.7.7" "10.255.250.2" "quiss.garden.lan" ];
+		host = "alpha.home.lan";
+		aliases = [ "192.168.7.3" "10.255.250.8" "alpha.garden.lan" ];
 	};
 in
 
 {
-	systemd.network = {
+	systemd.network =
+	let
+		# PtP 10.255.255.252/30
+		alpha-ip = "10.255.255.253";
+		 beta-ip = "10.255.255.254";
+		alpha-port-to-beta = "enp3s4f1";
+	in
+	{
 		enable = true;
 		networks."${alpha-port-to-beta}" = {
 			matchConfig.Name = alpha-port-to-beta;
@@ -35,8 +35,11 @@ in
 		};
 	};
 
+	# ------------------------------------------------------------ #
+
 	# Create service group
 	users.groups."${serv-group}" = { };
+	modules.services.samba.shares."data" = raid-mount;
 
 	systemd.tmpfiles.rules = [
 #		Type Path                    Mode User Group
@@ -55,12 +58,4 @@ in
 	];
 
 	# ------------------------------------------------------------ #
-
-	# SAMBA
-
-	modules.services.samba.shares.custom = let
-		create-share = (name: root: owner: { inherit name root owner; });
-	in [
-		(create-share "data" raid-mount username)
-	];
 }
