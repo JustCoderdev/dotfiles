@@ -14,7 +14,7 @@ in
 		environment.systemPackages = with pkgs; [ cifs-utils ];
 
 		systemd.tmpfiles.rules =
-		let inherit (cfg.services.samba.settings.public) path; in
+		let inherit (config.services.samba.settings.public) path; in
 		[
 #			Type Path    Mode User  Group
 			"d   ${path} 0755 samba samba"
