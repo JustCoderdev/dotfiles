@@ -42,6 +42,9 @@ in
 					"read only" = "no";
 					"guest ok" = "no";
 
+					"map to guest" = "bad user";
+					"guest account" = "nobody";
+
 					"server smb encrypt" = "required";
 					"server min protocol" = "SMB3_00";
 					"workgroup" = "WORKGROUP";
