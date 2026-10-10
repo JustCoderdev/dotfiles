@@ -37,7 +37,10 @@
 			)
 			(
 				nixpkgs.lib.attrsets.filterAttrs
-					(name: value: !(nixpkgs.lib.strings.hasPrefix "_" name) && (value == "directory"))
+					(name: value:
+						 !(nixpkgs.lib.strings.hasPrefix "." name)
+						 && !(nixpkgs.lib.strings.hasPrefix "_" name)
+						 && (value == "directory"))
 					(builtins.readDir ./nixos/hosts)
 			)
 		);
