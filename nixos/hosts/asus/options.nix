@@ -38,6 +38,7 @@
 
 	modules.services =
 	{
+		avahi.enable = true;
 		samba.enable = true;
 		uxplay = {
 			enable = true;
