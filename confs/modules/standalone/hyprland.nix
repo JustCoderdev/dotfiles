@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-	inherit (config.jcconfs) wallpapers_path;
+	inherit (config.jcconfs) wallpaper_path;
 	inherit (config.jcconfs.host) has-de;
 
 	cfg = config.jcconfs.module.hyprland;
@@ -32,7 +32,7 @@ in
 				];
 
 				env = "XCURSOR_SIZE,24";
-				exec = "${pkgs.swww}/bin/swww img ${wallpapers_path}/space_engineers.png";
+				exec = "${pkgs.swww}/bin/swww img ${wallpaper_path}";
 
 				general =
 				{

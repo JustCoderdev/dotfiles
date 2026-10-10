@@ -66,7 +66,7 @@ There are 3 main directories (+1):
     - `<application>`: application related files and configurations
 - `settings`: user settings (profiles and insecure/unfree packages list)
 - `stylix`: stylix theme and modules
-- `users-icon`: available users icon
+- `ryuji-pictures`: ryuji icon and wallapaper
 
 ### hardware
 

@@ -24,10 +24,10 @@
 		};
 	};
 
-	wallpapers_path = lib.mkOption {
-		description = "Specify the wallpapers directory";
+	wallpaper_path = lib.mkOption {
+		description = "Wallpaper file path";
 		type = lib.types.path;
-		default = ../.wallpapers;
+		default = ../ryuji-pictures/space_engineers.png;
 		readOnly = true;
 	};
 }

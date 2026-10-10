@@ -3,7 +3,7 @@
 {
 	options.jcconfs =
 	{
-		inherit (import ./common.nix { inherit lib pkgs; }) icon-theme host wallpapers_path;
+		inherit (import ./common.nix { inherit lib pkgs; }) icon-theme host wallpaper_path;
 
 		users = lib.mkOption {
 			description = "User preferences";

@@ -11,7 +11,7 @@ in
 		{
 			enable = true && cfg.host.has-de;
 			polarity = "dark";
-			image = "${cfg.wallpapers_path}/space_engineers.png";
+			image = cfg.wallpaper_path;
 			overlays.enable = false;
 
 			cursor = {

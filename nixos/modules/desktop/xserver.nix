@@ -20,7 +20,7 @@ in
 					(
 						let
 							ldm-grp = config.users.users.lightdm.group;
-							icons-filepath = "${dotfiles_store_path}/confs/users-icon";
+							icons-filepath = "${dotfiles_store_path}/confs/ryuji-pictures";
 						in
 						[
 							# Fix icon without exposing home folder
@@ -29,9 +29,6 @@ in
 						#  Type Path                                            Mode User Group      Age Argument
 							"L+ /var/lib/AccountsService/icons/${username}.jpeg 0640 root ${ldm-grp} -   ${icons-filepath}/${username}.jpeg"
 							"f+ /var/lib/AccountsService/users/${username}      0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/${username}.jpeg\\n"
-
-							"L+ /var/lib/AccountsService/icons/school.jpeg      0640 root ${ldm-grp} -   ${icons-filepath}/school.jpeg"
-							"f+ /var/lib/AccountsService/users/school           0640 root ${ldm-grp} -   [User]\\nIcon=/var/lib/AccountsService/icons/school.jpeg\\n"
 						]
 					);
 

@@ -16,7 +16,7 @@ in
 {
 	options.jcconfs =
 	{
-		inherit (import ./common.nix { inherit lib pkgs; }) host icon-theme wallpapers_path;
+		inherit (import ./common.nix { inherit lib pkgs; }) host icon-theme wallpaper_path;
 
 		user.profiles = lib.mkOption {
 			description = "List of profiles to enable";
