@@ -60,7 +60,6 @@ There are 3 main directories (+1):
 
 ### confs
 
-- `.wallpapers`: desktop wallpapers
 - `modules`: applications configurations
     - `standalone`: configurations that exist only in home-manager
     - `<application>`: application related files and configurations
