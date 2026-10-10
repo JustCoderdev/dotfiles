@@ -26,21 +26,11 @@
 			"ryuji_buildclient" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK05zx+zekMnUpJ7qog1r/yNrsMDVcDXyny1GdZGog4";
 		};
 
-		wireguard =
+		wireguard."wg-server" =
 		{
-			"wg-server" =
-			{
-				enable = true;
-				publicKey = "F8qzOVcYphb81XE0s/AndbKYf7ZYXR4g1mCNRseSFDI=";
-				self-address = "10.255.250.1";
-			};
-
-			"wg-giugio" =
-			{
-				enable = true;
-				publicKey = "F8qzOVcYphb81XE0s/AndbKYf7ZYXR4g1mCNRseSFDI=";
-				self-address = "10.255.249.1";
-			};
+			enable = true;
+			publicKey = "F8qzOVcYphb81XE0s/AndbKYf7ZYXR4g1mCNRseSFDI=";
+			self-address = "10.255.250.1";
 		};
 	};
 }
