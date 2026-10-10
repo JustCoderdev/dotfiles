@@ -13,6 +13,13 @@ in
 		users.users.${username}.extraGroups = [ "samba" ];
 		environment.systemPackages = with pkgs; [ cifs-utils ];
 
+		systemd.tmpfiles.rules =
+		let inherit (cfg.services.samba.settings.public) path; in
+		[
+#			Type Path    Mode User  Group
+			"d   ${path} 0755 samba samba"
+		];
+
 		# Autodiscovery on windows
 		services.samba-wsdd = {
 			enable = true;
@@ -47,7 +54,7 @@ in
 					"fruit:encoding" = "native";
 				};
 
-				homes = { };
+				homes."browseable" = "no";
 
 				public =
 				{
