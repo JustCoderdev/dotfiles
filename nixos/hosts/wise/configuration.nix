@@ -112,40 +112,40 @@ in
 			# 	};
 			# };
 
-			# "jellyfin.foxburrow.org" = (default-ssl-config)
-			# // {
-			# 	locations =
-			# 	let
-			# 		location-cfg =
-			# 		{
-			# 			proxyPass = "https://10.255.250.2/jellyfin";
-			# 			extraConfig  = ""
-			# 				+ "proxy_set_header Host $host;\n"
-			# 				+ "proxy_set_header X-Real-IP $remote_addr;\n"
-			# 				+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-			# 				+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
-			# 				+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
-			# 				+ "proxy_set_header X-Forwarded-Host $http_host;\n"
-			# 				+ "proxy_headers_hash_max_size 512;\n"
-			# 				+ "proxy_headers_hash_bucket_size 128;\n"
-			# 			;
-			# 		};
-			# 	in
-			# 	{
-			# 		"/".return = "301 /jellyfin";
-			# 		"^~ /jellyfin" = location-cfg;
-			# 		"/jellyfin/socket" = (location-cfg) // { proxyWebsockets = true; };
-			# 	};
-			#
-			# 	extraConfig = ""
-			# 		# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
-			# 		+ "add_header X-XSS-Protection \"1; mode=block\";\n"
-			# 		+ "add_header X-Content-Type-Options \"nosniff\";\n"
-			# 		+ "proxy_ssl_verify off;\n"
-			# 		+ "proxy_ssl_session_reuse off;\n"
-			# 		+ "proxy_ssl_server_name on;\n"
-			# 		+ "";
-			# };
+			"jellyfin.foxburrow.org" = (default-ssl-config)
+			// {
+				locations =
+				let
+					location-cfg =
+					{
+						proxyPass = "https://10.255.250.2/jellyfin";
+						extraConfig  = ""
+							+ "proxy_set_header Host $host;\n"
+							+ "proxy_set_header X-Real-IP $remote_addr;\n"
+							+ "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+							+ "proxy_set_header X-Forwarded-Proto $scheme;\n"
+							+ "proxy_set_header X-Forwarded-Protocol $scheme;\n"
+							+ "proxy_set_header X-Forwarded-Host $http_host;\n"
+							+ "proxy_headers_hash_max_size 512;\n"
+							+ "proxy_headers_hash_bucket_size 128;\n"
+						;
+					};
+				in
+				{
+					"/".return = "301 /jellyfin";
+					"^~ /jellyfin" = location-cfg;
+					"/jellyfin/socket" = (location-cfg) // { proxyWebsockets = true; };
+				};
+
+				extraConfig = ""
+					# + "add_header X-Frame-Options \"SAMEORIGIN\";\n"
+					+ "add_header X-XSS-Protection \"1; mode=block\";\n"
+					+ "add_header X-Content-Type-Options \"nosniff\";\n"
+					+ "proxy_ssl_verify off;\n"
+					+ "proxy_ssl_session_reuse off;\n"
+					+ "proxy_ssl_server_name on;\n"
+					+ "";
+			};
 
 			"_" =
 			let
@@ -175,7 +175,7 @@ in
 								"/".return = "301 /${name}";
 								"^~ /${name}" =
 								{
-									proxyPass = "https://10.255.250.2/${name}";
+									proxyPass = "https://10.255.250.7/${name}";
 									extraConfig = reverse_proxy_headers;
 								};
 							};
