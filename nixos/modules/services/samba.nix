@@ -69,7 +69,7 @@ in
 			}
 			//
 			builtins.mapAttrs (
-				name: path: owner:
+				name: path:
 				{
 					comment = name;
 					path = "${path}/${name}";
