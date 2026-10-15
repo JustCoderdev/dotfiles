@@ -41,10 +41,12 @@
 				enable = true;
 				tools = {
 					android.enable = true;
-					network.enable = true;
-					game-development.enable = true;
+					assembly.enable = true;
 					c.enable = true;
+					game-development.enable = true;
 					java.enable = true;
+					network.enable = true;
+					vhdl.enable = true;
 				};
 			};
 		};
