@@ -13,6 +13,8 @@ in
 		++ lib.lists.optionals (cfg.tools.android.enable) [ android-tools scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap unixtools.arp ]
 		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 unityhub ]
+		++ lib.lists.optionals (cfg.tools.vhdl.enable) [ ghdl gtkwave ]
+		++ lib.lists.optionals (cfg.tools.assembly.enable) [ qemu clang ]
 		++ lib.lists.optionals (cfg.tools.c.enable)
 		[
 			# Docs
@@ -79,6 +81,8 @@ in
 		tools = {
 			android.enable = lib.mkEnableOption "android tools";
 			c.enable = lib.mkEnableOption "c tools";
+			vhdl.enable = lib.mkEnableOption "vhdl tools";
+			assembly.enable = lib.mkEnableOption "assembly tools";
 			game-development.enable = lib.mkEnableOption "game development tools";
 			java.enable = lib.mkEnableOption "java ide";
 			network.enable = lib.mkEnableOption "network tools";

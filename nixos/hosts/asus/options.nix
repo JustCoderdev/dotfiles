@@ -23,6 +23,8 @@
 				tools = {
 					android.enable = true;
 					c.enable = true;
+					vhdl.enable = true;
+					assembly.enable = true;
 					java.enable = true;
 					network.enable = true;
 				};
