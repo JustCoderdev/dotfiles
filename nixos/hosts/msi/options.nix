@@ -40,6 +40,7 @@
 			{
 				enable = true;
 				tools = {
+					arduino.enable = true;
 					android.enable = true;
 					assembly.enable = true;
 					c.enable = true;

@@ -10,11 +10,10 @@
 	# Temporary services
 	# ------------------------------------------------------------ #
 
-	# services.mysql = {
-	# 	enable = true;
-	# 	package = pkgs.mariadb;
-	# 	# settings.mysqld.innodb_buffer_pool_size = "1GB";
-	# };
+	services.mysql = {
+		enable = true;
+		package = pkgs.mariadb;
+	};
 
 	# services.deluge =
 	# {

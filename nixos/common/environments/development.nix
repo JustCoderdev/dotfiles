@@ -9,7 +9,8 @@ in
 {
 	config = lib.mkIf (cfg.enable)
 	{
-		environment.systemPackages = with pkgs; [ screen ]
+		environment.systemPackages = with pkgs; [ ]
+		++ lib.lists.optionals (cfg.tools.arduino.enable) [ screen arduino-ide ]
 		++ lib.lists.optionals (cfg.tools.android.enable) [ android-tools scrcpy ]
 		++ lib.lists.optionals (cfg.tools.network.enable) [ wireshark ethtool nmap unixtools.arp ]
 		++ lib.lists.optionals (cfg.tools.game-development.enable) [ blender godot_4 unityhub ]
@@ -45,6 +46,7 @@ in
 		users.users.${username}.extraGroups = []
 		++ lib.lists.optionals (cfg.tools.network.enable) [ "wireshark" "pcap" ]
 		++ lib.lists.optionals (cfg.tools.android.enable) [ "adbusers" ]
+		++ lib.lists.optionals (cfg.tools.arduino.enable) [ "dialout" ]
 		;
 
 		# -------------------- #
@@ -79,6 +81,7 @@ in
 	{
 		enable = lib.mkEnableOption "the development environment";
 		tools = {
+			arduino.enable = lib.mkEnableOption "arduino tools";
 			android.enable = lib.mkEnableOption "android tools";
 			c.enable = lib.mkEnableOption "c tools";
 			vhdl.enable = lib.mkEnableOption "vhdl tools";
