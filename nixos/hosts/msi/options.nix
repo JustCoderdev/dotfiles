@@ -30,12 +30,7 @@
 
 		environments =
 		{
-			gaming =
-			{
-				enable = true;
-				vr.enable = true;
-			};
-
+			gaming.enable = true;
 			development =
 			{
 				enable = true;
@@ -72,6 +67,10 @@
 		{
 			enable = true;
 			maxJobs = 6;
+		};
+		uxplay = {
+			enable = true;
+			openFirewall = true;
 		};
 	};
 }
